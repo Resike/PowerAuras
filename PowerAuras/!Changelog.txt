@@ -1,0 +1,81 @@
+﻿* 4.23.18
+Minor fixes.
+
+* 4.23.17
+Fixed level issues with the Option frames.
+Disabled aura icons alpha now can't be changed.
+Added Monk's "Fist of Justice" spell as a stun.
+Other smaller fixes.
+
+* 4.23.16
+Updated and fixed localizations.
+Other minor fixes.
+
+* 4.23.15
+Core cleanup, round three.
+Fixed a moving bug.
+Replaced bugged background from the options frame.
+Fixed some missing translations.
+Renamed sounds.
+Added new sounds.
+Added new textures.
+Renamed fonts.
+Some other minor fixes.
+
+* 4.23.14
+Added "Changelog.txt".
+Code cleanup, round two.
+Fixed "aggro.ogg" sound.
+Fixed missing clicking sound on some buttons.
+Menu layout tweaks.
+Option table border fixes.
+Added some missing button and string localizations.
+Removed "Ranged Slot" from Equipment Slots.
+Equipment Slot frame tweaks.
+
+* 4.23.13
+Total code cleanup.
+Merged localizations.
+Fixed bugged "Send" and "Cancel" buttons on "Export" and "Export Set" dialog.
+
+* 4.23.12
+Support for Patch 5.2
+
+* 4.23.11
+Support for Patch 5.1
+
+* 4.23.10
+Fixed Warlock Shards max power from 3 to 4
+Fixed incorrect version numbering
+
+* 4.3.9
+Fixed map taint issues (thanks to Resike)
+
+* 4.3.8
+Non-Fire Mage GCDs are properly ignored in auras
+
+* 4.3.7
+Fixed Chi (Light Power) max power from 4 to 5
+
+* 4.3.6
+Fixed totem aura update lag
+
+* 4.3.5
+Warrior GCDs are properly ignored in auras, for reals this time...
+
+* 4.3.4
+Master of Ghouls is now properly detected
+Paladin, Warrior, and Monk GCDs are properly ignored in auras
+
+* 4.3.3
+Fixed glyph taint issues (thanks to Resike)
+Fixed action usable so abilities that are charging up but still have active charges on them show up as usable
+
+* 4.3.2
+Added support for special power tracking for Shadow Orbs, Burning Embers, Demonic Fury, and Chi
+
+* 4.3.1
+Updated Paladin Holy Power from 3 to 5
+
+* 4.3
+Updated the code to be compatible with MoP 5.0.4
