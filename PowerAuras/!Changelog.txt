@@ -1,4 +1,7 @@
-﻿* 4.23.18
+﻿* 4.23.19
+Fixed a bug with Old End Animations, where Growing and Shrinking got reversed.
+
+* 4.23.18
 Converted sounds to mp3.
 Added new sounds. ("Bloodbath", "Vengeance", "Warpath").
 Minor fixes.

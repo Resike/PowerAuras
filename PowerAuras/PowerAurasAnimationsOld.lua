@@ -240,8 +240,8 @@ function cPowaAnimationEndResizeAndFade:Update(elapsed)
 	return false;
 end
 
-cPowaAnimationEndGrowAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = -1});
-cPowaAnimationEndShrinkAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = 1});
+cPowaAnimationEndGrowAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = 1});
+cPowaAnimationEndShrinkAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = - 1});
 cPowaAnimationEndFade = PowaClass(cPowaAnimationEnd);
 function cPowaAnimationEndFade:Update(elapsed)
 	self.Alpha = self.Alpha - (elapsed * 2);
