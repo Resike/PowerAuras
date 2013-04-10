@@ -1,4 +1,6 @@
 ﻿* 4.23.18
+Converted sounds to mp3.
+Added new sounds. ("Bloodbath", "Vengeance", "Warpath").
 Minor fixes.
 
 * 4.23.17
