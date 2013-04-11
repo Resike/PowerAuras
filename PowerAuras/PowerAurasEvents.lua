@@ -16,11 +16,11 @@ function PowaAuras:ADDON_LOADED(addon)
 	for k in pairs(PowaGlobalMisc) do
 		if (PowaAuras.PowaGlobalMiscDefault[k]==nil) then PowaGlobalMisc[k] = nil; end
 	end
-	if (PowaMisc.OverrideMaxTextures) then
+	--[[if (PowaMisc.OverrideMaxTextures) then
 		self.MaxTextures = PowaMisc.UserSetMaxTextures;
-	else
+	else]]--
 		self.MaxTextures = PowaAuras.TextureCount;
-	end
+	--end
 	local null, null, major, minor = string.find(self.Version, self.VersionPattern);
 	self.VersionParts = {Major=tonumber(major), Minor=tonumber(minor), Build=0, Revision=""};
 	null, null, major, minor = string.find(PowaMisc.Version, self.VersionPattern);

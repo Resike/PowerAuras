@@ -191,6 +191,7 @@ cPowaAnimationBeginTranslateRight = PowaClass(cPowaAnimationBeginTranslate, {Off
 cPowaAnimationBeginTranslateBottomRight = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=75, OffsetY=-75, DirectionX=-1, DirectionY=1, TranslationSpeed = 1.5});
 cPowaAnimationBeginTranslateBottom = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=0, OffsetY=-100, DirectionX=0, DirectionY=1, TranslationSpeed = 2.0});
 cPowaAnimationBeginTranslateBottomLeft = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=-75, OffsetY=-75, DirectionX=1, DirectionY=1, TranslationSpeed = 1.5});
+
 cPowaAnimationBeginBounce = PowaClass(cPowaAnimationBaseTranslate, {OffsetX=0, OffsetY=100, MinVelocity=100, Acceleration=1000});
 function cPowaAnimationBeginBounce:Initialise()
 	self.Velocity = 0;
@@ -233,15 +234,16 @@ function cPowaAnimationEndResizeAndFade:Update(elapsed)
 	if (self.Alpha <= 0) then
 		return true;
 	end
-	local sizeStep = self.Direction * elapsed * 200;
+	local sizeStep = self.Direction * elapsed * 300;
 	self.Width = math.max(0, self.Width + sizeStep);
 	self.Height = math.max(0, self.Height + sizeStep);
 	self:UpdateFrame();
 	return false;
 end
 
-cPowaAnimationEndGrowAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = 1});
-cPowaAnimationEndShrinkAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = - 1});
+cPowaAnimationEndGrowAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = 5});
+cPowaAnimationEndShrinkAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = - 5});
+
 cPowaAnimationEndFade = PowaClass(cPowaAnimationEnd);
 function cPowaAnimationEndFade:Update(elapsed)
 	self.Alpha = self.Alpha - (elapsed * 2);

@@ -238,7 +238,7 @@
 	<!-- Aura Configuration Frame -->
 	<Frame name = "PowaBarConfigFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
-			<AbsDimension x = "488" y = "716"/>
+			<AbsDimension x = "488" y = "718"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "CENTER" relativeTo = "UIParent">
@@ -957,12 +957,12 @@
 						<Frames>
 							<EditBox name = "PowaBarBuffName" autoFocus = "false" inherits = "InputBoxTemplate" historyLines = "5">
 								<Size>
-									<AbsDimension x = "272" y = "16"/>
+									<AbsDimension x = "290" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor2" relativePoint = "TOPLEFT">
 										<Offset>
-											<AbsDimension x = "13" y = "-55"/>
+											<AbsDimension x = "16" y = "-55"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1107,12 +1107,12 @@
 							</EditBox>
 							<EditBox name = "PowaBarBuffStacks" autoFocus = "false" inherits = "InputBoxTemplate">
 								<Size>
-									<AbsDimension x = "90" y = "16"/>
+									<AbsDimension x = "85" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "BOTTOMLEFT" relativeTo = "PowaBarBuffName" relativePoint = "TOPLEFT">
 										<Offset>
-											<AbsDimension x = "200" y = "12"/>
+											<AbsDimension x = "205" y = "12"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1157,7 +1157,7 @@
 								<Anchors>
 									<Anchor point = "BOTTOMLEFT" relativeTo = "PowaBarBuffName" relativePoint = "TOPLEFT">
 										<Offset>
-											<AbsDimension x = "-25" y = "10"/>
+											<AbsDimension x = "-24" y = "8"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1190,7 +1190,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarBuffName" relativePoint = "TOPRIGHT">
 										<Offset>
-											<AbsDimension x = "10" y = "5"/>
+											<AbsDimension x = "-6" y = "5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1347,7 +1347,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "TOPRIGHT">
 										<Offset>
-											<AbsDimension x = "40" y = "15"/>
+											<AbsDimension x = "40" y = "11"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2128,7 +2128,7 @@
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownAnimBegin" relativePoint = "RIGHT">
 										<Offset>
-											<AbsDimension x = "0" y = "0"/>
+											<AbsDimension x = "20" y = "0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2216,7 +2216,7 @@
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownAnim1" relativePoint = "RIGHT">
 										<Offset>
-											<AbsDimension x = "0" y = "0"/>
+											<AbsDimension x = "20" y = "0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2837,7 +2837,7 @@
 							</Slider>
 							<CheckButton name = "PowaBuffTimerCentsButton" inherits = "PowaCheckTemplate">
 								<Size>
-									<AbsDimension x = "25" y = "35"/>
+									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaTimerSizeSlider" relativePoint = "BOTTOMLEFT">

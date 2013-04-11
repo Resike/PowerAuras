@@ -2253,23 +2253,69 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		aura = PowaAuras:AuraFactory(PowaAuras.BuffTypes.Buff, 0);
 	end
 	if (owner:GetName() == "PowaDropDownAnim1Button" or owner:GetName() == "PowaDropDownAnim1") then
-		for i = 1, #(PowaAuras.Anim) do
-			info = {};
-			info.text = PowaAuras.Anim[i];
-			info.value = i;
-			info.func = PowaAuras.DropDownMenu_OnClickAnim1;
-			UIDropDownMenu_AddButton(info);
+		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
+		if aura ~= nil then
+			if aura.UseOldAnimations == false then
+				for i = 1, #(PowaAuras.Anim) do
+					info = {};
+					info.text = PowaAuras.Anim[i];
+					info.value = i;
+					info.func = PowaAuras.DropDownMenu_OnClickAnim1;
+					UIDropDownMenu_AddButton(info);
+				end
+			else
+				for i = 1, #(PowaAuras.Anim) - 2 do
+					info = {};
+					info.text = PowaAuras.Anim[i];
+					info.value = i;
+					info.func = PowaAuras.DropDownMenu_OnClickAnim1;
+					UIDropDownMenu_AddButton(info);
+				end
+			end
+			UIDropDownMenu_SetSelectedValue(PowaDropDownAnim1, aura.anim1);
+		else
+			for i = 1, #(PowaAuras.Anim) - 2 do
+				info = {};
+				info.text = PowaAuras.Anim[i];
+				info.value = i;
+				info.func = PowaAuras.DropDownMenu_OnClickAnim1;
+				UIDropDownMenu_AddButton(info);
+			end
+			UIDropDownMenu_SetSelectedID(PowaDropDownAnim1, 1);
 		end
-		UIDropDownMenu_SetSelectedValue(PowaDropDownAnim1, aura.anim1);
+		UIDropDownMenu_SetWidth(PowaDropDownAnim1, 175, 1);
 	elseif (owner:GetName() == "PowaDropDownAnim2Button" or owner:GetName() == "PowaDropDownAnim2") then
-		for i = 0, #(PowaAuras.Anim) do
-			info = {};
-			info.text = PowaAuras.Anim[i];
-			info.value = i;
-			info.func = PowaAuras.DropDownMenu_OnClickAnim2;
-			UIDropDownMenu_AddButton(info);
+		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
+		if aura ~= nil then
+			if aura.UseOldAnimations == false then
+				for i = 0, #(PowaAuras.Anim) do
+					info = {};
+					info.text = PowaAuras.Anim[i];
+					info.value = i;
+					info.func = PowaAuras.DropDownMenu_OnClickAnim2;
+					UIDropDownMenu_AddButton(info);
+				end
+			else
+				for i = 0, #(PowaAuras.Anim) - 2 do
+					info = {};
+					info.text = PowaAuras.Anim[i];
+					info.value = i;
+					info.func = PowaAuras.DropDownMenu_OnClickAnim2;
+					UIDropDownMenu_AddButton(info);
+				end
+			end
+			UIDropDownMenu_SetSelectedValue(PowaDropDownAnim2, aura.anim2);
+		else
+			for i = 0, #(PowaAuras.Anim) - 2 do
+				info = {};
+				info.text = PowaAuras.Anim[i];
+				info.value = i;
+				info.func = PowaAuras.DropDownMenu_OnClickAnim2;
+				UIDropDownMenu_AddButton(info);
+			end
+			UIDropDownMenu_SetSelectedID(PowaDropDownAnim2, 1);
 		end
-		UIDropDownMenu_SetSelectedValue(PowaDropDownAnim2, aura.anim2);
+		UIDropDownMenu_SetWidth(PowaDropDownAnim2, 175, 1);
 	elseif (owner:GetName() == "PowaDropDownStanceButton" or owner:GetName() == "PowaDropDownStance") then
 		info = {func = PowaAuras.DropDownMenu_OnClickStance, owner = owner};
 		for k, v in pairs(PowaAuras.PowaStance) do
@@ -2364,14 +2410,34 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info);
 		end
 		UIDropDownMenu_SetSelectedValue(PowaDropDownAnimBegin, aura.begin);
+		UIDropDownMenu_SetWidth(PowaDropDownAnimBegin, 175, 1);
 	elseif (owner:GetName() == "PowaDropDownAnimEndButton" or owner:GetName() == "PowaDropDownAnimEnd") then
 		info = {func = PowaAuras.DropDownMenu_OnClickEnd, owner = owner};
-		for i = 0, #PowaAuras.EndAnimDisplay do
-			info.text = PowaAuras.EndAnimDisplay[i];
-			info.value = i;
-			UIDropDownMenu_AddButton(info);
+		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
+		if aura ~= nil then
+			if aura.UseOldAnimations == false then
+				for i = 0, #PowaAuras.EndAnimDisplay do
+					info.text = PowaAuras.EndAnimDisplay[i];
+					info.value = i;
+					UIDropDownMenu_AddButton(info);
+				end
+			else
+				for i = 0, #PowaAuras.EndAnimDisplay - 2  do
+					info.text = PowaAuras.EndAnimDisplay[i];
+					info.value = i;
+					UIDropDownMenu_AddButton(info);
+				end
+			end
+			UIDropDownMenu_SetSelectedValue(PowaDropDownAnimEnd, aura.finish);
+		else
+			for i = 0, #PowaAuras.EndAnimDisplay - 2  do
+				info.text = PowaAuras.EndAnimDisplay[i];
+				info.value = i;
+				UIDropDownMenu_AddButton(info);
+			end
+			UIDropDownMenu_SetSelectedID(PowaDropDownAnimEnd, 1);
 		end
-		UIDropDownMenu_SetSelectedValue(PowaDropDownAnimEnd, aura.finish);
+		UIDropDownMenu_SetWidth(PowaDropDownAnimEnd, 175, 1);
 	elseif (owner:GetName() == "PowaDropDownBuffTypeButton" or owner:GetName() == "PowaDropDownBuffType") then
 		--PowaAuras:Message("DropDownMenu_Initialize for buff type");
 		PowaAuras:FillDropdownSorted(PowaAuras.Text.AuraType, {func = PowaAuras.DropDownMenu_OnClickBuffType, owner = owner});
@@ -2457,6 +2523,42 @@ function PowaAuras:OldAnimationChecked(control)
 	local aura = self.Auras[self.CurrentAuraId];
 	if (control:GetChecked()) then
 		aura.UseOldAnimations = true;
+		if UIDropDownMenu_GetSelectedID(PowaDropDownAnimEnd) == 5 then
+			local auraId = PowaAuras.CurrentAuraId;
+			UIDropDownMenu_SetSelectedID(PowaDropDownAnimEnd, 1);
+			PowaAuras.Auras[auraId].finish = 0;
+			PowaAuras:RedisplayAura(auraId);
+		end
+		if UIDropDownMenu_GetSelectedID(PowaDropDownAnimEnd) == 6 then
+			local auraId = PowaAuras.CurrentAuraId;
+			UIDropDownMenu_SetSelectedID(PowaDropDownAnimEnd, 1);
+			PowaAuras.Auras[auraId].finish = 0;
+			PowaAuras:RedisplayAura(auraId);
+		end
+		if UIDropDownMenu_GetSelectedID(PowaDropDownAnim1) == 11 then
+			local auraId = PowaAuras.CurrentAuraId;
+			UIDropDownMenu_SetSelectedID(PowaDropDownAnim1, 1);
+			PowaAuras.Auras[auraId].anim1 = 1;
+			PowaAuras:RedisplayAura(auraId);
+		end
+		if UIDropDownMenu_GetSelectedID(PowaDropDownAnim1) == 12 then
+			local auraId = PowaAuras.CurrentAuraId;
+			UIDropDownMenu_SetSelectedID(PowaDropDownAnim1, 1);
+			PowaAuras.Auras[auraId].anim1 = 1;
+			PowaAuras:RedisplayAura(auraId);
+		end
+		if UIDropDownMenu_GetSelectedID(PowaDropDownAnim2) == 12 then
+			local auraId = PowaAuras.CurrentAuraId;
+			UIDropDownMenu_SetSelectedID(PowaDropDownAnim2, 1);
+			PowaAuras.Auras[auraId].anim2 = 0;
+			PowaAuras:RedisplayAura(auraId);
+		end
+		if UIDropDownMenu_GetSelectedID(PowaDropDownAnim2) == 13 then
+			local auraId = PowaAuras.CurrentAuraId;
+			UIDropDownMenu_SetSelectedID(PowaDropDownAnim2, 1);
+			PowaAuras.Auras[auraId].anim2 = 0;
+			PowaAuras:RedisplayAura(auraId);
+		end
 	else
 		aura.UseOldAnimations = false;
 	end
