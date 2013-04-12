@@ -1,20 +1,30 @@
 function PowaAuras:ADDON_LOADED(addon)
-	if(addon ~= "PowerAuras") then return; end
+	if(addon ~= "PowerAuras") then
+		return;
+	end
 	PowaMisc.disabled = nil;
 	-- Ensure PowaMisc gets any new values
 	for k, v in pairs(PowaAuras.PowaMiscDefault) do
-		if (PowaMisc[k]==nil) then PowaMisc[k] = v; end
+		if (PowaMisc[k]==nil) then
+			PowaMisc[k] = v;
+		end
 	end
 	-- Remove redundant settings
 	for k in pairs(PowaMisc) do
-		if (PowaAuras.PowaMiscDefault[k]==nil) then PowaMisc[k] = nil; end
+		if (PowaAuras.PowaMiscDefault[k] == nil) then
+			PowaMisc[k] = nil;
+		end
 	end
 	for k, v in pairs(PowaAuras.PowaGlobalMiscDefault) do
-		if (PowaGlobalMisc[k]==nil) then PowaGlobalMisc[k] = v; end
+		if (PowaGlobalMisc[k] == nil) then
+			PowaGlobalMisc[k] = v;
+		end
 	end
 	-- Remove redundant settings
 	for k in pairs(PowaGlobalMisc) do
-		if (PowaAuras.PowaGlobalMiscDefault[k]==nil) then PowaGlobalMisc[k] = nil; end
+		if (PowaAuras.PowaGlobalMiscDefault[k] == nil) then
+			PowaGlobalMisc[k] = nil;
+		end
 	end
 	--[[if (PowaMisc.OverrideMaxTextures) then
 		self.MaxTextures = PowaMisc.UserSetMaxTextures;
@@ -30,7 +40,7 @@ function PowaAuras:ADDON_LOADED(addon)
 		self:DisplayText(self.Colors.Purple.."<Power Auras Classic>|r "..self.Colors.Gold..self.Version.."|r - "..self.Text.welcome);
 		PowaMisc.Version = self.Version;
 	end
-	if (TestPA==nil) then
+	if (TestPA == nil) then
 		PowaState = {};
 	end
 	null, self.playerclass = UnitClass("player");
@@ -39,7 +49,7 @@ function PowaAuras:ADDON_LOADED(addon)
 		getglobal("PowaOptionsList"..i):SetText(PowaPlayerListe[i]);
 	end
 	for i = 1, 10 do
-		getglobal("PowaOptionsList"..i+5):SetText(PowaGlobalListe[i]);
+		getglobal("PowaOptionsList"..i + 5):SetText(PowaGlobalListe[i]);
 	end
 	PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures);
 	PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures);
@@ -56,7 +66,9 @@ end
 function PowaAuras:Setup()
 	PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE");
 	local spellId = self.GCDSpells[PowaAuras.playerclass];
-	if (not spellId) then return false; end
+	if (not spellId) then
+		return false;
+	end
 	self.GCDSpellName = GetSpellInfo(spellId);
 	--self:ShowText("GCD spell = ", self.GCDSpellName, "(", spellId, ") CD=", GetSpellCooldown(self.GCDSpellName));
 	-- Look-up spells by spellId for debuff types
@@ -90,21 +102,21 @@ end
 
 function PowaAuras:GetInstanceType()
 	local null, instanceType = IsInInstance();
-	if (instanceType=="pvp") then
+	if (instanceType == "pvp") then
 		instanceType = "Bg";
-	elseif (instanceType=="arena") then
+	elseif (instanceType == "arena") then
 		instanceType = "Arena";
-	elseif (instanceType=="party" or instanceType=="raid") then
+	elseif (instanceType == "party" or instanceType == "raid") then
 		instanceDifficulty = select(3, GetInstanceInfo());
-		if (instanceDifficulty==1) then
+		if (instanceDifficulty == 1) then
 			instanceType = "5Man";
-		elseif (instanceDifficulty==2 or instanceDifficulty==8) then
+		elseif (instanceDifficulty == 2 or instanceDifficulty == 8) then
 			instanceType = "5ManHeroic";
-		elseif (instanceDifficulty==3) then
+		elseif (instanceDifficulty == 3) then
 			instanceType = "10Man";
-		elseif (instanceDifficulty==4 or instanceDifficulty==7 or instanceDifficulty==9) then
+		elseif (instanceDifficulty == 4 or instanceDifficulty == 7 or instanceDifficulty == 9) then
 			instanceType = "25Man";
-		elseif (instanceDifficulty==5) then
+		elseif (instanceDifficulty == 5) then
 			instanceType = "10ManHeroic";
 		else
 			instanceType = "25ManHeroic";
@@ -164,7 +176,9 @@ function PowaAuras:GROUP_ROSTER_UPDATE(...)
 	end
 	local partyCount = GetNumSubgroupMembers();
 	self.WeAreInParty = (partyCount > 0);
-	if (GetNumGroupMembers()>0) then return; end
+	if (GetNumGroupMembers() > 0) then
+		return;
+	end
 	self:FillGroup("party", partyCount);
 end
 
@@ -174,7 +188,7 @@ function PowaAuras:FillGroup(group, count)
 	for i = 1, count do
 		local unit = group..i;
 		local role, roleType = self:DetermineRole(unit);
-		if (group=="raid" and UnitIsUnit(unit, "player")) then
+		if (group == "raid" and UnitIsUnit(unit, "player")) then
 			unit = "player";
 		end
 		self.GroupUnits[unit] = {Name = UnitName(unit), Class = select(2, UnitClass(unit))};
@@ -209,7 +223,7 @@ function PowaAuras:UNIT_MAXPOWER(...)
 end
 
 function PowaAuras:CheckPower(unit, resourceType)
-	if (resourceType=="MANA") then
+	if (resourceType == "MANA") then
 		self:SetCheckResource("Mana", unit);
 	else
 		self:SetCheckResource("Power", unit);
@@ -505,7 +519,9 @@ end
 
 function PowaAuras:ZONE_CHANGED_NEW_AREA()
 	local instanceType = self:GetInstanceType();
-	if (self.Instance == instanceType) then return; end
+	if (self.Instance == instanceType) then
+		return;
+	end
 	self.Instance = instanceType;
 	if (self.ModTest == false) then
 		if (self.DebugEvents) then
@@ -517,7 +533,9 @@ end
 
 function PowaAuras:UNIT_COMBO_POINTS(...)
 	local unit = ...;
-	if (unit ~= "player") then return; end
+	if (unit ~= "player") then
+		return;
+	end
 	if (self.ModTest == false) then
 		self.DoCheck.Combo = true;
 		self.DoCheck.CheckIt = true;
@@ -526,7 +544,9 @@ end
 
 function PowaAuras:UNIT_PET(...)
 	local unit = ...;
-	if (unit ~= "player") then return; end
+	if (unit ~= "player") then
+		return;
+	end
 	if (self.ModTest == false) then
 		self.DoCheck.Pet = true;
 		self.DoCheck.UnitMatch = true;
@@ -540,9 +560,9 @@ function PowaAuras:PLAYER_TOTEM_UPDATE(...)
 		if (self.DebugEvents) then
 			self:DisplayText("PLAYER_TOTEM_UPDATE slot=", slot, " class=", self.playerclass);
 		end
-		if (self.playerclass=="SHAMAN" or self.playerclass=="DRUID") then
+		if (self.playerclass == "SHAMAN" or self.playerclass == "DRUID") then
 			self.DoCheck.All = true;
-		elseif (self.playerclass=="DEATHKNIGHT" and not self.MasterOfGhouls) then
+		elseif (self.playerclass == "DEATHKNIGHT" and not self.MasterOfGhouls) then
 			if (self.DebugEvents) then
 				self:DisplayText("Ghoul (temp version)");
 			end
@@ -552,7 +572,9 @@ function PowaAuras:PLAYER_TOTEM_UPDATE(...)
 end
 
 function PowaAuras:VehicleCheck(unit, entered)
-	if unit ~= "player" then return; end
+	if unit ~= "player" then
+		return;
+	end
 	if (self.ModTest == false) then
 		self.DoCheck.All = true;
 	end
@@ -618,35 +640,34 @@ function PowaAuras:FlagsChanged(unit)
 end
 
 function PowaAuras.StringStarts(String,Start)
-	return string.sub(String,1,string.len(Start))==Start
+	return string.sub(String,1,string.len(Start)) == Start
 end
 
 function PowaAuras.StringEnds(String,End)
-	return End=='' or string.sub(String,-string.len(End))==End
+	return End == '' or string.sub(String,-string.len(End)) == End
 end
 
 function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 	--self:ShowText("COMBAT_LOG_EVENT_UNFILTERED");
 	if (self.ModTest) then return end
-	-- Args.
+	-- Args
 	local timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, spellId, spellName, null, spellType = ...;
 	if (not spellName) then return end
-	--self:ShowText("CLEU: ", event, " by me=", sourceGUID==UnitGUID("player"), " on me=", destGUID==UnitGUID("player"), " ", spellName);
+	--self:ShowText("CLEU: ", event, " by me=", sourceGUID == UnitGUID("player"), " on me=", destGUID == UnitGUID("player"), " ", spellName);
 	--self:ShowText("Player=", UnitGUID("player"), " sourceGUID=", sourceGUID, " destGUID=", destGUID);
 	--self:ShowText(sourceName, " ", destName);
 	--self:ShowText(sourceFlags, " ", destFlags);
-	--
 	--if bit.band(destFlags, COMBATLOG_OBJECT_CONTROL_PLAYER) > 0 then
 	--self:ShowText("Dest: a player")
 	--end
 	--if bit.band(destFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) > 0 then
 	--self:ShowText("Dest: belongs to me")
 	--end
-	if (sourceGUID==UnitGUID("player") and event=="SPELL_CAST_SUCCESS") then
+	if (sourceGUID == UnitGUID("player") and event == "SPELL_CAST_SUCCESS") then
 		if (self.DebugEvents) then
 			self:DisplayText("COMBAT_LOG_EVENT_UNFILTERED", "-  By Me! ", event);
 		end
-		self.CastByMe[spellName] = {SpellName=spellName, SpellId=spellId, DestGUID=destGUID, DestName=destName, Hostile=bit.band(destFlags, COMBATLOG_OBJECT_REACTION_HOSTILE)};
+		self.CastByMe[spellName] = {SpellName = spellName, SpellId = spellId, DestGUID = destGUID, DestName = destName, Hostile = bit.band(destFlags, COMBATLOG_OBJECT_REACTION_HOSTILE)};
 		--self:ShowText(sourceName, " ", destName);
 		--self:ShowText(sourceFlags, " ", destFlags);
 		--self:ShowText("hostile ", self.CastByMe[spellName].Hostile);
@@ -660,12 +681,12 @@ function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 		self.DoCheck.PlayerSpells = true;
 		self.DoCheck.GroupOrSelfSpells = true;
 	end
-	if (destGUID==UnitGUID("player")) then
+	if (destGUID == UnitGUID("player")) then
 		if (self.DebugEvents) then
 			self:DisplayText("COMBAT_LOG_EVENT_UNFILTERED", "-  On Me! ", event);
 		end
 		if (PowaAuras.StringStarts(event,"SPELL_") and sourceName) then
-			self.CastOnMe[sourceName] = {SpellName=spellName, SpellId=spellId, SourceGUID=sourceGUID, Hostile=bit.band(sourceFlags, COMBATLOG_OBJECT_REACTION_HOSTILE)};
+			self.CastOnMe[sourceName] = {SpellName = spellName, SpellId = spellId, SourceGUID = sourceGUID, Hostile = bit.band(sourceFlags, COMBATLOG_OBJECT_REACTION_HOSTILE)};
 			self.DoCheck.Spells = true; -- scan party/raid targets for casting
 			self.DoCheck.CheckIt = true;
 			--if self.CastOnMe[sourceName].Hostile > 0 then
@@ -684,7 +705,7 @@ function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 			end
 			return;
 		end
-		if ((event=="SPELL_PERIODIC_DAMAGE" or event=="SPELL_DAMAGE" or ((event=="SPELL_AURA_APPLIED" or event=="SPELL_AURA_APPLIED_DOSE") and spellType=="DEBUFF"))) then
+		if ((event == "SPELL_PERIODIC_DAMAGE" or event == "SPELL_DAMAGE" or ((event == "SPELL_AURA_APPLIED" or event == "SPELL_AURA_APPLIED_DOSE") and spellType == "DEBUFF"))) then
 			--self:ShowText("SPELL_PERIODIC_DAMAGE ", spellId, " ", spellName);
 			self.AoeAuraAdded[spellId] = spellName;
 			if (not self.AoeAuraTexture[spellName]) then
@@ -706,14 +727,15 @@ end
 
 function PowaAuras:UPDATE_SHAPESHIFT_FORMS(...)
 	self:GetStances();
-	if (self.ModTest) then return; end
-	
+	if (self.ModTest) then
+		return;
+	end
 	self.DoCheck.Stance = true;
 	self.DoCheck.CheckIt = true;
 end
 
 function PowaAuras:GetStances()
-	if (self.playerclass=="WARLOCK") then -- Fix for Warlock metamorphosis
+	if (self.playerclass == "WARLOCK") then -- Fix for Warlock metamorphosis
 		self.PowaStance[2] = select(2,GetShapeshiftFormInfo(1));
 		return;
 	end
@@ -728,27 +750,35 @@ function PowaAuras:GetStances()
 end
 
 function PowaAuras:ACTIONBAR_UPDATE_COOLDOWN(...)
-	if (self.ModTest) then return; end
+	if (self.ModTest) then
+		return;
+	end
 	self.DoCheck.Actions = true;
 	self.DoCheck.Stance = true;
 	self.DoCheck.CheckIt = true;
 end
 
 function PowaAuras:ACTIONBAR_UPDATE_USABLE(...)
-	if (self.ModTest) then return; end
+	if (self.ModTest) then
+		return;
+	end
 	self.DoCheck.Actions = true;
 	self.DoCheck.Stance = true;
 	self.DoCheck.CheckIt = true;
 end
 
 function PowaAuras:SPELL_UPDATE_COOLDOWN(...)
-	if (self.ModTest) then return; end
+	if (self.ModTest) then
+		return;
+	end
 	self.DoCheck.SpellCooldowns = true;
 	self.DoCheck.CheckIt = true;
 end
 
 function PowaAuras:UPDATE_SHAPESHIFT_FORM(...)
-	if (self.ModTest) then return; end
+	if (self.ModTest) then
+		return;
+	end
 	self.DoCheck.Stance = true;
 	self.DoCheck.Actions = true;
 	self.DoCheck.Combo = true;
@@ -758,7 +788,7 @@ end
 function PowaAuras:UNIT_INVENTORY_CHANGED(...)
 	if (self.ModTest == false) then
 		local unit = ...;
-		if (unit=="player") then
+		if (unit == "player") then
 			if (self.DebugEvents) then
 				self:DisplayText("UNIT_INVENTORY_CHANGED ", unit);
 			end
