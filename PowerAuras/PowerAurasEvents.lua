@@ -5,7 +5,7 @@ function PowaAuras:ADDON_LOADED(addon)
 	PowaMisc.disabled = nil;
 	-- Ensure PowaMisc gets any new values
 	for k, v in pairs(PowaAuras.PowaMiscDefault) do
-		if (PowaMisc[k]==nil) then
+		if (PowaMisc[k] == nil) then
 			PowaMisc[k] = v;
 		end
 	end
@@ -32,9 +32,9 @@ function PowaAuras:ADDON_LOADED(addon)
 		self.MaxTextures = PowaAuras.TextureCount;
 	--end
 	local null, null, major, minor = string.find(self.Version, self.VersionPattern);
-	self.VersionParts = {Major=tonumber(major), Minor=tonumber(minor), Build=0, Revision=""};
+	self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""};
 	null, null, major, minor = string.find(PowaMisc.Version, self.VersionPattern);
-	self.PreviousVersionParts = {Major=tonumber(major), Minor=tonumber(minor), Build=0, Revision=""};
+	self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""};
 	self.VersionUpgraded = self:VersionGreater(self.VersionParts, self.PreviousVersionParts);
 	if (self.VersionUpgraded) then
 		self:DisplayText(self.Colors.Purple.."<Power Auras Classic>|r "..self.Colors.Gold..self.Version.."|r - "..self.Text.welcome);
@@ -89,7 +89,7 @@ function PowaAuras:Setup()
 	self.WeAreInRaid = IsInRaid();
 	self.WeAreInParty = IsInGroup();
 	self.WeAreMounted = (IsMounted() == 1 and true or self:IsDruidTravelForm());
-	self.WeAreInVehicle = (UnitInVehicle("player")~=nil);
+	self.WeAreInVehicle = (UnitInVehicle("player") ~= nil);
 	self.Comms:Register();
 	self.ActiveTalentGroup = GetActiveSpecGroup();
 	self.Instance = self:GetInstanceType();
@@ -673,7 +673,7 @@ function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 		--self:ShowText("hostile ", self.CastByMe[spellName].Hostile);
 		--if self.CastByMe[spellName].Hostile > 0 then
 		--self:ShowText(self.Colors.Red, spellName, " cast by me on ", destName);
-		--elseif (destName~=nil) then
+		--elseif (destName ~= nil) then
 		--self:ShowText(self.Colors.Green, spellName, " cast by me on ", destName);
 		--else
 		--self:ShowText(self.Colors.Green, spellName, " cast by me");
