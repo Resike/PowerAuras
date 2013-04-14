@@ -223,15 +223,15 @@ aideImport = "Press Ctrl-V to paste the Aura-string and press \'Accept\'",
 aideExport = "Press Ctrl-C to copy the Aura-string for sharing.",
 aideImportSet = "Press Ctrl-V to paste the Aura-Set-string and press \'Accept\' this will erase all auras on this page",
 aideExportSet = "Press Ctrl-C to copy all the Auras on this page for sharing.",
-aideDel = "Remove the selected effect (Hold CTRL to allow this button to work)",
+aideDel = "Remove the selected effect. (Hold Ctrl to allow this button to work.)",
 
 nomMove = "Move",
 nomCopy = "Copy",
 nomPlayerEffects = "Character effects",
 nomGlobalEffects = "Global\neffects",
 
-aideEffectTooltip = "(Shift-click to toggle effect ON or OFF)",
-aideEffectTooltip2 = "(Ctrl-click to give reason for activation)",
+aideEffectTooltip = "Shift-click to toggle effect ON or OFF.",
+aideEffectTooltip2 = "Ctrl-click to give reason for activation.",
 
 aideItems = "Enter full name of Item or [xxx] for Id",
 aideSlots = "Enter name of slot to track: Ammo, Back, Chest, Feet, Finger0, Finger1, Hands, Head, Legs, MainHand, Neck, Ranged, SecondaryHand, Shirt, Shoulder, Tabard, Trinket0, Trinket1, Waist, Wrist",

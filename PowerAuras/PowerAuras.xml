@@ -2174,7 +2174,7 @@
 							</CheckButton>
 							<Frame name = "PowaDropDownAnim1" inherits = "UIDropDownMenuTemplate" id = "3">
 								<Size>
-									<AbsDimension x = "140"/>
+									<AbsDimension x = "175"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOP" relativeTo = "PowaDropDownAnimBegin" relativePoint = "BOTTOM">
@@ -2197,6 +2197,9 @@
 									</Layer>
 								</Layers>
 								<Scripts>
+									<OnLoad>
+										self:SetHitRectInsets(18, -20, 2, 6)
+									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
 									</OnShow>
@@ -2211,7 +2214,7 @@
 							</Frame>
 							<Frame name = "PowaDropDownAnim2" inherits = "UIDropDownMenuTemplate" id = "4">
 								<Size>
-									<AbsDimension x = "140"/>
+									<AbsDimension x = "175"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownAnim1" relativePoint = "RIGHT">
@@ -2234,6 +2237,9 @@
 									</Layer>
 								</Layers>
 								<Scripts>
+									<OnLoad>
+										self:SetHitRectInsets(18, -20, 2, 6)
+									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
 									</OnShow>
@@ -2396,6 +2402,9 @@
 									</Layer>
 								</Layers>
 								<Scripts>
+									<OnLoad>
+										self:SetHitRectInsets(18, -20, 2, 6)
+									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
 									</OnShow>
@@ -2433,6 +2442,9 @@
 									</Layer>
 								</Layers>
 								<Scripts>
+									<OnLoad>
+										self:SetHitRectInsets(18, -20, 2, 6)
+									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
 									</OnShow>
@@ -2543,6 +2555,9 @@
 									</Layer>
 								</Layers>
 								<Scripts>
+									<OnLoad>
+										self:SetHitRectInsets(18, -20, 2, 6)
+									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
 									</OnShow>
@@ -2580,6 +2595,9 @@
 									</Layer>
 								</Layers>
 								<Scripts>
+									<OnLoad>
+										self:SetHitRectInsets(18, -20, 2, 6)
+									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
 									</OnShow>

@@ -380,7 +380,7 @@
 			<!-- Icon Effects Window -->
 			<Frame name = "PowaOptionsSelectorFrame">
 				<Size>
-					<AbsDimension x = "194" y = "286"/>
+					<AbsDimension x = "192" y = "286"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPRIGHT">
@@ -663,7 +663,7 @@
 				<Anchors>
 					<Anchor point = "TOPRIGHT" relativeTo = "PowaOptionsSelectorFrame" relativePoint = "TOPLEFT">
 						<Offset>
-							<AbsDimension x = "-3" y = "0"/>
+							<AbsDimension x = "-4" y = "0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
