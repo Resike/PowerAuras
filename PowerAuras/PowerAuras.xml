@@ -160,31 +160,17 @@
 	</Slider>
 	<CheckButton name = "PowaCheckTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
 		<HitRectInsets>
-			<AbsInset left = "0" right = "0" top = "0" bottom = "0"/>
+			<AbsInset left = "4" right = "4" top = "4" bottom = "4"/>
 		</HitRectInsets>
-	</CheckButton>
-	<CheckButton name = "PowaRadioTemplate" inherits = "UIRadioButtonTemplate" virtual = "true">
-		<HitRectInsets>
-			<AbsInset left = "0" right = "0" top = "0" bottom = "0"/>
-		</HitRectInsets>
-		<Scripts>
-			<OnEnter>
-				local parent = self:GetParent()
-				if (parent.tooltipText) then 
-					GameTooltip:SetOwner(parent, "ANCHOR_RIGHT")
-					GameTooltip:SetText(parent.tooltipText, nil, nil, nil, nil, 1)
-				end
-			</OnEnter>
-			<OnLeave>
-				GameTooltip:Hide()
-			</OnLeave>
-		</Scripts>
 	</CheckButton>
 	<!-- Ternary Selector -->
 	<CheckButton name = "PowaTernarySelectorTemplate" inherits = "UICheckButtonTemplate" virtual = "true">
 		<Size>
 			<AbsDimension x = "25" y = "25"/>
 		</Size>
+		<HitRectInsets>
+			<AbsInset left = "4" right = "4" top = "4" bottom = "4"/>
+		</HitRectInsets>
 		<Scripts>
 			<OnClick>
 				PowaAuras.Ternary_OnClick(self)
@@ -366,12 +352,12 @@
 					<Layer>
 						<Texture name = "AuraTexture" file = "Interface\AddOns\PowerAuras\Auras\Aura1.tga" alphaMode = "ADD">
 							<Size>
-								<AbsDimension x = "107" y = "107"/>
+								<AbsDimension x = "136" y = "136"/>
 							</Size>
 							<Anchors>
 								<Anchor point = "TOPLEFT">
 									<Offset>
-										<AbsDimension x = "22" y = "-5"/>
+										<AbsDimension x = "6" y = "-6"/>
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -379,14 +365,14 @@
 					</Layer>
 				</Layers>
 				<Frames>
-					<Slider name = "PowaBarAuraTextureSlider" inherits = "PowaBarSliderTemplateWithButtons">
+					<Slider name = "PowaBarAuraTextureSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
 							<AbsDimension x = "290" y = "16"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "LEFT" relativeTo = "AuraTexture" relativePoint = "BOTTOMRIGHT">
 								<Offset>
-									<AbsDimension x = "20" y = "0"/>
+									<AbsDimension x = "8" y = "28"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -394,10 +380,15 @@
 							<OnLoad>
 								self.aide = PowaAuras.Text.aideTexture
 								self:SetValueStep(1)
+								PowaBarAuraTextureSliderLow:SetText("1")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:BarAuraTextureSliderChanged()
 							</OnValueChanged>
+							<OnMouseWheel>
+								self:EnableMouseWheel(true)
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<EditBox name = "PowaBarAuraTextureEdit" autoFocus = "false" inherits = "InputBoxTemplate">
@@ -469,6 +460,9 @@
 								PowaAuras:AurasTextCancel()
 								self:ClearFocus()
 							</OnEscapePressed>
+							<OnLeave>
+								GameTooltip:Hide()
+							</OnLeave>
 						</Scripts>
 					</EditBox>
 					<Button name = "PowaFontsButton" inherits = "OptionsButtonTemplate" text = "[T]">
@@ -533,9 +527,9 @@
 							<AbsDimension x = "25" y = "25"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "LEFT" relativeTo = "AuraTexture" relativePoint = "TOPRIGHT">
+							<Anchor point = "TOPLEFT" relativeTo = "AuraTexture" relativePoint = "TOPRIGHT">
 								<Offset>
-									<AbsDimension x = "40" y = "-8"/>
+									<AbsDimension x = "6" y = "0"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -612,27 +606,6 @@
 							</OnClick>
 						</Scripts>
 					</CheckButton>
-					<CheckButton name = "PowaRandomColorButton" inherits = "PowaCheckTemplate">
-						<Size>
-							<AbsDimension x = "25" y = "25"/>
-						</Size>
-						<Anchors>
-							<Anchor point = "BOTTOMLEFT" relativeTo = "AuraTexture" relativePoint = "BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x = "-15" y = "-42"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideRandomColor
-								PowaRandomColorButtonText:SetText(PowaAuras.Text.nomRandomColor)
-							</OnLoad>
-							<OnClick>
-								PowaAuras:RandomColorChecked()
-							</OnClick>
-						</Scripts>
-					</CheckButton>
 					<Slider name = "PowaBarAuraAlphaSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
 							<AbsDimension x = "290" y = "16"/>
@@ -656,6 +629,10 @@
 							<OnValueChanged>
 								PowaAuras:BarAuraAlphaSliderChanged()
 							</OnValueChanged>
+							<OnMouseWheel>
+								self:EnableMouseWheel(true)
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<Slider name = "PowaBarAuraDeformSlider" inherits = "PowaBarSliderTemplate">
@@ -682,6 +659,10 @@
 							<OnValueChanged>
 								PowaAuras:BarAuraDeformSliderChanged()
 							</OnValueChanged>
+							<OnMouseWheel>
+								self:EnableMouseWheel(true)
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<Slider name = "PowaBarAuraSymSlider" inherits = "PowaBarSliderTemplate">
@@ -707,6 +688,10 @@
 							<OnValueChanged>
 								PowaAuras:BarAuraSymSliderChanged()
 							</OnValueChanged>
+							<OnMouseWheel>
+								self:EnableMouseWheel(true)
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<Slider name = "PowaBarAuraSizeSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -732,6 +717,10 @@
 							<OnValueChanged>
 								PowaAuras:BarAuraSizeSliderChanged()
 							</OnValueChanged>
+							<OnMouseWheel>
+								self:EnableMouseWheel(true)
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<Slider name = "PowaBarAuraCoordXSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -762,6 +751,10 @@
 								PowaBarAuraCoordXSliderLow:SetText(self:GetValue()-200)
 								PowaBarAuraCoordXSliderHigh:SetText(self:GetValue()+200)
 							</OnMouseUp>
+							<OnMouseWheel>
+								self:EnableMouseWheel(true)
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<EditBox name = "PowaBarAuraCoordXEdit" autoFocus = "false" inherits = "InputBoxTemplate">
@@ -825,6 +818,10 @@
 								PowaBarAuraCoordSliderLow:SetText(self:GetValue()-200)
 								PowaBarAuraCoordSliderHigh:SetText(self:GetValue()+200)
 							</OnMouseUp>
+							<OnMouseWheel>
+								self:EnableMouseWheel(true)
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<EditBox name = "PowaBarAuraCoordYEdit" autoFocus = "false" inherits = "InputBoxTemplate">
@@ -867,7 +864,7 @@
 						<Anchors>
 							<Anchor point = "BOTTOMLEFT" relativeTo = "AuraTexture" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "-11" y = "-15"/>
+									<AbsDimension x = "6" y = "-24"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -909,6 +906,27 @@
 						</Scripts>
 						<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\ChatFrameColorSwatch"/>
 					</Button>
+					<CheckButton name = "PowaRandomColorButton" inherits = "PowaCheckTemplate">
+						<Size>
+							<AbsDimension x = "25" y = "25"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "TOPLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x = "-4" y = "-4"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.tooltipText = PowaAuras.Text.aideRandomColor
+								PowaRandomColorButtonText:SetText(PowaAuras.Text.nomRandomColor)
+							</OnLoad>
+							<OnClick>
+								PowaAuras:RandomColorChecked()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
 					<!-- First Configuration Tab Panel (Activation)-->
 					<Frame name = "PowaBarConfigFrameEditor2">
 						<Size>
@@ -1317,6 +1335,10 @@
 									<OnValueChanged>
 										PowaAuras:BarThresholdSliderChanged()
 									</OnValueChanged>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<CheckButton name = "PowaThresholdInvertButton" inherits = "PowaCheckTemplate">
@@ -2275,6 +2297,10 @@
 									<OnValueChanged>
 										PowaAuras:BarAuraAnimSpeedSliderChanged(self)
 									</OnValueChanged>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<Slider name = "PowaBarAuraDurationSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -2301,6 +2327,10 @@
 									<OnValueChanged>
 										PowaAuras:BarAuraAnimDurationSliderChanged(self)
 									</OnValueChanged>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<CheckButton name = "PowaOldAnimation" inherits = "PowaCheckTemplate">
@@ -2745,6 +2775,10 @@
 										PowaTimerCoordXSliderLow:SetText(self:GetValue()-100)
 										PowaTimerCoordXSliderHigh:SetText(self:GetValue()+100)
 									</OnMouseUp>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<Slider name = "PowaTimerCoordSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -2775,6 +2809,10 @@
 										PowaTimerCoordSliderLow:SetText(self:GetValue()-100)
 										PowaTimerCoordSliderHigh:SetText(self:GetValue()+100)
 									</OnMouseUp>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<Slider name = "PowaTimerSizeSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -2800,6 +2838,10 @@
 									<OnValueChanged>
 										PowaAuras:TimerSizeSliderChanged()
 									</OnValueChanged>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<Slider name = "PowaTimerAlphaSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -2825,6 +2867,10 @@
 									<OnValueChanged>
 										PowaAuras:TimerAlphaSliderChanged()
 									</OnValueChanged>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<Slider name = "PowaTimerDurationSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -2851,6 +2897,10 @@
 									<OnValueChanged>
 										PowaAuras:TimerDurationSliderChanged()
 									</OnValueChanged>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<CheckButton name = "PowaBuffTimerCentsButton" inherits = "PowaCheckTemplate">
@@ -3144,6 +3194,10 @@
 									<OnValueChanged>
 										PowaAuras:PowaTimerInvertAuraSliderChanged(self)
 									</OnValueChanged>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 						</Frames>
@@ -3228,6 +3282,10 @@
 										PowaStacksCoordXSliderLow:SetText(self:GetValue()-100)
 										PowaStacksCoordXSliderHigh:SetText(self:GetValue()+100)
 									</OnMouseUp>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<Slider name = "PowaStacksCoordSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -3258,6 +3316,10 @@
 										PowaStacksCoordSliderLow:SetText(self:GetValue()-100)
 										PowaStacksCoordSliderHigh:SetText(self:GetValue()+100)
 									</OnMouseUp>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<Slider name = "PowaStacksSizeSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -3283,6 +3345,10 @@
 									<OnValueChanged>
 										PowaAuras:StacksSizeSliderChanged()
 									</OnValueChanged>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<Slider name = "PowaStacksAlphaSlider" inherits = "PowaBarSliderTemplateWithButtons">
@@ -3308,6 +3374,10 @@
 									<OnValueChanged>
 										PowaAuras:StacksAlphaSliderChanged()
 									</OnValueChanged>
+									<OnMouseWheel>
+										self:EnableMouseWheel(true)
+										PowaAuras.OnMouseWheel(self, delta)
+									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<CheckButton name = "PowaBuffStacksTransparentButton" inherits = "PowaCheckTemplate">

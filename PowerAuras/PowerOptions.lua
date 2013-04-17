@@ -2142,6 +2142,7 @@ function PowaAuras:TextAuraChecked()
 		aura.owntex = false;
 		aura.wowtex = false;
 		aura.customtex = false;
+		PowaBarAuraTextureEdit:Hide();
 		PowaBarAuraTextureSlider:Hide();
 		PowaBarAurasText:Show();
 		PowaFontsButton:Show();
@@ -2154,6 +2155,7 @@ function PowaAuras:TextAuraChecked()
 	else
 		--self:ShowText("TextAuraChecked: unset");
 		aura.textaura = false;
+		PowaBarAuraTextureEdit:Show();
 		PowaBarAuraTextureSlider:Show();
 		PowaBarAurasText:Hide();
 		PowaFontsButton:Hide();
@@ -3573,4 +3575,12 @@ function PowaAuras:EquipmentSlot_OnClick(slotButton)
 		end
 	end
 	--self:Message("aura.buffname=", aura.buffname);
+end
+
+function PowaAuras.OnMouseWheel(self, delta)
+	if delta > 0 then
+		self:SetValue(self:GetValue() + self:GetValueStep())
+	else
+		self:SetValue(self:GetValue() - self:GetValueStep())
+	end
 end
