@@ -1647,7 +1647,7 @@ function PowaAuras:InitPage(aura)
 		PowaFontsButton:Show();
 		--self:ShowText("InitPage: set aurastext to ", aura.aurastext);
 		PowaBarAurasText:SetText(aura.aurastext);
-		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\INV_Scroll_02"); -- Driizt: check if need to test as well
+		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\INV_Scroll_02");
 	else
 		PowaBarAuraTextureSlider:Show();
 		PowaBarCustomTexName:Hide();
@@ -1720,15 +1720,8 @@ function PowaAuras:BarAuraTextureSliderChanged()
 	end
 	PowaBarAuraTextureSliderText:SetText(self.Text.nomTexture.." : "..SliderValue);
 	AuraTexture:SetVertexColor(self.Auras[auraId].r,self.Auras[auraId].g,self.Auras[auraId].b);
-	PowaBarAuraTextureEdit:SetText(SliderValue);
 	self.Auras[auraId].texture = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
-end
-
-function PowaAuras:TextAuraTextureChanged()
-	local thisText = PowaBarAuraTextureEdit:GetText();
-	local thisNumber = tonumber(thisText);
-	PowaBarAuraTextureSlider:SetValue(thisNumber or 0);
 end
 
 function PowaAuras:BarAuraAlphaSliderChanged()
@@ -2142,7 +2135,6 @@ function PowaAuras:TextAuraChecked()
 		aura.owntex = false;
 		aura.wowtex = false;
 		aura.customtex = false;
-		PowaBarAuraTextureEdit:Hide();
 		PowaBarAuraTextureSlider:Hide();
 		PowaBarAurasText:Show();
 		PowaFontsButton:Show();
@@ -2155,7 +2147,6 @@ function PowaAuras:TextAuraChecked()
 	else
 		--self:ShowText("TextAuraChecked: unset");
 		aura.textaura = false;
-		PowaBarAuraTextureEdit:Show();
 		PowaBarAuraTextureSlider:Show();
 		PowaBarAurasText:Hide();
 		PowaFontsButton:Hide();

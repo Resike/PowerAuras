@@ -430,6 +430,7 @@ nomWowTextures = "WoW Textures",
 nomCustomTextures = "Custom Textures",
 nomTextAura = "Text Aura",
 nomRealaura = "Real Aura",
+nomColorPicker = "Color Picker",
 nomRandomColor = "Random Colors",
 nomTexMode = "Glow",
 

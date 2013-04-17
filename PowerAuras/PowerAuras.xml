@@ -391,39 +391,6 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<EditBox name = "PowaBarAuraTextureEdit" autoFocus = "false" inherits = "InputBoxTemplate">
-						<Size>
-							<AbsDimension x = "40" y = "16"/>
-						</Size>
-						<Anchors>
-							<Anchor point = "BOTTOMRIGHT" relativeTo = "PowaBarAuraTextureSlider" relativePoint = "TOPRIGHT">
-								<Offset>
-									<AbsDimension x = "0" y = "5"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Layers>
-							<Layer level = "OVERLAY">
-								<FontString inherits = "ChatFontNormal" bytes = "6"/>
-							</Layer>
-						</Layers>
-						<Scripts>
-							<OnLoad>
-								self:SetMaxLetters(3)
-							</OnLoad>
-							<OnEnterPressed>
-								self:ClearFocus()
-								PowaAuras:TextAuraTextureChanged()
-							</OnEnterPressed>
-							<OnEditFocusLost>
-								PowaAuras:AurasTextChanged()
-							</OnEditFocusLost>
-							<OnEscapePressed>
-								PowaAuras:AurasTextCancel()
-								self:ClearFocus()
-							</OnEscapePressed>
-						</Scripts>
-					</EditBox>
 					<EditBox name = "PowaBarAurasText" autoFocus = "false" inherits = "InputBoxTemplate">
 						<Size>
 							<AbsDimension x = "225" y = "16"/>
@@ -622,7 +589,7 @@
 								self:SetMinMaxValues(0.1,1.0)
 								self:SetValue(1.0)
 								self:SetValueStep(0.01)
-								PowaBarAuraAlphaSliderText:SetText(PowaAuras.Text.nomAlpha.." : 1.0")
+								PowaBarAuraAlphaSliderText:SetText(PowaAuras.Text.nomAlpha..": 1.0")
 								PowaBarAuraAlphaSliderLow:SetText("10")
 								PowaBarAuraAlphaSliderHigh:SetText("100")
 							</OnLoad>
@@ -652,7 +619,7 @@
 								self:SetMinMaxValues(0.5,1.5)
 								self:SetValue(1)
 								self:SetValueStep(0.01)
-								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform.." : 1")
+								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform..": 1")
 								PowaBarAuraDeformSliderLow:SetText(PowaAuras.Text.hauteur)
 								PowaBarAuraDeformSliderHigh:SetText(PowaAuras.Text.largeur)
 							</OnLoad>
@@ -681,7 +648,7 @@
 								self:SetMinMaxValues(0,3)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaBarAuraSymSliderText:SetText(PowaAuras.Text.nomSymetrie.." : "..PowaAuras.Text.aucune)
+								PowaBarAuraSymSliderText:SetText(PowaAuras.Text.nomSymetrie..": "..PowaAuras.Text.aucune)
 								PowaBarAuraSymSliderLow:SetText(PowaAuras.Text.aucune)
 								PowaBarAuraSymSliderHigh:SetText("XY")
 							</OnLoad>
@@ -710,7 +677,7 @@
 								self:SetMinMaxValues(0.02,5.0)
 								self:SetValue(1.0)
 								self:SetValueStep(0.01)
-								PowaBarAuraSizeSliderText:SetText(PowaAuras.Text.nomTaille.." : 100")
+								PowaBarAuraSizeSliderText:SetText(PowaAuras.Text.nomTaille..": 100")
 								PowaBarAuraSizeSliderLow:SetText("2%")
 								PowaBarAuraSizeSliderHigh:SetText("500%")
 							</OnLoad>
@@ -739,7 +706,7 @@
 								self:SetMinMaxValues(-300,300)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaBarAuraCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X : 0")
+								PowaBarAuraCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X: 0")
 								PowaBarAuraCoordXSliderLow:SetText("-300")
 								PowaBarAuraCoordXSliderHigh:SetText("300")
 							</OnLoad>
@@ -806,7 +773,7 @@
 								self:SetMinMaxValues(-300,300)
 								self:SetValue(-30)
 								self:SetValueStep(1)
-								PowaBarAuraCoordSliderText:SetText(PowaAuras.Text.nomPos.." Y : -30")
+								PowaBarAuraCoordSliderText:SetText(PowaAuras.Text.nomPos.." Y: -30")
 								PowaBarAuraCoordSliderLow:SetText("-300")
 								PowaBarAuraCoordSliderHigh:SetText("300")
 							</OnLoad>
@@ -883,6 +850,18 @@
 									</Anchors>
 									<Color r = "1.0" g = "1.0" b = "1.0"/>
 								</Texture>
+								<FontString name = "$parentText" inherits = "GameFontNormalSmall" justifyH = "LEFT">
+									<Size>
+										<AbsDimension x = "200" y = "24"/>
+									</Size>
+									<Anchors>
+										<Anchor point = "LEFT" relativeTo = "PowaColor" relativePoint = "RIGHT">
+											<Offset>
+												<AbsDimension x = "5" y = "0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
 							</Layer>
 						</Layers>
 						<Scripts>
@@ -890,6 +869,7 @@
 								getglobal(self:GetName().."_SwatchBg").r = 1.0
 								getglobal(self:GetName().."_SwatchBg").g = 1.0
 								getglobal(self:GetName().."_SwatchBg").b = 1.0
+								PowaColorText:SetText(PowaAuras.Text.nomColorPicker)
 							</OnLoad>
 							<OnClick>
 								PowaAuras:OpenColorPicker(self, PowaAuras.Auras[PowaAuras.CurrentAuraId])
@@ -1328,7 +1308,7 @@
 										self:SetMinMaxValues(0,100)
 										self:SetValue(50)
 										self:SetValueStep(1)
-										getglobal(self:GetName().."Text"):SetText(PowaAuras.Text.nomThreshold.." : 50%")
+										getglobal(self:GetName().."Text"):SetText(PowaAuras.Text.nomThreshold..": 50%")
 										getglobal(self:GetName().."Low"):SetText("0%")
 										getglobal(self:GetName().."High"):SetText("100%")
 									</OnLoad>
@@ -2290,7 +2270,7 @@
 										self:SetMinMaxValues(0.05,2.00)
 										self:SetValue(1.0)
 										self:SetValueStep(0.01)
-										PowaBarAuraAnimSpeedSliderText:SetText(PowaAuras.Text.nomSpeed.." : 100%")
+										PowaBarAuraAnimSpeedSliderText:SetText(PowaAuras.Text.nomSpeed..": 100%")
 										PowaBarAuraAnimSpeedSliderLow:SetText("5")
 										PowaBarAuraAnimSpeedSliderHigh:SetText("200")
 									</OnLoad>
@@ -2320,7 +2300,7 @@
 										self:SetMinMaxValues(0,30)
 										self:SetValue(0)
 										self:SetValueStep(0.25)
-										PowaBarAuraDurationSliderText:SetText(PowaAuras.Text.nomDuration.." : 0 sec")
+										PowaBarAuraDurationSliderText:SetText(PowaAuras.Text.nomDuration..": 0 sec")
 										PowaBarAuraDurationSliderLow:SetText(PowaAuras.Text.aucune)
 										PowaBarAuraDurationSliderHigh:SetText("30")
 									</OnLoad>
@@ -2763,7 +2743,7 @@
 										self:SetMinMaxValues(-150,150)
 										self:SetValue(0)
 										self:SetValueStep(1)
-										PowaTimerCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X : 0")
+										PowaTimerCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X: 0")
 										PowaTimerCoordXSliderLow:SetText("-150")
 										PowaTimerCoordXSliderHigh:SetText("150")
 									</OnLoad>
@@ -2797,7 +2777,7 @@
 										self:SetMinMaxValues(-200,100)
 										self:SetValue(0)
 										self:SetValueStep(1)
-										PowaTimerCoordSliderText:SetText(PowaAuras.Text.nomPos.." Y : 0")
+										PowaTimerCoordSliderText:SetText(PowaAuras.Text.nomPos.." Y: 0")
 										PowaTimerCoordSliderLow:SetText("-200")
 										PowaTimerCoordSliderHigh:SetText("100")
 									</OnLoad>
@@ -2831,7 +2811,7 @@
 										self:SetMinMaxValues(0.5,10.0)
 										self:SetValue(1.0)
 										self:SetValueStep(0.01)
-										PowaTimerSizeSliderText:SetText(PowaAuras.Text.nomTaille.." : 1.0")
+										PowaTimerSizeSliderText:SetText(PowaAuras.Text.nomTaille..": 1.0")
 										PowaTimerSizeSliderLow:SetText("0.5")
 										PowaTimerSizeSliderHigh:SetText("10.0")
 									</OnLoad>
@@ -2860,7 +2840,7 @@
 										self:SetMinMaxValues(0.1,1.0)
 										self:SetValue(1.0)
 										self:SetValueStep(0.01)
-										PowaTimerAlphaSliderText:SetText(PowaAuras.Text.nomAlpha.." : 1.0")
+										PowaTimerAlphaSliderText:SetText(PowaAuras.Text.nomAlpha..": 1.0")
 										PowaTimerAlphaSliderLow:SetText("0.1")
 										PowaTimerAlphaSliderHigh:SetText("1.0")
 									</OnLoad>
@@ -2890,7 +2870,7 @@
 										self:SetMinMaxValues(0,60)
 										self:SetValue(0)
 										self:SetValueStep(1)
-										PowaTimerDurationSliderText:SetText(PowaAuras.Text.nomTimerDuration.." : 0")
+										PowaTimerDurationSliderText:SetText(PowaAuras.Text.nomTimerDuration..": 0")
 										PowaTimerDurationSliderLow:SetText("0")
 										PowaTimerDurationSliderHigh:SetText("60")
 									</OnLoad>
@@ -3187,7 +3167,7 @@
 										self:SetMinMaxValues(0,600)
 										self:SetValue(0)
 										self:SetValueStep(0.25)
-										getglobal(self:GetName().."Text"):SetText(PowaAuras.Text.nomTimerInvertAura.." : 0")
+										getglobal(self:GetName().."Text"):SetText(PowaAuras.Text.nomTimerInvertAura..": 0")
 										getglobal(self:GetName().."Low"):SetText("0")
 										getglobal(self:GetName().."High"):SetText("600")
 									</OnLoad>
@@ -3270,7 +3250,7 @@
 										self:SetMinMaxValues(-150,150)
 										self:SetValue(0)
 										self:SetValueStep(1)
-										PowaStacksCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X : 0")
+										PowaStacksCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X: 0")
 										PowaStacksCoordXSliderLow:SetText("-150")
 										PowaStacksCoordXSliderHigh:SetText("150")
 									</OnLoad>
@@ -3304,7 +3284,7 @@
 										self:SetMinMaxValues(-200,100)
 										self:SetValue(0)
 										self:SetValueStep(1)
-										PowaStacksCoordSliderText:SetText(PowaAuras.Text.nomPos.." Y : 0")
+										PowaStacksCoordSliderText:SetText(PowaAuras.Text.nomPos.." Y: 0")
 										PowaStacksCoordSliderLow:SetText("-200")
 										PowaStacksCoordSliderHigh:SetText("100")
 									</OnLoad>
@@ -3338,7 +3318,7 @@
 										self:SetMinMaxValues(0.5,10.0)
 										self:SetValue(1.0)
 										self:SetValueStep(0.01)
-										PowaStacksSizeSliderText:SetText(PowaAuras.Text.nomTaille.." : 1.0")
+										PowaStacksSizeSliderText:SetText(PowaAuras.Text.nomTaille..": 1.0")
 										PowaStacksSizeSliderLow:SetText("0.5")
 										PowaStacksSizeSliderHigh:SetText("10.0")
 									</OnLoad>
@@ -3367,7 +3347,7 @@
 										self:SetMinMaxValues(0.1,1.0)
 										self:SetValue(1.0)
 										self:SetValueStep(0.01)
-										PowaStacksAlphaSliderText:SetText(PowaAuras.Text.nomAlpha.." : 1.0")
+										PowaStacksAlphaSliderText:SetText(PowaAuras.Text.nomAlpha..": 1.0")
 										PowaStacksAlphaSliderLow:SetText("0.1")
 										PowaStacksAlphaSliderHigh:SetText("1.0")
 									</OnLoad>
