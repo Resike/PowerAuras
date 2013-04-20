@@ -1,5 +1,7 @@
 ﻿* 4.23.20
 Millions of smaller GUI bugfixes.
+Added texture rotater slider.
+Removed value increaser and decreaser buttons from the sliders.
 Sliders now can be adjusted with mousewheel up/down.
 Tooltip fixes.
 

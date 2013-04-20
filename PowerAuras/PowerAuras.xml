@@ -121,7 +121,7 @@
 		</Scripts>
 	</Slider>
 	<Slider name = "PowaBarSliderTemplateWithButtons" inherits = "PowaBarSliderTemplate" virtual = "true">
-		<Frames>
+		<!--<Frames>
 			<Button name = "$parentPlus" text = "+" inherits = "OptionsButtonTemplate">
 				<Size>
 					<AbsDimension x = "17" y = "18"/>
@@ -156,7 +156,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-		</Frames>
+		</Frames>-->
 	</Slider>
 	<CheckButton name = "PowaCheckTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
 		<HitRectInsets>
@@ -224,7 +224,7 @@
 	<!-- Aura Configuration Frame -->
 	<Frame name = "PowaBarConfigFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
-			<AbsDimension x = "488" y = "718"/>
+			<AbsDimension x = "488" y = "750"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "CENTER" relativeTo = "UIParent">
@@ -322,7 +322,7 @@
 			<!-- Top Panel -->
 			<Frame name = "PowaBarConfigFrameEditor">
 				<Size>
-					<AbsDimension x = "450" y = "300"/>
+					<AbsDimension x = "450" y = "332"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOP">
@@ -586,12 +586,12 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:SetMinMaxValues(0.1,1.0)
+								self:SetMinMaxValues(0,1.0)
 								self:SetValue(1.0)
 								self:SetValueStep(0.01)
 								PowaBarAuraAlphaSliderText:SetText(PowaAuras.Text.nomAlpha..": 1.0")
-								PowaBarAuraAlphaSliderLow:SetText("10")
-								PowaBarAuraAlphaSliderHigh:SetText("100")
+								PowaBarAuraAlphaSliderLow:SetText("0%")
+								PowaBarAuraAlphaSliderHigh:SetText("100%")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:BarAuraAlphaSliderChanged()
@@ -602,44 +602,14 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<Slider name = "PowaBarAuraDeformSlider" inherits = "PowaBarSliderTemplate">
-						<Size>
-							<AbsDimension x = "130" y = "16"/>
-						</Size>
-						<Anchors>
-							<Anchor point = "TOPRIGHT" relativeTo = "PowaBarAuraAlphaSlider" relativePoint = "BOTTOMRIGHT">
-								<Offset>
-									<AbsDimension x = "0" y = "-17"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self.aide = PowaAuras.Text.aideDeform
-								self:SetMinMaxValues(0.5,1.5)
-								self:SetValue(1)
-								self:SetValueStep(0.01)
-								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform..": 1")
-								PowaBarAuraDeformSliderLow:SetText(PowaAuras.Text.hauteur)
-								PowaBarAuraDeformSliderHigh:SetText(PowaAuras.Text.largeur)
-							</OnLoad>
-							<OnValueChanged>
-								PowaAuras:BarAuraDeformSliderChanged()
-							</OnValueChanged>
-							<OnMouseWheel>
-								self:EnableMouseWheel(true)
-								PowaAuras.OnMouseWheel(self, delta)
-							</OnMouseWheel>
-						</Scripts>
-					</Slider>
 					<Slider name = "PowaBarAuraSymSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
-							<AbsDimension x = "130" y = "16"/>
+							<AbsDimension x = "150" y = "16"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "RIGHT" relativeTo = "PowaBarAuraDeformSlider" relativePoint = "LEFT">
+							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraAlphaSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "-30" y = "0"/>
+									<AbsDimension x = "0" y = "-17"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -661,7 +631,37 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<Slider name = "PowaBarAuraSizeSlider" inherits = "PowaBarSliderTemplateWithButtons">
+					<Slider name = "PowaBarAuraDeformSlider" inherits = "PowaBarSliderTemplate">
+						<Size>
+							<AbsDimension x = "130" y = "16"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "LEFT" relativeTo = "PowaBarAuraSymSlider" relativePoint = "RIGHT">
+								<Offset>
+									<AbsDimension x = "10" y = "0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.aide = PowaAuras.Text.aideDeform
+								self:SetMinMaxValues(0,2)
+								self:SetValue(1)
+								self:SetValueStep(0.01)
+								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform..": 1")
+								PowaBarAuraDeformSliderLow:SetText(PowaAuras.Text.hauteur)
+								PowaBarAuraDeformSliderHigh:SetText(PowaAuras.Text.largeur)
+							</OnLoad>
+							<OnValueChanged>
+								PowaAuras:BarAuraDeformSliderChanged()
+							</OnValueChanged>
+							<OnMouseWheel>
+								self:EnableMouseWheel(true)
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
+						</Scripts>
+					</Slider>
+					<Slider name = "PowaBarAuraRotateSlider" inherits = "PowaBarSliderTemplateWithButtons">
 						<Size>
 							<AbsDimension x = "398" y = "16"/>
 						</Size>
@@ -674,11 +674,40 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:SetMinMaxValues(0.02,5.0)
+								self:SetMinMaxValues(0,360)
+								self:SetValue(0)
+								self:SetValueStep(1)
+								PowaBarAuraRotateSliderText:SetText(PowaAuras.Text.nomRotation..": 0°")
+								PowaBarAuraRotateSliderLow:SetText("0°")
+								PowaBarAuraRotateSliderHigh:SetText("360°")
+							</OnLoad>
+							<OnValueChanged>
+								PowaAuras:BarAuraRotateSliderChanged()
+							</OnValueChanged>
+							<OnMouseWheel>
+								self:EnableMouseWheel(true)
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
+						</Scripts>
+					</Slider>
+					<Slider name = "PowaBarAuraSizeSlider" inherits = "PowaBarSliderTemplateWithButtons">
+						<Size>
+							<AbsDimension x = "398" y = "16"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "TOPRIGHT" relativeTo = "PowaBarAuraRotateSlider" relativePoint = "BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x = "0" y = "-17"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self:SetMinMaxValues(0.01,5.0)
 								self:SetValue(1.0)
 								self:SetValueStep(0.01)
 								PowaBarAuraSizeSliderText:SetText(PowaAuras.Text.nomTaille..": 100")
-								PowaBarAuraSizeSliderLow:SetText("2%")
+								PowaBarAuraSizeSliderLow:SetText("1%")
 								PowaBarAuraSizeSliderHigh:SetText("500%")
 							</OnLoad>
 							<OnValueChanged>
@@ -703,24 +732,23 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:SetMinMaxValues(-300,300)
+								self:SetMinMaxValues(-1500,1500)
 								self:SetValue(0)
 								self:SetValueStep(1)
 								PowaBarAuraCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X: 0")
-								PowaBarAuraCoordXSliderLow:SetText("-300")
-								PowaBarAuraCoordXSliderHigh:SetText("300")
+								PowaBarAuraCoordXSliderLow:SetText("-1500")
+								PowaBarAuraCoordXSliderHigh:SetText("1500")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:BarAuraCoordXSliderChanged()
 							</OnValueChanged>
 							<OnMouseUp>
-								self:SetMinMaxValues(self:GetValue()-200,self:GetValue()+200)
-								PowaBarAuraCoordXSliderLow:SetText(self:GetValue()-200)
-								PowaBarAuraCoordXSliderHigh:SetText(self:GetValue()+200)
+								PowaAuras.OnMouseUpX(self)
 							</OnMouseUp>
 							<OnMouseWheel>
 								self:EnableMouseWheel(true)
 								PowaAuras.OnMouseWheel(self, delta)
+								PowaAuras.OnMouseUpX(self)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -747,6 +775,7 @@
 							<OnEnterPressed>
 								self:ClearFocus()
 								PowaAuras:TextCoordXChanged()
+								PowaAuras.OnMouseUpX(PowaBarAuraCoordXSlider)
 							</OnEnterPressed>
 							<OnEditFocusLost>
 								PowaAuras:TextCoordXChanged()
@@ -757,7 +786,7 @@
 							</OnEscapePressed>
 						</Scripts>
 					</EditBox>
-					<Slider name = "PowaBarAuraCoordSlider" inherits = "PowaBarSliderTemplateWithButtons">
+					<Slider name = "PowaBarAuraCoordYSlider" inherits = "PowaBarSliderTemplateWithButtons">
 						<Size>
 							<AbsDimension x = "350" y = "16"/>
 						</Size>
@@ -770,24 +799,23 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:SetMinMaxValues(-300,300)
-								self:SetValue(-30)
+								self:SetMinMaxValues(-1500,1500)
+								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaBarAuraCoordSliderText:SetText(PowaAuras.Text.nomPos.." Y: -30")
-								PowaBarAuraCoordSliderLow:SetText("-300")
-								PowaBarAuraCoordSliderHigh:SetText("300")
+								PowaBarAuraCoordYSliderText:SetText(PowaAuras.Text.nomPos.." Y: 0")
+								PowaBarAuraCoordYSliderLow:SetText("-1500")
+								PowaBarAuraCoordYSliderHigh:SetText("1500")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraCoordSliderChanged()
+								PowaAuras:BarAuraCoordYSliderChanged()
 							</OnValueChanged>
 							<OnMouseUp>
-								self:SetMinMaxValues(self:GetValue()-200,self:GetValue()+200)
-								PowaBarAuraCoordSliderLow:SetText(self:GetValue()-200)
-								PowaBarAuraCoordSliderHigh:SetText(self:GetValue()+200)
+								PowaAuras.OnMouseUpY(self)
 							</OnMouseUp>
 							<OnMouseWheel>
 								self:EnableMouseWheel(true)
 								PowaAuras.OnMouseWheel(self, delta)
+								PowaAuras.OnMouseUpY(self)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -796,7 +824,7 @@
 							<AbsDimension x = "40" y = "16"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "LEFT" relativeTo = "PowaBarAuraCoordSlider" relativePoint = "RIGHT">
+							<Anchor point = "LEFT" relativeTo = "PowaBarAuraCoordYSlider" relativePoint = "RIGHT">
 								<Offset>
 									<AbsDimension x = "10" y = "0"/>
 								</Offset>
@@ -814,6 +842,7 @@
 							<OnEnterPressed>
 								self:ClearFocus()
 								PowaAuras:TextCoordYChanged()
+								PowaAuras.OnMouseUpY(PowaBarAuraCoordYSlider)
 							</OnEnterPressed>
 							<OnEditFocusLost>
 								PowaAuras:TextCoordYChanged()

@@ -87,11 +87,12 @@ cPowaAura.ExportSettings =
 	duration = 0,
 	-- Appearance Settings
 	alpha = 0.75,
+	rotate = 0,
 	size = 0.75,
 	torsion = 1,
 	symetrie = 0,
 	x = 0,
-	y = -30,
+	y = 0,
 	randomcolor = false,
 	r = 1.0,
 	g = 1.0,
@@ -1649,39 +1650,39 @@ cPowaTypeBuff = PowaClass(cPowaBuffBase, {buffAuraType = "HELPFUL", AuraType="Bu
 
 cPowaTypeBuff.OptionText =
 {
-	buffNameTooltip=PowaAuras.Text.aideBuff3,
-	exactTooltip=PowaAuras.Text.aideExact,
-	typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.TypeBuff],
-	mineText=PowaAuras.Text.nomDispellable, mineTooltip=PowaAuras.Text.aideDispellable,
-	targetFriendText=PowaAuras.Text.nomCheckFriend, targetFriendTooltip=PowaAuras.Text.aideTargetFriend,
+	buffNameTooltip = PowaAuras.Text.aideBuff3,
+	exactTooltip = PowaAuras.Text.aideExact,
+	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.TypeBuff],
+	mineText = PowaAuras.Text.nomDispellable, mineTooltip = PowaAuras.Text.aideDispellable,
+	targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend,
 };
 
 cPowaTypeBuff.ShowOptions =
 {
-	["PowaGroupAnyButton"]=1,
-	["PowaBarTooltipCheck"]=1,
+	["PowaGroupAnyButton"] = 1,
+	["PowaBarTooltipCheck"] = 1,
 };
 
 cPowaTypeBuff.CheckBoxes =
 {
-	["PowaTargetButton"]=1,
-	["PowaPartyButton"]=1,
-	["PowaFocusButton"]=1,
-	["PowaRaidButton"]=1,
-	["PowaGroupOrSelfButton"]=1,
-	["PowaGroupAnyButton"]=1,
-	["PowaOptunitnButton"]=1,
-	["PowaInverseButton"]=1,
-	["PowaIngoreCaseButton"]=1,
-	["PowaOwntexButton"]=1,
+	["PowaTargetButton"] = 1,
+	["PowaPartyButton"] = 1,
+	["PowaFocusButton"] = 1,
+	["PowaRaidButton"] = 1,
+	["PowaGroupOrSelfButton"] = 1,
+	["PowaGroupAnyButton"] = 1,
+	["PowaOptunitnButton"] = 1,
+	["PowaInverseButton"] = 1,
+	["PowaIngoreCaseButton"] = 1,
+	["PowaOwntexButton"] = 1,
 };
 
 cPowaTypeBuff.TooltipOptions =
 {
-	r=0.8,
-	g=1.0,
-	b=0.8,
-	showBuffName=true
+	r = 0.8,
+	g = 1.0,
+	b = 0.8,
+	showBuffName = true
 };
 
 function cPowaTypeBuff:IsPresent(target, z)
@@ -1697,7 +1698,7 @@ function cPowaTypeBuff:IsPresent(target, z)
 		PowaAuras:Message("TypeBuff ", name, " IsPresent on ",target,"  buffid ",z,"  removeable ",removeable);
 	end
 	self.DisplayUnit = target;
-	if (self.mine and typeBuff==nil) then
+	if (self.mine and typeBuff == nil) then
 		self.DisplayValue = name;
 		return false;
 	end
@@ -1715,7 +1716,7 @@ function cPowaTypeBuff:IsPresent(target, z)
 		typeBuffName = PowaAuras.Text.DebuffType[typeBuff];
 	end
 	local typeBuffCatName = PowaAuras.Text.DebuffCatType[PowaAuras.DebuffCatSpells[name]];
-	if (typeBuffName == nil and typeBuffCatName==nil) then
+	if (typeBuffName == nil and typeBuffCatName == nil) then
 		typeBuffName = PowaAuras.Text.aucun;
 	end
 	--PowaAuras:UnitTestDebug("typeBuffName ",typeBuffName);
@@ -1744,20 +1745,20 @@ function cPowaTypeBuff:IsPresent(target, z)
 	return false;
 end
 
-cPowaSpecialSpellBase = PowaClass(cPowaBuffBase, {buffAuraType = "HARMFUL", target=true, CanHaveTimer=true, CanHaveTimerOnInverse=false, CanHaveStacks=true, CanHaveInvertTime=true});
+cPowaSpecialSpellBase = PowaClass(cPowaBuffBase, {buffAuraType = "HARMFUL", target = true, CanHaveTimer = true, CanHaveTimerOnInverse = false, CanHaveStacks = true, CanHaveInvertTime = true});
 
 cPowaSpecialSpellBase.ShowOptions =
 {
-	["PowaBarTooltipCheck"]=1,
+	["PowaBarTooltipCheck"] = 1,
 };
 
 cPowaSpecialSpellBase.CheckBoxes =
 {
-	["PowaTargetButton"]=1,
-	["PowaFocusButton"]=1,
-	["PowaInverseButton"]=1,
-	["PowaIngoreCaseButton"]=1,
-	["PowaOwntexButton"]=1,
+	["PowaTargetButton"] = 1,
+	["PowaFocusButton"] = 1,
+	["PowaInverseButton"] = 1,
+	["PowaIngoreCaseButton"] = 1,
+	["PowaOwntexButton"] = 1,
 };
 
 function cPowaSpecialSpellBase:CheckIfShouldShow(giveReason)
@@ -1796,7 +1797,7 @@ function cPowaSpecialSpellBase:CheckIfShouldShow(giveReason)
 		numrm = 0;
 	end
 	if numrm > 0 then
-		for i=1, numrm do
+		for i = 1, numrm do
 			if (self:CheckUnit("raid"..i.."target", "raid"..i)) then
 				if (not giveReason) then return true; end
 				return true, PowaAuras:InsertText(PowaAuras.Text["nomReasonRaidTarget"..self.AuraType.."Present"], i, self.buffname);
@@ -1810,7 +1811,7 @@ function cPowaSpecialSpellBase:CheckIfShouldShow(giveReason)
 		-- Scan party targets
 		local numpm = GetNumSubgroupMembers();
 		if numpm > 0 then
-			for i=1, numpm do
+			for i = 1, numpm do
 				if (self:CheckUnit("party"..i.."target", "party"..i)) then
 					if (not giveReason) then return true; end
 					return true, PowaAuras:InsertText(PowaAuras.Text["nomReasonPartyTarget"..self.AuraType.."Present"], i, self.buffname);
@@ -1839,21 +1840,21 @@ function cPowaSpecialSpellBase:AddEffectAndEvents()
 	end
 end
 
-cPowaStealableSpell = PowaClass(cPowaSpecialSpellBase, {AuraType="Stealable"});
+cPowaStealableSpell = PowaClass(cPowaSpecialSpellBase, {AuraType = "Stealable"});
 
 cPowaStealableSpell.OptionText =
 {
-	buffNameTooltip=PowaAuras.Text.aideStealableSpells,
-	exactTooltip=PowaAuras.Text.aideExact,
-	typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.StealableSpell],
+	buffNameTooltip = PowaAuras.Text.aideStealableSpells,
+	exactTooltip = PowaAuras.Text.aideExact,
+	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.StealableSpell],
 };
 
 cPowaStealableSpell.TooltipOptions =
 {
-	r=0.8,
-	g=0.8,
-	b=0.2,
-	showBuffName=true,
+	r = 0.8,
+	g = 0.8,
+	b = 0.2,
+	showBuffName = true,
 };
 
 function cPowaStealableSpell:CheckUnit(unit, targetOf)
@@ -1901,21 +1902,21 @@ function cPowaStealableSpell:CheckUnit(unit, targetOf)
 	return false;
 end
 
-cPowaPurgeableSpell = PowaClass(cPowaSpecialSpellBase, {AuraType="Purgeable"});
+cPowaPurgeableSpell = PowaClass(cPowaSpecialSpellBase, {AuraType = "Purgeable"});
 
 cPowaPurgeableSpell.OptionText =
 {
-	buffNameTooltip=PowaAuras.Text.aidePurgeableSpells,
-	exactTooltip=PowaAuras.Text.aideExact,
-	typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.PurgeableSpell],
+	buffNameTooltip = PowaAuras.Text.aidePurgeableSpells,
+	exactTooltip = PowaAuras.Text.aideExact,
+	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.PurgeableSpell],
 };
 
 cPowaPurgeableSpell.TooltipOptions =
 {
-	r=0.2,
-	g=0.8,
-	b=0.2,
-	showBuffName=true,
+	r = 0.2,
+	g = 0.8,
+	b = 0.2,
+	showBuffName = true,
 };
 
 function cPowaPurgeableSpell:CheckUnit(unit, targetOf)
@@ -1940,7 +1941,7 @@ function cPowaPurgeableSpell:CheckUnit(unit, targetOf)
 				PowaAuras:Message("Slot=", i, " auraName=", auraName, " typeDebuff=", typeDebuff, " (", auraId, ")" );
 			end
 			if (auraName == nil) then return nil; end
-			if (typeDebuff=="Magic") then
+			if (typeDebuff == "Magic") then
 				--PowaAuras:ShowText(i," C Aura=",auraName," count=",count," expirationTime=", expirationTime);
 				if (auraName and self:CompareAura(unit, s, auraName, auraTexture, auraId, pword)) then
 					if (self.Stacks) then
@@ -1974,21 +1975,21 @@ cPowaAoE = PowaClass(cPowaAura, {AuraType = "Aoe"});
 
 cPowaAoE.OptionText =
 {
-	buffNameTooltip=PowaAuras.Text.aideBuff4,
-	exactTooltip=PowaAuras.Text.aideExact,
-	typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.AoE],
+	buffNameTooltip = PowaAuras.Text.aideBuff4,
+	exactTooltip = PowaAuras.Text.aideExact,
+	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.AoE],
 };
 
-cPowaAoE.ShowOptions={["PowaBarTooltipCheck"]=1};
+cPowaAoE.ShowOptions = {["PowaBarTooltipCheck"] = 1};
 
-cPowaAoE.CheckBoxes={["PowaIngoreCaseButton"]=1};
+cPowaAoE.CheckBoxes = {["PowaIngoreCaseButton"] = 1};
 
 cPowaAoE.TooltipOptions =
 {
-	r=0.6,
-	g=0.4,
-	b=1.0,
-	showBuffName=true,
+	r = 0.6,
+	g = 0.4,
+	b = 1.0,
+	showBuffName = true,
 };
 
 function cPowaAoE:AddEffectAndEvents()
@@ -2022,26 +2023,26 @@ cPowaEnchant = PowaClass(cPowaAura, {AuraType = "Enchants", CanHaveTimer=true, C
 
 cPowaEnchant.OptionText =
 {
-	buffNameTooltip=PowaAuras.Text.aideBuff5,
-	exactTooltip=PowaAuras.Text.aideExact,
-	typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Enchant],
+	buffNameTooltip = PowaAuras.Text.aideBuff5,
+	exactTooltip = PowaAuras.Text.aideExact,
+	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Enchant],
 };
 
-cPowaEnchant.ShowOptions={["PowaBarBuffStacks"]=1};
+cPowaEnchant.ShowOptions = {["PowaBarBuffStacks"] = 1};
 
 cPowaEnchant.CheckBoxes =
 {
-	["PowaIngoreCaseButton"]=1,
-	["PowaInverseButton"]=1,
-	["PowaOwntexButton"]=1,
+	["PowaIngoreCaseButton"] = 1,
+	["PowaInverseButton"] = 1,
+	["PowaOwntexButton"] = 1,
 };
 
 cPowaEnchant.TooltipOptions =
 {
-	r=1.0,
-	g=0.8,
-	b=1.0,
-	showBuffName=true,
+	r = 1.0,
+	g = 0.8,
+	b = 1.0,
+	showBuffName = true,
 };
 
 function cPowaEnchant:AddEffectAndEvents()
@@ -2161,24 +2162,24 @@ end
 cPowaCombo = PowaClass(cPowaAura,
 {
 	AuraType = "Combo",
-	CanHaveStacks=true,
-	OptionText={buffNameTooltip=PowaAuras.Text.aideBuff6, exactTooltip=PowaAuras.Text.aideExact, typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Combo]},
-	CheckBoxes={["PowaIngoreCaseButton"]=1,},
+	CanHaveStacks = true,
+	OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff6, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Combo]},
+	CheckBoxes = {["PowaIngoreCaseButton"] = 1,},
 });
 
 cPowaCombo.TooltipOptions =
 {
-	r=1.0,
-	g=1.0,
-	b=0.0,
-	showBuffName=true,
+	r = 1.0,
+	g = 1.0,
+	b = 0.0,
+	showBuffName = true,
 };
 
 function cPowaCombo:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id);
 	PowaAuras.Events.UNIT_COMBO_POINTS = true;
 	PowaAuras.Events.PLAYER_TARGET_CHANGED = true;
-	if (PowaAuras.playerclass=="DRUID") then
+	if (PowaAuras.playerclass == "DRUID") then
 		PowaAuras.Events.UPDATE_SHAPESHIFT_FORM = true;
 	end
 end
@@ -2216,24 +2217,24 @@ cPowaActionReady = PowaClass(cPowaAura, {AuraType = "Actions", CanHaveTimer=true
 
 cPowaActionReady.OptionText =
 {
-	buffNameTooltip=PowaAuras.Text.aideBuff7,
-	exactTooltip=PowaAuras.Text.aideExact,
-	typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.ActionReady],
-	mineText=PowaAuras.Text.nomIgnoreUseable, mineTooltip=PowaAuras.Text.aideIgnoreUseable,
+	buffNameTooltip = PowaAuras.Text.aideBuff7,
+	exactTooltip = PowaAuras.Text.aideExact,
+	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.ActionReady],
+	mineText = PowaAuras.Text.nomIgnoreUseable, mineTooltip = PowaAuras.Text.aideIgnoreUseable,
 };
 
 cPowaActionReady.CheckBoxes =
 {
-	["PowaIngoreCaseButton"]=1,
-	["PowaInverseButton"]=1,
-	["PowaOwntexButton"]=1,
+	["PowaIngoreCaseButton"] = 1,
+	["PowaInverseButton"] = 1,
+	["PowaOwntexButton"] = 1,
 };
 cPowaActionReady.TooltipOptions =
 {
-	r=0.8,
-	g=0.8,
-	b=1.0,
-	showBuffName=true,
+	r = 0.8,
+	g = 0.8,
+	b = 1.0,
+	showBuffName = true,
 };
 
 function cPowaActionReady:AddEffectAndEvents()
@@ -2319,32 +2320,32 @@ function cPowaActionReady:ShowTimerDurationSlider()
 	return true;
 end
 
-cPowaSpellCooldown = PowaClass(cPowaAura, {AuraType = "SpellCooldowns", CanHaveTimer=true, CanHaveTimerOnInverse=true, CooldownAura=true, CanHaveInvertTime=true});
+cPowaSpellCooldown = PowaClass(cPowaAura, {AuraType = "SpellCooldowns", CanHaveTimer = true, CanHaveTimerOnInverse = true, CooldownAura = true, CanHaveInvertTime = true});
 
 cPowaSpellCooldown.OptionText =
 {
-	buffNameTooltip=PowaAuras.Text.aideBuff8,
-	exactTooltip=PowaAuras.Text.aideExact,
-	typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellCooldown],
-	mineText=PowaAuras.Text.nomIgnoreUseable, mineTooltip=PowaAuras.Text.aideIgnoreUseable,
-	targetFriendText=PowaAuras.Text.nomCheckPet, targetFriendTooltip=PowaAuras.Text.aideCheckPet,
+	buffNameTooltip = PowaAuras.Text.aideBuff8,
+	exactTooltip = PowaAuras.Text.aideExact,
+	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellCooldown],
+	mineText = PowaAuras.Text.nomIgnoreUseable, mineTooltip = PowaAuras.Text.aideIgnoreUseable,
+	targetFriendText = PowaAuras.Text.nomCheckPet, targetFriendTooltip = PowaAuras.Text.aideCheckPet,
 };
-cPowaSpellCooldown.ShowOptions={["PowaBarTooltipCheck"]=1};
+cPowaSpellCooldown.ShowOptions = {["PowaBarTooltipCheck"] = 1};
 
 cPowaSpellCooldown.CheckBoxes =
 {
-	["PowaInverseButton"]=1,
-	["PowaInverseButton"]=1,
-	["PowaIngoreCaseButton"]=1,
-	["PowaOwntexButton"]=1,
+	["PowaInverseButton"] = 1,
+	["PowaInverseButton"] = 1,
+	["PowaIngoreCaseButton"] = 1,
+	["PowaOwntexButton"] = 1,
 };
 
 cPowaSpellCooldown.TooltipOptions =
 {
-	r=1.0,
-	g=0.6,
-	b=0.2,
-	showBuffName=true,
+	r = 1.0,
+	g = 0.6,
+	b = 0.2,
+	showBuffName = true,
 };
 
 function cPowaSpellCooldown:AddEffectAndEvents()
@@ -2443,30 +2444,30 @@ function cPowaSpellCooldown:ShowTimerDurationSlider()
 	return true;
 end
 
-cPowaAuraStats = PowaClass(cPowaAura, {CanHaveStacks=true, MaxRange=100, RangeType="%"});
+cPowaAuraStats = PowaClass(cPowaAura, {CanHaveStacks = true, MaxRange = 100, RangeType = "%"});
 
 cPowaAuraStats.OptionText =
 {
-	targetFriendText=PowaAuras.Text.nomCheckFriend,
-	targetFriendTooltip=PowaAuras.Text.aideTargetFriend,
+	targetFriendText = PowaAuras.Text.nomCheckFriend,
+	targetFriendTooltip = PowaAuras.Text.aideTargetFriend,
 };
 
 cPowaAuraStats.ShowOptions =
 {
-	["PowaBarThresholdSlider"]=1,
-	["PowaThresholdInvertButton"]=1,
+	["PowaBarThresholdSlider"] = 1,
+	["PowaThresholdInvertButton"] = 1,
 };
 
 cPowaAuraStats.CheckBoxes =
 {
-	["PowaTargetButton"]=1,
-	["PowaPartyButton"]=1,
-	["PowaFocusButton"]=1,
-	["PowaRaidButton"]=1,
-	["PowaGroupOrSelfButton"]=1,
-	["PowaGroupAnyButton"]=1,
-	["PowaOptunitnButton"]=1,
-	["PowaInverseButton"]=1,
+	["PowaTargetButton"] = 1,
+	["PowaPartyButton"] = 1,
+	["PowaFocusButton"] = 1,
+	["PowaRaidButton"] = 1,
+	["PowaGroupOrSelfButton"] = 1,
+	["PowaGroupAnyButton"] = 1,
+	["PowaOptunitnButton"] = 1,
+	["PowaInverseButton"] = 1,
 };
 
 function cPowaAuraStats:AddEffectAndEvents()
@@ -3863,22 +3864,22 @@ function cPowaItems:CheckIfShouldShow(giveReason)
 end
 
 -- Tracking Aura
-cPowaTracking= PowaClass(cPowaAura, {AuraType="Tracking", ValueName = "Tracking", });
+cPowaTracking = PowaClass(cPowaAura, {AuraType = "Tracking", ValueName = "Tracking", });
 
-cPowaTracking.OptionText={buffNameTooltip=PowaAuras.Text.aideTracking, typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Tracking], exactTooltip=PowaAuras.Text.aideExact,};
+cPowaTracking.OptionText = {buffNameTooltip = PowaAuras.Text.aideTracking, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Tracking], exactTooltip = PowaAuras.Text.aideExact,};
 
 cPowaTracking.CheckBoxes =
 {
-	["PowaInverseButton"]=1,
-	["PowaIngoreCaseButton"]=1,
-	["PowaOwntexButton"]=1,
+	["PowaInverseButton"] = 1,
+	["PowaIngoreCaseButton"] = 1,
+	["PowaOwntexButton"] = 1,
 };
 
 cPowaTracking.TooltipOptions =
 {
-	r=0.4,
-	g=1.0,
-	b=0.4,
+	r = 0.4,
+	g = 1.0,
+	b = 0.4,
 };
 
 function cPowaTracking:AddEffectAndEvents()
@@ -3913,17 +3914,17 @@ function cPowaTracking:CheckIfShouldShow(giveReason)
 end
 
 -- Static Aura
-cPowaStatic= PowaClass(cPowaAura, {AuraType="Static", ValueName = "Static"});
+cPowaStatic = PowaClass(cPowaAura, {AuraType = "Static", ValueName = "Static"});
 
-cPowaStatic.OptionText={typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Static]};
+cPowaStatic.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Static]};
 
-cPowaStatic.CheckBoxes={};
+cPowaStatic.CheckBoxes = {};
 
 cPowaStatic.TooltipOptions =
 {
-	r=0.4,
-	g=0.4,
-	b=0.4,
+	r = 0.4,
+	g = 0.4,
+	b = 0.4,
 };
 
 function cPowaStatic:AddEffectAndEvents()
@@ -3940,25 +3941,28 @@ function cPowaStatic:SetFixedIcon()
 end
 
 -- Unit Match Aura
-cPowaUnitMatch= PowaClass(cPowaAura, { AuraType = "UnitMatch", ValueName = "Unit Check" });
+cPowaUnitMatch = PowaClass(cPowaAura, { AuraType = "UnitMatch", ValueName = "Unit Check" });
 
 cPowaUnitMatch.OptionText =
 {
-	typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.UnitMatch],
-	buffNameTooltip=PowaAuras.Text.aideUnitMatch,
+	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.UnitMatch],
+	buffNameTooltip = PowaAuras.Text.aideUnitMatch,
 };
+
 cPowaUnitMatch.TooltipOptions =
 {
-	r=0.4,
-	g=0.6,
-	b=0.8
+	r = 0.4,
+	g = 0.6,
+	b = 0.8
 };
-cPowaUnitMatch.CheckBoxes={
-	["PowaInverseButton"]=1,
-	["PowaRoleTankButton"]=1,
-	["PowaRoleHealerButton"]=1,
-	["PowaRoleMeleDpsButton"]=1,
-	["PowaRoleRangeDpsButton"]=1,
+
+cPowaUnitMatch.CheckBoxes =
+{
+	["PowaInverseButton"] = 1,
+	["PowaRoleTankButton"] = 1,
+	["PowaRoleHealerButton"] = 1,
+	["PowaRoleMeleDpsButton"] = 1,
+	["PowaRoleRangeDpsButton"] = 1,
 }
 
 function cPowaUnitMatch:AddEffectAndEvents()
@@ -4002,19 +4006,19 @@ function cPowaUnitMatch:SetFixedIcon()
 end
 
 -- Pet Stance Aura
-cPowaPetStance= PowaClass(cPowaAura, { AuraType = "PetStance", ValueName = "Pet Stance" });
+cPowaPetStance = PowaClass(cPowaAura, { AuraType = "PetStance", ValueName = "Pet Stance" });
 
 cPowaPetStance.OptionText =
 {
-	typeText=PowaAuras.Text.AuraType[PowaAuras.BuffTypes.PetStance],
-	buffNameTooltip=PowaAuras.Text.aidePetStance,
+	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.PetStance],
+	buffNameTooltip = PowaAuras.Text.aidePetStance,
 };
 
 cPowaPetStance.TooltipOptions =
 {
-	r=0.8,
-	g=0.6,
-	b=0.4
+	r = 0.8,
+	g = 0.6,
+	b = 0.4
 };
 
 cPowaPetStance.CheckBoxes = {["PowaInverseButton"]=1,}
@@ -4041,7 +4045,7 @@ function cPowaPetStance:CheckIfShouldShow(giveReason)
 		end
 	end
 	-- Check all indexes on the pet action bar, you can move them around so...
-	for i=1, NUM_PET_ACTION_SLOTS do
+	for i = 1, NUM_PET_ACTION_SLOTS do
 		-- Check the name and token state.
 		local name, null, null, isToken, isActive = GetPetActionInfo(i);
 		if(isToken and isActive) then
@@ -4082,34 +4086,34 @@ end
 -- Concrete Classes
 PowaAuras.AuraClasses =
 {
-	[PowaAuras.BuffTypes.Buff]=cPowaBuff,
-	[PowaAuras.BuffTypes.Debuff]=cPowaDebuff,
-	[PowaAuras.BuffTypes.TypeDebuff]=cPowaTypeDebuff,
-	[PowaAuras.BuffTypes.AoE]=cPowaAoE,
-	[PowaAuras.BuffTypes.Enchant]=cPowaEnchant,
-	[PowaAuras.BuffTypes.Combo]=cPowaCombo,
-	[PowaAuras.BuffTypes.ActionReady]=cPowaActionReady,
-	[PowaAuras.BuffTypes.Health]=cPowaHealth,
-	[PowaAuras.BuffTypes.Mana]=cPowaMana,
-	[PowaAuras.BuffTypes.EnergyRagePower]=cPowaPowerType,
-	[PowaAuras.BuffTypes.Aggro]=cPowaAggro,
-	[PowaAuras.BuffTypes.PvP]=cPowaPvP,
-	[PowaAuras.BuffTypes.SpellAlert]=cPowaSpellAlert,
-	[PowaAuras.BuffTypes.Stance]=cPowaStance,
-	[PowaAuras.BuffTypes.SpellCooldown]=cPowaSpellCooldown,
-	[PowaAuras.BuffTypes.StealableSpell]=cPowaStealableSpell,
-	[PowaAuras.BuffTypes.PurgeableSpell]=cPowaPurgeableSpell,
-	[PowaAuras.BuffTypes.GTFO]=cPowaGTFO,
-	[PowaAuras.BuffTypes.Totems]=cPowaTotems,
-	[PowaAuras.BuffTypes.Pet]=cPowaPet,
-	[PowaAuras.BuffTypes.Runes]=cPowaRunes,
-	[PowaAuras.BuffTypes.Slots]=cPowaSlots,
-	[PowaAuras.BuffTypes.Items]=cPowaItems,
-	[PowaAuras.BuffTypes.Tracking]=cPowaTracking,
-	[PowaAuras.BuffTypes.TypeBuff]=cPowaTypeBuff,
-	[PowaAuras.BuffTypes.Static]=cPowaStatic,
-	[PowaAuras.BuffTypes.UnitMatch]=cPowaUnitMatch,
-	[PowaAuras.BuffTypes.PetStance]=cPowaPetStance,
+	[PowaAuras.BuffTypes.Buff] = cPowaBuff,
+	[PowaAuras.BuffTypes.Debuff] = cPowaDebuff,
+	[PowaAuras.BuffTypes.TypeDebuff] = cPowaTypeDebuff,
+	[PowaAuras.BuffTypes.AoE] = cPowaAoE,
+	[PowaAuras.BuffTypes.Enchant] = cPowaEnchant,
+	[PowaAuras.BuffTypes.Combo] = cPowaCombo,
+	[PowaAuras.BuffTypes.ActionReady] = cPowaActionReady,
+	[PowaAuras.BuffTypes.Health] = cPowaHealth,
+	[PowaAuras.BuffTypes.Mana] = cPowaMana,
+	[PowaAuras.BuffTypes.EnergyRagePower] = cPowaPowerType,
+	[PowaAuras.BuffTypes.Aggro] = cPowaAggro,
+	[PowaAuras.BuffTypes.PvP] = cPowaPvP,
+	[PowaAuras.BuffTypes.SpellAlert] = cPowaSpellAlert,
+	[PowaAuras.BuffTypes.Stance] = cPowaStance,
+	[PowaAuras.BuffTypes.SpellCooldown] = cPowaSpellCooldown,
+	[PowaAuras.BuffTypes.StealableSpell] = cPowaStealableSpell,
+	[PowaAuras.BuffTypes.PurgeableSpell] = cPowaPurgeableSpell,
+	[PowaAuras.BuffTypes.GTFO] = cPowaGTFO,
+	[PowaAuras.BuffTypes.Totems] = cPowaTotems,
+	[PowaAuras.BuffTypes.Pet] = cPowaPet,
+	[PowaAuras.BuffTypes.Runes] = cPowaRunes,
+	[PowaAuras.BuffTypes.Slots] = cPowaSlots,
+	[PowaAuras.BuffTypes.Items] = cPowaItems,
+	[PowaAuras.BuffTypes.Tracking] = cPowaTracking,
+	[PowaAuras.BuffTypes.TypeBuff] = cPowaTypeBuff,
+	[PowaAuras.BuffTypes.Static] = cPowaStatic,
+	[PowaAuras.BuffTypes.UnitMatch] = cPowaUnitMatch,
+	[PowaAuras.BuffTypes.PetStance] = cPowaPetStance,
 }
 
 -- Instance concrete class based on type

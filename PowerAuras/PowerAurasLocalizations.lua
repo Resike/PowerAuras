@@ -327,6 +327,7 @@ nomEnd = "End Animation",
 nomSymetrie = "Symmetry",
 nomAlpha = "Opacity",
 nomPos = "Position",
+nomRotation = "Rotation",
 nomTaille = "Size",
 
 nomExact = "Exact Name",

@@ -28,12 +28,12 @@ PowaGlobalMisc =
 PowaAuras.PowaMiscDefault = PowaAuras:CopyTable(PowaMisc);
 PowaAuras.PowaGlobalMiscDefault = PowaAuras:CopyTable(PowaGlobalMisc);
 
-PowaSet = {};
-PowaTimer = {};
+PowaSet = { };
+PowaTimer = { };
 
-PowaGlobalSet = {};
-PowaGlobalListe = {};
-PowaPlayerListe = {};
+PowaGlobalSet = { };
+PowaGlobalListe = { };
+PowaPlayerListe = { };
 
 --Default page names
 for i = 1, 5 do
@@ -46,7 +46,7 @@ end
 function PowaAuras:Toggle(enable)
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	--self:ShowText("Toggle Frame=", PowaAuras_Frame);
-	if (enable==nil) then
+	if (enable == nil) then
 		enable = PowaMisc.Disabled;
 	end
 	if enable then
@@ -73,7 +73,7 @@ function PowaAuras:Toggle(enable)
 		self:DisplayText("Power Auras "..self.Colors.Red..ADDON_DISABLED.."|r");
 	end
 	--self:ShowText("Setting Enabled button to: ", PowaMisc.Disabled~=true);
-	PowaEnableButton:SetChecked(PowaMisc.Disabled~=true);
+	PowaEnableButton:SetChecked(PowaMisc.Disabled ~= true);
 end
 
 function PowaAuras:OnLoad(frame)
@@ -90,7 +90,7 @@ function PowaAuras:ReregisterEvents(frame)
 end
 
 function PowaAuras:RegisterEvents(frame)
-	if (self.playerclass=="DRUID") then
+	if (self.playerclass == "DRUID") then
 		self.Events.UPDATE_SHAPESHIFT_FORM = true;
 	end
 	for event in pairs(self.Events) do
@@ -104,18 +104,18 @@ end
 
 function PowaAuras:LoadAuras()
 	--self:ShowText("LoadAuras");
-	self.Auras = {};
-	self.AuraSequence = {};
+	self.Auras = { };
+	self.AuraSequence = { };
 	for k, v in pairs(PowaGlobalSet) do
 		--self:UnitTestDebug("PowaGlobalSet",k,v.buffname);
-		if (k~=0 and v.is_a == nil or not v:is_a(cPowaAura)) then
+		if (k ~= 0 and v.is_a == nil or not v:is_a(cPowaAura)) then
 			--self:UnitTestDebug(k,v.buffname);
 			self.Auras[k] = self:AuraFactory(v.bufftype, k, v);
 		end
 	end
 	for k, v in pairs(PowaSet) do
 		--self:UnitTestDebug("PowaSet",k,v.buffname, self.Auras[k]);
-		if (k>0 and k <121 and not self.Auras[k]) then
+		if (k > 0 and k < 121 and not self.Auras[k]) then
 			--self:UnitTestDebug("is_a=",v.is_a);
 			if (v.is_a == nil or not v:is_a(cPowaAura)) then
 				--self:ShowText("load aura ", k, " bufftype=",v.bufftype);
@@ -129,7 +129,7 @@ function PowaAuras:LoadAuras()
 	end
 	self:DiscoverLinkedAuras();
 	--self:Message("backwards combatiblity");
-	--self.Auras[0] = cPowaAura(0, {off=true});
+	--self.Auras[0] = cPowaAura(0, {off = true});
 	if (self.VersionUpgraded) then
 		self:UpdateOldAuras();
 	end
@@ -140,7 +140,7 @@ function PowaAuras:LoadAuras()
 	for i = 121, 360 do
 		PowaGlobalSet[i] = self.Auras[i];
 	end
-	PowaTimer = {};
+	PowaTimer = { };
 end
 
 function PowaAuras:CalculateAuraSequence()
@@ -161,7 +161,7 @@ end
 
 function PowaAuras:DiscoverLinksForAura(aura, ignoreOff)
 	--self:ShowText("DiscoverLinksForAura ",aura.id, " multiids=",aura.multiids, " ignoreOff=",ignoreOff);
-	if (not aura or (ignoreOff and aura.off) or not aura.multiids or aura.multiids=="" or self.UsedInMultis[aura.id]) then return end
+	if (not aura or (ignoreOff and aura.off) or not aura.multiids or aura.multiids == "" or self.UsedInMultis[aura.id]) then return end
 	for pword in string.gmatch(aura.multiids, "[^/]+") do
 		if (string.sub(pword, 1, 1) == "!") then
 			pword = string.sub(pword, 2);
@@ -181,16 +181,16 @@ function PowaAuras:UpdateOldAuras()
 		local aura = self.Auras[k];
 		if (aura) then
 			aura.Timer = cPowaTimer(aura, v);
-			if (PowaSet[k]~=nil and PowaSet[k].timer~=nil) then
+			if (PowaSet[k] ~= nil and PowaSet[k].timer ~= nil) then
 				aura.Timer.enabled = PowaSet[k].timer;
 			end
-			if (PowaGlobalSet[k]~=nil and PowaGlobalSet[k].timer~=nil) then
+			if (PowaGlobalSet[k] ~= nil and PowaGlobalSet[k].timer ~= nil) then
 				aura.Timer.enabled = PowaGlobalSet[k].timer;
 			end
 		end
 	end
 	local rescaleRatio = UIParent:GetHeight() / 768;
-	if (not rescaleRatio or rescaleRatio==0) then
+	if (not rescaleRatio or rescaleRatio == 0) then
 		rescaleRatio = 1;
 	end
 	-- Update for backwards combatiblity
@@ -198,34 +198,34 @@ function PowaAuras:UpdateOldAuras()
 		-- gere les rajouts
 		local aura = self.Auras[i];
 		local oldaura = PowaSet[i];
-		if (oldaura==nil) then
+		if (oldaura == nil) then
 			oldaura = PowaGlobalSet[i];
 		end
 		if (aura and oldaura) then
-			if (oldaura.combat==0) then
+			if (oldaura.combat == 0) then
 				aura.combat = 0;
-			elseif (oldaura.combat==1) then
+			elseif (oldaura.combat == 1) then
 				aura.combat = true;
-			elseif (oldaura.combat==2) then
+			elseif (oldaura.combat == 2) then
 				aura.combat = false;
 			end
-			if (oldaura.ignoreResting==true) then
+			if (oldaura.ignoreResting == true) then
 				aura.isResting = true;
-			elseif (oldaura.ignoreResting==true) then
+			elseif (oldaura.ignoreResting == true) then
 				aura.isResting = false;
 			end
 			aura.ignoreResting = nil;
-			if (oldaura.isinraid==true) then
+			if (oldaura.isinraid == true) then
 				aura.inRaid = true;
-			elseif (oldaura.isinraid==false) then
+			elseif (oldaura.isinraid == false) then
 				aura.inRaid = 0;
 			end
 			aura.isinraid = nil;
-			if (oldaura.isDead==true) then
+			if (oldaura.isDead == true) then
 				aura.isAlive = false;
-			elseif (oldaura.isDead==false) then
+			elseif (oldaura.isDead == false) then
 				aura.isAlive = true;
-			elseif (oldaura.isDead==0) then
+			elseif (oldaura.isDead == 0) then
 				aura.isAlive = 0;
 			end
 			aura.isDead = nil;
@@ -244,18 +244,18 @@ function PowaAuras:UpdateOldAuras()
 					aura.bufftype = self.BuffTypes.Buff;
 				end
 			-- Update old combo style 1235 => 1/2/3/5
-			elseif (aura.bufftype==self.BuffTypes.Combo) then
+			elseif (aura.bufftype == self.BuffTypes.Combo) then
 				--self:UnitTestDebug("Combo upgrade check ", aura.buffname, " for ", aura.id);
-				if (string.len(aura.buffname)>1 and string.find(aura.buffname, "/", 1, true)==nil) then
+				if (string.len(aura.buffname) > 1 and string.find(aura.buffname, "/", 1, true) == nil) then
 					local newBuffName=string.sub(aura.buffname, 1, 1);
-					for i=2, string.len(aura.buffname) do
+					for i = 2, string.len(aura.buffname) do
 						newBuffName = newBuffName.."/"..string.sub(aura.buffname, i, i);
 					end
 					aura.buffname = newBuffName
 				end
 			--Update Spell Alert logic
-			elseif (aura.bufftype==self.BuffTypes.SpellAlert) then
-				if (PowaSet[i]~=nil and PowaSet[i].RoleTank==nil) then
+			elseif (aura.bufftype == self.BuffTypes.SpellAlert) then
+				if (PowaSet[i] ~= nil and PowaSet[i].RoleTank == nil) then
 					if (aura.target) then
 						aura.groupOrSelf = true;
 					elseif (aura.targetfriend) then
@@ -264,7 +264,7 @@ function PowaAuras:UpdateOldAuras()
 				end
 			end
 			-- Rescale if required
-			if (PowaSet[i]~=nil and PowaSet[i].RoleTank==nil and math.abs(rescaleRatio-1.0)>0.01) then
+			if (PowaSet[i] ~= nil and PowaSet[i].RoleTank == nil and math.abs(rescaleRatio - 1.0) > 0.01) then
 				if (aura.Timer) then
 					--self:DisplayText("Rescaling aura ", i, " Timer");
 					aura.Timer.x = aura.Timer.x * rescaleRatio;
@@ -278,7 +278,7 @@ function PowaAuras:UpdateOldAuras()
 					aura.Stacks.h = aura.Stacks.h * rescaleRatio;
 				end
 			end
-			if (PowaSet[i]~=nil) then
+			if (PowaSet[i] ~= nil) then
 				if (aura.Timer) then
 					aura.Timer.x = math.floor(aura.Timer.x + 0.5);
 					aura.Timer.y = math.floor(aura.Timer.y + 0.5);
@@ -317,7 +317,7 @@ function PowaAuras:FindAllChildren()
 end
 
 function PowaAuras:FindChildren(aura)
-	if (not aura.multiids or aura.multiids=="") then return; end
+	if (not aura.multiids or aura.multiids == "") then return; end
 	--self:ShowText(aura.id.." "..aura.multiids);
 	for pword in string.gmatch(aura.multiids, "[^/]+") do
 		if (string.sub(pword, 1, 1) == "!") then
@@ -328,7 +328,7 @@ function PowaAuras:FindChildren(aura)
 		local dependant = self.Auras[id];
 		if (dependant) then
 			if (not dependant.Children) then
-				dependant.Children = {};
+				dependant.Children = { };
 			end
 			dependant.Children[aura.id] = true;
 		end
@@ -380,7 +380,7 @@ function PowaAuras:CreateTimerFrameIfMissing(auraId, updatePing)
 	end
 	if (not self.TimerFrame[auraId]) then
 		--self:Message("Creating missing TimerFrames for aura "..tostring(auraId));
-		self.TimerFrame[auraId] = {};
+		self.TimerFrame[auraId] = { };
 		self:CreateTimerFrame(auraId, 1, updatePing);
 		self:CreateTimerFrame(auraId, 2, updatePing);
 	end
@@ -465,7 +465,7 @@ function PowaAuras:MemorizeActions(actionIndex)
 		if (HasAction(i)) then
 			local type, id, subType, spellID = GetActionInfo(i);
 			local name, text;
-			if (type=="macro") then
+			if (type == "macro") then
 				name = GetMacroInfo(id);
 			end
 			PowaAction_Tooltip:SetOwner(UIParent, "ANCHOR_NONE");
@@ -477,10 +477,10 @@ function PowaAuras:MemorizeActions(actionIndex)
 			--if text and text ~= "" then
 			--self:ShowText("| "..text.." |");
 			--end
-			if (text~=nil) then
+			if (text ~= nil) then
 				for k, v in pairs(self.AurasByType.Actions) do
 					local actionAura = self.Auras[v];
-					if (actionAura==nil) then
+					if (actionAura == nil) then
 						self.AurasByType.Actions[k] = nil; -- aura deleted
 					elseif (not actionAura.slot) then
 						--self:ShowText("actionAura",v,actionAura.buffname, actionAura.ignoremaj);
@@ -512,7 +512,7 @@ end
 function PowaAuras:AddChildrenToCascade(aura, originalId)
 	if (not aura or not aura.Children) then return; end
 	for id in pairs(aura.Children) do
-		if (not self.Cascade[id] and id~=originalId) then
+		if (not self.Cascade[id] and id ~= originalId) then
 			--self:ShowText("Cascade adding aura."..id);
 			self.Cascade[id] = true;
 			self:AddChildrenToCascade(self.Auras[id], originalId or aura.id);
@@ -563,13 +563,13 @@ function PowaAuras:OnUpdate(elapsed)
 		self.BuffRaidCount = 0;
 		self.BuffUnitCount = 0;
 		self.BuffSlotCount = 0;
-		self.AuraTypeCount = {};
+		self.AuraTypeCount = { };
 	end]]--
 	self.InGCD = nil;
 	if (self.GCDSpellName) then
 		local gcdStart = GetSpellCooldown(self.GCDSpellName);
 		if (gcdStart) then
-			self.InGCD = (gcdStart>0);
+			self.InGCD = (gcdStart > 0);
 		end
 	end
 	local checkAura = false;
@@ -588,7 +588,7 @@ function PowaAuras:OnUpdate(elapsed)
 				self.DoCheck.All = true;
 				self.WeAreMounted = isMountedNow;
 			end
-			local isInVehicledNow = (UnitInVehicle("player")~=nil);
+			local isInVehicledNow = (UnitInVehicle("player") ~= nil);
 			if (isInVehicledNow ~= self.WeAreInVehicle) then
 				self.DoCheck.All = true;
 				self.WeAreInVehicle = isInVehicledNow;
@@ -603,7 +603,7 @@ function PowaAuras:OnUpdate(elapsed)
 		--self:UnitTestInfo("Pending");
 		for id, cd in pairs(self.Pending) do
 			--self:ShowText("Pending check for ", id, " cd=", cd, " time=", GetTime());
-			if cd and cd >0 then
+			if cd and cd > 0 then
 				--self:ShowText("Pending check for ", id, " cd=", cd, " time=", GetTime());
 				if (GetTime() >= cd) then
 					self.Pending[id] = nil;
@@ -671,12 +671,12 @@ function PowaAuras:OnUpdate(elapsed)
 end
 
 function PowaAuras:IsDruidTravelForm()
-	if (self.playerclass~="DRUID") then return false; end
+	if (self.playerclass ~= "DRUID") then return false; end
 	local nStance = GetShapeshiftForm();
 	-- If stance 4 or 6, we're in travel/flight form.
 	if(nStance == 4 or nStance == 6) then return true; end
 	-- If in stance 5, it's complicated. Moonkin/Tree form take index 5 if learned, but if not learned then flight form is here.
-	if(nStance == 5 and select(5, GetTalentInfo(3,21)) == 0 and select(5, GetTalentInfo(1,8)) == 0) then return true; end
+	if(nStance == 5 and select(5, GetTalentInfo(3, 21)) == 0 and select(5, GetTalentInfo(1, 8)) == 0) then return true; end
 	-- Otherwise we're not in it.
 	return false;
 end
@@ -689,7 +689,7 @@ function PowaAuras:NewCheckBuffs()
 	for i = 1, #self.AurasByTypeList do
 		local auraType = self.AurasByTypeList[i];
 		--self:ShowText("Check auraType ",auraType);
-		if ((self.DoCheck[auraType] or self.DoCheck.All) and #self.AurasByType[auraType]>0) then
+		if ((self.DoCheck[auraType] or self.DoCheck.All) and #self.AurasByType[auraType] > 0) then
 			--self:ShowText("Checking auraType ",auraType, " #", #self.AurasByType[auraType]);
 			--if (self.DoCheck.All) then
 				--self:ShowText("TestAuraTypes ",auraType," DoCheck ", self.DoCheck[auraType], " All ", self.DoCheck.All, " #", #self.AurasByType[auraType]);
@@ -749,13 +749,13 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 	--self:ShowText("Test Aura for Hide or Show = ",auraId, " showing=",aura.Showing);
 	aura.InactiveDueToMulti = nil;
 	local shouldShow, reason = aura:ShouldShow(giveReason or debugEffectTest);
-	if (shouldShow==-1) then
+	if (shouldShow == - 1) then
 		if (debugEffectTest) then
 			self:Message("TestThisEffect unchanged");
 		end
 		return aura.Active, reason;
 	end
-	if (shouldShow==true) then
+	if (shouldShow == true) then
 		shouldShow, reason = self:CheckMultiple(aura, reason, giveReason or debugEffectTest);
 		if (not shouldShow) then
 			--self:ShowText("InactiveDueToMulti Aura ", aura.buffname, " (",auraId,")");
@@ -823,7 +823,7 @@ function PowaAuras:CheckMultiple(aura, reason, giveReason)
 		if linkedAura then
 			--self:ShowText("Multicheck. Aura ",k);
 			result, reason = linkedAura:ShouldShow(giveReason, reverse);
-			if (result==false or (result==-1 and not linkedAura.Showing and not linkedAura.HideRequest)) then
+			if (result == false or (result == - 1 and not linkedAura.Showing and not linkedAura.HideRequest)) then
 				if (not giveReason) then return false; end
 				return result, reason;
 			end
@@ -850,7 +850,9 @@ end
 
 -- Drag and Drop functions
 local function stopFrameMoving(frame)
-	if (frame==nil or not frame.isMoving) then return; end
+	if (frame == nil or not frame.isMoving) then
+		return;
+	end
 	frame.isMoving = false;
 	--PowaAuras:ShowText("stopMove id=", frame.aura.id);
 	frame:StopMovingOrSizing();
@@ -873,9 +875,9 @@ local function startFrameMoving(frame)
 	if (PowaAuras.CurrentAuraId ~= frame.aura.id) then
 		--PowaAuras:ShowText("Switching from id=", PowaAuras.CurrentAuraId);
 		stopFrameMoving(PowaAuras.Frames[PowaAuras.CurrentAuraId]);
-		local i = frame.aura.id - (PowaAuras.CurrentAuraPage-1)*24;
+		local i = frame.aura.id - (PowaAuras.CurrentAuraPage - 1) * 24;
 		local icon;
-		if (i>0 and i<25) then
+		if (i > 0 and i < 25) then
 			icon = getglobal("PowaIcone"..i);
 		end
 		PowaAuras:SetCurrent(icon, frame.aura.id);
@@ -885,7 +887,7 @@ local function startFrameMoving(frame)
 	--PowaAuras:ShowText("startMove id=", frame.aura.id);
 	frame:StartMoving();
 	local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id];
-	if (secondaryAura~=nil) then
+	if (secondaryAura ~= nil) then
 		secondaryAura.HideRequest = true;
 	end
 end
@@ -898,18 +900,18 @@ end
 
 local function keyUp(frame, key)
 	--PowaAuras:ShowText("keyUp key=", key, " aura=",frame.aura.id);
-	if ((key~="UP" and key~="DOWN" and key~="LEFT" and key~="RIGHT") or not frame.mouseIsOver) then return; end
-	if (key=="UP") then
+	if ((key ~= "UP" and key ~= "DOWN" and key ~= "LEFT" and key ~= "RIGHT") or not frame.mouseIsOver) then return; end
+	if (key == "UP") then
 		frame.aura.y = frame.aura.y + 1;
-	elseif (key=="DOWN") then
+	elseif (key == "DOWN") then
 		frame.aura.y = frame.aura.y - 1;
-	elseif (key=="LEFT") then
+	elseif (key == "LEFT") then
 		frame.aura.x = frame.aura.x - 1;
-	elseif (key=="RIGHT") then
+	elseif (key == "RIGHT") then
 		frame.aura.x = frame.aura.x + 1;
 	end
 	local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id];
-	if (secondaryAura~=nil) then
+	if (secondaryAura ~= nil) then
 		secondaryAura.HideRequest = true;
 	end
 	if (PowaAuras.CurrentAuraId == frame.aura.id) then
@@ -943,7 +945,7 @@ local function leaveAura(frame)
 end
 
 function PowaAuras:SetForDragging(aura, frame)
-	if (frame==nil or aura==nil or frame.SetForDragging) then return; end
+	if (frame == nil or aura == nil or frame.SetForDragging) then return; end
 	--self:ShowText("Set Dragging ", aura.id);
 	frame:SetMovable(true);
 	frame:EnableMouse(true);
@@ -958,7 +960,7 @@ function PowaAuras:SetForDragging(aura, frame)
 end
 
 function PowaAuras:ResetDragging(aura, frame)
-	if (frame==nil or aura==nil or not frame.SetForDragging) then return; end
+	if (frame == nil or aura == nil or not frame.SetForDragging) then return; end
 	--self:ShowText("Reset Dragging ", aura.id);
 	frame:SetMovable(false);
 	frame:EnableMouse(false);
@@ -1000,7 +1002,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			--self:ShowText("Playing custom sound ",pathToSound);
 			PlaySoundFile(pathToSound, PowaMisc.SoundChannel);
 		elseif (aura.sound > 0) then
-			if (PowaAuras.Sound[aura.sound]~=nil and string.len(PowaAuras.Sound[aura.sound])>0) then
+			if (PowaAuras.Sound[aura.sound] ~= nil and string.len(PowaAuras.Sound[aura.sound]) > 0) then
 				if (string.find(PowaAuras.Sound[aura.sound], "%.")) then
 					--self:ShowText("Playing sound ",PowaGlobalMisc.PathToSounds,PowaAuras.Sound[aura.sound]);
 					PlaySoundFile(PowaGlobalMisc.PathToSounds .. PowaAuras.Sound[aura.sound], PowaMisc.SoundChannel);
@@ -1019,7 +1021,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		self:ResetDragging(aura, frame);
 	end
 	if (aura.owntex == true) then
-		if (aura.icon=="") then
+		if (aura.icon == "") then
 			texture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark");
 		else
 			texture:SetTexture(aura.icon);
@@ -1034,7 +1036,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga");
 	end
 	if (aura.randomcolor) then
-		texture:SetVertexColor(random(20,100)/100,random(20,100)/100,random(20,100)/100);
+		texture:SetVertexColor(random(20,100) / 100, random(20,100) / 100, random(20,100) / 100);
 	else
 		texture:SetVertexColor(aura.r,aura.g,aura.b);
 	end
@@ -1043,7 +1045,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			texture:SetBlendMode("ADD");
 		else
 			texture:SetShadowColor(0.0, 0.0, 0.0, 0.8);
-			texture:SetShadowOffset(2,-2);
+			texture:SetShadowOffset(2, -2);
 		end
 		frame:SetFrameStrata(aura.strata);
 	else
@@ -1061,16 +1063,24 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	end
 	if (aura.textaura ~= true) then
 		if (aura.symetrie == 1) then
-			texture:SetTexCoord(1, 0, 0, 1); -- inverse X
+			texture:SetRotation(math.rad(aura.rotate));
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
+			texture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy); -- Inverse X
 		elseif (aura.symetrie == 2) then
-			texture:SetTexCoord(0, 1, 1, 0); -- inverse Y
+			texture:SetRotation(math.rad(aura.rotate));
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
+			texture:SetTexCoord(LLx, LLy, ULx, ULy, LRx, LRy, URx, URy); -- Inverse Y
 		elseif (aura.symetrie == 3) then
-			texture:SetTexCoord(1, 0, 1, 0); -- inverse XY
+			texture:SetRotation(math.rad(aura.rotate));
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
+			texture:SetTexCoord(LRx, LRy, URx, URy, LLx, LLy, ULx, ULy); -- Inverse XY
 		else
-			texture:SetTexCoord(0, 1, 0, 1);
+			texture:SetRotation(math.rad(aura.rotate));
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
+			texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy); -- Normal
 		end
 	end
-	frame.baseH = 256 * aura.size * (2-aura.torsion);
+	frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
 	if (aura.textaura == true) then
 		local fontsize = math.min(33, math.max(10, math.floor(frame.baseH / 12.8)));
 		local checkfont = texture:SetFont(self.Fonts[aura.aurastextfont], fontsize, "OUTLINE, MONOCHROME");
@@ -1079,10 +1089,10 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		end
 		frame.baseL = texture:GetStringWidth() + 5;
 	else
-		frame.baseL = 256 * aura.size * aura.torsion;
+		frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
 	end
 	PowaAuras:InitialiseFrame(aura, frame);
-	if (aura.duration>0) then
+	if (aura.duration > 0) then
 		aura.TimeToHide = GetTime() + aura.duration;
 	else
 		aura.TimeToHide = nil;
@@ -1111,7 +1121,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		else
 			frame.beginAnim = 0;
 		end
-		if (aura.begin and aura.begin>0) then
+		if (aura.begin and aura.begin > 0) then
 			aura.animation = self:AnimationBeginFactory(aura.begin, aura, frame);
 		else
 			aura.animation = self:AnimationMainFactory(aura.anim1, aura, frame);
@@ -1206,13 +1216,21 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	end
 	if (aura.textaura ~= true) then
 		if (aura.symetrie == 1) then
-			secondaryTexture:SetTexCoord(1, 0, 0, 1); -- inverse X
+			secondaryTexture:SetRotation(math.rad(aura.rotate));
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
+			secondaryTexture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy); -- Inverse X
 		elseif (aura.symetrie == 2) then
-			secondaryTexture:SetTexCoord(0, 1, 1, 0); -- inverse Y
+			secondaryTexture:SetRotation(math.rad(aura.rotate));
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
+			secondaryTexture:SetTexCoord(LLx, LLy, ULx, ULy, LRx, LRy, URx, URy); -- Inverse Y
 		elseif (aura.symetrie == 3) then
-			secondaryTexture:SetTexCoord(1, 0, 1, 0); -- inverse XY
+			secondaryTexture:SetRotation(math.rad(aura.rotate));
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
+			secondaryTexture:SetTexCoord(LRx, LRy, URx, URy, LLx, LLy, ULx, ULy); -- Inverse XY
 		else
-			secondaryTexture:SetTexCoord(0, 1, 0, 1);
+			secondaryTexture:SetRotation(math.rad(aura.rotate));
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
+			secondaryTexture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy); -- Normal
 		end
 	end
 	secondaryFrame.baseL = frame.baseL;
@@ -1227,7 +1245,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 		else
 			secondaryFrame.beginAnim = 0;
 		end
-		if (not aura.begin or aura.begin==0) then
+		if (not aura.begin or aura.begin == 0) then
 			secondaryAura.animation = self:AnimationMainFactory(aura.anim2, secondaryAura, secondaryFrame);
 		else
 			secondaryFrame:SetAlpha(0.0); -- Hide secondary until primary begin animation finishes
@@ -1257,7 +1275,7 @@ function PowaAuras:DisplayAura(auraId)
 	--self:ShowText("DisplayAura aura ", auraId);
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end -- de-actived
 	local aura = self.Auras[auraId];
-	if (aura==nil or aura.off) then return; end
+	if (aura == nil or aura.off) then return; end
 	--self:ShowText("DisplayAura aura ", aura.id);
 	self:ShowAuraForFirstTime(aura);
 end
@@ -1318,7 +1336,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 					--self:ShowText("Playing sound "..pathToSound);
 					PlaySoundFile(pathToSound, PowaMisc.SoundChannel);
 				elseif (aura.soundend > 0) then
-					if (PowaAuras.Sound[aura.soundend]~=nil and string.len(PowaAuras.Sound[aura.soundend])>0) then
+					if (PowaAuras.Sound[aura.soundend] ~= nil and string.len(PowaAuras.Sound[aura.soundend]) > 0) then
 						if (aura.Debug) then
 							self:Message("Playing end sound ", PowaAuras.Sound[aura.soundend]);
 						end
@@ -1368,7 +1386,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 		if (aura.Active and aura.Stacks and aura.Stacks.enabled) then
 			if (self.ModTest) then
 				if (aura.Stacks.SetStackCount) then
-					aura.Stacks:SetStackCount(random(1,12));
+					aura.Stacks:SetStackCount(random(1, 12));
 				else
 					self:Message("aura.Stacks:SetStackCount nil!! ",aura.id);
 				end
@@ -1418,7 +1436,7 @@ end
 
 function PowaAuras:UpdateAuraAnimation(aura, elapsed, frame)
 	if (not aura.Showing) then return; end
-	if (not aura.animation or elapsed==0) then return; end
+	if (not aura.animation or elapsed == 0) then return; end
 	if (aura.isSecondary) then
 		-- Secondary animation only shows during primary main animation
 		primaryAnimation = PowaAuras.Auras[aura.id].animation;

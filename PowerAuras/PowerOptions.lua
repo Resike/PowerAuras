@@ -12,14 +12,14 @@ function PowaAuras:UpdateMainOption()
 	PowaMainTestButton:SetText(self.Text.nomTest);
 	PowaEditButton:SetText(self.Text.nomEdit);
 	PowaOptionsRename:SetText(self.Text.nomRename);
-	PowaEnableButton:SetChecked(PowaMisc.Disabled~=true);
-	PowaDebugButton:SetChecked(PowaMisc.debug==true);
-	PowaTimerRoundingButton:SetChecked(PowaMisc.TimerRoundUp==true);
-	PowaAllowInspectionsButton:SetChecked(PowaMisc.AllowInspections==true);
+	PowaEnableButton:SetChecked(PowaMisc.Disabled ~= true);
+	PowaDebugButton:SetChecked(PowaMisc.debug == true);
+	PowaTimerRoundingButton:SetChecked(PowaMisc.TimerRoundUp == true);
+	PowaAllowInspectionsButton:SetChecked(PowaMisc.AllowInspections == true);
 	PowaOptionsTextureCount:SetValue(self.MaxTextures);
 	-- attach the icons
 	for i = 1, 24 do
-		local k = ((self.CurrentAuraPage-1)*24) + i;
+		local k = ((self.CurrentAuraPage - 1) * 24) + i;
 		--self:Message("icon ", k);
 		local aura = self.Auras[k];
 		local icon = getglobal("PowaIcone"..i);
@@ -122,7 +122,7 @@ end
 
 function PowaAuras:IconeEntered(owner)
 	local iconeID = owner:GetID();
-	local k = ((self.CurrentAuraPage-1)*24) + iconeID;
+	local k = ((self.CurrentAuraPage - 1) * 24) + iconeID;
 	local aura = self.Auras[k];
 	if (self.MoveEffect > 0) then -- mode move, annule
 		return;
@@ -133,7 +133,6 @@ function PowaAuras:IconeEntered(owner)
 	else
 		GameTooltip:SetOwner(owner, "ANCHOR_RIGHT");
 		aura:AddExtraTooltipInfo(GameTooltip);
-		
 		if (aura.party) then
 			GameTooltip:AddLine("("..self.Text.nomCheckParty..")", 1.0, 0.2, 0.2, 1);
 		end
@@ -161,8 +160,8 @@ function PowaAuras:IconeEntered(owner)
 		if (aura.targetfriend) then
 			GameTooltip:AddLine("("..self.Text.nomCheckFriend..")", 0.2, 1.0, 0.2, 1);
 		end
-		GameTooltip:AddLine(self.Text.aideEffectTooltip,1.0,1.0,1.0,1);
-		GameTooltip:AddLine(self.Text.aideEffectTooltip2,1.0,1.0,1.0,1);
+		GameTooltip:AddLine(self.Text.aideEffectTooltip, 1.0, 1.0, 1.0, 1);
+		GameTooltip:AddLine(self.Text.aideEffectTooltip2, 1.0, 1.0, 1.0, 1);
 		GameTooltip:Show();
 	end
 end
@@ -179,7 +178,7 @@ function PowaAuras:MainListClick(owner)
 		return;
 	end
 	if IsShiftKeyDown() then -- Toggle ON ou OFF
-		local min = ((listeID-1)*24) + 1;
+		local min = ((listeID - 1) * 24) + 1;
 		local max = min + 23;
 		local allEnabled = true;
 		local offText = "OFF";
@@ -208,7 +207,7 @@ function PowaAuras:MainListClick(owner)
 	getglobal("PowaOptionsList"..self.CurrentAuraPage):UnlockHighlight();
 	PowaSelected:Hide();
 	self.CurrentAuraPage = listeID;
-	self.CurrentAuraId = ((self.CurrentAuraPage-1)*24)+1;
+	self.CurrentAuraId = ((self.CurrentAuraPage - 1) * 24) + 1;
 	local aura = self.Auras[self.CurrentAuraId];
 	if (aura ~= nil and aura.buffname ~= "" and aura.buffname ~= " ") then
 		self:InitPage(aura);
@@ -219,7 +218,9 @@ function PowaAuras:MainListClick(owner)
 	--local pageButton = "PowaOptionsList"..self.CurrentAuraPage;
 	--self:ShowText(pageButton, getglobal(pageButton));
 	local currentText = getglobal("PowaOptionsList"..self.CurrentAuraPage):GetText();
-	if (currentText==nil) then currentText = "" end;
+	if (currentText == nil) then
+		currentText = "";
+	end
 	PowaOptionsRenameEditBox:SetText( currentText );
 	self:UpdateMainOption();
 end
@@ -249,7 +250,7 @@ function PowaAuras:OptionRename()
 	PowaOptionsRename:Hide();
 	PowaOptionsRenameEditBox:Show();
 	local currentText = getglobal("PowaOptionsList"..self.CurrentAuraPage):GetText();
-	if (currentText==nil) then currentText = "" end;
+	if (currentText == nil) then currentText = "" end;
 	PowaOptionsRenameEditBox:SetText( currentText );
 end
 
@@ -265,7 +266,7 @@ function PowaAuras:OptionRenameEdited()
 end
 
 function PowaAuras:TriageIcones(nPage)
-	local min = ((nPage-1)*24) + 1;
+	local min = ((nPage - 1) * 24) + 1;
 	local max = min + 23;
 	-- Hide any auras on this page
 	for i = min, max do
@@ -278,10 +279,10 @@ function PowaAuras:TriageIcones(nPage)
 	local a = min;
 	for i = min, max do
 		if (self.Auras[i]) then
-			if (i~=a) then
+			if (i ~= a) then
 				self:ReindexAura(i, a);
 			end
-			if (i>a) then
+			if (i > a) then
 				self.Auras[i] = nil;
 			end
 			a = a + 1;
@@ -310,11 +311,11 @@ function PowaAuras:ReindexAura(oldId, newId)
 	for i = 1, 360 do
 		local aura = self.Auras[i];
 		if (aura) then
-			if (aura.multiids and aura.multiids~="") then
+			if (aura.multiids and aura.multiids ~= "") then
 				local newMultiids = "";
 				local sep = "";
 				for multiId in string.gmatch(aura.multiids, "[^/]+") do
-					if (tonumber(multiId)==oldId) then
+					if (tonumber(multiId) == oldId) then
 						newMultiids = newMultiids .. sep .. tostring(newId);
 					else
 						newMultiids = newMultiids .. sep .. multiId;
@@ -329,9 +330,11 @@ end
 
 function PowaAuras:Dispose(tableName, key, key2)
 	local t = self[tableName];
-	if (t==nil or t[key]==nil) then return; end
-	if (key2~=nil) then
-		if (t[key][key2]==nil) then return; end
+	if (t == nil or t[key] == nil) then return; end
+	if (key2 ~= nil) then
+		if (t[key][key2] == nil) then
+			return;
+		end
 		t = t[key];
 		key = key2;
 	end
@@ -367,10 +370,10 @@ function PowaAuras:OptionDeleteEffect(auraId)
 end
 
 function PowaAuras:GetNextFreeSlot(page)
-	if (page==nil) then
+	if (page == nil) then
 		page = self.CurrentAuraPage;
 	end
-	local min = ((page-1)*24) + 1;
+	local min = ((page - 1) * 24) + 1;
 	local max = min + 23;
 	for i = min, max do
 		if (self.Auras[i] == nil or self.Auras[i].buffname == "" or self.Auras[i].buffname == " ") then -- Found a free slot
@@ -429,13 +432,25 @@ function PowaAuras:ExtractImportValue(valueType, value)
 end
 
 function PowaAuras:VersionGreater(v1, v2)
-	if (v1.Major>v2.Major) then return true; end
-	if (v1.Major<v2.Major) then return false; end
-	if (v1.Minor>v2.Minor) then return true; end
-	if (v1.Minor<v2.Minor) then return false; end
-	if (v1.Build>v2.Build) then return true; end
-	if (v1.Build<v2.Build) then return false; end
-	return v1.Revision>v2.Revision;
+	if (v1.Major > v2.Major) then
+		return true;
+	end
+	if (v1.Major < v2.Major) then
+		return false;
+	end
+	if (v1.Minor > v2.Minor) then
+		return true;
+	end
+	if (v1.Minor < v2.Minor) then
+		return false;
+	end
+	if (v1.Build > v2.Build) then
+		return true;
+	end
+	if (v1.Build < v2.Build) then
+		return false;
+	end
+	return v1.Revision > v2.Revision;
 end
 
 function PowaAuras:ImportAura(aurastring, auraId, offset)
@@ -444,9 +459,9 @@ function PowaAuras:ImportAura(aurastring, auraId, offset)
 	local aura = cPowaAura(auraId);
 	local trimmed = string.gsub(aurastring,";%s*",";");
 	local settings = {strsplit(";", trimmed)};
-	local importAuraSettings = {};
-	local importTimerSettings = {};
-	local importStacksSettings = {};
+	local importAuraSettings = { };
+	local importTimerSettings = { };
+	local importStacksSettings = { };
 	local hasTimerSettings = false;
 	local hasStacksSettings = false;
 	local oldSpellAlertLogic = true;
@@ -461,15 +476,15 @@ function PowaAuras:ImportAura(aurastring, auraId, offset)
 		for null, val in ipairs(settings) do
 			local key, var = strsplit(":", val);
 			--self:Message("key ",key,"=", var);
-			local varType = string.sub(var,1,2);
-			var = string.sub(var,3);
-			if (key=="Version") then
+			local varType = string.sub(var, 1, 2);
+			var = string.sub(var, 3);
+			if (key == "Version") then
 				local null, null, major, minor = string.find(var, self.VersionPattern);
-				if (self:VersionGreater({Major=tonumber(major), Minor=tonumber(minor), Build=0, Revision=""}, {Major=3, Minor=0, Build=0, Revision="J"})) then
+				if (self:VersionGreater({Major=tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}, {Major = 3, Minor = 0, Build = 0, Revision = "J"})) then
 					oldSpellAlertLogic = false;
 				end
-			elseif (string.sub(key,1,6) == "timer.") then
-				local key = string.sub(key,7);
+			elseif (string.sub(key, 1, 6) == "timer.") then
+				local key = string.sub(key, 7);
 				if (key == "InvertAuraBelow") then
 					if (self:IsNumeric(var)) then
 						importAuraSettings[key] = self:ExtractImportValue(varType, var);
@@ -478,8 +493,8 @@ function PowaAuras:ImportAura(aurastring, auraId, offset)
 					importTimerSettings[key] = self:ExtractImportValue(varType, var);
 					hasTimerSettings = true;
 				end
-			elseif (string.sub(key,1,7) == "stacks.") then
-				importStacksSettings[string.sub(key,8)] = self:ExtractImportValue(varType, var);
+			elseif (string.sub(key, 1, 7) == "stacks.") then
+				importStacksSettings[string.sub(key, 8)] = self:ExtractImportValue(varType, var);
 				hasStacksSettings = true;
 			else
 				importAuraSettings[key] = self:ExtractImportValue(varType, var);
@@ -491,59 +506,59 @@ function PowaAuras:ImportAura(aurastring, auraId, offset)
 			oldSpellAlertLogic = false;
 			--self:Message("val=", val);
 			--self:Message(key,"=", var);
-			if (key=="Version") then
+			if (key == "Version") then
 			elseif (string.sub(key,1,6) == "timer.") then
 				key = string.sub(key,7);
-				if (cPowaTimer.ExportSettings[key]~=nil) then
+				if (cPowaTimer.ExportSettings[key] ~= nil) then
 					--self:Message("cPowaTimer.ExportSettings[key]=",cPowaTimer.ExportSettings[key]," type=", type(cPowaTimer.ExportSettings[key]));
 					importTimerSettings[key] = self:ExtractImportValue(type(cPowaTimer.ExportSettings[key]), var);
 					hasTimerSettings = true;
 				end
-			elseif (string.sub(key,1,7) == "stacks.") then
-				key = string.sub(key,8);
-				if (cPowaStacks.ExportSettings[key]~=nil) then
+			elseif (string.sub(key, 1, 7) == "stacks.") then
+				key = string.sub(key, 8);
+				if (cPowaStacks.ExportSettings[key] ~= nil) then
 					importStacksSettings[key] = self:ExtractImportValue(type(cPowaStacks.ExportSettings[key]), var);
 					hasStacksSettings = true;
 				end
 			else
 				--self:Message("cPowaAura.ExportSettings[",key,"]=", cPowaAura.ExportSettings[key]);
-				if (cPowaAura.ExportSettings[key]~= nil) then
+				if (cPowaAura.ExportSettings[key] ~= nil) then
 					importAuraSettings[key] = self:ExtractImportValue(type(cPowaAura.ExportSettings[key]), var);
 				end
 			end
 		end
 	end
 	for k, v in pairs(aura) do
-		if (importAuraSettings[k]~=nil) then
+		if (importAuraSettings[k] ~= nil) then
 			local varType = type(v);
 			--self:Message("k=",k, " v=",importAuraSettings[k]);
-			if (k=="combat") then
-				if (importAuraSettings[k]==0) then
+			if (k == "combat") then
+				if (importAuraSettings[k] == 0) then
 					aura[k] = 0;
-				elseif (importAuraSettings[k]==1) then
+				elseif (importAuraSettings[k] == 1) then
 					aura[k] = true;
-				elseif (importAuraSettings[k]==2) then
+				elseif (importAuraSettings[k] == 2) then
 					aura[k] = false;
 				else
 					aura[k] = importAuraSettings[k];
 				end
-			elseif (k=="isResting") then
-				if (importAuraSettings.ignoreResting==true) then
+			elseif (k == "isResting") then
+				if (importAuraSettings.ignoreResting == true) then
 					aura[k] = true;
-				elseif (importAuraSettings.ignoreResting==true) then
+				elseif (importAuraSettings.ignoreResting == true) then
 					aura[k] = 0;
 				else
 					aura[k] = importAuraSettings[k];
 				end
-			elseif (k=="inRaid") then
-				if (importAuraSettings.isinraid==true) then
+			elseif (k == "inRaid") then
+				if (importAuraSettings.isinraid == true) then
 					aura[k] = true;
-				elseif (importAuraSettings.isinraid==false) then
+				elseif (importAuraSettings.isinraid == false) then
 					aura[k] = 0;
 				else
 					aura[k] = importAuraSettings[k];
 				end
-			elseif (k=="multiids" and offset) then
+			elseif (k == "multiids" and offset) then
 				local newMultiids = "";
 				local sep = "";
 				for multiId in string.gmatch(importAuraSettings[k], "[^/]+") do
@@ -562,26 +577,26 @@ function PowaAuras:ImportAura(aurastring, auraId, offset)
 					end
 				end
 				aura[k] = newMultiids;
-			elseif (k=="icon") then
-				if (string.find(string.lower(importAuraSettings[k]), string.lower(PowaAuras.IconSource), 1, true)==1) then
+			elseif (k == "icon") then
+				if (string.find(string.lower(importAuraSettings[k]), string.lower(PowaAuras.IconSource), 1, true) == 1) then
 					aura[k] = importAuraSettings[k];
 				else
 					aura[k] = PowaAuras.IconSource..importAuraSettings[k];
 				end
-			elseif (varType == "string" or varType == "boolean" or varType == "number" and k~="id") then
+			elseif (varType == "string" or varType == "boolean" or varType == "number" and k ~= "id") then
 				aura[k] = importAuraSettings[k];
 			end
 		end
 	end
-	if (aura.bufftype==self.BuffTypes.Combo) then --backwards compatability
-		if (string.len(aura.buffname)>1 and string.find(aura.buffname, "/", 1, true)==nil) then
-			local newBuffName=string.sub(aura.buffname, 1, 1);
-			for i=2, string.len(aura.buffname) do
+	if (aura.bufftype == self.BuffTypes.Combo) then --backwards compatability
+		if (string.len(aura.buffname) > 1 and string.find(aura.buffname, "/", 1, true) == nil) then
+			local newBuffName = string.sub(aura.buffname, 1, 1);
+			for i = 2, string.len(aura.buffname) do
 				newBuffName = newBuffName.."/"..string.sub(aura.buffname, i, i);
 			end
 			aura.buffname = newBuffName
 		end
-	elseif (aura.bufftype==self.BuffTypes.SpellAlert) then
+	elseif (aura.bufftype == self.BuffTypes.SpellAlert) then
 		if (oldSpellAlertLogic) then
 			if (aura.target) then
 				aura.groupOrSelf = true;
@@ -632,7 +647,7 @@ function PowaAuras:CreateNewAuraSetFromImport(importString)
 	local setName;
 	for k, v in string.gmatch(importString, "([^\n=@]+)=([^@]+)@") do
 		--self:ShowText("k=", k, " len=", string.len(v));
-		if (k=="Set") then
+		if (k == "Set") then
 			setName = v;
 		else
 			if (not offset) then
@@ -665,7 +680,7 @@ function PowaAuras:CreateNewAuraSetFromImport(importString)
 		if (not nameFound) then
 			getglobal("PowaOptionsList"..self.CurrentAuraPage):SetText( setName );
 			if (self.CurrentAuraPage > 5) then
-				PowaGlobalListe[self.CurrentAuraPage-5] = setName;
+				PowaGlobalListe[self.CurrentAuraPage - 5] = setName;
 			else
 				PowaPlayerListe[self.CurrentAuraPage] = setName;
 			end
@@ -811,7 +826,7 @@ function PowaAuras:SetDialogTimeout(dialog, timeout)
 	end
 	-- Update stuff.
 	dialog.statusTimeoutLength = timeout;
-	dialog.statusTimeout = (time()+timeout);
+	dialog.statusTimeout = (time() + timeout);
 	-- If it's more than 0, add the loop.
 	if(dialog.statusTimeoutLength > 0) then
 		-- Add onupdate handler if needed.
@@ -862,7 +877,9 @@ function PowaAuras:ExportDialogInit(self)
 	-- Fired when the frame state needs updating.
 	self.SetStatus = function(self, status)
 		-- Can we send/receive data?
-		if(not PowaAuras.Comms:IsRegistered()) then status = 6; end
+		if(not PowaAuras.Comms:IsRegistered()) then
+			status = 6;
+		end
 		-- Change it.
 		self.sendStatus = status or self.sendStatus or 1;
 		-- Hide buttons, update labels and change values depending on status.
@@ -1565,13 +1582,14 @@ function PowaAuras:InitPage(aura)
 	end
 	-- Auras visuals
 	PowaBarAuraAlphaSlider:SetValue(aura.alpha);
+	PowaBarAuraRotateSlider:SetValue(aura.rotate);
 	PowaBarAuraSizeSlider:SetValue(aura.size);
 	-- adjust slider Y
-	PowaBarAuraCoordSlider:SetMinMaxValues(aura.y-5000,aura.y+5000);
-	PowaBarAuraCoordSliderLow:SetText(aura.y-200);
-	PowaBarAuraCoordSliderHigh:SetText(aura.y+200);
-	PowaBarAuraCoordSlider:SetValue(aura.y);
-	PowaBarAuraCoordSlider:SetMinMaxValues(aura.y-200,aura.y+200);
+	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y-5000,aura.y+5000);
+	PowaBarAuraCoordYSliderLow:SetText(aura.y-200);
+	PowaBarAuraCoordYSliderHigh:SetText(aura.y+200);
+	PowaBarAuraCoordYSlider:SetValue(aura.y);
+	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y-200,aura.y+200);
 	PowaBarAuraCoordYEdit:SetText(aura.y);
 	-- adjust slider X
 	PowaBarAuraCoordXSlider:SetMinMaxValues(aura.x-5000,aura.x+5000);
@@ -1670,7 +1688,7 @@ function PowaAuras:InitPage(aura)
 	AuraTexture:SetVertexColor(aura.r,aura.g,aura.b);
 	PowaColorNormalTexture:SetVertexColor(aura.r,aura.g,aura.b);
 	-- affiche la symetrie
-	if (aura.symetrie == 1) then
+	--[[if (aura.symetrie == 1) then
 		AuraTexture:SetTexCoord(1, 0, 0, 1); -- inverse X
 	elseif (aura.symetrie == 2) then
 		AuraTexture:SetTexCoord(0, 1, 1, 0); -- inverse Y
@@ -1678,7 +1696,8 @@ function PowaAuras:InitPage(aura)
 		AuraTexture:SetTexCoord(1, 0, 1, 0); -- inverse XY
 	else
 		AuraTexture:SetTexCoord(0, 1, 0, 1);
-	end
+	end]]--
+	--AuraTexture:SetRotation(math.rad(aura.rotate));
 	PowaColor_SwatchBg.r = aura.r;
 	PowaColor_SwatchBg.g = aura.g;
 	PowaColor_SwatchBg.b = aura.b;
@@ -1718,7 +1737,7 @@ function PowaAuras:BarAuraTextureSliderChanged()
 	if (checkTexture ~= 1) then
 		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga");
 	end
-	PowaBarAuraTextureSliderText:SetText(self.Text.nomTexture.." : "..SliderValue);
+	PowaBarAuraTextureSliderText:SetText(self.Text.nomTexture..": "..SliderValue);
 	AuraTexture:SetVertexColor(self.Auras[auraId].r,self.Auras[auraId].g,self.Auras[auraId].b);
 	self.Auras[auraId].texture = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
@@ -1727,7 +1746,7 @@ end
 function PowaAuras:BarAuraAlphaSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraAlphaSlider:GetValue();
-	PowaBarAuraAlphaSliderText:SetText(self.Text.nomAlpha.." : "..format("%.0f",SliderValue*100).."%");
+	PowaBarAuraAlphaSliderText:SetText(self.Text.nomAlpha..": "..format("%.0f",SliderValue*100).."%");
 	self.Auras[self.CurrentAuraId].alpha = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -1736,21 +1755,8 @@ function PowaAuras:BarAuraSizeSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraSizeSlider:GetValue();
 	local auraId = self.CurrentAuraId;
-	PowaBarAuraSizeSliderText:SetText(self.Text.nomTaille.." : "..format("%.0f",SliderValue*100).."%");
+	PowaBarAuraSizeSliderText:SetText(self.Text.nomTaille..": "..format("%.0f",SliderValue*100).."%");
 	self.Auras[auraId].size = SliderValue;
-	self:RedisplayAura(self.CurrentAuraId);
-end
-
-function PowaAuras:BarAuraCoordSliderChanged()
-	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
-	local SliderValue = PowaBarAuraCoordSlider:GetValue();
-	local auraId = self.CurrentAuraId;
-	
-	PowaBarAuraCoordSliderText:SetText(self.Text.nomPos.." Y : "..SliderValue);
-	if (PowaBarAuraCoordYEdit) then
-		PowaBarAuraCoordYEdit:SetText(SliderValue);
-	end
-	self.Auras[auraId].y = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
@@ -1759,7 +1765,7 @@ function PowaAuras:BarAuraCoordXSliderChanged()
 	local SliderValue = PowaBarAuraCoordXSlider:GetValue();
 	local auraId = self.CurrentAuraId;
 	
-	PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X : "..SliderValue);
+	PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X: "..SliderValue);
 	if (PowaBarAuraCoordXEdit) then
 		PowaBarAuraCoordXEdit:SetText(SliderValue);
 	end
@@ -1767,11 +1773,24 @@ function PowaAuras:BarAuraCoordXSliderChanged()
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
+function PowaAuras:BarAuraCoordYSliderChanged()
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	local SliderValue = PowaBarAuraCoordYSlider:GetValue();
+	local auraId = self.CurrentAuraId;
+	
+	PowaBarAuraCoordYSliderText:SetText(self.Text.nomPos.." Y: "..SliderValue);
+	if (PowaBarAuraCoordYEdit) then
+		PowaBarAuraCoordYEdit:SetText(SliderValue);
+	end
+	self.Auras[auraId].y = SliderValue;
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
 function PowaAuras:BarAuraAnimSpeedSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraAnimSpeedSlider:GetValue();
 	local auraId = self.CurrentAuraId;
-	PowaBarAuraAnimSpeedSliderText:SetText(self.Text.nomSpeed.." : "..format("%.0f",SliderValue*100).."%");
+	PowaBarAuraAnimSpeedSliderText:SetText(self.Text.nomSpeed..": "..format("%.0f",SliderValue*100).."%");
 	self.Auras[auraId].speed = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -1779,7 +1798,7 @@ end
 function PowaAuras:BarAuraAnimDurationSliderChanged(control)
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local sliderValue = control:GetValue();
-	getglobal(control:GetName().."Text"):SetText(self.Text.nomDuration.." : "..sliderValue.." sec");
+	getglobal(control:GetName().."Text"):SetText(self.Text.nomDuration..": "..sliderValue.." sec");
 	--self:ShowText("Duration set to ", sliderValue);
 	self.Auras[self.CurrentAuraId].duration = sliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
@@ -1789,26 +1808,38 @@ function PowaAuras:BarAuraSymSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local sliderValue = PowaBarAuraSymSlider:GetValue();
 	if (sliderValue == 0) then
-		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie.." : "..self.Text.aucune);
-		AuraTexture:SetTexCoord(0, 1, 0, 1);
+		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie..": "..self.Text.aucune);
+		--AuraTexture:SetTexCoord(0, 1, 0, 1);
 	elseif (sliderValue == 1) then
-		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie.." : X");
-		AuraTexture:SetTexCoord(1, 0, 0, 1);
+		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie..": X");
+		--AuraTexture:SetTexCoord(1, 0, 0, 1);
 	elseif (sliderValue == 2) then
-		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie.." : Y");
-		AuraTexture:SetTexCoord(0, 1, 1, 0);
+		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie..": Y");
+		--AuraTexture:SetTexCoord(0, 1, 1, 0);
 	elseif (sliderValue == 3) then
-		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie.." : XY");
-		AuraTexture:SetTexCoord(1, 0, 1, 0);
+		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie..": XY");
+		--AuraTexture:SetTexCoord(1, 0, 1, 0);
 	end
 	self.Auras[self.CurrentAuraId].symetrie = sliderValue;
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:BarAuraRotateSliderChanged()
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	local sliderValue = PowaBarAuraRotateSlider:GetValue();
+	PowaBarAuraRotateSliderText:SetText(PowaAuras.Text.nomRotation..": "..sliderValue.."°");
+	--[[if self.Auras[self.CurrentAuraId].textaura ~= true then
+		AuraTexture:SetPoint("CENTER");
+		AuraTexture:SetRotation(math.rad(sliderValue));
+	end]]--
+	self.Auras[self.CurrentAuraId].rotate = sliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
 function PowaAuras:BarAuraDeformSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local sliderValue = PowaBarAuraDeformSlider:GetValue();
-	PowaBarAuraDeformSliderText:SetText(self.Text.nomDeform.." : "..format("%.2f", sliderValue));
+	PowaBarAuraDeformSliderText:SetText(self.Text.nomDeform..": "..format("%.2f", sliderValue));
 	self.Auras[self.CurrentAuraId].torsion = sliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -1821,7 +1852,7 @@ function PowaAuras:BarThresholdSliderChanged()
 	local aura = self.Auras[self.CurrentAuraId];
 	--PowaAuras:ShowText("Old Threshold=", aura.threshold);
 	--PowaAuras:ShowText("MaxRange=", aura.MaxRange..aura.RangeType);
-	PowaBarThresholdSliderText:SetText(self.Text.nomThreshold.." : "..sliderValue..aura.RangeType);
+	PowaBarThresholdSliderText:SetText(self.Text.nomThreshold..": "..sliderValue..aura.RangeType);
 	aura.threshold = sliderValue;
 	--PowaAuras:ShowText("New Threshold=", aura.threshold);
 end
@@ -1831,21 +1862,14 @@ function PowaAuras:TextCoordXChanged()
 	local thisText = PowaBarAuraCoordXEdit:GetText();
 	local thisNumber = tonumber(thisText);
 	local auraId = self.CurrentAuraId;
-
 	if (thisNumber == nil) then
-		PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X : "..0);
+		PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X: "..0);
 		PowaBarAuraCoordXSlider:SetValue(0);
 		PowaBarAuraCoordXEdit:SetText(0);
 		self.Auras[auraId].x = 0;
 	else
-		if (thisNumber > 300 or thisNumber < -300) then
-			PowaBarAuraCoordXEdit:SetText(thisNumber);
-			self:DisableSlider("PowaBarAuraCoordXSlider");
-		else
-			self:EnableSlider("PowaBarAuraCoordXSlider");
-			PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X : "..thisNumber);
-			PowaBarAuraCoordXSlider:SetValue(thisNumber);
-		end
+		PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X: "..thisNumber);
+		PowaBarAuraCoordXSlider:SetValue(thisNumber);
 		self.Auras[auraId].x = thisNumber;
 	end
 	self:RedisplayAura(self.CurrentAuraId);
@@ -1856,19 +1880,13 @@ function PowaAuras:TextCoordYChanged()
 	local thisNumber = tonumber(thisText);
 	local auraId = self.CurrentAuraId;
 	if (thisNumber == nil) then
-		PowaBarAuraCoordSliderText:SetText(self.Text.nomPos.." Y : "..0);
-		PowaBarAuraCoordSlider:SetValue(0);
+		PowaBarAuraCoordYSliderText:SetText(self.Text.nomPos.." Y: "..0);
+		PowaBarAuraCoordYSlider:SetValue(0);
 		PowaBarAuraCoordYEdit:SetText(0);
 		self.Auras[auraId].y = 0;
 	else
-		if (thisNumber > 300 or thisNumber < -300) then
-			PowaBarAuraCoordYEdit:SetText(thisNumber);
-			self:DisableSlider("PowaBarAuraCoordSlider");
-		else
-			self:EnableSlider("PowaBarAuraCoordSlider");
-			PowaBarAuraCoordSliderText:SetText(self.Text.nomPos.." Y : "..thisNumber);
-			PowaBarAuraCoordSlider:SetValue(thisNumber);
-		end
+		PowaBarAuraCoordYSliderText:SetText(self.Text.nomPos.." Y: "..thisNumber);
+		PowaBarAuraCoordYSlider:SetValue(thisNumber);
 		self.Auras[auraId].y = thisNumber;
 	end
 	self:RedisplayAura(self.CurrentAuraId);
@@ -3570,8 +3588,40 @@ end
 
 function PowaAuras.OnMouseWheel(self, delta)
 	if delta > 0 then
-		self:SetValue(self:GetValue() + self:GetValueStep())
+		self:SetValue(self:GetValue() + self:GetValueStep());
 	else
-		self:SetValue(self:GetValue() - self:GetValueStep())
+		self:SetValue(self:GetValue() - self:GetValueStep());
 	end
 end
+
+function PowaAuras.OnMouseUpX(self)
+	self:SetMinMaxValues(self:GetValue() - 200, self:GetValue() + 200);
+	PowaBarAuraCoordXSliderLow:SetText(self:GetValue() - 200);
+	PowaBarAuraCoordXSliderHigh:SetText(self:GetValue() + 200);
+end
+
+function PowaAuras.OnMouseUpY(self)
+	self:SetMinMaxValues(self:GetValue() - 200, self:GetValue() + 200);
+	PowaBarAuraCoordYSliderLow:SetText(self:GetValue() - 200);
+	PowaBarAuraCoordYSliderHigh:SetText(self:GetValue() + 200);
+end
+
+--[[function PowaAuras.OnEnterX(self)
+	local thisText = PowaBarAuraCoordXEdit:GetText();
+	local thisNumber = tonumber(thisText);
+	self:SetValue(thisNumber)
+	PowaBarAuraCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X: "..thisNumber)
+	self:SetMinMaxValues(self:GetValue() - 200, self:GetValue() + 200);
+	PowaBarAuraCoordXSliderLow:SetText(self:GetValue() - 200);
+	PowaBarAuraCoordXSliderHigh:SetText(self:GetValue() + 200);
+end
+
+function PowaAuras.OnEnterY(self)
+	local thisText = PowaBarAuraCoordYEdit:GetText();
+	local thisNumber = tonumber(thisText);
+	self:SetValue(thisNumber)
+	PowaBarAuraCoordYSliderText:SetText(PowaAuras.Text.nomPos.." Y: "..thisNumber)
+	self:SetMinMaxValues(self:GetValue() - 200, self:GetValue() + 200);
+	PowaBarAuraCoordYSliderLow:SetText(self:GetValue() - 200);
+	PowaBarAuraCoordYSliderHigh:SetText(self:GetValue() + 200);
+end]]--
