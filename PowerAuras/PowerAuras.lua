@@ -1220,22 +1220,22 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 		secondaryFrame:SetFrameStrata("BACKGROUND");
 	end
 	if (aura.textaura ~= true) then
-		secondaryFrame:SetRotation(math.rad(aura.rotate));
+		secondaryTexture:SetRotation(math.rad(aura.rotate));
 	end
 	if (aura.customtex == true) or (aura.owntex == true) then
-		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryFrame:GetTexCoord();
-		secondaryFrame:SetTexCoord(ULx + 0.2, ULy + 0.2, LLx + 0.2, LLy - 0.2, URx - 0.2, URy + 0.2, LRx - 0.2, LRy - 0.2);
+		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
+		secondaryTexture:SetTexCoord(ULx + 0.2, ULy + 0.2, LLx + 0.2, LLy - 0.2, URx - 0.2, URy + 0.2, LRx - 0.2, LRy - 0.2);
 	end
 	if (aura.textaura ~= true) then
-		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryFrame:GetTexCoord();
+		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
 		if (aura.symetrie == 1) then
-			secondaryFrame:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy); -- Inverse X
+			secondaryTexture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy); -- Inverse X
 		elseif (aura.symetrie == 2) then
-			secondaryFrame:SetTexCoord(LLx, LLy, ULx, ULy, LRx, LRy, URx, URy); -- Inverse Y
+			secondaryTexture:SetTexCoord(LLx, LLy, ULx, ULy, LRx, LRy, URx, URy); -- Inverse Y
 		elseif (aura.symetrie == 3) then
-			secondaryFrame:SetTexCoord(LRx, LRy, URx, URy, LLx, LLy, ULx, ULy); -- Inverse XY
+			secondaryTexture:SetTexCoord(LRx, LRy, URx, URy, LLx, LLy, ULx, ULy); -- Inverse XY
 		else
-			secondaryFrame:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy); -- Normal
+			secondaryTexture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy); -- Normal
 		end
 	end
 	secondaryFrame.baseL = frame.baseL;
