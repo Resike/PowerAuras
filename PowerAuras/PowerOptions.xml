@@ -669,7 +669,7 @@
 				</Anchors>
 				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
 					<EdgeSize>
-						<AbsValue val = "12"/>
+						<AbsValue val = "16"/>
 					</EdgeSize>
 					<TileSize>
 						<AbsValue val = "128"/>
@@ -767,7 +767,7 @@
 				</Anchors>
 				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
 					<EdgeSize>
-						<AbsValue val = "12"/>
+						<AbsValue val = "16"/>
 					</EdgeSize>
 					<TileSize>
 						<AbsValue val = "128"/>

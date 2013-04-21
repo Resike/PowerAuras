@@ -224,7 +224,7 @@
 	<!-- Aura Configuration Frame -->
 	<Frame name = "PowaBarConfigFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
-			<AbsDimension x = "488" y = "750"/>
+			<AbsDimension x = "488" y = "775"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "CENTER" relativeTo = "UIParent">
@@ -299,35 +299,25 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name = "PowaCloseButton">
-				<Size>
-					<AbsDimension x = "30" y = "30"/>
-				</Size>
+			<!-- Exit Button -->
+			<Button name = "PowaCloseButton"  inherits = "UIPanelCloseButton">
 				<Anchors>
 					<Anchor point = "TOPRIGHT" relativeTo = "PowaBarConfigFrame" relativePoint = "TOPRIGHT">
 						<Offset>
-							<AbsDimension x = "-4" y = "-4"/>
+							<AbsDimension x = "-5" y = "-5"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Scripts>
-					<OnClick>
-						PowaAuras:EditorClose()
-					</OnClick>
-				</Scripts>
-				<NormalTexture file = "Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
-				<PushedTexture file = "Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
-				<HighlightTexture file = "Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode = "ADD"/>
 			</Button>
 			<!-- Top Panel -->
 			<Frame name = "PowaBarConfigFrameEditor">
 				<Size>
-					<AbsDimension x = "450" y = "332"/>
+					<AbsDimension x = "450" y = "352"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOP">
 						<Offset>
-							<AbsDimension x = "0" y = "-25"/>
+							<AbsDimension x = "0" y = "-30"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -393,7 +383,7 @@
 					</Slider>
 					<EditBox name = "PowaBarAurasText" autoFocus = "false" inherits = "InputBoxTemplate">
 						<Size>
-							<AbsDimension x = "225" y = "16"/>
+							<AbsDimension x = "232" y = "16"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraTextureSlider" relativePoint = "TOPLEFT">
@@ -434,16 +424,19 @@
 					</EditBox>
 					<Button name = "PowaFontsButton" inherits = "OptionsButtonTemplate" text = "[T]">
 						<Size>
-							<AbsDimension x = "22" y = "22"/>
+							<AbsDimension x = "50" y = "20"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAurasText" relativePoint = "TOPRIGHT">
 								<Offset>
-									<AbsDimension x = "5" y = "3"/>
+									<AbsDimension x = "5" y = "2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 						<Scripts>
+							<OnLoad>
+								PowaFontsButtonText:SetText(PowaAuras.Text.font)
+							</OnLoad>
 							<OnClick>
 								PowaAuras:OpenFontSelector(self)
 							</OnClick>
@@ -458,7 +451,7 @@
 					</Button>
 					<EditBox name = "PowaBarCustomTexName" autoFocus = "false" inherits = "InputBoxTemplate">
 						<Size>
-							<AbsDimension x = "145" y = "16"/>
+							<AbsDimension x = "285" y = "16"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraTextureSlider" relativePoint = "TOPLEFT">
@@ -580,7 +573,7 @@
 						<Anchors>
 							<Anchor point = "TOPRIGHT" relativeTo = "PowaBarAuraTextureSlider" relativePoint = "BOTTOMRIGHT">
 								<Offset>
-									<AbsDimension x = "0" y = "-17"/>
+									<AbsDimension x = "0" y = "-20"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -604,12 +597,12 @@
 					</Slider>
 					<Slider name = "PowaBarAuraSymSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
-							<AbsDimension x = "150" y = "16"/>
+							<AbsDimension x = "140" y = "16"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraAlphaSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-17"/>
+									<AbsDimension x = "0" y = "-20"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -633,7 +626,7 @@
 					</Slider>
 					<Slider name = "PowaBarAuraDeformSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
-							<AbsDimension x = "130" y = "16"/>
+							<AbsDimension x = "140" y = "16"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "LEFT" relativeTo = "PowaBarAuraSymSlider" relativePoint = "RIGHT">
@@ -644,13 +637,12 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.aide = PowaAuras.Text.aideDeform
 								self:SetMinMaxValues(0,2)
 								self:SetValue(1)
 								self:SetValueStep(0.01)
-								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform..": 1")
-								PowaBarAuraDeformSliderLow:SetText(PowaAuras.Text.hauteur)
-								PowaBarAuraDeformSliderHigh:SetText(PowaAuras.Text.largeur)
+								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform..": 1.00")
+								PowaBarAuraDeformSliderLow:SetText("0.00")
+								PowaBarAuraDeformSliderHigh:SetText("2.00")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:BarAuraDeformSliderChanged()
@@ -663,12 +655,12 @@
 					</Slider>
 					<Slider name = "PowaBarAuraRotateSlider" inherits = "PowaBarSliderTemplateWithButtons">
 						<Size>
-							<AbsDimension x = "398" y = "16"/>
+							<AbsDimension x = "430" y = "16"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "TOPRIGHT" relativeTo = "PowaBarAuraDeformSlider" relativePoint = "BOTTOMRIGHT">
+							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraSymSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-17"/>
+									<AbsDimension x = "-140" y = "-20"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -692,12 +684,12 @@
 					</Slider>
 					<Slider name = "PowaBarAuraSizeSlider" inherits = "PowaBarSliderTemplateWithButtons">
 						<Size>
-							<AbsDimension x = "398" y = "16"/>
+							<AbsDimension x = "430" y = "16"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "TOPRIGHT" relativeTo = "PowaBarAuraRotateSlider" relativePoint = "BOTTOMRIGHT">
+							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraRotateSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-17"/>
+									<AbsDimension x = "0" y = "-20"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -721,12 +713,12 @@
 					</Slider>
 					<Slider name = "PowaBarAuraCoordXSlider" inherits = "PowaBarSliderTemplateWithButtons">
 						<Size>
-							<AbsDimension x = "350" y = "16"/>
+							<AbsDimension x = "380" y = "16"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraSizeSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-18"/>
+									<AbsDimension x = "0" y = "-20"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -788,12 +780,12 @@
 					</EditBox>
 					<Slider name = "PowaBarAuraCoordYSlider" inherits = "PowaBarSliderTemplateWithButtons">
 						<Size>
-							<AbsDimension x = "350" y = "16"/>
+							<AbsDimension x = "380" y = "16"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "TOP" relativeTo = "PowaBarAuraCoordXSlider" relativePoint = "BOTTOM">
+							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraCoordXSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-16"/>
+									<AbsDimension x = "0" y = "-20"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -936,7 +928,7 @@
 							</OnClick>
 						</Scripts>
 					</CheckButton>
-					<!-- First Configuration Tab Panel (Activation)-->
+					<!-- First Configuration Tab Panel (Activation) -->
 					<Frame name = "PowaBarConfigFrameEditor2">
 						<Size>
 							<AbsDimension x = "450" y = "352"/>
@@ -2092,7 +2084,7 @@
 							</CheckButton>
 						</Frames>
 					</Frame>
-					<!-- Second Configuration Tab Panel (Animation)-->
+					<!-- Second Configuration Tab Panel (Animation) -->
 					<Frame name = "PowaBarConfigFrameEditor3" hidden = "true">
 						<Size>
 							<AbsDimension x = "450" y = "220"/>
@@ -2365,7 +2357,7 @@
 							</CheckButton>
 						</Frames>
 					</Frame>
-					<!-- Third Configuration Tab Panel (Sound)-->
+					<!-- Third Configuration Tab Panel (Sound) -->
 					<Frame name = "PowaBarConfigFrameEditor5" hidden = "true">
 						<Size>
 							<AbsDimension x = "450" y = "340"/>
@@ -2704,7 +2696,7 @@
 							</EditBox>
 						</Frames>
 					</Frame>
-					<!-- Fourth Configuration Tab Panel (Timer)-->
+					<!-- Fourth Configuration Tab Panel (Timer) -->
 					<Frame name = "PowaBarConfigFrameEditor4" hidden = "true">
 						<Size>
 							<AbsDimension x = "450" y = "310"/>
@@ -3211,7 +3203,7 @@
 							</Slider>
 						</Frames>
 					</Frame>
-					<!-- Fith Configuration Tab Panel (Stacks)-->
+					<!-- Fifth Configuration Tab Panel (Stacks) -->
 					<Frame name = "PowaBarConfigFrameEditor6" hidden = "true">
 						<Size>
 							<AbsDimension x = "450" y = "260"/>
@@ -3598,7 +3590,7 @@
 							</Frame>
 						</Frames>
 					</Frame>
-					<Button name = "PowaEditorTab2" inherits = "TabButtonTemplate">
+					<Button name = "PowaEditorTab1" inherits = "TabButtonTemplate">
 						<Anchors>
 							<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor2">
 								<Offset>
@@ -3609,7 +3601,7 @@
 						<Scripts>
 							<OnClick>
 								PanelTemplates_SelectTab(self)
-								PanelTemplates_DeselectTab(PowaEditorTab1)
+								PanelTemplates_DeselectTab(PowaEditorTab2)
 								PanelTemplates_DeselectTab(PowaEditorTab3)
 								PanelTemplates_DeselectTab(PowaEditorTab4)
 								PanelTemplates_DeselectTab(PowaEditorTab5)
@@ -3621,44 +3613,14 @@
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
-								PowaEditorTab2Text:SetText(PowaAuras.Text.nomTabActiv)
+								PowaEditorTab1Text:SetText(PowaAuras.Text.nomTabActiv)
 								PanelTemplates_SelectTab(self)
 								PanelTemplates_TabResize(self, 0)
 								getglobal(self:GetName().."HighlightTexture"):SetWidth(self:GetTextWidth() + 31)
 							</OnLoad>
 						</Scripts>
 					</Button>
-					<Button name = "PowaEditorTab1" inherits = "TabButtonTemplate">
-						<Anchors>
-							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab2">
-								<Offset>
-									<AbsDimension x = "0" y = "0"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnClick>
-								PanelTemplates_SelectTab(self)
-								PanelTemplates_DeselectTab(PowaEditorTab2)
-								PanelTemplates_DeselectTab(PowaEditorTab3)
-								PanelTemplates_DeselectTab(PowaEditorTab4)
-								PanelTemplates_DeselectTab(PowaEditorTab5)
-								PowaBarConfigFrameEditor2:Hide()
-								PowaBarConfigFrameEditor3:Show()
-								PowaBarConfigFrameEditor4:Hide()
-								PowaBarConfigFrameEditor5:Hide()
-								PowaBarConfigFrameEditor6:Hide()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
-							</OnClick>
-							<OnLoad>
-								PowaEditorTab1Text:SetText(PowaAuras.Text.nomTabAnim)
-								PanelTemplates_DeselectTab(self)
-								PanelTemplates_TabResize(self, 0)
-								getglobal(self:GetName().."HighlightTexture"):SetWidth(self:GetTextWidth() + 31)
-							</OnLoad>
-						</Scripts>
-					</Button>
-					<Button name = "PowaEditorTab4" inherits = "TabButtonTemplate">
+					<Button name = "PowaEditorTab2" inherits = "TabButtonTemplate">
 						<Anchors>
 							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab1">
 								<Offset>
@@ -3670,18 +3632,18 @@
 							<OnClick>
 								PanelTemplates_SelectTab(self)
 								PanelTemplates_DeselectTab(PowaEditorTab1)
-								PanelTemplates_DeselectTab(PowaEditorTab2)
 								PanelTemplates_DeselectTab(PowaEditorTab3)
+								PanelTemplates_DeselectTab(PowaEditorTab4)
 								PanelTemplates_DeselectTab(PowaEditorTab5)
-								PowaBarConfigFrameEditor5:Show()
 								PowaBarConfigFrameEditor2:Hide()
-								PowaBarConfigFrameEditor3:Hide()
+								PowaBarConfigFrameEditor3:Show()
 								PowaBarConfigFrameEditor4:Hide()
+								PowaBarConfigFrameEditor5:Hide()
 								PowaBarConfigFrameEditor6:Hide()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
-								PowaEditorTab4Text:SetText(PowaAuras.Text.nomTabSound)
+								PowaEditorTab2Text:SetText(PowaAuras.Text.nomTabAnim)
 								PanelTemplates_DeselectTab(self)
 								PanelTemplates_TabResize(self, 0)
 								getglobal(self:GetName().."HighlightTexture"):SetWidth(self:GetTextWidth() + 31)
@@ -3690,7 +3652,7 @@
 					</Button>
 					<Button name = "PowaEditorTab3" inherits = "TabButtonTemplate">
 						<Anchors>
-							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab4">
+							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab2">
 								<Offset>
 									<AbsDimension x = "0" y = "0"/>
 								</Offset>
@@ -3703,6 +3665,36 @@
 								PanelTemplates_DeselectTab(PowaEditorTab2)
 								PanelTemplates_DeselectTab(PowaEditorTab4)
 								PanelTemplates_DeselectTab(PowaEditorTab5)
+								PowaBarConfigFrameEditor5:Show()
+								PowaBarConfigFrameEditor2:Hide()
+								PowaBarConfigFrameEditor3:Hide()
+								PowaBarConfigFrameEditor4:Hide()
+								PowaBarConfigFrameEditor6:Hide()
+								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+							</OnClick>
+							<OnLoad>
+								PowaEditorTab3Text:SetText(PowaAuras.Text.nomTabSound)
+								PanelTemplates_DeselectTab(self)
+								PanelTemplates_TabResize(self, 0)
+								getglobal(self:GetName().."HighlightTexture"):SetWidth(self:GetTextWidth() + 31)
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name = "PowaEditorTab4" inherits = "TabButtonTemplate">
+						<Anchors>
+							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab3">
+								<Offset>
+									<AbsDimension x = "0" y = "0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PanelTemplates_SelectTab(self)
+								PanelTemplates_DeselectTab(PowaEditorTab1)
+								PanelTemplates_DeselectTab(PowaEditorTab2)
+								PanelTemplates_DeselectTab(PowaEditorTab3)
+								PanelTemplates_DeselectTab(PowaEditorTab5)
 								PowaBarConfigFrameEditor4:Show()
 								PowaBarConfigFrameEditor2:Hide()
 								PowaBarConfigFrameEditor3:Hide()
@@ -3712,7 +3704,7 @@
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
-								PowaEditorTab3Text:SetText(PowaAuras.Text.nomTabTimer)
+								PowaEditorTab4Text:SetText(PowaAuras.Text.nomTabTimer)
 								PanelTemplates_DeselectTab(self)
 								PanelTemplates_TabResize(self, 0)
 								getglobal(self:GetName().."HighlightTexture"):SetWidth(self:GetTextWidth() + 31)
@@ -3721,7 +3713,7 @@
 					</Button>
 					<Button name = "PowaEditorTab5" inherits = "TabButtonTemplate">
 						<Anchors>
-							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab3">
+							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab4">
 								<Offset>
 									<AbsDimension x = "0" y = "0"/>
 								</Offset>

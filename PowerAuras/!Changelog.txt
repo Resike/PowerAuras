@@ -3,7 +3,14 @@ Millions of smaller GUI bugfixes.
 Added texture rotater slider.
 Removed value increaser and decreaser buttons from the sliders.
 Sliders now can be adjusted with mousewheel up/down.
-Tooltip fixes.
+The default aura size now 100%.
+The default aura y coodriante now 0.
+X, Y, XY symmetry changes now wont be shown in effect editor.
+Alpha slider now can be changed to 0% too.
+Deformation slider min-max value now can be set between 0-2.
+Fixed font button for text auras.
+Text aura icons and TempPortrait icons now wont get modified by the current auras choosen color.
+Tooltip and hover fixes.
 
 * 4.23.19
 Fixed a bug which didn't let the addon to use all the installed Textures (254).
