@@ -187,10 +187,10 @@ Cancel = "Cancel",
 
 -- Main
 nomEnable = "Activate Power Auras",
-aideEnable = "Enable all Power Auras effects",
+aideEnable = "Enable all Power Aura effects.",
 
 nomDebug = "Activate Debug Messages",
-aideDebug = "Enable Debug Messages",
+aideDebug = "Enable Debug Messages.",
 nomTextureCount = "Max Textures",
 aideTextureCount = "Change this if you add your own textures",
 
@@ -305,6 +305,7 @@ aideUnitn2 = "Only for raid/group.",
 aideMaxTex = "Define the maximum number of textures available on the Effect Editor. If you add textures on the Mod directory (with the names AURA1.tga to AURA50.tga), you must indicate the correct number here.",
 aideWowTextures = "Check this to use the texture of WoW instead of textures in the Power Auras directory for this effect.",
 aideTextAura = "Check this to type text instead of texture.",
+aideTextureRotatable = "Uncheck this, when you experience problems with the current texture.",
 aideRealaura = "Real Aura",
 aideCustomTextures = "Check this to use textures in the 'Custom' subdirectory. Put the name of the texture below (ex: myTexture.tga). You can also use a Spell Name (ex: Feign Death) or SpellID (ex: 5384).",
 aideRandomColor = "Check this to tell this effect to use random color each time it will be activated.",
@@ -325,6 +326,7 @@ nomEnd = "End Animation",
 nomSymetrie = "Symmetry",
 nomAlpha = "Opacity",
 nomPos = "Position",
+nomTextureRotatable = "Texure Rotatable",
 nomRotation = "Rotation",
 nomTaille = "Size",
 
@@ -544,10 +546,10 @@ aidePowaTimerInvertAuraSlider = "Invert the aura when the duration is less than 
 nomTimerHideAura = "Hide Aura & Timer Until Time Above",
 aidePowaTimerHideAuraSlider = "Hide the aura and timer when the duration is greater than this limit (0 to deactivate)",
 
-aideTimerRounding = "When checked will round the timer up",
-nomTimerRounding = "Round Timer Up",
+aideTimerRounding = "When checked will round the timers up.",
+nomTimerRounding = "Round Timers Up",
 
-aideAllowInspections = "Allow Power Auras to Inspect players to determine roles, turning this off will sacrifice accuracy for speed",
+aideAllowInspections = "Allow Power Auras to Inspect players to determine roles, turning this off will sacrifice accuracy for speed.",
 nomAllowInspections = "Allow Inspections",
 
 nomCarried = "Only if in bags",
@@ -784,7 +786,7 @@ PlayerImportDialogAcceptButton2 = "Save",
 PlayerImportDialogCancelButton1 = "Reject",
 
 aideCommsRegisterFailure = "There was an error when setting up addon communications.",
-aideBlockIncomingAuras = "Prevent anybody sending you auras",
+aideBlockIncomingAuras = "Prevent anybody sending you auras.",
 nomBlockIncomingAuras = "Block Incoming Auras",
 aideFixExports = "Check this when aura exports are not functioning correctly and leave you with a blank textbox.",
 nomFixExports = "Alternative Exports",
@@ -3341,10 +3343,10 @@ nomCustomSound = "Fichier de son:",
 aideCustomSound = "Enter a soundfile that is in the Sounds folder, BEFORE you started the game. mp3 and wav are supported. example: 'cookie.mp3'\nOr\nEnter the full path to play any WoW sound e.g. Sound\\Events\\GuldanCheers.wav",
 
 nomCustomSoundPath = "Path to custom sounds:",
-aideCustomSoundPath = "Set this to your own path (within the WoW install) to prevent your own sounds being overwritten by updating Power Auras",
+aideCustomSoundPath = "Set this to your own path (within the WoW install) to prevent your own sounds being overwritten by updating Power Auras.",
 
 nomCustomAuraPath = "Path to custom aura textures:",
-aideCustomAuraPath = "Set this to your own path (within the WoW install) to prevent your own textures being overwritten by updating Power Auras",
+aideCustomAuraPath = "Set this to your own path (within the WoW install) to prevent your own textures being overwritten by updating Power Auras.",
 
 nomSoundEnding = "Son de fin:",
 nomSoundEnd = "Son à jouer",

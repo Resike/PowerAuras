@@ -6,7 +6,7 @@
 			</OnLoad>
 		</Scripts>
 		<Frames>
-			<!-- Enable PA Checkbox -->
+			<!-- Enable Power Auras -->
 			<CheckButton name = "PowaEnableButton" inherits = "PowaCheckTemplate">
 				<Size>
 					<AbsDimension x = "25" y = "25"/>
@@ -209,26 +209,26 @@
 				</Scripts>
 			</CheckButton>
 			<!-- Number of Aura Textures -->
-			<Slider name = "PowaOptionsTextureCount" inherits = "PowaBarSliderTemplateWithButtons">
+			<Slider name = "PowaOptionsTextureCount" inherits = "PowaBarSliderTemplate">
 				<Size>
-					<AbsDimension x = "550" y = "16" />
+					<AbsDimension x = "580" y = "16" />
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaOverrideTextureCountButton" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "25" y = "-10"/>
+							<AbsDimension x = "0" y = "-10"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self:SetMinMaxValues(10,500)
+						self:SetMinMaxValues(1,1000)
 						self:SetValue(PowaMisc.UserSetMaxTextures)
 						self:SetValueStep(1)
 						self.aide = aideTextureCount
-						PowaOptionsTextureCountText:SetText(PowaAuras.Text.nomTextureCount.." : "..self:GetValue())
-						PowaOptionsTextureCountLow:SetText("10")
-						PowaOptionsTextureCountHigh:SetText("500")
+						PowaOptionsTextureCountText:SetText(PowaAuras.Text.nomTextureCount..": "..self:GetValue())
+						PowaOptionsTextureCountLow:SetText("1")
+						PowaOptionsTextureCountHigh:SetText("1000")
 					</OnLoad>
 					<OnValueChanged>
 						PowaAuras:PowaOptionsMaxTexturesSliderChanged(self)
@@ -242,7 +242,7 @@
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaOptionsTextureCount" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "0" y = "-20"/>
+							<AbsDimension x = "110" y = "-20"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -283,7 +283,7 @@
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaShowAuraBrowserButton" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "-10" y = "-25"/>
+							<AbsDimension x = "-15" y = "-25"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -361,7 +361,7 @@
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownDefaultTimerTexture" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "-20" y = "-15"/>
+							<AbsDimension x = "-90" y = "-20"/>
 						</Offset>
 					</Anchor>
 				</Anchors>

@@ -1066,7 +1066,16 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	end
 	if (aura.customtex == true) or (aura.owntex == true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
-		texture:SetTexCoord(ULx + 0.2, ULy + 0.2, LLx + 0.2, LLy - 0.2, URx - 0.2, URy + 0.2, LRx - 0.2, LRy - 0.2);
+		local x = (sqrt(2) - 1) / 2
+		if string.find(aura.customname, "\\") then
+			if aura.texturerotatable == true then
+				texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy);
+			else
+				texture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+			end
+		else
+			texture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+		end
 	end
 	if (aura.textaura ~= true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
@@ -1080,8 +1089,18 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy); -- Normal
 		end
 	end
-	if (aura.textaura == true) or (aura.customtex == true) or (aura.owntex == true) then
+	if (aura.textaura == true) or (aura.owntex == true) then
 		frame.baseH = 256 * aura.size * (2 - aura.torsion);
+	elseif (aura.customtex == true) then
+		if string.find(aura.customname, "\\") then
+			if aura.texturerotatable == true then
+				frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
+			else
+				frame.baseH = 256 * aura.size * (2 - aura.torsion);
+			end
+		else
+			frame.baseH = 256 * aura.size * (2 - aura.torsion);
+		end
 	else
 		frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
 		frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
@@ -1093,7 +1112,17 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			texture:SetFont(STANDARD_TEXT_FONT, fontsize, "OUTLINE, MONOCHROME");
 		end
 		frame.baseL = texture:GetStringWidth() + 5;
-	elseif (aura.customtex == true) or (aura.owntex == true) then
+	elseif (aura.customtex == true) then
+		if string.find(aura.customname, "\\") then
+			if aura.texturerotatable == true then
+				frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
+			else
+				frame.baseL = 256 * aura.size * aura.torsion;
+			end
+		else
+			frame.baseL = 256 * aura.size * aura.torsion;
+		end
+	elseif (aura.owntex == true) then
 		frame.baseL = 256 * aura.size * aura.torsion;
 	end
 	PowaAuras:InitialiseFrame(aura, frame);
@@ -1155,8 +1184,8 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 end
 
 function PowaAuras:InitialiseFrame(aura, frame)
-	frame:SetAlpha(math.min(aura.alpha,0.99));
-	frame:SetPoint("CENTER",aura.x, aura.y);
+	frame:SetAlpha(math.min(aura.alpha, 0.99));
+	frame:SetPoint("CENTER", aura.x, aura.y);
 	frame:SetWidth(frame.baseL);
 	frame:SetHeight(frame.baseH);
 end
@@ -1224,7 +1253,16 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	end
 	if (aura.customtex == true) or (aura.owntex == true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
-		secondaryTexture:SetTexCoord(ULx + 0.2, ULy + 0.2, LLx + 0.2, LLy - 0.2, URx - 0.2, URy + 0.2, LRx - 0.2, LRy - 0.2);
+		local x = (sqrt(2) - 1) / 2
+		if string.find(aura.customname, "\\") then
+			if aura.texturerotatable == true then
+				secondaryTexture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy);
+			else
+				secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+			end
+		else
+			secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+		end
 	end
 	if (aura.textaura ~= true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
@@ -1240,7 +1278,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	end
 	secondaryFrame.baseL = frame.baseL;
 	secondaryFrame.baseH = frame.baseH;
-	secondaryFrame:SetPoint("CENTER",aura.x, aura.y);
+	secondaryFrame:SetPoint("CENTER", aura.x, aura.y);
 	secondaryFrame:SetWidth(secondaryFrame.baseL);
 	secondaryFrame:SetHeight(secondaryFrame.baseH);
 	if (aura.UseOldAnimations) then

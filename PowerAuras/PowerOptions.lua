@@ -1539,6 +1539,7 @@ function PowaAuras:InitPage(aura)
 	PowaThresholdInvertButton:SetChecked(aura.thresholdinvert);
 	PowaExtraButton:SetChecked(aura.Extra);
 	PowaTexModeButton:SetChecked(aura.texmode == 1);
+	PowaTextureRotatableButton:SetChecked(aura.texturerotatable)
 	-- Ternary Logic
 	self:TernarySetState(PowaInCombatButton, aura.combat);
 	self:TernarySetState(PowaIsInRaidButton, aura.inRaid);
@@ -2064,6 +2065,15 @@ function PowaAuras:TexModeChecked()
 		self.Auras[auraId].texmode = 1;
 	else
 		self.Auras[auraId].texmode = 2;
+	end
+	self:RedisplayAura(self.CurrentAuraId);
+end
+function PowaAuras:TextureRotatableChecked()
+	local auraId = self.CurrentAuraId;
+	if (PowaTextureRotatableButton:GetChecked()) then
+		self.Auras[auraId].texturerotatable = true;
+	else
+		self.Auras[auraId].texturerotatable = false;
 	end
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -3282,7 +3292,7 @@ local function OptionsRefresh()
 	PowaOptionsUpdateSlider2:SetValue(100 - 200 * PowaMisc.OnUpdateLimit);
 	PowaOptionsTimerUpdateSlider2:SetValue(100 - 1000 * PowaMisc.AnimationLimit);
 	PowaOptionsTextureCount:SetValue(PowaMisc.UserSetMaxTextures);
-	PowaOverrideTextureCountButton:SetChecked(PowaMisc.OverrideMaxTextures ~= true);
+	PowaOverrideTextureCountButton:SetChecked(PowaMisc.OverrideMaxTextures);
 	PowaEnableButton:SetChecked(PowaMisc.Disabled ~= true);
 	PowaDebugButton:SetChecked(PowaMisc.debug);
 	PowaTimerRoundingButton:SetChecked(PowaMisc.TimerRoundUp);

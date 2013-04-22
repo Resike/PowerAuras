@@ -36,15 +36,12 @@
 		</Anchors>
 	</GameTooltip>
 	<!-- Templates -->
-	<!-- Copied from OptionSliderTemplate 2.4.3 because Blizzard is ......
-	Check to see if they use consistent fontsizes in build > 8982 and remove this template.
-	Revert PowaBarSliderTemplate to inherit from OptionsSliderTemplate if it's fixed as well.-->
-	<Slider name = "OptionsSmallSliderTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
+	<Slider name = "PowaBarSliderTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
 		<Size>
 			<AbsDimension x = "144" y = "17"/>
 		</Size>
 		<HitRectInsets>
-			<AbsInset left = "0" right = "0" top = "-10" bottom = "-10"/>
+			<AbsInset left = "0" right = "0" top = "0" bottom = "2"/>
 		</HitRectInsets>
 		<Backdrop bgFile = "Interface\Buttons\UI-SliderBar-Background" edgeFile = "Interface\Buttons\UI-SliderBar-Border" tile = "true">
 			<EdgeSize>
@@ -87,13 +84,9 @@
 		<Scripts>
 			<OnEnter>
 				if (self:IsEnabled()) then
-					if (self.tooltipText) then
-						GameTooltip:SetOwner(self, self.tooltipOwnerPoint or "ANCHOR_RIGHT")
-						GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1)
-					end
-					if (self.tooltipRequirement) then
-						GameTooltip:AddLine(self.tooltipRequirement, 1.0, 1.0, 1.0, 1.0)
-						GameTooltip:Show()
+					if (self.aide) then
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+						GameTooltip:SetText(self.aide, nil, nil, nil, nil, 1)
 					end
 				end
 			</OnEnter>
@@ -106,57 +99,6 @@
 				<AbsDimension x = "32" y = "32"/>
 			</Size>
 		</ThumbTexture>
-	</Slider>
-	<Slider name = "PowaBarSliderTemplate" inherits = "OptionsSmallSliderTemplate" virtual = "true">
-		<Scripts>
-			<OnEnter>
-				if (self.aide) then 
-					GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-					GameTooltip:SetText(self.aide, nil, nil, nil, nil, 1)
-				end
-			</OnEnter>
-			<OnLeave>
-				GameTooltip:Hide()
-			</OnLeave>
-		</Scripts>
-	</Slider>
-	<Slider name = "PowaBarSliderTemplateWithButtons" inherits = "PowaBarSliderTemplate" virtual = "true">
-		<!--<Frames>
-			<Button name = "$parentPlus" text = "+" inherits = "OptionsButtonTemplate">
-				<Size>
-					<AbsDimension x = "17" y = "18"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "RIGHT" relativePoint = "LEFT">
-						<Offset>
-							<AbsDimension x = "0" y = "0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						self:GetParent():SetValue(self:GetParent():GetValue() + self:GetParent():GetValueStep())
-					</OnClick>
-				</Scripts>
-			</Button>
-			<Button name = "$parentMinus" text = "-" inherits = "OptionsButtonTemplate">
-				<Size>
-					<AbsDimension x = "17" y = "18"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "RIGHT" relativePoint = "LEFT" relativeTo = "$parentPlus">
-						<Offset>
-							<AbsDimension x = "0" y = "0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						self:GetParent():SetValue(self:GetParent():GetValue() - self:GetParent():GetValueStep())
-					</OnClick>
-				</Scripts>
-			</Button>
-		</Frames>-->
 	</Slider>
 	<CheckButton name = "PowaCheckTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
 		<HitRectInsets>
@@ -653,7 +595,7 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<Slider name = "PowaBarAuraRotateSlider" inherits = "PowaBarSliderTemplateWithButtons">
+					<Slider name = "PowaBarAuraRotateSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
 							<AbsDimension x = "430" y = "16"/>
 						</Size>
@@ -682,7 +624,28 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<Slider name = "PowaBarAuraSizeSlider" inherits = "PowaBarSliderTemplateWithButtons">
+					<CheckButton name = "PowaTextureRotatableButton" inherits = "PowaCheckTemplate">
+						<Size>
+							<AbsDimension x = "25" y = "25"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaBarAuraRotateSlider" relativePoint = "TOPLEFT">
+								<Offset>
+									<AbsDimension x = "-2" y = "-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.tooltipText = PowaAuras.Text.aideTextureRotatable
+								PowaTextureRotatableButtonText:SetText(PowaAuras.Text.nomTextureRotatable)
+							</OnLoad>
+							<OnClick>
+								PowaAuras:TextureRotatableChecked()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<Slider name = "PowaBarAuraSizeSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
 							<AbsDimension x = "430" y = "16"/>
 						</Size>
@@ -711,7 +674,7 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<Slider name = "PowaBarAuraCoordXSlider" inherits = "PowaBarSliderTemplateWithButtons">
+					<Slider name = "PowaBarAuraCoordXSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
 							<AbsDimension x = "380" y = "16"/>
 						</Size>
@@ -778,7 +741,7 @@
 							</OnEscapePressed>
 						</Scripts>
 					</EditBox>
-					<Slider name = "PowaBarAuraCoordYSlider" inherits = "PowaBarSliderTemplateWithButtons">
+					<Slider name = "PowaBarAuraCoordYSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
 							<AbsDimension x = "380" y = "16"/>
 						</Size>
@@ -1313,7 +1276,7 @@
 									</OnLeave>
 								</Scripts>
 							</Frame>
-							<Slider name = "PowaBarThresholdSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaBarThresholdSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "220" y = "16"/>
 								</Size>
@@ -2275,7 +2238,7 @@
 									</OnLeave>
 								</Scripts>
 							</Frame>
-							<Slider name = "PowaBarAuraAnimSpeedSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaBarAuraAnimSpeedSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "360" y = "16"/>
 								</Size>
@@ -2304,7 +2267,7 @@
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
-							<Slider name = "PowaBarAuraDurationSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaBarAuraDurationSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "360" y = "16"/>
 								</Size>
@@ -2748,7 +2711,7 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<Slider name = "PowaTimerCoordXSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaTimerCoordXSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "180" y = "16"/>
 								</Size>
@@ -2782,7 +2745,7 @@
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
-							<Slider name = "PowaTimerCoordSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaTimerCoordSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "180" y = "16"/>
 								</Size>
@@ -2816,7 +2779,7 @@
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
-							<Slider name = "PowaTimerSizeSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaTimerSizeSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "180" y = "16"/>
 								</Size>
@@ -2845,7 +2808,7 @@
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
-							<Slider name = "PowaTimerAlphaSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaTimerAlphaSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "180" y = "16"/>
 								</Size>
@@ -2874,7 +2837,7 @@
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
-							<Slider name = "PowaTimerDurationSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaTimerDurationSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "180" y = "16"/>
 								</Size>
@@ -3171,7 +3134,7 @@
 									</OnLeave>
 								</Scripts>
 							</Frame>
-							<Slider name = "PowaTimerInvertAuraSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaTimerInvertAuraSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "398" y = "16"/>
 								</Size>
@@ -3255,7 +3218,7 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<Slider name = "PowaStacksCoordXSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaStacksCoordXSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "180" y = "16"/>
 								</Size>
@@ -3289,7 +3252,7 @@
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
-							<Slider name = "PowaStacksCoordSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaStacksCoordSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "180" y = "16"/>
 								</Size>
@@ -3323,7 +3286,7 @@
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
-							<Slider name = "PowaStacksSizeSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaStacksSizeSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "180" y = "16"/>
 								</Size>
@@ -3352,7 +3315,7 @@
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
-							<Slider name = "PowaStacksAlphaSlider" inherits = "PowaBarSliderTemplateWithButtons">
+							<Slider name = "PowaStacksAlphaSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
 									<AbsDimension x = "180" y = "16"/>
 								</Size>
