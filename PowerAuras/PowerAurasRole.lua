@@ -7,7 +7,7 @@ function PowaAuras:ResetTalentScan(unit)
 	end
 	local unitName = UnitName(unit);
 	if (unitName == nil) then return; end
-	--self:Message("Resetting inspect for ",unitName);
+	--self:Message("Resetting inspect for ", unitName);
 	self.InspectedRoles[unitName] = nil;
 	self.FixRoles[unitName] = nil;
 end
@@ -31,15 +31,15 @@ function PowaAuras:SetRoleUndefined(unit)
 end
 
 function PowaAuras:ShouldBeInspected(unit)
-	if ("focus" == unit or self.GroupUnits[unit]==nil) then
+	if ("focus" == unit or self.GroupUnits[unit] == nil) then
 		return false;
 	end
 	local class = self.GroupUnits[unit].Class;
-	if (class=="ROGUE") or (class=="HUNTER") or (class=="MAGE") or (class=="WARLOCK") or (class=="DEATHKNIGHT") then
+	if (class == "ROGUE") or (class == "HUNTER") or (class == "MAGE") or (class == "WARLOCK") or (class == "DEATHKNIGHT") then
 		return false;
 	end
 	local name = self.GroupUnits[unit].Name;
-	--self:Message("ShouldBeInspected? ",unit, " - ", name);
+	--self:Message("ShouldBeInspected? ", unit, " - ", name);
 	if (self.InspectedRoles[name] ~= nil) then
 		return false;
 	end
@@ -70,7 +70,7 @@ function PowaAuras:TryInspectNext()
 				self.NextInspectTimeOut = GetTime() + self.InspectTimeOut;
 				self.NextInspectUnit = unit;
 				NotifyInspect(unit);
-				--self:Message("Inspect requested for ",unitInfo.Name);
+				--self:Message("Inspect requested for ", unitInfo.Name);
 			end
 			return;
 		end
@@ -99,23 +99,23 @@ function PowaAuras:InspectUnit(unit)
 		--self:Message(" Not Found!");
 		return;
 	end
-	--self:Message("InspectRole: ",unitInfo.Name, " (", unit,")");
+	--self:Message("InspectRole: ", unitInfo.Name, " (", unit,")");
 	local activeTree = GetInspectSpecialization(unit);
-	local null, null, null, null, roleType = GetSpecializationInfoByID(activeTree);
+	local _, _, _, _, roleType = GetSpecializationInfoByID(activeTree);
 	local role;
-	if (roleType=="DAMAGER") then
-		if (unitInfo.Class=="DRUID" and activeTree==103) then
+	if (roleType == "DAMAGER") then
+		if (unitInfo.Class == "DRUID" and activeTree == 103) then
 			role = "RoleMeleDps"; -- Feral
-		elseif (unitInfo.Class=="SHAMAN" and activeTree==263) then
+		elseif (unitInfo.Class == "SHAMAN" and activeTree == 263) then
 			role = "RoleMeleDps"; -- Enhancement
-		elseif (unitInfo.Class=="WARRIOR" or unitInfo.Class=="MONK" or unitInfo.Class=="PALADIN") then
+		elseif (unitInfo.Class == "WARRIOR" or unitInfo.Class == "MONK" or unitInfo.Class == "PALADIN") then
 			role = "RoleMeleDps";
 		else
 			role = "RoleRangeDps";
 		end
-	elseif (roleType=="HEALER") then
+	elseif (roleType == "HEALER") then
 		role = "RoleHealer";
-	elseif (roleType=="TANK") then
+	elseif (roleType == "TANK") then
 		role = "RoleTank";
 	end
 	self.InspectedRoles[unitInfo.Name] = role;
@@ -123,15 +123,15 @@ function PowaAuras:InspectUnit(unit)
 end
 
 function PowaAuras:DetermineRole(unit)
-	if (unit==nil) then return; end
-	local null, class = UnitClass(unit);
+	if (unit == nil) then return; end
+	local _, class = UnitClass(unit);
 	if (class=="ROGUE") then
 		return "RoleMeleDps", "Preset";
-	elseif (class=="HUNTER") then
+	elseif (class == "HUNTER") then
 		return "RoleRangeDps", "Preset";
-	elseif (class=="MAGE") then
+	elseif (class == "MAGE") then
 		return "RoleRangeDps", "Preset";
-	elseif (class=="WARLOCK") then
+	elseif (class == "WARLOCK") then
 		return "RoleRangeDps", "Preset";
 	end
 	local unitName = UnitName(unit);
@@ -141,31 +141,31 @@ function PowaAuras:DetermineRole(unit)
 	if (self.FixRoles[unitName] ~= nil) then
 		return self.FixRoles[unitName], "Fixed";
 	end
-	if (class=="DEATHKNIGHT") then
-		local null, null, buffExist = UnitBuff(unit, self.Spells.BUFF_BLOOD_PRESENCE);
+	if (class == "DEATHKNIGHT") then
+		local _, _, buffExist = UnitBuff(unit, self.Spells.BUFF_BLOOD_PRESENCE);
 		if (buffExist) then
 			self.FixRoles[unitName] = "RoleTank";
 		else
 			self.FixRoles[unitName] = "RoleMeleDps";
 		end
 		return self.FixRoles[unitName], "Guess";
-	elseif (class=="PRIEST") then
-		local null, null, buffExist = UnitBuff(unit, self.Spells.SHADOWFORM);
+	elseif (class == "PRIEST") then
+		local _, _, buffExist = UnitBuff(unit, self.Spells.SHADOWFORM);
 		if (buffExist) then
 			self.FixRoles[unitName] = "RoleRangeDps";
 			return "RoleRangeDps", "Guess";
 		end
 		return "RoleHealer", "Guess";
-	elseif (class=="WARRIOR") then
+	elseif (class == "WARRIOR") then
 		local defense = select(2, UnitDefense(unit)) / UnitLevel(unit);
 		if (defense > 2) then
 			return "RoleTank", "Guess";
 		end
 		return "RoleMeleDps", "Guess";
-	elseif (class=="DRUID") then
-		local null, powerType = UnitPowerType(unit);
+	elseif (class == "DRUID") then
+		local _, powerType = UnitPowerType(unit);
 		if (powerType == "MANA") then
-			null, null, tBuffExist = UnitBuff(unit, self.Spells.MOONKIN_FORM);
+			_, _, tBuffExist = UnitBuff(unit, self.Spells.MOONKIN_FORM);
 			if (tBuffExist) then
 				self.FixRoles[unitName] = "RoleRangeDps";
 				return "RoleRangeDps", "Guess";
@@ -179,7 +179,7 @@ function PowaAuras:DetermineRole(unit)
 			self.FixRoles[unitName] = "RoleMeleDps";
 			return "RoleMeleDps", "Guess";
 		end
-	elseif (class=="PALADIN") then
+	elseif (class == "PALADIN") then
 		local defense = select(2, UnitDefense(unit)) / UnitLevel(unit);
 		if (defense > 2) then
 			return "RoleTank", "Guess";
@@ -188,7 +188,7 @@ function PowaAuras:DetermineRole(unit)
 			return "RoleHealer", "Guess";
 		end
 		return "RoleMeleDps", "Guess";
-	elseif (class=="SHAMAN") then
+	elseif (class == "SHAMAN") then
 		if (UnitStat(unit, 2) > UnitStat(unit, 4)) then
 			return "RoleMeleDps", "Guess";
 		end

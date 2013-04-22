@@ -1,5 +1,6 @@
 ﻿* 4.23.20
 Millions of smaller GUI bugfixes.
+Performance upgradements.
 Added texture rotater slider.
 Removed value increaser and decreaser buttons from the sliders.
 Sliders now can be adjusted with mousewheel up/down.
@@ -10,7 +11,16 @@ Alpha slider now can be changed to 0% too.
 Deformation slider min-max value now can be set between 0-2.
 Fixed font button for text auras.
 Text aura icons and TempPortrait icons now wont get modified by the current auras choosen color.
+Fixed a bug when you manually set max texture count.
+Fixed a bug with the button itself.
+Override max textures min-max value now is 1-1000.
+Added "Texture Rotatable" checkbutton, which fixes some not fully rotatable custom textures, when disabled.
+The texure cutter algorythm is now more precise for ingame icons, and custom textures.
+Hide all button now properly decreases all icon's alpha immediately.
+Slider inherit changes, removed unused stuff.
+Some smaller slider fixes.
 Tooltip and hover fixes.
+Code cleanup.
 
 * 4.23.19
 Fixed a bug which didn't let the addon to use all the installed Textures (254).

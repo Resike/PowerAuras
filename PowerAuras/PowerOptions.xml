@@ -1197,7 +1197,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAuras:OptionHideAll()
-								PowaAuras:UpdateMainOption()
+								PowaAuras:UpdateMainOption(true)
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>

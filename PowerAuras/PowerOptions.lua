@@ -6,7 +6,7 @@ function PowaAuras:ResetPositions()
 	PowaOptionsFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 50);
 end
 
-function PowaAuras:UpdateMainOption()
+function PowaAuras:UpdateMainOption(hideAll)
 	PowaOptionsHeader:SetText("Power Auras "..self.Version);
 	PowaMainHideAllButton:SetText(self.Text.nomHide);
 	PowaMainTestButton:SetText(self.Text.nomTest);
@@ -56,7 +56,11 @@ function PowaAuras:UpdateMainOption()
 			if (not aura.Showing) then
 				icon:SetAlpha(0.33);
 			else
-				icon:SetAlpha(1.0);
+				if hideAll == true then
+					icon:SetAlpha(0.33);
+				else
+					icon:SetAlpha(1.0);
+				end
 			end
 		end
 	end

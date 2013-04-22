@@ -25,15 +25,21 @@ Registers the POWA header for addon communications. Note that this requires a pa
 --]]
 function PowaComms:Register()
 	-- Register prefix.
-	if(not RegisterAddonMessagePrefix) then return; end
+	if (not RegisterAddonMessagePrefix) then
+		return;
+	end
 	RegisterAddonMessagePrefix("POWA");
 	-- Check to see if it's registered (RegisterAddonMessagePrefix may return true even if it fails, just playing safe!).
-	if(not IsAddonMessagePrefixRegistered("POWA")) then
-		if(PowaMisc.debug) then PowaAuras:ShowText("PowaComms:Register() |cFFFF0000failed!|r"); end
+	if (not IsAddonMessagePrefixRegistered("POWA")) then
+		if(PowaMisc.debug) then
+			PowaAuras:ShowText("PowaComms:Register() |cFFFF0000failed!|r");
+		end
 		self.Registered = false;
 		return false;
 	else
-		if(PowaMisc.debug) then PowaAuras:ShowText("PowaComms:Register() |cFF00FF00succeeded!|r"); end
+		if(PowaMisc.debug) then
+			PowaAuras:ShowText("PowaComms:Register() |cFF00FF00succeeded!|r");
+		end
 		self.Registered = true;
 		return true;
 	end
@@ -53,19 +59,23 @@ handle the data.
 --]]
 function PowaAuras:CHAT_MSG_ADDON(header, data, channel, from)
 	-- Check the header.
-	if(header ~= "POWA") then return; end
+	if (header ~= "POWA") then
+		return;
+	end
 	-- A good data message is always in the following format: <INSTRUCTION;SEGMENT_INDEX;SEGMENT_COUNT;/>
 	local stx = strfind(data, "<", 1, true);
-	local segpos = strfind(data, ";", stx+1, true);
-	local segtotal = strfind(data, ";", segpos+1, true);
-	local datasegment = strfind(data, "/>", segtotal+1, true);
+	local segpos = strfind(data, ";", stx + 1, true);
+	local segtotal = strfind(data, ";", segpos + 1, true);
+	local datasegment = strfind(data, "/>", segtotal + 1, true);
 	-- They all need to be present.
-	if(not stx or not segpos or not segtotal or not datasegment) then return; end
+	if (not stx or not segpos or not segtotal or not datasegment) then
+		return;
+	end
 	-- Replace segpos/segtotal with their actual values. Extract the instruction too.
-	local instruction, segpos, segtotal, datasegment = strsub(data, stx+1, segpos-1),
-		tonumber(strsub(data, segpos+1, segtotal-1), 10),
-		tonumber(strsub(data, segtotal+1, datasegment-1), 10),
-		strsub(data, datasegment+2);
+	local instruction, segpos, segtotal, datasegment = strsub(data, stx + 1, segpos - 1),
+		tonumber(strsub(data, segpos + 1, segtotal - 1), 10),
+		tonumber(strsub(data, segtotal + 1, datasegment-1), 10),
+		strsub(data, datasegment + 2);
 	-- Fire handlers.
 	self.Comms:FireHandler(instruction, datasegment, from, segpos, segtotal);
 end
@@ -75,21 +85,25 @@ Wrapper for SendAddonMessage, handles all of the lock requests and multiple data
 --]]
 function PowaComms:SendAddonMessage(instruction, data, to, segment, total)
 	-- Only send if we can receive.
-	if(not self:IsRegistered()) then return false; end
+	if (not self:IsRegistered()) then
+		return false;
+	end
 	-- Check length.
 	local length = strlen(data);
-	if(PowaMisc.debug) then PowaAuras:ShowText("Comms: Sending instruction " .. instruction .. " (data length " .. length .. ")"); end
-	if(length <= 200) then
+	if (PowaMisc.debug) then
+		PowaAuras:ShowText("Comms: Sending instruction "..instruction.." (data length "..length..")");
+	end
+	if (length <= 200) then
 		-- And AWAY!
-		data = "<" .. instruction .. ";" .. (segment or 1) .. ";" .. (total or 1) .. "/>" .. data;
+		data = "<"..instruction..";"..(segment or 1)..";"..(total or 1).."/>"..data;
 		SendAddonMessage("POWA", data, "WHISPER", to);
-	elseif(not self.SenderLock or time() > self.SenderTimeout) then
+	elseif (not self.SenderLock or time() > self.SenderTimeout) then
 		-- We'll need a multipart message. Store this data for now.
 		self.SenderInstruction = instruction;
 		self.SenderStore = data;
 		-- Lock ourselves.
 		self.SenderLock = to;
-		self.SenderTimeout = time()+10;
+		self.SenderTimeout = time() + 10;
 		-- Request a lock with this user.
 		self:SendAddonMessage("REQUEST_LOCK", instruction, to);
 	end
@@ -103,7 +117,9 @@ it will remain until you return true.
 --]]
 function PowaComms:AddHandler(instruction, func)
 	-- Add it.
-	if(not self.Handlers[instruction]) then self.Handlers[instruction] = {}; end
+	if (not self.Handlers[instruction]) then
+		self.Handlers[instruction] = { };
+	end
 	tinsert(self.Handlers[instruction], func);
 end
 --[[
@@ -112,10 +128,12 @@ Executes any handlers for the given instruction.
 --]]
 function PowaComms:FireHandler(instruction, data, from, segpos, segtotal)
 	-- Send data to the appropriate place.
-	if(PowaMisc.debug) then PowaAuras:ShowText("Comms: Firing handler for instruction: " .. instruction); end
-	if(self.Handlers[instruction]) then
+	if (PowaMisc.debug) then
+		PowaAuras:ShowText("Comms: Firing handler for instruction: "..instruction);
+	end
+	if (self.Handlers[instruction]) then
 		for index, func in pairs(self.Handlers[instruction]) do
-			if(func(self, data, from, segpos, segtotal) == true) then
+			if (func(self, data, from, segpos, segtotal) == true) then
 				tremove(self.Handlers[instruction], index);
 			end
 		end
@@ -142,19 +160,23 @@ message is concatenated, sent to the appropriate function and the sender is made
 --]]
 PowaComms:AddHandler("MULTIPART", function(self, data, from, segpos, segtotal)
 	-- Accept multipart messages from our locked partner.
-	if(not self.ReceiverLock or self.ReceiverLock ~= from) then return; end
+	if (not self.ReceiverLock or self.ReceiverLock ~= from) then
+		return;
+	end
 	tinsert(self.ReceiverStore, segpos, data);
 	-- Do we have all of the segments?
 	-- If we never receive them all, our lock will expire in about 10 seconds and all data is purged, with the sender
 	-- being notified.
-	if(#(self.ReceiverStore) ~= segtotal) then return; end
+	if (#(self.ReceiverStore) ~= segtotal) then
+		return;
+	end
 	-- Verify that all data exists.
 	local instruction, count, data = self.ReceiverInstruction, #(self.ReceiverStore), "";
 	-- Tell the sender they're done.
 	self:SendAddonMessage("MULTIPART_SUCCESS", "", from);
 	-- Concatenate the message.
-	for i=count,1,-1 do
-		data = self.ReceiverStore[i] .. data;
+	for i = count, 1, - 1 do
+		data = self.ReceiverStore[i]..data;
 	end
 	-- Reset our lock (doing this earlier would wipe our data).
 	self:ResetReceiverLock();
@@ -168,17 +190,17 @@ If a lock wasn't properly closed beforehand, the previous lock owner will receiv
 --]]
 PowaComms:AddHandler("REQUEST_LOCK", function(self, data, from)
 	-- Accept if we're not locked.
-	if(not self.ReceiverLock or time() > self.ReceiverTimeout) then
+	if (not self.ReceiverLock or time() > self.ReceiverTimeout) then
 		-- If it was an expired lock, tell the person it belonged to.
 		-- Don't send timeouts if the same person is contacting us, it causes a problem.
-		if(self.ReceiverLock and self.ReceiverLock ~= from) then
+		if (self.ReceiverLock and self.ReceiverLock ~= from) then
 			self:SendAddonMessage("TIMEOUT_LOCK", "", self.ReceiverLock);
 		end
 		-- Reset our lock data (just to be safe).
 		self:ResetReceiverLock();
 		-- And set us up the bomb.
 		self.ReceiverLock = from;
-		self.ReceiverTimeout = time()+10;
+		self.ReceiverTimeout = time() + 10;
 		self.ReceiverInstruction = data;
 		-- Tell sender we love them.
 		self:SendAddonMessage("ACCEPT_LOCK", "", from);
@@ -205,12 +227,14 @@ end
 ACCEPT_LOCK
 Handler for lock accepts. Will begin transmitting a multipart message.
 --]]
-PowaComms:AddHandler("ACCEPT_LOCK", function(self, null, from)
+PowaComms:AddHandler("ACCEPT_LOCK", function(self, _, from)
 	-- Verify lock ownership.
-	if(not self.SenderLock or self.SenderLock ~= from) then return; end
+	if (not self.SenderLock or self.SenderLock ~= from) then
+		return;
+	end
 	-- Start transmitting data.
 	local segment, i, total = "", 1, ceil(strlen(self.SenderStore) / 200);
-	for i=1,total do
+	for i = 1, total do
 		segment = strsub(self.SenderStore, 0, 200);
 		self.SenderStore = strsub(self.SenderStore, 201);
 		self:SendAddonMessage("MULTIPART", segment, from, i, total);
@@ -220,18 +244,22 @@ end);
 MULTIPART_SUCCESS
 Called when the receiver has told us that all segments have been received, closes our sender lock.
 --]]
-PowaComms:AddHandler("MULTIPART_SUCCESS", function(self, null, from)
+PowaComms:AddHandler("MULTIPART_SUCCESS", function(self, _, from)
 	-- Verify lock ownership.
-	if(not self.SenderLock or self.SenderLock ~= from) then return; end
+	if (not self.SenderLock or self.SenderLock ~= from) then
+		return;
+	end
 	self:ResetSenderLock();
 end);
 --[[
 REJECT_LOCK
 Called if the receiver is busy and cannot service our request. Resets our lock.
 --]]
-PowaComms:AddHandler("REJECT_LOCK", function(self, null, from)
+PowaComms:AddHandler("REJECT_LOCK", function(self, _, from)
 	-- Verify lock ownership.
-	if(not self.SenderLock or self.SenderLock ~= from) then return; end
+	if (not self.SenderLock or self.SenderLock ~= from) then
+		return;
+	end
 	-- Close any locks we had with this user.
 	self:ResetSenderLock();
 end);
@@ -239,9 +267,11 @@ end);
 TIMEOUT_LOCK
 Called if the receiver or us had a transmission fault which left us with an open lock. Will reset our sender lock.
 --]]
-PowaComms:AddHandler("TIMEOUT_LOCK", function(self, null, from)
+PowaComms:AddHandler("TIMEOUT_LOCK", function(self, _, from)
 	-- Verify lock ownership.
-	if(not self.SenderLock or self.SenderLock ~= from) then return; end
+	if (not self.SenderLock or self.SenderLock ~= from) then
+		return;
+	end
 	-- Close any locks we had with this user.
 	self:ResetSenderLock();
 end);
@@ -254,7 +284,7 @@ VERSION_REQUEST
 Sends our PowerAuras version to the requesting party. Mostly just here for testing. Sends the version back with a
 VERSION_RESPONSE header.
 --]]
-PowaComms:AddHandler("VERSION_REQUEST", function(self, null, from)
+PowaComms:AddHandler("VERSION_REQUEST", function(self, _, from)
 	-- Give them our version.
 	self:SendAddonMessage("VERSION_RESPONSE", PowaAuras.Version, from);
 end);

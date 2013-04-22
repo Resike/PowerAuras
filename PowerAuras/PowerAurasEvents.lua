@@ -31,9 +31,9 @@ function PowaAuras:ADDON_LOADED(addon)
 	else]]--
 		self.MaxTextures = PowaAuras.TextureCount;
 	--end
-	local null, null, major, minor = string.find(self.Version, self.VersionPattern);
+	local _, _, major, minor = string.find(self.Version, self.VersionPattern);
 	self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""};
-	null, null, major, minor = string.find(PowaMisc.Version, self.VersionPattern);
+	_, _, major, minor = string.find(PowaMisc.Version, self.VersionPattern);
 	self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""};
 	self.VersionUpgraded = self:VersionGreater(self.VersionParts, self.PreviousVersionParts);
 	if (self.VersionUpgraded) then
@@ -43,7 +43,7 @@ function PowaAuras:ADDON_LOADED(addon)
 	if (TestPA == nil) then
 		PowaState = {};
 	end
-	null, self.playerclass = UnitClass("player");
+	_, self.playerclass = UnitClass("player");
 	self:LoadAuras();
 	for i = 1, 5 do
 		getglobal("PowaOptionsList"..i):SetText(PowaPlayerListe[i]);
@@ -101,7 +101,7 @@ function PowaAuras:Setup()
 end
 
 function PowaAuras:GetInstanceType()
-	local null, instanceType = IsInInstance();
+	local _, instanceType = IsInInstance();
 	if (instanceType == "pvp") then
 		instanceType = "Bg";
 	elseif (instanceType == "arena") then
@@ -304,7 +304,7 @@ function PowaAuras:UNIT_SPELLCAST_SUCCEEDED(...)
 				self.DoCheck.Power = true;
 				self.DoCheck.CheckIt = true;
 			end
-			for null, auraId in pairs(self.AurasByType.SpellCooldowns) do
+			for _, auraId in pairs(self.AurasByType.SpellCooldowns) do
 				--self:ShowText("Pending set for SpellCooldowns ", auraId);
 				self.DoCheck.SpellCooldowns = true;
 				self.DoCheck.CheckIt = true;
@@ -651,7 +651,7 @@ function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 	--self:ShowText("COMBAT_LOG_EVENT_UNFILTERED");
 	if (self.ModTest) then return end
 	-- Args
-	local timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, spellId, spellName, null, spellType = ...;
+	local timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, spellId, spellName, _, spellType = ...;
 	if (not spellName) then return end
 	--self:ShowText("CLEU: ", event, " by me=", sourceGUID == UnitGUID("player"), " on me=", destGUID == UnitGUID("player"), " ", spellName);
 	--self:ShowText("Player=", UnitGUID("player"), " sourceGUID=", sourceGUID, " destGUID=", destGUID);
@@ -794,7 +794,7 @@ function PowaAuras:UNIT_INVENTORY_CHANGED(...)
 			end
 			self.DoCheck.Items = true;
 			self.DoCheck.Slots = true;
-			for null, auraId in pairs(self.AurasByType.Enchants) do
+			for _, auraId in pairs(self.AurasByType.Enchants) do
 				if (self.DebugEvents) then
 					self:DisplayText("Pending set for Enchants ", auraId);
 				end

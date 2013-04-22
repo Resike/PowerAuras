@@ -160,7 +160,7 @@ function PowaAuras:DiscoverLinkedAuras()
 end
 
 function PowaAuras:DiscoverLinksForAura(aura, ignoreOff)
-	--self:ShowText("DiscoverLinksForAura ",aura.id, " multiids=",aura.multiids, " ignoreOff=",ignoreOff);
+	--self:ShowText("DiscoverLinksForAura ", aura.id, " multiids=", aura.multiids, " ignoreOff=",ignoreOff);
 	if (not aura or (ignoreOff and aura.off) or not aura.multiids or aura.multiids == "" or self.UsedInMultis[aura.id]) then return end
 	for pword in string.gmatch(aura.multiids, "[^/]+") do
 		if (string.sub(pword, 1, 1) == "!") then
@@ -300,13 +300,13 @@ end
 -- Events
 function PowaAuras:FindAllChildren()
 	--self:ShowText("FindAllChildren");
-	for null, aura in pairs(self.Auras) do
+	for _, aura in pairs(self.Auras) do
 		aura.Children = nil;
 	end
-	for null, aura in pairs(self.Auras) do
+	for _, aura in pairs(self.Auras) do
 		self:FindChildren(aura);
 	end
-	--[[for null, aura in pairs(self.Auras) do
+	--[[for _, aura in pairs(self.Auras) do
 		if (aura.Children) then
 			self:ShowText("Aura "..aura.id.." Children:");
 			for childId in pairs(aura.Children) do
@@ -437,7 +437,7 @@ function PowaAuras:CreateEffectLists()
 end
 
 function PowaAuras:InitialiseAllAuras()
-	for null, aura in pairs(self.Auras) do
+	for _, aura in pairs(self.Auras) do
 		aura:Init();
 	end
 end
@@ -454,7 +454,7 @@ function PowaAuras:MemorizeActions(actionIndex)
 		imin = 1;
 		imax = 120;
 		-- reset all action positions
-		for null, v in pairs(self.AurasByType.Actions) do
+		for _, v in pairs(self.AurasByType.Actions) do
 			self.Auras[v].slot = nil;
 		end
 	else
@@ -483,7 +483,7 @@ function PowaAuras:MemorizeActions(actionIndex)
 					if (actionAura == nil) then
 						self.AurasByType.Actions[k] = nil; -- aura deleted
 					elseif (not actionAura.slot) then
-						--self:ShowText("actionAura",v,actionAura.buffname, actionAura.ignoremaj);
+						--self:ShowText("actionAura", v, actionAura.buffname, actionAura.ignoremaj);
 						if (self:MatchString(name, actionAura.buffname, actionAura.ignoremaj)
 						 or self:MatchString(text, actionAura.buffname, actionAura.ignoremaj)) then
 							actionAura.slot = i; -- remember the slot
@@ -524,7 +524,7 @@ end
 function PowaAuras:OnUpdate(elapsed)
 	--self:UnitTestInfo("OnUpdate", elapsed);
 	if (self.NextDebugCheck > 0 and self.DebugTimer > self.NextDebugCheck) then
-		PowaAuras:Message("OnUpdate   Init=", not (self.VariablesLoaded and self.SetupDone)); --OK
+		PowaAuras:Message("OnUpdate Init=", not (self.VariablesLoaded and self.SetupDone)); --OK
 	end
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	self.ChecksTimer = self.ChecksTimer + elapsed;
@@ -579,7 +579,7 @@ function PowaAuras:OnUpdate(elapsed)
 	end
 	if (not self.ModTest and (checkAura or self.DebugCycle)) then
 		--self.CheckCount = self.CheckCount + 1;
-		--self:Message("OnUpdate ",elapsedCheck, " ", self.ChecksTimer);
+		--self:Message("OnUpdate ", elapsedCheck, " ", self.ChecksTimer);
 		--self:UnitTestInfo("ChecksTimer", self.ChecksTimer, self.NextCheck);
 		if ((self.ChecksTimer > (self.NextCheck + PowaMisc.OnUpdateLimit))) then
 			self.ChecksTimer = 0;
@@ -664,7 +664,7 @@ function PowaAuras:OnUpdate(elapsed)
 			self:UpdateTimer(aura, timerElapsed, skipTimerUpdate);
 		end
 	end
-	for null, aura in pairs(self.SecondaryAuras) do
+	for _, aura in pairs(self.SecondaryAuras) do
 		self:UpdateAura(aura, elapsed);
 	end
 	self.ResetTargetTimers = false;
@@ -688,11 +688,11 @@ function PowaAuras:NewCheckBuffs()
 	--end
 	for i = 1, #self.AurasByTypeList do
 		local auraType = self.AurasByTypeList[i];
-		--self:ShowText("Check auraType ",auraType);
+		--self:ShowText("Check auraType ", auraType);
 		if ((self.DoCheck[auraType] or self.DoCheck.All) and #self.AurasByType[auraType] > 0) then
-			--self:ShowText("Checking auraType ",auraType, " #", #self.AurasByType[auraType]);
+			--self:ShowText("Checking auraType ", auraType, " #", #self.AurasByType[auraType]);
 			--if (self.DoCheck.All) then
-				--self:ShowText("TestAuraTypes ",auraType," DoCheck ", self.DoCheck[auraType], " All ", self.DoCheck.All, " #", #self.AurasByType[auraType]);
+				--self:ShowText("TestAuraTypes ", auraType," DoCheck ", self.DoCheck[auraType], " All ", self.DoCheck.All, " #", #self.AurasByType[auraType]);
 			--end
 			for k, v in pairs(self.AurasByType[auraType]) do
 				--self:ShowText(k," TestThisEffect ",v);
@@ -735,18 +735,18 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 	--self.EffectCount = self.EffectCount + 1;
 	if (debugEffectTest) then
 		self:Message("===================================");
-		self:Message("Test Aura for Hide or Show = ",auraId);
+		self:Message("Test Aura for Hide or Show= ", auraId);
 		self:Message("Active= ", aura.Active);
 		self:Message("Showing= ", aura.Showing);
 		self:Message("HideRequest= ", aura.HideRequest);
 	end
 	-- Prevent crash if class not set-up properly
 	if (not aura.ShouldShow) then
-		self:Message("ShouldShow nil! id= ",auraId)
+		self:Message("ShouldShow nil! id= ", auraId)
 		if (not giveReason) then return false; end
 		return false, self.Text.nomReasonAuraBad;
 	end
-	--self:ShowText("Test Aura for Hide or Show = ",auraId, " showing=",aura.Showing);
+	--self:ShowText("Test Aura for Hide or Show = ", auraId, " showing=", aura.Showing);
 	aura.InactiveDueToMulti = nil;
 	local shouldShow, reason = aura:ShouldShow(giveReason or debugEffectTest);
 	if (shouldShow == - 1) then
@@ -758,13 +758,13 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 	if (shouldShow == true) then
 		shouldShow, reason = self:CheckMultiple(aura, reason, giveReason or debugEffectTest);
 		if (not shouldShow) then
-			--self:ShowText("InactiveDueToMulti Aura ", aura.buffname, " (",auraId,")");
+			--self:ShowText("InactiveDueToMulti Aura ", aura.buffname, " (", auraId,")");
 			aura.InactiveDueToMulti = true;
 		end
 	elseif (aura.Timer and aura.CanHaveTimerOnInverse) then
 		local multiShouldShow = self:CheckMultiple(aura, reason, giveReason or debugEffectTest);
 		if (not multiShouldShow) then
-			--self:ShowText("InactiveDueToMulti Aura ", aura.buffname, " (",auraId,")");
+			--self:ShowText("InactiveDueToMulti Aura ", aura.buffname, " (", auraId,")");
 			aura.InactiveDueToMulti = true;
 		end
 	end
@@ -774,7 +774,7 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 	if shouldShow then
 		if (not aura.Active) then
 			if (debugEffectTest) then
-				self:Message("ShowAura ", aura.buffname, " (",auraId,") ", reason);
+				self:Message("ShowAura ", aura.buffname, " (", auraId,") ", reason);
 			end
 			self:DisplayAura(auraId);
 			if (not ignoreCascade) then self:AddChildrenToCascade(aura); end
@@ -784,7 +784,7 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 		local secondaryAura = self.SecondaryAuras[aura.id];
 		if (aura.Showing) then
 			if (debugEffectTest) then
-				self:Message("HideAura ", aura.buffname, " (",auraId,") ", reason);
+				self:Message("HideAura ", aura.buffname, " (", auraId,") ", reason);
 			end
 			self:SetAuraHideRequest(aura, secondaryAura);
 		end
@@ -1038,7 +1038,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	if (aura.randomcolor) then
 		texture:SetVertexColor(random(20,100) / 100, random(20,100) / 100, random(20,100) / 100);
 	else
-		texture:SetVertexColor(aura.r,aura.g,aura.b);
+		texture:SetVertexColor(aura.r, aura.g, aura.b);
 	end
 	if (aura.texmode == 1) then
 		if (aura.textaura ~= true) then
@@ -1235,7 +1235,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 			secondaryTexture:SetVertexColor(texture:GetTextColor());
 		end
 	else
-		secondaryTexture:SetVertexColor(aura.r,aura.g,aura.b);
+		secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b);
 	end
 	if (aura.texmode == 1) then
 		if (aura.textaura ~= true) then
@@ -1344,8 +1344,8 @@ function PowaAuras:UpdateAura(aura, elapsed)
 	end
 	if (PowaAuras.DebugCycle) then
 		self:DisplayText("====Aura"..aura.id.."====");
-		self:DisplayText("aura.HideRequest=",aura.HideRequest);
-		self:DisplayText("aura.Showing=",aura.Showing);
+		self:DisplayText("aura.HideRequest=", aura.HideRequest);
+		self:DisplayText("aura.Showing=", aura.Showing);
 	end
 	--self:ShowText("aura.Showing ", aura.Showing);
 	if (aura.Showing) then
@@ -1396,7 +1396,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 				aura.Stacks:Hide();
 			end
 			if (aura.Debug) then
-				self:Message("Hide Requested for ",aura.id);
+				self:Message("Hide Requested for ", aura.id);
 			end
 			if (aura.UseOldAnimations) then
 				aura.animation = self:AnimationEndFactory(aura.finish, aura, frame);
@@ -1408,7 +1408,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 					aura:Hide();
 				else
 					if (aura.Debug) then
-						self:Message("Stop current animations ",aura.id);
+						self:Message("Stop current animations ", aura.id);
 					end
 					if (aura.BeginAnimation and aura.BeginAnimation:IsPlaying()) then
 						aura.BeginAnimation:Stop();
@@ -1417,7 +1417,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 						aura.MainAnimation:Stop();
 					end
 					if (aura.Debug) then
-						self:Message("Play end animation ",aura.id);
+						self:Message("Play end animation ", aura.id);
 					end
 					aura.EndAnimation:Play();
 				end
@@ -1431,7 +1431,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 				if (aura.Stacks.SetStackCount) then
 					aura.Stacks:SetStackCount(random(1, 12));
 				else
-					self:Message("aura.Stacks:SetStackCount nil!! ",aura.id);
+					self:Message("aura.Stacks:SetStackCount nil!! ", aura.id);
 				end
 			end
 			aura.Stacks:Update();
@@ -1449,12 +1449,12 @@ function PowaAuras:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 		return;
 	end
 	if (PowaAuras.DebugCycle) then
-		self:DisplayText("aura.Timer id=",aura.id);
-		self:DisplayText("ShowOnAuraHide=",aura.Timer.ShowOnAuraHide);
-		self:DisplayText("ForceTimeInvert=",aura.ForceTimeInvert);
-		self:DisplayText("InvertTimeHides=",aura.InvertTimeHides);
-		self:DisplayText("ModTest=",self.ModTest);
-		self:DisplayText("aura.Active=",aura.Active);
+		self:DisplayText("aura.Timer id=", aura.id);
+		self:DisplayText("ShowOnAuraHide=", aura.Timer.ShowOnAuraHide);
+		self:DisplayText("ForceTimeInvert=", aura.ForceTimeInvert);
+		self:DisplayText("InvertTimeHides=", aura.InvertTimeHides);
+		self:DisplayText("ModTest=", self.ModTest);
+		self:DisplayText("aura.Active=", aura.Active);
 	end
 	local timerHide;
 	--if (aura.Timer.ShowOnAuraHide and not self.ModTest and ((not aura.ForceTimeInvert and not aura.InvertTimeHides) or (aura.ForceTimeInvert and not aura.inverse)) ) then
@@ -1464,8 +1464,8 @@ function PowaAuras:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 		timerHide = not aura.Active;
 	end
 	if (PowaAuras.DebugCycle) then
-		self:Message("timerHide=",timerHide);
-		self:Message("InactiveDueToState=",aura.InactiveDueToState);
+		self:Message("timerHide=", timerHide);
+		self:Message("InactiveDueToState=", aura.InactiveDueToState);
 	end
 	if (timerHide or (aura.InactiveDueToState and not aura.Active) or aura.InactiveDueToMulti) then
 		aura.Timer:Hide(); -- Request or state
