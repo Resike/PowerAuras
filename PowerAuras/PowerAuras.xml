@@ -41,7 +41,7 @@
 			<AbsDimension x = "144" y = "17"/>
 		</Size>
 		<HitRectInsets>
-			<AbsInset left = "0" right = "0" top = "0" bottom = "2"/>
+			<AbsInset left = "0" right = "0" top = "-2" bottom = "1"/>
 		</HitRectInsets>
 		<Backdrop bgFile = "Interface\Buttons\UI-SliderBar-Background" edgeFile = "Interface\Buttons\UI-SliderBar-Border" tile = "true">
 			<EdgeSize>
@@ -624,27 +624,6 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<CheckButton name = "PowaTextureRotatableButton" inherits = "PowaCheckTemplate">
-						<Size>
-							<AbsDimension x = "25" y = "25"/>
-						</Size>
-						<Anchors>
-							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaBarAuraRotateSlider" relativePoint = "TOPLEFT">
-								<Offset>
-									<AbsDimension x = "-2" y = "-1"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideTextureRotatable
-								PowaTextureRotatableButtonText:SetText(PowaAuras.Text.nomTextureRotatable)
-							</OnLoad>
-							<OnClick>
-								PowaAuras:TextureRotatableChecked()
-							</OnClick>
-						</Scripts>
-					</CheckButton>
 					<Slider name = "PowaBarAuraSizeSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
 							<AbsDimension x = "430" y = "16"/>

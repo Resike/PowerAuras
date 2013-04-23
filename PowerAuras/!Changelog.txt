@@ -18,6 +18,9 @@ Added "Texture Rotatable" checkbutton, which fixes some not fully rotatable cust
 The texure cutter algorythm is now more precise for ingame icons, and custom textures.
 Hide all button now properly decreases all icon's alpha immediately.
 Slider inherit changes, removed unused stuff.
+Right clicking on an aura now going to increase it's alpha properly.
+Hide all button now also closes the effect editor.
+Fixed a bug when Texture slider value was 0 and show blank aura.
 Some smaller slider fixes.
 Tooltip and hover fixes.
 Code cleanup.

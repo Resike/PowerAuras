@@ -87,6 +87,7 @@ function PowaAuras:IconClick(owner, button)
 		else
 			aura.off = true;
 			owner:SetText("OFF");
+			owner:SetAlpha(0.33);
 		end
 	elseif IsControlKeyDown() then
 		local show, reason = self:TestThisEffect(aura.id, true);
@@ -97,6 +98,12 @@ function PowaAuras:IconClick(owner, button)
 		end
 	elseif (self.CurrentAuraId == aura.id) then
 		if (button == "RightButton") then
+			if aura.off == false then
+				if (not aura.Showing) then
+					owner:SetAlpha(1.0);
+				end
+				PowaAuras:OptionEditorTest();
+			end
 			self:EditorShow();
 		else
 			if aura.off == false then
@@ -108,10 +115,17 @@ function PowaAuras:IconClick(owner, button)
 				PowaAuras:OptionTest();
 			end
 		end
-	elseif (self.CurrentAuraId ~= aura.id) then -- clicked a different button
+	elseif (self.CurrentAuraId ~= aura.id) then -- Clicked a different button
 		self:SetCurrent(owner, aura.id);
 		self:InitPage(aura);
 		if (button == "RightButton") then
+			if aura.off == false then
+				if (not aura.Showing) then
+					owner:SetAlpha(1.0);
+				end
+				PowaAuras:OptionEditorTest();
+			end
+			PowaBarConfigFrame:Hide();
 			self:EditorShow();
 		end
 	end
@@ -1543,7 +1557,6 @@ function PowaAuras:InitPage(aura)
 	PowaThresholdInvertButton:SetChecked(aura.thresholdinvert);
 	PowaExtraButton:SetChecked(aura.Extra);
 	PowaTexModeButton:SetChecked(aura.texmode == 1);
-	PowaTextureRotatableButton:SetChecked(aura.texturerotatable)
 	-- Ternary Logic
 	self:TernarySetState(PowaInCombatButton, aura.combat);
 	self:TernarySetState(PowaIsInRaidButton, aura.inRaid);
@@ -1726,6 +1739,10 @@ end
 function PowaAuras:BarAuraTextureSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraTextureSlider:GetValue();
+	if (SliderValue == 0) or (SliderValue == nil) then
+		SliderValue = 1;
+		PowaBarAuraTextureSlider:SetValue(SliderValue);
+	end
 	local checkTexture = 0;
 	local auraId = self.CurrentAuraId;
 	if (self.Auras[auraId].owntex == true) then
@@ -2069,15 +2086,6 @@ function PowaAuras:TexModeChecked()
 		self.Auras[auraId].texmode = 1;
 	else
 		self.Auras[auraId].texmode = 2;
-	end
-	self:RedisplayAura(self.CurrentAuraId);
-end
-function PowaAuras:TextureRotatableChecked()
-	local auraId = self.CurrentAuraId;
-	if (PowaTextureRotatableButton:GetChecked()) then
-		self.Auras[auraId].texturerotatable = true;
-	else
-		self.Auras[auraId].texturerotatable = false;
 	end
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -3454,6 +3462,20 @@ function PowaAuras:OptionTest()
 	end
 end
 
+function PowaAuras:OptionEditorTest()
+	--self:Message("OptionTest for ", self.CurrentAuraId);
+	local aura = self.Auras[self.CurrentAuraId];
+	if (not aura or aura.buffname == "" or aura.buffname == " ") then
+		return;
+	end
+	if (not aura.Showing) then
+		aura.Active = true;
+		aura:CreateFrames();
+		self.SecondaryAuras[aura.id] = nil; -- Force recreate
+		self:DisplayAura(aura.id);
+	end
+end
+
 function PowaAuras:OptionTestAll()
 	PowaAuras:OptionHideAll(true);
 	--self:ShowText("Test All Active Frames now=", now);
@@ -3483,6 +3505,7 @@ function PowaAuras:OptionHideAll(now) -- Hide all auras
 			if (aura.Timer) then aura.Timer.HideRequest = true; end
 		end
 	end
+	PowaBarConfigFrame:Hide();
 end
 
 function PowaAuras:RedisplayAuras()

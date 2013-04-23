@@ -922,6 +922,9 @@
 					</Button>
 					<!-- Lock Button -->
 					<Button name = "PowaMainLockButton" inherits = "OptionsButtonTemplate">
+						<Size>
+							<AbsDimension x = "90" y = "22"/>
+						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaOptionsRename" relativePoint = "BOTTOM">
 								<Offset>
@@ -942,6 +945,9 @@
 					</Button>
 					<!-- Test Button -->
 					<Button name = "PowaMainTestButton" inherits = "OptionsButtonTemplate">
+						<Size>
+							<AbsDimension x = "90" y = "22"/>
+						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaMainLockButton" relativePoint = "BOTTOM">
 								<Offset>
@@ -962,6 +968,9 @@
 					</Button>
 					<!-- Test All Button -->
 					<Button name = "PowaMainTestAllButton" inherits = "OptionsButtonTemplate">
+						<Size>
+							<AbsDimension x = "90" y = "22"/>
+						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaMainTestButton" relativePoint = "BOTTOM">
 								<Offset>
@@ -1121,6 +1130,9 @@
 					</Button>
 					<!-- Edit Button -->
 					<Button name = "PowaEditButton" inherits = "OptionsButtonTemplate">
+						<Size>
+							<AbsDimension x = "90" y = "22"/>
+						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaOptionsSelectorExportSet" relativePoint = "BOTTOM">
 								<Offset>
@@ -1140,6 +1152,9 @@
 					</Button>
 					<!-- Import Button -->
 					<Button name = "PowaOptionsSelectorImport" inherits = "OptionsButtonTemplate">
+						<Size>
+							<AbsDimension x = "90" y = "22"/>
+						</Size>
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1184,6 +1199,9 @@
 					</Button>
 					<!-- Hide All Button -->
 					<Button name = "PowaMainHideAllButton" inherits = "OptionsButtonTemplate">
+						<Size>
+							<AbsDimension x = "90" y = "22"/>
+						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaOptionsSelectorImportSet" relativePoint = "BOTTOM">
 								<Offset>

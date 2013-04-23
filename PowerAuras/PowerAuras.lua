@@ -338,7 +338,7 @@ end
 function PowaAuras:CustomTexPath(customname)
 	--self:ShowText("CustomTexPath ", customname);
 	local texpath;
-	if string.find(customname,".", 1, true) then
+	if string.find(customname, ".", 1, true) then
 		texpath = PowaGlobalMisc.PathToAuras .. customname;
 	else
 		local spellId = select(3, string.find(customname, "%[?(%d+)%]?"));
@@ -350,7 +350,9 @@ function PowaAuras:CustomTexPath(customname)
 		end
 	end
 	--self:ShowText("texpath ", texpath);
-	if not texpath then texpath = "" end
+	if not texpath then
+		texpath = ""
+	end
 	return texpath;
 end
 
@@ -1067,14 +1069,26 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	if (aura.customtex == true) or (aura.owntex == true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
 		local x = (sqrt(2) - 1) / 2
-		if string.find(aura.customname, "\\") then
-			if aura.texturerotatable == true then
-				texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy);
-			else
+		if string.find(aura.customname, "//") then
+			if (aura.rotate == 0) or (aura.rotate == 360) then
 				texture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+			elseif (aura.rotate == 90) then
+				texture:SetTexCoord(ULx + x, ULy + x, LLx - x, LLy + x, URx + x, URy - x, LRx - x, LRy - x);
+			elseif (aura.rotate == 180) then
+				texture:SetTexCoord(ULx + x, ULy - x, LLx + x, LLy + x, URx - x, URy - x, LRx - x, LRy + x);
+			elseif (aura.rotate == 270) then
+				texture:SetTexCoord(ULx - x, ULy - x, LLx + x, LLy - x, URx - x, URy + x, LRx + x, LRy + x);
 			end
 		else
-			texture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+			if (aura.rotate == 0) or (aura.rotate == 360) then
+				texture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+			elseif (aura.rotate == 90) then
+				texture:SetTexCoord(ULx - x, ULy + x, LLx + x, LLy + x, URx - x, URy - x, LRx + x, LRy - x);
+			elseif (aura.rotate == 180) then
+				texture:SetTexCoord(ULx - x, ULy - x, LLx - x, LLy + x, URx + x, URy - x, LRx + x, LRy + x);
+			elseif (aura.rotate == 270) then
+				texture:SetTexCoord(ULx + x, ULy - x, LLx - x, LLy - x, URx + x, URy + x, LRx - x, LRy + x);
+			end
 		end
 	end
 	if (aura.textaura ~= true) then
@@ -1089,17 +1103,34 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy); -- Normal
 		end
 	end
-	if (aura.textaura == true) or (aura.owntex == true) then
+	if (aura.textaura == true) then
 		frame.baseH = 256 * aura.size * (2 - aura.torsion);
 	elseif (aura.customtex == true) then
-		if string.find(aura.customname, "\\") then
-			if aura.texturerotatable == true then
-				frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
-			else
+		local x = (sqrt(2) * 2) - 1
+		if string.find(aura.customname, "//") then
+			if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
 				frame.baseH = 256 * aura.size * (2 - aura.torsion);
+			elseif (aura.rotate == 90) or (aura.rotate == 270) then
+				frame.baseH = x * 256 * aura.size * (2 - aura.torsion);
+			else
+				frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
 			end
 		else
+			if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
+				frame.baseH = 256 * aura.size * (2 - aura.torsion);
+			elseif (aura.rotate == 90) or (aura.rotate == 270) then
+				frame.baseH = 256 * aura.size * (2 - aura.torsion);
+			else
+				frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
+			end
+		end
+	elseif (aura.owntex == true) then
+		if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
 			frame.baseH = 256 * aura.size * (2 - aura.torsion);
+		elseif (aura.rotate == 90) or (aura.rotate == 270) then
+			frame.baseH = 256 * aura.size * (2 - aura.torsion);
+		else
+			frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
 		end
 	else
 		frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
@@ -1113,17 +1144,34 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		end
 		frame.baseL = texture:GetStringWidth() + 5;
 	elseif (aura.customtex == true) then
-		if string.find(aura.customname, "\\") then
-			if aura.texturerotatable == true then
-				frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
-			else
+		local x = (sqrt(2) * 2) - 1
+		if string.find(aura.customname, "//") then
+			if (aura.rotate == 0) or (aura.rotate == 360) then
 				frame.baseL = 256 * aura.size * aura.torsion;
+			elseif (aura.rotate == 90) or (aura.rotate == 270) then
+				frame.baseL = 256 * aura.size * aura.torsion;
+			elseif (aura.rotate == 180) then
+				frame.baseL = x * 256 * aura.size * aura.torsion;
+			else
+				frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
 			end
 		else
-			frame.baseL = 256 * aura.size * aura.torsion;
+			if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
+				frame.baseL = 256 * aura.size * aura.torsion;
+			elseif (aura.rotate == 90) or (aura.rotate == 270) then
+				frame.baseL = 256 * aura.size * aura.torsion;
+			else
+				frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
+			end
 		end
 	elseif (aura.owntex == true) then
-		frame.baseL = 256 * aura.size * aura.torsion;
+		if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
+			frame.baseL = 256 * aura.size * aura.torsion;
+		elseif (aura.rotate == 90) or (aura.rotate == 270) then
+			frame.baseL = 256 * aura.size * aura.torsion;
+		else
+			frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
+		end
 	end
 	PowaAuras:InitialiseFrame(aura, frame);
 	if (aura.duration > 0) then
@@ -1161,9 +1209,15 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			aura.animation = self:AnimationMainFactory(aura.anim1, aura, frame);
 		end
 	elseif (aura.textaura ~= true) then -- Text aura animations is broken
-		if (not aura.BeginAnimation) then aura.BeginAnimation = self:AddBeginAnimation(aura, frame); end
-		if (not aura.MainAnimation) then aura.MainAnimation = self:AddMainAnimation(aura, frame); end
-		if (not aura.EndAnimation) then aura.EndAnimation = self:AddEndAnimation(aura, frame); end
+		if (not aura.BeginAnimation) then
+			aura.BeginAnimation = self:AddBeginAnimation(aura, frame);
+		end
+		if (not aura.MainAnimation) then
+			aura.MainAnimation = self:AddMainAnimation(aura, frame);
+		end
+		if (not aura.EndAnimation) then
+			aura.EndAnimation = self:AddEndAnimation(aura, frame);
+		end
 	end
 	if (not aura.UseOldAnimations) then
 		if (aura.BeginAnimation) then
@@ -1254,14 +1308,26 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	if (aura.customtex == true) or (aura.owntex == true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
 		local x = (sqrt(2) - 1) / 2
-		if string.find(aura.customname, "\\") then
-			if aura.texturerotatable == true then
-				secondaryTexture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy);
-			else
+		if string.find(aura.customname, "//") then
+			if (aura.rotate == 0) or (aura.rotate == 360) then
 				secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+			elseif (aura.rotate == 90) then
+				secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx - x, LLy + x, URx + x, URy - x, LRx - x, LRy - x);
+			elseif (aura.rotate == 180) then
+				secondaryTexture:SetTexCoord(ULx + x, ULy - x, LLx + x, LLy + x, URx - x, URy - x, LRx - x, LRy + x);
+			elseif (aura.rotate == 270) then
+				secondaryTexture:SetTexCoord(ULx - x, ULy - x, LLx + x, LLy - x, URx - x, URy + x, LRx + x, LRy + x);
 			end
 		else
-			secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+			if (aura.rotate == 0) or (aura.rotate == 360) then
+				secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
+			elseif (aura.rotate == 90) then
+				secondaryTexture:SetTexCoord(ULx - x, ULy + x, LLx + x, LLy + x, URx - x, URy - x, LRx + x, LRy - x);
+			elseif (aura.rotate == 180) then
+				secondaryTexture:SetTexCoord(ULx - x, ULy - x, LLx - x, LLy + x, URx + x, URy - x, LRx + x, LRy + x);
+			elseif (aura.rotate == 270) then
+				secondaryTexture:SetTexCoord(ULx + x, ULy - x, LLx - x, LLy - x, URx + x, URy + x, LRx - x, LRy + x);
+			end
 		end
 	end
 	if (aura.textaura ~= true) then

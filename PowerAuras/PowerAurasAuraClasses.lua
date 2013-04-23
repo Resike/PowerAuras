@@ -87,7 +87,6 @@ cPowaAura.ExportSettings =
 	duration = 0,
 	-- Appearance Settings
 	alpha = 0.75,
-	texturerotatable = true,
 	rotate = 0,
 	size = 1,
 	torsion = 1,

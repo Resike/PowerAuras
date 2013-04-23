@@ -195,7 +195,7 @@ nomTextureCount = "Max Textures",
 aideTextureCount = "Change this if you add your own textures",
 
 aideOverrideTextureCount = "Override the number of textures",
-nomOverrideTextureCount= "Set this if you are adding your own textures",
+nomOverrideTextureCount = "Set this if you are adding your own textures",
 
 ListePlayer = "Page",
 ListeGlobal = "Global",
@@ -246,7 +246,7 @@ nomSound = "Sound to play",
 nomSound2 = "More sounds to play",
 aideSound = "Plays a sound at the beginning.",
 aideSound2 = "Plays a sound at the beginning.",
-nomCustomSound = "OR soundfile:",
+nomCustomSound = "Or soundfile:",
 aideCustomSound = "Enter a soundfile that is in the Sounds folder, BEFORE you started the game. mp3 and wav are supported. example: 'cookie.mp3'\nOr\nEnter the full path to play any WoW sound e.g. Sound\\Events\\GuldanCheers.wav",
 
 nomCustomSoundPath = "Path to custom sounds:",
@@ -305,7 +305,6 @@ aideUnitn2 = "Only for raid/group.",
 aideMaxTex = "Define the maximum number of textures available on the Effect Editor. If you add textures on the Mod directory (with the names AURA1.tga to AURA50.tga), you must indicate the correct number here.",
 aideWowTextures = "Check this to use the texture of WoW instead of textures in the Power Auras directory for this effect.",
 aideTextAura = "Check this to type text instead of texture.",
-aideTextureRotatable = "Uncheck this, when you experience problems with the current texture.",
 aideRealaura = "Real Aura",
 aideCustomTextures = "Check this to use textures in the 'Custom' subdirectory. Put the name of the texture below (ex: myTexture.tga). You can also use a Spell Name (ex: Feign Death) or SpellID (ex: 5384).",
 aideRandomColor = "Check this to tell this effect to use random color each time it will be activated.",
@@ -326,7 +325,6 @@ nomEnd = "End Animation",
 nomSymetrie = "Symmetry",
 nomAlpha = "Opacity",
 nomPos = "Position",
-nomTextureRotatable = "Texure Rotatable",
 nomRotation = "Rotation",
 nomTaille = "Size",
 
@@ -379,7 +377,7 @@ aideStance = "Select which Stance, Aura or Form trigger the event.",
 aideGTFO = "Select which GTFO Alert will trigger the event.",
 aidePowerType = "Select which type of resource to track",
 
-aideShowSpinAtBeginning= "At the end of the begin animation show a 360 degree spin",
+aideShowSpinAtBeginning = "At the end of the begin animation show a 360 degree spin",
 nomCheckShowSpinAtBeginning = "Show Spin after begin animation ends",
 
 nomCheckShowTimer = "Show",
@@ -399,7 +397,7 @@ aideInverse = "Invert the logic to show this effect only when buff/debuff is not
 nomCheckIgnoreMaj = "Ignore case",
 aideIgnoreMaj = "Check this to ignore upper/lowercase of buff/debuff names.",
 
-nomAuraDebug= "Debug",
+nomAuraDebug = "Debug",
 aideAuraDebug = "Debug this Aura",
 
 nomDuration = "Anim. duration",
@@ -451,90 +449,94 @@ nomStacksTexture = "Stacks Texture",
 Enabled = "Enabled",
 Default = "Default",
 
-Ternary = {
+Ternary =
+{
 	combat = "In Combat",
 	inRaid = "In Raid",
 	inParty = "In Party",
 	isResting = "Resting",
 	ismounted = "Mounted",
 	inVehicle = "In Vehicle",
-	isAlive= "Alive",
-	PvP= "PvP flag set",
-	Instance5Man= "5-Man",
-	Instance5ManHeroic= "5-Man Hc",
-	Instance10Man= "10-Man",
-	Instance10ManHeroic= "10-Man Hc",
-	Instance25Man= "25-Man",
-	Instance25ManHeroic= "25-Man Hc",
-	InstanceBg= "Battleground",
-	InstanceArena= "Arena",
+	isAlive = "Alive",
+	PvP = "PvP flag set",
+	Instance5Man = "5-Man",
+	Instance5ManHeroic = "5-Man Hc",
+	Instance10Man = "10-Man",
+	Instance10ManHeroic = "10-Man Hc",
+	Instance25Man = "25-Man",
+	Instance25ManHeroic = "25-Man Hc",
+	InstanceBg = "Battleground",
+	InstanceArena = "Arena",
 },
 
 nomWhatever = "Ignored",
 aideTernary = "Sets how the status effects how this aura is shown.",
-TernaryYes = {
+TernaryYes =
+{
 	combat = "Only When In Combat",
 	inRaid = "Only When In Raid",
 	inParty = "Only When In Party",
 	isResting = "Only When Resting",
 	ismounted = "Only When Mounted",
 	inVehicle = "Only When In Vehicle",
-	isAlive= "Only When Alive",
-	PvP= "Only when PvP flag set",
-	Instance5Man= "Only when in a 5-Man Normal instance",
-	Instance5ManHeroic= "Only when in a 5-Man Heroic instance",
-	Instance10Man= "Only when in a 10-Man Normal instance",
-	Instance10ManHeroic= "Only when in a 10-Man Heroic instance",
-	Instance25Man= "Only when in a 25-Man Normal instance",
-	Instance25ManHeroic= "Only when in a 25-Man Heroic instance",
-	InstanceBg= "Only when in a Battleground",
-	InstanceArena= "Only when in an Arena instance",
+	isAlive = "Only When Alive",
+	PvP = "Only when PvP flag set",
+	Instance5Man = "Only when in a 5-Man Normal instance",
+	Instance5ManHeroic = "Only when in a 5-Man Heroic instance",
+	Instance10Man = "Only when in a 10-Man Normal instance",
+	Instance10ManHeroic = "Only when in a 10-Man Heroic instance",
+	Instance25Man = "Only when in a 25-Man Normal instance",
+	Instance25ManHeroic = "Only when in a 25-Man Heroic instance",
+	InstanceBg = "Only when in a Battleground",
+	InstanceArena = "Only when in an Arena instance",
 	RoleTank = "Only when a Tank",
 	RoleHealer = "Only when a Healer",
 	RoleMeleDps = "Only when a Melee DPS",
 	RoleRangeDps = "Only when a Ranged DPS",
 },
 
-TernaryNo = {
+TernaryNo =
+{
 	combat = "Only When Not in Combat",
 	inRaid = "Only When Not in Raid",
 	inParty = "Only When Not in Party",
 	isResting = "Only When Not Resting",
 	ismounted = "Only When Not Mounted",
 	inVehicle = "Only When Not in Vehicle",
-	isAlive= "Only When Dead",
-	PvP= "Only when PvP flag Not set",
-	Instance5Man= "Only when Not in a 5-Man Normal instance",
-	Instance5ManHeroic= "Only when Not in a 5-Man Heroic instance",
-	Instance10Man= "Only when Not in a 10-Man Normal instance",
-	Instance10ManHeroic= "Only when Not in a 10-Man Heroic instance",
-	Instance25Man= "Only when Not in a 25-Man Normal instance",
-	Instance25ManHeroic= "Only when Not in a 25-Man Heroic instance",
-	InstanceBg= "Only when Not in a Battleground",
-	InstanceArena= "Only when Not in an Arena instance",
+	isAlive = "Only When Dead",
+	PvP = "Only when PvP flag Not set",
+	Instance5Man = "Only when Not in a 5-Man Normal instance",
+	Instance5ManHeroic = "Only when Not in a 5-Man Heroic instance",
+	Instance10Man = "Only when Not in a 10-Man Normal instance",
+	Instance10ManHeroic = "Only when Not in a 10-Man Heroic instance",
+	Instance25Man = "Only when Not in a 25-Man Normal instance",
+	Instance25ManHeroic = "Only when Not in a 25-Man Heroic instance",
+	InstanceBg = "Only when Not in a Battleground",
+	InstanceArena = "Only when Not in an Arena instance",
 	RoleTank = "Only when Not a Tank",
 	RoleHealer = "Only when Not a Healer",
 	RoleMeleDps = "Only when Not a Melee DPS",
 	RoleRangeDps = "Only when Not a Ranged DPS",
 },
 
-TernaryAide = {
+TernaryAide =
+{
 	combat = "Effect modified by Combat status.",
 	inRaid = "Effect modified by Raid status.",
 	inParty = "Effect modified by Party status.",
 	isResting = "Effect modified by Resting status.",
 	ismounted = "Effect modified by Mounted status.",
 	inVehicle = "Effect modified by Vehicle status.",
-	isAlive= "Effect modified by Alive status.",
-	PvP= "Effect modified by PvP flag.",
-	Instance5Man= "Effect modified by being in a 5-Man Normal instance.",
-	Instance5ManHeroic= "Effect modified by being in a 5-Man Heroic instance.",
-	Instance10Man= "Effect modified by being in a 10-Man Normal instance.",
-	Instance10ManHeroic= "Effect modified by being in a 10-Man Heroic instance.",
-	Instance25Man= "Effect modified by being in a 25-Man Normal instance.",
-	Instance25ManHeroic= "Effect modified by being in a 25-Man Heroic instance.",
-	InstanceBg= "Effect modified by being in a Battleground.",
-	InstanceArena= "Effect modified by being in an Arena instance.",
+	isAlive = "Effect modified by Alive status.",
+	PvP = "Effect modified by PvP flag.",
+	Instance5Man = "Effect modified by being in a 5-Man Normal instance.",
+	Instance5ManHeroic = "Effect modified by being in a 5-Man Heroic instance.",
+	Instance10Man = "Effect modified by being in a 10-Man Normal instance.",
+	Instance10ManHeroic = "Effect modified by being in a 10-Man Heroic instance.",
+	Instance25Man = "Effect modified by being in a 25-Man Normal instance.",
+	Instance25ManHeroic = "Effect modified by being in a 25-Man Heroic instance.",
+	InstanceBg = "Effect modified by being in a Battleground.",
+	InstanceArena = "Effect modified by being in an Arena instance.",
 	RoleTank = "Effect modified by being a Tank.",
 	RoleHealer = "Effect modified by being a Healer.",
 	RoleMeleDps = "Effect modified by being a Melee DPS.",
@@ -743,13 +745,14 @@ nomUnknownSpellId = "PowerAuras: Aura $1 references an unknown spellId: ", -- $1
 
 nomReasonGTFOAlerts = "GTFO alerts are never always on.",
 
-ReasonStat = {
-	Health = {MatchReason="$1 Health past limit", NoMatchReason="$1 Health not past limit"},
-	Mana = {MatchReason="$1 Mana past limit", NoMatchReason="$1 Mana not past limit"},
-	Power = {MatchReason="$1 $3 past limit", NoMatchReason="$1 $3 not past limit", NilReason = "$1 has wrong Power Type"},
-	Aggro = {MatchReason="$1 has aggro", NoMatchReason="$1 does not have aggro"},
-	PvP = {MatchReason="$1 PvP flag set", NoMatchReason="$1 PvP flag not set"},
-	SpellAlert = {MatchReason="$1 casting $2", NoMatchReason="$1 not casting $2"},
+ReasonStat =
+{
+	Health = {MatchReason = "$1 Health past limit", NoMatchReason = "$1 Health not past limit"},
+	Mana = {MatchReason = "$1 Mana past limit", NoMatchReason = "$1 Mana not past limit"},
+	Power = {MatchReason = "$1 $3 past limit", NoMatchReason = "$1 $3 not past limit", NilReason = "$1 has wrong Power Type"},
+	Aggro = {MatchReason = "$1 has aggro", NoMatchReason = "$1 does not have aggro"},
+	PvP = {MatchReason = "$1 PvP flag set", NoMatchReason = "$1 PvP flag not set"},
+	SpellAlert = {MatchReason = "$1 casting $2", NoMatchReason = "$1 not casting $2"},
 },
 
 -- Import dialog
@@ -772,6 +775,7 @@ ExportDialogSendTitle5 = "Send successful!",
 ExportDialogSendButton1 = "Send",
 ExportDialogSendButton2 = "Back",
 ExportDialogCancelButton = "Close",
+
 -- Cross-client import dialog
 PlayerImportDialogTopTitle = "You Have Auras!",
 PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
@@ -922,20 +926,20 @@ AuraType =
 PowerType =
 {
 	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage", -- Requires localization
-	[SPELL_POWER_FOCUS] = "Focus", -- Requires localization
-	[SPELL_POWER_ENERGY] = "Energy", -- Requires localization
-	[SPELL_POWER_RUNIC_POWER] = "Runic Power", -- Requires localization
-	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards", -- Requires localization
-	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse", -- Requires localization
-	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse", -- Requires localization
-	[SPELL_POWER_HOLY_POWER] = "Holy Power", -- Requires localization
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power", -- Requires localization
-	[SPELL_POWER_DARK_FORCE] = "Dark Force", -- Requires localization
-	[SPELL_POWER_CHI] = "Chi", -- Requires localization
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs", -- Requires localization
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers", -- Requires localization
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury", -- Requires localization
+	[SPELL_POWER_RAGE] = "Rage",
+	[SPELL_POWER_FOCUS] = "Focus",
+	[SPELL_POWER_ENERGY] = "Energy",
+	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
+	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
+	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
+	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
+	[SPELL_POWER_HOLY_POWER] = "Holy Power",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	[SPELL_POWER_CHI] = "Chi",
+	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
 },
 
 Relative =
@@ -1143,7 +1147,7 @@ aideStance = "Haltung, Aura oder Form auswählen, die die Aura aktivieren soll."
 aideGTFO = "Select which GTFO Alert will trigger the event.",
 nomPowerType = "Power Type:",
 
-aideShowSpinAtBeginning= "Zeige am Ende der Anfangsanimation eine 360 Grad Drehung",
+aideShowSpinAtBeginning = "Zeige am Ende der Anfangsanimation eine 360 Grad Drehung",
 nomCheckShowSpinAtBeginning = "Zeige Drehung am Ende der Anfangsanimation",
 
 nomCheckShowTimer = "Zeigen",
@@ -1163,7 +1167,7 @@ aideInverse = "Kehrt die Logik des Effekts um, sodass er nur angezeigt wird, wen
 nomCheckIgnoreMaj = "Ignoriere Groß/Kleinschreibung",
 aideIgnoreMaj = "Aktivieren um die Groß/Kleinschreibung bei Buff- und Debuffnamen zu ignorieren.",
 
-nomAuraDebug= "Debug",
+nomAuraDebug = "Debug",
 aideAuraDebug = "Diese Aura debuggen",
 
 nomDuration = "Animationsdauer",
@@ -1212,88 +1216,92 @@ nomStacksTexture = "Stapel Grafik",
 Enabled = "Aktiviert",
 Default = "Standard",
 
-Ternary = {
+Ternary =
+{
 	combat = "Im Kampft",
 	inRaid = "Im Schlachtzug",
 	inParty = "In Gruppe",
 	isResting = "Erholen",
 	ismounted = "Auf Reittier",
 	inVehicle = "In Fahrzeug",
-	isAlive= "Am Leben",
-	PvP= "PvP aktiv",
-	Instance5Man= "5-Mann",
-	Instance5ManHeroic= "5-Mann HC",
-	Instance10Man= "10-Mann",
-	Instance10ManHeroic= "10-Mann HC",
-	Instance25Man= "25-Mann",
-	Instance25ManHeroic= "25-Mann HC",
-	InstanceBg= "Schlachtfeld",
-	InstanceArena= "Arena",
+	isAlive = "Am Leben",
+	PvP = "PvP aktiv",
+	Instance5Man = "5-Mann",
+	Instance5ManHeroic = "5-Mann HC",
+	Instance10Man = "10-Mann",
+	Instance10ManHeroic = "10-Mann HC",
+	Instance25Man = "25-Mann",
+	Instance25ManHeroic = "25-Mann HC",
+	InstanceBg = "Schlachtfeld",
+	InstanceArena = "Arena",
 },
 
 nomWhatever = "Ignorieren",
 aideTernary = "Legt fest, wie der Status die Aura ein/ausschaltet.",
-TernaryYes = {
+TernaryYes =
+{
 	combat = "Nur wenn im Kampf",
 	inRaid = "Nur wenn in einer Schlachtgruppe",
 	inParty = "Nur wenn in einer Gruppe",
 	isResting = "Nur wenn erholend",
 	ismounted = "Nur wenn auf einem Reittier",
 	inVehicle = "Nur wenn in einem Fahrzeug",
-	isAlive= "Nur wenn am Leben",
-	PvP= "Only when PvP flag set",
-	Instance5Man= "Only when in a 5-Man Normal instance",
-	Instance5ManHeroic= "Only when in a 5-Man Heroic instance",
-	Instance10Man= "Only when in a 10-Man Normal instance",
-	Instance10ManHeroic= "Only when in a 10-Man Heroic instance",
-	Instance25Man= "Only when in a 25-Man Normal instance",
-	Instance25ManHeroic= "Only when in a 25-Man Heroic instance",
-	InstanceBg= "Only when in a Battleground",
-	InstanceArena= "Only when in an Arena instance",
+	isAlive = "Nur wenn am Leben",
+	PvP = "Only when PvP flag set",
+	Instance5Man = "Only when in a 5-Man Normal instance",
+	Instance5ManHeroic = "Only when in a 5-Man Heroic instance",
+	Instance10Man = "Only when in a 10-Man Normal instance",
+	Instance10ManHeroic = "Only when in a 10-Man Heroic instance",
+	Instance25Man = "Only when in a 25-Man Normal instance",
+	Instance25ManHeroic = "Only when in a 25-Man Heroic instance",
+	InstanceBg = "Only when in a Battleground",
+	InstanceArena = "Only when in an Arena instance",
 	RoleTank = "Nur wenn Tank",
 	RoleHealer = "Nur wenn Heiler",
 	RoleMeleDps = "Nur wenn Nahkämpfer",
 	RoleRangeDps = "Nur wenn Fernkämpfer",
 },
-TernaryNo = {
+TernaryNo =
+{
 	combat = "Nur wenn nicht im Kampf",
 	inRaid = "Nur wenn in keiner Schlachtgruppe",
 	inParty = "Nur wenn in keiner Gruppe",
 	isResting = "Nur wenn nicht erholend",
 	ismounted = "Nur wenn auf keinem Mount",
 	inVehicle = "Nur wenn in keinem Fahrzeug",
-	isAlive= "Nur wenn tot",
-	PvP= "Only when PvP flag Not set",
-	Instance5Man= "Only when Not in a 5-Man Normal instance",
-	Instance5ManHeroic= "Only when Not in a 5-Man Heroic instance",
-	Instance10Man= "Only when Not in a 10-Man Normal instance",
-	Instance10ManHeroic= "Only when Not in a 10-Man Heroic instance",
-	Instance25Man= "Only when Not in a 25-Man Normal instance",
-	Instance25ManHeroic= "Only when Not in a 25-Man Heroic instance",
-	InstanceBg= "Only when Not in a Battleground",
-	InstanceArena= "Only when Not in an Arena instance",
+	isAlive = "Nur wenn tot",
+	PvP = "Only when PvP flag Not set",
+	Instance5Man = "Only when Not in a 5-Man Normal instance",
+	Instance5ManHeroic = "Only when Not in a 5-Man Heroic instance",
+	Instance10Man = "Only when Not in a 10-Man Normal instance",
+	Instance10ManHeroic = "Only when Not in a 10-Man Heroic instance",
+	Instance25Man = "Only when Not in a 25-Man Normal instance",
+	Instance25ManHeroic = "Only when Not in a 25-Man Heroic instance",
+	InstanceBg = "Only when Not in a Battleground",
+	InstanceArena = "Only when Not in an Arena instance",
 	RoleTank = "Nur wenn kein Tank",
 	RoleHealer = "Nur wenn kein Heiler",
 	RoleMeleDps = "Nur wenn kein Nahkämpfer",
 	RoleRangeDps = "Nur wenn kein Fernkämpfer",
 },
-TernaryAide = {
+TernaryAide =
+{
 	combat = "Effekt beeinflusst durch Kampfstatus.",
 	inRaid = "Effekt beeinflusst durch Schlachtzugsstatus.",
 	inParty = "Effekt beeinflusst durch Gruppenstatus.",
 	isResting = "Effekt beeinflusst durch Erholenstatus.",
 	ismounted = "Effekt beeinflusst durch Reittierstatus.",
 	inVehicle = "Effekt beeinflusst durch Fahrzeugstatus.",
-	isAlive= "Effekt beeinflusst durch Lebensstatus.",
-	PvP= "Effekt beinflusst durch PvP Status",
-	Instance5Man= "Effect modified by being in a 5-Man Normal instance",
-	Instance5ManHeroic= "Effect modified by being in a 5-Man Heroic instance",
-	Instance10Man= "Effect modified by being in a 10-Man Normal instance",
-	Instance10ManHeroic= "Effect modified by being in a 10-Man Heroic instance",
-	Instance25Man= "Effect modified by being in a 25-Man Normal instance",
-	Instance25ManHeroic= "Effect modified by being in a 25-Man Heroic instance",
-	InstanceBg= "Effect modified by being in a Battleground",
-	InstanceArena= "Effect modified by being in an Arena instance",
+	isAlive = "Effekt beeinflusst durch Lebensstatus.",
+	PvP = "Effekt beinflusst durch PvP Status",
+	Instance5Man = "Effect modified by being in a 5-Man Normal instance",
+	Instance5ManHeroic = "Effect modified by being in a 5-Man Heroic instance",
+	Instance10Man = "Effect modified by being in a 10-Man Normal instance",
+	Instance10ManHeroic = "Effect modified by being in a 10-Man Heroic instance",
+	Instance25Man = "Effect modified by being in a 25-Man Normal instance",
+	Instance25ManHeroic = "Effect modified by being in a 25-Man Heroic instance",
+	InstanceBg = "Effect modified by being in a Battleground",
+	InstanceArena = "Effect modified by being in an Arena instance",
 	RoleTank = "Effekt beeinflusst durch Tanklasse",
 	RoleHealer = "Effekt beeinflusst durch Heilklasse",
 	RoleMeleDps = "Effekt beeinflusst durch Nahkampfklasse",
@@ -1493,13 +1501,14 @@ nomReasonRoleNoMatch = "No matching Role",
 
 nomReasonGTFOAlerts = "GTFO alerts are never always on.",
 
-ReasonStat = {
-	Health = {MatchReason="$1 Gesundheit niedrig", NoMatchReason="$1 Gesundheit nicht niedrig genug"},
-	Mana = {MatchReason="$1 Mana niedrig", NoMatchReason="$1 Mana nicht niedrig genug"},
-	Power = {MatchReason="$1 EnergieWutRunen niedrig", NoMatchReason="$1 EnergieWutRunen nicht niedrig genug", NilReason = "$1 has wrong Power Type"},
-	Aggro = {MatchReason="$1 hat Aggro", NoMatchReason="$1 hat keine Aggro"},
-	PvP = {MatchReason="$1 PvP Markierung gesetzt", NoMatchReason="$1 PvP Markierung nicht gesetzt"},
-	SpellAlert = {MatchReason="$1 casting $2", NoMatchReason="$1 not casting $2"},
+ReasonStat =
+{
+	Health = {MatchReason = "$1 Gesundheit niedrig", NoMatchReason = "$1 Gesundheit nicht niedrig genug"},
+	Mana = {MatchReason = "$1 Mana niedrig", NoMatchReason = "$1 Mana nicht niedrig genug"},
+	Power = {MatchReason = "$1 EnergieWutRunen niedrig", NoMatchReason = "$1 EnergieWutRunen nicht niedrig genug", NilReason = "$1 has wrong Power Type"},
+	Aggro = {MatchReason = "$1 hat Aggro", NoMatchReason = "$1 hat keine Aggro"},
+	PvP = {MatchReason = "$1 PvP Markierung gesetzt", NoMatchReason = "$1 PvP Markierung nicht gesetzt"},
+	SpellAlert = {MatchReason = "$1 casting $2", NoMatchReason = "$1 not casting $2"},
 },
 
 -- Import dialog
@@ -1676,12 +1685,12 @@ PowerType =
 	[SPELL_POWER_LUNAR_ECLIPSE] = "Eclipse lunar",
 	[SPELL_POWER_SOLAR_ECLIPSE] = "Eclipse solar",
 	[SPELL_POWER_HOLY_POWER] = "Poder sagrado",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power", -- Requires localization
-	[SPELL_POWER_DARK_FORCE] = "Dark Force", -- Requires localization
-	[SPELL_POWER_CHI] = "Chi", -- Requires localization
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs", -- Requires localization
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers", -- Requires localization
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury", -- Requires localization
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	[SPELL_POWER_CHI] = "Chi",
+	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
 },
 
 Relative =
@@ -1722,9 +1731,9 @@ Slots =
 	Wrist = "Muñeca",
 },
 
-SlotsToCheck = "Select Slots to Check", -- Requires localization
+SlotsToCheck = "Select Slots to Check",
 
-Cancel = "Cancel", -- Requires localization
+Cancel = "Cancel",
 
 -- Main
 nomEnable = "Activar Power Auras",
@@ -1736,7 +1745,7 @@ nomTextureCount = "Texturas máximas",
 aideTextureCount = "Cambia esto si añades tus propias texturas",
 
 aideOverrideTextureCount = "Sobrepasa número de texturas",
-nomOverrideTextureCount= "Activa esto si vas a añadir tus propias texturas",
+nomOverrideTextureCount = "Activa esto si vas a añadir tus propias texturas",
 
 ListePlayer = "Página",
 ListeGlobal = "Global",
@@ -1913,7 +1922,7 @@ aideStance = "Selecciona qué actitud, aura o forma activa el aura",
 aideGTFO = "Selecciona qué alerta ¡muévete! cativa el aura",
 aidePowerType = "Selecciona qué tipo de recurso monitorizar",
 
-aideShowSpinAtBeginning= "Al final del inicio de la animación, ejecuta un giro de 360 grados",
+aideShowSpinAtBeginning = "Al final del inicio de la animación, ejecuta un giro de 360 grados",
 nomCheckShowSpinAtBeginning = "Ejecuta un giro después del inicio de la animación",
 
 nomCheckShowTimer = "Mostrar",
@@ -1933,7 +1942,7 @@ aideInverse = "Invierte la lógica para mostrar este aura sólo cuando el bufo/d
 nomCheckIgnoreMaj = "Ignorar tipografía",
 aideIgnoreMaj = "Activa esto para ignorar mayúsculas/minúsculas del nombre de bufos/debufos",
 
-nomAuraDebug= "Depurar",
+nomAuraDebug = "Depurar",
 aideAuraDebug = "Depurar este aura",
 
 nomDuration = "Duración de la animación",
@@ -1984,88 +1993,92 @@ nomStacksTexture = "Textura de las acumulaciones",
 Enabled = "Habilitado",
 Default = "Por defecto",
 
-Ternary = {
+Ternary =
+{
 	combat = "En combate",
 	inRaid = "En banda",
 	inParty = "En grupo",
 	isResting = "Descansando",
 	ismounted = "Sobre montura",
 	inVehicle = "En vehículo",
-	isAlive= "Vivo",
-	PvP= "PvP activado",
-	Instance5Man= "5-Normal",
-	Instance5ManHeroic= "5-Heróico",
-	Instance10Man= "10-Normal",
-	Instance10ManHeroic= "10-Heróico",
-	Instance25Man= "25-Normal",
-	Instance25ManHeroic= "25-Heróico",
-	InstanceBg= "Campo de batalla",
-	InstanceArena= "Arena",
+	isAlive = "Vivo",
+	PvP = "PvP activado",
+	Instance5Man = "5-Normal",
+	Instance5ManHeroic = "5-Heróico",
+	Instance10Man = "10-Normal",
+	Instance10ManHeroic = "10-Heróico",
+	Instance25Man = "25-Normal",
+	Instance25ManHeroic = "25-Heróico",
+	InstanceBg = "Campo de batalla",
+	InstanceArena = "Arena",
 },
 
 nomWhatever = "Ignorado",
 aideTernary = "Establece cuando este aura se muestra.",
-TernaryYes = {
+TernaryYes =
+{
 	combat = "Sólo en combate",
 	inRaid = "Sólo en banda",
 	inParty = "Sólo en grupo",
 	isResting = "Sólo descansando",
 	ismounted = "Sólo sobre montura",
 	inVehicle = "Sólo en vehículos",
-	isAlive= "Sólo vivo",
-	PvP= "Sólo con PvP activado",
-	Instance5Man= "Sólo en mazmorras 5-Normal",
-	Instance5ManHeroic= "Sólo en mazmorras 5-Heróico",
-	Instance10Man= "Sólo en bandas 10-Normal",
-	Instance10ManHeroic= "Sólo en bandas 10-Heróico",
-	Instance25Man= "Sólo en bandas 25-Normal",
-	Instance25ManHeroic= "Sólo en bandas 25-Heróico",
-	InstanceBg= "Sólo en campos de batalla",
-	InstanceArena= "Sólo en Arenas",
+	isAlive = "Sólo vivo",
+	PvP = "Sólo con PvP activado",
+	Instance5Man = "Sólo en mazmorras 5-Normal",
+	Instance5ManHeroic = "Sólo en mazmorras 5-Heróico",
+	Instance10Man = "Sólo en bandas 10-Normal",
+	Instance10ManHeroic = "Sólo en bandas 10-Heróico",
+	Instance25Man = "Sólo en bandas 25-Normal",
+	Instance25ManHeroic = "Sólo en bandas 25-Heróico",
+	InstanceBg = "Sólo en campos de batalla",
+	InstanceArena = "Sólo en Arenas",
 	RoleTank = "Sólo cuando tanque",
 	RoleHealer = "Sólo cuando curador",
 	RoleMeleDps = "Sólo cuando DPS cuerpo a cuerpo",
 	RoleRangeDps = "Sólo cuando DPS a distancia",
 },
-TernaryNo = {
+TernaryNo =
+{
 	combat = "Sólo cuando no en combate",
 	inRaid = "Sólo cuando no en banda",
 	inParty = "Sólo cuando no en grupo",
 	isResting = "Sólo cuando no descansando",
 	ismounted = "Sólo cuando no sobre montura",
 	inVehicle = "Sólo cuando no en vehículos",
-	isAlive= "Sólo muerto",
-	PvP= "Sólo cuando PvP desactivado",
-	Instance5Man= "Sólo cuando no en mazmorras 5-Normal",
-	Instance5ManHeroic= "Sólo cuando no en mazmorras 5-Heróico",
-	Instance10Man= "Sólo cuando no en bandas 10-Normal",
-	Instance10ManHeroic= "Sólo cuando no en bandas 10-Heróico",
-	Instance25Man= "Sólo cuando no en bandas 25-Normal",
-	Instance25ManHeroic= "Sólo cuando no en bandas 25-Heróico",
-	InstanceBg= "Sólo cuando no en campos de batalla",
-	InstanceArena= "Sólo cuando no en arena",
+	isAlive = "Sólo muerto",
+	PvP = "Sólo cuando PvP desactivado",
+	Instance5Man = "Sólo cuando no en mazmorras 5-Normal",
+	Instance5ManHeroic = "Sólo cuando no en mazmorras 5-Heróico",
+	Instance10Man = "Sólo cuando no en bandas 10-Normal",
+	Instance10ManHeroic = "Sólo cuando no en bandas 10-Heróico",
+	Instance25Man = "Sólo cuando no en bandas 25-Normal",
+	Instance25ManHeroic = "Sólo cuando no en bandas 25-Heróico",
+	InstanceBg = "Sólo cuando no en campos de batalla",
+	InstanceArena = "Sólo cuando no en arena",
 	RoleTank = "Sólo cuando no tanque",
 	RoleHealer = "Sólo cuando no curador",
 	RoleMeleDps = "Sólo cuando no DPS cuerpo a cuerpo",
 	RoleRangeDps = "Sólo cuando no DPS a distancia",
 },
-TernaryAide = {
+TernaryAide =
+{
 	combat = "Efecto modificado por estado de combate",
 	inRaid = "Efecto modificado por estado de banda",
 	inParty = "Efecto modificado por estado de grupo",
 	isResting = "Efecto modificado por descansado",
 	ismounted = "Efecto modificado por montura",
 	inVehicle = "Efecto modificado por vehículos",
-	isAlive= "Efecto modificado por vida",
-	PvP= "Efecto modificado por estado de PvP",
-	Instance5Man= "Efecto modificado por estar en mazmorra 5-Normal",
-	Instance5ManHeroic= "Efecto modificado por estar en mazmorra 5-Heróico",
-	Instance10Man= "Efecto modificado por estar en banda 10-Normal",
-	Instance10ManHeroic= "Efecto modificado por estar en banda 10-Heróico",
-	Instance25Man= "Efecto modificado por estar en banda 25-Normal",
-	Instance25ManHeroic= "Efecto modificado por estar en banda 25-Heróico",
-	InstanceBg= "Efecto modificado por estar en campo de batalla",
-	InstanceArena= "Efecto modificado por estar en arena",
+	isAlive = "Efecto modificado por vida",
+	PvP = "Efecto modificado por estado de PvP",
+	Instance5Man = "Efecto modificado por estar en mazmorra 5-Normal",
+	Instance5ManHeroic = "Efecto modificado por estar en mazmorra 5-Heróico",
+	Instance10Man = "Efecto modificado por estar en banda 10-Normal",
+	Instance10ManHeroic = "Efecto modificado por estar en banda 10-Heróico",
+	Instance25Man = "Efecto modificado por estar en banda 25-Normal",
+	Instance25ManHeroic = "Efecto modificado por estar en banda 25-Heróico",
+	InstanceBg = "Efecto modificado por estar en campo de batalla",
+	InstanceArena = "Efecto modificado por estar en arena",
 	RoleTank = "Efecto modificado por ser tanque",
 	RoleHealer = "Efecto modificado por ser curador",
 	RoleMeleDps = "Efecto modificado por ser DPS cuerpo a cuerpo",
@@ -2269,13 +2282,14 @@ nomUnknownSpellId = "PowerAuras: Aura $1 hace referencia a un ID desconocido", -
 
 nomReasonGTFOAlerts = "Las alertas ¡muévete! no siempre están activadas",
 
-ReasonStat = {
-	Health = {MatchReason="$1 poca vida", NoMatchReason="$1 demasiada vida"},
-	Mana = {MatchReason="$1 poco maná", NoMatchReason="$1 demasiado maná"},
-	Power = {MatchReason="$1 poco poder", NoMatchReason="$1 demasiado poder", NilReason = "$1 tiene un tipo de poder distinto"},
-	Aggro = {MatchReason="$1 tiene aggro", NoMatchReason="$1 no tiene aggro"},
-	PvP = {MatchReason="$1 PvP activado", NoMatchReason="$1 PvP no activado"},
-	SpellAlert = {MatchReason="$1 lanzando $2", NoMatchReason="$1 no está lanzando $2"},
+ReasonStat =
+{
+	Health = {MatchReason = "$1 poca vida", NoMatchReason = "$1 demasiada vida"},
+	Mana = {MatchReason = "$1 poco maná", NoMatchReason = "$1 demasiado maná"},
+	Power = {MatchReason = "$1 poco poder", NoMatchReason = "$1 demasiado poder", NilReason = "$1 tiene un tipo de poder distinto"},
+	Aggro = {MatchReason = "$1 tiene aggro", NoMatchReason = "$1 no tiene aggro"},
+	PvP = {MatchReason = "$1 PvP activado", NoMatchReason = "$1 PvP no activado"},
+	SpellAlert = {MatchReason = "$1 lanzando $2", NoMatchReason = "$1 no está lanzando $2"},
 },
 
 -- Import dialog
@@ -2298,6 +2312,7 @@ ExportDialogSendTitle5 = "¡Envío realizado!",
 ExportDialogSendButton1 = "Enviar",
 ExportDialogSendButton2 = "Atrás",
 ExportDialogCancelButton = "Cerrar",
+
 -- Cross-client import dialog
 PlayerImportDialogTopTitle = "¡Tienes auras!",
 PlayerImportDialogDescTitle1 = "%s quiere enviarte auras",
@@ -2453,15 +2468,13 @@ PowerType =
 	[SPELL_POWER_LUNAR_ECLIPSE] = "Eclipse lunar",
 	[SPELL_POWER_SOLAR_ECLIPSE] = "Eclipse solar",
 	[SPELL_POWER_HOLY_POWER] = "Poder sagrado",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power", -- Requires localization
-	[SPELL_POWER_DARK_FORCE] = "Dark Force", -- Requires localization
-	[SPELL_POWER_CHI] = "Chi", -- Requires localization
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs", -- Requires localization
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers", -- Requires localization
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury", -- Requires localization
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	[SPELL_POWER_CHI] = "Chi",
+	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
 },
-
-
 
 Relative =
 {
@@ -2501,9 +2514,9 @@ Slots =
 	Wrist = "Muñeca",
 },
 
-SlotsToCheck = "Select Slots to Check", -- Requires localization
+SlotsToCheck = "Select Slots to Check",
 
-Cancel = "Cancel", -- Requires localization
+Cancel = "Cancel",
 
 -- Main
 nomEnable = "Activar Power Auras",
@@ -2515,7 +2528,7 @@ nomTextureCount = "Texturas máximas",
 aideTextureCount = "Cambia esto si añades tus propias texturas",
 
 aideOverrideTextureCount = "Sobrepasa número de texturas",
-nomOverrideTextureCount= "Activa esto si vas a añadir tus propias texturas",
+nomOverrideTextureCount = "Activa esto si vas a añadir tus propias texturas",
 
 ListePlayer = "Página",
 ListeGlobal = "Global",
@@ -2692,7 +2705,7 @@ aideStance = "Selecciona qué actitud, aura o forma activa el aura",
 aideGTFO = "Selecciona qué alerta ¡muévete! cativa el aura",
 aidePowerType = "Selecciona qué tipo de recurso monitorizar",
 
-aideShowSpinAtBeginning= "Al final del inicio de la animación, ejecuta un giro de 360 grados",
+aideShowSpinAtBeginning = "Al final del inicio de la animación, ejecuta un giro de 360 grados",
 nomCheckShowSpinAtBeginning = "Ejecuta un giro después del inicio de la animación",
 
 nomCheckShowTimer = "Mostrar",
@@ -2712,7 +2725,7 @@ aideInverse = "Invierte la lógica para mostrar este aura sólo cuando el bufo/d
 nomCheckIgnoreMaj = "Ignorar tipografía",
 aideIgnoreMaj = "Activa esto para ignorar mayúsculas/minúsculas del nombre de bufos/debufos",
 
-nomAuraDebug= "Depurar",
+nomAuraDebug = "Depurar",
 aideAuraDebug = "Depurar este aura",
 
 nomDuration = "Duración de la animación",
@@ -2763,88 +2776,92 @@ nomStacksTexture = "Textura de las acumulaciones",
 Enabled = "Habilitado",
 Default = "Por defecto",
 
-Ternary = {
+Ternary =
+{
 	combat = "En combate",
 	inRaid = "En banda",
 	inParty = "En grupo",
 	isResting = "Descansando",
 	ismounted = "Sobre montura",
 	inVehicle = "En vehículo",
-	isAlive= "Vivo",
-	PvP= "PvP activado",
-	Instance5Man= "5-Normal",
-	Instance5ManHeroic= "5-Heróico",
-	Instance10Man= "10-Normal",
-	Instance10ManHeroic= "10-Heróico",
-	Instance25Man= "25-Normal",
-	Instance25ManHeroic= "25-Heróico",
-	InstanceBg= "Campo de batalla",
-	InstanceArena= "Arena",
+	isAlive = "Vivo",
+	PvP = "PvP activado",
+	Instance5Man = "5-Normal",
+	Instance5ManHeroic = "5-Heróico",
+	Instance10Man = "10-Normal",
+	Instance10ManHeroic = "10-Heróico",
+	Instance25Man = "25-Normal",
+	Instance25ManHeroic = "25-Heróico",
+	InstanceBg = "Campo de batalla",
+	InstanceArena = "Arena",
 },
 
 nomWhatever = "Ignorado",
 aideTernary = "Establece cuando este aura se muestra.",
-TernaryYes = {
+TernaryYes =
+{
 	combat = "Sólo en combate",
 	inRaid = "Sólo en banda",
 	inParty = "Sólo en grupo",
 	isResting = "Sólo descansando",
 	ismounted = "Sólo sobre montura",
 	inVehicle = "Sólo en vehículos",
-	isAlive= "Sólo vivo",
-	PvP= "Sólo con PvP activado",
-	Instance5Man= "Sólo en mazmorras 5-Normal",
-	Instance5ManHeroic= "Sólo en mazmorras 5-Heróico",
-	Instance10Man= "Sólo en bandas 10-Normal",
-	Instance10ManHeroic= "Sólo en bandas 10-Heróico",
-	Instance25Man= "Sólo en bandas 25-Normal",
-	Instance25ManHeroic= "Sólo en bandas 25-Heróico",
-	InstanceBg= "Sólo en campos de batalla",
-	InstanceArena= "Sólo en Arenas",
+	isAlive = "Sólo vivo",
+	PvP = "Sólo con PvP activado",
+	Instance5Man = "Sólo en mazmorras 5-Normal",
+	Instance5ManHeroic = "Sólo en mazmorras 5-Heróico",
+	Instance10Man = "Sólo en bandas 10-Normal",
+	Instance10ManHeroic = "Sólo en bandas 10-Heróico",
+	Instance25Man = "Sólo en bandas 25-Normal",
+	Instance25ManHeroic = "Sólo en bandas 25-Heróico",
+	InstanceBg = "Sólo en campos de batalla",
+	InstanceArena = "Sólo en Arenas",
 	RoleTank = "Sólo cuando tanque",
 	RoleHealer = "Sólo cuando curador",
 	RoleMeleDps = "Sólo cuando DPS cuerpo a cuerpo",
 	RoleRangeDps = "Sólo cuando DPS a distancia",
 },
-TernaryNo = {
+TernaryNo =
+{
 	combat = "Sólo cuando no en combate",
 	inRaid = "Sólo cuando no en banda",
 	inParty = "Sólo cuando no en grupo",
 	isResting = "Sólo cuando no descansando",
 	ismounted = "Sólo cuando no sobre montura",
 	inVehicle = "Sólo cuando no en vehículos",
-	isAlive= "Sólo muerto",
-	PvP= "Sólo cuando PvP desactivado",
-	Instance5Man= "Sólo cuando no en mazmorras 5-Normal",
-	Instance5ManHeroic= "Sólo cuando no en mazmorras 5-Heróico",
-	Instance10Man= "Sólo cuando no en bandas 10-Normal",
-	Instance10ManHeroic= "Sólo cuando no en bandas 10-Heróico",
-	Instance25Man= "Sólo cuando no en bandas 25-Normal",
-	Instance25ManHeroic= "Sólo cuando no en bandas 25-Heróico",
-	InstanceBg= "Sólo cuando no en campos de batalla",
-	InstanceArena= "Sólo cuando no en arena",
+	isAlive = "Sólo muerto",
+	PvP = "Sólo cuando PvP desactivado",
+	Instance5Man = "Sólo cuando no en mazmorras 5-Normal",
+	Instance5ManHeroic = "Sólo cuando no en mazmorras 5-Heróico",
+	Instance10Man = "Sólo cuando no en bandas 10-Normal",
+	Instance10ManHeroic = "Sólo cuando no en bandas 10-Heróico",
+	Instance25Man = "Sólo cuando no en bandas 25-Normal",
+	Instance25ManHeroic = "Sólo cuando no en bandas 25-Heróico",
+	InstanceBg = "Sólo cuando no en campos de batalla",
+	InstanceArena = "Sólo cuando no en arena",
 	RoleTank = "Sólo cuando no tanque",
 	RoleHealer = "Sólo cuando no curador",
 	RoleMeleDps = "Sólo cuando no DPS cuerpo a cuerpo",
 	RoleRangeDps = "Sólo cuando no DPS a distancia",
 },
-TernaryAide = {
+TernaryAide =
+{
 	combat = "Efecto modificado por estado de combate",
 	inRaid = "Efecto modificado por estado de banda",
 	inParty = "Efecto modificado por estado de grupo",
 	isResting = "Efecto modificado por descansado",
 	ismounted = "Efecto modificado por montura",
 	inVehicle = "Efecto modificado por vehículos",
-	isAlive= "Efecto modificado por vida",
-	PvP= "Efecto modificado por estado de PvP",
-	Instance5Man= "Efecto modificado por estar en mazmorra 5-Normal",
-	Instance5ManHeroic= "Efecto modificado por estar en mazmorra 5-Heróico",
-	Instance10Man= "Efecto modificado por estar en banda 10-Normal",
-	Instance10ManHeroic= "Efecto modificado por estar en banda 10-Heróico",
-	Instance25Man= "Efecto modificado por estar en banda 25-Normal",
-	Instance25ManHeroic= "Efecto modificado por estar en banda 25-Heróico",
-	InstanceBg= "Efecto modificado por estar en campo de batalla",
-	InstanceArena= "Efecto modificado por estar en arena",
+	isAlive = "Efecto modificado por vida",
+	PvP = "Efecto modificado por estado de PvP",
+	Instance5Man = "Efecto modificado por estar en mazmorra 5-Normal",
+	Instance5ManHeroic = "Efecto modificado por estar en mazmorra 5-Heróico",
+	Instance10Man = "Efecto modificado por estar en banda 10-Normal",
+	Instance10ManHeroic = "Efecto modificado por estar en banda 10-Heróico",
+	Instance25Man = "Efecto modificado por estar en banda 25-Normal",
+	Instance25ManHeroic = "Efecto modificado por estar en banda 25-Heróico",
+	InstanceBg = "Efecto modificado por estar en campo de batalla",
+	InstanceArena = "Efecto modificado por estar en arena",
 	RoleTank = "Efecto modificado por ser tanque",
 	RoleHealer = "Efecto modificado por ser curador",
 	RoleMeleDps = "Efecto modificado por ser DPS cuerpo a cuerpo",
@@ -3048,13 +3065,14 @@ nomUnknownSpellId = "PowerAuras: Aura $1 hace referencia a un ID desconocido", -
 
 nomReasonGTFOAlerts = "Las alertas ¡muévete! no siempre están activadas",
 
-ReasonStat = {
-	Health = {MatchReason="$1 poca vida", NoMatchReason="$1 demasiada vida"},
-	Mana = {MatchReason="$1 poco maná", NoMatchReason="$1 demasiado maná"},
-	Power = {MatchReason="$1 poco poder", NoMatchReason="$1 demasiado poder", NilReason = "$1 tiene un tipo de poder distinto"},
-	Aggro = {MatchReason="$1 tiene aggro", NoMatchReason="$1 no tiene aggro"},
-	PvP = {MatchReason="$1 PvP activado", NoMatchReason="$1 PvP no activado"},
-	SpellAlert = {MatchReason="$1 lanzando $2", NoMatchReason="$1 no está lanzando $2"},
+ReasonStat =
+{
+	Health = {MatchReason = "$1 poca vida", NoMatchReason = "$1 demasiada vida"},
+	Mana = {MatchReason = "$1 poco maná", NoMatchReason = "$1 demasiado maná"},
+	Power = {MatchReason = "$1 poco poder", NoMatchReason = "$1 demasiado poder", NilReason = "$1 tiene un tipo de poder distinto"},
+	Aggro = {MatchReason = "$1 tiene aggro", NoMatchReason = "$1 no tiene aggro"},
+	PvP = {MatchReason = "$1 PvP activado", NoMatchReason = "$1 PvP no activado"},
+	SpellAlert = {MatchReason = "$1 lanzando $2", NoMatchReason = "$1 no está lanzando $2"},
 },
 
 -- Import dialog
@@ -3077,6 +3095,7 @@ ExportDialogSendTitle5 = "¡Envío realizado!",
 ExportDialogSendButton1 = "Enviar",
 ExportDialogSendButton2 = "Atrás",
 ExportDialogCancelButton = "Cerrar",
+
 -- Cross-client import dialog
 PlayerImportDialogTopTitle = "¡Tienes auras!",
 PlayerImportDialogDescTitle1 = "%s quiere enviarte auras",
@@ -3231,12 +3250,12 @@ PowerType =
 	[SPELL_POWER_SOUL_SHARDS] = "Fragment d'âme",
 	[SPELL_POWER_ECLIPSE] = "Eclipse",
 	[SPELL_POWER_HOLY_POWER] = "Puissance sacrée",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power", -- Requires localization
-	[SPELL_POWER_DARK_FORCE] = "Dark Force", -- Requires localization
-	[SPELL_POWER_CHI] = "Chi", -- Requires localization
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs", -- Requires localization
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers", -- Requires localization
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury", -- Requires localization
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	[SPELL_POWER_CHI] = "Chi",
+	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
 },
 
 Relative =
@@ -3277,9 +3296,9 @@ Slots =
 	Wrist = "Poignets",
 },
 
-SlotsToCheck = "Select Slots to Check", -- Requires localization
+SlotsToCheck = "Select Slots to Check",
 
-Cancel = "Cancel", -- Requires localization
+Cancel = "Cancel",
 
 -- Main
 nomEnable = "Activer Power Auras",
@@ -3291,7 +3310,7 @@ nomTextureCount = "Max Textures",
 aideTextureCount = "Change this if you add your own textures",
 
 aideOverrideTextureCount = "Override the number of textures",
-nomOverrideTextureCount= "Set this if you are adding your own textures",
+nomOverrideTextureCount = "Set this if you are adding your own textures",
 
 ListePlayer = "Page",
 ListeGlobal = "Global",
@@ -3468,7 +3487,7 @@ aideStance = "Select which Stance,Aura or Form trigger the event.",
 aideGTFO = "Select which GTFO Alert will trigger the event.",
 aidePowerType = "Select which type of resource to track",
 
-aideShowSpinAtBeginning= "Un tournoiement de 360° après l'animation de départ.",
+aideShowSpinAtBeginning = "Un tournoiement de 360° après l'animation de départ.",
 nomCheckShowSpinAtBeginning = "Tournoiement après l'animation de début.",
 
 nomCheckShowTimer = "Afficher",
@@ -3488,7 +3507,7 @@ aideInverse = "Cochez cette case pour afficher cet effet uniquement quand le buf
 nomCheckIgnoreMaj = "Ignorer les majuscules",
 aideIgnoreMaj = "Cochez cette case pour ignorer les majuscules/minuscules du nom des buffs/d\195\169buffs.",
 
-nomAuraDebug= "Debug",
+nomAuraDebug = "Debug",
 aideAuraDebug = "Debug this Aura",
 
 nomDuration = "Durée de l'animation",
@@ -3539,23 +3558,24 @@ nomStacksTexture = "Police de l'empilement",
 Enabled = "Enabled",
 Default = "Default",
 
-Ternary = {
+Ternary =
+{
 	combat = "En combat",
 	inRaid = "En raid",
 	inParty = "En groupe",
 	isResting = "En repos",
 	ismounted = "En monture",
 	inVehicle = "En véhicule",
-	isAlive= "Vivant",
-	PvP= "Statut JcJ",
-	Instance5Man= "5 joueurs",
-	Instance5ManHeroic= "5 joueurs H",
-	Instance10Man= "10 joueurs",
-	Instance10ManHeroic= "10 joueurs H",
-	Instance25Man= "25 joueurs",
-	Instance25ManHeroic= "25 joueurs H",
-	InstanceBg= "Champ de bataille",
-	InstanceArena= "Arène",
+	isAlive = "Vivant",
+	PvP = "Statut JcJ",
+	Instance5Man = "5 joueurs",
+	Instance5ManHeroic = "5 joueurs H",
+	Instance10Man = "10 joueurs",
+	Instance10ManHeroic = "10 joueurs H",
+	Instance25Man = "25 joueurs",
+	Instance25ManHeroic = "25 joueurs H",
+	InstanceBg = "Champ de bataille",
+	InstanceArena = "Arène",
 },
 
 nomWhatever = "Ignored",
@@ -3567,60 +3587,62 @@ TernaryYes = {
 	isResting = "Only When Resting",
 	ismounted = "Only When Mounted",
 	inVehicle = "Only When In Vehicle",
-	isAlive= "Only When Alive",
-	PvP= "Only when PvP flag set",
-	Instance5Man= "Only when in a 5-Man Normal instance",
-	Instance5ManHeroic= "Only when in a 5-Man Heroic instance",
-	Instance10Man= "Only when in a 10-Man Normal instance",
-	Instance10ManHeroic= "Only when in a 10-Man Heroic instance",
-	Instance25Man= "Only when in a 25-Man Normal instance",
-	Instance25ManHeroic= "Only when in a 25-Man Heroic instance",
-	InstanceBg= "Only when in a Battleground",
-	InstanceArena= "Only when in an Arena instance",
+	isAlive = "Only When Alive",
+	PvP = "Only when PvP flag set",
+	Instance5Man = "Only when in a 5-Man Normal instance",
+	Instance5ManHeroic = "Only when in a 5-Man Heroic instance",
+	Instance10Man = "Only when in a 10-Man Normal instance",
+	Instance10ManHeroic = "Only when in a 10-Man Heroic instance",
+	Instance25Man = "Only when in a 25-Man Normal instance",
+	Instance25ManHeroic = "Only when in a 25-Man Heroic instance",
+	InstanceBg = "Only when in a Battleground",
+	InstanceArena = "Only when in an Arena instance",
 	RoleTank = "Only when a Tank",
 	RoleHealer = "Only when a Healer",
 	RoleMeleDps = "Only when a Melee DPS",
 	RoleRangeDps = "Only when a Ranged DPS",
 },
-TernaryNo = {
+TernaryNo =
+{
 	combat = "Only When Not in Combat",
 	inRaid = "Only When Not in Raid",
 	inParty = "Only When Not in Party",
 	isResting = "Only When Not Resting",
 	ismounted = "Only When Not Mounted",
 	inVehicle = "Only When Not in Vehicle",
-	isAlive= "Only When Dead",
-	PvP= "Only when PvP flag Not set",
-	Instance5Man= "Only when Not in a 5-Man Normal instance",
-	Instance5ManHeroic= "Only when Not in a 5-Man Heroic instance",
-	Instance10Man= "Only when Not in a 10-Man Normal instance",
-	Instance10ManHeroic= "Only when Not in a 10-Man Heroic instance",
-	Instance25Man= "Only when Not in a 25-Man Normal instance",
-	Instance25ManHeroic= "Only when Not in a 25-Man Heroic instance",
-	InstanceBg= "Only when Not in a Battleground",
-	InstanceArena= "Only when Not in an Arena instance",
+	isAlive = "Only When Dead",
+	PvP = "Only when PvP flag Not set",
+	Instance5Man = "Only when Not in a 5-Man Normal instance",
+	Instance5ManHeroic = "Only when Not in a 5-Man Heroic instance",
+	Instance10Man = "Only when Not in a 10-Man Normal instance",
+	Instance10ManHeroic = "Only when Not in a 10-Man Heroic instance",
+	Instance25Man = "Only when Not in a 25-Man Normal instance",
+	Instance25ManHeroic = "Only when Not in a 25-Man Heroic instance",
+	InstanceBg = "Only when Not in a Battleground",
+	InstanceArena = "Only when Not in an Arena instance",
 	RoleTank = "Only when Not a Tank",
 	RoleHealer = "Only when Not a Healer",
 	RoleMeleDps = "Only when Not a Melee DPS",
 	RoleRangeDps = "Only when Not a Ranged DPS",
 },
-TernaryAide = {
+TernaryAide =
+{
 	combat = "Effect modified by Combat status.",
 	inRaid = "Effect modified by Raid status.",
 	inParty = "Effect modified by Party status.",
 	isResting = "Effect modified by Resting status.",
 	ismounted = "Effect modified by Mounted status.",
 	inVehicle = "Effect modified by Vehicle status.",
-	isAlive= "Effect modified by Alive status.",
-	PvP= "Effect modified by PvP flag",
-	Instance5Man= "Effect modified by being in a 5-Man Normal instance",
-	Instance5ManHeroic= "Effect modified by being in a 5-Man Heroic instance",
-	Instance10Man= "Effect modified by being in a 10-Man Normal instance",
-	Instance10ManHeroic= "Effect modified by being in a 10-Man Heroic instance",
-	Instance25Man= "Effect modified by being in a 25-Man Normal instance",
-	Instance25ManHeroic= "Effect modified by being in a 25-Man Heroic instance",
-	InstanceBg= "Effect modified by being in a Battleground",
-	InstanceArena= "Effect modified by being in an Arena instance",
+	isAlive = "Effect modified by Alive status.",
+	PvP = "Effect modified by PvP flag",
+	Instance5Man = "Effect modified by being in a 5-Man Normal instance",
+	Instance5ManHeroic = "Effect modified by being in a 5-Man Heroic instance",
+	Instance10Man = "Effect modified by being in a 10-Man Normal instance",
+	Instance10ManHeroic = "Effect modified by being in a 10-Man Heroic instance",
+	Instance25Man = "Effect modified by being in a 25-Man Normal instance",
+	Instance25ManHeroic = "Effect modified by being in a 25-Man Heroic instance",
+	InstanceBg = "Effect modified by being in a Battleground",
+	InstanceArena = "Effect modified by being in an Arena instance",
 	RoleTank = "Effect modified by being a Tank",
 	RoleHealer = "Effect modified by being a Healer",
 	RoleMeleDps = "Effect modified by being a Melee DPS",
@@ -3824,13 +3846,14 @@ nomUnknownSpellId = "PowerAuras: Aura $1 references an unknown spellId: ", -- $1
 
 nomReasonGTFOAlerts = "GTFO alerts are never always on.",
 
-ReasonStat = {
-	Health = {MatchReason="$1 Health past limit", NoMatchReason="$1 Health not past limit"},
-	Mana = {MatchReason="$1 Mana past limit", NoMatchReason="$1 Mana not past limit"},
-	Power = {MatchReason="$1 $3 past limit", NoMatchReason="$1 $3 not past limit", NilReason = "$1 has wrong Power Type"},
-	Aggro = {MatchReason="$1 has aggro", NoMatchReason="$1 does not have aggro"},
-	PvP = {MatchReason="$1 PvP flag set", NoMatchReason="$1 PvP flag not set"},
-	SpellAlert = {MatchReason="$1 casting $2", NoMatchReason="$1 not casting $2"},
+ReasonStat =
+{
+	Health = {MatchReason = "$1 Health past limit", NoMatchReason = "$1 Health not past limit"},
+	Mana = {MatchReason = "$1 Mana past limit", NoMatchReason = "$1 Mana not past limit"},
+	Power = {MatchReason = "$1 $3 past limit", NoMatchReason = "$1 $3 not past limit", NilReason = "$1 has wrong Power Type"},
+	Aggro = {MatchReason = "$1 has aggro", NoMatchReason = "$1 does not have aggro"},
+	PvP = {MatchReason = "$1 PvP flag set", NoMatchReason = "$1 PvP flag not set"},
+	SpellAlert = {MatchReason = "$1 casting $2", NoMatchReason = "$1 not casting $2"},
 },
 
 -- Import dialog
@@ -3853,6 +3876,7 @@ ExportDialogSendTitle5 = "Send successful!",
 ExportDialogSendButton1 = "Send",
 ExportDialogSendButton2 = "Back",
 ExportDialogCancelButton = "Close",
+
 -- Cross-client import dialog
 PlayerImportDialogTopTitle = "You Have Auras!",
 PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
@@ -3974,20 +3998,20 @@ AuraType =
 PowerType =
 {
 	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage", -- Requires localization
-	[SPELL_POWER_FOCUS] = "Focus", -- Requires localization
-	[SPELL_POWER_ENERGY] = "Energy", -- Requires localization
-	[SPELL_POWER_RUNIC_POWER] = "Runic Power", -- Requires localization
-	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards", -- Requires localization
-	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse", -- Requires localization
-	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse", -- Requires localization
-	[SPELL_POWER_HOLY_POWER] = "Holy Power", -- Requires localization
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power", -- Requires localization
-	[SPELL_POWER_DARK_FORCE] = "Dark Force", -- Requires localization
-	[SPELL_POWER_CHI] = "Chi", -- Requires localization
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs", -- Requires localization
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers", -- Requires localization
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury", -- Requires localization
+	[SPELL_POWER_RAGE] = "Rage",
+	[SPELL_POWER_FOCUS] = "Focus",
+	[SPELL_POWER_ENERGY] = "Energy",
+	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
+	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
+	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
+	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
+	[SPELL_POWER_HOLY_POWER] = "Holy Power",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	[SPELL_POWER_CHI] = "Chi",
+	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
 },
 
 Relative =
@@ -4028,16 +4052,16 @@ Slots =
 	Wrist = "Wrist",
 },
 
-SlotsToCheck = "Select Slots to Check", -- Requires localization
+SlotsToCheck = "Select Slots to Check",
 
-Cancel = "Cancel", -- Requires localization
+Cancel = "Cancel",
 
 -- Main
 nomEnable = "Power Auras 활성화",
 aideEnable = "모든 Power Auras 효과를 활성화합니다.",
 
 nomDebug = "디버그 메시지 활성화",
-nomTextureCount = "Max Textures", -- Requires localization
+nomTextureCount = "Max Textures",
 aideDebug = "디버그 메시지를 활성화합니다.",
 ListePlayer = "페이지",
 ListeGlobal = "공통",
@@ -4166,7 +4190,7 @@ aideOptunitn = "공격대/그룹에 속해 있는 특정 캐릭터에 한해 테
 aideExact = "버프/디버프/행동의 정확한 이름을 테스트하려면 이곳에 체크하십시오.",
 aideStance = "이벤트에 적용할 태세, 오라 혹은 변신을 선택하십시오.",
 
-aideShowSpinAtBeginning= "At the end of the begin animation show a 360 degree spin",
+aideShowSpinAtBeginning = "At the end of the begin animation show a 360 degree spin",
 nomCheckShowSpinAtBeginning = "Show Spin after begin animation ends",
 
 nomCheckShowTimer = "보이기",
@@ -4384,12 +4408,13 @@ nomReasonNoCasting = "Nobody's target casting $1", -- $1=Casting match
 nomReasonStance = "Current Stance $1, matches $2", -- $1=Current Stance, $2=Match Stance
 nomReasonNoStance = "Current Stance $1, does not match $2", -- $1=Current Stance, $2=Match Stance
 
-ReasonStat = {
-	Health = {MatchReason="$1 Health low", NoMatchReason="$1 Health not low enough"},
-	Mana = {MatchReason="$1 Mana low", NoMatchReason="$1 Mana not low enough"},
-	RageEnergy = {MatchReason="$1 EnergyRagePower low", NoMatchReason="$1 EnergyRagePower not low enough"},
-	Aggro = {MatchReason="$1 has aggro", NoMatchReason="$1 does not have aggro"},
-	PvP = {MatchReason="$1 PvP flag set", NoMatchReason="$1 PvP flag not set"},
+ReasonStat =
+{
+	Health = {MatchReason = "$1 Health low", NoMatchReason = "$1 Health not low enough"},
+	Mana = {MatchReason = "$1 Mana low", NoMatchReason = "$1 Mana not low enough"},
+	RageEnergy = {MatchReason = "$1 EnergyRagePower low", NoMatchReason = "$1 EnergyRagePower not low enough"},
+	Aggro = {MatchReason = "$1 has aggro", NoMatchReason = "$1 does not have aggro"},
+	PvP = {MatchReason = "$1 PvP flag set", NoMatchReason = "$1 PvP flag not set"},
 },
 
 -- Import dialog
@@ -4412,6 +4437,7 @@ ExportDialogSendTitle5 = "Send successful!",
 ExportDialogSendButton1 = "Send",
 ExportDialogSendButton2 = "Back",
 ExportDialogCancelButton = "Close",
+
 -- Cross-client import dialog
 PlayerImportDialogTopTitle = "You Have Auras!",
 PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
@@ -4565,12 +4591,12 @@ PowerType =
 	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
 	[SPELL_POWER_ECLIPSE] = "Eclipse",
 	[SPELL_POWER_HOLY_POWER] = "Holy Power",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power", -- Requires localization
-	[SPELL_POWER_DARK_FORCE] = "Dark Force", -- Requires localization
-	[SPELL_POWER_CHI] = "Chi", -- Requires localization
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs", -- Requires localization
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers", -- Requires localization
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury", -- Requires localization
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	[SPELL_POWER_CHI] = "Chi",
+	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
 },
 
 Relative =
@@ -4611,9 +4637,9 @@ Slots =
 	Wrist = "Запястье",
 },
 
-SlotsToCheck = "Select Slots to Check", -- Requires localization
+SlotsToCheck = "Select Slots to Check",
 
-Cancel = "Cancel", -- Requires localization
+Cancel = "Cancel",
 
 -- Main
 nomEnable = "Активировать Power Auras",
@@ -4788,7 +4814,7 @@ aideStance = "Выберите, какая стойка, форма или ау�
 aideGTFO = "Выберите, какое предупреждение GTFO вызовет событие.",
 aidePowerType = "Select which type of resource to track",
 
-aideShowSpinAtBeginning= "В конце начать отображать анимацию с поворотом на 360 градусов",
+aideShowSpinAtBeginning = "В конце начать отображать анимацию с поворотом на 360 градусов",
 nomCheckShowSpinAtBeginning = "Показать поворот после начала конца анимации", -- ???
 
 nomCheckShowTimer = "Показать",
@@ -4808,7 +4834,7 @@ aideInverse = "Инвертировать логику отображение э
 nomCheckIgnoreMaj = "Игнор верхнего регистра",
 aideIgnoreMaj = "Если отметите это, будет игнорироваться верхний/нижний регистр строчных букв в названиях баффов/дебаффов.",
 
-nomAuraDebug= "Отладка",
+nomAuraDebug = "Отладка",
 aideAuraDebug = "Отлажывать данную ауру",
 
 nomDuration = "Длина анимации:",
@@ -4857,50 +4883,53 @@ nomStacksTexture = "Текстура стопки",
 Enabled = "Включено",
 Default = "По умолчанию",
 
-Ternary = {
+Ternary =
+{
 	combat = "В бою",
 	inRaid = "В рейде",
 	inParty = "В группе",
 	isResting = "Отдых",
 	ismounted = "Верхом",
 	inVehicle = "В транспорте",
-	isAlive= "Живой",
-	PvP= "С меткой PvP",
-	Instance5Man= "5-чел",
-	Instance5ManHeroic= "5-чел Гер",
-	Instance10Man= "10-чел",
-	Instance10ManHeroic= "10-чел Гер",
-	Instance25Man= "25-чел",
-	Instance25ManHeroic= "25-чел Гер",
-	InstanceBg= "Поле боя",
-	InstanceArena= "Арена",
+	isAlive = "Живой",
+	PvP = "С меткой PvP",
+	Instance5Man = "5-чел",
+	Instance5ManHeroic = "5-чел Гер",
+	Instance10Man = "10-чел",
+	Instance10ManHeroic = "10-чел Гер",
+	Instance25Man = "25-чел",
+	Instance25ManHeroic = "25-чел Гер",
+	InstanceBg = "Поле боя",
+	InstanceArena = "Арена",
 },
 
 nomWhatever = "Игнорировать",
 aideTernary = "Установите в каком состоянии, будет отображаться эта ауры.",
-TernaryYes = {
+TernaryYes =
+{
 	combat = "Только когда в бою",
 	inRaid = "Только когда в рейде",
 	inParty = "Только когда в группе",
 	isResting = "Только когда вы отдыхаете",
 	ismounted = "Только когда на средстве передвижения",
 	inVehicle = "Только когда в транспорте",
-	isAlive= "Только когда жив",
-	PvP= "Только когда включен PvP режим",
-	Instance5Man= "Только когда в обычном подземелье на 5-чел",
-	Instance5ManHeroic= "Только когда в героическом подземелье на 5-чел",
-	Instance10Man= "Только когда в обычном подземелье на 10-чел",
-	Instance10ManHeroic= "Только когда в героическом подземелье на 10-чел",
-	Instance25Man= "Только когда в обычном подземелье на 25-чел",
-	Instance25ManHeroic= "Только когда в героическом подземелье на 25-чел",
-	InstanceBg= "Только когда на поле боя",
-	InstanceArena= "Только когда на арене",
+	isAlive = "Только когда жив",
+	PvP = "Только когда включен PvP режим",
+	Instance5Man = "Только когда в обычном подземелье на 5-чел",
+	Instance5ManHeroic = "Только когда в героическом подземелье на 5-чел",
+	Instance10Man = "Только когда в обычном подземелье на 10-чел",
+	Instance10ManHeroic = "Только когда в героическом подземелье на 10-чел",
+	Instance25Man = "Только когда в обычном подземелье на 25-чел",
+	Instance25ManHeroic = "Только когда в героическом подземелье на 25-чел",
+	InstanceBg = "Только когда на поле боя",
+	InstanceArena = "Только когда на арене",
 	RoleTank = "Only when a Tank",
 	RoleHealer = "Only when a Healer",
 	RoleMeleDps = "Only when a Melee DPS",
 	RoleRangeDps = "Only when a Ranged DPS",
 },
-TernaryNo = {
+TernaryNo =
+{
 	combat = "Только когда НЕ в бою",
 	inRaid = "Только когда НЕ в рейде",
 	inParty = "Только когда НЕ в группе",
@@ -4922,7 +4951,8 @@ TernaryNo = {
 	RoleMeleDps = "Only when Not a Melee DPS",
 	RoleRangeDps = "Only when Not a Ranged DPS",
 },
-TernaryAide = {
+TernaryAide =
+{
 	combat = "Эффект изменен статусом боя.",
 	inRaid = "Эффект изменен статусом участия в рейде.",
 	inParty = "Эффект изменен статусом участия в группе.",
@@ -5140,7 +5170,8 @@ nomUnknownSpellId = "PowerAuras: Aura $1 references an unknown spellId: ", -- $1
 
 nomReasonGTFOAlerts = "GTFO alerts are never always on.",
 
-ReasonStat = {
+ReasonStat =
+{
 	Health = {MatchReason="$1 Низкий уровень здоровья", NoMatchReason="$1 Уровень здоровье не достаточно низкий"},
 	Mana = {MatchReason="$1 Низкий уровень маны", NoMatchReason="$1 Уровень мана не достаточно низкий"},
 	RageEnergy = {MatchReason="$1 Низкий уровень энергии", NoMatchReason="$1 Уровень энергия не достаточно низкий"},
@@ -5169,6 +5200,7 @@ ExportDialogSendTitle5 = "Send successful!",
 ExportDialogSendButton1 = "Send",
 ExportDialogSendButton2 = "Back",
 ExportDialogCancelButton = "Close",
+
 -- Cross-client import dialog
 PlayerImportDialogTopTitle = "You Have Auras!",
 PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
@@ -5278,32 +5310,32 @@ AuraType =
 PowerType =
 {
 	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage", -- Requires localization
-	[SPELL_POWER_FOCUS] = "Focus", -- Requires localization
-	[SPELL_POWER_ENERGY] = "Energy", -- Requires localization
-	[SPELL_POWER_RUNIC_POWER] = "Runic Power", -- Requires localization
-	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards", -- Requires localization
-	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse", -- Requires localization
-	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse", -- Requires localization
-	[SPELL_POWER_HOLY_POWER] = "Holy Power", -- Requires localization
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power", -- Requires localization
-	[SPELL_POWER_DARK_FORCE] = "Dark Force", -- Requires localization
-	[SPELL_POWER_CHI] = "Chi", -- Requires localization
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs", -- Requires localization
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers", -- Requires localization
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury", -- Requires localization
+	[SPELL_POWER_RAGE] = "Rage",
+	[SPELL_POWER_FOCUS] = "Focus",
+	[SPELL_POWER_ENERGY] = "Energy",
+	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
+	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
+	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
+	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
+	[SPELL_POWER_HOLY_POWER] = "Holy Power",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	[SPELL_POWER_CHI] = "Chi",
+	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
 },
 
-SlotsToCheck = "Select Slots to Check", -- Requires localization
+SlotsToCheck = "Select Slots to Check",
 
-Cancel = "Cancel", -- Requires localization
+Cancel = "Cancel",
 
 -- Main
 nomEnable = "启用",
 aideEnable = "启用/禁用所有PowerAuras特效",
 
 nomDebug = "调试模式",
-nomTextureCount = "Max Textures", -- Requires localization
+nomTextureCount = "Max Textures",
 aideDebug = "打开调试模式后,将在聊天窗口显示特效的触发条件等信息",
 ListePlayer = "分类",
 ListeGlobal = "全局",
@@ -5432,7 +5464,7 @@ aideOptunitn = "此buff/debuff仅存在于团队/小队中的特定成员身上"
 aideExact = "选中此项将精确匹配buff/debuff名称",
 aideStance = "选择用于触发特效的姿态",
 
-aideShowSpinAtBeginning= "起始动画结束后使其做360度旋转",
+aideShowSpinAtBeginning = "起始动画结束后使其做360度旋转",
 nomCheckShowSpinAtBeginning = "动画结束后旋转",
 
 nomCheckShowTimer = "显示",
@@ -5650,12 +5682,13 @@ nomReasonNoCasting = "没有任何人的目标在施放法术 $1", -- $1=Casting
 nomReasonStance = "当前姿态$1, 与设置值$2相匹配", -- $1=Current Stance, $2=Match Stance
 nomReasonNoStance = "当前姿态$1, 与设置值$2不匹配", -- $1=Current Stance, $2=Match Stance
 
-ReasonStat = {
-	Health = {MatchReason="$1 生命值低", NoMatchReason="$1 生命值不够低"},
-	Mana = {MatchReason="$1 法术值低", NoMatchReason="$1法术值不够低"},
-	RageEnergy = {MatchReason="$1 能量值低", NoMatchReason="$1 能量值不够低"},
-	Aggro = {MatchReason="$1 获得仇恨", NoMatchReason="$1 没有获得仇恨"},
-	PvP = {MatchReason="$1 PVP状态", NoMatchReason="$1 不在PVP状态"},
+ReasonStat =
+{
+	Health = {MatchReason = "$1 生命值低", NoMatchReason = "$1 生命值不够低"},
+	Mana = {MatchReason = "$1 法术值低", NoMatchReason = "$1法术值不够低"},
+	RageEnergy = {MatchReason = "$1 能量值低", NoMatchReason = "$1 能量值不够低"},
+	Aggro = {MatchReason = "$1 获得仇恨", NoMatchReason = "$1 没有获得仇恨"},
+	PvP = {MatchReason = "$1 PVP状态", NoMatchReason = "$1 不在PVP状态"},
 },
 
 -- Import dialog
@@ -5787,25 +5820,25 @@ AuraType =
 PowerType =
 {
 	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage", -- Requires localization
-	[SPELL_POWER_FOCUS] = "Focus", -- Requires localization
-	[SPELL_POWER_ENERGY] = "Energy", -- Requires localization
-	[SPELL_POWER_RUNIC_POWER] = "Runic Power", -- Requires localization
-	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards", -- Requires localization
-	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse", -- Requires localization
-	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse", -- Requires localization
-	[SPELL_POWER_HOLY_POWER] = "Holy Power", -- Requires localization
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power", -- Requires localization
-	[SPELL_POWER_DARK_FORCE] = "Dark Force", -- Requires localization
-	[SPELL_POWER_CHI] = "Chi", -- Requires localization
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs", -- Requires localization
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers", -- Requires localization
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury", -- Requires localization
+	[SPELL_POWER_RAGE] = "Rage",
+	[SPELL_POWER_FOCUS] = "Focus",
+	[SPELL_POWER_ENERGY] = "Energy",
+	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
+	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
+	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
+	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
+	[SPELL_POWER_HOLY_POWER] = "Holy Power",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	[SPELL_POWER_CHI] = "Chi",
+	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
 },
 
-SlotsToCheck = "Select Slots to Check", -- Requires localization
+SlotsToCheck = "Select Slots to Check",
 
-Cancel = "Cancel", -- Requires localization
+Cancel = "Cancel",
 
 -- Main
 nomEnable = "啟用",
@@ -5813,7 +5846,7 @@ aideEnable = "啟用/禁用所有PowerAuras特效",
 
 nomDebug = "調試模式",
 aideDebug = "打開調試模式後,將在聊天窗口顯示特效的觸發條件等信息",
-nomTextureCount = "Max Textures", -- Requires localization
+nomTextureCount = "Max Textures",
 ListePlayer = "分類",
 ListeGlobal = "全局",
 aideMove = "移動特效",
@@ -5941,7 +5974,7 @@ aideOptunitn = "此buff/debuff僅存在於團隊/小隊中的特定成員身上"
 aideExact = "選中此項將精確匹配buff/debuff名稱",
 aideStance = "選擇用於觸發特效的姿態",
 
-aideShowSpinAtBeginning= "起始動畫結束後使其做360度旋轉",
+aideShowSpinAtBeginning = "起始動畫結束後使其做360度旋轉",
 nomCheckShowSpinAtBeginning = "動畫結束後旋轉",
 
 nomCheckShowTimer = "顯示",
@@ -6000,7 +6033,8 @@ nomStacksTexture = "疊加次數材質",
 Enabled = "已啟用",
 Default = "默認",
 
-Ternary = {
+Ternary =
+{
 	combat = "戰鬥狀態",
 	inRaid = "團隊狀態",
 	inParty = "小隊狀態",
@@ -6021,7 +6055,8 @@ TernaryYes = {
 	inVehicle = "在載具狀態時觸發",
 	isAlive= "在存活狀態時觸發",
 },
-TernaryNo = {
+TernaryNo =
+{
 	combat = "非戰鬥狀態時觸發",
 	inRaid = "非團隊狀態時觸發",
 	inParty = "非小隊狀態時觸發",
@@ -6030,7 +6065,8 @@ TernaryNo = {
 	inVehicle = "非載具狀態時觸發",
 	isAlive= "在死亡狀態時觸發",
 },
-TernaryAide = {
+TernaryAide =
+{
 	combat = "此效果受戰鬥狀態影響",
 	inRaid = "此效果受團隊狀態影響",
 	inParty = "此效果受小隊狀態影響",
@@ -6159,7 +6195,8 @@ nomReasonNoCasting = "沒有任何人的目標在施放法術 $1", -- $1=Casting
 nomReasonStance = "當前姿態$1, 與設置值$2相匹配", -- $1=Current Stance, $2=Match Stance
 nomReasonNoStance = "當前姿態$1, 與設置值$2不匹配", -- $1=Current Stance, $2=Match Stance
 
-ReasonStat = {
+ReasonStat =
+{
 	Health = {MatchReason="$1 生命值低", NoMatchReason="$1 生命值不夠低"},
 	Mana = {MatchReason="$1 法術值低", NoMatchReason="$1法術值不夠低"},
 	RageEnergy = {MatchReason="$1 能量值低", NoMatchReason="$1 能量值不夠低"},
@@ -6187,6 +6224,7 @@ ExportDialogSendTitle5 = "Send successful!",
 ExportDialogSendButton1 = "Send",
 ExportDialogSendButton2 = "Back",
 ExportDialogCancelButton = "Close",
+
 -- Cross-client import dialog
 PlayerImportDialogTopTitle = "You Have Auras!",
 PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
