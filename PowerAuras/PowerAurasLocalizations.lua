@@ -308,6 +308,7 @@ aideTextAura = "Check this to type text instead of texture.",
 aideRealaura = "Real Aura",
 aideCustomTextures = "Check this to use textures in the 'Custom' subdirectory. Put the name of the texture below (ex: myTexture.tga). You can also use a Spell Name (ex: Feign Death) or SpellID (ex: 5384).",
 aideRandomColor = "Check this to tell this effect to use random color each time it will be activated.",
+aideEnableFullRotation = "Uncheck this if you experience any errors with the current texture.",
 
 aideTexMode = "Uncheck this to use the texture opacity. By default, the darkest colors will be more transparent.",
 
@@ -431,6 +432,7 @@ nomTextAura = "Text Aura",
 nomRealaura = "Real Aura",
 nomColorPicker = "Color Picker",
 nomRandomColor = "Random Colors",
+nomEnableFullRotation = "Enable Full Rotation",
 nomTexMode = "Glow",
 
 nomTalentGroup1 = "Spec 1",

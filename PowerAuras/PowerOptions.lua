@@ -1557,6 +1557,7 @@ function PowaAuras:InitPage(aura)
 	PowaThresholdInvertButton:SetChecked(aura.thresholdinvert);
 	PowaExtraButton:SetChecked(aura.Extra);
 	PowaTexModeButton:SetChecked(aura.texmode == 1);
+	PowaEnableFullRotationButton:SetChecked(aura.enablefullrotation);
 	-- Ternary Logic
 	self:TernarySetState(PowaInCombatButton, aura.combat);
 	self:TernarySetState(PowaIsInRaidButton, aura.inRaid);
@@ -1865,7 +1866,7 @@ end
 function PowaAuras:BarAuraDeformSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraDeformSlider:GetValue();
-	PowaBarAuraDeformSliderText:SetText(self.Text.nomDeform..": "..format("%.2f", SliderValue));
+	PowaBarAuraDeformSliderText:SetText(self.Text.nomDeform..": "..format("%.3f", SliderValue));
 	self.Auras[self.CurrentAuraId].torsion = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -2196,6 +2197,19 @@ function PowaAuras:TextAuraChecked()
 		PowaFontsButton:Hide();
 	end
 	self:BarAuraTextureSliderChanged();
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:EnableFullRotationChecked()
+	local auraId = self.CurrentAuraId;
+	if (PowaEnableFullRotationButton:GetChecked()) then
+		self.Auras[auraId].enablefullrotation = true;
+		PowaBarAuraRotateSlider:SetValueStep(1)
+	else
+		self.Auras[auraId].enablefullrotation = false;
+		PowaBarAuraRotateSlider:SetValue(0)
+		PowaBarAuraRotateSlider:SetValueStep(90)
+	end
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
@@ -3641,9 +3655,9 @@ end
 
 function PowaAuras.OnMouseWheel(self, delta)
 	if delta > 0 then
-		self:SetValue(self:GetValue() + self:GetValueStep());
-	else
 		self:SetValue(self:GetValue() - self:GetValueStep());
+	else
+		self:SetValue(self:GetValue() + self:GetValueStep());
 	end
 end
 

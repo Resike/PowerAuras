@@ -579,12 +579,12 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:SetMinMaxValues(0,2)
+								self:SetMinMaxValues(-0.010,2.010)
 								self:SetValue(1)
-								self:SetValueStep(0.01)
-								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform..": 1.00")
-								PowaBarAuraDeformSliderLow:SetText("0.00")
-								PowaBarAuraDeformSliderHigh:SetText("2.00")
+								self:SetValueStep(0.005)
+								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform..": 1.000")
+								PowaBarAuraDeformSliderLow:SetText("0.0")
+								PowaBarAuraDeformSliderHigh:SetText("2.0")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:BarAuraDeformSliderChanged()
@@ -856,7 +856,7 @@
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "-4" y = "-4"/>
+									<AbsDimension x = "-4" y = "-2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -867,6 +867,27 @@
 							</OnLoad>
 							<OnClick>
 								PowaAuras:RandomColorChecked()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name = "PowaEnableFullRotationButton" inherits = "PowaCheckTemplate">
+						<Size>
+							<AbsDimension x = "25" y = "25"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "TOPLEFT" relativeTo = "PowaRandomColorButton" relativePoint = "BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x = "0" y = "4"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.tooltipText = PowaAuras.Text.aideEnableFullRotation
+								PowaEnableFullRotationButtonText:SetText(PowaAuras.Text.nomEnableFullRotation)
+							</OnLoad>
+							<OnClick>
+								PowaAuras:EnableFullRotationChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -903,7 +924,7 @@
 							<Layer>
 								<Texture name = "PowaIconTexture" file = "Interface\InventoryItems\WowUnknownItem01">
 									<Size>
-										<AbsDimension x = "40" y = "40"/>
+										<AbsDimension x = "60" y = "60"/>
 									</Size>
 									<Anchors>
 										<Anchor point = "TOPRIGHT" relativeTo = "PowaBarConfigFrameEditor2" relativePoint = "TOPRIGHT">

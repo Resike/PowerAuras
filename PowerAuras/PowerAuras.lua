@@ -81,7 +81,8 @@ function PowaAuras:OnLoad(frame)
 	--frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 	-- options init
 	SlashCmdList["POWA"] = PowaAuras_CommanLine;
-	SLASH_POWA1 = "/powa";
+	SLASH_POWA1 = "/pa";
+	SLASH_POWA2 = "/powa";
 end
 
 function PowaAuras:ReregisterEvents(frame)

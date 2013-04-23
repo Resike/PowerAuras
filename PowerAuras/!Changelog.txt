@@ -1,5 +1,7 @@
 ﻿* 4.23.20
 Millions of smaller GUI bugfixes.
+Added "/pa" command to bring up the options too.
+Added 122 new textures from WoW.
 Performance upgradements.
 Added texture rotater slider.
 Removed value increaser and decreaser buttons from the sliders.

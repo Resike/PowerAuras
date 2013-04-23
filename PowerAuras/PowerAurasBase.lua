@@ -438,31 +438,31 @@ WowTextures =
 	[4] = "Spells\\GENERICGLOW2B",
 	[5] = "Spells\\GenericGlow2b1",
 	[6] = "Spells\\ShockRingCrescent256",
-	[7] = "SPELLS\\AuraRune1",
-	[8] = "SPELLS\\AuraRune5Green",
-	[9] = "SPELLS\\AuraRune7",
-	[10] = "SPELLS\\AuraRune8",
-	[11] = "SPELLS\\AuraRune9",
-	[12] = "SPELLS\\AuraRune11",
-	[13] = "SPELLS\\AuraRune_A",
-	[14] = "SPELLS\\AuraRune_C",
-	[15] = "SPELLS\\AuraRune_D",
-	[16] = "SPELLS\\Holy_Rune1",
-	[17] = "SPELLS\\Rune1d_GLOWless",
-	[18] = "SPELLS\\Rune4blue",
-	[19] = "SPELLS\\RuneBC1",
-	[20] = "SPELLS\\RuneBC2",
-	[21] = "SPELLS\\RUNEFROST",
+	[7] = "Spells\\AuraRune1",
+	[8] = "Spells\\AuraRune5Green",
+	[9] = "Spells\\AuraRune7",
+	[10] = "Spells\\AuraRune8",
+	[11] = "Spells\\AuraRune9",
+	[12] = "Spells\\AuraRune11",
+	[13] = "Spells\\AuraRune_A",
+	[14] = "Spells\\AuraRune_C",
+	[15] = "Spells\\AuraRune_D",
+	[16] = "Spells\\Holy_Rune1",
+	[17] = "Spells\\Rune1d_GLOWless",
+	[18] = "Spells\\Rune4blue",
+	[19] = "Spells\\RuneBC1",
+	[20] = "Spells\\RuneBC2",
+	[21] = "Spells\\RUNEFROST",
 	[22] = "Spells\\Holy_Rune_128",
 	[23] = "Spells\\Nature_Rune_128",
-	[24] = "SPELLS\\Death_Rune",
-	[25] = "SPELLS\\DemonRune6",
-	[26] = "SPELLS\\DemonRune7",
+	[24] = "Spells\\Death_Rune",
+	[25] = "Spells\\DemonRune6",
+	[26] = "Spells\\DemonRune7",
 	[27] = "Spells\\DemonRune5backup",
 	-- Icon Types
 	[28] = "Particles\\Intellect128_outline",
 	[29] = "Spells\\Intellect_128",
-	[30] = "SPELLS\\GHOST1",
+	[30] = "Spells\\GHOST1",
 	[31] = "Spells\\Aspect_Beast",
 	[32] = "Spells\\Aspect_Hawk",
 	[33] = "Spells\\Aspect_Wolf",
@@ -480,13 +480,136 @@ WowTextures =
 	[45] = "Spells\\Star4",
 	[46] = "Spells\\Strength_128",
 	[47] = "Particles\\STUNWHIRL",
-	[48] = "SPELLS\\BloodSplash1",
-	[49] = "SPELLS\\DarkSummon",
-	[50] = "SPELLS\\EndlessRage",
-	[51] = "SPELLS\\Rampage",
-	[52] = "SPELLS\\Eye",
-	[53] = "SPELLS\\Eyes",
-	[54] = "SPELLS\\Zap1b",
+	[48] = "Spells\\BloodSplash1",
+	[49] = "Spells\\DarkSummon",
+	[50] = "Spells\\EndlessRage",
+	[51] = "Spells\\Rampage",
+	[52] = "Spells\\Eye",
+	[53] = "Spells\\Eyes",
+	[54] = "Spells\\Zap1b",
+	[55] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-1",
+	[56] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-2",
+	[57] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-3",
+	[58] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-4",
+	[59] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-5",
+	[60] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-6",
+	[61] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-7",
+	[62] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-8",
+	[63] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-9",
+	[64] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-10",
+	[65] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-11",
+	[66] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-12",
+	[67] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-13",
+	[68] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-14",
+	[69] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-15",
+	[70] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-16",
+	[71] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-17",
+	[72] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-18",
+	[73] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-19",
+	[74] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-20",
+	[75] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-21",
+	[76] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-22",
+	[77] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-23",
+	[78] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-24",
+	[79] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-25",
+	[80] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-26",
+	[81] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-27",
+	[82] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-28",
+	[83] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-29",
+	[84] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-30",
+	[85] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-31",
+	[86] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-32",
+	[87] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-33",
+	[88] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-34",
+	[89] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-35",
+	[90] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-36",
+	[91] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-37",
+	[92] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-38",
+	[93] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-39",
+	[94] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-40",
+	[95] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-41",
+	[96] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-42",
+	[97] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-43",
+	[98] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-44",
+	[99] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-45",
+	[100] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-46",
+	[101] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-47",
+	[102] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-48",
+	[103] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-49",
+	[104] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-50",
+	[105] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-51",
+	[106] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-52",
+	[107] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-53",
+	[108] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-54",
+	[109] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-55",
+	[110] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-56",
+	[111] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-57",
+	[112] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-58",
+	[113] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-59",
+	[114] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-60",
+	[115] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-61",
+	[116] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-62",
+	[117] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-63",
+	[118] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-64",
+	[119] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-65",
+	[120] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-66",
+	[121] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-67",
+	[122] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-68",
+	[123] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-69",
+	[124] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-70",
+	[125] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-71",
+	[126] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-72",
+	[127] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-73",
+	[128] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-74",
+	[129] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-75",
+	[130] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-76",
+	[131] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-77",
+	[132] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-78",
+	[133] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-79",
+	[134] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-80",
+	[135] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-81",
+	[136] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-82",
+	[137] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-83",
+	[138] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-84",
+	[139] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-85",
+	[140] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-86",
+	[141] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-87",
+	[142] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-88",
+	[143] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-89",
+	[144] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-90",
+	[145] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-91",
+	[146] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-92",
+	[147] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-93",
+	[148] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-94",
+	[149] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-95",
+	[150] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-96",
+	[151] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-97",
+	[152] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-98",
+	[153] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-99",
+	[154] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-100",
+	[155] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-101",
+	[156] = "Interface\\Spellbook\\UI-Glyph-Rune1",
+	[157] = "Interface\\Spellbook\\UI-Glyph-Rune-1",
+	[158] = "Interface\\Spellbook\\UI-Glyph-Rune-2",
+	[159] = "Interface\\Spellbook\\UI-Glyph-Rune-3",
+	[160] = "Interface\\Spellbook\\UI-Glyph-Rune-4",
+	[161] = "Interface\\Spellbook\\UI-Glyph-Rune-5",
+	[162] = "Interface\\Spellbook\\UI-Glyph-Rune-6",
+	[163] = "Interface\\Spellbook\\UI-Glyph-Rune-7",
+	[164] = "Interface\\Spellbook\\UI-Glyph-Rune-8",
+	[165] = "Interface\\Spellbook\\UI-Glyph-Rune-9",
+	[166] = "Interface\\Spellbook\\UI-Glyph-Rune-10",
+	[167] = "Interface\\Spellbook\\UI-Glyph-Rune-11",
+	[168] = "Interface\\Spellbook\\UI-Glyph-Rune-12",
+	[169] = "Interface\\Spellbook\\UI-Glyph-Rune-13",
+	[170] = "Interface\\Spellbook\\UI-Glyph-Rune-14",
+	[171] = "Interface\\Spellbook\\UI-Glyph-Rune-15",
+	[172] = "Interface\\Spellbook\\UI-Glyph-Rune-16",
+	[173] = "Interface\\Spellbook\\UI-Glyph-Rune-17",
+	[174] = "Interface\\Spellbook\\UI-Glyph-Rune-18",
+	[175] = "Interface\\Spellbook\\UI-Glyph-Rune-19",
+	[176] = "Interface\\Spellbook\\UI-Glyph-Rune-20",
+
 };
 
 Fonts =
@@ -541,13 +664,13 @@ Colors =
 
 SetColours =
 {
-	["PowaTargetButton"] = {r=1.0, g=0.2, b=0.2},
-	["PowaTargetFriendButton"] = {r=0.2, g=1.0, b=0.2},
-	["PowaPartyButton"] = {r=0.2, g=1.0, b=0.2},
-	["PowaGroupOrSelfButton"] = {r=0.2, g=1.0, b=0.2},
-	["PowaFocusButton"] = {r=0.2, g=1.0, b=0.2},
-	["PowaRaidButton"] = {r=0.2, g=1.0, b=0.2},
-	["PowaOptunitnButton"] = {r=0.2, g=1.0, b=0.2},
+	["PowaTargetButton"] = {r = 1.0, g = 0.2, b = 0.2},
+	["PowaTargetFriendButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaPartyButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaGroupOrSelfButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaFocusButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaRaidButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaOptunitnButton"] = {r = 0.2, g = 1.0, b = 0.2},
 };
 
 OptionCheckBoxes =
@@ -568,7 +691,7 @@ OptionCheckBoxes =
 	"PowaRoleRangeDpsButton",
 };
 
-OptionTernary = {};
+OptionTernary = { };
 
 OptionHideables =
 {
@@ -971,12 +1094,12 @@ function PowaAuras:Debug(...)
 end
 
 function PowaAuras:Message(...)
-	args={...};
-	if (args==nil or #args==0) then
+	args = {...};
+	if (args == nil or #args == 0) then
 		return;
 	end
 	local Message = "";
-	for i=1, #args do
+	for i = 1, #args do
 		Message = Message..tostring(args[i]);
 	end
 	DEFAULT_CHAT_FRAME:AddMessage(Message);
@@ -993,7 +1116,7 @@ function PowaAuras:DisplayText(...)
 end
 
 function PowaAuras:DisplayTable(t, indent)
-	if (not t or type(t)~="table") then
+	if (not t or type(t) ~= "table") then
 		return "No table";
 	end
 	if (indent == nil) then
@@ -1002,8 +1125,8 @@ function PowaAuras:DisplayTable(t, indent)
 		indent = indent .. "  ";
 	end
 	for i,v in pairs(t) do
-		if (type(v)~="function") then
-			if (type(v)~="table") then
+		if (type(v) ~= "function") then
+			if (type(v) ~= "table") then
 				self:Message(indent..tostring(i).." = "..tostring(v))
 			else
 				self:Message(indent..tostring(i))
@@ -1015,7 +1138,7 @@ end
 
 -- This function will print a Message to the GUI screen (not the chat window) then fade.
 function PowaAuras:Error( msg, holdtime )
-	if (holdtime==nil) then
+	if (holdtime == nil) then
 		holdtime = UIERRORS_HOLD_TIME;
 	end
 	UIErrorsFrame:AddMessage(msg, 0.75, 0.75, 1.0, 1.0, holdtime);
@@ -1026,7 +1149,9 @@ function PowaAuras:IsNumeric(a)
 end
 
 function PowaAuras:ReverseTable(t)
-	if (type(t)~="table") then return nil; end
+	if (type(t) ~= "table") then
+		return nil;
+	end
 	local newTable = {};
 	for k,v in pairs(t) do
 		newTable[v] = k;
@@ -1035,7 +1160,9 @@ function PowaAuras:ReverseTable(t)
 end
 
 function PowaAuras:TableEmpty(t)
-	if (type(t)~="table") then return nil; end
+	if (type(t) ~= "table") then
+		return nil;
+	end
 	for k in pairs(t) do
 		return false;
 	end
@@ -1043,7 +1170,9 @@ function PowaAuras:TableEmpty(t)
 end
 
 function PowaAuras:TableSize(t)
-	if (type(t)~="table") then return nil; end
+	if (type(t) ~= "table") then
+		return nil;
+	end
 	local size = 0;
 	for k in pairs(t) do
 		size = size + 1;
@@ -1052,18 +1181,18 @@ function PowaAuras:TableSize(t)
 end
 
 function PowaAuras:CopyTable(t, lookup_table, original)
-	if (type(t)~="table") then
+	if (type(t) ~= "table") then
 		return t;
 	end
 	local copy;
-	if (original==nil) then
+	if (original == nil) then
 		copy = {};
 	else
 		copy = original;
 	end
 	for i,v in pairs(t) do
-		if (type(v)~="function") then
-			if (type(v)~="table") then
+		if (type(v) ~= "function") then
+			if (type(v) ~= "table") then
 				copy[i] = v;
 			else
 				lookup_table = lookup_table or {};
@@ -1080,20 +1209,20 @@ function PowaAuras:CopyTable(t, lookup_table, original)
 end
 
 function PowaAuras:MergeTables(desTable, sourceTable)
-	if (not sourceTable or type(sourceTable)~="table") then
+	if (not sourceTable or type(sourceTable) ~= "table") then
 		return;
 	end
-	if (not desTable or type(desTable)~="table") then
+	if (not desTable or type(desTable) ~= "table") then
 		desTable = sourceTable;
 		return;
 	end
 	for i,v in pairs(sourceTable) do
-		if (type(v)~="function") then
-			if (type(v)~="table") then
+		if (type(v) ~= "function") then
+			if (type(v) ~= "table") then
 				desTable[i] = v;
 			else
-				if (not desTable[i] or type(desTable[i])~="table") then
-					desTable[i] = {};
+				if (not desTable[i] or type(desTable[i]) ~= "table") then
+					desTable[i] = { };
 				end
 				self:MergeTables(desTable[i], v);
 			end
@@ -1102,8 +1231,8 @@ function PowaAuras:MergeTables(desTable, sourceTable)
 end
 
 function PowaAuras:InsertText(text, ...)
-	args={...};
-	if (args==nil or #args==0) then
+	args = {...};
+	if (args == nil or #args == 0) then
 		return text;
 	end
 	for k, v in pairs(args) do
@@ -1113,8 +1242,8 @@ function PowaAuras:InsertText(text, ...)
 end
 
 function PowaAuras:MatchString(textToSearch, textToFind, ingoreCase)
-	if (textToSearch==nil) then
-		return textToFind==nil;
+	if (textToSearch == nil) then
+		return textToFind == nil;
 	end
 	if (ingoreCase) then
 		textToFind = string.upper(textToFind);
@@ -1127,17 +1256,19 @@ function PowaAuras:Different(o1, o2)
 	local t1 = type(t1);
 	local t2 = type(t2);
 	if (t1~=t2 or t1 == "string" or t2 == "string") then
-		return tostring(o1)~=tostring(o2);
+		return tostring(o1) ~= tostring(o2);
 	end
-	if (t1=="number") then
-		return math.abs(o1-o2) > 1e-9;
+	if (t1 == "number") then
+		return math.abs(o1 - o2) > 1e-9;
 	end
 	return o1 ~= o2;
 end
 
 function PowaAuras:GetSettingForExport(prefix, k, v, default)
 	-- Causes an unreproducable bug. Will increase size of export codes, but at least they work.
-	if (not self:Different(v, default) and not PowaGlobalMisc.FixExports) then return ""; end
+	if (not self:Different(v, default) and not PowaGlobalMisc.FixExports) then
+		return "";
+	end
 	local varType = type(v);
 	local setting = prefix..k..":";
 	if (varType == "string") then
@@ -1153,7 +1284,7 @@ end
 
 -- PowaAura Classes
 function PowaClass(base,ctor)
-	local c = {} -- A new class instance
+	local c = { } -- A new class instance
 	if not ctor and type(base) == 'function' then
 		ctor = base;
 		base = nil;
@@ -1162,7 +1293,7 @@ function PowaClass(base,ctor)
 		for i,v in pairs(base) do
 			c[i] = v;
 		end
-		if (type(ctor)=="table") then
+		if (type(ctor) == "table") then
 			for i,v in pairs(ctor) do
 				c[i] = v;
 			end
@@ -1174,13 +1305,13 @@ function PowaClass(base,ctor)
 	-- And they will look up their methods in it.
 	c.__index = c
 	-- Expose a ctor which can be called by <classname>(<args>)
-	local mt = {}
-	mt.__call = function(class_tbl,...)
-		local obj = {}
+	local mt = { }
+	mt.__call = function(class_tbl, ...)
+		local obj = { }
 		setmetatable(obj,c)
 		if ctor then
 			--PowaAuras:ShowText("Call constructor "..tostring(ctor));
-			ctor(obj,...)
+			ctor(obj, ...)
 		end
 		return obj
 	end
