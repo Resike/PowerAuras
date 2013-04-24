@@ -1602,6 +1602,11 @@ function PowaAuras:InitPage(aura)
 	-- Auras visuals
 	PowaBarAuraAlphaSlider:SetValue(aura.alpha);
 	PowaBarAuraRotateSlider:SetValue(aura.rotate);
+	if (aura.enablefullrotation == true) then
+		PowaBarAuraRotateSlider:SetValueStep(1)
+	else
+		PowaBarAuraRotateSlider:SetValueStep(90)
+	end
 	PowaBarAuraSizeSlider:SetValue(aura.size);
 	-- Adjust Slider Y
 	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y - 5000, aura.y + 5000);
@@ -2207,7 +2212,9 @@ function PowaAuras:EnableFullRotationChecked()
 		PowaBarAuraRotateSlider:SetValueStep(1)
 	else
 		self.Auras[auraId].enablefullrotation = false;
-		PowaBarAuraRotateSlider:SetValue(0)
+		if (self.Auras[auraId].rotate ~= 0) and (self.Auras[auraId].rotate ~= 90) and (self.Auras[auraId].rotate ~= 180) and (self.Auras[auraId].rotate ~= 270) and (self.Auras[auraId].rotate ~= 360) then
+			PowaBarAuraRotateSlider:SetValue(0)
+		end
 		PowaBarAuraRotateSlider:SetValueStep(90)
 	end
 	self:RedisplayAura(self.CurrentAuraId);
