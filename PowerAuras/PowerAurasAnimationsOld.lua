@@ -355,7 +355,7 @@ function cPowaAnimationBubble:Update(elapsed)
 	self:UpdateFrame();
 end
 
-cPowaAnimationWaterDrop = PowaClass(cPowaAnimationBaseTranslate, {OffsetX=0, OffsetY=0});
+cPowaAnimationWaterDrop = PowaClass(cPowaAnimationBaseTranslate, {OffsetX = 0, OffsetY = 0});
 function cPowaAnimationWaterDrop:Initialise()
 	self.Alpha = self.Frame:GetAlpha();
 	self.Width = self.Frame:GetWidth();

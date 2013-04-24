@@ -1601,6 +1601,7 @@ function PowaAuras:InitPage(aura)
 	end
 	-- Auras visuals
 	PowaBarAuraAlphaSlider:SetValue(aura.alpha);
+	PowaBarAuraAlphaSliderText:SetText(self.Text.nomAlpha..": "..format("%.0f", aura.alpha * 100).."%");
 	PowaBarAuraRotateSlider:SetValue(aura.rotate);
 	if (aura.enablefullrotation == true) then
 		PowaBarAuraRotateSlider:SetValueStep(1)

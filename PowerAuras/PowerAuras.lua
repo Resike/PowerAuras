@@ -1064,6 +1064,8 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			frame:SetFrameStrata("BACKGROUND");
 		end
 	end
+	local height = 256
+	local width = 256
 	if (aura.textaura ~= true) then
 		texture:SetRotation(math.rad(aura.rotate));
 	end
@@ -1131,54 +1133,54 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		end
 	end
 	if (aura.textaura == true) then
-		frame.baseH = 256 * aura.size * (2 - aura.torsion);
+		frame.baseH = height * aura.size * (2 - aura.torsion);
 	elseif (aura.customtex == true) then
 		local x = (sqrt(2) * 2) - 1
 		if string.find(aura.customname, "//") then
 			if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
-				frame.baseH = 256 * aura.size * (2 - aura.torsion);
+				frame.baseH = height * aura.size * (2 - aura.torsion);
 			elseif (aura.rotate == 90) or (aura.rotate == 270) then
-				frame.baseH = x * 256 * aura.size * (2 - aura.torsion);
+				frame.baseH = x * height * aura.size * (2 - aura.torsion);
 			else
-				frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
+				frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
 			end
 		else
 			if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
-				frame.baseH = 256 * aura.size * (2 - aura.torsion);
+				frame.baseH = height * aura.size * (2 - aura.torsion);
 			elseif (aura.rotate == 90) or (aura.rotate == 270) then
-				frame.baseH = 256 * aura.size * (2 - aura.torsion);
+				frame.baseH = height * aura.size * (2 - aura.torsion);
 			else
-				frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
+				frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
 			end
 		end
 	elseif (aura.owntex == true) then
 		if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
-			frame.baseH = 256 * aura.size * (2 - aura.torsion);
+			frame.baseH = height * aura.size * (2 - aura.torsion);
 		elseif (aura.rotate == 90) or (aura.rotate == 270) then
-			frame.baseH = 256 * aura.size * (2 - aura.torsion);
+			frame.baseH = height * aura.size * (2 - aura.torsion);
 		else
-			frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
+			frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
 		end
 	elseif (aura.wowtex == true) then
 		local x = (sqrt(2) * 2) - 1
 		if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
-			frame.baseH = 256 * aura.size * (2 - aura.torsion);
+			frame.baseH = height * aura.size * (2 - aura.torsion);
 		elseif (aura.rotate == 90) or (aura.rotate == 270) then
-			frame.baseH = 256 * aura.size * (2 - aura.torsion);
+			frame.baseH = height * aura.size * (2 - aura.torsion);
 		else
-			frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
+			frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
 		end
 	elseif (aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true) then
 		local x = (sqrt(2) * 2) - 1
 		if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
-			frame.baseH = 256 * aura.size * (2 - aura.torsion);
-			frame.baseL = 256 * aura.size * aura.torsion;
+			frame.baseH = height * aura.size * (2 - aura.torsion);
+			frame.baseL = width * aura.size * aura.torsion;
 		elseif (aura.rotate == 90) or (aura.rotate == 270) then
-			frame.baseH = 256 * aura.size * (2 - aura.torsion);
-			frame.baseL = 256 * aura.size * aura.torsion;
+			frame.baseH = height * aura.size * (2 - aura.torsion);
+			frame.baseL = width * aura.size * aura.torsion;
 		else
-			frame.baseH = sqrt(2) * 256 * aura.size * (2 - aura.torsion);
-			frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
+			frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
+			frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
 		end
 	end
 	if (aura.textaura == true) then
@@ -1192,41 +1194,41 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		local x = (sqrt(2) * 2) - 1
 		if string.find(aura.customname, "//") then
 			if (aura.rotate == 0) or (aura.rotate == 360) then
-				frame.baseL = 256 * aura.size * aura.torsion;
+				frame.baseL = width * aura.size * aura.torsion;
 			elseif (aura.rotate == 90) or (aura.rotate == 270) then
-				frame.baseL = 256 * aura.size * aura.torsion;
+				frame.baseL = width * aura.size * aura.torsion;
 			elseif (aura.rotate == 180) then
-				frame.baseL = x * 256 * aura.size * aura.torsion;
+				frame.baseL = x * width * aura.size * aura.torsion;
 			else
-				frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
+				frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
 			end
 		else
 			if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
-				frame.baseL = 256 * aura.size * aura.torsion;
+				frame.baseL = width * aura.size * aura.torsion;
 			elseif (aura.rotate == 90) or (aura.rotate == 270) then
-				frame.baseL = 256 * aura.size * aura.torsion;
+				frame.baseL = width * aura.size * aura.torsion;
 			else
-				frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
+				frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
 			end
 		end
 	elseif (aura.owntex == true) then
 		if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
-			frame.baseL = 256 * aura.size * aura.torsion;
+			frame.baseL = width * aura.size * aura.torsion;
 		elseif (aura.rotate == 90) or (aura.rotate == 270) then
-			frame.baseL = 256 * aura.size * aura.torsion;
+			frame.baseL = width * aura.size * aura.torsion;
 		else
-			frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
+			frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
 		end
 	elseif (aura.wowtex == true) then
 		local x = (sqrt(2) * 2) - 1
 		if (aura.rotate == 0) or (aura.rotate == 360) then
-			frame.baseL = 256 * aura.size * aura.torsion;
+			frame.baseL = width * aura.size * aura.torsion;
 		elseif (aura.rotate == 90) or (aura.rotate == 270) then
-			frame.baseL = 256 * aura.size * aura.torsion;
+			frame.baseL = width * aura.size * aura.torsion;
 		elseif (aura.rotate == 180) then
-			frame.baseL = 256 * aura.size * aura.torsion;
+			frame.baseL = width * aura.size * aura.torsion;
 		else
-			frame.baseL = sqrt(2) * 256 * aura.size * aura.torsion;
+			frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
 		end
 	end
 	PowaAuras:InitialiseFrame(aura, frame);
