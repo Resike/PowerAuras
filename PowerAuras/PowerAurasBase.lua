@@ -61,13 +61,13 @@ WeAreAlive = true;
 PvPFlagSet = false;
 Instance = "none";
 
-GroupUnits = {};
-GroupNames = {};
+GroupUnits = { };
+GroupNames = { };
 
-Pending = {}; -- Workaround for 'silent' cooldown end (no event fired)
-Cascade = {}; -- Dependant auras that need checking
+Pending = { }; -- Workaround for 'silent' cooldown end (no event fired)
+Cascade = { }; -- Dependant auras that need checking
 
-UsedInMultis = {};
+UsedInMultis = { };
 
 PowaStance =
 {
@@ -93,31 +93,31 @@ CurrentAuraPage = 1;
 
 MoveEffect = 0; -- 1 = copie / 2 = move
 
-Auras = {};
-SecondaryAuras = {};
-Frames = {};
-SecondaryFrames = {};
-Textures = {};
-SecondaryTextures = {};
+Auras = { };
+SecondaryAuras = { };
+Frames = { };
+SecondaryFrames = { };
+Textures = { };
+SecondaryTextures = { };
 
-TimerFrame = {};
-StacksFrames = {};
+TimerFrame = { };
+StacksFrames = { };
 
-Sound = {};
-BeginAnimDisplay = {};
-EndAnimDisplay = {};
-Text = {};
-Anim = {};
+Sound = { };
+BeginAnimDisplay = { };
+EndAnimDisplay = { };
+Text = { };
+Anim = { };
 
-DebuffCatSpells = {};
+DebuffCatSpells = { };
 
-AoeAuraAdded = {};
-AoeAuraFaded = {};
-AoeAuraTexture = {};
+AoeAuraAdded = { };
+AoeAuraFaded = { };
+AoeAuraTexture = { };
 
 playerclass = "unknown";
 
-Events = {};
+Events = { };
 AlwaysEvents =
 {
 	ACTIVE_TALENT_GROUP_CHANGED = true,
@@ -149,16 +149,45 @@ RelativeToParent =
 	BOTTOMLEFT = "TOPRIGHT",
 	LEFT = "RIGHT",
 	CENTER = "CENTER",
-},
+};
+
+StrataList =
+{
+	"Background",
+	"Low",
+	"Medium",
+	"High",
+	"Dialog",
+	"Fullscreen",
+	"Fullscreen_Dialog",
+	"Tooltip",
+};
+
+TextureStrataList =
+{
+	"Background",
+	"Border",
+	"Artwork",
+	"Overlay",
+};
+
+BlendModeList =
+{
+	"Add",
+	"Alphakey",
+	"Blend",
+	"Disable",
+	"Mod",
+};
 
 ChangedUnits =
 {
-	Buffs = {},
-	Targets = {};
+	Buffs = { },
+	Targets = { };
 };
 
-InspectedRoles = {};
-FixRoles = {};
+InspectedRoles = { };
+FixRoles = { };
 
 Spells =
 {
@@ -176,9 +205,9 @@ Spells =
 	DRUID_SHIFT_MOONKIN = GetSpellInfo(24858),
 };
 
-ExtraUnitEvent = {};
-CastOnMe = {};
-CastByMe = {};
+ExtraUnitEvent = { };
+CastOnMe = { };
+CastByMe = { };
 
 DoCheck =
 {
@@ -331,10 +360,10 @@ AnimationTypes =
 };
 
 -- Aura name -> Auras array
-AurasByType = {};
+AurasByType = { };
 
 -- Index -> Aura name
-AurasByTypeList = {};
+AurasByTypeList = { };
 
 DebuffCatType =
 {
@@ -714,7 +743,7 @@ Backdrop =
 };
 
 function PowaAuras:RegisterAuraType(auraType)
-	self.AurasByType[auraType] = {};
+	self.AurasByType[auraType] = { };
 	table.insert(self.AurasByTypeList, auraType);
 end
 
@@ -1076,7 +1105,7 @@ PowaAuras.DebuffTypeSpellIds =
 	[29703]	= PowaAuras.DebuffCatType.Snare,	-- Dazed
 };
 
-PowaAuras.Text = {};
+PowaAuras.Text = { };
 
 function PowaAuras:UnitTestDebug(...)
 
@@ -1152,8 +1181,8 @@ function PowaAuras:ReverseTable(t)
 	if (type(t) ~= "table") then
 		return nil;
 	end
-	local newTable = {};
-	for k,v in pairs(t) do
+	local newTable = { };
+	for k, v in pairs(t) do
 		newTable[v] = k;
 	end
 	return newTable;
@@ -1186,7 +1215,7 @@ function PowaAuras:CopyTable(t, lookup_table, original)
 	end
 	local copy;
 	if (original == nil) then
-		copy = {};
+		copy = { };
 	else
 		copy = original;
 	end
@@ -1195,7 +1224,7 @@ function PowaAuras:CopyTable(t, lookup_table, original)
 			if (type(v) ~= "table") then
 				copy[i] = v;
 			else
-				lookup_table = lookup_table or {};
+				lookup_table = lookup_table or { };
 				lookup_table[t] = copy;
 				if lookup_table[v] then
 					copy[i] = lookup_table[v]; -- We already copied this table. Reuse the copy.
@@ -1255,7 +1284,7 @@ end
 function PowaAuras:Different(o1, o2)
 	local t1 = type(t1);
 	local t2 = type(t2);
-	if (t1~=t2 or t1 == "string" or t2 == "string") then
+	if (t1 ~= t2 or t1 == "string" or t2 == "string") then
 		return tostring(o1) ~= tostring(o2);
 	end
 	if (t1 == "number") then
@@ -1283,7 +1312,7 @@ function PowaAuras:GetSettingForExport(prefix, k, v, default)
 end
 
 -- PowaAura Classes
-function PowaClass(base,ctor)
+function PowaClass(base, ctor)
 	local c = { } -- A new class instance
 	if not ctor and type(base) == 'function' then
 		ctor = base;
@@ -1308,7 +1337,7 @@ function PowaClass(base,ctor)
 	local mt = { }
 	mt.__call = function(class_tbl, ...)
 		local obj = { }
-		setmetatable(obj,c)
+		setmetatable(obj, c)
 		if ctor then
 			--PowaAuras:ShowText("Call constructor "..tostring(ctor));
 			ctor(obj, ...)
@@ -1331,6 +1360,6 @@ function PowaClass(base,ctor)
 		end
 		return false
 	end
-	setmetatable(c,mt)
+	setmetatable(c, mt)
 	return c
 end

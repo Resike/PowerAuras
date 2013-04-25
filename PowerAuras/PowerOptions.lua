@@ -1305,6 +1305,7 @@ function PowaAuras:MainOptionShow()
 		self.ModTest = true;
 		self:UpdateMainOption();
 		PowaOptionsFrame:Show();
+		PowaAuras:UpdateMainOption(true);
 		PlaySound("TalentScreenOpen", PowaMisc.SoundChannel);
 		if (PowaMisc.Disabled) then
 			self:DisplayText("Power Auras "..self.Colors.Red..ADDON_DISABLED.."|r");
@@ -1512,6 +1513,12 @@ function PowaAuras:InitPage(aura)
 		aura = self.Auras[self.CurrentAuraId];
 	end
 	self:UpdateTimerOptions();
+	UIDropDownMenu_SetSelectedName(PowaStrataDropDown, aura.strata);
+	UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, aura.texturestrata);
+	PowaFrameStrataLevelSlider:SetValue(aura.stratalevel);
+	PowaTextureStrataSublevelSlider:SetValue(aura.texturesublevel);
+	PowaStrataDropDownText:SetText(aura.strata)
+	PowaTextureStrataDropDownText:SetText(aura.texturestrata)
 	PowaDropDownAnim1Text:SetText(self.Anim[aura.anim1]);
 	PowaDropDownAnim2Text:SetText(self.Anim[aura.anim2]);
 	PowaDropDownAnimBeginText:SetText(self.BeginAnimDisplay[aura.begin]);
@@ -1661,12 +1668,12 @@ function PowaAuras:InitPage(aura)
 		PowaBarAuraTextureSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
-		PowaFontsButton:Hide();
+		PowaFontButton:Hide();
 	elseif (aura.wowtex) then
 		PowaBarAuraTextureSlider:Show();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
-		PowaFontsButton:Hide();
+		PowaFontButton:Hide();
 		if (#self.WowTextures > self.MaxTextures) then
 			PowaBarAuraTextureSlider:SetMinMaxValues(1, #self.WowTextures);
 			PowaBarAuraTextureSlider:SetValue(aura.texture);
@@ -1679,7 +1686,7 @@ function PowaAuras:InitPage(aura)
 	elseif (aura.customtex) then
 		PowaBarAuraTextureSlider:Hide();
 		PowaBarAurasText:Hide();
-		PowaFontsButton:Hide();
+		PowaFontButton:Hide();
 		PowaBarCustomTexName:Show();
 		PowaBarCustomTexName:SetText(aura.customname);
 		checkTexture = AuraTexture:SetTexture(self:CustomTexPath(aura.customname));
@@ -1687,7 +1694,7 @@ function PowaAuras:InitPage(aura)
 		PowaBarAuraTextureSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Show();
-		PowaFontsButton:Show();
+		PowaFontButton:Show();
 		--self:ShowText("InitPage: set aurastext to ", aura.aurastext);
 		PowaBarAurasText:SetText(aura.aurastext);
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\INV_Scroll_02");
@@ -1695,7 +1702,7 @@ function PowaAuras:InitPage(aura)
 		PowaBarAuraTextureSlider:Show();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
-		PowaFontsButton:Hide();
+		PowaFontButton:Hide();
 		if (#self.WowTextures < self.MaxTextures) then
 			PowaBarAuraTextureSlider:SetMinMaxValues(1,self.MaxTextures);
 			PowaBarAuraTextureSlider:SetValue(aura.texture);
@@ -1773,6 +1780,22 @@ function PowaAuras:BarAuraTextureSliderChanged()
 		AuraTexture:SetVertexColor(self.Auras[auraId].r, self.Auras[auraId].g, self.Auras[auraId].b);
 	end
 	self.Auras[auraId].texture = SliderValue;
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:FrameStrataLevelSliderChanged()
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	local SliderValue = PowaFrameStrataLevelSlider:GetValue();
+	PowaFrameStrataLevelSliderText:SetText("Level: "..format("%.0f", SliderValue));
+	self.Auras[self.CurrentAuraId].stratalevel = SliderValue;
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:TextureStrataSublevelSliderChanged()
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	local SliderValue = PowaTextureStrataSublevelSlider:GetValue();
+	PowaTextureStrataSublevelSliderText:SetText("Sublevel: "..format("%.0f", SliderValue));
+	self.Auras[self.CurrentAuraId].texturesublevel = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
@@ -2119,7 +2142,7 @@ function PowaAuras:OwntexChecked()
 		PowaBarAuraTextureSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
-		PowaFontsButton:Hide();
+		PowaFontButton:Hide();
 	else
 		aura.owntex = false;
 	end
@@ -2143,7 +2166,7 @@ function PowaAuras:WowTexturesChecked()
 		PowaBarAuraTextureSlider:Show();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
-		PowaFontsButton:Hide();
+		PowaFontButton:Hide();
 	else
 		aura.wowtex = false;
 		PowaBarAuraTextureSlider:SetMinMaxValues(1,self.MaxTextures);
@@ -2168,7 +2191,7 @@ function PowaAuras:CustomTexturesChecked()
 		PowaWowTextureButton:SetChecked(false);
 		PowaTextAuraButton:SetChecked(false);
 		PowaBarAurasText:Hide();
-		PowaFontsButton:Hide();
+		PowaFontButton:Hide();
 	else
 		aura.customtex = false;
 		PowaBarAuraTextureSlider:Show();
@@ -2188,7 +2211,7 @@ function PowaAuras:TextAuraChecked()
 		aura.customtex = false;
 		PowaBarAuraTextureSlider:Hide();
 		PowaBarAurasText:Show();
-		PowaFontsButton:Show();
+		PowaFontButton:Show();
 		--self:ShowText("TextAuraChecked: aura text changed to ", aura.aurastext);
 		PowaBarAurasText:SetText(aura.aurastext);
 		PowaOwntexButton:SetChecked(false);
@@ -2200,7 +2223,7 @@ function PowaAuras:TextAuraChecked()
 		aura.textaura = false;
 		PowaBarAuraTextureSlider:Show();
 		PowaBarAurasText:Hide();
-		PowaFontsButton:Hide();
+		PowaFontButton:Hide();
 	end
 	self:BarAuraTextureSliderChanged();
 	self:RedisplayAura(self.CurrentAuraId);
@@ -2311,12 +2334,50 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 	if (aura == nil) then
 		aura = PowaAuras:AuraFactory(PowaAuras.BuffTypes.Buff, 0);
 	end
-	if (owner:GetName() == "PowaDropDownAnim1Button" or owner:GetName() == "PowaDropDownAnim1") then
+	if (owner:GetName() == "PowaStrataDropDown") then
+		UIDropDownMenu_SetWidth(owner, 140)
+		for i = 1, #PowaAuras.StrataList do
+			local info = UIDropDownMenu_CreateInfo();
+			info.hasArrow = false;
+			info.text = PowaAuras.StrataList[i];
+			info.func = function(self)
+				local strata = PowaAuras.StrataList[i];
+				local AuraID = PowaAuras.CurrentAuraId;
+				if PowaAuras.CurrentAuraId > 120 then
+					PowaGlobalSet[AuraID]["strata"] = strata;
+				end
+				PowaSet[AuraID]["strata"] = strata
+				PowaStrataDropDownText:SetText(strata);
+				UIDropDownMenu_SetSelectedName(PowaStrataDropDown, strata);
+				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
+			end;
+			UIDropDownMenu_AddButton(info, level);
+		end
+	elseif (owner:GetName() == "PowaTextureStrataDropDown") then
+		UIDropDownMenu_SetWidth(owner, 140)
+		for i = 1, #PowaAuras.TextureStrataList do
+			local info = UIDropDownMenu_CreateInfo();
+			info.hasArrow = false;
+			info.text = PowaAuras.TextureStrataList[i];
+			info.func = function(self)
+				local texturestrata = PowaAuras.TextureStrataList[i];
+				local AuraID = PowaAuras.CurrentAuraId;
+				if PowaAuras.CurrentAuraId > 120 then
+					PowaGlobalSet[AuraID]["texturestrata"] = texturestrata;
+				end
+				PowaSet[AuraID]["texturestrata"] = texturestrata
+				PowaTextureStrataDropDownText:SetText(texturestrata);
+				UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, texturestrata);
+				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
+			end;
+			UIDropDownMenu_AddButton(info, level);
+		end
+	elseif (owner:GetName() == "PowaDropDownAnim1Button" or owner:GetName() == "PowaDropDownAnim1") then
 		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
 		if aura ~= nil then
 			if aura.UseOldAnimations == false then
 				for i = 1, #(PowaAuras.Anim) do
-					info = {};
+					info = { };
 					info.text = PowaAuras.Anim[i];
 					info.value = i;
 					info.func = PowaAuras.DropDownMenu_OnClickAnim1;
@@ -2324,7 +2385,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				end
 			else
 				for i = 1, #(PowaAuras.Anim) - 2 do
-					info = {};
+					info = { };
 					info.text = PowaAuras.Anim[i];
 					info.value = i;
 					info.func = PowaAuras.DropDownMenu_OnClickAnim1;
@@ -2334,7 +2395,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_SetSelectedValue(PowaDropDownAnim1, aura.anim1);
 		else
 			for i = 1, #(PowaAuras.Anim) - 2 do
-				info = {};
+				info = { };
 				info.text = PowaAuras.Anim[i];
 				info.value = i;
 				info.func = PowaAuras.DropDownMenu_OnClickAnim1;
@@ -2348,7 +2409,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		if aura ~= nil then
 			if aura.UseOldAnimations == false then
 				for i = 0, #(PowaAuras.Anim) do
-					info = {};
+					info = { };
 					info.text = PowaAuras.Anim[i];
 					info.value = i;
 					info.func = PowaAuras.DropDownMenu_OnClickAnim2;
@@ -2356,7 +2417,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				end
 			else
 				for i = 0, #(PowaAuras.Anim) - 2 do
-					info = {};
+					info = { };
 					info.text = PowaAuras.Anim[i];
 					info.value = i;
 					info.func = PowaAuras.DropDownMenu_OnClickAnim2;
@@ -2366,7 +2427,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_SetSelectedValue(PowaDropDownAnim2, aura.anim2);
 		else
 			for i = 0, #(PowaAuras.Anim) - 2 do
-				info = {};
+				info = { };
 				info.text = PowaAuras.Anim[i];
 				info.value = i;
 				info.func = PowaAuras.DropDownMenu_OnClickAnim2;
@@ -2531,6 +2592,14 @@ function PowaAuras:FillDropdownSorted(t, info)
 		UIDropDownMenu_AddButton(info);
 	end
 end
+
+--[[function PowaAuras.DropDownMenu_OnClickStrata(self)
+	UIDropDownMenu_SetSelectedValue(self.owner, self.value);
+	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
+	aura.strata = PowaAuras.StrataList[self.value];
+	aura:Init();
+	PowaAuras:InitPage();
+end]]--
 
 function PowaAuras.DropDownMenu_OnClickBuffType(self)
 	--PowaAuras:Message("DropDownMenu_OnClickBuffType bufftype ", self.value, " for aura ", PowaAuras.CurrentAuraId, " ", self.owner);
@@ -2794,6 +2863,7 @@ function PowaAuras:OpenColorPicker(control, source, setTexture)
 		ColorPickerFrame.setTexture = setTexture;
 		ColorPickerFrame.func = self.SetColor -- button.swatchFunc;
 		ColorPickerFrame:SetColorRGB(button.r, button.g, button.b);
+		
 		ColorPickerFrame.previousValues = {r = button.r, g = button.g, b = button.b, opacity = button.opacity};
 		ColorPickerFrame.cancelFunc = self.CancelColor
 		ColorPickerFrame:SetPoint("TOPLEFT", "PowaBarConfigFrame", "TOPRIGHT", 0, 0)
@@ -3470,17 +3540,20 @@ end
 function PowaAuras:OptionTest()
 	--self:Message("OptionTest for ", self.CurrentAuraId);
 	local aura = self.Auras[self.CurrentAuraId];
+	local owner = _G["PowaIcone"..self.CurrentAuraId];
 	if (not aura or aura.buffname == "" or aura.buffname == " ") then
 		return;
 	end
 	if (aura.Showing) then
 		self:SetAuraHideRequest(aura);
 		aura.Active = false;
+		owner:SetAlpha(0.33)
 	else
-		aura.Active = true;
 		aura:CreateFrames();
 		self.SecondaryAuras[aura.id] = nil; -- Force recreate
 		self:DisplayAura(aura.id);
+		aura.Active = true;
+		owner:SetAlpha(1)
 	end
 end
 
@@ -3527,7 +3600,7 @@ function PowaAuras:OptionHideAll(now) -- Hide all auras
 			if (aura.Timer) then aura.Timer.HideRequest = true; end
 		end
 	end
-	PowaBarConfigFrame:Hide();
+	--PowaBarConfigFrame:Hide();
 end
 
 function PowaAuras:RedisplayAuras()

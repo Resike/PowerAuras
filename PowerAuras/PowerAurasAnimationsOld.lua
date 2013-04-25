@@ -49,7 +49,7 @@ function cPowaAnimationBase:UpdateFrameBase()
 	--PowaAuras:Message("Base:UpdateFrameBase aura="..tostring(self.Aura).." frame="..tostring(self.Frame));
 	self.Frame:SetWidth(self.Width);
 	self.Frame:SetHeight(self.Height);
-	self.Frame:SetAlpha(math.min(self.Alpha,0.99));
+	self.Frame:SetAlpha(math.min(self.Alpha, 0.99));
 end
 
 function cPowaAnimationBase:UpdateFrame()
@@ -99,7 +99,7 @@ function cPowaAnimationBeginZoomIn:Update(elapsed)
 	--PowaAuras:UnitTestInfo("BeginZoomIn Update ", elapsed);
 	local step = elapsed * 150 * self.Aura.speed;
 	self.Width = self.Width - (step * self.Aura.torsion);
-	self.Height = self.Height - (step * (2-self.Aura.torsion));
+	self.Height = self.Height - (step * (2 - self.Aura.torsion));
 	self.Alpha = self.TargetAlpha * (self.StartWidth - self.Width) / (self.StartWidth - self.TargetWidth);
 	local result = false;
 	if (self.Width <= self.TargetWidth) then
@@ -183,16 +183,16 @@ function cPowaAnimationBeginTranslate:Update(elapsed)
 	return result;
 end
 
-cPowaAnimationBeginTranslateLeft = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=-100, OffsetY=0, DirectionX=1, DirectionY=0, TranslationSpeed = 2.0});
-cPowaAnimationBeginTranslateTopLeft = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=-75 , OffsetY=75, DirectionX=1, DirectionY=-1, TranslationSpeed = 1.5});
-cPowaAnimationBeginTranslateTop = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=0, OffsetY=100, DirectionX=0, DirectionY=-1, TranslationSpeed = 2.0});
-cPowaAnimationBeginTranslateTopRight = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=75, OffsetY=75, DirectionX=-1, DirectionY=-1, TranslationSpeed = 1.5});
-cPowaAnimationBeginTranslateRight = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=100, OffsetY=0, DirectionX=-1, DirectionY=0, TranslationSpeed = 2.0});
-cPowaAnimationBeginTranslateBottomRight = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=75, OffsetY=-75, DirectionX=-1, DirectionY=1, TranslationSpeed = 1.5});
-cPowaAnimationBeginTranslateBottom = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=0, OffsetY=-100, DirectionX=0, DirectionY=1, TranslationSpeed = 2.0});
-cPowaAnimationBeginTranslateBottomLeft = PowaClass(cPowaAnimationBeginTranslate, {OffsetX=-75, OffsetY=-75, DirectionX=1, DirectionY=1, TranslationSpeed = 1.5});
+cPowaAnimationBeginTranslateLeft = PowaClass(cPowaAnimationBeginTranslate, {OffsetX = - 100, OffsetY = 0, DirectionX = 1, DirectionY = 0, TranslationSpeed = 2.0});
+cPowaAnimationBeginTranslateTopLeft = PowaClass(cPowaAnimationBeginTranslate, {OffsetX = - 75 , OffsetY = 75, DirectionX = 1, DirectionY = - 1, TranslationSpeed = 1.5});
+cPowaAnimationBeginTranslateTop = PowaClass(cPowaAnimationBeginTranslate, {OffsetX = 0, OffsetY = 100, DirectionX = 0, DirectionY = - 1, TranslationSpeed = 2.0});
+cPowaAnimationBeginTranslateTopRight = PowaClass(cPowaAnimationBeginTranslate, {OffsetX = 75, OffsetY = 75, DirectionX = - 1, DirectionY = - 1, TranslationSpeed = 1.5});
+cPowaAnimationBeginTranslateRight = PowaClass(cPowaAnimationBeginTranslate, {OffsetX = 100, OffsetY = 0, DirectionX = - 1, DirectionY = 0, TranslationSpeed = 2.0});
+cPowaAnimationBeginTranslateBottomRight = PowaClass(cPowaAnimationBeginTranslate, {OffsetX = 75, OffsetY = - 75, DirectionX = - 1, DirectionY = 1, TranslationSpeed = 1.5});
+cPowaAnimationBeginTranslateBottom = PowaClass(cPowaAnimationBeginTranslate, {OffsetX = 0, OffsetY = - 100, DirectionX = 0, DirectionY = 1, TranslationSpeed = 2.0});
+cPowaAnimationBeginTranslateBottomLeft = PowaClass(cPowaAnimationBeginTranslate, {OffsetX = - 75, OffsetY = - 75, DirectionX = 1, DirectionY = 1, TranslationSpeed = 1.5});
 
-cPowaAnimationBeginBounce = PowaClass(cPowaAnimationBaseTranslate, {OffsetX=0, OffsetY=100, MinVelocity=100, Acceleration=1000});
+cPowaAnimationBeginBounce = PowaClass(cPowaAnimationBaseTranslate, {OffsetX = 0, OffsetY = 100, MinVelocity = 100, Acceleration = 1000});
 function cPowaAnimationBeginBounce:Initialise()
 	self.Velocity = 0;
 	self:InitialiseBase();
@@ -205,14 +205,14 @@ function cPowaAnimationBeginBounce:Update(elapsed)
 	self.Velocity = math.max(math.min(self.Velocity + self.Acceleration * self.Aura.speed * elapsed, 1000), -1000);
 	self.Y = self.Y - elapsed * (self.Velocity + self.Acceleration * self.Aura.speed * elapsed / 2);
 	local result = false;
-	if (self.Y <= self.TargetY and self.Velocity>0) then
+	if (self.Y <= self.TargetY and self.Velocity > 0) then
 		self.Y = self.TargetY;
 		self.Alpha = self.TargetAlpha;
 		if (self.Velocity <= self.MinVelocity) then
 			self.Velocity = 0;
 			result = true;
 		else
-			self.Velocity = -self.Velocity * 0.9;
+			self.Velocity = - self.Velocity * 0.9;
 		end
 	end
 	self:UpdateFrame();
@@ -257,7 +257,7 @@ end
 -- Main Animations
 cPowaAnimationFlashing = PowaClass(cPowaAnimationBase);
 function cPowaAnimationFlashing:Initialise()
-	self.Direction = -1;
+	self.Direction = - 1;
 	self.MinAlpha = self.TargetAlpha * 0.5 * self.Aura.speed;
 	self.Alpha = self.Frame:GetAlpha();
 end
@@ -265,12 +265,12 @@ end
 function cPowaAnimationFlashing:Update(elapsed)
 	--PowaAuras:UnitTestInfo("cPowaAnimationFlashing Update ", elapsed);
 	self.Alpha = self.Alpha + self.Direction * elapsed / 2;
-	if (self.Alpha<=self.MinAlpha) then
+	if (self.Alpha <= self.MinAlpha) then
 		self.Alpha = self.MinAlpha;
 		self.Direction = 1;
-	elseif (self.Alpha>=self.TargetAlpha) then
+	elseif (self.Alpha >= self.TargetAlpha) then
 		self.Alpha = self.TargetAlpha;
-		self.Direction = -1;
+		self.Direction = - 1;
 	end
 	self:UpdateFrame();
 end
@@ -346,7 +346,7 @@ function cPowaAnimationBubble:Update(elapsed)
 	if (self.Width >= self.MaxWidth) then
 		self.Width = self.MaxWidth;
 		self.Height = self.MinHeight;
-		self.Direction = -1;
+		self.Direction = - 1;
 	elseif (self.Width <= self.MinWidth) then
 		self.Width = self.MinWidth;
 		self.Height = self.MaxHeight;
@@ -386,7 +386,7 @@ function cPowaAnimationWaterDrop:Update(elapsed)
 	self:UpdateFrame();
 end
 
-cPowaAnimationElectric = PowaClass(cPowaAnimationBaseTranslate, {OffsetX=0, OffsetY=0});
+cPowaAnimationElectric = PowaClass(cPowaAnimationBaseTranslate, {OffsetX = 0, OffsetY = 0});
 function cPowaAnimationElectric:Initialise()
 	self.Alpha = self.Frame:GetAlpha();
 	self.Width = self.Frame:GetWidth();
@@ -439,7 +439,7 @@ function cPowaAnimationShrinking:Update(elapsed)
 	elseif (self.Status == 2) then -- zoom out + fade in
 		local speedScale = 50 * self.Aura.speed * self.Aura.size;
 		self.Width = self.Width - elapsed * speedScale * self.Aura.torsion;
-		self.Height = self.Height - elapsed * speedScale * (2-self.Aura.torsion);
+		self.Height = self.Height - elapsed * speedScale * (2 - self.Aura.torsion);
 		self.Alpha = self.TargetAlpha * (self.MaxWidth - self.Width) / (self.MaxWidth - self.MinWidth);
 		if (self.Width <= self.MinWidth) then
 			self.Width = self.MinWidth;
@@ -452,7 +452,7 @@ function cPowaAnimationShrinking:Update(elapsed)
 		self.Alpha = self.TargetAlpha;
 		self.Status = 3;
 	elseif (self.Status == 3) then -- fade-out
-		self.Alpha = self.Alpha - (elapsed / random(1,2));
+		self.Alpha = self.Alpha - (elapsed / random(1, 2));
 		if (self.Alpha <= 0.0) then
 			self.Alpha = 0;
 			self.Status = 0;
@@ -461,7 +461,7 @@ function cPowaAnimationShrinking:Update(elapsed)
 	self:UpdateFrame();
 end
 
-cPowaAnimationFlame = PowaClass(cPowaAnimationBaseTranslate, {OffsetX=0, OffsetY=0});
+cPowaAnimationFlame = PowaClass(cPowaAnimationBaseTranslate, {OffsetX = 0, OffsetY = 0});
 function cPowaAnimationFlame:Initialise()
 	self.Alpha = self.Frame:GetAlpha();
 	self.Width = self.Frame:GetWidth();
@@ -488,7 +488,7 @@ function cPowaAnimationFlame:Update(elapsed)
 		self.Y = self.Y + elapsed * random(10,20);
 		self.Alpha = self.Alpha - self.TargetAlpha * elapsed / random(2,4);
 		self.Width = self.Width - elapsed * speedScale * self.Aura.torsion;
-		self.Height = self.Height - elapsed * speedScale * (2-self.Aura.torsion);
+		self.Height = self.Height - elapsed * speedScale * (2 - self.Aura.torsion);
 		if (self.Alpha < 0.0) then
 			self.Alpha = 0;
 			self.Status = 1;
@@ -497,19 +497,19 @@ function cPowaAnimationFlame:Update(elapsed)
 	self:UpdateFrame();
 end
 
-cPowaAnimationOrbit = PowaClass(cPowaAnimationBaseTranslate, {OffsetX=0, OffsetY=0});
+cPowaAnimationOrbit = PowaClass(cPowaAnimationBaseTranslate, {OffsetX = 0, OffsetY = 0});
 function cPowaAnimationOrbit:Initialise()
 	self.Alpha = self.Frame:GetAlpha();
 	self.TargetX = self.Aura.x;
 	self.TargetY = self.Aura.y;
 	self.X = self.TargetX;
 	self.Y = self.TargetY;
-	self.MaxWidth = math.max(self.TargetX, -self.TargetX, 5) * 1.0;
+	self.MaxWidth = math.max(self.TargetX, - self.TargetX, 5) * 1.0;
 	self.MaxHeight = self.MaxWidth * (1.6 - self.Aura.torsion);
 	--PowaAuras:ShowText("MaxWidth ", self.MaxWidth);
 	--PowaAuras:ShowText("MaxHeight ", self.MaxHeight);
 	self.Width = self.TargetWidth / self.Aura.torsion;
-	self.Height = self.TargetHeight / (2-self.Aura.torsion);
+	self.Height = self.TargetHeight / (2 - self.Aura.torsion);
 	self.Angle = 0;
 	-- annule la symetrie
 	if self.Aura.textaura ~= true then
@@ -541,9 +541,9 @@ function cPowaAnimationOrbit:Update(elapsed)
 	-- transparence
 	if (self.Angle < 180) then -- zone de transparence
 		if (self.Angle < 90) then
-			self.Alpha = self.TargetAlpha * (1-self.Angle/90);
+			self.Alpha = self.TargetAlpha * (1 - self.Angle / 90);
 		else
-			self.Alpha = self.TargetAlpha * (self.Angle/90-1);
+			self.Alpha = self.TargetAlpha * (self.Angle / 90 - 1);
 		end
 	else
 		self.Alpha = self.TargetAlpha;
@@ -588,7 +588,7 @@ PowaAuras.AnimationBeginClasses = {
 function PowaAuras:AnimationBeginFactory(animationType, aura, frame, base)
 	--self:Message("AnimationBeginFactory "..tostring(animationType).." aura.id="..tostring(aura.id).." frame="..tostring(frame));
 	if (not base) then
-		base = {};
+		base = { };
 	end
 	base.IsBegin = true;
 	return self:AnimationFactory(animationType, self.AnimationBeginClasses, aura, frame, base)
@@ -596,10 +596,10 @@ end
 
 -- Concrete Animation End Classes
 PowaAuras.AnimationEndClasses = {
-	[PowaAuras.AnimationEndTypes.None]=cPowaAnimationEnd,
-	[PowaAuras.AnimationEndTypes.GrowAndFade]=cPowaAnimationEndGrowAndFade,
-	[PowaAuras.AnimationEndTypes.ShrinkAndFade]=cPowaAnimationEndShrinkAndFade,
-	[PowaAuras.AnimationEndTypes.Fade]=cPowaAnimationEndFade,
+	[PowaAuras.AnimationEndTypes.None] = cPowaAnimationEnd,
+	[PowaAuras.AnimationEndTypes.GrowAndFade] = cPowaAnimationEndGrowAndFade,
+	[PowaAuras.AnimationEndTypes.ShrinkAndFade] = cPowaAnimationEndShrinkAndFade,
+	[PowaAuras.AnimationEndTypes.Fade] = cPowaAnimationEndFade,
 }
 
 function PowaAuras:AnimationEndFactory(animationType, aura, frame, base)
@@ -608,7 +608,7 @@ function PowaAuras:AnimationEndFactory(animationType, aura, frame, base)
 		return nil;
 	end
 	if (not base) then
-		base = {};
+		base = { };
 	end
 	base.IsEnd = true;
 	return self:AnimationFactory(animationType, self.AnimationEndClasses, aura, frame, base)
@@ -616,7 +616,7 @@ end
 
 function PowaAuras:AnimationMainFactory(animationType, aura, frame, base)
 	--self:ShowText("AnimationMainFactory type="..tostring(animationType).." aura.id="..tostring(aura.id).." frame="..tostring(frame));
-	if (animationType==PowaAuras.AnimationTypes.Invisible) then
+	if (animationType == PowaAuras.AnimationTypes.Invisible) then
 		return nil;
 	end
 	return self:AnimationFactory(animationType, self.AnimationMainClasses, aura, frame, base)

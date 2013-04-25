@@ -2,7 +2,7 @@ function PowaAuras:CalculateDurations(speed)
 	-- speed ranges from 0.05 to 2
 	-- First duration is then 1.225 to 0.25
 	-- Second duration is then 30 to 0.25
-	return 1.25 - speed / 2, 1.526 / math.max(speed,0.05) - 0.513;
+	return 1.25 - speed / 2, 1.526 / math.max(speed, 0.05) - 0.513;
 end
 
 function PowaAuras:AddBeginAnimation(aura, frame)
@@ -38,7 +38,7 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 	local duration, duration2 = self:CalculateDurations(aura.speed);
 	--PowaAuras:ShowText("AddBeginAnimation duration=", duration, " speed=", aura.speed);
 	if (aura.begin ~= PowaAuras.AnimationBeginTypes.Bounce) then
-		self:AddJumpAlphaAndReturn(animationGroup, - math.min(aura.alpha,0.99), duration, 1);
+		self:AddJumpAlphaAndReturn(animationGroup, - math.min(aura.alpha, 0.99), duration, 1);
 	end
 	if (aura.begin == PowaAuras.AnimationBeginTypes.ZoomOut) then
 		self:AddJumpScaleAndReturn(animationGroup, 0.5, duration, 1);
@@ -140,49 +140,38 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		self:AddAlpha(animationGroup, deltaAlpha, duration, 2);
 	elseif (aura.anim1 == PowaAuras.AnimationTypes.Growing) then
 		self:AddScale(animationGroup, 1.2, 1.2, duration * 3, 1);
-		if (aura.isSecondary) then
-			self:AddAlpha(animationGroup, math.min(aura.alpha,0.99), duration * 3, 1);
-		else
-			self:AddAlpha(animationGroup, - math.min(aura.alpha,0.99), duration * 3, 1);
-		end
+		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), duration * 3, 1);
 	elseif (aura.anim1==PowaAuras.AnimationTypes.Pulse) then
 		self:AddScale(animationGroup, 1.08, 1.08, duration, 1);
 		self:AddScale(animationGroup, 0.9259, 0.9259, duration, 2);
 	elseif (aura.anim1==PowaAuras.AnimationTypes.Shrinking) then
-		if (aura.isSecondary) then
-			self:AddAlpha(animationGroup, math.min(aura.alpha,0.99), duration, 1);
-		else
-			self:AddAlpha(animationGroup, - math.min(aura.alpha,0.99), duration, 1);
-		end
+		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), duration, 1);
 		self:AddScale(animationGroup, 1.3, 1.3, 0, 2);
 		self:AddScale(animationGroup, 1 / 1.3, 1 / 1.3, duration * 3, 3);
-		if (aura.isSecondary) then
-			self:AddAlpha(animationGroup, math.min(aura.alpha,0.99), duration * 3, 3);
-		else
-			self:AddAlpha(animationGroup, math.min(aura.alpha,0.99), duration * 3, 3);
-		end
+		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), duration * 3, 3);
 	elseif (aura.anim1 == PowaAuras.AnimationTypes.WaterDrop) then
 		self:AddMoveRandomLocation(animationGroup, 0, 20, - 10, 0, 20, - 10, 0, 0, false, aura.speed, 1);
 		self:AddScale(animationGroup, 0.85, 0.85, 0, 0, 1);
 		self:AddScale(animationGroup, 1.76, 1.76, duration * 4, 2);
-		if (aura.isSecondary) then
-			self:AddAlpha(animationGroup, math.min(aura.alpha,0.99), duration * 4, 2);
-		else
-			self:AddAlpha(animationGroup, - math.min(aura.alpha,0.99), duration * 4, 2);
-		end
+		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), duration * 4, 2);
 	elseif (aura.anim1 == PowaAuras.AnimationTypes.Electric) then
-		frame:SetAlpha(aura.alpha / 2);
+		local steps = 30;
+		local deltaAlpha = math.min(aura.alpha, 0.99) / steps;
+		local stepDuration = duration * 4 / steps;
 		animationGroup.speed = aura.speed;
 		animationGroup:SetScript("OnPlay",
 		function(self)
 			self.Trigger = (random( 210 - self.speed * 100 ) < 4);
 			--PowaAuras:ShowText("Electric OnPlay Trigger=", self.Trigger);
 		end);
-		self:AddMoveRandomLocation(animationGroup, 0, 10, - 5, 0, 10, - 5, 0.05, true, aura.speed, 1);
-		self:AddAlphaOnTrigger(animationGroup, 2, 0.05, 1);
+		for i = 1, steps do
+			self:AddMoveRandomLocation(animationGroup, 0, 10, - 5, 0, 10, - 5, stepDuration, true, aura.speed, i);
+			self:AddAlpha(animationGroup, -deltaAlpha, stepDuration, i);
+			--self:AddAlphaOnTrigger(animationGroup, 2, 0.05, 1);
+		end
 	elseif (aura.anim1 == PowaAuras.AnimationTypes.Flame) then
 		local steps = 40;
-		local deltaAlpha = math.min(aura.alpha,0.99) / steps;
+		local deltaAlpha = math.min(aura.alpha, 0.99) / steps;
 		local stepDuration = duration * 4 / steps;
 		for i = 1, steps do
 			self:AddMoveRandomLocation(animationGroup, 1, 7, - 4, 0, 2, 0, stepDuration, false, aura.speed, i);
@@ -250,7 +239,7 @@ function PowaAuras:AddMoveRandomLocation(animationGroup, xrangel, xrangeu, xoffs
 		if (not self.useTrigger or self:GetParent().Trigger) then
 			self:SetOffset((random(self.xrangel,self.xrangeu) + self.xoffset) * self.speed, (random(self.yrangel,self.yrangeu) + self.yoffset) * self.speed);
 		else
-			self:SetOffset(0,0);
+			self:SetOffset(0, 0);
 		end
 	end);
 end

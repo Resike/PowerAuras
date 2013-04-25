@@ -69,7 +69,10 @@ cPowaAura.ExportSettings =
 	aurastext = "",
 	aurastextfont = 1,
 	icon = "",
-	strata = "LOW",
+	strata = "Low",
+	stratalevel = 0,
+	texturestrata = "Background",
+	texturesublevel = 0,
 	timerduration = 0,
 	-- Sound Settings
 	sound = 0,

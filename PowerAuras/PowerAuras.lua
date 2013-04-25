@@ -1040,17 +1040,33 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	end
 	if (aura.randomcolor) then
 		texture:SetVertexColor(random(20,100) / 100, random(20,100) / 100, random(20,100) / 100);
+		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
+			if self.Auras[self.CurrentAuraId].off == false then
+				AuraTexture:SetVertexColor(random(20,100) / 100, random(20,100) / 100, random(20,100) / 100);
+			end
+		else
+			AuraTexture:SetVertexColor(1, 1, 1);
+		end
 	else
 		texture:SetVertexColor(aura.r, aura.g, aura.b);
+		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
+			if self.Auras[self.CurrentAuraId].off == false then
+				AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
+			end
+		else
+			AuraTexture:SetVertexColor(1, 1, 1);
+		end
 	end
 	if (aura.texmode == 1) then
 		if (aura.textaura ~= true) then
 			texture:SetBlendMode("ADD");
 		else
 			texture:SetShadowColor(0.0, 0.0, 0.0, 0.8);
-			texture:SetShadowOffset(2, -2);
+			texture:SetShadowOffset(2, - 2);
 		end
 		frame:SetFrameStrata(aura.strata);
+		frame:SetFrameLevel(aura.stratalevel);
+		texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
 	else
 		if (aura.textaura ~= true) then
 			texture:SetBlendMode("DISABLE");
@@ -1058,11 +1074,9 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			texture:SetShadowColor(0.0, 0.0, 0.0, 0.0);
 			texture:SetShadowOffset(0,0);
 		end
-		if(aura.strata ~= "LOW") then
-			frame:SetFrameStrata(aura.strata);
-		else
-			frame:SetFrameStrata("BACKGROUND");
-		end
+		frame:SetFrameStrata(aura.strata);
+		frame:SetFrameLevel(aura.stratalevel);
+		texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
 	end
 	local height = 256
 	local width = 256
@@ -1342,7 +1356,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	end
 	if (aura.randomcolor) then
 		if texture:GetObjectType() == "Texture" then
-			secondaryTexture:SetVertexColor( texture:GetVertexColor() );
+			secondaryTexture:SetVertexColor(texture:GetVertexColor());
 		elseif texture:GetObjectType() == "FontString" then
 			secondaryTexture:SetVertexColor(texture:GetTextColor());
 		end
@@ -1354,11 +1368,19 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 			secondaryTexture:SetBlendMode("ADD");
 		end
 		secondaryFrame:SetFrameStrata(aura.strata);
+		secondaryFrame:SetFrameLevel(aura.stratalevel);
+		secondaryTexture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
 	else
 		if (aura.textaura ~= true) then
-			secondaryTexture:SetBlendMode("DISABLE");
+			if (secondaryAura.anim1 == PowaAuras.AnimationTypes.Growing) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.Shrinking) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.WaterDrop) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.Electric) then
+				secondaryTexture:SetBlendMode("BLEND");
+			else
+				secondaryTexture:SetBlendMode("DISABLE");
+			end
 		end
 		secondaryFrame:SetFrameStrata("BACKGROUND");
+		secondaryFrame:SetFrameLevel(aura.stratalevel);
+		secondaryTexture:SetDrawLayer("BACKGROUND", aura.texturesublevel);
 	end
 	if (aura.textaura ~= true) then
 		secondaryTexture:SetRotation(math.rad(aura.rotate));
