@@ -902,7 +902,7 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<!-- Position X Slider -->
+					<!-- Texture Position X Slider -->
 					<Slider name = "PowaBarAuraCoordXSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
 							<AbsDimension x = "380" y = "16"/>
@@ -916,12 +916,12 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:SetMinMaxValues(-1500,1500)
+								self:SetMinMaxValues(-700,700)
 								self:SetValue(0)
 								self:SetValueStep(1)
 								PowaBarAuraCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X: 0")
-								PowaBarAuraCoordXSliderLow:SetText("-1500")
-								PowaBarAuraCoordXSliderHigh:SetText("1500")
+								PowaBarAuraCoordXSliderLow:SetText("-700")
+								PowaBarAuraCoordXSliderHigh:SetText("700")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:BarAuraCoordXSliderChanged()
@@ -936,7 +936,7 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<!-- Position X EditBox -->
+					<!-- Texture Position X EditBox -->
 					<EditBox name = "PowaBarAuraCoordXEdit" autoFocus = "false" inherits = "InputBoxTemplate">
 						<Size>
 							<AbsDimension x = "40" y = "16"/>
@@ -971,7 +971,7 @@
 							</OnEscapePressed>
 						</Scripts>
 					</EditBox>
-					<!-- Position Y Slider -->
+					<!-- Texture Position Y Slider -->
 					<Slider name = "PowaBarAuraCoordYSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
 							<AbsDimension x = "380" y = "16"/>
@@ -985,12 +985,12 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:SetMinMaxValues(-1500,1500)
+								self:SetMinMaxValues(-400,400)
 								self:SetValue(0)
 								self:SetValueStep(1)
 								PowaBarAuraCoordYSliderText:SetText(PowaAuras.Text.nomPos.." Y: 0")
-								PowaBarAuraCoordYSliderLow:SetText("-1500")
-								PowaBarAuraCoordYSliderHigh:SetText("1500")
+								PowaBarAuraCoordYSliderLow:SetText("-400")
+								PowaBarAuraCoordYSliderHigh:SetText("400")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:BarAuraCoordYSliderChanged()
@@ -1005,7 +1005,7 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
-					<!-- Position Y EditBox -->
+					<!-- Texture Position Y EditBox -->
 					<EditBox name = "PowaBarAuraCoordYEdit" autoFocus = "false" inherits = "InputBoxTemplate">
 						<Size>
 							<AbsDimension x = "40" y = "16"/>
@@ -2873,20 +2873,18 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:SetMinMaxValues(-150,150)
+										self:SetMinMaxValues(-700,700)
 										self:SetValue(0)
 										self:SetValueStep(1)
 										PowaTimerCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X: 0")
-										PowaTimerCoordXSliderLow:SetText("-150")
-										PowaTimerCoordXSliderHigh:SetText("150")
+										PowaTimerCoordXSliderLow:SetText("-700")
+										PowaTimerCoordXSliderHigh:SetText("700")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:TimerCoordXSliderChanged()
 									</OnValueChanged>
 									<OnMouseUp>
-										self:SetMinMaxValues(self:GetValue()-100,self:GetValue()+100)
-										PowaTimerCoordXSliderLow:SetText(self:GetValue()-100)
-										PowaTimerCoordXSliderHigh:SetText(self:GetValue()+100)
+										PowaAuras.OnMouseUpX(self)
 									</OnMouseUp>
 									<OnMouseWheel>
 										self:EnableMouseWheel(true)
@@ -2907,20 +2905,18 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:SetMinMaxValues(-200,100)
+										self:SetMinMaxValues(-400,400)
 										self:SetValue(0)
 										self:SetValueStep(1)
 										PowaTimerCoordSliderText:SetText(PowaAuras.Text.nomPos.." Y: 0")
-										PowaTimerCoordSliderLow:SetText("-200")
-										PowaTimerCoordSliderHigh:SetText("100")
+										PowaTimerCoordSliderLow:SetText("-400")
+										PowaTimerCoordSliderHigh:SetText("400")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:TimerCoordSliderChanged()
 									</OnValueChanged>
 									<OnMouseUp>
-										self:SetMinMaxValues(self:GetValue()-100,self:GetValue()+100)
-										PowaTimerCoordSliderLow:SetText(self:GetValue()-100)
-										PowaTimerCoordSliderHigh:SetText(self:GetValue()+100)
+										PowaAuras.OnMouseUpY(self)
 									</OnMouseUp>
 									<OnMouseWheel>
 										self:EnableMouseWheel(true)
@@ -3380,20 +3376,18 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:SetMinMaxValues(-150,150)
+										self:SetMinMaxValues(-700,700)
 										self:SetValue(0)
 										self:SetValueStep(1)
 										PowaStacksCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X: 0")
-										PowaStacksCoordXSliderLow:SetText("-150")
-										PowaStacksCoordXSliderHigh:SetText("150")
+										PowaStacksCoordXSliderLow:SetText("-700")
+										PowaStacksCoordXSliderHigh:SetText("700")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:StacksCoordXSliderChanged()
 									</OnValueChanged>
 									<OnMouseUp>
-										self:SetMinMaxValues(self:GetValue()-100,self:GetValue()+100)
-										PowaStacksCoordXSliderLow:SetText(self:GetValue()-100)
-										PowaStacksCoordXSliderHigh:SetText(self:GetValue()+100)
+										PowaAuras.OnMouseUpX(self)
 									</OnMouseUp>
 									<OnMouseWheel>
 										self:EnableMouseWheel(true)
@@ -3414,20 +3408,18 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:SetMinMaxValues(-200,100)
+										self:SetMinMaxValues(-400,400)
 										self:SetValue(0)
 										self:SetValueStep(1)
 										PowaStacksCoordSliderText:SetText(PowaAuras.Text.nomPos.." Y: 0")
-										PowaStacksCoordSliderLow:SetText("-200")
-										PowaStacksCoordSliderHigh:SetText("100")
+										PowaStacksCoordSliderLow:SetText("-400")
+										PowaStacksCoordSliderHigh:SetText("400")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:StacksCoordSliderChanged()
 									</OnValueChanged>
 									<OnMouseUp>
-										self:SetMinMaxValues(self:GetValue()-100,self:GetValue()+100)
-										PowaStacksCoordSliderLow:SetText(self:GetValue()-100)
-										PowaStacksCoordSliderHigh:SetText(self:GetValue()+100)
+										PowaAuras.OnMouseUpY(self)
 									</OnMouseUp>
 									<OnMouseWheel>
 										self:EnableMouseWheel(true)

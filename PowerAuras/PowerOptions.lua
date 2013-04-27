@@ -1345,18 +1345,18 @@ function PowaAuras:UpdateTimerOptions()
 		PowaShowTimerButton:SetChecked(timer.enabled);
 		PowaTimerAlphaSlider:SetValue(timer.a);
 		PowaTimerSizeSlider:SetValue(timer.h);
-		-- ajuste slider Y
-		PowaTimerCoordSlider:SetMinMaxValues(timer.y - 5000, timer.y + 5000);
-		PowaTimerCoordSliderLow:SetText(timer.y - 100);
-		PowaTimerCoordSliderHigh:SetText(timer.y + 100);
-		PowaTimerCoordSlider:SetValue(timer.y);
-		PowaTimerCoordSlider:SetMinMaxValues(timer.y - 100, timer.y + 100);
 		-- ajuste slider X
-		PowaTimerCoordXSlider:SetMinMaxValues(timer.x - 5000, timer.x + 5000);
-		PowaTimerCoordXSliderLow:SetText(timer.x - 100);
-		PowaTimerCoordXSliderHigh:SetText(timer.x + 100);
+		PowaTimerCoordXSlider:SetMinMaxValues(timer.x - 10000, timer.x + 10000);
+		PowaTimerCoordXSliderLow:SetText(timer.x - 700);
+		PowaTimerCoordXSliderHigh:SetText(timer.x + 700);
 		PowaTimerCoordXSlider:SetValue(timer.x);
-		PowaTimerCoordXSlider:SetMinMaxValues(timer.x - 100, timer.x + 100);
+		PowaTimerCoordXSlider:SetMinMaxValues(timer.x - 700, timer.x + 700);
+		-- ajuste slider Y
+		PowaTimerCoordSlider:SetMinMaxValues(timer.y - 10000, timer.y + 10000);
+		PowaTimerCoordSliderLow:SetText(timer.y - 400);
+		PowaTimerCoordSliderHigh:SetText(timer.y + 400);
+		PowaTimerCoordSlider:SetValue(timer.y);
+		PowaTimerCoordSlider:SetMinMaxValues(timer.y - 400, timer.y + 400);
 		PowaBuffTimerCentsButton:SetChecked(timer.cents);
 		PowaBuffTimerLeadingZerosButton:SetChecked(timer.HideLeadingZeros);
 		PowaBuffTimerTransparentButton:SetChecked(timer.Transparent);
@@ -1388,17 +1388,17 @@ function PowaAuras:UpdateStacksOptions()
 		PowaStacksAlphaSlider:SetValue(stacks.a);
 		PowaStacksSizeSlider:SetValue(stacks.h);
 		-- ajuste slider Y
-		PowaStacksCoordSlider:SetMinMaxValues(stacks.y - 5000, stacks.y + 5000);
-		PowaStacksCoordSliderLow:SetText(stacks.y - 100);
-		PowaStacksCoordSliderHigh:SetText(stacks.y + 100);
+		PowaStacksCoordSlider:SetMinMaxValues(stacks.y - 10000, stacks.y + 10000);
+		PowaStacksCoordSliderLow:SetText(stacks.y - 800);
+		PowaStacksCoordSliderHigh:SetText(stacks.y + 800);
 		PowaStacksCoordSlider:SetValue(stacks.y);
-		PowaStacksCoordSlider:SetMinMaxValues(stacks.y - 100, stacks.y + 100);
+		PowaStacksCoordSlider:SetMinMaxValues(stacks.y - 800, stacks.y + 800);
 		-- ajuste slider X
-		PowaStacksCoordXSlider:SetMinMaxValues(stacks.x - 5000, stacks.x + 5000);
-		PowaStacksCoordXSliderLow:SetText(stacks.x - 100);
-		PowaStacksCoordXSliderHigh:SetText(stacks.x + 100);
+		PowaStacksCoordXSlider:SetMinMaxValues(stacks.x - 10000, stacks.x + 10000);
+		PowaStacksCoordXSliderLow:SetText(stacks.x - 800);
+		PowaStacksCoordXSliderHigh:SetText(stacks.x + 800);
 		PowaStacksCoordXSlider:SetValue(stacks.x);
-		PowaStacksCoordXSlider:SetMinMaxValues(stacks.x - 100, stacks.x + 100);
+		PowaStacksCoordXSlider:SetMinMaxValues(stacks.x - 800, stacks.x + 800);
 		PowaBuffStacksTransparentButton:SetChecked(stacks.Transparent);
 		PowaBuffStacksUpdatePingButton:SetChecked(stacks.UpdatePing);
 		PowaBuffStacksUseOwnColorButton:SetChecked(stacks.UseOwnColor);
@@ -1616,20 +1616,20 @@ function PowaAuras:InitPage(aura)
 		PowaBarAuraRotateSlider:SetValueStep(90)
 	end
 	PowaBarAuraSizeSlider:SetValue(aura.size);
-	-- Adjust Slider Y
-	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y - 5000, aura.y + 5000);
-	PowaBarAuraCoordYSliderLow:SetText(aura.y - 200);
-	PowaBarAuraCoordYSliderHigh:SetText(aura.y + 200);
-	PowaBarAuraCoordYSlider:SetValue(aura.y);
-	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y - 200, aura.y + 200);
-	PowaBarAuraCoordYEdit:SetText(aura.y);
-	-- Adjust Slider X
-	PowaBarAuraCoordXSlider:SetMinMaxValues(aura.x - 5000, aura.x + 5000);
-	PowaBarAuraCoordXSliderLow:SetText(aura.x - 200);
-	PowaBarAuraCoordXSliderHigh:SetText(aura.x + 200);
+	-- Texture Position Slider X
+	PowaBarAuraCoordXSlider:SetMinMaxValues(aura.x - 10000, aura.x + 10000);
+	PowaBarAuraCoordXSliderLow:SetText(aura.x - 700);
+	PowaBarAuraCoordXSliderHigh:SetText(aura.x + 700);
 	PowaBarAuraCoordXSlider:SetValue(aura.x);
-	PowaBarAuraCoordXSlider:SetMinMaxValues(aura.x - 200, aura.x + 200);
+	PowaBarAuraCoordXSlider:SetMinMaxValues(aura.x - 700, aura.x + 700);
 	PowaBarAuraCoordXEdit:SetText(aura.x);
+	-- Texture Position Slider Y
+	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y - 10000, aura.y + 10000);
+	PowaBarAuraCoordYSliderLow:SetText(aura.y - 400);
+	PowaBarAuraCoordYSliderHigh:SetText(aura.y + 400);
+	PowaBarAuraCoordYSlider:SetValue(aura.y);
+	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y - 400, aura.y + 400);
+	PowaBarAuraCoordYEdit:SetText(aura.y);
 	PowaBarAuraAnimSpeedSlider:SetValue(aura.speed);
 	PowaBarAuraDurationSlider:SetValue(aura.duration);
 	PowaBarAuraDurationSlider:SetMinMaxValues(aura.minDuration or 0, 30);
@@ -3743,15 +3743,15 @@ function PowaAuras.OnMouseWheel(self, delta)
 end
 
 function PowaAuras.OnMouseUpX(self)
-	self:SetMinMaxValues(self:GetValue() - 200, self:GetValue() + 200);
-	PowaBarAuraCoordXSliderLow:SetText(self:GetValue() - 200);
-	PowaBarAuraCoordXSliderHigh:SetText(self:GetValue() + 200);
+	self:SetMinMaxValues(self:GetValue() - 700, self:GetValue() + 700);
+	PowaBarAuraCoordXSliderLow:SetText(self:GetValue() - 700);
+	PowaBarAuraCoordXSliderHigh:SetText(self:GetValue() + 700);
 end
 
 function PowaAuras.OnMouseUpY(self)
-	self:SetMinMaxValues(self:GetValue() - 200, self:GetValue() + 200);
-	PowaBarAuraCoordYSliderLow:SetText(self:GetValue() - 200);
-	PowaBarAuraCoordYSliderHigh:SetText(self:GetValue() + 200);
+	self:SetMinMaxValues(self:GetValue() - 400, self:GetValue() + 400);
+	PowaBarAuraCoordYSliderLow:SetText(self:GetValue() - 400);
+	PowaBarAuraCoordYSliderHigh:SetText(self:GetValue() + 400);
 end
 
 --[[function PowaAuras.OnEnterX(self)

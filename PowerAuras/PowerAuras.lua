@@ -954,7 +954,7 @@ function PowaAuras:SetForDragging(aura, frame)
 	frame:EnableMouse(true);
 	frame:SetClampedToScreen(false);
 	frame:RegisterForDrag("LeftButton");
-	frame:SetBackdrop( self.Backdrop);
+	frame:SetBackdrop(self.Backdrop);
 	frame:SetBackdropColor(0, 0.6, 0, 1);
 	--frame:SetScript("OnHide", stopMove);
 	frame:SetScript("OnEnter", enterAura);
@@ -1019,9 +1019,9 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	local frame, texture = aura:CreateFrames();
 	frame.aura = aura;
 	if (self.ModTest and not PowaMisc.Locked) then
-		self:SetForDragging(aura, frame);
+		--self:SetForDragging(aura, frame);
 	else
-		self:ResetDragging(aura, frame);
+		--self:ResetDragging(aura, frame);
 	end
 	if (aura.owntex == true) then
 		if (aura.icon == "") then
@@ -1039,10 +1039,10 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga");
 	end
 	if (aura.randomcolor) then
-		texture:SetVertexColor(random(20,100) / 100, random(20,100) / 100, random(20,100) / 100);
+		texture:SetVertexColor(random(20, 100) / 100, random(20, 100) / 100, random(20, 100) / 100);
 		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
 			if self.Auras[self.CurrentAuraId].off == false then
-				AuraTexture:SetVertexColor(random(20,100) / 100, random(20,100) / 100, random(20,100) / 100);
+				AuraTexture:SetVertexColor(random(20, 100) / 100, random(20, 100) / 100, random(20, 100) / 100);
 			end
 		else
 			AuraTexture:SetVertexColor(1, 1, 1);

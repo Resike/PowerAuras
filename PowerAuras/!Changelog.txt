@@ -7,7 +7,8 @@ Added Frame's strata changer dropdown, to change the aura frame's z index.
 Added Frame level changer slider, to change the current frame's strata's z index. (0 - 20)
 Added Texture strata changer dropdown, to change the aura texture's z index.
 Added Texture sublevel changer slider, to change the current texture strata's z index. (-8 - 7)
-With this change you can create upto 12.000 different texture layers per aura.
+Disabled aura mouse moving, untill i can fix the bug what it's causes.
+With this change you can create up to 12.000 different texture layers per aura.
 Performance upgradements.
 Increased preview icon's size.
 Aura preview icon's color now will change immediately while changing color at the color picker, also when random color is changed.
@@ -21,16 +22,16 @@ X, Y, XY symmetry changes now wont be shown in effect editor.
 Alpha slider now can be changed to 0% too.
 Deformation slider min-max value now can be set between 0-2.
 Fixed font button for text auras.
-Text aura icons and TempPortrait icons now wont get modified by the current aura's choosen color.
+Text aura and TempPortrait icons now wont get modified by the current aura's choosen color.
 Fixed a bug when you manually set max texture count.
 Fixed a bug with the button itself.
 Override max textures min-max value now is 1-1000.
-Added "Texture Rotatable" checkbutton, which fixes some not fully rotatable custom textures, when disabled.
+Added "Enable Full Rotation" checkbutton, which fixes some not fully rotatable textures, when disabled.
 The texure cutter algorythm is now more precise for ingame icons, and custom textures.
 Hide all button now properly decreases all icon's alpha immediately.
 Slider inherit changes, removed unused stuff.
 Right clicking on an aura now going to increase it's icons alpha properly.
-Tesl all button now wont hide the currently opened effect editor.
+Test all button now wont hide the currently opened effect editor.
 Hide all button now also closes the effect editor.
 When you open the aura browser while an aura is currently showing, now it's gonna decrease it's icons alpha properly.
 Alpha slider text initalization fix.
