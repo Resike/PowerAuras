@@ -889,7 +889,7 @@
 								self:SetMinMaxValues(0.01,5.0)
 								self:SetValue(1.0)
 								self:SetValueStep(0.01)
-								PowaBarAuraSizeSliderText:SetText(PowaAuras.Text.nomTaille..": 100")
+								PowaBarAuraSizeSliderText:SetText(PowaAuras.Text.nomTaille..": 100%")
 								PowaBarAuraSizeSliderLow:SetText("1%")
 								PowaBarAuraSizeSliderHigh:SetText("500%")
 							</OnLoad>
@@ -2400,12 +2400,12 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:SetMinMaxValues(0.05,2.00)
+										self:SetMinMaxValues(0.01,2.00)
 										self:SetValue(1.0)
 										self:SetValueStep(0.01)
 										PowaBarAuraAnimSpeedSliderText:SetText(PowaAuras.Text.nomSpeed..": 100%")
-										PowaBarAuraAnimSpeedSliderLow:SetText("5")
-										PowaBarAuraAnimSpeedSliderHigh:SetText("200")
+										PowaBarAuraAnimSpeedSliderLow:SetText("1%")
+										PowaBarAuraAnimSpeedSliderHigh:SetText("200%")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:BarAuraAnimSpeedSliderChanged(self)

@@ -1,8 +1,10 @@
 ﻿* 4.23.20
 Millions of smaller GUI bugfixes.
+Addon memory improvements.
+Recoded all images with RLE loseless compression.
 Added "/pa" command to bring up the options too.
 Added 122 new textures from WoW.
-Added 2 new Custom texture.
+Added 5 new Custom texture.
 Added Frame's strata changer dropdown, to change the aura frame's z index.
 Added Frame level changer slider, to change the current frame's strata's z index. (0 - 20)
 Added Texture strata changer dropdown, to change the aura texture's z index.

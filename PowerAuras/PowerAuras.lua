@@ -1041,7 +1041,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	if (aura.randomcolor) then
 		texture:SetVertexColor(random(20, 100) / 100, random(20, 100) / 100, random(20, 100) / 100);
 		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-			if self.Auras[self.CurrentAuraId].off == false then
+			if (aura.off ~= true) then
 				AuraTexture:SetVertexColor(random(20, 100) / 100, random(20, 100) / 100, random(20, 100) / 100);
 			end
 		else
@@ -1050,7 +1050,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	else
 		texture:SetVertexColor(aura.r, aura.g, aura.b);
 		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-			if self.Auras[self.CurrentAuraId].off == false then
+			if (aura.off ~= true) then
 				AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
 			end
 		else
