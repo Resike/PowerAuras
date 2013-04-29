@@ -196,7 +196,7 @@ function PowaAuras:UpdateOldAuras()
 	end
 	-- Update for backwards combatiblity
 	for i = 1, 360 do
-		-- gere les rajouts
+		-- Manage additions
 		local aura = self.Auras[i];
 		local oldaura = PowaSet[i];
 		if (oldaura == nil) then
@@ -254,7 +254,7 @@ function PowaAuras:UpdateOldAuras()
 					end
 					aura.buffname = newBuffName
 				end
-			--Update Spell Alert logic
+			-- Update Spell Alert logic
 			elseif (aura.bufftype == self.BuffTypes.SpellAlert) then
 				if (PowaSet[i] ~= nil and PowaSet[i].RoleTank == nil) then
 					if (aura.target) then
@@ -451,12 +451,12 @@ function PowaAuras:MemorizeActions(actionIndex)
 	if (#self.AurasByType.Actions == 0) then
 		return;
 	end
-	-- scan tout ou uniquement le slot qui a change
+	-- Scan every changed slots
 	if (actionIndex == nil) then
 		--self:ShowText("-- Scan all Actionbuttons");
 		imin = 1;
 		imax = 120;
-		-- reset all action positions
+		-- Reset all action positions
 		for _, v in pairs(self.AurasByType.Actions) do
 			self.Auras[v].slot = nil;
 		end
@@ -492,7 +492,7 @@ function PowaAuras:MemorizeActions(actionIndex)
 							actionAura.slot = i; -- remember the slot
 							--self:ShowText("========================================");
 							--self:ShowText("Name=", name, "Tooltip=", text, " Match=", actionAura.buffname);
-							-- remember the texture
+							-- Remember the texture
 							local tempicon;
 							if (actionAura.owntex == true) then
 								PowaIconTexture:SetTexture(GetActionTexture(i));
@@ -870,7 +870,7 @@ end
 
 local function stopMove(frame, button)
 	--PowaAuras:ShowText("stopMove button=", button);
-	--PowaAuras:ShowText("isMoving=",frame.isMoving);
+	--PowaAuras:ShowText("isMoving=", frame.isMoving);
 	if (button ~= "LeftButton") then return end;
 	stopFrameMoving(frame);
 end
@@ -898,13 +898,13 @@ local function startFrameMoving(frame)
 end
 
 local function startMove(frame, button)
-	--PowaAuras:ShowText("startMove button=", button, " isMoving=",frame.isMoving);
+	--PowaAuras:ShowText("startMove button=", button, " isMoving=", frame.isMoving);
 	if (button ~= "LeftButton") then return end;
 	startFrameMoving(frame);
 end
 
 local function keyUp(frame, key)
-	--PowaAuras:ShowText("keyUp key=", key, " aura=",frame.aura.id);
+	--PowaAuras:ShowText("keyUp key=", key, " aura=", frame.aura.id);
 	if ((key ~= "UP" and key ~= "DOWN" and key ~= "LEFT" and key ~= "RIGHT") or not frame.mouseIsOver) then return; end
 	if (key == "UP") then
 		frame.aura.y = frame.aura.y + 1;
@@ -926,7 +926,7 @@ local function keyUp(frame, key)
 end
 
 local function enterAura(frame)
-	--PowaAuras:ShowText("enterAura aura=",frame.aura.id);
+	--PowaAuras:ShowText("enterAura aura=", frame.aura.id);
 	frame.mouseIsOver = true;
 	frame:EnableKeyboard(true);
 	frame:SetScript("OnKeyUp", keyUp);
@@ -937,7 +937,7 @@ local function enterAura(frame)
 end
 
 local function leaveAura(frame)
-	--PowaAuras:ShowText("leaveAura aura=",frame.aura.id);
+	--PowaAuras:ShowText("leaveAura aura=", frame.aura.id);
 	frame.mouseIsOver = nil;
 	stopFrameMoving(frame);
 	frame:EnableKeyboard(false);
@@ -1004,15 +1004,15 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			else
 				pathToSound = PowaGlobalMisc.PathToSounds .. aura.customsound;
 			end
-			--self:ShowText("Playing custom sound ",pathToSound);
+			--self:ShowText("Playing custom sound ", pathToSound);
 			PlaySoundFile(pathToSound, PowaMisc.SoundChannel);
 		elseif (aura.sound > 0) then
 			if (PowaAuras.Sound[aura.sound] ~= nil and string.len(PowaAuras.Sound[aura.sound]) > 0) then
 				if (string.find(PowaAuras.Sound[aura.sound], "%.")) then
-					--self:ShowText("Playing sound ",PowaGlobalMisc.PathToSounds,PowaAuras.Sound[aura.sound]);
+					--self:ShowText("Playing sound ", PowaGlobalMisc.PathToSounds,PowaAuras.Sound[aura.sound]);
 					PlaySoundFile(PowaGlobalMisc.PathToSounds .. PowaAuras.Sound[aura.sound], PowaMisc.SoundChannel);
 				else
-					--self:ShowText("Playing WoW sound ",PowaAuras.Sound[aura.sound]);
+					--self:ShowText("Playing WoW sound ", PowaAuras.Sound[aura.sound]);
 					PlaySound(PowaAuras.Sound[aura.sound], PowaMisc.SoundChannel);
 				end
 			end
@@ -1074,7 +1074,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			texture:SetBlendMode("DISABLE");
 		else
 			texture:SetShadowColor(0.0, 0.0, 0.0, 0.0);
-			texture:SetShadowOffset(0,0);
+			texture:SetShadowOffset(0, 0);
 		end
 		frame:SetFrameStrata(aura.strata);
 		frame:SetFrameLevel(aura.stratalevel);
@@ -1296,7 +1296,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	if (not aura.UseOldAnimations) then
 		if (aura.BeginAnimation) then
 			aura.BeginAnimation:Play();
-			frame:SetAlpha(0); -- prevents flickering
+			frame:SetAlpha(0); -- Prevents flickering
 		elseif (aura.MainAnimation) then
 			aura.MainAnimation:Play();
 		end
@@ -1320,7 +1320,7 @@ end
 
 function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	--self:UnitTestInfo("ShowSecondaryAuraForFirstTime", aura.id);
-	if (aura.anim2 == 0) then -- no secondary aura
+	if (aura.anim2 == 0) then -- No secondary aura
 		local secondaryAura = self.SecondaryAuras[aura.id];
 		if (secondaryAura) then
 			secondaryAura:Hide();
@@ -1337,9 +1337,9 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	secondaryAura.alpha = aura.alpha * 0.5;
 	secondaryAura.anim1 = aura.anim2;
 	if (aura.speed > 0.5) then
-		secondaryAura.speed = aura.speed - 0.1; -- legerement plus lent
+		secondaryAura.speed = aura.speed - 0.1; -- Slightly slower
 	else
-		secondaryAura.speed = aura.speed / 2; -- legerement plus lent
+		secondaryAura.speed = aura.speed / 2; -- Slower
 	end
 	local auraId = aura.id;
 	local frame = self.Frames[auraId];
@@ -1490,7 +1490,7 @@ end
 function PowaAuras:DisplayAura(auraId)
 	--self:UnitTestInfo("DisplayAura", auraId);
 	--self:ShowText("DisplayAura aura ", auraId);
-	if (not (self.VariablesLoaded and self.SetupDone)) then return; end -- de-actived
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local aura = self.Auras[auraId];
 	if (aura == nil or aura.off) then return; end
 	--self:ShowText("DisplayAura aura ", aura.id);
@@ -1617,7 +1617,7 @@ end
 
 function PowaAuras:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 	--if (aura.Debug) then
-	--PowaAuras:UnitTestInfo("UpdateTimer ",self.id, " ", aura.Timer, " skip=",skipTimerUpdate);
+	--PowaAuras:UnitTestInfo("UpdateTimer ", self.id, " ", aura.Timer, " skip=", skipTimerUpdate);
 	--end
 	if (not aura.Timer or skipTimerUpdate) then
 		return;
@@ -1631,7 +1631,7 @@ function PowaAuras:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 		self:DisplayText("aura.Active=", aura.Active);
 	end
 	local timerHide;
-	--if (aura.Timer.ShowOnAuraHide and not self.ModTest and ((not aura.ForceTimeInvert and not aura.InvertTimeHides) or (aura.ForceTimeInvert and not aura.inverse)) ) then
+	--if (aura.Timer.ShowOnAuraHide and not self.ModTest and ((not aura.ForceTimeInvert and not aura.InvertTimeHides) or (aura.ForceTimeInvert and not aura.inverse))) then
 	if (aura.Timer.ShowOnAuraHide and not self.ModTest and (not aura.ForceTimeInvert and not aura.InvertTimeHides) ) then
 		timerHide = aura.Active;
 	else
