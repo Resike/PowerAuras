@@ -168,7 +168,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		end);
 		for i = 1, steps do
 			self:AddMoveRandomLocation(animationGroup, 0, 10, - 5, 0, 10, - 5, stepDuration, true, aura.speed, i);
-			self:AddAlpha(animationGroup, -deltaAlpha, stepDuration, i);
+			self:AddAlpha(animationGroup, - deltaAlpha, stepDuration, i);
 			--self:AddAlphaOnTrigger(animationGroup, 2, 0.05, 1);
 		end
 	elseif (aura.anim1 == PowaAuras.AnimationTypes.Flame) then
@@ -177,7 +177,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		local stepDuration = duration * 4 / steps;
 		for i = 1, steps do
 			self:AddMoveRandomLocation(animationGroup, 1, 7, - 4, 0, 2, 0, stepDuration, false, aura.speed, i);
-			self:AddAlpha(animationGroup, -deltaAlpha, stepDuration, i);
+			self:AddAlpha(animationGroup, - deltaAlpha, stepDuration, i);
 			self:AddScale(animationGroup, 0.98, 0.98, stepDuration, i);
 		end
 	elseif (aura.anim1==PowaAuras.AnimationTypes.Bubble) then

@@ -1515,10 +1515,12 @@ function PowaAuras:InitPage(aura)
 	self:UpdateTimerOptions();
 	UIDropDownMenu_SetSelectedName(PowaStrataDropDown, aura.strata);
 	UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, aura.texturestrata);
+	UIDropDownMenu_SetSelectedName(PowaOrientationDropDown, aura.orientation);
 	PowaFrameStrataLevelSlider:SetValue(aura.stratalevel);
 	PowaTextureStrataSublevelSlider:SetValue(aura.texturesublevel);
 	PowaStrataDropDownText:SetText(aura.strata)
 	PowaTextureStrataDropDownText:SetText(aura.texturestrata)
+	PowaOrientationDropDownText:SetText(aura.orientation)
 	PowaDropDownAnim1Text:SetText(self.Anim[aura.anim1]);
 	PowaDropDownAnim2Text:SetText(self.Anim[aura.anim2]);
 	PowaDropDownAnimBeginText:SetText(self.BeginAnimDisplay[aura.begin]);
@@ -1565,6 +1567,7 @@ function PowaAuras:InitPage(aura)
 	PowaExtraButton:SetChecked(aura.Extra);
 	PowaTexModeButton:SetChecked(aura.texmode == 1);
 	PowaEnableFullRotationButton:SetChecked(aura.enablefullrotation);
+	PowaEnableGradientButton:SetChecked(aura.gradient);
 	-- Ternary Logic
 	self:TernarySetState(PowaInCombatButton, aura.combat);
 	self:TernarySetState(PowaIsInRaidButton, aura.inRaid);
@@ -1717,9 +1720,13 @@ function PowaAuras:InitPage(aura)
 	if (checkTexture ~= 1) then
 		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga");
 	end
-	AuraTexture:SetVertexColor(aura.r,aura.g,aura.b);
-	PowaColorNormalTexture:SetVertexColor(aura.r,aura.g,aura.b);
-	-- affiche la symetrie
+	if (aura.gradient ~= true) then
+		AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
+	else
+		AuraTexture:SetGradientAlpha(aura.orientation, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+	end
+	PowaColorNormalTexture:SetVertexColor(aura.r, aura.g, aura.b);
+	PowaGradientColorNormalTexture:SetVertexColor(aura.gr, aura.gg, aura.gb);
 	--[[if (aura.symetrie == 1) then
 		AuraTexture:SetTexCoord(1, 0, 0, 1); -- inverse X
 	elseif (aura.symetrie == 2) then
@@ -1733,6 +1740,9 @@ function PowaAuras:InitPage(aura)
 	PowaColor_SwatchBg.r = aura.r;
 	PowaColor_SwatchBg.g = aura.g;
 	PowaColor_SwatchBg.b = aura.b;
+	PowaGradientColor_SwatchBg.r = aura.gr;
+	PowaGradientColor_SwatchBg.g = aura.gg;
+	PowaGradientColor_SwatchBg.b = aura.gb;
 	PowaHeader:SetText(self.Text.nomEffectEditor.." ("..aura.id..")");
 end
 
@@ -2229,6 +2239,16 @@ function PowaAuras:TextAuraChecked()
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
+function PowaAuras:GradientChecked()
+	local auraId = self.CurrentAuraId;
+	if (PowaEnableGradientButton:GetChecked()) then
+		self.Auras[auraId].gradient = true;
+	else
+		self.Auras[auraId].gradient = false;
+	end
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
 function PowaAuras:EnableFullRotationChecked()
 	local auraId = self.CurrentAuraId;
 	if (PowaEnableFullRotationButton:GetChecked()) then
@@ -2368,6 +2388,25 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				PowaSet[AuraID]["texturestrata"] = texturestrata
 				PowaTextureStrataDropDownText:SetText(texturestrata);
 				UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, texturestrata);
+				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
+			end;
+			UIDropDownMenu_AddButton(info, level);
+		end
+	elseif (owner:GetName() == "PowaOrientationDropDown") then
+		UIDropDownMenu_SetWidth(owner, 140)
+		for i = 1, #PowaAuras.OrientationList do
+			local info = UIDropDownMenu_CreateInfo();
+			info.hasArrow = false;
+			info.text = PowaAuras.OrientationList[i];
+			info.func = function(self)
+				local orientation = PowaAuras.OrientationList[i];
+				local AuraID = PowaAuras.CurrentAuraId;
+				if PowaAuras.CurrentAuraId > 120 then
+					PowaGlobalSet[AuraID]["orientation"] = orientation;
+				end
+				PowaSet[AuraID]["orientation"] = orientation
+				PowaOrientationDropDownText:SetText(orientation);
+				UIDropDownMenu_SetSelectedName(PowaOrientationDropDown, orientation);
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
 			end;
 			UIDropDownMenu_AddButton(info, level);
@@ -2829,7 +2868,7 @@ end
 function PowaAuras:SetAuraColor(r, g, b)
 	--self:Message("SetColor r=", r, " g=",g, " b=", b);
 	local swatch = getglobal(ColorPickerFrame.Button:GetName().."NormalTexture"); -- Only the visuals
-	swatch:SetVertexColor(r,g,b);
+	swatch:SetVertexColor(r, g, b);
 	local frame = getglobal(ColorPickerFrame.Button:GetName().."_SwatchBg"); -- Set the calling button's color
 	frame.r = r;
 	frame.g = g;
@@ -2838,7 +2877,7 @@ function PowaAuras:SetAuraColor(r, g, b)
 	ColorPickerFrame.Source.g = g;
 	ColorPickerFrame.Source.b = b;
 	if (ColorPickerFrame.setTexture) then
-		AuraTexture:SetVertexColor(r,g,b);
+		AuraTexture:SetVertexColor(r, g, b);
 	end
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -2849,15 +2888,57 @@ function PowaAuras:OpenColorPicker(control, source, setTexture)
 		PowaAuras.CancelColor();
 		ColorPickerFrame:Hide();
 	else
-		button = PowaColor_SwatchBg;
+		local button = PowaColor_SwatchBg;
 		ColorPickerFrame.Source = source;
 		ColorPickerFrame.Button = control;
 		ColorPickerFrame.setTexture = setTexture;
 		ColorPickerFrame.func = self.SetColor -- button.swatchFunc;
 		ColorPickerFrame:SetColorRGB(button.r, button.g, button.b);
 		
-		ColorPickerFrame.previousValues = {r = button.r, g = button.g, b = button.b, opacity = button.opacity};
+		ColorPickerFrame.previousValues = {r = button.r, g = button.g, b = button.b, a = button.opacity};
 		ColorPickerFrame.cancelFunc = self.CancelColor
+		ColorPickerFrame:SetPoint("TOPLEFT", "PowaBarConfigFrame", "TOPRIGHT", 0, 0)
+		ColorPickerFrame:Show();
+	end
+end
+
+function PowaAuras.SetGradientColor()
+	PowaAuras:SetGradientAuraColor(ColorPickerFrame:GetColorRGB());
+end
+
+function PowaAuras.CancelGradientColor()
+	PowaAuras:SetGradientAuraColor(ColorPickerFrame.previousGradientValues.r, ColorPickerFrame.previousGradientValues.g, ColorPickerFrame.previousGradientValues.b);
+end
+
+function PowaAuras:SetGradientAuraColor(r, g, b)
+	--self:Message("SetColor r=", r, " g=",g, " b=", b);
+	local swatch = getglobal(ColorPickerFrame.GradientButton:GetName().."NormalTexture"); -- Only the visuals
+	swatch:SetVertexColor(r, g, b);
+	local frame = getglobal(ColorPickerFrame.GradientButton:GetName().."_SwatchBg"); -- Set the calling button's color
+	frame.r = r;
+	frame.g = g;
+	frame.b = b;
+	self.Auras[self.CurrentAuraId].gr = r;
+	self.Auras[self.CurrentAuraId].gg = g;
+	self.Auras[self.CurrentAuraId].gb = b;
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:OpenGradientColorPicker(control, source, setTexture)
+	CloseMenus();
+	if ColorPickerFrame:IsVisible() then
+		PowaAuras.CancelGradientColor();
+		ColorPickerFrame:Hide();
+	else
+		local button = PowaGradientColor_SwatchBg;
+		ColorPickerFrame.GradientSource = source;
+		ColorPickerFrame.GradientButton = control;
+		ColorPickerFrame.setTexture = setTexture;
+		ColorPickerFrame.func = self.SetGradientColor -- button.swatchFunc;
+		ColorPickerFrame:SetColorRGB(button.r, button.g, button.b);
+		
+		ColorPickerFrame.previousGradientValues = {r = button.r, g = button.g, b = button.b, a = button.opacity};
+		ColorPickerFrame.cancelFunc = self.CancelGradientColor
 		ColorPickerFrame:SetPoint("TOPLEFT", "PowaBarConfigFrame", "TOPRIGHT", 0, 0)
 		ColorPickerFrame:Show();
 	end

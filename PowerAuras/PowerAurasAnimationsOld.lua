@@ -243,8 +243,8 @@ function cPowaAnimationEndResizeAndFade:Update(elapsed)
 	return false;
 end
 
-cPowaAnimationEndGrowAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = 5});
-cPowaAnimationEndShrinkAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = - 5});
+cPowaAnimationEndGrowAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = 3});
+cPowaAnimationEndShrinkAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Direction = - 3});
 
 cPowaAnimationEndFade = PowaClass(cPowaAnimationEnd);
 function cPowaAnimationEndFade:Update(elapsed)

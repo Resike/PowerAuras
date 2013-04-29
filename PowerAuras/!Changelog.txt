@@ -13,6 +13,7 @@ Added Texture sublevel changer slider, to change the current texture strata's z 
 Fixed a bugged font.
 Fixed a major moving bug, when you move the auras with the mouse.
 Fixed a bug which made auras disappear while on the timer/stacks tab.
+Added option for gradient colors.
 With this change you can create up to 12.000 different texture layers per aura.
 Performance upgradements.
 Increased preview icon's size.

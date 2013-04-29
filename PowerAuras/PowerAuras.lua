@@ -1052,10 +1052,18 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			AuraTexture:SetVertexColor(1, 1, 1);
 		end
 	else
-		texture:SetVertexColor(aura.r, aura.g, aura.b);
+		if (aura.gradient ~= true) then
+			texture:SetVertexColor(aura.r, aura.g, aura.b);
+		else
+			texture:SetGradientAlpha(aura.orientation, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+		end
 		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
 			if (aura.off ~= true) then
-				AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
+				if (aura.gradient ~= true) then
+					AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
+				else
+					AuraTexture:SetGradientAlpha(aura.orientation, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+				end
 			end
 		else
 			AuraTexture:SetVertexColor(1, 1, 1);
@@ -1365,7 +1373,11 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 			secondaryTexture:SetVertexColor(texture:GetTextColor());
 		end
 	else
-		secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b);
+		if (aura.gradient ~= true) then
+			secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b);
+		else
+			secondaryTexture:SetGradientAlpha(aura.orientation, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+		end
 	end
 	if (aura.texmode == 1) then
 		if (aura.textaura ~= true) then

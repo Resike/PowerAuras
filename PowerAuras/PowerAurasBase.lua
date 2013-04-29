@@ -182,6 +182,12 @@ BlendModeList =
 	"Mod",
 };
 
+OrientationList =
+{
+	"Horizontal",
+	"Vertical",
+};
+
 ChangedUnits =
 {
 	Buffs = { },

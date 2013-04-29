@@ -361,6 +361,125 @@
 						</Scripts>
 						<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\ChatFrameColorSwatch"/>
 					</Button>
+					<!-- Enable Gradient -->
+					<CheckButton name = "PowaEnableGradientButton" inherits = "PowaCheckTemplate">
+						<Size>
+							<AbsDimension x = "25" y = "25"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "TOPLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x = "-140" y = "0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								--self.tooltipText = PowaAuras.Text.aideRandomColor
+								PowaEnableGradientButtonText:SetText("Enable Gradient")
+							</OnLoad>
+							<OnClick>
+								PowaAuras:GradientChecked()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<!-- Gradient Orientation DropDown -->
+					<Frame name = "PowaOrientationDropDown" inherits = "UIDropDownMenuTemplate" id = "40">
+						<Anchors>
+							<Anchor point = "TOPLEFT" relativeTo = "PowaEnableGradientButton" relativePoint = "BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x = "-80" y = "-20"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer>
+								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+									<Anchors>
+										<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+											<Offset>
+												<AbsDimension x = "20" y = "4"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
+						<Scripts>
+							<OnLoad>
+								PowaOrientationDropDownLabel:SetText("Gradient Style:")
+							</OnLoad>
+							<OnShow>
+								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+							</OnShow>
+						</Scripts>
+					</Frame>
+					<!-- Gradient Color Picker Button -->
+					<Button name = "PowaGradientColor">
+						<Size>
+							<AbsDimension x = "16" y = "16"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x = "0" y = "-70"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level = "BACKGROUND">
+								<Texture name = "$parent_SwatchBg">
+									<Size>
+										<AbsDimension x = "14" y = "14"/>
+									</Size>
+									<Anchors>
+										<Anchor point = "CENTER">
+											<Offset>
+												<AbsDimension x = "0" y = "0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+									<Color r = "1.0" g = "1.0" b = "1.0"/>
+								</Texture>
+								<FontString name = "$parentText" inherits = "GameFontNormalSmall" justifyH = "LEFT">
+									<Size>
+										<AbsDimension x = "200" y = "24"/>
+									</Size>
+									<Anchors>
+										<Anchor point = "LEFT" relativeTo = "PowaGradientColor" relativePoint = "RIGHT">
+											<Offset>
+												<AbsDimension x = "5" y = "0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(self:GetName().."_SwatchBg").r = 1.0
+								getglobal(self:GetName().."_SwatchBg").g = 1.0
+								getglobal(self:GetName().."_SwatchBg").b = 1.0
+								PowaGradientColorText:SetText("Secondary Color")
+							</OnLoad>
+							<OnClick>
+								PowaAuras:OpenGradientColorPicker(self, PowaAuras.Auras[PowaAuras.CurrentAuraId])
+							</OnClick>
+							<OnEnter>
+								getglobal(self:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
+								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+								--GameTooltip:SetText(PowaAuras.Text.aideColor, nil, nil, nil, nil, 1)
+							</OnEnter>
+							<OnLeave>
+								getglobal(self:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
+								GameTooltip:Hide()
+							</OnLeave>
+						</Scripts>
+						<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\ChatFrameColorSwatch"/>
+					</Button>
 					<!-- Ranom Color CheckButton -->
 					<CheckButton name = "PowaRandomColorButton" inherits = "PowaCheckTemplate">
 						<Size>
