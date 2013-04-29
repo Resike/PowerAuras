@@ -1,3 +1,5 @@
+local string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select = string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select;
+
 -- Exposed for Saving
 PowaMisc =
 {
@@ -1087,7 +1089,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	end
 	if (aura.customtex == true) or (aura.owntex == true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
-		local x = (sqrt(2) - 1) / 2
+		local x = (math.sqrt(2) - 1) / 2
 		if string.find(aura.customname, "//") then
 			if (aura.rotate == 0) or (aura.rotate == 360) then
 				texture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
@@ -1112,7 +1114,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	end
 	if (aura.wowtex == true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
-		local x = (sqrt(2) - 1) / 2
+		local x = (math.sqrt(2) - 1) / 2
 		if (aura.rotate == 0) or (aura.rotate == 360) then
 			texture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
 		elseif (aura.rotate == 90) then
@@ -1125,7 +1127,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	end
 	if (aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
-		local x = (sqrt(2) - 1) / 2
+		local x = (math.sqrt(2) - 1) / 2
 		if (aura.rotate == 0) or (aura.rotate == 360) then
 			texture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
 		elseif (aura.rotate == 90) then
@@ -1151,14 +1153,14 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	if (aura.textaura == true) then
 		frame.baseH = height * aura.size * (2 - aura.torsion);
 	elseif (aura.customtex == true) then
-		local x = (sqrt(2) * 2) - 1
+		local x = (math.sqrt(2) * 2) - 1
 		if string.find(aura.customname, "//") then
 			if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
 				frame.baseH = height * aura.size * (2 - aura.torsion);
 			elseif (aura.rotate == 90) or (aura.rotate == 270) then
 				frame.baseH = x * height * aura.size * (2 - aura.torsion);
 			else
-				frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
+				frame.baseH = math.sqrt(2) * height * aura.size * (2 - aura.torsion);
 			end
 		else
 			if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
@@ -1166,7 +1168,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			elseif (aura.rotate == 90) or (aura.rotate == 270) then
 				frame.baseH = height * aura.size * (2 - aura.torsion);
 			else
-				frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
+				frame.baseH = math.sqrt(2) * height * aura.size * (2 - aura.torsion);
 			end
 		end
 	elseif (aura.owntex == true) then
@@ -1175,19 +1177,19 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		elseif (aura.rotate == 90) or (aura.rotate == 270) then
 			frame.baseH = height * aura.size * (2 - aura.torsion);
 		else
-			frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
+			frame.baseH = math.sqrt(2) * height * aura.size * (2 - aura.torsion);
 		end
 	elseif (aura.wowtex == true) then
-		local x = (sqrt(2) * 2) - 1
+		local x = (math.sqrt(2) * 2) - 1
 		if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
 			frame.baseH = height * aura.size * (2 - aura.torsion);
 		elseif (aura.rotate == 90) or (aura.rotate == 270) then
 			frame.baseH = height * aura.size * (2 - aura.torsion);
 		else
-			frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
+			frame.baseH = math.sqrt(2) * height * aura.size * (2 - aura.torsion);
 		end
 	elseif (aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true) then
-		local x = (sqrt(2) * 2) - 1
+		local x = (math.sqrt(2) * 2) - 1
 		if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
 			frame.baseH = height * aura.size * (2 - aura.torsion);
 			frame.baseL = width * aura.size * aura.torsion;
@@ -1195,8 +1197,8 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			frame.baseH = height * aura.size * (2 - aura.torsion);
 			frame.baseL = width * aura.size * aura.torsion;
 		else
-			frame.baseH = sqrt(2) * height * aura.size * (2 - aura.torsion);
-			frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
+			frame.baseH = math.sqrt(2) * height * aura.size * (2 - aura.torsion);
+			frame.baseL = math.sqrt(2) * width * aura.size * aura.torsion;
 		end
 	end
 	if (aura.textaura == true) then
@@ -1207,7 +1209,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		end
 		frame.baseL = texture:GetStringWidth() + 5;
 	elseif (aura.customtex == true) then
-		local x = (sqrt(2) * 2) - 1
+		local x = (math.sqrt(2) * 2) - 1
 		if string.find(aura.customname, "//") then
 			if (aura.rotate == 0) or (aura.rotate == 360) then
 				frame.baseL = width * aura.size * aura.torsion;
@@ -1216,7 +1218,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			elseif (aura.rotate == 180) then
 				frame.baseL = x * width * aura.size * aura.torsion;
 			else
-				frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
+				frame.baseL = math.sqrt(2) * width * aura.size * aura.torsion;
 			end
 		else
 			if (aura.rotate == 0) or (aura.rotate == 180) or (aura.rotate == 360) then
@@ -1224,7 +1226,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			elseif (aura.rotate == 90) or (aura.rotate == 270) then
 				frame.baseL = width * aura.size * aura.torsion;
 			else
-				frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
+				frame.baseL = math.sqrt(2) * width * aura.size * aura.torsion;
 			end
 		end
 	elseif (aura.owntex == true) then
@@ -1233,10 +1235,10 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		elseif (aura.rotate == 90) or (aura.rotate == 270) then
 			frame.baseL = width * aura.size * aura.torsion;
 		else
-			frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
+			frame.baseL = math.sqrt(2) * width * aura.size * aura.torsion;
 		end
 	elseif (aura.wowtex == true) then
-		local x = (sqrt(2) * 2) - 1
+		local x = (math.sqrt(2) * 2) - 1
 		if (aura.rotate == 0) or (aura.rotate == 360) then
 			frame.baseL = width * aura.size * aura.torsion;
 		elseif (aura.rotate == 90) or (aura.rotate == 270) then
@@ -1244,7 +1246,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		elseif (aura.rotate == 180) then
 			frame.baseL = width * aura.size * aura.torsion;
 		else
-			frame.baseL = sqrt(2) * width * aura.size * aura.torsion;
+			frame.baseL = math.sqrt(2) * width * aura.size * aura.torsion;
 		end
 	end
 	PowaAuras:InitialiseFrame(aura, frame);
@@ -1389,7 +1391,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	end
 	if (aura.customtex == true) or (aura.owntex == true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
-		local x = (sqrt(2) - 1) / 2
+		local x = (math.sqrt(2) - 1) / 2
 		if string.find(aura.customname, "//") then
 			if (aura.rotate == 0) or (aura.rotate == 360) then
 				secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
@@ -1414,7 +1416,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	end
 	if (aura.wowtex == true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
-		local x = (sqrt(2) - 1) / 2
+		local x = (math.sqrt(2) - 1) / 2
 		if (aura.rotate == 0) or (aura.rotate == 360) then
 			secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
 		elseif (aura.rotate == 90) then
@@ -1427,7 +1429,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	end
 	if (aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
-		local x = (sqrt(2) - 1) / 2
+		local x = (math.sqrt(2) - 1) / 2
 		if (aura.rotate == 0) or (aura.rotate == 360) then
 			secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x);
 		elseif (aura.rotate == 90) then

@@ -4,22 +4,26 @@ Addon memory improvements.
 Recoded all images with RLE loseless compression.
 Added "/pa" command to bring up the options too.
 Added 122 new textures from WoW.
-Added 5 new Custom texture.
+Added 5 new Custom textures.
+Added 1 new font.
 Added Frame's strata changer dropdown, to change the aura frame's z index.
 Added Frame level changer slider, to change the current frame's strata's z index. (0 - 20)
 Added Texture strata changer dropdown, to change the aura texture's z index.
 Added Texture sublevel changer slider, to change the current texture strata's z index. (-8 - 7)
+Fixed a bugged font.
 Fixed a major moving bug, when you move the auras with the mouse.
 Fixed a bug which made auras disappear while on the timer/stacks tab.
 With this change you can create up to 12.000 different texture layers per aura.
 Performance upgradements.
 Increased preview icon's size.
+Fixed an export/import bug.
 Aura preview icon's color now will change immediately while changing color at the color picker, also when random color is changed.
 Aura preview icon's color now wont change on toggled off aruas, when the Test all button is being pushed.
 Added texture rotater slider.
 Removed value increaser and decreaser buttons from the sliders.
 Sliders now can be adjusted with mousewheel up/down.
 The default aura size now 100%.
+Default alpha for new auras is now 85%.
 The default aura y coodriante now 0.
 X, Y, XY symmetry changes now wont be shown in effect editor.
 Alpha slider now can be changed to 0% too.

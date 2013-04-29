@@ -1,3 +1,5 @@
+local math, min, max, sqrt = math, min, max, sqrt;
+
 function PowaAuras:CalculateDurations(speed)
 	-- speed ranges from 0.05 to 2
 	-- First duration is then 1.225 to 0.25

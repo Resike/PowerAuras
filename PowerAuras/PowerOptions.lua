@@ -1,3 +1,5 @@
+local string, find, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit = string, find, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit;
+
 -- Main Options
 function PowaAuras:ResetPositions()
 	PowaBarConfigFrame:ClearAllPoints();
@@ -3539,13 +3541,17 @@ function PowaAuras:OptionTest()
 	if (aura.Showing) then
 		self:SetAuraHideRequest(aura);
 		aura.Active = false;
-		owner:SetAlpha(0.33)
+		if (owner ~= nil) then
+			owner:SetAlpha(0.33)
+		end
 	else
 		aura:CreateFrames();
 		self.SecondaryAuras[aura.id] = nil; -- Force recreate
 		self:DisplayAura(aura.id);
 		aura.Active = true;
-		owner:SetAlpha(1)
+		if (owner ~= nil) then
+			owner:SetAlpha(1)
+		end
 	end
 end
 

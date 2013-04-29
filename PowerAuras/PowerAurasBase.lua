@@ -1,3 +1,5 @@
+local string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select = string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select;
+
 PowaAuras =
 {
 Version = GetAddOnMetadata("PowerAuras", "Version");
@@ -644,8 +646,8 @@ WowTextures =
 Fonts =
 {
 	-- Wow Fonts
-	[1] = STANDARD_TEXT_FONT, -- "Fonts\\FRIZQT__.TTF"
-	[2] = "Fonts\\ARIALN.TTF",
+	[1] = STANDARD_TEXT_FONT, -- "Fonts\\FRIZQT__.ttf"
+	[2] = "Fonts\\ARIALN.ttf",
 	[3] = "Fonts\\skurri.ttf",
 	-- External Fonts
 	[4] = "Interface\\Addons\\PowerAuras\\Fonts\\AllStar.ttf",
@@ -655,14 +657,15 @@ Fonts =
 	[8] = "Interface\\Addons\\PowerAuras\\Fonts\\Blazed.ttf",
 	[9] = "Interface\\Addons\\PowerAuras\\Fonts\\Blox.ttf",
 	[10] = "Interface\\Addons\\PowerAuras\\Fonts\\Cloister Black.ttf",
-	[11] = "Interface\\Addons\\PowerAuras\\Fonts\\Hexagon.ttf",
-	[12] = "Interface\\Addons\\PowerAuras\\Fonts\\Moonstar.ttf",
-	[13] = "Interface\\Addons\\PowerAuras\\Fonts\\Morpheus.ttf",
-	[14] = "Interface\\Addons\\PowerAuras\\Fonts\\Neon.ttf",
-	[15] = "Interface\\Addons\\PowerAuras\\Fonts\\Pulse Virgin.ttf",
-	[16] = "Interface\\Addons\\PowerAuras\\Fonts\\Punks Not Dead.ttf",
-	[17] = "Interface\\Addons\\PowerAuras\\Fonts\\Starcraft.ttf",
-	[18] = "Interface\\Addons\\PowerAuras\\Fonts\\Whoa.ttf",
+	[11] = "Interface\\Addons\\PowerAuras\\Fonts\\Diediedie.ttf",
+	[12] = "Interface\\Addons\\PowerAuras\\Fonts\\Hexagon.ttf",
+	[13] = "Interface\\Addons\\PowerAuras\\Fonts\\Moonstar.ttf",
+	[14] = "Interface\\Addons\\PowerAuras\\Fonts\\Morpheus.ttf",
+	[15] = "Interface\\Addons\\PowerAuras\\Fonts\\Neon.ttf",
+	[16] = "Interface\\Addons\\PowerAuras\\Fonts\\Pulse Virgin.ttf",
+	[17] = "Interface\\Addons\\PowerAuras\\Fonts\\Punks Not Dead.ttf",
+	[18] = "Interface\\Addons\\PowerAuras\\Fonts\\Starcraft.ttf",
+	[19] = "Interface\\Addons\\PowerAuras\\Fonts\\Whoa.ttf",
 };
 
 TimerTextures =
@@ -1153,7 +1156,7 @@ function PowaAuras:DisplayTable(t, indent)
 	else
 		indent = indent .. "  ";
 	end
-	for i,v in pairs(t) do
+	for i, v in pairs(t) do
 		if (type(v) ~= "function") then
 			if (type(v) ~= "table") then
 				self:Message(indent..tostring(i).." = "..tostring(v))

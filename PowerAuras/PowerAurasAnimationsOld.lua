@@ -1,3 +1,5 @@
+local math, min, max, pairs, type = math, min, max, pairs, type;
+
 cPowaAnimationBase = PowaClass(function(animation, aura, frame, base)
 	animation.State = 0;
 	animation.Aura = aura;
@@ -9,7 +11,7 @@ cPowaAnimationBase = PowaClass(function(animation, aura, frame, base)
 	animation.Height = animation.TargetHeight;
 	animation.Alpha = animation.TargetAlpha;
 	if (base) then
-		for k, v in pairs (base) do
+		for k, v in pairs(base) do
 			local varType = type(v);
 			if (varType == "string" or varType == "boolean" or varType == "number") then
 				animation[k] = base[k];

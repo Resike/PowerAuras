@@ -1,3 +1,4 @@
+local string, len, find, sub, tonumber, pairs, table, insert, remove, ceil, wipe = string, len, find, sub, tonumber, pairs, table, insert, remove, ceil, wipe;
 --[[
 Author: Daniel Yates <dyates92@gmail.com>
 Adds addon communication functionality into Power Auras. Utilizes the SendAddonMessage API and its own locking system to
@@ -63,19 +64,19 @@ function PowaAuras:CHAT_MSG_ADDON(header, data, channel, from)
 		return;
 	end
 	-- A good data message is always in the following format: <INSTRUCTION;SEGMENT_INDEX;SEGMENT_COUNT;/>
-	local stx = strfind(data, "<", 1, true);
-	local segpos = strfind(data, ";", stx + 1, true);
-	local segtotal = strfind(data, ";", segpos + 1, true);
-	local datasegment = strfind(data, "/>", segtotal + 1, true);
+	local stx = string.find(data, "<", 1, true);
+	local segpos = string.find(data, ";", stx + 1, true);
+	local segtotal = string.find(data, ";", segpos + 1, true);
+	local datasegment = string.find(data, "/>", segtotal + 1, true);
 	-- They all need to be present.
 	if (not stx or not segpos or not segtotal or not datasegment) then
 		return;
 	end
 	-- Replace segpos/segtotal with their actual values. Extract the instruction too.
-	local instruction, segpos, segtotal, datasegment = strsub(data, stx + 1, segpos - 1),
-		tonumber(strsub(data, segpos + 1, segtotal - 1), 10),
-		tonumber(strsub(data, segtotal + 1, datasegment-1), 10),
-		strsub(data, datasegment + 2);
+	local instruction, segpos, segtotal, datasegment = string.sub(data, stx + 1, segpos - 1),
+		tonumber(string.sub(data, segpos + 1, segtotal - 1), 10),
+		tonumber(string.sub(data, segtotal + 1, datasegment - 1), 10),
+		string.sub(data, datasegment + 2);
 	-- Fire handlers.
 	self.Comms:FireHandler(instruction, datasegment, from, segpos, segtotal);
 end
@@ -89,7 +90,7 @@ function PowaComms:SendAddonMessage(instruction, data, to, segment, total)
 		return false;
 	end
 	-- Check length.
-	local length = strlen(data);
+	local length = string.len(data);
 	if (PowaMisc.debug) then
 		PowaAuras:ShowText("Comms: Sending instruction "..instruction.." (data length "..length..")");
 	end
@@ -120,7 +121,7 @@ function PowaComms:AddHandler(instruction, func)
 	if (not self.Handlers[instruction]) then
 		self.Handlers[instruction] = { };
 	end
-	tinsert(self.Handlers[instruction], func);
+	table.insert(self.Handlers[instruction], func);
 end
 --[[
 FireHandler
@@ -134,7 +135,7 @@ function PowaComms:FireHandler(instruction, data, from, segpos, segtotal)
 	if (self.Handlers[instruction]) then
 		for index, func in pairs(self.Handlers[instruction]) do
 			if (func(self, data, from, segpos, segtotal) == true) then
-				tremove(self.Handlers[instruction], index);
+				table.remove(self.Handlers[instruction], index);
 			end
 		end
 	end
@@ -163,7 +164,7 @@ PowaComms:AddHandler("MULTIPART", function(self, data, from, segpos, segtotal)
 	if (not self.ReceiverLock or self.ReceiverLock ~= from) then
 		return;
 	end
-	tinsert(self.ReceiverStore, segpos, data);
+	table.insert(self.ReceiverStore, segpos, data);
 	-- Do we have all of the segments?
 	-- If we never receive them all, our lock will expire in about 10 seconds and all data is purged, with the sender
 	-- being notified.
@@ -233,10 +234,10 @@ PowaComms:AddHandler("ACCEPT_LOCK", function(self, _, from)
 		return;
 	end
 	-- Start transmitting data.
-	local segment, i, total = "", 1, ceil(strlen(self.SenderStore) / 200);
+	local segment, i, total = "", 1, math.ceil(string.len(self.SenderStore) / 200);
 	for i = 1, total do
-		segment = strsub(self.SenderStore, 0, 200);
-		self.SenderStore = strsub(self.SenderStore, 201);
+		segment = string.sub(self.SenderStore, 0, 200);
+		self.SenderStore = string.sub(self.SenderStore, 201);
 		self:SendAddonMessage("MULTIPART", segment, from, i, total);
 	end
 end);

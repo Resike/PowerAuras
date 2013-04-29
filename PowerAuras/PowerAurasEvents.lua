@@ -1,3 +1,5 @@
+local string, len, find, sub, tonumber, select, pairs = string, len, find, sub, tonumber, select, pairs;
+
 function PowaAuras:ADDON_LOADED(addon)
 	if(addon ~= "PowerAuras") then
 		return;
@@ -623,13 +625,13 @@ function PowaAuras:FlagsChanged(unit)
 		if (unit == "target") then
 			self.DoCheck.TargetPvP = true;
 		end
-		for i=1,GetNumSubgroupMembers() do
+		for i = 1,GetNumSubgroupMembers() do
 			if (unit == "party"..i) then
 				self.DoCheck.PartyPvP = true;
 				break;
 			end
 		end
-		for i=1, GetNumGroupMembers() do
+		for i = 1, GetNumGroupMembers() do
 			if (unit == "raid"..i) then
 				self.DoCheck.RaidPvP = true;
 				break;
@@ -640,11 +642,11 @@ function PowaAuras:FlagsChanged(unit)
 end
 
 function PowaAuras.StringStarts(String,Start)
-	return string.sub(String,1,string.len(Start)) == Start
+	return string.sub(String, 1, string.len(Start)) == Start
 end
 
 function PowaAuras.StringEnds(String,End)
-	return End == '' or string.sub(String,-string.len(End)) == End
+	return End == '' or string.sub(String, - string.len(End)) == End
 end
 
 function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
@@ -744,7 +746,7 @@ function PowaAuras:GetStances()
 		self.PowaStance[3] = select(2,GetShapeshiftFormInfo(3));
 		return;
 	end
-	for iForm=1, GetNumShapeshiftForms() do
+	for iForm = 1, GetNumShapeshiftForms() do
 		self.PowaStance[iForm] = select(2,GetShapeshiftFormInfo(iForm));
 	end
 end
