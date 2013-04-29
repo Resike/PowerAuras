@@ -2980,7 +2980,7 @@ function PowaAuras:UpdateOptionsTimer(auraId)
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local timer = self.Auras[auraId].Timer;
 	local frame1 = self.TimerFrame[auraId][1];
-	frame1:SetAlpha(math.min(timer.a,0.99));
+	frame1:SetAlpha(math.min(timer.a, 0.99));
 	frame1:SetWidth(20 * timer.h);
 	frame1:SetHeight(20 * timer.h);
 	if (timer:IsRelative()) then
@@ -3449,7 +3449,7 @@ function PowaAuras:InitializeTextureDropdown(owner, onClick, currentValue, addDe
 	if (addDefaultOption) then
 		UIDropDownMenu_AddButton(info);
 	end
-	for k,v in pairs(PowaAuras.TimerTextures) do
+	for k, v in pairs(PowaAuras.TimerTextures) do
 		info.text = v;
 		info.value = v;
 		UIDropDownMenu_AddButton(info);
@@ -3736,9 +3736,9 @@ end
 
 function PowaAuras.OnMouseWheel(self, delta)
 	if delta > 0 then
-		self:SetValue(self:GetValue() - self:GetValueStep());
-	else
 		self:SetValue(self:GetValue() + self:GetValueStep());
+	else
+		self:SetValue(self:GetValue() - self:GetValueStep());
 	end
 end
 

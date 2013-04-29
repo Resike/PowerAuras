@@ -115,7 +115,7 @@ function PowaAuras:AddJumpAlphaAndReturn(animationGroup, change, duration, order
 end
 
 function PowaAuras:AddJumpScaleAndReturn(animationGroup, scale, duration, order)
-	self:AddScale(animationGroup, scale, scale, 0, 0, order);
+	self:AddScale(animationGroup, scale, scale, 0, order);
 	self:AddScale(animationGroup, 1 / scale, 1 / scale, duration, order + 1);
 end
 

@@ -861,6 +861,8 @@ local function stopFrameMoving(frame)
 	frame:StopMovingOrSizing();
 	frame.aura.x = math.floor(frame:GetLeft() + (frame:GetWidth() - UIParent:GetWidth()) / 2 + 0.5);
 	frame.aura.y = math.floor(frame:GetTop() - (frame:GetHeight() + UIParent:GetHeight()) / 2 + 0.5);
+	frame:ClearAllPoints();
+    frame:SetPoint("CENTER", frame.aura.x, frame.aura.y);
 	if (PowaAuras.CurrentAuraId == frame.aura.id) then
 		PowaAuras:InitPage(frame.aura);
 	end
@@ -1019,9 +1021,9 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	local frame, texture = aura:CreateFrames();
 	frame.aura = aura;
 	if (self.ModTest and not PowaMisc.Locked) then
-		--self:SetForDragging(aura, frame);
+		self:SetForDragging(aura, frame);
 	else
-		--self:ResetDragging(aura, frame);
+		self:ResetDragging(aura, frame);
 	end
 	if (aura.owntex == true) then
 		if (aura.icon == "") then
