@@ -1,11 +1,12 @@
 local string, len, find, sub, tonumber, pairs, table, insert, remove, ceil, wipe = string, len, find, sub, tonumber, pairs, table, insert, remove, ceil, wipe;
+
 --[[
 Author: Daniel Yates <dyates92@gmail.com>
 Adds addon communication functionality into Power Auras. Utilizes the SendAddonMessage API and its own locking system to
 minimize load and prevent clashes when dealing with split messages.
 --]]
 PowaComms = {
-	Handlers = {}, -- Custom functions to be executed when an instruction is processed.
+	Handlers = { }, -- Custom functions to be executed when an instruction is processed.
 	Registered = false,
 
 	ReceiverLock = nil,

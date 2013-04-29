@@ -37,7 +37,7 @@ Added "Enable Full Rotation" checkbutton, which fixes some not fully rotatable t
 The texure cutter algorythm is now more precise for ingame icons, and custom textures.
 Hide all button now properly decreases all icon's alpha immediately.
 Slider inherit changes, removed unused stuff.
-Right clicking on an aura now going to increase it's icons alpha properly.
+Clicking on the Edit button or right clicking on an aura now going to increase it's icons alpha properly.
 Test all button now wont hide the currently opened effect editor.
 Hide all button now also closes the effect editor.
 When you open the aura browser while an aura is currently showing, now it's gonna decrease it's icons alpha properly.

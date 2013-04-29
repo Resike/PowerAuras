@@ -44,7 +44,7 @@ BuffUnitSetCount = 0;
 BuffUnitCount = 0;
 BuffSlotCount = 0;
 AuraTypeCount = {};
-]]
+]]--
 
 VariablesLoaded = false;
 SetupDone = false;
@@ -93,7 +93,7 @@ DefaultOperator = ">=";
 
 CurrentAuraPage = 1;
 
-MoveEffect = 0; -- 1 = copie / 2 = move
+MoveEffect = 0; -- 1 = Copy, 2 = Move
 
 Auras = { };
 SecondaryAuras = { };

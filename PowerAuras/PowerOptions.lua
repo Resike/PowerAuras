@@ -1,4 +1,4 @@
-local string, find, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit = string, find, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit;
+local string, find, sub, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit = string, find, sub, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit;
 
 -- Main Options
 function PowaAuras:ResetPositions()
@@ -109,9 +109,7 @@ function PowaAuras:IconClick(owner, button)
 			self:EditorShow();
 		else
 			if aura.off == false then
-				if (aura.Showing) then
-					owner:SetAlpha(0.33);
-				else
+				if (not aura.Showing) then
 					owner:SetAlpha(1.0);
 				end
 				PowaAuras:OptionTest();
@@ -2937,6 +2935,7 @@ function PowaAuras.FontScrollBar_Update(owner)
 end
 
 function PowaAuras:EditorShow()
+	local owner = _G["PowaIcone"..self.CurrentAuraId];
 	if (PowaBarConfigFrame:IsVisible()) then
 		self:EditorClose();
 		return;
@@ -2948,6 +2947,9 @@ function PowaAuras:EditorShow()
 			aura:CreateFrames();
 			self.SecondaryAuras[aura.id] = nil; -- Force recreate
 			self:DisplayAura(aura.id);
+			if (owner ~= nil) then
+				owner:SetAlpha(1.0)
+			end
 		end
 		self:InitPage(aura);
 		PowaBarConfigFrame:Show();
