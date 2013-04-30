@@ -710,6 +710,40 @@
 							</OnShow>
 						</Scripts>
 					</Frame>
+					<!-- Blend Mode DropDown -->
+					<Frame name = "PowaBlendModeDropDown" inherits = "UIDropDownMenuTemplate" id = "50">
+						<Anchors>
+							<Anchor point = "LEFT" relativeTo = "PowaTextureStrataDropDown" relativePoint = "RIGHT">
+								<Offset>
+									<AbsDimension x = "10" y = "0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer>
+								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+									<Anchors>
+										<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+											<Offset>
+												<AbsDimension x = "20" y = "4"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
+						<Scripts>
+							<OnLoad>
+								PowaBlendModeDropDownLabel:SetText("Blend Mode:")
+							</OnLoad>
+							<OnShow>
+								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+							</OnShow>
+						</Scripts>
+					</Frame>
 					<!-- Texture Sublevel Slider -->
 					<Slider name = "PowaTextureStrataSublevelSlider" inherits = "PowaBarSliderTemplate">
 						<Size>

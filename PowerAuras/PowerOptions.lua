@@ -1515,11 +1515,13 @@ function PowaAuras:InitPage(aura)
 	self:UpdateTimerOptions();
 	UIDropDownMenu_SetSelectedName(PowaStrataDropDown, aura.strata);
 	UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, aura.texturestrata);
+	UIDropDownMenu_SetSelectedName(PowaBlendModeDropDown, aura.blendmode);
 	UIDropDownMenu_SetSelectedName(PowaOrientationDropDown, aura.orientation);
 	PowaFrameStrataLevelSlider:SetValue(aura.stratalevel);
 	PowaTextureStrataSublevelSlider:SetValue(aura.texturesublevel);
 	PowaStrataDropDownText:SetText(aura.strata)
 	PowaTextureStrataDropDownText:SetText(aura.texturestrata)
+	PowaBlendModeDropDownText:SetText(aura.blendmode)
 	PowaOrientationDropDownText:SetText(aura.orientation)
 	PowaDropDownAnim1Text:SetText(self.Anim[aura.anim1]);
 	PowaDropDownAnim2Text:SetText(self.Anim[aura.anim2]);
@@ -2388,6 +2390,25 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				PowaSet[AuraID]["texturestrata"] = texturestrata
 				PowaTextureStrataDropDownText:SetText(texturestrata);
 				UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, texturestrata);
+				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
+			end;
+			UIDropDownMenu_AddButton(info, level);
+		end
+	elseif (owner:GetName() == "PowaBlendModeDropDown") then
+		UIDropDownMenu_SetWidth(owner, 140)
+		for i = 1, #PowaAuras.BlendModeList do
+			local info = UIDropDownMenu_CreateInfo();
+			info.hasArrow = false;
+			info.text = PowaAuras.BlendModeList[i];
+			info.func = function(self)
+				local blendmode = PowaAuras.BlendModeList[i];
+				local AuraID = PowaAuras.CurrentAuraId;
+				if PowaAuras.CurrentAuraId > 120 then
+					PowaGlobalSet[AuraID]["blendmode"] = blendmode;
+				end
+				PowaSet[AuraID]["blendmode"] = blendmode
+				PowaBlendModeDropDownText:SetText(blendmode);
+				UIDropDownMenu_SetSelectedName(PowaBlendModeDropDown, blendmode);
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
 			end;
 			UIDropDownMenu_AddButton(info, level);

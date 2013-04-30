@@ -1081,7 +1081,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
 	else
 		if (aura.textaura ~= true) then
-			texture:SetBlendMode("DISABLE");
+			texture:SetBlendMode(aura.blendmode);
 		else
 			texture:SetShadowColor(0.0, 0.0, 0.0, 0.0);
 			texture:SetShadowOffset(0, 0);
@@ -1391,7 +1391,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 			if (secondaryAura.anim1 == PowaAuras.AnimationTypes.Growing) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.Shrinking) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.WaterDrop) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.Electric) then
 				secondaryTexture:SetBlendMode("BLEND");
 			else
-				secondaryTexture:SetBlendMode("DISABLE");
+				secondaryTexture:SetBlendMode(aura.blendmode);
 			end
 		end
 		secondaryFrame:SetFrameStrata("BACKGROUND");

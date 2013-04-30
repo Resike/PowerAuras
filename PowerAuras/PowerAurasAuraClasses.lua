@@ -74,6 +74,7 @@ cPowaAura.ExportSettings =
 	stratalevel = 0,
 	texturestrata = "Background",
 	texturesublevel = 0,
+	blendmode = "Disable",
 	timerduration = 0,
 	-- Sound Settings
 	sound = 0,

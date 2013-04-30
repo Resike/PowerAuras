@@ -204,7 +204,7 @@ end
 function cPowaAnimationBeginBounce:Update(elapsed)
 	--PowaAuras:UnitTestInfo("BeginBounce Update ", elapsed);
 	self.Alpha = math.max(self.TargetAlpha + elapsed * 2 * self.Aura.speed * self.TargetAlpha , self.TargetAlpha);
-	self.Velocity = math.max(math.min(self.Velocity + self.Acceleration * self.Aura.speed * elapsed, 1000), -1000);
+	self.Velocity = math.max(math.min(self.Velocity + self.Acceleration * self.Aura.speed * elapsed, 1000), - 1000);
 	self.Y = self.Y - elapsed * (self.Velocity + self.Acceleration * self.Aura.speed * elapsed / 2);
 	local result = false;
 	if (self.Y <= self.TargetY and self.Velocity > 0) then
@@ -316,7 +316,7 @@ function cPowaAnimationPulse:Update(elapsed)
 	--PowaAuras:UnitTestInfo("cPowaAnimationPulse Update ", elapsed);
 	local step = self.Direction * elapsed * 50 * self.Aura.speed * self.Aura.size;
 	self.Width = self.Width + step * self.Aura.torsion;
-	self.Height = self.Height + step * (2-self.Aura.torsion);
+	self.Height = self.Height + step * (2 - self.Aura.torsion);
 	if (self.Width >= self.MaxWidth) then
 		self.Width = self.MaxWidth;
 		self.Height = self.MaxHeight;
@@ -344,7 +344,7 @@ function cPowaAnimationBubble:Update(elapsed)
 	--PowaAuras:UnitTestInfo("cPowaAnimationBubble Update ", elapsed);
 	local step = self.Direction * elapsed * 50 * self.Aura.speed * self.Aura.size;
 	self.Width = self.Width + step * self.Aura.torsion;
-	self.Height = self.Height - step * (2-self.Aura.torsion);
+	self.Height = self.Height - step * (2 - self.Aura.torsion);
 	if (self.Width >= self.MaxWidth) then
 		self.Width = self.MaxWidth;
 		self.Height = self.MinHeight;
