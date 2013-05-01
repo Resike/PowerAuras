@@ -153,6 +153,15 @@ RelativeToParent =
 	CENTER = "CENTER",
 };
 
+BlendModeList =
+{
+	"Add",
+	"Alphakey",
+	"Blend",
+	"Disable",
+	"Mod",
+};
+
 StrataList =
 {
 	"Background",
@@ -171,15 +180,6 @@ TextureStrataList =
 	"Border",
 	"Artwork",
 	"Overlay",
-};
-
-BlendModeList =
-{
-	"Add",
-	"Alphakey",
-	"Blend",
-	"Disable",
-	"Mod",
 };
 
 GradientStyleList =

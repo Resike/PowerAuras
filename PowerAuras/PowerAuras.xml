@@ -388,7 +388,7 @@
 						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
-								PowaGradientStyleDropDownLabel:SetText("Gradient Style:")
+								PowaGradientStyleDropDownLabel:SetText(PowaAuras.Text.nomGradientStyle..":")
 							</OnLoad>
 							<OnShow>
 								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -441,7 +441,7 @@
 								getglobal(self:GetName().."_SwatchBg").r = 1.0
 								getglobal(self:GetName().."_SwatchBg").g = 1.0
 								getglobal(self:GetName().."_SwatchBg").b = 1.0
-								PowaGradientColorText:SetText("Secondary Color")
+								PowaGradientColorText:SetText(PowaAuras.Text.nomSecondaryColorPicker)
 							</OnLoad>
 							<OnClick>
 								PowaAuras:OpenGradientColorPicker(self, PowaAuras.Auras[PowaAuras.CurrentAuraId])
@@ -449,7 +449,7 @@
 							<OnEnter>
 								getglobal(self:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-								--GameTooltip:SetText(PowaAuras.Text.aideColor, nil, nil, nil, nil, 1)
+								--GameTooltip:SetText(PowaAuras.Text.aideSecondaryColor, nil, nil, nil, nil, 1)
 							</OnEnter>
 							<OnLeave>
 								getglobal(self:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
@@ -595,7 +595,7 @@
 						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
-								PowaStrataDropDownLabel:SetText("Frame's Strata:")
+								PowaStrataDropDownLabel:SetText(PowaAuras.Text.nomFrameStrata..":")
 							</OnLoad>
 							<OnShow>
 								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -659,7 +659,7 @@
 						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
-								PowaTextureStrataDropDownLabel:SetText("Textures's Strata:")
+								PowaTextureStrataDropDownLabel:SetText(PowaAuras.Text.nomTextureStrata..":")
 							</OnLoad>
 							<OnShow>
 								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -723,7 +723,7 @@
 						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
-								PowaBlendModeDropDownLabel:SetText("Blend Mode:")
+								PowaBlendModeDropDownLabel:SetText(PowaAuras.Text.nomBlendMode..":")
 							</OnLoad>
 							<OnShow>
 								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)

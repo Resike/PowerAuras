@@ -2157,8 +2157,10 @@ function PowaAuras:WowTexturesChecked()
 		aura.owntex = false;
 		aura.customtex = false;
 		aura.textaura = false;
+		if (PowaBarAuraTextureSlider:GetValue() > #self.WowTextures) then
+			PowaBarAuraTextureSlider:SetValue(1);
+		end
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, #self.WowTextures);
-		PowaBarAuraTextureSlider:SetValue(1);
 		PowaBarAuraTextureSliderHigh:SetText(#self.WowTextures);
 		PowaOwntexButton:SetChecked(false);
 		PowaCustomTextureButton:SetChecked(false);
@@ -2169,8 +2171,10 @@ function PowaAuras:WowTexturesChecked()
 		PowaFontButton:Hide();
 	else
 		aura.wowtex = false;
-		PowaBarAuraTextureSlider:SetMinMaxValues(1,self.MaxTextures);
-		PowaBarAuraTextureSlider:SetValue(1);
+		if (PowaBarAuraTextureSlider:GetValue() > self.MaxTextures) then
+			PowaBarAuraTextureSlider:SetValue(1);
+		end
+		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures);
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures);
 	end
 	PowaAuras:BarAuraTextureSliderChanged();
