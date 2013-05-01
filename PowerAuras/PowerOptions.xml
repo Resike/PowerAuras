@@ -939,6 +939,7 @@
 							<OnClick>
 								PowaAuras:ToggleLock()
 								PowaAuras:UpdateMainOption()
+								PowaAuras:InitPage()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>

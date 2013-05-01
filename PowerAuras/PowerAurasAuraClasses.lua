@@ -217,7 +217,7 @@ function cPowaAura:DisplayType()
 	return self.OptionText.typeText;
 end
 
-cPowaAura.TooltipOptions = {r=1.0, g=1.0, b=1.0};
+cPowaAura.TooltipOptions = {r = 1.0, g = 1.0, b = 1.0};
 function cPowaAura:AddExtraTooltipInfo(tooltip)
 	tooltip:SetText("|cffFFFFFF["..(self.id or "?").."] |r"..(self:DisplayType() or "?"), self.TooltipOptions.r, self.TooltipOptions.g, self.TooltipOptions.b, 1);
 	if (self.TooltipOptions.showBuffName and self.buffname ~= "???") then
@@ -335,7 +335,7 @@ function cPowaAura:UpdateText(texture)
 		PowaAuras:Message("CurrentText=", self.CurrentText);
 		PowaAuras:Message("newText    =", newText);
 	end
-	if (newText~=self.CurrentText or texture == nil) then
+	if (newText ~= self.CurrentText or texture == nil) then
 		if (texture == nil) then
 			texture = self:GetTexture();
 		end

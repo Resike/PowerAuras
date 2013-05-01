@@ -1787,7 +1787,11 @@ function PowaAuras:BarAuraTextureSliderChanged()
 	if (self.Auras[auraId].textaura == true) or AuraTexture:GetTexture() == "Interface\\CharacterFrame\\TempPortrait" then
 		AuraTexture:SetVertexColor(1, 1, 1);
 	else
-		AuraTexture:SetVertexColor(self.Auras[auraId].r, self.Auras[auraId].g, self.Auras[auraId].b);
+		if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+			AuraTexture:SetGradientAlpha(aura.gradientstyle, self.Auras[auraId].r, self.Auras[auraId].g, self.Auras[auraId].b, 1.0, self.Auras[auraId].gr, self.Auras[auraId].gg, self.Auras[auraId].gb, 1.0)
+		else
+			AuraTexture:SetVertexColor(self.Auras[auraId].r, self.Auras[auraId].g, self.Auras[auraId].b);
+		end
 	end
 	self.Auras[auraId].texture = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
