@@ -2112,12 +2112,14 @@ function PowaAuras:CheckedButtonOnClick(button, key)
 end
 
 function PowaAuras:RandomColorChecked()
+	local aura = self.Auras[self.CurrentAuraId];
 	local auraId = self.CurrentAuraId;
 	if (PowaRandomColorButton:GetChecked()) then
 		self.Auras[auraId].randomcolor = true;
 	else
 		self.Auras[auraId].randomcolor = false;
 	end
+	self:RedisplayAura(aura.id);
 end
 
 function PowaAuras:ThresholdInvertChecked(owner)
