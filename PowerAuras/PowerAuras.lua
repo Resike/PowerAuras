@@ -1042,54 +1042,65 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	else
 		texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga");
 	end
+	local r1, r2, r3, r4, r5, r6
 	if (aura.randomcolor) then
-		texture:SetVertexColor(random(20, 100) / 100, random(20, 100) / 100, random(20, 100) / 100);
+		if (aura.textaura ~= true) then
+			r1 = random(20, 100) / 100;
+			r2 = random(20, 100) / 100;
+			r3 = random(20, 100) / 100;
+			r4 = random(20, 100) / 100;
+			r5 = random(20, 100) / 100;
+			r6 = random(20, 100) / 100;
+			if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+				texture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
+			else
+				texture:SetVertexColor(r1, r2, r3);
+			end
+		else
+			texture:SetVertexColor(r1, r2, r3);
+		end
 		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
 			if (aura.off ~= true) then
-				AuraTexture:SetVertexColor(random(20, 100) / 100, random(20, 100) / 100, random(20, 100) / 100);
+				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+					AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
+				else
+					AuraTexture:SetVertexColor(r1, r2, r3);
+				end
 			end
 		else
 			AuraTexture:SetVertexColor(1, 1, 1);
 		end
 	else
-		if (aura.gradient ~= true) then
-			texture:SetVertexColor(aura.r, aura.g, aura.b);
+		if (aura.textaura ~= true) then
+			if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+				texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			else
+				texture:SetVertexColor(aura.r, aura.g, aura.b);
+			end
 		else
-			texture:SetGradientAlpha(aura.orientation, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			texture:SetVertexColor(aura.r, aura.g, aura.b);
 		end
 		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
 			if (aura.off ~= true) then
-				if (aura.gradient ~= true) then
-					AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
+				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+					AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 				else
-					AuraTexture:SetGradientAlpha(aura.orientation, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+					AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
 				end
 			end
 		else
 			AuraTexture:SetVertexColor(1, 1, 1);
 		end
 	end
-	if (aura.texmode == 1) then
-		if (aura.textaura ~= true) then
-			texture:SetBlendMode("ADD");
-		else
-			texture:SetShadowColor(0.0, 0.0, 0.0, 0.8);
-			texture:SetShadowOffset(2, - 2);
-		end
-		frame:SetFrameStrata(aura.strata);
-		frame:SetFrameLevel(aura.stratalevel);
-		texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
+	if (aura.textaura ~= true) then
+		texture:SetBlendMode(aura.blendmode);
 	else
-		if (aura.textaura ~= true) then
-			texture:SetBlendMode(aura.blendmode);
-		else
-			texture:SetShadowColor(0.0, 0.0, 0.0, 0.0);
-			texture:SetShadowOffset(0, 0);
-		end
-		frame:SetFrameStrata(aura.strata);
-		frame:SetFrameLevel(aura.stratalevel);
-		texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
+		texture:SetShadowColor(0.0, 0.0, 0.0, 0.0);
+		texture:SetShadowOffset(0, 0);
 	end
+	frame:SetFrameStrata(aura.strata);
+	frame:SetFrameLevel(aura.stratalevel);
+	texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
 	local height = 256
 	local width = 256
 	if (aura.textaura ~= true) then
@@ -1318,7 +1329,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	frame:Show(); -- Show Aura Frame
 	aura.Showing = true;
 	aura.HideRequest = false;
-	self:ShowSecondaryAuraForFirstTime(aura);
+	self:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6);
 end
 
 function PowaAuras:InitialiseFrame(aura, frame)
@@ -1328,7 +1339,7 @@ function PowaAuras:InitialiseFrame(aura, frame)
 	frame:SetHeight(frame.baseH);
 end
 
-function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
+function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	--self:UnitTestInfo("ShowSecondaryAuraForFirstTime", aura.id);
 	if (aura.anim2 == 0) then -- No secondary aura
 		local secondaryAura = self.SecondaryAuras[aura.id];
@@ -1368,36 +1379,27 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	end
 	if (aura.randomcolor) then
 		if texture:GetObjectType() == "Texture" then
-			secondaryTexture:SetVertexColor(texture:GetVertexColor());
+			secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
 		elseif texture:GetObjectType() == "FontString" then
 			secondaryTexture:SetVertexColor(texture:GetTextColor());
 		end
 	else
-		if (aura.gradient ~= true) then
-			secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b);
+		if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+			secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 		else
-			secondaryTexture:SetGradientAlpha(aura.orientation, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b);
 		end
 	end
-	if (aura.texmode == 1) then
-		if (aura.textaura ~= true) then
+	if (aura.textaura ~= true) then
+		if (secondaryAura.anim1 == PowaAuras.AnimationTypes.Growing) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.Shrinking) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.WaterDrop) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.Electric) then
+			secondaryTexture:SetBlendMode("BLEND");
+		else
 			secondaryTexture:SetBlendMode("ADD");
 		end
-		secondaryFrame:SetFrameStrata(aura.strata);
-		secondaryFrame:SetFrameLevel(aura.stratalevel);
-		secondaryTexture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
-	else
-		if (aura.textaura ~= true) then
-			if (secondaryAura.anim1 == PowaAuras.AnimationTypes.Growing) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.Shrinking) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.WaterDrop) or (secondaryAura.anim1 == PowaAuras.AnimationTypes.Electric) then
-				secondaryTexture:SetBlendMode("BLEND");
-			else
-				secondaryTexture:SetBlendMode(aura.blendmode);
-			end
-		end
-		secondaryFrame:SetFrameStrata("BACKGROUND");
-		secondaryFrame:SetFrameLevel(aura.stratalevel);
-		secondaryTexture:SetDrawLayer("BACKGROUND", aura.texturesublevel);
 	end
+	secondaryFrame:SetFrameStrata("BACKGROUND");
+	secondaryFrame:SetFrameLevel(aura.stratalevel);
+	secondaryTexture:SetDrawLayer("BACKGROUND", aura.texturesublevel);
 	if (aura.textaura ~= true) then
 		secondaryTexture:SetRotation(math.rad(aura.rotate));
 	end

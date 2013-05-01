@@ -182,8 +182,9 @@ BlendModeList =
 	"Mod",
 };
 
-OrientationList =
+GradientStyleList =
 {
+	"None",
 	"Horizontal",
 	"Vertical",
 };

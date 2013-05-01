@@ -166,7 +166,7 @@
 	<!-- Aura Configuration Frame -->
 	<Frame name = "PowaBarConfigFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
-			<AbsDimension x = "488" y = "815"/>
+			<AbsDimension x = "488" y = "850"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "CENTER" relativeTo = "UIParent">
@@ -254,7 +254,7 @@
 			<!-- Top Panel -->
 			<Frame name = "PowaBarConfigFrameEditor">
 				<Size>
-					<AbsDimension x = "450" y = "392"/>
+					<AbsDimension x = "450" y = "427"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOP">
@@ -361,34 +361,12 @@
 						</Scripts>
 						<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\ChatFrameColorSwatch"/>
 					</Button>
-					<!-- Enable Gradient -->
-					<CheckButton name = "PowaEnableGradientButton" inherits = "PowaCheckTemplate">
-						<Size>
-							<AbsDimension x = "25" y = "25"/>
-						</Size>
+					<!-- Gradient Style DropDown -->
+					<Frame name = "PowaGradientStyleDropDown" inherits = "UIDropDownMenuTemplate" id = "40">
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "-140" y = "0"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								--self.tooltipText = PowaAuras.Text.aideRandomColor
-								PowaEnableGradientButtonText:SetText("Enable Gradient")
-							</OnLoad>
-							<OnClick>
-								PowaAuras:GradientChecked()
-							</OnClick>
-						</Scripts>
-					</CheckButton>
-					<!-- Gradient Orientation DropDown -->
-					<Frame name = "PowaOrientationDropDown" inherits = "UIDropDownMenuTemplate" id = "40">
-						<Anchors>
-							<Anchor point = "TOPLEFT" relativeTo = "PowaEnableGradientButton" relativePoint = "BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x = "-80" y = "-20"/>
+									<AbsDimension x = "-19" y = "-20"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -410,7 +388,7 @@
 						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
-								PowaOrientationDropDownLabel:SetText("Gradient Style:")
+								PowaGradientStyleDropDownLabel:SetText("Gradient Style:")
 							</OnLoad>
 							<OnShow>
 								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -423,9 +401,9 @@
 							<AbsDimension x = "16" y = "16"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
+							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaGradientStyleDropDown" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-70"/>
+									<AbsDimension x = "19" y = "-14"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -486,7 +464,7 @@
 							<AbsDimension x = "25" y = "25"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "TOPLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
+							<Anchor point = "TOPLEFT" relativeTo = "PowaGradientColor" relativePoint = "BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x = "-4" y = "-2"/>
 								</Offset>
@@ -524,8 +502,8 @@
 							</OnClick>
 						</Scripts>
 					</CheckButton>
-					<!-- Glow CheckButton -->
-					<CheckButton name = "PowaTexModeButton" inherits = "PowaCheckTemplate">
+					<!-- WoW Textures CheckButton -->
+					<CheckButton name = "PowaWowTextureButton" inherits = "PowaCheckTemplate">
 						<Size>
 							<AbsDimension x = "25" y = "25"/>
 						</Size>
@@ -533,28 +511,6 @@
 							<Anchor point = "TOPLEFT" relativeTo = "AuraTexture" relativePoint = "TOPRIGHT">
 								<Offset>
 									<AbsDimension x = "6" y = "0"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideTexMode
-								PowaTexModeButtonText:SetText(PowaAuras.Text.nomTexMode)
-							</OnLoad>
-							<OnClick>
-								PowaAuras:TexModeChecked()
-							</OnClick>
-						</Scripts>
-					</CheckButton>
-					<!-- WoW Textures CheckButton -->
-					<CheckButton name = "PowaWowTextureButton" inherits = "PowaCheckTemplate">
-						<Size>
-							<AbsDimension x = "25" y = "25"/>
-						</Size>
-						<Anchors>
-							<Anchor point = "TOPLEFT" relativeTo = "PowaTexModeButton" relativePoint = "BOTTOMLEFT">
-								<Offset>
-									<AbsDimension x = "0" y = "4"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -615,9 +571,9 @@
 					<!-- Frame's Strata DropDown -->
 					<Frame name = "PowaStrataDropDown" inherits = "UIDropDownMenuTemplate" id = "40">
 						<Anchors>
-							<Anchor point = "LEFT" relativeTo = "PowaTexModeButton" relativePoint = "RIGHT">
+							<Anchor point = "TOPLEFT" relativeTo = "PowaTextAuraButton" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "94" y = "-22"/>
+									<AbsDimension x = "-15" y = "-15"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -652,9 +608,9 @@
 							<AbsDimension x = "140" y = "16"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "TOPLEFT" relativeTo = "PowaTextAuraButton" relativePoint = "BOTTOMLEFT">
+							<Anchor point = "TOPLEFT" relativeTo = "PowaStrataDropDown" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-15"/>
+									<AbsDimension x = "20" y = "-12"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -679,9 +635,9 @@
 					<!-- Texture's Strata DropDown -->
 					<Frame name = "PowaTextureStrataDropDown" inherits = "UIDropDownMenuTemplate" id = "50">
 						<Anchors>
-							<Anchor point = "TOPLEFT" relativeTo = "PowaStrataDropDown" relativePoint = "BOTTOMLEFT">
+							<Anchor point = "LEFT" relativeTo = "PowaStrataDropDown" relativePoint = "RIGHT">
 								<Offset>
-									<AbsDimension x = "0" y = "-11"/>
+									<AbsDimension x = "-23" y = "0"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -704,40 +660,6 @@
 						<Scripts>
 							<OnLoad>
 								PowaTextureStrataDropDownLabel:SetText("Textures's Strata:")
-							</OnLoad>
-							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
-							</OnShow>
-						</Scripts>
-					</Frame>
-					<!-- Blend Mode DropDown -->
-					<Frame name = "PowaBlendModeDropDown" inherits = "UIDropDownMenuTemplate" id = "50">
-						<Anchors>
-							<Anchor point = "LEFT" relativeTo = "PowaTextureStrataDropDown" relativePoint = "RIGHT">
-								<Offset>
-									<AbsDimension x = "10" y = "0"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Layers>
-							<Layer>
-								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
-									<Anchors>
-										<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
-											<Offset>
-												<AbsDimension x = "20" y = "4"/>
-											</Offset>
-										</Anchor>
-									</Anchors>
-								</FontString>
-							</Layer>
-						</Layers>
-						<HitRectInsets>
-							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-						</HitRectInsets>
-						<Scripts>
-							<OnLoad>
-								PowaBlendModeDropDownLabel:SetText("Blend Mode:")
 							</OnLoad>
 							<OnShow>
 								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -774,6 +696,40 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
+					<!-- Blend Mode DropDown -->
+					<Frame name = "PowaBlendModeDropDown" inherits = "UIDropDownMenuTemplate" id = "60">
+						<Anchors>
+							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaTextureStrataDropDown" relativePoint = "TOPLEFT">
+								<Offset>
+									<AbsDimension x = "0" y = "13"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer>
+								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+									<Anchors>
+										<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+											<Offset>
+												<AbsDimension x = "20" y = "4"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
+						<Scripts>
+							<OnLoad>
+								PowaBlendModeDropDownLabel:SetText("Blend Mode:")
+							</OnLoad>
+							<OnShow>
+								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+							</OnShow>
+						</Scripts>
+					</Frame>
 					<!-- Texture Slider -->
 					<Slider name = "PowaBarAuraTextureSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
@@ -782,7 +738,7 @@
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaFrameStrataLevelSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-20"/>
+									<AbsDimension x = "0" y = "-22"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -913,7 +869,7 @@
 						<Anchors>
 							<Anchor point = "TOPRIGHT" relativeTo = "PowaBarAuraTextureSlider" relativePoint = "BOTTOMRIGHT">
 								<Offset>
-									<AbsDimension x = "0" y = "-20"/>
+									<AbsDimension x = "0" y = "-22"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -943,7 +899,7 @@
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraAlphaSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-20"/>
+									<AbsDimension x = "0" y = "-22"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -1003,7 +959,7 @@
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraSymSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "-140" y = "-20"/>
+									<AbsDimension x = "-140" y = "-22"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -1033,7 +989,7 @@
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraRotateSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-20"/>
+									<AbsDimension x = "0" y = "-22"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -1063,7 +1019,7 @@
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraSizeSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-20"/>
+									<AbsDimension x = "0" y = "-22"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -1132,7 +1088,7 @@
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraCoordXSlider" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "0" y = "-20"/>
+									<AbsDimension x = "0" y = "-22"/>
 								</Offset>
 							</Anchor>
 						</Anchors>

@@ -1516,13 +1516,13 @@ function PowaAuras:InitPage(aura)
 	UIDropDownMenu_SetSelectedName(PowaStrataDropDown, aura.strata);
 	UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, aura.texturestrata);
 	UIDropDownMenu_SetSelectedName(PowaBlendModeDropDown, aura.blendmode);
-	UIDropDownMenu_SetSelectedName(PowaOrientationDropDown, aura.orientation);
+	UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, aura.gradientstyle);
 	PowaFrameStrataLevelSlider:SetValue(aura.stratalevel);
 	PowaTextureStrataSublevelSlider:SetValue(aura.texturesublevel);
 	PowaStrataDropDownText:SetText(aura.strata)
 	PowaTextureStrataDropDownText:SetText(aura.texturestrata)
 	PowaBlendModeDropDownText:SetText(aura.blendmode)
-	PowaOrientationDropDownText:SetText(aura.orientation)
+	PowaGradientStyleDropDownText:SetText(aura.gradientstyle)
 	PowaDropDownAnim1Text:SetText(self.Anim[aura.anim1]);
 	PowaDropDownAnim2Text:SetText(self.Anim[aura.anim2]);
 	PowaDropDownAnimBeginText:SetText(self.BeginAnimDisplay[aura.begin]);
@@ -1567,9 +1567,7 @@ function PowaAuras:InitPage(aura)
 	PowaMineButton:SetChecked(aura.mine);
 	PowaThresholdInvertButton:SetChecked(aura.thresholdinvert);
 	PowaExtraButton:SetChecked(aura.Extra);
-	PowaTexModeButton:SetChecked(aura.texmode == 1);
 	PowaEnableFullRotationButton:SetChecked(aura.enablefullrotation);
-	PowaEnableGradientButton:SetChecked(aura.gradient);
 	-- Ternary Logic
 	self:TernarySetState(PowaInCombatButton, aura.combat);
 	self:TernarySetState(PowaIsInRaidButton, aura.inRaid);
@@ -1722,10 +1720,10 @@ function PowaAuras:InitPage(aura)
 	if (checkTexture ~= 1) then
 		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga");
 	end
-	if (aura.gradient ~= true) then
-		AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
+	if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+		AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 	else
-		AuraTexture:SetGradientAlpha(aura.orientation, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+		AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
 	end
 	PowaColorNormalTexture:SetVertexColor(aura.r, aura.g, aura.b);
 	PowaGradientColorNormalTexture:SetVertexColor(aura.gr, aura.gg, aura.gb);
@@ -2122,16 +2120,6 @@ function PowaAuras:RandomColorChecked()
 	end
 end
 
-function PowaAuras:TexModeChecked()
-	local auraId = self.CurrentAuraId;
-	if (PowaTexModeButton:GetChecked()) then
-		self.Auras[auraId].texmode = 1;
-	else
-		self.Auras[auraId].texmode = 2;
-	end
-	self:RedisplayAura(self.CurrentAuraId);
-end
-
 function PowaAuras:ThresholdInvertChecked(owner)
 	local aura = self.Auras[self.CurrentAuraId];
 	if (PowaThresholdInvertButton:GetChecked()) then
@@ -2238,16 +2226,7 @@ function PowaAuras:TextAuraChecked()
 		PowaFontButton:Hide();
 	end
 	self:BarAuraTextureSliderChanged();
-	self:RedisplayAura(self.CurrentAuraId);
-end
-
-function PowaAuras:GradientChecked()
-	local auraId = self.CurrentAuraId;
-	if (PowaEnableGradientButton:GetChecked()) then
-		self.Auras[auraId].gradient = true;
-	else
-		self.Auras[auraId].gradient = false;
-	end
+	PowaAuras:OptionTest();
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
@@ -2357,7 +2336,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		aura = PowaAuras:AuraFactory(PowaAuras.BuffTypes.Buff, 0);
 	end
 	if (owner:GetName() == "PowaStrataDropDown") then
-		UIDropDownMenu_SetWidth(owner, 140)
+		UIDropDownMenu_SetWidth(owner, 123)
 		for i = 1, #PowaAuras.StrataList do
 			local info = UIDropDownMenu_CreateInfo();
 			info.hasArrow = false;
@@ -2376,7 +2355,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info, level);
 		end
 	elseif (owner:GetName() == "PowaTextureStrataDropDown") then
-		UIDropDownMenu_SetWidth(owner, 140)
+		UIDropDownMenu_SetWidth(owner, 123)
 		for i = 1, #PowaAuras.TextureStrataList do
 			local info = UIDropDownMenu_CreateInfo();
 			info.hasArrow = false;
@@ -2395,7 +2374,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info, level);
 		end
 	elseif (owner:GetName() == "PowaBlendModeDropDown") then
-		UIDropDownMenu_SetWidth(owner, 140)
+		UIDropDownMenu_SetWidth(owner, 123)
 		for i = 1, #PowaAuras.BlendModeList do
 			local info = UIDropDownMenu_CreateInfo();
 			info.hasArrow = false;
@@ -2413,21 +2392,21 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			end;
 			UIDropDownMenu_AddButton(info, level);
 		end
-	elseif (owner:GetName() == "PowaOrientationDropDown") then
-		UIDropDownMenu_SetWidth(owner, 140)
-		for i = 1, #PowaAuras.OrientationList do
+	elseif (owner:GetName() == "PowaGradientStyleDropDown") then
+		UIDropDownMenu_SetWidth(owner, 120)
+		for i = 1, #PowaAuras.GradientStyleList do
 			local info = UIDropDownMenu_CreateInfo();
 			info.hasArrow = false;
-			info.text = PowaAuras.OrientationList[i];
+			info.text = PowaAuras.GradientStyleList[i];
 			info.func = function(self)
-				local orientation = PowaAuras.OrientationList[i];
+				local gradientstyle = PowaAuras.GradientStyleList[i];
 				local AuraID = PowaAuras.CurrentAuraId;
 				if PowaAuras.CurrentAuraId > 120 then
-					PowaGlobalSet[AuraID]["orientation"] = orientation;
+					PowaGlobalSet[AuraID]["gradientstyle"] = gradientstyle;
 				end
-				PowaSet[AuraID]["orientation"] = orientation
-				PowaOrientationDropDownText:SetText(orientation);
-				UIDropDownMenu_SetSelectedName(PowaOrientationDropDown, orientation);
+				PowaSet[AuraID]["gradientstyle"] = gradientstyle
+				PowaGradientStyleDropDownText:SetText(gradientstyle);
+				UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, gradientstyle);
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
 			end;
 			UIDropDownMenu_AddButton(info, level);

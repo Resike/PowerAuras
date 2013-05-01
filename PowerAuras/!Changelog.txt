@@ -13,6 +13,8 @@ Added Texture sublevel changer slider, to change the current texture strata's z 
 Fixed a bugged font.
 Fixed a major moving bug, when you move the auras with the mouse.
 Fixed a bug which made auras disappear while on the timer/stacks tab.
+Removed Glow check button.
+Added blend mode dropdown.
 Added option for gradient colors.
 With this change you can create up to 12.000 different texture layers per aura.
 Performance upgradements.
@@ -40,7 +42,7 @@ Hide all button now properly decreases all icon's alpha immediately.
 Slider inherit changes, removed unused stuff.
 Clicking on the Edit button or right clicking on an aura now going to increase it's icons alpha properly.
 Test all button now wont hide the currently opened effect editor.
-Hide all button now also closes the effect editor.
+--Hide all button now also closes the effect editor.
 When you open the aura browser while an aura is currently showing, now it's gonna decrease it's icons alpha properly.
 Alpha slider text initalization fix.
 Fixed a bug when Texture slider value was 0 and show blank aura.
