@@ -2423,7 +2423,7 @@ cPowaMana.TooltipOptions = {r = 0.2, g = 0.2, b = 1.0, showThreshold = true};
 
 function cPowaMana:Init()
 	if (self.PowerType ~= SPELL_POWER_MANA) then
-		PowaAuras:DisplayText("cPowaMana correcting PowerType from ", self.PowerType, " to ", SPELL_POWER_MANA);
+		--PowaAuras:DisplayText("cPowaMana correcting PowerType from ", self.PowerType, " to ", SPELL_POWER_MANA);
 		self.PowerType = SPELL_POWER_MANA;
 	end
 	cPowaAuraStats.Init(self);

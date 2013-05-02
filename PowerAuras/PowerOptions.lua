@@ -1443,6 +1443,7 @@ function PowaAuras:SetOptionText(aura)
 	if (aura.OptionText.targetFriendText) then
 		self:EnableCheckBox("PowaTargetFriendButton");
 		PowaTargetFriendButtonText:SetText(aura.OptionText.targetFriendText);
+		PowaTargetFriendButtonText:SetTextColor(0.2, 1.0, 0.2)
 		PowaTargetFriendButton.tooltipText = aura.OptionText.targetFriendTooltip;
 	else
 		PowaTargetFriendButton:SetChecked(false);
@@ -1668,7 +1669,7 @@ function PowaAuras:InitPage(aura)
 	if (aura.owntex) then
 		--self:ShowText("owntex tex=", aura.icon);
 		checkTexture = AuraTexture:SetTexture(PowaIconTexture:GetTexture());
-		PowaBarAuraTextureSlider:Hide();
+		--PowaBarAuraTextureSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
@@ -2146,7 +2147,7 @@ function PowaAuras:OwntexChecked()
 		PowaWowTextureButton:SetChecked(false);
 		PowaCustomTextureButton:SetChecked(false);
 		PowaTextAuraButton:SetChecked(false);
-		PowaBarAuraTextureSlider:Hide();
+		--PowaBarAuraTextureSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
@@ -2347,7 +2348,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		aura = PowaAuras:AuraFactory(PowaAuras.BuffTypes.Buff, 0);
 	end
 	if (owner:GetName() == "PowaStrataDropDown") then
-		UIDropDownMenu_SetWidth(owner, 123)
+		UIDropDownMenu_SetWidth(owner, 125)
 		for i = 1, #PowaAuras.StrataList do
 			local info = UIDropDownMenu_CreateInfo();
 			info.hasArrow = false;
@@ -2366,7 +2367,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info, level);
 		end
 	elseif (owner:GetName() == "PowaTextureStrataDropDown") then
-		UIDropDownMenu_SetWidth(owner, 123)
+		UIDropDownMenu_SetWidth(owner, 125)
 		for i = 1, #PowaAuras.TextureStrataList do
 			local info = UIDropDownMenu_CreateInfo();
 			info.hasArrow = false;
@@ -2385,7 +2386,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info, level);
 		end
 	elseif (owner:GetName() == "PowaBlendModeDropDown") then
-		UIDropDownMenu_SetWidth(owner, 123)
+		UIDropDownMenu_SetWidth(owner, 125)
 		for i = 1, #PowaAuras.BlendModeList do
 			local info = UIDropDownMenu_CreateInfo();
 			info.hasArrow = false;
@@ -2422,6 +2423,38 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			end;
 			UIDropDownMenu_AddButton(info, level);
 		end
+	elseif (owner:GetName() == "PowaDropDownBuffTypeButton" or owner:GetName() == "PowaDropDownBuffType") then
+		UIDropDownMenu_SetWidth(owner, 175)
+		--PowaAuras:Message("DropDownMenu_Initialize for buff type");
+		PowaAuras:FillDropdownSorted(PowaAuras.Text.AuraType, {func = PowaAuras.DropDownMenu_OnClickBuffType, owner = owner});
+		UIDropDownMenu_SetSelectedValue(PowaDropDownBuffType, aura.bufftype);
+	elseif (owner:GetName() == "PowaDropDownPowerTypeButton" or owner:GetName() == "PowaDropDownPowerType") then
+		UIDropDownMenu_SetWidth(owner, 145)
+		info = {func = PowaAuras.DropDownMenu_OnClickPowerType, owner = owner};
+		for i, name in pairs(PowaAuras.Text.PowerType) do
+			info.text = name;
+			info.value = i;
+			UIDropDownMenu_AddButton(info);
+		end
+		UIDropDownMenu_SetSelectedValue(PowaDropDownPowerType, aura.PowerType);
+	elseif (owner:GetName() == "PowaDropDownStanceButton" or owner:GetName() == "PowaDropDownStance") then
+		UIDropDownMenu_SetWidth(owner, 145)
+		info = {func = PowaAuras.DropDownMenu_OnClickStance, owner = owner};
+		for k, v in pairs(PowaAuras.PowaStance) do
+			info.text = v;
+			info.value = k;
+			UIDropDownMenu_AddButton(info);
+		end
+		UIDropDownMenu_SetSelectedValue(PowaDropDownStance, aura.stance);
+	elseif (owner:GetName() == "PowaDropDownGTFOButton" or owner:GetName() == "PowaDropDownGTFO") then
+		UIDropDownMenu_SetWidth(owner, 145)
+		info = {func = PowaAuras.DropDownMenu_OnClickGTFO, owner = owner};
+		for i = 0, #(PowaAuras.PowaGTFO) do
+			info.text = PowaAuras.PowaGTFO[i];
+			info.value = i;
+			UIDropDownMenu_AddButton(info);
+		end
+		UIDropDownMenu_SetSelectedValue(PowaDropDownGTFO, aura.GTFO);
 	elseif (owner:GetName() == "PowaDropDownAnim1Button" or owner:GetName() == "PowaDropDownAnim1") then
 		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
 		if aura ~= nil then
@@ -2486,32 +2519,6 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_SetSelectedID(PowaDropDownAnim2, 1);
 		end
 		UIDropDownMenu_SetWidth(PowaDropDownAnim2, 175, 1);
-	elseif (owner:GetName() == "PowaDropDownStanceButton" or owner:GetName() == "PowaDropDownStance") then
-		info = {func = PowaAuras.DropDownMenu_OnClickStance, owner = owner};
-		for k, v in pairs(PowaAuras.PowaStance) do
-			info.text = v;
-			info.value = k;
-			UIDropDownMenu_AddButton(info);
-		end
-		UIDropDownMenu_SetSelectedValue(PowaDropDownStance, aura.stance);
-		UIDropDownMenu_SetWidth(PowaDropDownStance, 210, 1);
-	elseif (owner:GetName() == "PowaDropDownGTFOButton" or owner:GetName() == "PowaDropDownGTFO") then
-		info = {func = PowaAuras.DropDownMenu_OnClickGTFO, owner = owner};
-		for i = 0, #(PowaAuras.PowaGTFO) do
-			info.text = PowaAuras.PowaGTFO[i];
-			info.value = i;
-			UIDropDownMenu_AddButton(info);
-		end
-		UIDropDownMenu_SetSelectedValue(PowaDropDownGTFO, aura.GTFO);
-		UIDropDownMenu_SetWidth(PowaDropDownGTFO, 110, 1);
-	elseif (owner:GetName() == "PowaDropDownPowerTypeButton" or owner:GetName() == "PowaDropDownPowerType") then
-		info = {func = PowaAuras.DropDownMenu_OnClickPowerType, owner = owner};
-		for i, name in pairs(PowaAuras.Text.PowerType) do
-			info.text = name;
-			info.value = i;
-			UIDropDownMenu_AddButton(info);
-		end
-		UIDropDownMenu_SetSelectedValue(PowaDropDownPowerType, aura.PowerType);
 	elseif (owner:GetName() == "PowaDropDownSoundButton" or owner:GetName() == "PowaDropDownSound") then
 		info = {func = PowaAuras.DropDownMenu_OnClickSound, owner = owner};
 		for i = 0, 29 do
@@ -2566,7 +2573,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				UIDropDownMenu_AddButton(info);
 			end
 		end
-		if (aura.soundend>=30) then
+		if (aura.soundend >= 30) then
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, aura.soundend);
 		else
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30);
@@ -2608,13 +2615,9 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_SetSelectedID(PowaDropDownAnimEnd, 1);
 		end
 		UIDropDownMenu_SetWidth(PowaDropDownAnimEnd, 175, 1);
-	elseif (owner:GetName() == "PowaDropDownBuffTypeButton" or owner:GetName() == "PowaDropDownBuffType") then
-		--PowaAuras:Message("DropDownMenu_Initialize for buff type");
-		PowaAuras:FillDropdownSorted(PowaAuras.Text.AuraType, {func = PowaAuras.DropDownMenu_OnClickBuffType, owner = owner});
-		UIDropDownMenu_SetSelectedValue(PowaDropDownBuffType, aura.bufftype);
 	elseif (owner:GetName() == "PowaBuffTimerRelativeButton" or owner:GetName() == "PowaBuffTimerRelative") then
 		info = {func = PowaAuras.DropDownMenu_OnClickTimerRelative, owner = owner};
-		for null,v in pairs({"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "CENTER"}) do
+		for null, v in pairs({"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "CENTER"}) do
 			info.text = PowaAuras.Text.Relative[v];
 			info.value = v;
 			UIDropDownMenu_AddButton(info);
@@ -2622,7 +2625,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		if (aura.Timer) then UIDropDownMenu_SetSelectedValue(PowaBuffTimerRelative, aura.Timer.Relative); end
 	elseif (owner:GetName() == "PowaBuffStacksRelativeButton" or owner:GetName() == "PowaBuffStacksRelative") then
 		info = {func = PowaAuras.DropDownMenu_OnClickStacksRelative, owner = owner};
-		for null,v in pairs({"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "TOPLEFT", "CENTER"}) do
+		for null, v in pairs({"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "TOPLEFT", "CENTER"}) do
 			info.text = PowaAuras.Text.Relative[v];
 			info.value = v;
 			UIDropDownMenu_AddButton(info);
@@ -3289,17 +3292,12 @@ end
 function PowaAuras_InitalizeOnMenuOpen()
 	-- Initalize dropdown menu buttons on menu open
 	-- PowaDropDownBuffType
-	PowaDropDownBuffTypeLabel:SetText(PowaAuras.Text.nomActivationBy);
-	UIDropDownMenu_SetWidth(PowaDropDownBuffType, 150);
 	UIDropDownMenu_Initialize(PowaDropDownBuffType, PowaAuras.DropDownMenu_Initialize);
 	-- PowaDropDownPowerType
-	PowaDropDownPowerTypeLabel:SetText(PowaAuras.Text.nomPowerType);
 	UIDropDownMenu_Initialize(PowaDropDownPowerType, PowaAuras.DropDownMenu_Initialize);
 	-- PowaDropDownStance
-	PowaDropDownStanceLabel:SetText(PowaAuras.Text.nomStance);
 	UIDropDownMenu_Initialize(PowaDropDownStance, PowaAuras.DropDownMenu_Initialize);
 	-- PowaDropDownGTFO
-	PowaDropDownGTFOLabel:SetText(PowaAuras.Text.nomGTFO);
 	UIDropDownMenu_Initialize(PowaDropDownGTFO, PowaAuras.DropDownMenu_Initialize);
 	-- PowaDropDownAnimBegin
 	PowaDropDownAnimBeginLabel:SetText(PowaAuras.Text.nomBegin);

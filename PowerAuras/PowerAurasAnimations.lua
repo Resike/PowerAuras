@@ -143,10 +143,10 @@ function PowaAuras:AddMainAnimation(aura, frame)
 	elseif (aura.anim1 == PowaAuras.AnimationTypes.Growing) then
 		self:AddScale(animationGroup, 1.2, 1.2, duration * 3, 1);
 		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), duration * 3, 1);
-	elseif (aura.anim1==PowaAuras.AnimationTypes.Pulse) then
+	elseif (aura.anim1 == PowaAuras.AnimationTypes.Pulse) then
 		self:AddScale(animationGroup, 1.08, 1.08, duration, 1);
 		self:AddScale(animationGroup, 0.9259, 0.9259, duration, 2);
-	elseif (aura.anim1==PowaAuras.AnimationTypes.Shrinking) then
+	elseif (aura.anim1 == PowaAuras.AnimationTypes.Shrinking) then
 		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), duration, 1);
 		self:AddScale(animationGroup, 1.3, 1.3, 0, 2);
 		self:AddScale(animationGroup, 1 / 1.3, 1 / 1.3, duration * 3, 3);
@@ -180,7 +180,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 			self:AddAlpha(animationGroup, - deltaAlpha, stepDuration, i);
 			self:AddScale(animationGroup, 0.98, 0.98, stepDuration, i);
 		end
-	elseif (aura.anim1==PowaAuras.AnimationTypes.Bubble) then
+	elseif (aura.anim1 == PowaAuras.AnimationTypes.Bubble) then
 		local factor = 0.05;
 		local increase = 1 + factor;
 		local decrease = 1 - factor;
@@ -192,7 +192,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		self:AddScale(animationGroup, 1 / increase, 1 / decrease, duration / 3, 2);
 		self:AddScale(animationGroup, decrease, increase, duration / 3, 3);
 		self:AddScale(animationGroup, 1 / decrease, 1 / increase, duration / 3, 4);
-	elseif (aura.anim1==PowaAuras.AnimationTypes.Orbit) then
+	elseif (aura.anim1 == PowaAuras.AnimationTypes.Orbit) then
 		local maxWidth = math.max(aura.x, - aura.x, 5);
 		local maxHeight = maxWidth * (1.6 - aura.torsion);
 		local i = 1;
@@ -207,7 +207,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		if (x > 0) then
 			angleOffset = 10;
 		end
-		for angle = 0, 360-step, step do
+		for angle = 0, 360 - step, step do
 			local newx = maxWidth * cos(angle + angleOffset);
 			local newy = aura.y + maxHeight * sin(angle + angleOffset);
 			--self:ShowText("Orbit ", i, " angle=", angle, " x=", string.format("%.2f", x), " y=", string.format("%.2f", y));
@@ -310,7 +310,7 @@ function PowaAuras:AddAbsoluteAlpha(animationGroup, targetAlpha, duration, order
 	alpha:SetDuration(duration);
 	alpha:SetScript("OnPlay",
 	function(self)
-		self:SetChange(math.min(targetAlpha,0.99) - self:GetRegionParent():GetAlpha());
+		self:SetChange(math.min(targetAlpha, 0.99) - self:GetRegionParent():GetAlpha());
 	end);
 end
 

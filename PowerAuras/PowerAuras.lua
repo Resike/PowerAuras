@@ -1308,7 +1308,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			aura.BeginAnimation = self:AddBeginAnimation(aura, frame);
 		end
 		if (not aura.MainAnimation) then
-			aura.MainAnimation = self:AddMainAnimation(aura, frame);
+			aura.MainAnimation = self:AddMainAnimation(aura, frame, texture);
 		end
 		if (not aura.EndAnimation) then
 			aura.EndAnimation = self:AddEndAnimation(aura, frame);
