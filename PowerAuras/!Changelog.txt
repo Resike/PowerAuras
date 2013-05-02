@@ -24,6 +24,8 @@ Switching to wow textures and back, now wont reset the sliders current value, un
 Aura preview icon's color now will change immediately while changing color at the color picker, also when random color is changed.
 Aura preview icon's color now wont change on toggled off aruas, when the Test all button is being pushed.
 Added texture rotater slider.
+When more auras is opened at the same time, the effec editors icon will show the current auras color correctly.
+Fixed a bug where, aura icons didn't updated when loaded a custom texture.
 Removed value increaser and decreaser buttons from the sliders.
 Sliders now can be adjusted with mousewheel up/down.
 The default aura size now 100%.

@@ -780,14 +780,17 @@
 							</OnLoad>
 							<OnEnterPressed>
 								PowaAuras:CustomTextChanged()
+								PowaAuras:InitPage()
 								self:ClearFocus()
 							</OnEnterPressed>
 							<OnEditFocusLost>
 								PowaAuras:CustomTextChanged()
+								PowaAuras:InitPage()
 							</OnEditFocusLost>
 							<OnEscapePressed>
 								PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 								self:ClearFocus()
+								PowaAuras:InitPage()
 							</OnEscapePressed>
 						</Scripts>
 					</EditBox>

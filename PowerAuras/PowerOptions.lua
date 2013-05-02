@@ -1784,6 +1784,7 @@ function PowaAuras:BarAuraTextureSliderChanged()
 		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga");
 	end
 	PowaBarAuraTextureSliderText:SetText(self.Text.nomTexture..": "..SliderValue);
+	local aura = self.Auras[self.CurrentAuraId];
 	if (self.Auras[auraId].textaura == true) or AuraTexture:GetTexture() == "Interface\\CharacterFrame\\TempPortrait" then
 		AuraTexture:SetVertexColor(1, 1, 1);
 	else
@@ -3038,8 +3039,10 @@ function PowaAuras:EditorShow()
 			aura:CreateFrames();
 			self.SecondaryAuras[aura.id] = nil; -- Force recreate
 			self:DisplayAura(aura.id);
-			if (owner ~= nil) then
-				owner:SetAlpha(1.0)
+			if aura.off == false then
+				if (owner ~= nil) then
+					owner:SetAlpha(1.0)
+				end
 			end
 		end
 		self:InitPage(aura);
