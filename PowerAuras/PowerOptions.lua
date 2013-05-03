@@ -1828,45 +1828,46 @@ end
 
 function PowaAuras:BarAuraSizeSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	local aura = self.Auras[self.CurrentAuraId];
 	local SliderValue = PowaBarAuraSizeSlider:GetValue();
-	local auraId = self.CurrentAuraId;
 	PowaBarAuraSizeSliderText:SetText(self.Text.nomTaille..": "..format("%.0f", SliderValue * 100).."%");
-	self.Auras[auraId].size = SliderValue;
+	if (aura.textaura == true) then
+		if (SliderValue < 1.61) then
+			self.Auras[self.CurrentAuraId].size = SliderValue;
+		end
+	else
+		self.Auras[self.CurrentAuraId].size = SliderValue;
+	end
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
 function PowaAuras:BarAuraCoordXSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraCoordXSlider:GetValue();
-	local auraId = self.CurrentAuraId;
-	
 	PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X: "..SliderValue);
 	if (PowaBarAuraCoordXEdit) then
 		PowaBarAuraCoordXEdit:SetText(SliderValue);
 	end
-	self.Auras[auraId].x = SliderValue;
+	self.Auras[self.CurrentAuraId].x = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
 function PowaAuras:BarAuraCoordYSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraCoordYSlider:GetValue();
-	local auraId = self.CurrentAuraId;
-	
 	PowaBarAuraCoordYSliderText:SetText(self.Text.nomPos.." Y: "..SliderValue);
 	if (PowaBarAuraCoordYEdit) then
 		PowaBarAuraCoordYEdit:SetText(SliderValue);
 	end
-	self.Auras[auraId].y = SliderValue;
+	self.Auras[self.CurrentAuraId].y = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
 function PowaAuras:BarAuraAnimSpeedSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraAnimSpeedSlider:GetValue();
-	local auraId = self.CurrentAuraId;
 	PowaBarAuraAnimSpeedSliderText:SetText(self.Text.nomSpeed..": "..format("%.0f", SliderValue * 100).."%");
-	self.Auras[auraId].speed = SliderValue;
+	self.Auras[self.CurrentAuraId].speed = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
@@ -2019,12 +2020,6 @@ function PowaAuras:CustomTextChanged()
 		end
 	end
 	self:RedisplayAura(self.CurrentAuraId);
-end
-
-function PowaAuras:AurasTextCancel()
-	local aura = self.Auras[self.CurrentAuraId];
-	--self:ShowText("AurasTextCancel: set aurastext to ", aura.aurastext);
-	PowaBarAurasText:SetText(aura.aurastext);
 end
 
 function PowaAuras:AurasTextChanged()
@@ -2200,6 +2195,7 @@ function PowaAuras:WowTexturesChecked()
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures);
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures);
 	end
+	PowaAuras:BarAuraSizeSliderChanged();
 	PowaAuras:BarAuraTextureSliderChanged();
 	self:RedisplayAura(aura.id);
 end
@@ -2224,6 +2220,7 @@ function PowaAuras:CustomTexturesChecked()
 		PowaBarAuraTextureSlider:Show();
 		PowaBarCustomTexName:Hide();
 	end
+	PowaAuras:BarAuraSizeSliderChanged();
 	PowaAuras:BarAuraTextureSliderChanged();
 	self:RedisplayAura(aura.id);
 end
@@ -2241,10 +2238,17 @@ function PowaAuras:TextAuraChecked()
 		PowaFontButton:Show();
 		--self:ShowText("TextAuraChecked: aura text changed to ", aura.aurastext);
 		PowaBarAurasText:SetText(aura.aurastext);
+		PowaBarAurasText:SetText(aura.aurastext.."!");
+		PowaAuras:AurasTextChanged()
+		PowaBarAurasText:SetText(string.sub(aura.aurastext, 1, -2));
+		PowaAuras:AurasTextChanged()
 		PowaOwntexButton:SetChecked(false);
 		PowaWowTextureButton:SetChecked(false);
 		PowaCustomTextureButton:SetChecked(false);
 		PowaBarCustomTexName:Hide();
+		if (PowaBarAuraSizeSlider:GetValue() > 1.61) then
+			PowaBarAuraSizeSlider:SetValue(1.61);
+		end
 	else
 		--self:ShowText("TextAuraChecked: unset");
 		aura.textaura = false;
@@ -2252,8 +2256,8 @@ function PowaAuras:TextAuraChecked()
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
 	end
+	PowaAuras:BarAuraSizeSliderChanged();
 	self:BarAuraTextureSliderChanged();
-	PowaAuras:OptionTest();
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
