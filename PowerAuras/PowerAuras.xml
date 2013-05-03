@@ -1643,50 +1643,6 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<!-- Ignore Case CheckButton -->
-							<CheckButton name = "PowaIngoreCaseButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaExactButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "85" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideIgnoreMaj
-										PowaIngoreCaseButtonText:SetText(PowaAuras.Text.nomCheckIgnoreMaj)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:IgnoreMajChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Use Own Texture CheckButton -->
-							<CheckButton name = "PowaOwntexButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaIngoreCaseButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "100" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideOwnTex
-										PowaOwntexButtonText:SetText(PowaAuras.Text.nomOwnTex)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:OwntexChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
 							<!-- Invert CheckButton -->
 							<CheckButton name = "PowaInverseButton" inherits = "PowaCheckTemplate">
 								<Size>
@@ -1709,44 +1665,6 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<!-- Cast By Me CheckButton -->
-							<CheckButton name = "PowaMineButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaInverseButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "85" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideMine
-										PowaMineButtonText:SetText(PowaAuras.Text.nomMine)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:SettingChecked(self, "mine")
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- PVP Flag CheckButton -->
-							<CheckButton name = "PowaPvPButton" inherits = "PowaTernarySelectorTemplate">
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaMineButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "100" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnShow>
-										self.Parameter = "PvP"
-										PowaPvPButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
-									</OnShow>
-								</Scripts>
-							</CheckButton>
 							<!-- In Combat CheckButton -->
 							<CheckButton name = "PowaInCombatButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
@@ -1764,66 +1682,6 @@
 										self.Parameter = "combat"
 										PowaInCombatButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
 									</OnShow>
-								</Scripts>
-							</CheckButton>
-							<!-- Resting CheckButton -->
-							<CheckButton name = "PowaRestingButton" inherits = "PowaTernarySelectorTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaInCombatButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "85" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnShow>
-										self.Parameter = "isResting"
-										PowaRestingButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
-									</OnShow>
-								</Scripts>
-							</CheckButton>
-							<!-- Alive CheckButton -->
-							<CheckButton name = "PowaIsAliveButton" inherits = "PowaTernarySelectorTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaRestingButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "100" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnShow>
-										self.Parameter = "isAlive"
-										PowaIsAliveButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
-									</OnShow>
-								</Scripts>
-							</CheckButton>
-							<!-- Extra CheckButton -->
-							<CheckButton name = "PowaExtraButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaIsAliveButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "80" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideExtra
-										PowaExtraButtonText:SetText(PowaAuras.Text.nomExtra)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:SettingChecked(self, "Extra")
-									</OnClick>
 								</Scripts>
 							</CheckButton>
 							<!-- In Party CheckButton -->
@@ -1845,15 +1703,207 @@
 									</OnShow>
 								</Scripts>
 							</CheckButton>
+							<!-- Mounted CheckButton -->
+							<CheckButton name = "PowaIsMountedButton" inherits = "PowaTernarySelectorTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaIsInPartyButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										self.Parameter = "ismounted"
+										PowaIsMountedButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
+								</Scripts>
+							</CheckButton>
+							<!-- Enemy Target CheckButton -->
+							<CheckButton name = "PowaTargetButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaIsMountedButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideTarget
+										PowaTargetButtonText:SetText(PowaAuras.Text.nomCheckTarget)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:TargetChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Focus CheckButton -->
+							<CheckButton name = "PowaFocusButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaTargetButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideFocus
+										PowaFocusButtonText:SetText(PowaAuras.Text.nomCheckFocus)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:FocusChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Party Member CheckButton -->
+							<CheckButton name = "PowaPartyButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaFocusButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideParty
+										PowaPartyButtonText:SetText(PowaAuras.Text.nomCheckParty)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:PartyChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Any Member CheckButton -->
+							<CheckButton name = "PowaGroupAnyButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaPartyButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideGroupAny
+										PowaGroupAnyButtonText:SetText(PowaAuras.Text.nomCheckGroupAny)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:GroupAnyChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Spec 1 CheckButton -->
+							<CheckButton name = "PowaTalentGroup1Button" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaGroupAnyButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideTalentGroup1
+										PowaTalentGroup1ButtonText:SetText(PowaAuras.Text.nomTalentGroup1)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:SettingChecked(self, "spec1")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Ignore Case CheckButton -->
+							<CheckButton name = "PowaIngoreCaseButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaExactButton" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "85" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideIgnoreMaj
+										PowaIngoreCaseButtonText:SetText(PowaAuras.Text.nomCheckIgnoreMaj)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:IgnoreMajChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Cast By Me CheckButton -->
+							<CheckButton name = "PowaMineButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaIngoreCaseButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideMine
+										PowaMineButtonText:SetText(PowaAuras.Text.nomMine)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:SettingChecked(self, "mine")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Resting CheckButton -->
+							<CheckButton name = "PowaRestingButton" inherits = "PowaTernarySelectorTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaMineButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										self.Parameter = "isResting"
+										PowaRestingButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
+								</Scripts>
+							</CheckButton>
 							<!-- In Raid CheckButton -->
 							<CheckButton name = "PowaIsInRaidButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaIsInPartyButton" relativePoint = "RIGHT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaRestingButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "85" y = "0"/>
+											<AbsDimension x = "0" y = "5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1864,15 +1914,257 @@
 									</OnShow>
 								</Scripts>
 							</CheckButton>
+							<!-- In Vehicle CheckButton -->
+							<CheckButton name = "PowaInVehicleButton" inherits = "PowaTernarySelectorTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaIsInRaidButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										self.Parameter = "inVehicle"
+										PowaInVehicleButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
+								</Scripts>
+							</CheckButton>
+							<!-- Friendly Target CheckButton -->
+							<CheckButton name = "PowaTargetFriendButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaInVehicleButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideTargetFriend
+										PowaTargetFriendButtonText:SetText(PowaAuras.Text.nomCheckFriend)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:TargetFriendChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Party/Raid or Self CheckButton -->
+							<CheckButton name = "PowaGroupOrSelfButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaTargetFriendButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideGroupOrSelf
+										PowaGroupOrSelfButtonText:SetText(PowaAuras.Text.nomCheckGroupOrSelf)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:GroupOrSelfChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Raid Member CheckButton -->
+							<CheckButton name = "PowaRaidButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaGroupOrSelfButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideRaid
+										PowaRaidButtonText:SetText(PowaAuras.Text.nomCheckRaid)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:RaidChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Unit Name CheckButton -->
+							<CheckButton name = "PowaOptunitnButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaRaidButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideOptunitn
+										PowaOptunitnButtonText:SetText(PowaAuras.Text.nomCheckOptunitn)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:OptunitnChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Unit Name EditBox -->
+							<EditBox name = "PowaBarUnitn" autoFocus = "false" inherits = "InputBoxTemplate">
+								<Size>
+									<AbsDimension x = "100" y = "16"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaOptunitnButtonText" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "20" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level = "OVERLAY">
+										<FontString inherits = "ChatFontNormal" bytes = "200"/>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										self:SetMaxLetters(200)
+										self.aide = PowaAuras.Text.aideUnitn
+									</OnLoad>
+									<OnEnterPressed>
+										self:ClearFocus()
+									</OnEnterPressed>
+									<OnTextChanged>
+										PowaAuras:UnitnTextChanged()
+									</OnTextChanged>
+									<OnEnter>
+										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+										GameTooltip:SetText(self.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+								<Layers>
+									<Layer level = "OVERLAY">
+										<FontString name = "PowaBarUnitnText" inherits = "GameFontNormalSmall" justifyH = "LEFT" text = "">
+											<Size>
+												<AbsDimension x = "150" y = "20"/>
+											</Size>
+											<Anchors>
+												<Anchor point = "BOTTOMLEFT" relativeTo = "PowaBarUnitn" relativePoint = "TOPLEFT">
+													<Offset>
+														<AbsDimension x = "0" y = "0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</EditBox>
+							<!-- Spec 2 CheckButton -->
+							<CheckButton name = "PowaTalentGroup2Button" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaOptunitnButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideTalentGroup2
+										PowaTalentGroup2ButtonText:SetText(PowaAuras.Text.nomTalentGroup2)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:SettingChecked(self, "spec2")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Debug CheckButton -->
+							<CheckButton name = "PowaAuraDebugButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup2Button" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "185" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideAuraDebug
+										PowaAuraDebugButtonText:SetText(PowaAuras.Text.nomAuraDebug)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:SettingChecked(self, "Debug")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- PVP Flag CheckButton -->
+							<CheckButton name = "PowaPvPButton" inherits = "PowaTernarySelectorTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaIngoreCaseButton" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "90" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										self.Parameter = "PvP"
+										PowaPvPButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
+								</Scripts>
+							</CheckButton>
+							<!-- Alive CheckButton -->
+							<CheckButton name = "PowaIsAliveButton" inherits = "PowaTernarySelectorTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaPvPButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										self.Parameter = "isAlive"
+										PowaIsAliveButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
+								</Scripts>
+							</CheckButton>
 							<!-- 5 Man CheckButton -->
 							<CheckButton name = "Powa5ManInstanceButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaIsInRaidButton" relativePoint = "RIGHT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaIsAliveButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "100" y = "0"/>
+											<AbsDimension x = "0" y = "5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1978,15 +2270,37 @@
 									</OnShow>
 								</Scripts>
 							</CheckButton>
+							<!-- Own Texture CheckButton -->
+							<CheckButton name = "PowaOwntexButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaPvPButton" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "70" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideOwnTex
+										PowaOwntexButtonText:SetText(PowaAuras.Text.nomOwnTex)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:OwntexChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<!-- Tank CheckButton -->
 							<CheckButton name = "PowaRoleTankButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "Powa5ManInstanceButton" relativePoint = "RIGHT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaOwntexButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "80" y = "0"/>
+											<AbsDimension x = "0" y = "5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2092,51 +2406,13 @@
 									</OnShow>
 								</Scripts>
 							</CheckButton>
-							<!-- Mounted CheckButton -->
-							<CheckButton name = "PowaIsMountedButton" inherits = "PowaTernarySelectorTemplate">
+							<!-- Extra CheckButton -->
+							<CheckButton name = "PowaExtraButton" inherits = "PowaCheckTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaIsInPartyButton" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "0" y = "5"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnShow>
-										self.Parameter = "ismounted"
-										PowaIsMountedButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
-									</OnShow>
-								</Scripts>
-							</CheckButton>
-							<!-- In Vehicle CheckButton -->
-							<CheckButton name = "PowaInVehicleButton" inherits = "PowaTernarySelectorTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaIsMountedButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "85" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnShow>
-										self.Parameter = "inVehicle"
-										PowaInVehicleButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
-									</OnShow>
-								</Scripts>
-							</CheckButton>
-							<!-- Enemy Target CheckButton -->
-							<CheckButton name = "PowaTargetButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaIsMountedButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaArenaInstanceButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "5"/>
 										</Offset>
@@ -2144,291 +2420,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideTarget
-										PowaTargetButtonText:SetText(PowaAuras.Text.nomCheckTarget)
-										PowaTargetButtonText:SetTextColor(1.0, 0.2, 0.2)
+										self.tooltipText = PowaAuras.Text.aideExtra
+										PowaExtraButtonText:SetText(PowaAuras.Text.nomExtra)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TargetChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Friendly Target CheckButton -->
-							<CheckButton name = "PowaTargetFriendButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaTargetButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "85" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideTargetFriend
-										PowaTargetFriendButtonText:SetText(PowaAuras.Text.nomCheckFriend)
-										PowaTargetFriendButtonText:SetTextColor(0.2, 1.0, 0.2)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:TargetFriendChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Focus CheckButton -->
-							<CheckButton name = "PowaFocusButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaTargetButton" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "0" y = "5"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideFocus
-										PowaFocusButtonText:SetText(PowaAuras.Text.nomCheckFocus)
-										PowaFocusButtonText:SetTextColor(0.2, 1.0, 0.2)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:FocusChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Raid/Party or Self CheckButton -->
-							<CheckButton name = "PowaGroupOrSelfButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaFocusButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "85" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideGroupOrSelf
-										PowaGroupOrSelfButtonText:SetText(PowaAuras.Text.nomCheckGroupOrSelf)
-										PowaGroupOrSelfButtonText:SetTextColor(0.2,1.0,0.2)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:GroupOrSelfChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Party Member CheckButton -->
-							<CheckButton name = "PowaPartyButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaFocusButton" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "0" y = "5"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideParty
-										PowaPartyButtonText:SetText(PowaAuras.Text.nomCheckParty)
-										PowaPartyButtonText:SetTextColor(0.2, 1.0, 0.2)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:PartyChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Raid Member CheckButton -->
-							<CheckButton name = "PowaRaidButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaPartyButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "85" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideRaid
-										PowaRaidButtonText:SetText(PowaAuras.Text.nomCheckRaid)
-										PowaRaidButtonText:SetTextColor(0.2, 1.0, 0.2)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:RaidChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Unit Name CheckButton -->
-							<CheckButton name = "PowaOptunitnButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaPartyButton" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "0" y = "5"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideOptunitn
-										PowaOptunitnButtonText:SetText(PowaAuras.Text.nomCheckOptunitn)
-										PowaOptunitnButtonText:SetTextColor(0.2, 1.0, 0.2)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:OptunitnChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Unit Name EditBox -->
-							<EditBox name = "PowaBarUnitn" autoFocus = "false" inherits = "InputBoxTemplate">
-								<Size>
-									<AbsDimension x = "105" y = "16"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaOptunitnButtonText" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "40" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Layers>
-									<Layer level = "OVERLAY">
-										<FontString inherits = "ChatFontNormal" bytes = "200"/>
-									</Layer>
-								</Layers>
-								<Scripts>
-									<OnLoad>
-										self:SetMaxLetters(200)
-										self.aide = PowaAuras.Text.aideUnitn
-									</OnLoad>
-									<OnEnterPressed>
-										self:ClearFocus()
-									</OnEnterPressed>
-									<OnTextChanged>
-										PowaAuras:UnitnTextChanged()
-									</OnTextChanged>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(self.aide, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
-								</Scripts>
-								<Layers>
-									<Layer level = "OVERLAY">
-										<FontString name = "PowaBarUnitnText" inherits = "GameFontNormalSmall" justifyH = "LEFT" text = "">
-											<Size>
-												<AbsDimension x = "150" y = "20"/>
-											</Size>
-											<Anchors>
-												<Anchor point = "BOTTOMLEFT" relativeTo = "PowaBarUnitn" relativePoint = "TOPLEFT">
-													<Offset>
-														<AbsDimension x = "0" y = "0"/>
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-								</Layers>
-							</EditBox>
-							<!-- Spec 1 CheckButton -->
-							<CheckButton name = "PowaTalentGroup1Button" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOP" relativeTo = "PowaOptunitnButton" relativePoint = "BOTTOM">
-										<Offset>
-											<AbsDimension x = "0" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideTalentGroup1
-										PowaTalentGroup1ButtonText:SetText(PowaAuras.Text.nomTalentGroup1)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:SettingChecked(self, "spec1")
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Spec 2 CheckButton -->
-							<CheckButton name = "PowaTalentGroup2Button" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup1Button" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "85" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideTalentGroup2
-										PowaTalentGroup2ButtonText:SetText(PowaAuras.Text.nomTalentGroup2)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:SettingChecked(self, "spec2")
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Any CheckButton -->
-							<CheckButton name = "PowaGroupAnyButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup2Button" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "100" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideGroupAny
-										PowaGroupAnyButtonText:SetText(PowaAuras.Text.nomCheckGroupAny)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:GroupAnyChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Debug CheckButton -->
-							<CheckButton name = "PowaAuraDebugButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaGroupAnyButton" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "80" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideAuraDebug
-										PowaAuraDebugButtonText:SetText(PowaAuras.Text.nomAuraDebug)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:SettingChecked(self, "Debug")
+										PowaAuras:SettingChecked(self, "Extra")
 									</OnClick>
 								</Scripts>
 							</CheckButton>

@@ -1726,6 +1726,9 @@ function PowaAuras:InitPage(aura)
 	else
 		AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
 	end
+	if (AuraTexture:GetTexture() == "Interface\\CharacterFrame\\TempPortrait") or (AuraTexture:GetTexture() == "Interface\\Icons\\INV_Scroll_02") then
+		AuraTexture:SetVertexColor(1, 1, 1);
+	end
 	PowaColorNormalTexture:SetVertexColor(aura.r, aura.g, aura.b);
 	PowaGradientColorNormalTexture:SetVertexColor(aura.gr, aura.gg, aura.gb);
 	--[[if (aura.symetrie == 1) then
@@ -2005,8 +2008,16 @@ function PowaAuras:UnitnTextChanged()
 end
 
 function PowaAuras:CustomTextChanged()
-	local auraId = self.CurrentAuraId;
-	self.Auras[auraId].customname = PowaBarCustomTexName:GetText();
+	local aura = self.Auras[self.CurrentAuraId];
+	aura.customname = PowaBarCustomTexName:GetText();
+	if string.find(aura.customname, "%.") or (aura.customname == nil) or (aura.customname == "") then
+		aura.enablefullrotation = true;
+	else
+		aura.enablefullrotation = false;
+		if (aura.rotate ~= 0) and (aura.rotate ~= 90) and (aura.rotate ~= 180) and (aura.rotate ~= 270) and (aura.rotate ~= 360) then
+			PowaBarAuraRotateSlider:SetValue(0)
+		end
+	end
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
@@ -2144,9 +2155,13 @@ function PowaAuras:OwntexChecked()
 		aura.wowtex = false;
 		aura.customtex = false;
 		aura.textaura = false;
+		aura.enablefullrotation = false;
 		PowaWowTextureButton:SetChecked(false);
 		PowaCustomTextureButton:SetChecked(false);
 		PowaTextAuraButton:SetChecked(false);
+		if (aura.rotate ~= 0) and (aura.rotate ~= 90) and (aura.rotate ~= 180) and (aura.rotate ~= 270) and (aura.rotate ~= 360) then
+			PowaBarAuraRotateSlider:SetValue(0)
+		end
 		--PowaBarAuraTextureSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
@@ -2243,13 +2258,13 @@ function PowaAuras:TextAuraChecked()
 end
 
 function PowaAuras:EnableFullRotationChecked()
-	local auraId = self.CurrentAuraId;
+	local aura = self.Auras[self.CurrentAuraId];
 	if (PowaEnableFullRotationButton:GetChecked()) then
-		self.Auras[auraId].enablefullrotation = true;
+		aura.enablefullrotation = true;
 		PowaBarAuraRotateSlider:SetValueStep(1)
 	else
-		self.Auras[auraId].enablefullrotation = false;
-		if (self.Auras[auraId].rotate ~= 0) and (self.Auras[auraId].rotate ~= 90) and (self.Auras[auraId].rotate ~= 180) and (self.Auras[auraId].rotate ~= 270) and (self.Auras[auraId].rotate ~= 360) then
+		aura.enablefullrotation = false;
+		if (aura.rotate ~= 0) and (aura.rotate ~= 90) and (aura.rotate ~= 180) and (aura.rotate ~= 270) and (aura.rotate ~= 360) then
 			PowaBarAuraRotateSlider:SetValue(0)
 		end
 		PowaBarAuraRotateSlider:SetValueStep(90)

@@ -710,6 +710,7 @@ SetColours =
 	["PowaFocusButton"] = {r = 0.2, g = 1.0, b = 0.2},
 	["PowaRaidButton"] = {r = 0.2, g = 1.0, b = 0.2},
 	["PowaOptunitnButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaGroupAnyButton"] = {r = 0.2, g = 1.0, b = 0.2},
 };
 
 OptionCheckBoxes =
