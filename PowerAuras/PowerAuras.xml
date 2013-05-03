@@ -376,7 +376,7 @@
 									<Anchors>
 										<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 											<Offset>
-												<AbsDimension x = "20" y = "4"/>
+												<AbsDimension x = "20" y = "2"/>
 											</Offset>
 										</Anchor>
 									</Anchors>
@@ -403,7 +403,7 @@
 						<Anchors>
 							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaGradientStyleDropDown" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "19" y = "-14"/>
+									<AbsDimension x = "19" y = "-16"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -1430,7 +1430,7 @@
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "RIGHT">
 										<Offset>
-											<AbsDimension x = "0" y = "3"/>
+											<AbsDimension x = "0" y = "4"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2433,7 +2433,7 @@
 					<!-- Second Configuration Tab Panel (Animation) -->
 					<Frame name = "PowaBarConfigFrameEditor3" hidden = "true">
 						<Size>
-							<AbsDimension x = "450" y = "220"/>
+							<AbsDimension x = "450" y = "240"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaBarConfigFrameEditor" relativePoint = "BOTTOM">
@@ -2460,14 +2460,18 @@
 							</OnLoad>
 						</Scripts>
 						<Frames>
+							<!-- Begin Animation DropDown -->
 							<Frame name = "PowaDropDownAnimBegin" inherits = "UIDropDownMenuTemplate" id = "1">
 								<Size>
-									<AbsDimension x = "140"/>
+									<AbsDimension x = "200"/>
 								</Size>
+								<HitRectInsets>
+									<AbsInset left = "-20" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor3" relativePoint = "TOPLEFT">
 										<Offset>
-											<AbsDimension x = "-8" y = "-15"/>
+											<AbsDimension x = "-6" y = "-18"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2477,7 +2481,7 @@
 											<Anchors>
 												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 													<Offset>
-														<AbsDimension x = "21" y = "0"/>
+														<AbsDimension x = "20" y = "2"/>
 													</Offset>
 												</Anchor>
 											</Anchors>
@@ -2485,19 +2489,26 @@
 									</Layer>
 								</Layers>
 								<Scripts>
+									<OnLoad>
+										PowaDropDownAnimBeginLabel:SetText(PowaAuras.Text.nomBegin..":")
+									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
 									</OnShow>
 								</Scripts>
 							</Frame>
+							<!-- End Animation DropDown -->
 							<Frame name = "PowaDropDownAnimEnd" inherits = "UIDropDownMenuTemplate" id = "2">
 								<Size>
-									<AbsDimension x = "140"/>
+									<AbsDimension x = "200"/>
 								</Size>
+								<HitRectInsets>
+									<AbsInset left = "-20" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownAnimBegin" relativePoint = "RIGHT">
 										<Offset>
-											<AbsDimension x = "20" y = "0"/>
+											<AbsDimension x = "-20" y = "0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2507,7 +2518,7 @@
 											<Anchors>
 												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 													<Offset>
-														<AbsDimension x = "21" y = "0"/>
+														<AbsDimension x = "20" y = "2"/>
 													</Offset>
 												</Anchor>
 											</Anchors>
@@ -2515,19 +2526,45 @@
 									</Layer>
 								</Layers>
 								<Scripts>
+									<OnLoad>
+										PowaDropDownAnimEndLabel:SetText(PowaAuras.Text.nomEnd..":")
+									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
 									</OnShow>
 								</Scripts>
 							</Frame>
+							<!-- Old Animations CheckButton -->
+							<CheckButton name = "PowaOldAnimation" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnimBegin" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "15" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideAnimationsAreBrokenSorry
+										PowaOldAnimationText:SetText(PowaAuras.Text.nomOldAnimations)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:OldAnimationChecked(self)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Show Spin CheckButton -->
 							<CheckButton name = "PowaShowSpinAtBeginning" inherits = "PowaCheckTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnimBegin" relativePoint = "TOPLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaOldAnimation" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "15" y = "-30"/>
+											<AbsDimension x = "0" y = "5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2541,14 +2578,18 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<!-- Main Animation DropDown -->
 							<Frame name = "PowaDropDownAnim1" inherits = "UIDropDownMenuTemplate" id = "3">
 								<Size>
-									<AbsDimension x = "175"/>
+									<AbsDimension x = "200"/>
 								</Size>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
 								<Anchors>
-									<Anchor point = "TOP" relativeTo = "PowaDropDownAnimBegin" relativePoint = "BOTTOM">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaShowSpinAtBeginning" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "0" y = "-45"/>
+											<AbsDimension x = "-15" y = "-20"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2558,7 +2599,7 @@
 											<Anchors>
 												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 													<Offset>
-														<AbsDimension x = "21" y = "0"/>
+														<AbsDimension x = "20" y = "2"/>
 													</Offset>
 												</Anchor>
 											</Anchors>
@@ -2567,7 +2608,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										self:SetHitRectInsets(18, -20, 2, 6)
+										PowaDropDownAnim1Label:SetText(PowaAuras.Text.nomAnim1..":")
 									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -2581,14 +2622,18 @@
 									</OnLeave>
 								</Scripts>
 							</Frame>
+							<!-- Secondary Animation DropDown -->
 							<Frame name = "PowaDropDownAnim2" inherits = "UIDropDownMenuTemplate" id = "4">
 								<Size>
-									<AbsDimension x = "175"/>
+									<AbsDimension x = "200"/>
 								</Size>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownAnim1" relativePoint = "RIGHT">
 										<Offset>
-											<AbsDimension x = "20" y = "0"/>
+											<AbsDimension x = "-20" y = "0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2598,7 +2643,7 @@
 											<Anchors>
 												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 													<Offset>
-														<AbsDimension x = "21" y = "0"/>
+														<AbsDimension x = "20" y = "2"/>
 													</Offset>
 												</Anchor>
 											</Anchors>
@@ -2607,7 +2652,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										self:SetHitRectInsets(18, -20, 2, 6)
+										PowaDropDownAnim2Label:SetText(PowaAuras.Text.nomAnim2..":")
 									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -2621,20 +2666,21 @@
 									</OnLeave>
 								</Scripts>
 							</Frame>
+							<!-- Animation Speed Slider -->
 							<Slider name = "PowaBarAuraAnimSpeedSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
-									<AbsDimension x = "360" y = "16"/>
+									<AbsDimension x = "425" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnim1" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "60" y = "-10"/>
+											<AbsDimension x = "20" y = "-22"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:SetMinMaxValues(0.01,2.00)
+										self:SetMinMaxValues(0.01,2)
 										self:SetValue(1.0)
 										self:SetValueStep(0.01)
 										PowaBarAuraAnimSpeedSliderText:SetText(PowaAuras.Text.nomSpeed..": 100%")
@@ -2652,24 +2698,24 @@
 							</Slider>
 							<Slider name = "PowaBarAuraDurationSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
-									<AbsDimension x = "360" y = "16"/>
+									<AbsDimension x = "425" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraAnimSpeedSlider" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "0" y = "-15"/>
+											<AbsDimension x = "0" y = "-22"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
 								<Scripts>
 									<OnLoad>
 										self.aide = PowaAuras.Text.aideDuration
-										self:SetMinMaxValues(0,30)
+										self:SetMinMaxValues(0,60)
 										self:SetValue(0)
 										self:SetValueStep(0.25)
-										PowaBarAuraDurationSliderText:SetText(PowaAuras.Text.nomDuration..": 0 sec")
-										PowaBarAuraDurationSliderLow:SetText(PowaAuras.Text.aucune)
-										PowaBarAuraDurationSliderHigh:SetText("30")
+										PowaBarAuraDurationSliderText:SetText(PowaAuras.Text.nomDuration..": 0.00 sec")
+										PowaBarAuraDurationSliderLow:SetText("0 sec")
+										PowaBarAuraDurationSliderHigh:SetText("60 sec")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:BarAuraAnimDurationSliderChanged(self)
@@ -2680,27 +2726,6 @@
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
-							<CheckButton name = "PowaOldAnimation" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraDurationSlider" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "5" y = "-10"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideAnimationsAreBrokenSorry
-										PowaOldAnimationText:SetText(PowaAuras.Text.nomOldAnimations)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:OldAnimationChecked(self)
-									</OnClick>
-								</Scripts>
-							</CheckButton>
 						</Frames>
 					</Frame>
 					<!-- Third Configuration Tab Panel (Sound) -->

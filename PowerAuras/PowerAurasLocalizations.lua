@@ -268,7 +268,7 @@ aideTexture = "The texture to be shown. You can easily replace textures by chang
 nomAnim1 = "Main Animation",
 nomAnim2 = "Secondary Animation",
 aideAnim1 = "Animate the texture or not, with various effects.",
-aideAnim2 = "This animation will be shown with less opacity than the main animaton. Attention, to not overload the screen.",
+aideAnim2 = "This animation will be shown with less opacity than the main animaton.",
 
 nomDeform = "Deformation",
 
@@ -379,8 +379,8 @@ aideStance = "Select which Stance, Aura or Form trigger the event.",
 aideGTFO = "Select which GTFO Alert will trigger the event.",
 aidePowerType = "Select which type of resource to track.",
 
-aideShowSpinAtBeginning = "At the end of the begin animation show a 360 degree spin.",
-nomCheckShowSpinAtBeginning = "Show Spin after begin animation ends.",
+nomCheckShowSpinAtBeginning = "Spin the aura after shown",
+aideShowSpinAtBeginning = "Spin the aura 360° after the begin animation ends.",
 
 nomCheckShowTimer = "Show",
 nomTimerDuration = "Duration",
@@ -402,7 +402,7 @@ aideIgnoreMaj = "Check this to ignore upper/lowercase of buff/debuff names.",
 nomAuraDebug = "Debug",
 aideAuraDebug = "Enable debugging this Aura.",
 
-nomDuration = "Anim. duration",
+nomDuration = "Animation duration",
 aideDuration = "After this time, this effect will disapear. (0 to deactivate)",
 
 nomOldAnimations = "Old Animations";
