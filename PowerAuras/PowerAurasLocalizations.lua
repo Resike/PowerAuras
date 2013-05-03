@@ -317,6 +317,8 @@ nomActivationBy = "Activation by",
 
 nomOwnTex = "Own Texture",
 aideOwnTex = "Use the selected buff/debuff or ability's texture instead.",
+nomRoundIcons = "Round Icons",
+aideRoundIcons = "Enable this to use round icons.",
 nomStacks = "Stacks",
 
 nomUpdateSpeed = "Update speed",

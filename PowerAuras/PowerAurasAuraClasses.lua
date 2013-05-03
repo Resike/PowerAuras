@@ -64,6 +64,7 @@ cPowaAura.ExportSettings =
 	customtex = false,
 	textaura = false,
 	owntex = false,
+	roundicons = false,
 	realaura = 1,
 	texture = 1,
 	customname = "",

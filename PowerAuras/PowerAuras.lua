@@ -1118,6 +1118,20 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		elseif (aura.rotate == 270) then
 			texture:SetTexCoord(ULx + x, ULy - x, LLx - x, LLy - x, URx + x, URy + x, LRx - x, LRy + x);
 		end
+		if (aura.customtex == true) then
+			if string.find(aura.customname, "%.") then
+				-- Do nothing
+			else
+				if (aura.roundicons == true) then
+					SetPortraitToTexture(texture, texture:GetTexture());
+				end
+			end
+		end
+		if (aura.owntex == true) then
+			if (aura.roundicons == true) then
+				SetPortraitToTexture(texture, texture:GetTexture());
+			end
+		end
 	end
 	if (aura.wowtex == true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
@@ -1380,6 +1394,20 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 			secondaryTexture:SetTexCoord(ULx - x, ULy - x, LLx - x, LLy + x, URx + x, URy - x, LRx + x, LRy + x);
 		elseif (aura.rotate == 270) then
 			secondaryTexture:SetTexCoord(ULx + x, ULy - x, LLx - x, LLy - x, URx + x, URy + x, LRx - x, LRy + x);
+		end
+		if (aura.customtex == true) then
+			if string.find(aura.customname, "%.") then
+				-- Do nothing
+			else
+				if (aura.roundicons == true) then
+					SetPortraitToTexture(texture, texture:GetTexture());
+				end
+			end
+		end
+		if (aura.owntex == true) then
+			if (aura.roundicons == true) then
+				SetPortraitToTexture(texture, texture:GetTexture());
+			end
 		end
 	end
 	if (aura.wowtex == true) then

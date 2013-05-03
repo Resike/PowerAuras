@@ -1548,6 +1548,7 @@ function PowaAuras:InitPage(aura)
 	PowaDropDownGTFOText:SetText(self.PowaGTFO[aura.GTFO]);
 	PowaBarBuffStacks.aide = self.Text.aideStacks;
 	PowaOwntexButton:SetChecked(aura.owntex);
+	PowaRoundIconsButton:SetChecked(aura.roundicons);
 	PowaWowTextureButton:SetChecked(aura.wowtex);
 	PowaCustomTextureButton:SetChecked(aura.customtex);
 	PowaTextAuraButton:SetChecked(aura.textaura);
@@ -2272,6 +2273,16 @@ function PowaAuras:EnableFullRotationChecked()
 			PowaBarAuraRotateSlider:SetValue(0)
 		end
 		PowaBarAuraRotateSlider:SetValueStep(90)
+	end
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:RoundIconsChecked()
+	local aura = self.Auras[self.CurrentAuraId];
+	if (PowaRoundIconsButton:GetChecked()) then
+		aura.roundicons = true;
+	else
+		aura.roundicons = false;
 	end
 	self:RedisplayAura(self.CurrentAuraId);
 end

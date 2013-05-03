@@ -2298,13 +2298,35 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<!-- Round Icons CheckButton -->
+							<CheckButton name = "PowaRoundIconsButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaOwntexButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideRoundIcons
+										PowaRoundIconsButtonText:SetText(PowaAuras.Text.nomRoundIcons)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:RoundIconsChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<!-- Tank CheckButton -->
 							<CheckButton name = "PowaRoleTankButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaOwntexButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaRoundIconsButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "5"/>
 										</Offset>

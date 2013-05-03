@@ -13,6 +13,7 @@ Added Texture sublevel changer slider, to change the current texture strata's z 
 Fixed a bugged font.
 Fixed a major moving bug, when you move the auras with the mouse.
 Fixed a bug which made auras disappear while on the timer/stacks tab.
+Added "Rounc Icons" option to round icon edges.
 Removed Glow check button.
 Added blend mode dropdown.
 Added option for gradient colors.
@@ -55,6 +56,7 @@ Fixed a bug with Growing animation when it's applied on a secondary aura.
 Fixed a bug with Waterdrop animation when it's applied on a secondary aura.
 When you hide an aura with the Test button, it's icon's alpha now gonna dcrease properly.
 While "Old Animation" checkbutton is enabled the "Spin the aura after the begin animation" checkbutton is hidden.
+Text auras now won't get crashed when switching "Text Aura" checkbutton.
 Some text color fixes.
 Some smaller slider fixes.
 Tooltip and hover fixes.
