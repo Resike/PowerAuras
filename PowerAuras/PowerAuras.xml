@@ -2709,7 +2709,7 @@
 								<Scripts>
 									<OnLoad>
 										self:EnableMouseWheel(true)
-										self:SetMinMaxValues(0.01,2)
+										self:SetMinMaxValues(0.01, 2)
 										self:SetValue(1.0)
 										self:SetValueStep(0.01)
 										PowaBarAuraAnimSpeedSliderText:SetText(PowaAuras.Text.nomSpeed..": 100%")
