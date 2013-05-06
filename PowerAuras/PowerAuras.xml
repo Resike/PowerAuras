@@ -2739,7 +2739,7 @@
 									<OnLoad>
 										self:EnableMouseWheel(true)
 										self.aide = PowaAuras.Text.aideDuration
-										self:SetMinMaxValues(0,60)
+										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
 										self:SetValueStep(0.25)
 										PowaBarAuraDurationSliderText:SetText(PowaAuras.Text.nomDuration..": 0.00 sec")
