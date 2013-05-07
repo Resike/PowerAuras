@@ -945,7 +945,7 @@
 						<Scripts>
 							<OnLoad>
 								self:EnableMouseWheel(true)
-								self:SetMinMaxValues(-0.010,2.010)
+								self:SetMinMaxValues(-0.010, 2.010)
 								self:SetValue(1)
 								self:SetValueStep(0.005)
 								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform..": 1.000")
