@@ -2586,6 +2586,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_SetSelectedID(PowaDropDownAnim2, 1);
 		end
 	elseif (owner:GetName() == "PowaDropDownSoundButton" or owner:GetName() == "PowaDropDownSound") then
+		UIDropDownMenu_SetWidth(owner, 210)
 		info = {func = PowaAuras.DropDownMenu_OnClickSound, owner = owner};
 		for i = 0, 29 do
 			if (PowaAuras.Sound[i]) then
@@ -2599,8 +2600,8 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		else
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSound, 0);
 		end
-		UIDropDownMenu_SetWidth(PowaDropDownSound, 220, 1);
 	elseif (owner:GetName() == "PowaDropDownSound2Button" or owner:GetName() == "PowaDropDownSound2") then
+		UIDropDownMenu_SetWidth(owner, 210)
 		info = {func = PowaAuras.DropDownMenu_OnClickSound, owner = owner};
 		for i = 30, #PowaAuras.Sound do
 			if (PowaAuras.Sound[i]) then
@@ -2614,8 +2615,8 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		else
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, 30);
 		end
-		UIDropDownMenu_SetWidth(PowaDropDownSound2, 220, 1);
 	elseif (owner:GetName() == "PowaDropDownSoundEndButton" or owner:GetName() == "PowaDropDownSoundEnd") then
+		UIDropDownMenu_SetWidth(owner, 210)
 		info = {func = PowaAuras.DropDownMenu_OnClickSoundEnd, owner = owner};
 		for i = 0, 29 do
 			if (PowaAuras.Sound[i]) then
@@ -2629,8 +2630,8 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		else
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0);
 		end
-		UIDropDownMenu_SetWidth(PowaDropDownSoundEnd, 220, 1);
 	elseif (owner:GetName() == "PowaDropDownSound2EndButton" or owner:GetName() == "PowaDropDownSound2End") then
+		UIDropDownMenu_SetWidth(owner, 210)
 		info = {func = PowaAuras.DropDownMenu_OnClickSoundEnd, owner = owner};
 		for i = 30, #PowaAuras.Sound do
 			if (PowaAuras.Sound[i]) then
@@ -2644,7 +2645,6 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		else
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30);
 		end
-		UIDropDownMenu_SetWidth(PowaDropDownSound2End, 220, 1);
 	elseif (owner:GetName() == "PowaBuffTimerRelativeButton" or owner:GetName() == "PowaBuffTimerRelative") then
 		info = {func = PowaAuras.DropDownMenu_OnClickTimerRelative, owner = owner};
 		for null, v in pairs({"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "CENTER"}) do
@@ -2660,7 +2660,9 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			info.value = v;
 			UIDropDownMenu_AddButton(info);
 		end
-		if (aura.Stacks) then UIDropDownMenu_SetSelectedValue(PowaBuffStacksRelative, aura.Stacks.Relative); end
+		if (aura.Stacks) then
+			UIDropDownMenu_SetSelectedValue(PowaBuffStacksRelative, aura.Stacks.Relative);
+		end
 	end
 end
 
@@ -3340,18 +3342,12 @@ function PowaAuras_InitalizeOnMenuOpen()
 	-- PowaDropDownAnim2
 	UIDropDownMenu_Initialize(PowaDropDownAnim2, PowaAuras.DropDownMenu_Initialize);
 	-- PowaDropDownSound
-	PowaDropDownSoundLabel:SetText(PowaAuras.Text.nomSound);
-	PowaStartSoundText:SetText(PowaAuras.Text.nomSoundStarting);
 	UIDropDownMenu_Initialize(PowaDropDownSound, PowaAuras.DropDownMenu_Initialize);
 	-- PowaDropDownSound2
-	PowaDropDownSound2Label:SetText(PowaAuras.Text.nomSound2);
 	UIDropDownMenu_Initialize(PowaDropDownSound2, PowaAuras.DropDownMenu_Initialize);
 	-- PowaDropDownSoundEnd
-	PowaDropDownSoundEndLabel:SetText(PowaAuras.Text.nomSoundEnd);
-	PowaEndSoundText:SetText(PowaAuras.Text.nomSoundEnding);
 	UIDropDownMenu_Initialize(PowaDropDownSoundEnd, PowaAuras.DropDownMenu_Initialize);
 	-- PowaDropDownSound2End
-	PowaDropDownSound2EndLabel:SetText(PowaAuras.Text.nomSound2End);
 	UIDropDownMenu_Initialize(PowaDropDownSound2End, PowaAuras.DropDownMenu_Initialize);
 end
 

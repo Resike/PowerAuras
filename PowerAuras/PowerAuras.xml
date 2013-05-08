@@ -304,7 +304,7 @@
 					</Layer>
 				</Layers>
 				<Frames>
-					<!-- Color Picker Button -->
+					<!-- Base Color Button -->
 					<Button name = "PowaColor">
 						<Size>
 							<AbsDimension x = "16" y = "16"/>
@@ -347,21 +347,21 @@
 						</Layers>
 						<Scripts>
 							<OnLoad>
-								getglobal(self:GetName().."_SwatchBg").r = 1.0
-								getglobal(self:GetName().."_SwatchBg").g = 1.0
-								getglobal(self:GetName().."_SwatchBg").b = 1.0
+								PowaColor_SwatchBg.r = 1.0
+								PowaColor_SwatchBg.g = 1.0
+								PowaColor_SwatchBg.b = 1.0
 								PowaColorText:SetText(PowaAuras.Text.nomColorPicker)
 							</OnLoad>
 							<OnClick>
 								PowaAuras:OpenColorPicker(self, PowaAuras.Auras[PowaAuras.CurrentAuraId])
 							</OnClick>
 							<OnEnter>
-								getglobal(self:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
+								PowaColor_SwatchBg:SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 								GameTooltip:SetText(PowaAuras.Text.aideColor, nil, nil, nil, nil, 1)
 							</OnEnter>
 							<OnLeave>
-								getglobal(self:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
+								PowaColor_SwatchBg:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
 								GameTooltip:Hide()
 							</OnLeave>
 						</Scripts>
@@ -401,7 +401,7 @@
 							</OnShow>
 						</Scripts>
 					</Frame>
-					<!-- Gradient Color Picker Button -->
+					<!-- Secondary Color Button -->
 					<Button name = "PowaGradientColor">
 						<Size>
 							<AbsDimension x = "16" y = "16"/>
@@ -444,21 +444,21 @@
 						</Layers>
 						<Scripts>
 							<OnLoad>
-								getglobal(self:GetName().."_SwatchBg").r = 1.0
-								getglobal(self:GetName().."_SwatchBg").g = 1.0
-								getglobal(self:GetName().."_SwatchBg").b = 1.0
+								PowaGradientColor_SwatchBg.r = 1.0
+								PowaGradientColor_SwatchBg.g = 1.0
+								PowaGradientColor_SwatchBg.b = 1.0
 								PowaGradientColorText:SetText(PowaAuras.Text.nomSecondaryColorPicker)
 							</OnLoad>
 							<OnClick>
 								PowaAuras:OpenGradientColorPicker(self, PowaAuras.Auras[PowaAuras.CurrentAuraId])
 							</OnClick>
 							<OnEnter>
-								getglobal(self:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
+								PowaGradientColor_SwatchBg:SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-								--GameTooltip:SetText(PowaAuras.Text.aideSecondaryColor, nil, nil, nil, nil, 1)
+								GameTooltip:SetText(PowaAuras.Text.aideSecondaryColor, nil, nil, nil, nil, 1)
 							</OnEnter>
 							<OnLeave>
-								getglobal(self:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
+								PowaGradientColor_SwatchBg:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
 								GameTooltip:Hide()
 							</OnLeave>
 						</Scripts>
@@ -945,7 +945,7 @@
 						<Scripts>
 							<OnLoad>
 								self:EnableMouseWheel(true)
-								self:SetMinMaxValues(-0.010, 2.010)
+								self:SetMinMaxValues(-0.010,2.010)
 								self:SetValue(1)
 								self:SetValueStep(0.005)
 								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform..": 1.000")
@@ -1394,9 +1394,9 @@
 										self:SetMinMaxValues(0,100)
 										self:SetValue(50)
 										self:SetValueStep(1)
-										getglobal(self:GetName().."Text"):SetText(PowaAuras.Text.nomThreshold..": 50%")
-										getglobal(self:GetName().."Low"):SetText("0%")
-										getglobal(self:GetName().."High"):SetText("100%")
+										PowaBarThresholdSliderText:SetText(PowaAuras.Text.nomThreshold..": 50%")
+										PowaBarThresholdSliderLow:SetText("0%")
+										PowaBarThresholdSliderHigh:SetText("100%")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:BarThresholdSliderChanged()
@@ -1450,7 +1450,7 @@
 													</Offset>
 												</Anchor>
 											</Anchors>
-									</FontString>
+										</FontString>
 									</Layer>
 								</Layers>
 								<Scripts>
@@ -2759,7 +2759,7 @@
 					<!-- Third Configuration Tab Panel (Sound) -->
 					<Frame name = "PowaBarConfigFrameEditor5" hidden = "true">
 						<Size>
-							<AbsDimension x = "450" y = "340"/>
+							<AbsDimension x = "450" y = "300"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaBarConfigFrameEditor" relativePoint = "BOTTOM">
@@ -2786,45 +2786,28 @@
 							</OnLoad>
 						</Scripts>
 						<Frames>
-							<Frame name = "PowaStartSound">
+							<!-- Starting Sound DropDown -->
+							<Frame name = "PowaDropDownSound" inherits = "UIDropDownMenuTemplate" id = "13">
 								<Size>
-									<AbsDimension x = "220" y = "20"/>
+									<AbsDimension x = "200"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor5" relativePoint = "TOPLEFT">
 										<Offset>
-											<AbsDimension x = "10" y = "-10"/>
+											<AbsDimension x = "-6" y = "-18"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
-								<Layers>
-									<Layer>
-										<FontString name = "$parentText" inherits = "GameFontHighlight" justifyV = "TOP" justifyH = "LEFT" text = "Starting Sound:">
-											<FontHeight>
-												<AbsValue val = "22"/>
-											</FontHeight>
-										</FontString>
-									</Layer>
-								</Layers>
-							</Frame>
-							<Frame name = "PowaDropDownSound" inherits = "UIDropDownMenuTemplate" id = "11">
-								<Size>
-									<AbsDimension x = "220"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor5" relativePoint = "TOPLEFT">
-										<Offset>
-											<AbsDimension x = "5" y = "-45"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
 											<Anchors>
 												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 													<Offset>
-														<AbsDimension x = "15" y = "0"/>
+														<AbsDimension x = "20" y = "2"/>
 													</Offset>
 												</Anchor>
 											</Anchors>
@@ -2833,7 +2816,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										self:SetHitRectInsets(18, -20, 2, 6)
+										PowaDropDownSoundLabel:SetText(PowaAuras.Text.nomSound)
 									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -2847,24 +2830,28 @@
 									</OnLeave>
 								</Scripts>
 							</Frame>
-							<Frame name = "PowaDropDownSound2" inherits = "UIDropDownMenuTemplate" id = "11">
+							<!-- Custom Starting Sound DropDown -->
+							<Frame name = "PowaDropDownSound2" inherits = "UIDropDownMenuTemplate" id = "14">
 								<Size>
-									<AbsDimension x = "220"/>
+									<AbsDimension x = "200"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownSound" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "0" y = "-10"/>
+											<AbsDimension x = "0" y = "-15"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
 											<Anchors>
 												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 													<Offset>
-														<AbsDimension x = "15" y = "0"/>
+														<AbsDimension x = "20" y = "2"/>
 													</Offset>
 												</Anchor>
 											</Anchors>
@@ -2873,7 +2860,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										self:SetHitRectInsets(18, -20, 2, 6)
+										PowaDropDownSound2Label:SetText(PowaAuras.Text.nomSound2)
 									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -2887,26 +2874,36 @@
 									</OnLeave>
 								</Scripts>
 							</Frame>
+							<!-- Custom Ending Soundfile EditBox -->
 							<EditBox name = "PowaBarCustomSound" autoFocus = "false" inherits = "InputBoxTemplate">
 								<Size>
-									<AbsDimension x = "420" y = "16"/>
+									<AbsDimension x = "415" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownSound2" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "20" y = "-15"/>
+											<AbsDimension x = "25" y = "-15"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
 								<Layers>
-									<Layer level = "OVERLAY">
-										<FontString inherits = "ChatFontNormal" bytes = "200"/>
+									<Layer level = "BACKGROUND">
+										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+											<Anchors>
+												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+													<Offset>
+														<AbsDimension x = "-4" y = "4"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
 									</Layer>
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaBarCustomSoundText:SetText(PowaAuras.Text.nomCustomSound)
-										self:SetMaxLetters(200) self.aide = PowaAuras.Text.aideCustomSound
+										PowaBarCustomSoundLabel:SetText(PowaAuras.Text.nomCustomSound)
+										self:SetMaxLetters(256)
+										self.aide = PowaAuras.Text.aideCustomSound
 									</OnLoad>
 									<OnEnterPressed>
 										self:ClearFocus()
@@ -2922,62 +2919,29 @@
 										GameTooltip:Hide()
 									</OnLeave>
 								</Scripts>
-								<Layers>
-									<Layer level = "OVERLAY">
-										<FontString name = "$parentText" inherits = "GameFontNormalSmall" justifyH = "LEFT">
-											<Size>
-												<AbsDimension x = "220" y = "20"/>
-											</Size>
-											<Anchors>
-												<Anchor point = "BOTTOMLEFT" relativeTo = "$parent" relativePoint = "TOPLEFT">
-													<Offset>
-														<AbsDimension x = "0" y = "0"/>
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-								</Layers>
 							</EditBox>
-							<Frame name = "PowaEndSound">
+							<!-- Ending Sound Dropdown -->
+							<Frame name = "PowaDropDownSoundEnd" inherits = "UIDropDownMenuTemplate" id = "15">
 								<Size>
-									<AbsDimension x = "220" y = "20"/>
+									<AbsDimension x = "200"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarCustomSound" relativePoint = "TOPLEFT">
 										<Offset>
-											<AbsDimension x = "-15" y = "-30"/>
+											<AbsDimension x = "-23" y = "-60"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
-								<Layers>
-									<Layer>
-										<FontString name = "$parentText" inherits = "GameFontHighlight" justifyV = "TOP" justifyH = "LEFT" text = "Ending Sound:">
-											<FontHeight>
-												<AbsValue val = "22"/>
-											</FontHeight>
-										</FontString>
-									</Layer>
-								</Layers>
-							</Frame>
-							<Frame name = "PowaDropDownSoundEnd" inherits = "UIDropDownMenuTemplate" id = "11">
-								<Size>
-									<AbsDimension x = "220"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaEndSound" relativePoint = "TOPLEFT">
-										<Offset>
-											<AbsDimension x = "-5" y = "-35"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
 											<Anchors>
 												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 													<Offset>
-														<AbsDimension x = "15" y = "0"/>
+														<AbsDimension x = "20" y = "2"/>
 													</Offset>
 												</Anchor>
 											</Anchors>
@@ -2986,7 +2950,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										self:SetHitRectInsets(18, -20, 2, 6)
+										PowaDropDownSoundEndLabel:SetText(PowaAuras.Text.nomSoundEnd);
 									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -3000,24 +2964,28 @@
 									</OnLeave>
 								</Scripts>
 							</Frame>
-							<Frame name = "PowaDropDownSound2End" inherits = "UIDropDownMenuTemplate" id = "11">
+							<!-- Custom Ending Sound Dropdown -->
+							<Frame name = "PowaDropDownSound2End" inherits = "UIDropDownMenuTemplate" id = "16">
 								<Size>
 									<AbsDimension x = "220"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownSoundEnd" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "0" y = "-10"/>
+											<AbsDimension x = "0" y = "-15"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
 											<Anchors>
 												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 													<Offset>
-														<AbsDimension x = "15" y = "0"/>
+														<AbsDimension x = "20" y = "2"/>
 													</Offset>
 												</Anchor>
 											</Anchors>
@@ -3026,7 +2994,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										self:SetHitRectInsets(18, -20, 2, 6)
+										PowaDropDownSound2EndLabel:SetText(PowaAuras.Text.nomSound2End);
 									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -3040,26 +3008,35 @@
 									</OnLeave>
 								</Scripts>
 							</Frame>
+							<!-- Custom Ending Soundfile EditBox -->
 							<EditBox name = "PowaBarCustomSoundEnd" autoFocus = "false" inherits = "InputBoxTemplate">
 								<Size>
-									<AbsDimension x = "420" y = "16"/>
+									<AbsDimension x = "415" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownSound2End" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "20" y = "-15"/>
+											<AbsDimension x = "25" y = "-15"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
 								<Layers>
-									<Layer level = "OVERLAY">
-										<FontString inherits = "ChatFontNormal" bytes = "200"/>
+									<Layer level = "BACKGROUND">
+										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+											<Anchors>
+												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+													<Offset>
+														<AbsDimension x = "-4" y = "4"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
 									</Layer>
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaBarCustomSoundEndText:SetText(PowaAuras.Text.nomCustomSoundEnd)
-										self:SetMaxLetters(200)
+										PowaBarCustomSoundEndLabel:SetText(PowaAuras.Text.nomCustomSoundEnd)
+										self:SetMaxLetters(256)
 										self.aide = PowaAuras.Text.aideCustomSoundEnd
 									</OnLoad>
 									<OnEnterPressed>
@@ -3076,22 +3053,6 @@
 										GameTooltip:Hide()
 									</OnLeave>
 								</Scripts>
-								<Layers>
-									<Layer level = "OVERLAY">
-										<FontString name = "PowaBarCustomSoundEndText" inherits = "GameFontNormalSmall" justifyH = "LEFT">
-											<Size>
-												<AbsDimension x = "220" y = "20"/>
-											</Size>
-											<Anchors>
-												<Anchor point = "BOTTOMLEFT" relativeTo = "PowaBarCustomSoundEnd" relativePoint = "TOPLEFT">
-													<Offset>
-														<AbsDimension x = "0" y = "0"/>
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-								</Layers>
 							</EditBox>
 						</Frames>
 					</Frame>

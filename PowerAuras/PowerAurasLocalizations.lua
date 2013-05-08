@@ -240,14 +240,13 @@ aidePetStance = "Enter the ID numbers of pet stances that need to be active in o
 -- Editor
 aideCustomText = "Enter text to display. (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, %agl=agl, %sta=sta, %int=int, %spi=spi, %sp=spell power, %ap=attack power, %df=defence)",
 
-nomSoundStarting = "Starting Sound:",
-nomSound = "Sound to play",
+nomSound = "Starting Sound:",
 
-nomSound2 = "More sounds to play",
+nomSound2 = "Custom Starting Sound:",
 aideSound = "Plays a sound at the beginning.",
 aideSound2 = "Plays a sound at the beginning.",
-nomCustomSound = "Or soundfile:",
-aideCustomSound = "Enter a soundfile that is in the Sounds folder, BEFORE you started the game. mp3 and wav are supported. example: 'cookie.mp3'\nOr\nEnter the full path to play any WoW sound e.g. Sound\\Events\\GuldanCheers.wav",
+nomCustomSound = "Custom Starting Soundfile:",
+aideCustomSound = "Enter a soundfile that is in the Sounds folder.\nSupported file formats: .mp3, .wav and .ogg, you must copy the file before you start the game.\nExamples: 'cookie.mp3', 'Sound\\Events\\\nGuldanCheers.wav'.",
 
 nomCustomSoundPath = "Path to custom sounds:",
 aideCustomSoundPath = "Set this to your own path (within the WoW install folder) to prevent your own sounds being overwritten by updating Power Auras.",
@@ -255,13 +254,12 @@ aideCustomSoundPath = "Set this to your own path (within the WoW install folder)
 nomCustomAuraPath = "Path to custom aura textures:",
 aideCustomAuraPath = "Set this to your own path (within the WoW install folder) to prevent your own textures being overwritten by updating Power Auras.",
 
-nomSoundEnding = "Ending Sound:",
-nomSoundEnd = "Sound to play",
-nomSound2End = "More sounds to play",
+nomSoundEnd = "Ending Sound:",
+nomSound2End = "Custom Ending Sound:",
 aideSoundEnd = "Plays a sound at the end.",
 aideSound2End = "Plays a sound at the end.",
-nomCustomSoundEnd = "OR soundfile:",
-aideCustomSoundEnd = "Enter a soundfile that is in the Sounds folder, BEFORE you started the game. mp3 and wav are supported. example: 'cookie.mp3'\nOr\nEnter the full path to play any WoW sound e.g. Sound\\Events\\GuldanCheers.wav",
+nomCustomSoundEnd = "Custom Ending Soundfile:",
+aideCustomSoundEnd = "Enter a soundfile that is in the Sounds folder.\nSupported file formats: .mp3, .wav and .ogg, you must copy the file before you start the game.\nExamples: 'cookie.mp3', 'Sound\\Events\\\nGuldanCheers.wav'.",
 nomTexture = "Texture",
 aideTexture = "The texture to be shown. You can easily replace textures by changing the files Aura#.tga in the Addon's directory.",
 
@@ -1035,7 +1033,6 @@ aideTracking = "Enter name of Tracking type e.g. fish",
 -- Editor
 aideCustomText = "Enter text to display (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, agl=agl, %sta=sta, %int=int, %sp1=spi, %sp=spell power, %ap=attack power, %df=defence)",
 
-nomSoundStarting = "Start Sound:",
 nomSound = "Sound abspielen:",
 aideSound = "Spielt einen Sound am Anfang ab.",
 nomSound2 = "Noch mehr Sounds zum abspielen:",
@@ -1043,7 +1040,6 @@ aideSound2 = "Spielt einen Sound am Anfang ab",
 nomCustomSound = "ODER Sounddatei:",
 aideCustomSound = "Dateiname der Sounddatei eingeben, die VOR dem Starten von WoW im Sounds Verzeichniss war. mp3 und wav werden unterstützt. Bsp.: 'cookie.mp3' ;)",
 
-nomSoundEnding = "End Sound:",
 nomSoundEnd = "Sound abspielen:",
 nomSound2End = "Noch mehr Sounds zum abspielen:",
 aideSoundEnd = "Spielt einen Sound am Ende ab",
@@ -1796,7 +1792,6 @@ aideTracking = "Introduce el nombre del tipo de rastreo ej. pescado",
 -- Editor
 aideCustomText = "Introduce texto para mostrar (%t=nombre del objetivo, %f=nombre del foco, %v=valor de visualización, %u=nombre de la unidad, %str=fuerza, agl=agilidad, %sta=aguante, %int=intelecto, %sp1=espíritu, %sp=poder con hechizos, %ap=poder de ataque, %df=defensa)",
 
-nomSoundStarting = "Sonido inicial",
 nomSound = "Sonido para reproducir",
 nomSound2 = "Más sonidos para reproducir",
 aideSound = "Reproduce un sonido al inicio",
@@ -1810,7 +1805,6 @@ aideCustomSoundPath = "Publica tu propia ruta (within the WoW install) para evit
 nomCustomAuraPath = "Ruta texturas personalizados:",
 aideCustomAuraPath = "Publica tu propia ruta (within the WoW install) para evitar sobreescribirlas al actualizar Power Auras",
 
-nomSoundEnding = "Sonido final:",
 nomSoundEnd = "Sonido para reproducir",
 nomSound2End = "Más sonidos para reproducir",
 aideSoundEnd = "Reproduce un sonido al final",
@@ -2578,7 +2572,6 @@ aideTracking = "Introduce el nombre del tipo de rastreo ej. pescado",
 -- Editor
 aideCustomText = "Introduce texto para mostrar (%t=nombre del objetivo, %f=nombre del foco, %v=valor de visualización, %u=nombre de la unidad, %str=fuerza, agl=agilidad, %sta=aguante, %int=intelecto, %sp1=espíritu, %sp=poder con hechizos, %ap=poder de ataque, %df=defensa)",
 
-nomSoundStarting = "Sonido inicial",
 nomSound = "Sonido para reproducir",
 nomSound2 = "Más sonidos para reproducir",
 aideSound = "Reproduce un sonido al inicio",
@@ -2592,7 +2585,6 @@ aideCustomSoundPath = "Publica tu propia ruta (within the WoW install) para evit
 nomCustomAuraPath = "Ruta texturas personalizados:",
 aideCustomAuraPath = "Publica tu propia ruta (within the WoW install) para evitar sobreescribirlas al actualizar Power Auras",
 
-nomSoundEnding = "Sonido final:",
 nomSoundEnd = "Sonido para reproducir",
 nomSound2End = "Más sonidos para reproducir",
 aideSoundEnd = "Reproduce un sonido al final",
@@ -3359,7 +3351,6 @@ aideTracking = "Enter name of Tracking type e.g. fish",
 -- Editor
 aideCustomText = "Enter text to display (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, agl=agl, %sta=sta, %int=int, %sp1=spi, %sp=spell power, %ap=attack power, %df=defence)",
 
-nomSoundStarting = "Son de départ",
 nomSound = "Son à jouer",
 nomSound2 = "Son à jouer supplémentaire",
 aideSound = "Plays a sound at the beginning.",
@@ -3373,7 +3364,6 @@ aideCustomSoundPath = "Set this to your own path (within the WoW install) to pre
 nomCustomAuraPath = "Path to custom aura textures:",
 aideCustomAuraPath = "Set this to your own path (within the WoW install) to prevent your own textures being overwritten by updating Power Auras.",
 
-nomSoundEnding = "Son de fin:",
 nomSoundEnd = "Son à jouer",
 nomSound2End = "Son à jouer supplémentaire",
 aideSoundEnd = "Plays a sound at the end.",
@@ -4697,7 +4687,6 @@ aideTracking = "Enter name of Tracking type e.g. fish",
 -- Editor
 aideCustomText = "Enter text to display (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, agl=agl, %sta=sta, %int=int, %sp1=spi, %sp=spell power, %ap=attack power, %df=defence)",
 
-nomSoundStarting = "Starting Sound:",
 nomSound = "Проигрываемый звук",
 nomSound2 = "Еще звуки",
 aideSound = "Проиграть звук при начале.",
@@ -4705,7 +4694,6 @@ aideSound2 = "Проиграть звук при начале.",
 nomCustomSound = "или звуковой файл:",
 aideCustomSound = "Введите название звукового файла, который поместили в папку Sounds, ПРЕЖДЕ чем запустили игру. Поддерживаются mp3 и WAV. Например: 'cookie.mp3' ;)",
 
-nomSoundEnding = "Ending Sound:",
 nomSoundEnd = "Sound to play",
 nomSound2End = "More sounds to play",
 aideSoundEnd = "Plays a sound at the end.",
