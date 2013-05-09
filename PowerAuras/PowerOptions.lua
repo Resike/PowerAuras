@@ -2172,7 +2172,9 @@ function PowaAuras:OwntexChecked()
 		if (aura.rotate ~= 0) and (aura.rotate ~= 90) and (aura.rotate ~= 180) and (aura.rotate ~= 270) and (aura.rotate ~= 360) then
 			PowaBarAuraRotateSlider:SetValue(0)
 		end
-		--PowaBarAuraTextureSlider:Hide();
+		if (not PowaBarAuraTextureSlider:IsVisible()) then
+			PowaBarAuraTextureSlider:Show();
+		end
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
