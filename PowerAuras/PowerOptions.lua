@@ -15,7 +15,7 @@ function PowaAuras:UpdateMainOption(hideAll)
 	PowaEditButton:SetText(self.Text.nomEdit);
 	PowaOptionsRename:SetText(self.Text.nomRename);
 	PowaEnableButton:SetChecked(PowaMisc.Disabled ~= true);
-	PowaDebugButton:SetChecked(PowaMisc.debug == true);
+	PowaDebugButton:SetChecked(PowaMisc.Debug == true);
 	PowaTimerRoundingButton:SetChecked(PowaMisc.TimerRoundUp == true);
 	PowaAllowInspectionsButton:SetChecked(PowaMisc.AllowInspections == true);
 	PowaOptionsTextureCount:SetValue(self.MaxTextures);
@@ -427,7 +427,9 @@ function PowaAuras:OptionNewEffect()
 	self:UpdateTimerOptions();
 	self:InitPage(aura);
 	self:UpdateMainOption();
-	if (PowaEquipmentSlotsFrame:IsVisible()) then PowaEquipmentSlotsFrame:Hide(); end
+	if (PowaEquipmentSlotsFrame:IsVisible()) then
+		PowaEquipmentSlotsFrame:Hide();
+	end
 	if (not PowaBarConfigFrame:IsVisible()) then
 		PowaBarConfigFrame:Show();
 		PlaySound("TalentScreenOpen", PowaMisc.SoundChannel);
@@ -995,7 +997,9 @@ function PowaAuras:ExportDialogInit(self)
 	PowaComms:AddHandler("EXPORT_REJECT", function(null, data, from)
 		-- Were we sending to this person?
 		if(PowaAuraExportDialog.sendTo == from) then
-			if(PowaMisc.debug) then PowaAuras:ShowText("Comms: EXPORT_REJECT from " .. from); end
+			if(PowaMisc.Debug) then
+				PowaAuras:ShowText("Comms: EXPORT_REJECT from " .. from);
+			end
 			PowaAuraExportDialog.sendTo = nil;
 			PowaAuraExportDialog.errorReason = tonumber((data or 1), 10);
 			PowaAuraExportDialog:SetStatus(3);
@@ -1005,7 +1009,9 @@ function PowaAuras:ExportDialogInit(self)
 	PowaComms:AddHandler("EXPORT_ACCEPT", function(null, null, from)
 		-- Were we sending to this person?
 		if(PowaAuraExportDialog.sendTo == from) then
-			if(PowaMisc.debug) then PowaAuras:ShowText("Comms: EXPORT_ACCEPT from " .. from); end
+			if(PowaMisc.Debug) then
+				PowaAuras:ShowText("Comms: EXPORT_ACCEPT from " .. from);
+			end
 			PowaAuraExportDialog:SetStatus(4);
 			-- Let's get busy!
 			PowaComms:SendAddonMessage("EXPORT_DATA", PowaAuraExportDialog.sendString, from);
@@ -1161,17 +1167,23 @@ function PowaAuras:PlayerImportDialogInit(self)
 	PowaComms:AddHandler("EXPORT_REQUEST", function(null, data, from)
 		-- If we're busy, reject. If we're in combat, reject. If we're autoblocking, reject.
 		if(PowaAuraPlayerImportDialog.receiveFrom) then
-			if(PowaMisc.debug) then PowaAuras:ShowText("Comms: Rejected EXPORT_REQUEST - Busy."); end
+			if(PowaMisc.Debug) then
+				PowaAuras:ShowText("Comms: Rejected EXPORT_REQUEST - Busy.");
+			end
 			PowaComms:SendAddonMessage("EXPORT_REJECT", 4, from);
 			return;
 		end
 		if(InCombatLockdown()) then
-			if(PowaMisc.debug) then PowaAuras:ShowText("Comms: Rejected EXPORT_REQUEST - In combat."); end
+			if(PowaMisc.Debug) then
+				PowaAuras:ShowText("Comms: Rejected EXPORT_REQUEST - In combat.");
+			end
 			PowaComms:SendAddonMessage("EXPORT_REJECT", 1, from);
 			return;
 		end
 		if(PowaGlobalMisc.BlockIncomingAuras == true) then
-			if(PowaMisc.debug) then PowaAuras:ShowText("Comms: Rejected EXPORT_REQUEST - BlockIncomingAuras = true."); end
+			if(PowaMisc.Debug) then
+				PowaAuras:ShowText("Comms: Rejected EXPORT_REQUEST - BlockIncomingAuras = true.");
+			end
 			PowaComms:SendAddonMessage("EXPORT_REJECT", 2, from);
 			return;
 		end
@@ -1187,7 +1199,7 @@ function PowaAuras:PlayerImportDialogInit(self)
 	PowaComms:AddHandler("EXPORT_DATA", function(null, data, from)
 		-- Were we receiving from this person?
 		if(PowaAuraPlayerImportDialog.receiveFrom == from) then
-			if(PowaMisc.debug) then PowaAuras:ShowText("Comms: Receiving EXPORT_DATA"); end
+			if(PowaMisc.Debug) then PowaAuras:ShowText("Comms: Receiving EXPORT_DATA"); end
 			-- Status code 4 - we are pro.
 			PowaAuraPlayerImportDialog:SetStatus(4);
 			-- Store the data.
@@ -1352,11 +1364,11 @@ function PowaAuras:UpdateTimerOptions()
 		PowaTimerCoordXSlider:SetValue(timer.x);
 		PowaTimerCoordXSlider:SetMinMaxValues(timer.x - 700, timer.x + 700);
 		-- Timer slider Y
-		PowaTimerCoordSlider:SetMinMaxValues(timer.y - 10000, timer.y + 10000);
-		PowaTimerCoordSliderLow:SetText(timer.y - 400);
-		PowaTimerCoordSliderHigh:SetText(timer.y + 400);
-		PowaTimerCoordSlider:SetValue(timer.y);
-		PowaTimerCoordSlider:SetMinMaxValues(timer.y - 400, timer.y + 400);
+		PowaTimerCoordYSlider:SetMinMaxValues(timer.y - 10000, timer.y + 10000);
+		PowaTimerCoordYSliderLow:SetText(timer.y - 400);
+		PowaTimerCoordYSliderHigh:SetText(timer.y + 400);
+		PowaTimerCoordYSlider:SetValue(timer.y);
+		PowaTimerCoordYSlider:SetMinMaxValues(timer.y - 400, timer.y + 400);
 		PowaBuffTimerCentsButton:SetChecked(timer.cents);
 		PowaBuffTimerLeadingZerosButton:SetChecked(timer.HideLeadingZeros);
 		PowaBuffTimerTransparentButton:SetChecked(timer.Transparent);
@@ -1373,10 +1385,11 @@ function PowaAuras:UpdateTimerOptions()
 			PowaBuffTimerActivationTime:Disable();
 		end
 		PowaBuffTimerActivationTime:SetChecked(timer.ShowActivation);
+		PowaBuffTimer99:SetChecked(timer.Seconds99);
 		PowaBuffTimerUseOwnColorButton:SetChecked(timer.UseOwnColor);
 		PowaTimerColorNormalTexture:SetVertexColor(timer.r,timer.g,timer.b);
-		UIDropDownMenu_SetSelectedValue(PowaBuffTimerRelative, timer.Relative);
-		UIDropDownMenu_SetSelectedValue(PowaDropDownTimerTexture, timer.Texture);
+		--UIDropDownMenu_SetSelectedValue(PowaBuffTimerRelative, timer.Relative);
+		--UIDropDownMenu_SetSelectedValue(PowaDropDownTimerTexture, timer.Texture);
 		PowaTimerInvertAuraSlider:SetValue(aura.InvertAuraBelow);
 	end
 end
@@ -1389,22 +1402,23 @@ function PowaAuras:UpdateStacksOptions()
 		PowaStacksSizeSlider:SetValue(stacks.h);
 		-- Stacks slider X
 		PowaStacksCoordXSlider:SetMinMaxValues(stacks.x - 10000, stacks.x + 10000);
-		PowaStacksCoordXSliderLow:SetText(stacks.x - 800);
-		PowaStacksCoordXSliderHigh:SetText(stacks.x + 800);
+		PowaStacksCoordXSliderLow:SetText(stacks.x - 700);
+		PowaStacksCoordXSliderHigh:SetText(stacks.x + 700);
 		PowaStacksCoordXSlider:SetValue(stacks.x);
-		PowaStacksCoordXSlider:SetMinMaxValues(stacks.x - 800, stacks.x + 800);
+		PowaStacksCoordXSlider:SetMinMaxValues(stacks.x - 700, stacks.x + 700);
 		-- Stacks slider Y
-		PowaStacksCoordSlider:SetMinMaxValues(stacks.y - 10000, stacks.y + 10000);
-		PowaStacksCoordSliderLow:SetText(stacks.y - 800);
-		PowaStacksCoordSliderHigh:SetText(stacks.y + 800);
-		PowaStacksCoordSlider:SetValue(stacks.y);
-		PowaStacksCoordSlider:SetMinMaxValues(stacks.y - 800, stacks.y + 800);
+		PowaStacksCoordYSlider:SetMinMaxValues(stacks.y - 10000, stacks.y + 10000);
+		PowaStacksCoordYSliderLow:SetText(stacks.y - 400);
+		PowaStacksCoordYSliderHigh:SetText(stacks.y + 400);
+		PowaStacksCoordYSlider:SetValue(stacks.y);
+		PowaStacksCoordYSlider:SetMinMaxValues(stacks.y - 400, stacks.y + 400);
 		PowaBuffStacksTransparentButton:SetChecked(stacks.Transparent);
 		PowaBuffStacksUpdatePingButton:SetChecked(stacks.UpdatePing);
+		PowaBuffStacksLegacySizing:SetChecked(stacks.LegacySizing);
 		PowaBuffStacksUseOwnColorButton:SetChecked(stacks.UseOwnColor);
 		PowaStacksColorNormalTexture:SetVertexColor(stacks.r,stacks.g,stacks.b);
-		UIDropDownMenu_SetSelectedValue(PowaBuffStacksRelative, stacks.Relative);
-		UIDropDownMenu_SetSelectedValue(PowaDropDownStacksTexture, stacks.Texture);
+		--UIDropDownMenu_SetSelectedValue(PowaBuffStacksRelative, stacks.Relative);
+		--UIDropDownMenu_SetSelectedValue(PowaDropDownStacksTexture, stacks.Texture);
 	end
 end
 
@@ -1607,8 +1621,8 @@ function PowaAuras:InitPage(aura)
 		PanelTemplates_SelectTab(PowaEditorTab1);
 		PanelTemplates_DeselectTab(PowaEditorTab2);
 		PanelTemplates_DeselectTab(PowaEditorTab4);
-		PowaBarConfigFrameEditor2:Show();
-		PowaBarConfigFrameEditor3:Hide();
+		PowaBarConfigFrameEditor1:Show();
+		PowaBarConfigFrameEditor2:Hide();
 		PowaBarConfigFrameEditor4:Hide();
 	end
 	-- Auras visuals
@@ -2374,14 +2388,14 @@ end
 function PowaAuras.DropDownMenu_Initialize(owner)
 	local info;
 	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
+	local name = owner:GetName();
 	if (aura == nil) then
 		aura = PowaAuras:AuraFactory(PowaAuras.BuffTypes.Buff, 0);
 	end
-	if (owner:GetName() == "PowaStrataDropDown") then
+	if (name == "PowaStrataDropDown") then
 		UIDropDownMenu_SetWidth(owner, 125)
 		for i = 1, #PowaAuras.StrataList do
 			local info = UIDropDownMenu_CreateInfo();
-			info.hasArrow = false;
 			info.text = PowaAuras.StrataList[i];
 			info.func = function(self)
 				local strata = PowaAuras.StrataList[i];
@@ -2393,14 +2407,13 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				PowaStrataDropDownText:SetText(strata);
 				UIDropDownMenu_SetSelectedName(PowaStrataDropDown, strata);
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
-			end;
+			end
 			UIDropDownMenu_AddButton(info, level);
 		end
-	elseif (owner:GetName() == "PowaTextureStrataDropDown") then
+	elseif (name == "PowaTextureStrataDropDown") then
 		UIDropDownMenu_SetWidth(owner, 125)
 		for i = 1, #PowaAuras.TextureStrataList do
 			local info = UIDropDownMenu_CreateInfo();
-			info.hasArrow = false;
 			info.text = PowaAuras.TextureStrataList[i];
 			info.func = function(self)
 				local texturestrata = PowaAuras.TextureStrataList[i];
@@ -2412,14 +2425,13 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				PowaTextureStrataDropDownText:SetText(texturestrata);
 				UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, texturestrata);
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
-			end;
+			end
 			UIDropDownMenu_AddButton(info, level);
 		end
-	elseif (owner:GetName() == "PowaBlendModeDropDown") then
+	elseif (name == "PowaBlendModeDropDown") then
 		UIDropDownMenu_SetWidth(owner, 125)
 		for i = 1, #PowaAuras.BlendModeList do
 			local info = UIDropDownMenu_CreateInfo();
-			info.hasArrow = false;
 			info.text = PowaAuras.BlendModeList[i];
 			info.func = function(self)
 				local blendmode = PowaAuras.BlendModeList[i];
@@ -2431,14 +2443,13 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				PowaBlendModeDropDownText:SetText(blendmode);
 				UIDropDownMenu_SetSelectedName(PowaBlendModeDropDown, blendmode);
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
-			end;
+			end
 			UIDropDownMenu_AddButton(info, level);
 		end
-	elseif (owner:GetName() == "PowaGradientStyleDropDown") then
+	elseif (name == "PowaGradientStyleDropDown") then
 		UIDropDownMenu_SetWidth(owner, 120)
 		for i = 1, #PowaAuras.GradientStyleList do
 			local info = UIDropDownMenu_CreateInfo();
-			info.hasArrow = false;
 			info.text = PowaAuras.GradientStyleList[i];
 			info.func = function(self)
 				local gradientstyle = PowaAuras.GradientStyleList[i];
@@ -2450,15 +2461,14 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				PowaGradientStyleDropDownText:SetText(gradientstyle);
 				UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, gradientstyle);
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
-			end;
+			end
 			UIDropDownMenu_AddButton(info, level);
 		end
-	elseif (owner:GetName() == "PowaDropDownBuffTypeButton" or owner:GetName() == "PowaDropDownBuffType") then
+	elseif (name == "PowaDropDownBuffType") then
 		UIDropDownMenu_SetWidth(owner, 175)
-		--PowaAuras:Message("DropDownMenu_Initialize for buff type");
 		PowaAuras:FillDropdownSorted(PowaAuras.Text.AuraType, {func = PowaAuras.DropDownMenu_OnClickBuffType, owner = owner});
 		UIDropDownMenu_SetSelectedValue(PowaDropDownBuffType, aura.bufftype);
-	elseif (owner:GetName() == "PowaDropDownPowerTypeButton" or owner:GetName() == "PowaDropDownPowerType") then
+	elseif (name == "PowaDropDownPowerType") then
 		UIDropDownMenu_SetWidth(owner, 145)
 		info = {func = PowaAuras.DropDownMenu_OnClickPowerType, owner = owner};
 		for i, name in pairs(PowaAuras.Text.PowerType) do
@@ -2467,7 +2477,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info);
 		end
 		UIDropDownMenu_SetSelectedValue(PowaDropDownPowerType, aura.PowerType);
-	elseif (owner:GetName() == "PowaDropDownStanceButton" or owner:GetName() == "PowaDropDownStance") then
+	elseif (name == "PowaDropDownStance") then
 		UIDropDownMenu_SetWidth(owner, 145)
 		info = {func = PowaAuras.DropDownMenu_OnClickStance, owner = owner};
 		for k, v in pairs(PowaAuras.PowaStance) do
@@ -2476,7 +2486,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info);
 		end
 		UIDropDownMenu_SetSelectedValue(PowaDropDownStance, aura.stance);
-	elseif (owner:GetName() == "PowaDropDownGTFOButton" or owner:GetName() == "PowaDropDownGTFO") then
+	elseif (name == "PowaDropDownGTFO") then
 		UIDropDownMenu_SetWidth(owner, 145)
 		info = {func = PowaAuras.DropDownMenu_OnClickGTFO, owner = owner};
 		for i = 0, #(PowaAuras.PowaGTFO) do
@@ -2485,7 +2495,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info);
 		end
 		UIDropDownMenu_SetSelectedValue(PowaDropDownGTFO, aura.GTFO);
-	elseif (owner:GetName() == "PowaDropDownAnimBeginButton" or owner:GetName() == "PowaDropDownAnimBegin") then
+	elseif (name == "PowaDropDownAnimBegin") then
 		UIDropDownMenu_SetWidth(owner, 190)
 		info = {func = PowaAuras.DropDownMenu_OnClickBegin, owner = owner};
 		for i = 0, #PowaAuras.BeginAnimDisplay do
@@ -2494,7 +2504,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info);
 		end
 		UIDropDownMenu_SetSelectedValue(PowaDropDownAnimBegin, aura.begin);
-	elseif (owner:GetName() == "PowaDropDownAnimEndButton" or owner:GetName() == "PowaDropDownAnimEnd") then
+	elseif (name == "PowaDropDownAnimEnd") then
 		UIDropDownMenu_SetWidth(owner, 190)
 		info = {func = PowaAuras.DropDownMenu_OnClickEnd, owner = owner};
 		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
@@ -2521,7 +2531,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			end
 			UIDropDownMenu_SetSelectedID(PowaDropDownAnimEnd, 1);
 		end
-	elseif (owner:GetName() == "PowaDropDownAnim1Button" or owner:GetName() == "PowaDropDownAnim1") then
+	elseif (name == "PowaDropDownAnim1") then
 		UIDropDownMenu_SetWidth(owner, 190)
 		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
 		if aura ~= nil then
@@ -2553,7 +2563,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			end
 			UIDropDownMenu_SetSelectedID(PowaDropDownAnim1, 1);
 		end
-	elseif (owner:GetName() == "PowaDropDownAnim2Button" or owner:GetName() == "PowaDropDownAnim2") then
+	elseif (name == "PowaDropDownAnim2") then
 		UIDropDownMenu_SetWidth(owner, 190)
 		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId];
 		if aura ~= nil then
@@ -2585,7 +2595,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			end
 			UIDropDownMenu_SetSelectedID(PowaDropDownAnim2, 1);
 		end
-	elseif (owner:GetName() == "PowaDropDownSoundButton" or owner:GetName() == "PowaDropDownSound") then
+	elseif (name == "PowaDropDownSound") then
 		UIDropDownMenu_SetWidth(owner, 210)
 		info = {func = PowaAuras.DropDownMenu_OnClickSound, owner = owner};
 		for i = 0, 29 do
@@ -2600,7 +2610,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		else
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSound, 0);
 		end
-	elseif (owner:GetName() == "PowaDropDownSound2Button" or owner:GetName() == "PowaDropDownSound2") then
+	elseif (name == "PowaDropDownSound2") then
 		UIDropDownMenu_SetWidth(owner, 210)
 		info = {func = PowaAuras.DropDownMenu_OnClickSound, owner = owner};
 		for i = 30, #PowaAuras.Sound do
@@ -2615,7 +2625,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		else
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, 30);
 		end
-	elseif (owner:GetName() == "PowaDropDownSoundEndButton" or owner:GetName() == "PowaDropDownSoundEnd") then
+	elseif (name == "PowaDropDownSoundEnd") then
 		UIDropDownMenu_SetWidth(owner, 210)
 		info = {func = PowaAuras.DropDownMenu_OnClickSoundEnd, owner = owner};
 		for i = 0, 29 do
@@ -2630,7 +2640,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		else
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0);
 		end
-	elseif (owner:GetName() == "PowaDropDownSound2EndButton" or owner:GetName() == "PowaDropDownSound2End") then
+	elseif (name == "PowaDropDownSound2End") then
 		UIDropDownMenu_SetWidth(owner, 210)
 		info = {func = PowaAuras.DropDownMenu_OnClickSoundEnd, owner = owner};
 		for i = 30, #PowaAuras.Sound do
@@ -2645,15 +2655,19 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 		else
 			UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30);
 		end
-	elseif (owner:GetName() == "PowaBuffTimerRelativeButton" or owner:GetName() == "PowaBuffTimerRelative") then
+	elseif (name == "PowaBuffTimerRelative") then
+		UIDropDownMenu_SetWidth(owner, 190)
 		info = {func = PowaAuras.DropDownMenu_OnClickTimerRelative, owner = owner};
 		for null, v in pairs({"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "CENTER"}) do
 			info.text = PowaAuras.Text.Relative[v];
 			info.value = v;
 			UIDropDownMenu_AddButton(info);
 		end
-		if (aura.Timer) then UIDropDownMenu_SetSelectedValue(PowaBuffTimerRelative, aura.Timer.Relative); end
-	elseif (owner:GetName() == "PowaBuffStacksRelativeButton" or owner:GetName() == "PowaBuffStacksRelative") then
+		if (aura.Timer) then
+			UIDropDownMenu_SetSelectedValue(PowaBuffTimerRelative, aura.Timer.Relative);
+		end
+	elseif (name == "PowaBuffStacksRelative") then
+		UIDropDownMenu_SetWidth(owner, 190)
 		info = {func = PowaAuras.DropDownMenu_OnClickStacksRelative, owner = owner};
 		for null, v in pairs({"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "TOPLEFT", "CENTER"}) do
 			info.text = PowaAuras.Text.Relative[v];
@@ -3149,27 +3163,19 @@ function PowaAuras:ShowTimerChecked(control)
 	end
 end
 
-function PowaAuras:TimerAlphaSliderChanged()
-	local SliderValue = PowaTimerAlphaSlider:GetValue();
-	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
-	PowaTimerAlphaSliderText:SetText(self.Text.nomAlpha..": "..format("%.2f", SliderValue));
-	self.Auras[self.CurrentAuraId].Timer.a = SliderValue;
-	--self:CreateTimerFrameIfMissing(self.CurrentAuraId);
-end
-
 function PowaAuras:TimerSizeSliderChanged()
 	local SliderValue = PowaTimerSizeSlider:GetValue();
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
-	PowaTimerSizeSliderText:SetText(self.Text.nomTaille..": "..format("%.2f", SliderValue));
+	PowaTimerSizeSliderText:SetText(self.Text.nomTaille..": "..format("%.0f", SliderValue * 100).."%");
 	self.Auras[self.CurrentAuraId].Timer.h = SliderValue;
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId);
 end
 
-function PowaAuras:TimerCoordSliderChanged()
-	local SliderValue = PowaTimerCoordSlider:GetValue();
+function PowaAuras:TimerAlphaSliderChanged()
+	local SliderValue = PowaTimerAlphaSlider:GetValue();
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
-	PowaTimerCoordSliderText:SetText(self.Text.nomPos.." Y: "..SliderValue);
-	self.Auras[self.CurrentAuraId].Timer.y = SliderValue;
+	PowaTimerAlphaSliderText:SetText(self.Text.nomAlpha..": "..format("%.0f", SliderValue * 100).."%");
+	self.Auras[self.CurrentAuraId].Timer.a = SliderValue;
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId);
 end
 
@@ -3181,9 +3187,18 @@ function PowaAuras:TimerCoordXSliderChanged()
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId);
 end
 
-function PowaAuras:PowaTimerInvertAuraSliderChanged(slider)
+function PowaAuras:TimerCoordYSliderChanged()
+	local SliderValue = PowaTimerCoordYSlider:GetValue();
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	PowaTimerCoordYSliderText:SetText(self.Text.nomPos.." Y: "..SliderValue);
+	self.Auras[self.CurrentAuraId].Timer.y = SliderValue;
+	--self:CreateTimerFrameIfMissing(self.CurrentAuraId);
+end
+
+function PowaAuras:PowaTimerInvertAuraSliderChanged(slider)
 	local text;
+	local SliderValue = PowaTimerInvertAuraSlider:GetValue();
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	if (self.Auras[self.CurrentAuraId].InvertTimeHides) then
 		text = self.Text.nomTimerHideAura;
 		slider.aide = PowaAuras.Text.aidePowaTimerHideAuraSlider;
@@ -3191,15 +3206,15 @@ function PowaAuras:PowaTimerInvertAuraSliderChanged(slider)
 		text = self.Text.nomTimerInvertAura;
 		slider.aide = PowaAuras.Text.aidePowaTimerInvertAuraSlider;
 	end
-	getglobal(slider:GetName().."Text"):SetText(text..": "..slider:GetValue().." sec");
-	self.Auras[self.CurrentAuraId].InvertAuraBelow = slider:GetValue();
+	PowaTimerInvertAuraSliderText:SetText(text..": "..format("%.2f", SliderValue).." sec");
+	self.Auras[self.CurrentAuraId].InvertAuraBelow = SliderValue;
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId);
 end
 
 function PowaAuras:TimerDurationSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaTimerDurationSlider:GetValue();
-	PowaTimerDurationSliderText:SetText(self.Text.nomTimerDuration..": "..SliderValue.." sec");
+	PowaTimerDurationSliderText:SetText(self.Text.nomTimerDuration..": "..format("%.2f", SliderValue).." sec");
 	self.Auras[self.CurrentAuraId].timerduration = SliderValue;
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId);
 end
@@ -3261,22 +3276,15 @@ end
 function PowaAuras:StacksAlphaSliderChanged()
 	local SliderValue = PowaStacksAlphaSlider:GetValue();
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
-	PowaStacksAlphaSliderText:SetText(self.Text.nomAlpha..": "..format("%.2f", SliderValue) );
+	PowaStacksAlphaSliderText:SetText(self.Text.nomAlpha..": "..format("%.0f", SliderValue * 100).."%");
 	self.Auras[self.CurrentAuraId].Stacks.a = SliderValue;
 end
 
 function PowaAuras:StacksSizeSliderChanged()
 	local SliderValue = PowaStacksSizeSlider:GetValue();
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
-	PowaStacksSizeSliderText:SetText(self.Text.nomTaille..": "..format("%.2f", SliderValue) );
+	PowaStacksSizeSliderText:SetText(self.Text.nomTaille..": "..format("%.0f", SliderValue * 100).."%");
 	self.Auras[self.CurrentAuraId].Stacks.h = SliderValue;
-end
-
-function PowaAuras:StacksCoordSliderChanged()
-	local SliderValue = PowaStacksCoordSlider:GetValue();
-	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
-	PowaStacksCoordSliderText:SetText(self.Text.nomPos.." Y: "..SliderValue);
-	self.Auras[self.CurrentAuraId].Stacks.y = SliderValue;
 end
 
 function PowaAuras:StacksCoordXSliderChanged()
@@ -3284,6 +3292,14 @@ function PowaAuras:StacksCoordXSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	PowaStacksCoordXSliderText:SetText(self.Text.nomPos.." X: "..SliderValue);
 	self.Auras[self.CurrentAuraId].Stacks.x = SliderValue;
+end
+
+
+function PowaAuras:StacksCoordYSliderChanged()
+	local SliderValue = PowaStacksCoordYSlider:GetValue();
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	PowaStacksCoordYSliderText:SetText(self.Text.nomPos.." Y: "..SliderValue);
+	self.Auras[self.CurrentAuraId].Stacks.y = SliderValue;
 end
 
 function PowaAuras.DropDownMenu_OnClickStacksRelative(self)
@@ -3451,7 +3467,7 @@ local function OptionsOK()
 		PowaAuras.MaxTextures = PowaAuras.TextureCount;
 	end
 	PowaAuras:EnableChecked();
-	PowaAuras:MiscChecked(PowaDebugButton, "debug");
+	PowaAuras:MiscChecked(PowaDebugButton, "Debug");
 	PowaAuras:MiscChecked(PowaTimerRoundingButton, "TimerRoundUp");
 	PowaAuras:GlobalMiscChecked(PowaBlockIncomingAurasButton, "BlockIncomingAuras");
 	local newDefaultTimerTexture = UIDropDownMenu_GetSelectedValue(PowaDropDownDefaultTimerTexture);
@@ -3503,14 +3519,14 @@ local function OptionsRefresh()
 	--PowaAuras:ShowText("OnUpdateLimit=", PowaMisc.OnUpdateLimit);
 	--PowaAuras:ShowText("AnimationLimit=", PowaMisc.AnimationLimit);
 	--PowaAuras:ShowText("Disabled=", PowaMisc.Disabled ~= false);
-	--PowaAuras:ShowText("debug=", PowaMisc.debug);
+	--PowaAuras:ShowText("debug=", PowaMisc.Debug);
 	--PowaAuras:ShowText("UserSetMaxTextures=", PowaMisc.UserSetMaxTextures);
 	PowaOptionsUpdateSlider2:SetValue(100 - 200 * PowaMisc.OnUpdateLimit);
 	PowaOptionsTimerUpdateSlider2:SetValue(100 - 1000 * PowaMisc.AnimationLimit);
 	PowaOptionsTextureCount:SetValue(PowaMisc.UserSetMaxTextures);
 	PowaOverrideTextureCountButton:SetChecked(PowaMisc.OverrideMaxTextures);
 	PowaEnableButton:SetChecked(PowaMisc.Disabled ~= true);
-	PowaDebugButton:SetChecked(PowaMisc.debug);
+	PowaDebugButton:SetChecked(PowaMisc.Debug);
 	PowaTimerRoundingButton:SetChecked(PowaMisc.TimerRoundUp);
 	PowaAllowInspectionsButton:SetChecked(PowaMisc.AllowInspections);
 	PowaBlockIncomingAurasButton:SetChecked(PowaGlobalMisc.BlockIncomingAuras);
@@ -3544,19 +3560,26 @@ function PowaAuras:PowaOptionsMaxTexturesSliderChanged(control)
 end
 
 function PowaAuras.DropDownDefaultTimerMenu_Initialize(owner)
-	PowaAuras:InitializeTextureDropdown(owner, PowaAuras.DropDownMenu_OnClickDefault, PowaMisc.DefaultTimerTexture, false);
+	PowaAuras:InitializeTextureDropdown(owner, PowaAuras.DropDownMenu_OnClickDefaultTimer, PowaMisc.DefaultTimerTexture, false);
 end
 
 function PowaAuras.DropDownDefaultStacksMenu_Initialize(owner)
-	PowaAuras:InitializeTextureDropdown(owner, PowaAuras.DropDownMenu_OnClickDefault, PowaMisc.DefaultStacksTexture, false);
+	PowaAuras:InitializeTextureDropdown(owner, PowaAuras.DropDownMenu_OnClickDefaultStacks, PowaMisc.DefaultStacksTexture, false);
 end
 
-function PowaAuras.DropDownMenu_OnClickDefault(self)
+function PowaAuras.DropDownMenu_OnClickDefaultTimer(self)
 	UIDropDownMenu_SetSelectedValue(self.owner, self.value);
+	PowaMisc.DefaultTimerTexture = self.value;
+end
+
+function PowaAuras.DropDownMenu_OnClickDefaultStacks(self)
+	UIDropDownMenu_SetSelectedValue(self.owner, self.value);
+	PowaMisc.DefaultStacksTexture = self.value;
 end
 
 function PowaAuras:InitializeTextureDropdown(owner, onClick, currentValue, addDefaultOption)
 	--self:ShowText("InitializeTextureDropdown currentValue=", currentValue, " addDefaultOption=", addDefaultOption);
+	UIDropDownMenu_SetWidth(owner, 190)
 	local info = {func = onClick, owner = owner, text = PowaAuras.Text.Default};
 	if (addDefaultOption) then
 		UIDropDownMenu_AddButton(info);
@@ -3859,13 +3882,15 @@ function PowaAuras.OnMouseWheel(self, delta)
 end
 
 function PowaAuras.OnMouseUpX(self)
+	local frame = self:GetName();
 	self:SetMinMaxValues(self:GetValue() - 700, self:GetValue() + 700);
-	PowaBarAuraCoordXSliderLow:SetText(self:GetValue() - 700);
-	PowaBarAuraCoordXSliderHigh:SetText(self:GetValue() + 700);
+	_G[frame.."Low"]:SetText(self:GetValue() - 700);
+	_G[frame.."High"]:SetText(self:GetValue() + 700);
 end
 
 function PowaAuras.OnMouseUpY(self)
+	local frame = self:GetName();
 	self:SetMinMaxValues(self:GetValue() - 400, self:GetValue() + 400);
-	PowaBarAuraCoordYSliderLow:SetText(self:GetValue() - 400);
-	PowaBarAuraCoordYSliderHigh:SetText(self:GetValue() + 400);
+	_G[frame.."Low"]:SetText(self:GetValue() - 400);
+	_G[frame.."High"]:SetText(self:GetValue() + 400);
 end

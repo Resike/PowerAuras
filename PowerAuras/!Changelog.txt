@@ -10,20 +10,21 @@ Added Frame's strata changer dropdown, to change the aura frame's z index.
 Added Frame level changer slider, to change the current frame's strata's z index. (0 - 20)
 Added Texture strata changer dropdown, to change the aura texture's z index.
 Added Texture sublevel changer slider, to change the current texture strata's z index. (-8 - 7)
+With this change you can create up to 12.000 different texture layers per aura.
 Fixed a bugged font.
 Fixed a major moving bug, when you move the auras with the mouse.
 Fixed a bug which made auras disappear while on the timer/stacks tab.
-Added "Rounc Icons" option to round icon edges.
+Added "Round Icons" option to round icon edges.
 Removed Glow check button.
 Added blend mode dropdown.
 Added option for gradient colors.
-With this change you can create up to 12.000 different texture layers per aura.
 Performance upgradements.
 Increased preview icon's size.
 Fixed an export/import bug.
-Switching to wow textures and back, now wont reset the sliders current value, unless it's necessary,
+Switching to wow textures and back, now wont reset the texture sliders current value, unless it's necessary,
 Aura preview icon's color now will change immediately while changing color at the color picker, also when random color is changed.
-Aura preview icon's color now wont change on toggled off aruas, when the Test all button is being pushed.
+Aura preview icon's color now wont change on toggled off aruas, when the "Test all" button is being pushed.
+Text aura and TempPortrait icons now wont get modified by the current aura's choosen color.
 Added texture rotater slider.
 When more auras is opened at the same time, the effec editors icon will show the current auras color correctly.
 Fixed a bug where, aura icons didn't updated when loaded a custom texture.
@@ -32,11 +33,14 @@ Sliders now can be adjusted with mousewheel up/down.
 The default aura size now 100%.
 Default alpha for new auras is now 85%.
 The default aura y coodriante now 0.
+Fixed a bug with "Only show seconds below 100" checkbutton.
+Fixed a bug with "Wider Digits" checkbutton.
+Fixed a bug with "Timer Texture" dropdown menu.
+Fixed a bug with "Stacks Texture" dropdown menu.
 X, Y, XY symmetry changes now wont be shown in effect editor.
-Alpha slider now can be changed to 0% too.
+Alpha sliders now can be changed to 0% too.
 Deformation slider min-max value now can be set between 0-2.
 Fixed font button for text auras.
-Text aura and TempPortrait icons now wont get modified by the current aura's choosen color.
 Fixed a bug when you manually set max texture count.
 Fixed a bug with the button itself.
 Override max textures min-max value now is 1-1000.
@@ -44,18 +48,16 @@ Added "Enable Full Rotation" checkbutton, which fixes some not fully rotatable t
 The texure cutter algorythm is now more precise for ingame icons, and custom textures.
 Hide all button now properly decreases all icon's alpha immediately.
 Slider inherit changes, removed unused stuff.
-Clicking on the Edit button or right clicking on an aura now going to increase it's icons alpha properly.
 Test all button now wont hide the currently opened effect editor.
---Hide all button now also closes the effect editor.
+Clicking on the Edit button or right clicking on an aura now going to increase it's icons alpha properly.
+When you hide an aura with the Test button, it's icon's alpha now gonna dcrease properly.
 When you open the aura browser while an aura is currently showing, now it's gonna decrease it's icons alpha properly.
-Alpha slider text initalization fix.
 Fixed a bug when Texture slider value was 0 and show blank aura.
 Fixed a but with Electric animation both on main, and secondary animations.
 Fixed a bug with Shringing animation when it's applied on a secondary aura.
 Fixed a bug with Growing animation when it's applied on a secondary aura.
 Fixed a bug with Waterdrop animation when it's applied on a secondary aura.
-When you hide an aura with the Test button, it's icon's alpha now gonna dcrease properly.
-While "Old Animation" checkbutton is enabled the "Spin the aura after the begin animation" checkbutton is hidden.
+While "Old Animation" checkbutton is enabled the "Spin the aura after shown" checkbutton is hidden.
 Text auras now won't get crashed when switching "Text Aura" checkbutton.
 Some text color fixes.
 Some smaller slider fixes.

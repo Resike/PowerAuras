@@ -1,4 +1,5 @@
 ﻿<Ui>
+	<!-- Main Frame -->
 	<Frame name = "PowaOptionsCpuFrame2" parent = "UIParent">
 		<Scripts>
 			<OnLoad>
@@ -6,7 +7,7 @@
 			</OnLoad>
 		</Scripts>
 		<Frames>
-			<!-- Enable Power Auras -->
+			<!-- Enable Power Auras CheckButton -->
 			<CheckButton name = "PowaEnableButton" inherits = "PowaCheckTemplate">
 				<Size>
 					<AbsDimension x = "25" y = "25"/>
@@ -14,7 +15,7 @@
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaOptionsCpuFrame2" relativePoint = "TOPLEFT">
 						<Offset>
-							<AbsDimension x = "20" y = "-15"/>
+							<AbsDimension x = "15" y = "-15"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -28,28 +29,7 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<!-- Debug PA Checkbox -->
-			<CheckButton name = "PowaDebugButton" inherits = "PowaCheckTemplate">
-				<Size>
-					<AbsDimension x = "25" y = "25"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "TOPLEFT" relativeTo = "PowaOptionsCpuFrame2" relativePoint = "TOPRIGHT">
-						<Offset>
-							<AbsDimension x = "-200" y = "-15"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						self.tooltipText = PowaAuras.Text.aideDebug
-						PowaDebugButtonText:SetText(PowaAuras.Text.nomDebug)
-					</OnLoad>
-					<OnClick>
-						PowaAuras:MiscChecked(self, "debug")
-					</OnClick>
-				</Scripts>
-			</CheckButton>
+			<!-- Round Timers Up CheckButton -->
 			<CheckButton name = "PowaTimerRoundingButton" inherits = "PowaCheckTemplate">
 				<Size>
 					<AbsDimension x = "25" y = "25"/>
@@ -64,34 +44,14 @@
 				<Scripts>
 					<OnLoad>
 						self.tooltipText = PowaAuras.Text.aideTimerRounding
-						getglobal(self:GetName().."Text"):SetText(PowaAuras.Text.nomTimerRounding)
+						PowaTimerRoundingButtonText:SetText(PowaAuras.Text.nomTimerRounding)
 					</OnLoad>
 					<OnClick>
 						PowaAuras:MiscChecked(self, "TimerRoundUp")
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name = "PowaAllowInspectionsButton" inherits = "PowaCheckTemplate">
-				<Size>
-					<AbsDimension x = "25" y = "25"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "TOPLEFT" relativeTo = "PowaDebugButton" relativePoint = "BOTTOMLEFT">
-						<Offset>
-							<AbsDimension x = "0" y = "5"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						self.tooltipText = PowaAuras.Text.aideAllowInspections
-						getglobal(self:GetName().."Text"):SetText(PowaAuras.Text.nomAllowInspections)
-					</OnLoad>
-					<OnClick>
-						PowaAuras:MiscChecked(self, "AllowInspections")
-					</OnClick>
-				</Scripts>
-			</CheckButton>
+			<!-- Block Incoming Auras CheckButton -->
 			<CheckButton name = "PowaBlockIncomingAurasButton" inherits = "PowaCheckTemplate">
 				<Size>
 					<AbsDimension x = "25" y = "25"/>
@@ -106,13 +66,58 @@
 				<Scripts>
 					<OnLoad>
 						self.tooltipText = PowaAuras.Text.aideBlockIncomingAuras
-						getglobal(self:GetName().."Text"):SetText(PowaAuras.Text.nomBlockIncomingAuras)
+						PowaBlockIncomingAurasButtonText:SetText(PowaAuras.Text.nomBlockIncomingAuras)
 					</OnLoad>
 					<OnClick>
 						PowaAuras:GlobalMiscChecked(self, "BlockIncomingAuras")
 					</OnClick>
 				</Scripts>
 			</CheckButton>
+			<!-- Activate Debug Messages CheckButton -->
+			<CheckButton name = "PowaDebugButton" inherits = "PowaCheckTemplate">
+				<Size>
+					<AbsDimension x = "25" y = "25"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaOptionsCpuFrame2" relativePoint = "TOPRIGHT">
+						<Offset>
+							<AbsDimension x = "-210" y = "-15"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self.tooltipText = PowaAuras.Text.aideDebug
+						PowaDebugButtonText:SetText(PowaAuras.Text.nomDebug)
+					</OnLoad>
+					<OnClick>
+						PowaAuras:MiscChecked(self, "Debug")
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<!-- Allow Inspections CheckButton -->
+			<CheckButton name = "PowaAllowInspectionsButton" inherits = "PowaCheckTemplate">
+				<Size>
+					<AbsDimension x = "25" y = "25"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaDebugButton" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self.tooltipText = PowaAuras.Text.aideAllowInspections
+						PowaAllowInspectionsButtonText:SetText(PowaAuras.Text.nomAllowInspections)
+					</OnLoad>
+					<OnClick>
+						PowaAuras:MiscChecked(self, "AllowInspections")
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<!-- Alternative Exports CheckButton -->
 			<CheckButton name = "PowaFixExportsButton" inherits = "PowaCheckTemplate">
 				<Size>
 					<AbsDimension x = "25" y = "25"/>
@@ -127,14 +132,14 @@
 				<Scripts>
 					<OnLoad>
 						self.tooltipText = PowaAuras.Text.aideFixExports
-						getglobal(self:GetName().."Text"):SetText(PowaAuras.Text.nomFixExports)
+						PowaFixExportsButtonText:SetText(PowaAuras.Text.nomFixExports)
 					</OnLoad>
 					<OnClick>
 						PowaAuras:GlobalMiscChecked(self, "FixExports")
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<!-- Frequency auras are checked for updates -->
+			<!-- Update Speed Slider -->
 			<Slider name = "PowaOptionsUpdateSlider2" inherits = "PowaBarSliderTemplate">
 				<Size>
 					<AbsDimension x = "580" y = "16"/>
@@ -142,14 +147,15 @@
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaBlockIncomingAurasButton" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "0" y = "-10"/>
+							<AbsDimension x = "3" y = "-22"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self:SetMinMaxValues(0,100)
-						self:SetValue(100-200*PowaMisc.OnUpdateLimit)
+						self:EnableMouseWheel(true)
+						self:SetMinMaxValues(0, 100)
+						self:SetValue(100 - 200 * PowaMisc.OnUpdateLimit)
 						self:SetValueStep(1)
 						PowaOptionsUpdateSlider2Text:SetText(PowaAuras.Text.nomUpdateSpeed.." : "..self:GetValue().."%")
 						PowaOptionsUpdateSlider2Low:SetText("0%")
@@ -158,9 +164,12 @@
 					<OnValueChanged>
 						PowaAuras:PowaOptionsUpdateSliderChanged2(self)
 					</OnValueChanged>
+					<OnMouseWheel>
+						PowaAuras.OnMouseWheel(self, delta)
+					</OnMouseWheel>
 				</Scripts>
 			</Slider>
-			<!-- Frequency timers are updated -->
+			<!-- Timer Update Speed Slider -->
 			<Slider name = "PowaOptionsTimerUpdateSlider2" inherits = "PowaBarSliderTemplate">
 				<Size>
 					<AbsDimension x = "580" y = "16"/>
@@ -168,14 +177,15 @@
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaOptionsUpdateSlider2" relativePoint = "BOTTOMLEFT">
 						<Offset>
-						<AbsDimension x = "0" y = "-20"/>
+						<AbsDimension x = "0" y = "-22"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self:SetMinMaxValues(0,100)
-						self:SetValue(100-1000*PowaMisc.AnimationLimit)
+						self:EnableMouseWheel(true)
+						self:SetMinMaxValues(0, 100)
+						self:SetValue(100 - 1000 * PowaMisc.AnimationLimit)
 						self:SetValueStep(1)
 						PowaOptionsTimerUpdateSlider2Text:SetText(PowaAuras.Text.nomTimerUpdate.." : "..self:GetValue().."%")
 						PowaOptionsTimerUpdateSlider2Low:SetText("0%")
@@ -184,9 +194,12 @@
 					<OnValueChanged>
 						PowaAuras:PowaOptionsTimerUpdateSliderChanged2(self)
 					</OnValueChanged>
+					<OnMouseWheel>
+						PowaAuras.OnMouseWheel(self, delta)
+					</OnMouseWheel>
 				</Scripts>
 			</Slider>
-			<!-- User Texture Count -->
+			<!-- Override the Number of Textures CheckButton -->
 			<CheckButton name = "PowaOverrideTextureCountButton" inherits = "PowaCheckTemplate">
 				<Size>
 					<AbsDimension x = "25" y = "25"/>
@@ -194,7 +207,7 @@
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaOptionsTimerUpdateSlider2" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "0" y = "-20"/>
+							<AbsDimension x = "-2" y = "-20"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -208,21 +221,22 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<!-- Number of Aura Textures -->
+			<!-- Max Custom Textures Slider -->
 			<Slider name = "PowaOptionsTextureCount" inherits = "PowaBarSliderTemplate">
 				<Size>
-					<AbsDimension x = "580" y = "16" />
+					<AbsDimension x = "580" y = "16"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaOverrideTextureCountButton" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "0" y = "-10"/>
+							<AbsDimension x = "3" y = "-22"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self:SetMinMaxValues(1,1000)
+						self:EnableMouseWheel(true)
+						self:SetMinMaxValues(1, 1000)
 						self:SetValue(PowaMisc.UserSetMaxTextures)
 						self:SetValueStep(1)
 						self.aide = aideTextureCount
@@ -233,11 +247,15 @@
 					<OnValueChanged>
 						PowaAuras:PowaOptionsMaxTexturesSliderChanged(self)
 					</OnValueChanged>
+					<OnMouseWheel>
+						PowaAuras.OnMouseWheel(self, delta)
+					</OnMouseWheel>
 				</Scripts>
 			</Slider>
+			<!-- Show Aura Browser Button -->
 			<Button name = "PowaShowAuraBrowserButton" inherits = "OptionsButtonTemplate" text = "Show Browser">
 				<Size>
-					<AbsDimension x = "160" y = "22" />
+					<AbsDimension x = "160" y = "24"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaOptionsTextureCount" relativePoint = "BOTTOMLEFT">
@@ -255,9 +273,10 @@
 					</OnClick>
 				</Scripts>
 			</Button>
+			<!-- Reset Editor Positions Button -->
 			<Button name = "PowaResetPositionButton" inherits = "OptionsButtonTemplate" text = "Reset Editor">
 				<Size>
-					<AbsDimension x = "160" y = "22" />
+					<AbsDimension x = "160" y = "24"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "BOTTOMLEFT" relativeTo = "PowaShowAuraBrowserButton" relativePoint = "BOTTOMRIGHT">
@@ -276,14 +295,15 @@
 					</OnClick>
 				</Scripts>
 			</Button>
+			<!-- Default Timer Texture DropDown -->
 			<Frame name = "PowaDropDownDefaultTimerTexture" inherits = "UIDropDownMenuTemplate">
 				<Size>
-					<AbsDimension x = "240" />
+					<AbsDimension x = "200"/>
 				</Size>
 				<Anchors>
-					<Anchor point = "TOPLEFT" relativeTo = "PowaShowAuraBrowserButton" relativePoint = "BOTTOMLEFT">
+					<Anchor point = "TOPRIGHT" relativeTo = "PowaShowAuraBrowserButton" relativePoint = "BOTTOMRIGHT">
 						<Offset>
-							<AbsDimension x = "-15" y = "-25"/>
+							<AbsDimension x = "15" y = "-25"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -293,7 +313,7 @@
 						<Anchors>
 							<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 							<Offset>
-								<AbsDimension x = "21" y = "5"/>
+								<AbsDimension x = "20" y = "2"/>
 							</Offset>
 							</Anchor>
 						</Anchors>
@@ -302,27 +322,22 @@
 				</Layers>
 				<Scripts>
 					<OnLoad>
-						PowaDropDownDefaultTimerTextureLabel:SetText(PowaAuras.Text.nomDefaultTimerTexture) 
+						PowaDropDownDefaultTimerTextureLabel:SetText(PowaAuras.Text.nomDefaultTimerTexture)
 					</OnLoad>
 					<OnShow>
 						UIDropDownMenu_Initialize(self, PowaAuras.DropDownDefaultTimerMenu_Initialize)
 					</OnShow>
-					<OnEnter>
-						GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-					</OnEnter>
-					<OnLeave>
-						GameTooltip:Hide()
-					</OnLeave>
 				</Scripts>
 			</Frame>
+			<!-- Default Stacks Texture DropDown -->
 			<Frame name = "PowaDropDownDefaultStacksTexture" inherits = "UIDropDownMenuTemplate">
 				<Size>
-					<AbsDimension x = "260" />
+					<AbsDimension x = "260"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaResetPositionButton" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "10" y = "-25"/>
+							<AbsDimension x = "-15" y = "-25"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -332,7 +347,7 @@
 							<Anchors>
 								<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
 									<Offset>
-										<AbsDimension x = "21" y = "5"/>
+										<AbsDimension x = "20" y = "2"/>
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -346,14 +361,9 @@
 					<OnShow>
 						UIDropDownMenu_Initialize(self, PowaAuras.DropDownDefaultStacksMenu_Initialize)
 					</OnShow>
-					<OnEnter>
-						GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-					</OnEnter>
-					<OnLeave>
-						GameTooltip:Hide()
-					</OnLeave>
 				</Scripts>
 			</Frame>
+			<!-- Custom Sound Path Editbox -->
 			<EditBox name = "PowaCustomSoundPath" autoFocus = "false" inherits = "InputBoxTemplate">
 				<Size>
 					<AbsDimension x = "580" y = "16"/>
@@ -361,17 +371,29 @@
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownDefaultTimerTexture" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "-90" y = "-20"/>
+							<AbsDimension x = "-40" y = "-25"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 				<Layers>
 					<Layer level = "OVERLAY">
-						<FontString inherits = "ChatFontNormal" bytes = "200" />
+						<FontString name = "$parentText" inherits = "GameFontNormalSmall" justifyH = "LEFT">
+							<Size>
+								<AbsDimension x = "220" y = "20"/>
+							</Size>
+							<Anchors>
+								<Anchor point = "BOTTOMLEFT" relativeTo = "$parent" relativePoint = "TOPLEFT">
+									<Offset>
+										<AbsDimension x = "0" y = "0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
 					</Layer>
 				</Layers>
 				<Scripts>
 					<OnLoad>
+						self:SetMaxLetters(256)
 						PowaCustomSoundPathText:SetText(PowaAuras.Text.nomCustomSoundPath)
 						self.aide = PowaAuras.Text.aideCustomSoundPath
 					</OnLoad>
@@ -386,6 +408,19 @@
 						GameTooltip:Hide()
 					</OnLeave>
 				</Scripts>
+			</EditBox>
+			<!-- Custom Aura Path Editbox -->
+			<EditBox name = "PowaCustomAuraPath" autoFocus = "false" justifyH = "LEFT" inherits = "InputBoxTemplate">
+				<Size>
+					<AbsDimension x = "580" y = "16"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaCustomSoundPath" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-25"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
 				<Layers>
 					<Layer level = "OVERLAY">
 						<FontString name = "$parentText" inherits = "GameFontNormalSmall" justifyH = "LEFT">
@@ -402,25 +437,9 @@
 						</FontString>
 					</Layer>
 				</Layers>
-			</EditBox>
-			<EditBox name = "PowaCustomAuraPath" autoFocus = "false" justifyH = "LEFT" inherits = "InputBoxTemplate">
-				<Size>
-					<AbsDimension x = "580" y = "16"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "TOPLEFT" relativeTo = "PowaCustomSoundPath" relativePoint = "BOTTOMLEFT">
-						<Offset>
-							<AbsDimension x = "0" y = "-20"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level = "OVERLAY">
-						<FontString inherits = "ChatFontNormal" bytes = "200"/>
-					</Layer>
-				</Layers>
 				<Scripts>
 					<OnLoad>
+						self:SetMaxLetters(256)
 						PowaCustomAuraPathText:SetText(PowaAuras.Text.nomCustomAuraPath)
 						self.aide = PowaAuras.Text.aideCustomAuraPath
 					</OnLoad>
@@ -435,22 +454,6 @@
 						GameTooltip:Hide()
 					</OnLeave>
 				</Scripts>
-				<Layers>
-					<Layer level = "OVERLAY">
-						<FontString name = "$parentText" inherits = "GameFontNormalSmall" justifyH = "LEFT">
-							<Size>
-								<AbsDimension x = "220" y = "20"/>
-							</Size>
-							<Anchors>
-								<Anchor point = "BOTTOMLEFT" relativeTo = "$parent" relativePoint = "TOPLEFT">
-									<Offset>
-										<AbsDimension x = "0" y = "0"/>
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
 			</EditBox>
 		</Frames>
 	</Frame>
