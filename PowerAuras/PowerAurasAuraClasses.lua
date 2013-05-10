@@ -2101,6 +2101,8 @@ cPowaActionReady.TooltipOptions = {r = 0.8, g = 0.8, b = 1.0, showBuffName = tru
 function cPowaActionReady:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id);
 	PowaAuras.Events.ACTIONBAR_SLOT_CHANGED = true;
+	PowaAuras.Events.ACTIONBAR_SHOWGRID = true;
+	PowaAuras.Events.ACTIONBAR_HIDEGRID = true;
 	PowaAuras.Events.ACTIONBAR_UPDATE_COOLDOWN = true;
 	PowaAuras.Events.ACTIONBAR_UPDATE_USABLE = true;
 	PowaAuras.Events.UPDATE_SHAPESHIFT_FORM = true;
@@ -2189,10 +2191,11 @@ cPowaSpellCooldown.OptionText =
 	exactTooltip = PowaAuras.Text.aideExact,
 	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellCooldown],
 	mineText = PowaAuras.Text.nomIgnoreUseable, mineTooltip = PowaAuras.Text.aideIgnoreUseable,
-	targetFriendText = PowaAuras.Text.nomCheckPet, targetFriendTooltip = PowaAuras.Text.aideCheckPet,
+	targetFriendText = PowaAuras.Text.nomCheckPet,
+	targetFriendTooltip = PowaAuras.Text.aideCheckPet,
 };
 cPowaSpellCooldown.ShowOptions = {["PowaBarTooltipCheck"] = 1};
-cPowaSpellCooldown.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1};
+cPowaSpellCooldown.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1};
 cPowaSpellCooldown.TooltipOptions = {r = 1.0, g = 0.6, b = 0.2, showBuffName = true};
 
 function cPowaSpellCooldown:AddEffectAndEvents()
@@ -2211,7 +2214,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		PowaAuras:Message("Spell=", self.buffname);
 	end
 	for pword in string.gmatch(self.buffname, "[^/]+") do
-		local _, spellName, spellIcon, spellId = self:GetSpellFromMatch(pword);
+		local spellName, spellIcon, spellId = self:GetSpellFromMatch(pword);
 		if (not spellName) then
 			-- No spell name = Don't continue.
 			return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotFound, self.buffname);

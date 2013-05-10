@@ -727,6 +727,20 @@ function PowaAuras:ACTIONBAR_SLOT_CHANGED(...)
 	self.DoCheck.CheckIt = true;
 end
 
+function PowaAuras:ACTIONBAR_SHOWGRID(...)
+	local actionIndex = ...;
+	self:MemorizeActions(actionIndex);
+	self.DoCheck.Actions = true;
+	self.DoCheck.CheckIt = true;
+end
+
+function PowaAuras:ACTIONBAR_HIDEGRID(...)
+	local actionIndex = ...;
+	self:MemorizeActions(actionIndex);
+	self.DoCheck.Actions = true;
+	self.DoCheck.CheckIt = true;
+end
+
 function PowaAuras:UPDATE_SHAPESHIFT_FORMS(...)
 	self:GetStances();
 	if (self.ModTest) then
