@@ -2214,6 +2214,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		PowaAuras:Message("Spell=", self.buffname);
 	end
 	for pword in string.gmatch(self.buffname, "[^/]+") do
+		local _;
 		local spellName, spellIcon, spellId = self:GetSpellFromMatch(pword);
 		if (not spellName) then
 			-- No spell name = Don't continue.
@@ -2223,7 +2224,6 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			PowaAuras:Message("spellName=", spellName," spellId=", spellId);
 			PowaAuras:Message("spellIcon=", spellIcon);
 		end
-		local _
 		if (self:IconIsRequired()) then
 			if (not spellIcon) then
 				_, _, spellIcon = GetSpellInfo(spellName);
