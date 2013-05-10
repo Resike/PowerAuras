@@ -2223,6 +2223,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			PowaAuras:Message("spellName=", spellName," spellId=", spellId);
 			PowaAuras:Message("spellIcon=", spellIcon);
 		end
+		local _
 		if (self:IconIsRequired()) then
 			if (not spellIcon) then
 				_, _, spellIcon = GetSpellInfo(spellName);
