@@ -1,4 +1,14 @@
-﻿* 4.23.20
+﻿* 4.23.23
+- Fixed a bug when you disabled not the currently active aura pages with shif+click, and incorrectly shown "OFF" text for auras which wasn't actually disabled.
+
+* 4.23.22
+Fixed a leaked global from 4.23.21.
+
+* 4.23.21
+Fixed a bug which caused "Spell Cooldowns" not working properly.
+FIxed a bug with "Action Useable" where it didn't updated aura properly, when you moved the spell into another action bar slot. 
+
+* 4.23.20
 Millions of smaller GUI bugfixes.
 Addon memory improvements.
 Recoded all images with RLE loseless compression.

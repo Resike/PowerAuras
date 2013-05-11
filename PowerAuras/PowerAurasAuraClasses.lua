@@ -61,6 +61,7 @@ cPowaAura.ExportSettings =
 	buffname = "???",
 	texmode = 0,
 	wowtex = false,
+	model = false,
 	customtex = false,
 	textaura = false,
 	owntex = false,
@@ -251,6 +252,17 @@ function cPowaAura:CreateFrames()
 		frame.baseL = 256;
 		frame.baseH = 256;
 	end
+	local model = self:GetModel();
+	if (model == nil) then
+		model = CreateFrame("PlayerModel", nil, frame);
+		model:SetAllPoints(frame);
+		frame.model = model;
+		self:SetModel(model);
+	else
+		model:SetAllPoints(frame);
+		frame.model = model;
+		self:SetModel(model);
+	end
 	local texture = self:GetTexture();
 	if (texture == nil) then
 		--PowaAuras:UnitTestInfo("New Texture", self.id);
@@ -296,7 +308,7 @@ function cPowaAura:CreateFrames()
 			end
 		end
 	end
-	return frame, texture;
+	return frame, model, texture;
 end
 
 function cPowaAura:Hide(skipEndAnimationStop)
@@ -673,6 +685,13 @@ function cPowaAura:GetFrame()
 	return PowaAuras.Frames[self.id];
 end
 
+function cPowaAura:GetModel()
+	if (self.isSecondary) then
+		return PowaAuras.SecondaryModels[self.id];
+	end
+	return PowaAuras.Models[self.id];
+end
+
 function cPowaAura:GetTexture()
 	if (self.isSecondary) then
 		return PowaAuras.SecondaryTextures[self.id];
@@ -686,6 +705,14 @@ function cPowaAura:SetFrame(frame)
 		return;
 	end
 	PowaAuras.Frames[self.id] = frame;
+end
+
+function cPowaAura:SetModel(model)
+	if (self.isSecondary) then
+		PowaAuras.SecondaryModels[self.id] = model;
+		return;
+	end
+	PowaAuras.Models[self.id] = model;
 end
 
 function cPowaAura:SetTexture(texture)

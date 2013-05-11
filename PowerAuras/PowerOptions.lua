@@ -185,18 +185,18 @@ function PowaAuras:IconeEntered(owner)
 end
 
 function PowaAuras:MainListClick(owner)
-	local listeID = owner:GetID();
+	local listID = owner:GetID();
 	if (self.MoveEffect == 1) then
-		-- Move the aura
-		self:BeginCopyEffect(self.CurrentAuraId, listeID)
+		-- Copy the aura
+		self:BeginCopyEffect(self.CurrentAuraId, listID)
 		return;
 	elseif (self.MoveEffect == 2) then
 		-- Move the aura
-		self:BeginMoveEffect(self.CurrentAuraId, listeID)
+		self:BeginMoveEffect(self.CurrentAuraId, listID)
 		return;
 	end
 	if IsShiftKeyDown() then -- Toggle ON/OFF
-		local min = ((listeID - 1) * 24) + 1;
+		local min = ((listID - 1) * 24) + 1;
 		local max = min + 23;
 		local allEnabled = true;
 		local offText = "OFF";
@@ -214,7 +214,9 @@ function PowaAuras:MainListClick(owner)
 			if (aura) then
 				local auraIcon = getglobal("PowaIcone"..(i - min + 1));
 				aura.off = allEnabled;
-				auraIcon:SetText(offText);
+				if (self.CurrentAuraPage == listID) then
+					auraIcon:SetText(offText);
+				end
 			end
 			self.SecondaryAuras[i] = nil;
 		end
@@ -224,7 +226,7 @@ function PowaAuras:MainListClick(owner)
 	getglobal("PowaOptionsList"..self.CurrentAuraPage):SetHighlightTexture("");
 	getglobal("PowaOptionsList"..self.CurrentAuraPage):UnlockHighlight();
 	PowaSelected:Hide();
-	self.CurrentAuraPage = listeID;
+	self.CurrentAuraPage = listID;
 	self.CurrentAuraId = ((self.CurrentAuraPage - 1) * 24) + 1;
 	local aura = self.Auras[self.CurrentAuraId];
 	if (aura ~= nil and aura.buffname ~= "" and aura.buffname ~= " ") then
@@ -239,18 +241,18 @@ function PowaAuras:MainListClick(owner)
 	if (currentText == nil) then
 		currentText = "";
 	end
-	PowaOptionsRenameEditBox:SetText( currentText );
+	PowaOptionsRenameEditBox:SetText(currentText);
 	self:UpdateMainOption();
 end
 
 function PowaAuras:MainListEntered(owner)
-	local listeID = owner:GetID();
-	if (self.CurrentAuraPage ~= listeID) then
+	local listID = owner:GetID();
+	if (self.CurrentAuraPage ~= listID) then
 		if (self.MoveEffect > 0) then
-			getglobal("PowaOptionsList"..listeID):SetHighlightTexture("Interface\\Buttons\\UI-Panel-Button-Highlight");
+			getglobal("PowaOptionsList"..listID):SetHighlightTexture("Interface\\Buttons\\UI-Panel-Button-Highlight");
 		else
-			getglobal("PowaOptionsList"..listeID):SetHighlightTexture("");
-			getglobal("PowaOptionsList"..listeID):UnlockHighlight();
+			getglobal("PowaOptionsList"..listID):SetHighlightTexture("");
+			getglobal("PowaOptionsList"..listID):UnlockHighlight();
 		end
 	end
 	if (self.MoveEffect == 1) then
@@ -366,13 +368,21 @@ function PowaAuras:DeleteAura(aura)
 	if (not aura) then return; end
 	--self:Message("DeleteAura ", aura.id);
 	aura:Hide();
-	if (aura.Timer) then aura.Timer:Dispose(); end
-	if (aura.Stacks) then aura.Stacks:Dispose(); end
+	if (aura.Timer) then
+		aura.Timer:Dispose();
+	end
+	if (aura.Stacks) then
+		aura.Stacks:Dispose();
+	end
 	aura:Dispose();
 	PowaSelected:Hide();
 	if (PowaBarConfigFrame:IsVisible()) then
 		PowaBarConfigFrame:Hide();
 	end
+	if (self.isSecondary) then
+		PowaAuras.SecondaryModels[aura.id] = nil;
+	end
+	PowaAuras.Models[aura.id] = nil;
 	self.Auras[aura.id] = nil;
 	if (aura.id > 120) then
 		PowaGlobalSet[aura.id] = nil;
@@ -1564,6 +1574,7 @@ function PowaAuras:InitPage(aura)
 	PowaOwntexButton:SetChecked(aura.owntex);
 	PowaRoundIconsButton:SetChecked(aura.roundicons);
 	PowaWowTextureButton:SetChecked(aura.wowtex);
+	PowaModelsButton:SetChecked(aura.model);
 	PowaCustomTextureButton:SetChecked(aura.customtex);
 	PowaTextAuraButton:SetChecked(aura.textaura);
 	PowaRandomColorButton:SetChecked(aura.randomcolor);
@@ -1693,7 +1704,7 @@ function PowaAuras:InitPage(aura)
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
-		if (#self.WowTextures > self.MaxTextures) then
+		if (#self.WowTextures > self.MaxTextures) or (#self.WowTextures > #PowaAurasModels) then
 			PowaBarAuraTextureSlider:SetMinMaxValues(1, #self.WowTextures);
 			PowaBarAuraTextureSlider:SetValue(aura.texture);
 		else
@@ -1702,6 +1713,20 @@ function PowaAuras:InitPage(aura)
 		end
 		PowaBarAuraTextureSliderHigh:SetText(#self.WowTextures);
 		checkTexture = AuraTexture:SetTexture(self.WowTextures[aura.texture]);
+	elseif (aura.model) then
+		PowaBarAuraTextureSlider:Show();
+		PowaBarCustomTexName:Hide();
+		PowaBarAurasText:Hide();
+		PowaFontButton:Hide();
+		if (#PowaAurasModels > self.MaxTextures) or (#PowaAurasModels > #self.WowTextures) then
+			PowaBarAuraTextureSlider:SetMinMaxValues(1, #PowaAurasModels);
+			PowaBarAuraTextureSlider:SetValue(aura.texture);
+		else
+			PowaBarAuraTextureSlider:SetValue(aura.texture);
+			PowaBarAuraTextureSlider:SetMinMaxValues(1, #PowaAurasModels);
+		end
+		PowaBarAuraTextureSliderHigh:SetText(#PowaAurasModels);
+		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP");
 	elseif (aura.customtex) then
 		PowaBarAuraTextureSlider:Hide();
 		PowaBarAurasText:Hide();
@@ -1722,12 +1747,12 @@ function PowaAuras:InitPage(aura)
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
-		if (#self.WowTextures < self.MaxTextures) then
-			PowaBarAuraTextureSlider:SetMinMaxValues(1,self.MaxTextures);
+		if (#self.WowTextures < self.MaxTextures) or (#PowaAurasModels < #self.MaxTextures) then
+			PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures);
 			PowaBarAuraTextureSlider:SetValue(aura.texture);
 		else
 			PowaBarAuraTextureSlider:SetValue(aura.texture);
-			PowaBarAuraTextureSlider:SetMinMaxValues(1,self.MaxTextures);
+			PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures);
 		end
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures);
 		checkTexture = AuraTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga");
@@ -1792,6 +1817,8 @@ function PowaAuras:BarAuraTextureSliderChanged()
 		checkTexture = AuraTexture:SetTexture(self.Auras[auraId].icon);
 	elseif (self.Auras[auraId].wowtex == true) then
 		checkTexture = AuraTexture:SetTexture(self.WowTextures[SliderValue]);
+	elseif (self.Auras[auraId].model == true) then
+		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP");
 	elseif (self.Auras[auraId].customtex == true) then
 		checkTexture = AuraTexture:SetTexture(self:CustomTexPath(self.Auras[auraId].customname));
 	elseif (self.Auras[auraId].textaura == true) then
@@ -2162,11 +2189,13 @@ function PowaAuras:OwntexChecked()
 	local aura = self.Auras[self.CurrentAuraId];
 	if (PowaOwntexButton:GetChecked()) then
 		aura.owntex = true;
+		aura.model = false;
 		aura.wowtex = false;
 		aura.customtex = false;
 		aura.textaura = false;
 		aura.enablefullrotation = false;
 		PowaWowTextureButton:SetChecked(false);
+		PowaModelsButton:SetChecked(false);
 		PowaCustomTextureButton:SetChecked(false);
 		PowaTextAuraButton:SetChecked(false);
 		if (aura.rotate ~= 0) and (aura.rotate ~= 90) and (aura.rotate ~= 180) and (aura.rotate ~= 270) and (aura.rotate ~= 360) then
@@ -2182,13 +2211,14 @@ function PowaAuras:OwntexChecked()
 		aura.owntex = false;
 	end
 	PowaAuras:InitPage(aura);
-	self:RedisplayAura(aura.id);
+	self:RedisplayAura(self.CurrentAuraId);
 end
 
 function PowaAuras:WowTexturesChecked()
 	local aura = self.Auras[self.CurrentAuraId];
 	if (PowaWowTextureButton:GetChecked()) then
 		aura.wowtex = true;
+		aura.model = false;
 		aura.owntex = false;
 		aura.customtex = false;
 		aura.textaura = false;
@@ -2198,6 +2228,7 @@ function PowaAuras:WowTexturesChecked()
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, #self.WowTextures);
 		PowaBarAuraTextureSliderHigh:SetText(#self.WowTextures);
 		PowaOwntexButton:SetChecked(false);
+		PowaModelsButton:SetChecked(false);
 		PowaCustomTextureButton:SetChecked(false);
 		PowaTextAuraButton:SetChecked(false);
 		PowaBarAuraTextureSlider:Show();
@@ -2214,13 +2245,51 @@ function PowaAuras:WowTexturesChecked()
 	end
 	PowaAuras:BarAuraSizeSliderChanged();
 	PowaAuras:BarAuraTextureSliderChanged();
-	self:RedisplayAura(aura.id);
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:ModelsChecked()
+	local aura = self.Auras[self.CurrentAuraId];
+	if (PowaModelsButton:GetChecked()) then
+		aura.model = true;
+		aura.wowtex = false;
+		aura.owntex = false;
+		aura.customtex = false;
+		aura.textaura = false;
+		aura.UseOldAnimations = true;
+		if (PowaBarAuraTextureSlider:GetValue() > #PowaAurasModels) then
+			PowaBarAuraTextureSlider:SetValue(1);
+		end
+		PowaBarAuraTextureSlider:SetMinMaxValues(1, #PowaAurasModels);
+		PowaBarAuraTextureSliderHigh:SetText(#PowaAurasModels);
+		PowaWowTextureButton:SetChecked(false);
+		PowaOwntexButton:SetChecked(false);
+		PowaCustomTextureButton:SetChecked(false);
+		PowaTextAuraButton:SetChecked(false);
+		PowaBarAuraTextureSlider:Show();
+		PowaBarCustomTexName:Hide();
+		PowaBarAurasText:Hide();
+		PowaFontButton:Hide();
+	else
+		aura.model = false;
+		aura.UseOldAnimations = false;
+		if (PowaBarAuraTextureSlider:GetValue() > self.MaxTextures) then
+			PowaBarAuraTextureSlider:SetValue(1);
+		end
+		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures);
+		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures);
+	end
+	PowaOldAnimation:SetChecked(aura.UseOldAnimations);
+	PowaAuras:BarAuraSizeSliderChanged();
+	PowaAuras:BarAuraTextureSliderChanged();
+	self:RedisplayAura(self.CurrentAuraId);
 end
 
 function PowaAuras:CustomTexturesChecked()
 	local aura = self.Auras[self.CurrentAuraId];
 	if (PowaCustomTextureButton:GetChecked()) then
 		aura.customtex = true;
+		aura.model = false;
 		aura.owntex = false;
 		aura.wowtex = false;
 		aura.textaura = false;
@@ -2228,6 +2297,7 @@ function PowaAuras:CustomTexturesChecked()
 		PowaBarCustomTexName:Show();
 		PowaBarCustomTexName:SetText(self.Auras[aura.id].customname);
 		PowaOwntexButton:SetChecked(false);
+		PowaModelsButton:SetChecked(false);
 		PowaWowTextureButton:SetChecked(false);
 		PowaTextAuraButton:SetChecked(false);
 		PowaBarAurasText:Hide();
@@ -2239,7 +2309,7 @@ function PowaAuras:CustomTexturesChecked()
 	end
 	PowaAuras:BarAuraSizeSliderChanged();
 	PowaAuras:BarAuraTextureSliderChanged();
-	self:RedisplayAura(aura.id);
+	self:RedisplayAura(self.CurrentAuraId);
 end
 
 function PowaAuras:TextAuraChecked()
@@ -2261,6 +2331,7 @@ function PowaAuras:TextAuraChecked()
 		PowaAuras:AurasTextChanged()
 		PowaOwntexButton:SetChecked(false);
 		PowaWowTextureButton:SetChecked(false);
+		PowaModelsButton:SetChecked(false);
 		PowaCustomTextureButton:SetChecked(false);
 		PowaBarCustomTexName:Hide();
 		if (PowaBarAuraSizeSlider:GetValue() > 1.61) then

@@ -530,6 +530,28 @@
 							</OnClick>
 						</Scripts>
 					</CheckButton>
+					<!-- Models CheckButton -->
+					<CheckButton name = "PowaModelsButton" inherits = "PowaCheckTemplate">
+						<Size>
+							<AbsDimension x = "25" y = "25"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "LEFT" relativeTo = "PowaWowTextureButton" relativePoint = "RIGHT">
+								<Offset>
+									<AbsDimension x = "128" y = "0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								--self.tooltipText = PowaAuras.Text.aideWowTextures
+								PowaModelsButtonText:SetText("Models")
+							</OnLoad>
+							<OnClick>
+								PowaAuras:ModelsChecked()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
 					<!-- Custom Textures CheckButton -->
 					<CheckButton name = "PowaCustomTextureButton" inherits = "PowaCheckTemplate">
 						<Size>

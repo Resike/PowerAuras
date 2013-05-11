@@ -1221,6 +1221,7 @@
 							</OnClick>
 						</Scripts>
 					</Button>
+					<!-- Rename EditBox -->
 					<EditBox name = "PowaOptionsRenameEditBox" autoFocus = "true" inherits = "InputBoxTemplate" hidden = "true">
 						<Size>
 							<AbsDimension x = "85" y = "22"/>

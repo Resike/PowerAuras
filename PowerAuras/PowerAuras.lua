@@ -1020,7 +1020,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			end
 		end
 	end
-	local frame, texture = aura:CreateFrames();
+	local frame, model, texture = aura:CreateFrames();
 	frame.aura = aura;
 	if (self.ModTest and not PowaMisc.Locked) then
 		self:SetForDragging(aura, frame);
@@ -1028,85 +1028,103 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		self:ResetDragging(aura, frame);
 	end
 	if (aura.owntex == true) then
+		texture:Show();
 		if (aura.icon == "") then
 			texture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark");
 		else
 			texture:SetTexture(aura.icon);
 		end
 	elseif (aura.wowtex == true) then
+		texture:Show();
 		texture:SetTexture(self.WowTextures[aura.texture]);
 	elseif (aura.customtex == true) then
+		texture:Show();
 		texture:SetTexture(self:CustomTexPath(aura.customname));
 	elseif (aura.textaura == true) then
+		texture:Show();
 		aura:UpdateText(texture);
+	elseif (aura.model == true) then
+		texture:Hide();
+		model:SetModel(PowaAurasModels[aura.texture]);
 	else
+		texture:Show();
 		texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga");
 	end
 	local r1, r2, r3, r4, r5, r6
 	if (aura.randomcolor) then
-		if (aura.textaura ~= true) then
-			r1 = random(20, 100) / 100;
-			r2 = random(20, 100) / 100;
-			r3 = random(20, 100) / 100;
-			r4 = random(20, 100) / 100;
-			r5 = random(20, 100) / 100;
-			r6 = random(20, 100) / 100;
-			if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
-				texture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
+		if (aura.model ~= true) then
+			if (aura.textaura ~= true) then
+				r1 = random(20, 100) / 100;
+				r2 = random(20, 100) / 100;
+				r3 = random(20, 100) / 100;
+				r4 = random(20, 100) / 100;
+				r5 = random(20, 100) / 100;
+				r6 = random(20, 100) / 100;
+				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+					texture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
+				else
+					texture:SetVertexColor(r1, r2, r3);
+				end
 			else
 				texture:SetVertexColor(r1, r2, r3);
 			end
-		else
-			texture:SetVertexColor(r1, r2, r3);
-		end
-		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-			if (aura.off ~= true) then
-				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
-					AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
-				else
-					AuraTexture:SetVertexColor(r1, r2, r3);
+			if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
+				if (aura.off ~= true) then
+					if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+						AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
+					else
+						AuraTexture:SetVertexColor(r1, r2, r3);
+					end
 				end
+			else
+				AuraTexture:SetVertexColor(1, 1, 1);
 			end
-		else
-			AuraTexture:SetVertexColor(1, 1, 1);
 		end
 	else
-		if (aura.textaura ~= true) then
-			if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
-				texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+		if (aura.model ~= true) then
+			if (aura.textaura ~= true) then
+				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+					texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+				else
+					texture:SetVertexColor(aura.r, aura.g, aura.b);
+				end
 			else
 				texture:SetVertexColor(aura.r, aura.g, aura.b);
 			end
-		else
-			texture:SetVertexColor(aura.r, aura.g, aura.b);
-		end
-		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-			if (aura.off ~= true) then
-				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
-					AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
-				else
-					AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
+			if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
+				if (aura.off ~= true) then
+					if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+						AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+					else
+						AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
+					end
 				end
+			else
+				AuraTexture:SetVertexColor(1, 1, 1);
 			end
-		else
-			AuraTexture:SetVertexColor(1, 1, 1);
 		end
 	end
-	if (aura.textaura ~= true) then
-		texture:SetBlendMode(aura.blendmode);
-	else
-		texture:SetShadowColor(0.0, 0.0, 0.0, 0.0);
-		texture:SetShadowOffset(0, 0);
+	if (aura.model ~= true) then
+		if (aura.textaura ~= true) then
+			texture:SetBlendMode(aura.blendmode);
+		else
+			texture:SetShadowColor(0.0, 0.0, 0.0, 0.0);
+			texture:SetShadowOffset(0, 0);
+		end
 	end
 	frame:SetFrameStrata(aura.strata);
 	frame:SetFrameLevel(aura.stratalevel);
-	texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
+	if (aura.model ~= true) then
+		texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel);
+	end
 	local height = 256
 	local width = 256
-	if (aura.textaura ~= true) then
+	if (aura.textaura ~= true) and (aura.model ~= true) then
 		texture:SetRotation(math.rad(aura.rotate));
+	elseif (aura.model == true) then
+		model:SetRotation(math.rad(aura.rotate));
 	end
-	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
+	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
 		local x = (math.sqrt(2) - 1) / 2
 		if (aura.rotate == 0) or (aura.rotate == 360) then
@@ -1133,7 +1151,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			end
 		end
 	end
-	if (aura.textaura ~= true) then
+	if (aura.textaura ~= true) and (aura.model ~= true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord();
 		if (aura.symetrie == 1) then
 			texture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy); -- Inverse X
@@ -1153,8 +1171,8 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		end
 		frame.baseH = height * aura.size * (2 - aura.torsion);
 		frame.baseL = texture:GetStringWidth() + 5;
-	elseif (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
-		if (aura.rotate == 0) or (aura.rotate == 90) or (aura.rotate == 180) or (aura.rotate == 270) or (aura.rotate == 360) then
+	elseif (aura.customtex == true) or (aura.wowtex == true) or (aura.model == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
+		if ((aura.rotate == 0) or (aura.rotate == 90) or (aura.rotate == 180) or (aura.rotate == 270) or (aura.rotate == 360)) and (aura.model ~= true) then
 			frame.baseH = height * aura.size * (2 - aura.torsion);
 			frame.baseL = width * aura.size * aura.torsion;
 		else
@@ -1259,29 +1277,41 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	local auraId = aura.id;
 	local frame = self.Frames[auraId];
 	local texture = self.Textures[auraId];
-	local secondaryFrame, secondaryTexture = secondaryAura:CreateFrames();
+	local secondaryFrame, secondaryModel, secondaryTexture = secondaryAura:CreateFrames();
 	if (aura.owntex == true) then
+		secondaryTexture:Show();
 		secondaryTexture:SetTexture(aura.icon);
 	elseif (aura.wowtex == true) then
+		secondaryTexture:Show();
 		secondaryTexture:SetTexture(self.WowTextures[aura.texture]);
 	elseif (aura.customtex == true) then
+		secondaryTexture:Show();
 		secondaryTexture:SetTexture(self:CustomTexPath(aura.customname));
 	elseif (aura.textaura == true) then
+		secondaryTexture:Show();
 		secondaryTexture:SetText(aura.aurastext);
+	elseif (aura.model == true) then
+		secondaryTexture:Hide();
+		secondaryModel:SetModel(PowaAurasModels[aura.texture]);
 	else
+		secondaryTexture:Show();
 		secondaryTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga");
 	end
 	if (aura.randomcolor) then
-		if texture:GetObjectType() == "Texture" then
-			secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
-		elseif texture:GetObjectType() == "FontString" then
-			secondaryTexture:SetVertexColor(texture:GetTextColor());
+		if (aura.model ~= true) then
+			if texture:GetObjectType() == "Texture" then
+				secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
+			elseif texture:GetObjectType() == "FontString" then
+				secondaryTexture:SetVertexColor(texture:GetTextColor());
+			end
 		end
 	else
-		if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
-			secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
-		else
-			secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b);
+		if (aura.model ~= true) then
+			if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+				secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			else
+				secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b);
+			end
 		end
 	end
 	if (aura.textaura ~= true) then
@@ -1293,11 +1323,15 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	end
 	secondaryFrame:SetFrameStrata("BACKGROUND");
 	secondaryFrame:SetFrameLevel(aura.stratalevel);
-	secondaryTexture:SetDrawLayer("BACKGROUND", aura.texturesublevel);
-	if (aura.textaura ~= true) then
-		secondaryTexture:SetRotation(math.rad(aura.rotate));
+	if (aura.model ~= true) then
+		secondaryTexture:SetDrawLayer("BACKGROUND", aura.texturesublevel);
 	end
-	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
+	if (aura.textaura ~= true) and (aura.model ~= true) then
+		secondaryTexture:SetRotation(math.rad(aura.rotate));
+	elseif (aura.model == true) then
+		secondaryModel:SetRotation(math.rad(aura.rotate));
+	end
+	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
 		local x = (math.sqrt(2) - 1) / 2
 		if (aura.rotate == 0) or (aura.rotate == 360) then
@@ -1324,7 +1358,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 			end
 		end
 	end
-	if (aura.textaura ~= true) then
+	if (aura.textaura ~= true) and (aura.model ~= true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
 		if (aura.symetrie == 1) then
 			secondaryTexture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy); -- Inverse X

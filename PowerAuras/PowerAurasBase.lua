@@ -102,6 +102,9 @@ SecondaryFrames = { };
 Textures = { };
 SecondaryTextures = { };
 
+Models = { };
+SecondaryModels = { };
+
 TimerFrame = { };
 StacksFrames = { };
 
@@ -385,88 +388,6 @@ DebuffCatType =
 	PvE = 10,
 };
 
-Sound =
-{
-	-- Blizzard Sounds
-	[1] = "AuctionWindowClose",
-	[2] = "AuctionWindowOpen",
-	[3] = "Fishing Reel in",
-	[4] = "GAMEDIALOGOPEN",
-	[5] = "GAMEDIALOGCLOSE",
-	[6] = "HumanExploration",
-	[7] = "igAbilityOpen",
-	[8] = "igAbilityClose",
-	[9] = "igBackPackOpen",
-	[10] = "igBackPackClose",
-	[11] = "igInventoryOepn",
-	[12] = "igInventoryClose",
-	[13] = "igMainMenuOpen",
-	[14] = "igMainMenuClose",
-	[15] = "igMiniMapOpen",
-	[16] = "igMiniMapClose",
-	[17] = "igPlayerInvite",
-	[18] = "igPVPUpdate",
-	[19] = "LEVELUP",
-	[20] = "LOOTWINDOWCOINSOUND",
-	[21] = "MapPing",
-	[22] = "PVPENTERQUEUE",
-	[23] = "PVPTHROUGHQUEUE",
-	[24] = "QUESTADDED",
-	[25] = "QUESTCOMPLETED",
-	[26] = "RaidWarning",
-	[27] = "ReadyCheck",
-	[28] = "TalentScreenOpen",
-	[29] = "TalentScreenClose",
-	[30] = "TellMessage",
-	-- Second Tab
-	-- Custom Sounds
-	[31] = "Aggro.mp3",
-	[32] = "Arrow Swoosh.mp3",
-	[33] = "Bam.mp3",
-	[34] = "Bear Polar.mp3",
-	[35] = "Big Kiss.mp3",
-	[36] = "Bite.mp3",
-	[37] = "Bloodbath.mp3",
-	[38] = "Burp.mp3",
-	[39] = "Cat.mp3",
-	[40] = "Chant1.mp3",
-	[41] = "Chant2.mp3",
-	[42] = "Chimes.mp3",
-	[43] = "Cookie.mp3",
-	[44] = "Espark.mp3",
-	[45] = "Fireball.mp3",
-	[46] = "Gasp.mp3",
-	[47] = "Heartbeat.mp3",
-	[48] = "Hic.mp3",
-	[59] = "Huh.mp3",
-	[50] = "Hurricane.mp3",
-	[51] = "Hyena.mp3",
-	[52] = "Kaching.mp3",
-	[53] = "Moan.mp3",
-	[54] = "Panther.mp3",
-	[55] = "Phone.mp3",
-	[56] = "Punch.mp3",
-	[57] = "Rainroof.mp3",
-	[58] = "Rocket.mp3",
-	[69] = "Ship Horn.mp3",
-	[60] = "Shot.mp3",
-	[61] = "Snake.mp3",
-	[62] = "Sneeze.mp3",
-	[63] = "Sonar.mp3",
-	[64] = "Splash.mp3",
-	[65] = "Squeaky.mp3",
-	[66] = "Sword.mp3",
-	[67] = "Throw.mp3",	
-	[68] = "Thunder.mp3",
-	[69] = "Vengeance.mp3",
-	[70] = "Warpath.mp3",
-	[71] = "Wicked Laugh Female.mp3",
-	[72] = "Wicked Laugh Male.mp3",
-	[73] = "Wilhelm.mp3",
-	[74] = "Wolf.mp3",
-	[75] = "Yeehaw.mp3",
-};
-
 WowTextures =
 {
 	-- Auras Types
@@ -675,6 +596,88 @@ Fonts =
 	[19] = "Interface\\Addons\\PowerAuras\\Fonts\\Whoa.ttf",
 };
 
+Sound =
+{
+	-- Blizzard Sounds
+	[1] = "AuctionWindowClose",
+	[2] = "AuctionWindowOpen",
+	[3] = "Fishing Reel in",
+	[4] = "GAMEDIALOGOPEN",
+	[5] = "GAMEDIALOGCLOSE",
+	[6] = "HumanExploration",
+	[7] = "igAbilityOpen",
+	[8] = "igAbilityClose",
+	[9] = "igBackPackOpen",
+	[10] = "igBackPackClose",
+	[11] = "igInventoryOepn",
+	[12] = "igInventoryClose",
+	[13] = "igMainMenuOpen",
+	[14] = "igMainMenuClose",
+	[15] = "igMiniMapOpen",
+	[16] = "igMiniMapClose",
+	[17] = "igPlayerInvite",
+	[18] = "igPVPUpdate",
+	[19] = "LEVELUP",
+	[20] = "LOOTWINDOWCOINSOUND",
+	[21] = "MapPing",
+	[22] = "PVPENTERQUEUE",
+	[23] = "PVPTHROUGHQUEUE",
+	[24] = "QUESTADDED",
+	[25] = "QUESTCOMPLETED",
+	[26] = "RaidWarning",
+	[27] = "ReadyCheck",
+	[28] = "TalentScreenOpen",
+	[29] = "TalentScreenClose",
+	[30] = "TellMessage",
+	-- Second Tab
+	-- Custom Sounds
+	[31] = "Aggro.mp3",
+	[32] = "Arrow Swoosh.mp3",
+	[33] = "Bam.mp3",
+	[34] = "Bear Polar.mp3",
+	[35] = "Big Kiss.mp3",
+	[36] = "Bite.mp3",
+	[37] = "Bloodbath.mp3",
+	[38] = "Burp.mp3",
+	[39] = "Cat.mp3",
+	[40] = "Chant1.mp3",
+	[41] = "Chant2.mp3",
+	[42] = "Chimes.mp3",
+	[43] = "Cookie.mp3",
+	[44] = "Espark.mp3",
+	[45] = "Fireball.mp3",
+	[46] = "Gasp.mp3",
+	[47] = "Heartbeat.mp3",
+	[48] = "Hic.mp3",
+	[59] = "Huh.mp3",
+	[50] = "Hurricane.mp3",
+	[51] = "Hyena.mp3",
+	[52] = "Kaching.mp3",
+	[53] = "Moan.mp3",
+	[54] = "Panther.mp3",
+	[55] = "Phone.mp3",
+	[56] = "Punch.mp3",
+	[57] = "Rainroof.mp3",
+	[58] = "Rocket.mp3",
+	[69] = "Ship Horn.mp3",
+	[60] = "Shot.mp3",
+	[61] = "Snake.mp3",
+	[62] = "Sneeze.mp3",
+	[63] = "Sonar.mp3",
+	[64] = "Splash.mp3",
+	[65] = "Squeaky.mp3",
+	[66] = "Sword.mp3",
+	[67] = "Throw.mp3",	
+	[68] = "Thunder.mp3",
+	[69] = "Vengeance.mp3",
+	[70] = "Warpath.mp3",
+	[71] = "Wicked Laugh Female.mp3",
+	[72] = "Wicked Laugh Male.mp3",
+	[73] = "Wilhelm.mp3",
+	[74] = "Wolf.mp3",
+	[75] = "Yeehaw.mp3",
+};
+
 TimerTextures =
 {
 	"Original",
@@ -751,6 +754,12 @@ Backdrop =
 	insets = {left = 0, top = 0, right = 0, bottom = 0},
 	tile = true
 };
+};
+
+PowaAurasModels =
+{
+	[1] = "Creature\\Alexstrasza\\LadyAlexstrasa.m2",
+	[2] = "Creature\\Arthaslichking\\arthaslichking.m2",
 };
 
 function PowaAuras:RegisterAuraType(auraType)
@@ -925,9 +934,9 @@ PowaAuras.TalentChangeSpells =
 {
 	[PowaAuras.Spells.ACTIVATE_FIRST_TALENT] = true,
 	[PowaAuras.Spells.ACTIVATE_SECOND_TALENT] = true,
-	[PowaAuras.Spells.BUFF_FROST_PRESENCE] = true,
-	[PowaAuras.Spells.BUFF_BLOOD_PRESENCE] = true,
-	[PowaAuras.Spells.BUFF_UNHOLY_PRESENCE] = true,
+	--[PowaAuras.Spells.BUFF_FROST_PRESENCE] = true,
+	--[PowaAuras.Spells.BUFF_BLOOD_PRESENCE] = true,
+	--[PowaAuras.Spells.BUFF_UNHOLY_PRESENCE] = true,
 };
 
 PowaAuras.DebuffTypeSpellIds =
