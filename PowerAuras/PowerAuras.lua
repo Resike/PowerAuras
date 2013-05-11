@@ -1122,6 +1122,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	if (aura.textaura ~= true) and (aura.model ~= true) then
 		texture:SetRotation(math.rad(aura.rotate));
 	elseif (aura.model == true) then
+		model:SetPosition(aura.mz, aura.mx, aura.my)
 		model:SetRotation(math.rad(aura.rotate));
 	end
 	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then

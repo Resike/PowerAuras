@@ -111,6 +111,8 @@ function PowaAuras:IconClick(owner, button)
 			if aura.off == false then
 				if (not aura.Showing) then
 					owner:SetAlpha(1.0);
+				else
+					owner:SetAlpha(0.33);
 				end
 				PowaAuras:OptionTest();
 			end
@@ -1544,6 +1546,7 @@ function PowaAuras:InitPage(aura)
 	UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, aura.gradientstyle);
 	PowaFrameStrataLevelSlider:SetValue(aura.stratalevel);
 	PowaTextureStrataSublevelSlider:SetValue(aura.texturesublevel);
+	PowaModelPositionZSlider:SetValue(aura.mz);
 	PowaStrataDropDownText:SetText(aura.strata)
 	PowaTextureStrataDropDownText:SetText(aura.texturestrata)
 	PowaBlendModeDropDownText:SetText(aura.blendmode)
@@ -1696,11 +1699,23 @@ function PowaAuras:InitPage(aura)
 		--self:ShowText("owntex tex=", aura.icon);
 		checkTexture = AuraTexture:SetTexture(PowaIconTexture:GetTexture());
 		--PowaBarAuraTextureSlider:Hide();
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
 	elseif (aura.wowtex) then
 		PowaBarAuraTextureSlider:Show();
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
@@ -1714,7 +1729,13 @@ function PowaAuras:InitPage(aura)
 		PowaBarAuraTextureSliderHigh:SetText(#self.WowTextures);
 		checkTexture = AuraTexture:SetTexture(self.WowTextures[aura.texture]);
 	elseif (aura.model) then
+		PowaModelPositionZSlider:Show();
+		PowaModelPositionXSlider:Show();
+		PowaModelPositionYSlider:Show();
 		PowaBarAuraTextureSlider:Show();
+		PowaBlendModeDropDown:Hide();
+		PowaTextureStrataDropDown:Hide();
+		PowaTextureStrataSublevelSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
@@ -1729,6 +1750,12 @@ function PowaAuras:InitPage(aura)
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP");
 	elseif (aura.customtex) then
 		PowaBarAuraTextureSlider:Hide();
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
 		PowaBarCustomTexName:Show();
@@ -1736,6 +1763,12 @@ function PowaAuras:InitPage(aura)
 		checkTexture = AuraTexture:SetTexture(self:CustomTexPath(aura.customname));
 	elseif (aura.textaura) then
 		PowaBarAuraTextureSlider:Hide();
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Show();
 		PowaFontButton:Show();
@@ -1744,6 +1777,12 @@ function PowaAuras:InitPage(aura)
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\INV_Scroll_02");
 	else
 		PowaBarAuraTextureSlider:Show();
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
@@ -1857,6 +1896,30 @@ function PowaAuras:TextureStrataSublevelSliderChanged()
 	local SliderValue = PowaTextureStrataSublevelSlider:GetValue();
 	PowaTextureStrataSublevelSliderText:SetText("Sublevel: "..format("%.0f", SliderValue));
 	self.Auras[self.CurrentAuraId].texturesublevel = SliderValue;
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:ModelPositionZSliderChanged()
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	local SliderValue = PowaModelPositionZSlider:GetValue();
+	PowaModelPositionZSliderText:SetText("Model Z: "..format("%.2f", SliderValue));
+	self.Auras[self.CurrentAuraId].mz = SliderValue;
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:ModelPositionXSliderChanged()
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	local SliderValue = PowaModelPositionXSlider:GetValue();
+	PowaModelPositionXSliderText:SetText("Model X: "..format("%.2f", SliderValue));
+	self.Auras[self.CurrentAuraId].mx = SliderValue;
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:ModelPositionYSliderChanged()
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	local SliderValue = PowaModelPositionYSlider:GetValue();
+	PowaModelPositionYSliderText:SetText("Model Y: "..format("%.2f", SliderValue));
+	self.Auras[self.CurrentAuraId].my = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
@@ -2204,6 +2267,12 @@ function PowaAuras:OwntexChecked()
 		if (not PowaBarAuraTextureSlider:IsVisible()) then
 			PowaBarAuraTextureSlider:Show();
 		end
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
@@ -2232,6 +2301,12 @@ function PowaAuras:WowTexturesChecked()
 		PowaCustomTextureButton:SetChecked(false);
 		PowaTextAuraButton:SetChecked(false);
 		PowaBarAuraTextureSlider:Show();
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
@@ -2266,13 +2341,25 @@ function PowaAuras:ModelsChecked()
 		PowaOwntexButton:SetChecked(false);
 		PowaCustomTextureButton:SetChecked(false);
 		PowaTextAuraButton:SetChecked(false);
+		PowaModelPositionZSlider:Show();
+		PowaModelPositionXSlider:Show();
+		PowaModelPositionYSlider:Show();
 		PowaBarAuraTextureSlider:Show();
+		PowaBlendModeDropDown:Hide();
+		PowaTextureStrataDropDown:Hide();
+		PowaTextureStrataSublevelSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
 	else
 		aura.model = false;
 		aura.UseOldAnimations = false;
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
 		if (PowaBarAuraTextureSlider:GetValue() > self.MaxTextures) then
 			PowaBarAuraTextureSlider:SetValue(1);
 		end
@@ -2293,6 +2380,9 @@ function PowaAuras:CustomTexturesChecked()
 		aura.owntex = false;
 		aura.wowtex = false;
 		aura.textaura = false;
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
 		PowaBarAuraTextureSlider:Hide();
 		PowaBarCustomTexName:Show();
 		PowaBarCustomTexName:SetText(self.Auras[aura.id].customname);
@@ -2301,6 +2391,9 @@ function PowaAuras:CustomTexturesChecked()
 		PowaWowTextureButton:SetChecked(false);
 		PowaTextAuraButton:SetChecked(false);
 		PowaBarAurasText:Hide();
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
 		PowaFontButton:Hide();
 	else
 		aura.customtex = false;
@@ -2320,7 +2413,13 @@ function PowaAuras:TextAuraChecked()
 		aura.owntex = false;
 		aura.wowtex = false;
 		aura.customtex = false;
+		PowaModelPositionZSlider:Hide();
+		PowaModelPositionXSlider:Hide();
+		PowaModelPositionYSlider:Hide();
 		PowaBarAuraTextureSlider:Hide();
+		PowaBlendModeDropDown:Show();
+		PowaTextureStrataDropDown:Show();
+		PowaTextureStrataSublevelSlider:Show();
 		PowaBarAurasText:Show();
 		PowaFontButton:Show();
 		--self:ShowText("TextAuraChecked: aura text changed to ", aura.aurastext);

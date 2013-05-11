@@ -758,6 +758,96 @@
 							</OnShow>
 						</Scripts>
 					</Frame>
+					<!-- Model Position Z Slider -->
+					<Slider name = "PowaModelPositionZSlider" inherits = "PowaBarSliderTemplate">
+						<Size>
+							<AbsDimension x = "140" y = "16"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaTextureStrataDropDown" relativePoint = "TOPLEFT">
+								<Offset>
+									<AbsDimension x = "18" y = "21"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self:EnableMouseWheel(true)
+								self:SetMinMaxValues(-30, 3)
+								self:SetValue(0.00)
+								self:SetValueStep(0.05)
+								PowaModelPositionZSliderText:SetText("Model Z: 0")
+								PowaModelPositionZSliderLow:SetText("-30")
+								PowaModelPositionZSliderHigh:SetText("3")
+							</OnLoad>
+							<OnValueChanged>
+								PowaAuras:ModelPositionZSliderChanged()
+							</OnValueChanged>
+							<OnMouseWheel>
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
+						</Scripts>
+					</Slider>
+					<!-- Model Position X Slider -->
+					<Slider name = "PowaModelPositionXSlider" inherits = "PowaBarSliderTemplate">
+						<Size>
+							<AbsDimension x = "140" y = "16"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "LEFT" relativeTo = "PowaStrataDropDown" relativePoint = "RIGHT">
+								<Offset>
+									<AbsDimension x = "-5" y = "5"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self:EnableMouseWheel(true)
+								self:SetMinMaxValues(-3, 3)
+								self:SetValue(0.00)
+								self:SetValueStep(0.05)
+								PowaModelPositionXSliderText:SetText("Model X: 0")
+								PowaModelPositionXSliderLow:SetText("-3")
+								PowaModelPositionXSliderHigh:SetText("3")
+							</OnLoad>
+							<OnValueChanged>
+								PowaAuras:ModelPositionXSliderChanged()
+							</OnValueChanged>
+							<OnMouseWheel>
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
+						</Scripts>
+					</Slider>
+					<!-- Model Position Y Slider -->
+					<Slider name = "PowaModelPositionYSlider" inherits = "PowaBarSliderTemplate">
+						<Size>
+							<AbsDimension x = "140" y = "16"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "LEFT" relativeTo = "PowaFrameStrataLevelSlider" relativePoint = "RIGHT">
+								<Offset>
+									<AbsDimension x = "10" y = "0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self:EnableMouseWheel(true)
+								self:SetMinMaxValues(-3, 3)
+								self:SetValue(0.00)
+								self:SetValueStep(0.05)
+								PowaModelPositionYSliderText:SetText("Model Y: 0")
+								PowaModelPositionYSliderLow:SetText("-3")
+								PowaModelPositionYSliderHigh:SetText("3")
+							</OnLoad>
+							<OnValueChanged>
+								PowaAuras:ModelPositionYSliderChanged()
+							</OnValueChanged>
+							<OnMouseWheel>
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
+						</Scripts>
+					</Slider>
 					<!-- Texture Slider -->
 					<Slider name = "PowaBarAuraTextureSlider" inherits = "PowaBarSliderTemplate">
 						<Size>

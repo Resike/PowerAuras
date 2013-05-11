@@ -1246,6 +1246,13 @@
 								PowaAuras:OptionRenameEdited()
 								self:ClearFocus()
 							</OnEnterPressed>
+							<OnEditFocusLost>
+								PowaAuras:OptionRenameEdited()
+							</OnEditFocusLost>
+							<OnEscapePressed>
+								PowaAuras:OptionRenameEdited()
+								self:ClearFocus()
+							</OnEscapePressed>
 						</Scripts>
 					</EditBox>
 				</Frames>
