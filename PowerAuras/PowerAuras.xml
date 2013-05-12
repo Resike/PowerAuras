@@ -242,7 +242,7 @@
 		</Layers>
 		<Frames>
 			<!-- Exit Button -->
-			<Button name = "PowaCloseButton" inherits = "UIPanelCloseButton">
+			<Button name = "PowaCloseButton"  inherits = "UIPanelCloseButton">
 				<Anchors>
 					<Anchor point = "TOPRIGHT" relativeTo = "PowaBarConfigFrame" relativePoint = "TOPRIGHT">
 						<Offset>
@@ -803,12 +803,12 @@
 						<Scripts>
 							<OnLoad>
 								self:EnableMouseWheel(true)
-								self:SetMinMaxValues(-10, 10)
+								self:SetMinMaxValues(-3, 3)
 								self:SetValue(0.00)
 								self:SetValueStep(0.05)
 								PowaModelPositionXSliderText:SetText("Model X: 0")
-								PowaModelPositionXSliderLow:SetText("-10")
-								PowaModelPositionXSliderHigh:SetText("10")
+								PowaModelPositionXSliderLow:SetText("-3")
+								PowaModelPositionXSliderHigh:SetText("3")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:ModelPositionXSliderChanged()
@@ -833,12 +833,12 @@
 						<Scripts>
 							<OnLoad>
 								self:EnableMouseWheel(true)
-								self:SetMinMaxValues(-10, 10)
+								self:SetMinMaxValues(-3, 3)
 								self:SetValue(0.00)
 								self:SetValueStep(0.05)
 								PowaModelPositionYSliderText:SetText("Model Y: 0")
-								PowaModelPositionYSliderLow:SetText("-10")
-								PowaModelPositionYSliderHigh:SetText("10")
+								PowaModelPositionYSliderLow:SetText("-3")
+								PowaModelPositionYSliderHigh:SetText("3")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:ModelPositionYSliderChanged()
@@ -944,7 +944,7 @@
 							</OnLeave>
 						</Scripts>
 					</EditBox>
-					<!-- Text Aura Font Button -->
+					<!--  Text Aura Font Button -->
 					<Button name = "PowaFontButton" inherits = "OptionsButtonTemplate" text = "[T]">
 						<Size>
 							<AbsDimension x = "50" y = "20"/>
@@ -3028,7 +3028,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownSoundEndLabel:SetText(PowaAuras.Text.nomSoundEnd)
+										PowaDropDownSoundEndLabel:SetText(PowaAuras.Text.nomSoundEnd);
 									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -3072,7 +3072,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownSound2EndLabel:SetText(PowaAuras.Text.nomSound2End)
+										PowaDropDownSound2EndLabel:SetText(PowaAuras.Text.nomSound2End);
 									</OnLoad>
 									<OnShow>
 										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
@@ -4352,12 +4352,12 @@
 				<Frames>
 					<ScrollFrame name = "$parentScrollFrame" inherits = "FauxScrollFrameTemplate">
 						<Anchors>
-							<Anchor point = "TOPLEFT" relativeTo = "FontSelectorEditor">
+							<Anchor point = "TOPLEFT"  relativeTo = "FontSelectorEditor">
 								<Offset>
 									<AbsDimension x = "-22" y = "-3"/>
 								</Offset>
 							</Anchor>
-							<Anchor point = "BOTTOMRIGHT" relativeTo = "FontSelectorEditor">
+							<Anchor point = "BOTTOMRIGHT"  relativeTo = "FontSelectorEditor">
 								<Offset>
 									<AbsDimension x = "-22" y = "2"/>
 								</Offset>

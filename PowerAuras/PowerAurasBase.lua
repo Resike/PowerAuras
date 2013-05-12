@@ -1,766 +1,760 @@
-local string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select = string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select
+local string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select = string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select;
 
 PowaAuras =
 {
-	Version = GetAddOnMetadata("PowerAuras", "Version"),
-
-	VersionPattern = "(%d+)%.(%d+)",
-
-	WoWBuild = tonumber(select(4, GetBuildInfo()), 10),
-
-	IconSource = "Interface\\Icons\\",
-
-	CurrentAuraId = 1,
-	NextCheck = 0.2,
-	Tstep = 0.09765625,
-	NextDebugCheck = 0.0,
-	InspectTimeOut = 12,
-	InspectDelay = 2,
-	ExportMaxSize = 4000,
-	ExportWidth = 500,
-	TextureCount = 254,
-
-	DebugEvents = false,
-	--DebugAura = 1,
-
-	-- Internal counters
-	DebugTimer = 0,
-	ChecksTimer = 0,
-	ThrottleTimer = 0,
-	TimerUpdateThrottleTimer = 0,
-	NextInspectTimeOut = 0,
-
-	--[[
-	-- Profiling
-	NextProfileCheck = 0,
-	ProfileTimer = 0,
-	UpdateCount = 0,
-	CheckCount = 0,
-	EffectCount = 0,
-	AuraCheckCount = 0,
-	AuraCheckShowCount = 0,
-	BuffRaidCount = 0,
-	BuffUnitSetCount = 0,
-	BuffUnitCount = 0,
-	BuffSlotCount = 0,
-	AuraTypeCount = {},
-	]]--
-
-	VariablesLoaded = false,
-	SetupDone = false,
-	ModTest = false,
-	DebugCycle = false,
-	ResetTargetTimers = false,
-
-	ActiveTalentGroup = GetActiveSpecGroup(),
-
-	WeAreInCombat = false,
-	WeAreInRaid = false,
-	WeAreInParty = false,
-	WeAreMounted = false,
-	WeAreInVehicle = false,
-	WeAreAlive = true,
-	PvPFlagSet = false,
-	Instance = "none",
-
-	GroupUnits = { },
-	GroupNames = { },
-
-	Pending = { }, -- Workaround for 'silent' cooldown end (no event fired)
-	Cascade = { }, -- Dependant auras that need checking
-
-	UsedInMultis = { },
-
-	PowaStance =
-	{
-		[0] = "Humanoid"
-	},
-
-	PowaGTFO =
-	{
-		[0] = "High Damage",
-		[1] = "Low Damage",
-		[2] = "Fail Alert",
-		[3] = "Friendly Fire"
-	},
-
-	allowedOperators =
-	{
-		["="] = true,
-		[">"] = true,
-		["<"] = true,
-		["!"] = true,
-		[">="] = true,
-		["<="] = true,
-		["-"] = true
-	},
-
-	DefaultOperator = ">=",
-
-	CurrentAuraPage = 1,
-
-	MoveEffect = 0,
-
-	Auras = { },
-	SecondaryAuras = { },
-	Frames = { },
-	SecondaryFrames = { },
-	Textures = { },
-	SecondaryTextures = { },
-
-	Models = { },
-	SecondaryModels = { },
-
-	TimerFrame = { },
-	StacksFrames = { },
-
-	Sound = { },
-	BeginAnimDisplay = { },
-	EndAnimDisplay = { },
-	Text = { },
-	Anim = { },
-
-	DebuffCatSpells = { },
-
-	AoeAuraAdded = { },
-	AoeAuraFaded = { },
-	AoeAuraTexture = { },
-
-	playerclass = "unknown",
-
-	Events = { },
-	AlwaysEvents =
-	{
-		ACTIVE_TALENT_GROUP_CHANGED = true,
-		CHAT_MSG_ADDON = true,
-		INSPECT_TALENT_READY = true,
-		PLAYER_ALIVE = true,
-		PLAYER_DEAD = true,
-		PLAYER_REGEN_DISABLED = true,
-		PLAYER_REGEN_ENABLED = true,
-		PLAYER_TALENT_UPDATE = true,
-		PLAYER_UNGHOST = true,
-		PLAYER_UPDATE_RESTING = true,
-		GROUP_ROSTER_UPDATE = true,
-		UNIT_ENTERED_VEHICLE = true,
-		UNIT_EXITED_VEHICLE = true,
-		UNIT_FACTION = true,
-		UNIT_SPELLCAST_SUCCEEDED = true,
-		ZONE_CHANGED_NEW_AREA = true
-	},
-
-	RelativeToParent =
-	{
-		TOPLEFT = "BOTTOMRIGHT",
-		TOP = "BOTTOM",
-		TOPRIGHT = "BOTTOMLEFT",
-		RIGHT = "LEFT",
-		BOTTOMRIGHT = "TOPLEFT",
-		BOTTOM = "TOP",
-		BOTTOMLEFT = "TOPRIGHT",
-		LEFT = "RIGHT",
-		CENTER = "CENTER"
-	},
-
-	BlendModeList =
-	{
-		"Add",
-		"Alphakey",
-		"Blend",
-		"Disable",
-		"Mod"
-	},
-
-	StrataList =
-	{
-		"Background",
-		"Low",
-		"Medium",
-		"High",
-		"Dialog",
-		"Fullscreen",
-		"Fullscreen_Dialog",
-		"Tooltip"
-	},
-
-	TextureStrataList =
-	{
-		"Background",
-		"Border",
-		"Artwork",
-		"Overlay"
-	},
-
-	GradientStyleList =
-	{
-		"None",
-		"Horizontal",
-		"Vertical"
-	},
-
-	ChangedUnits =
-	{
-		Buffs = { },
-		Targets = { }
-	},
-
-	InspectedRoles = { },
-	FixRoles = { },
-
-	Spells =
-	{
-		ACTIVATE_FIRST_TALENT = GetSpellInfo(63645),
-		ACTIVATE_SECOND_TALENT = GetSpellInfo(63644),
-		BUFF_BLOOD_PRESENCE = GetSpellInfo(48266),
-		BUFF_FROST_PRESENCE = GetSpellInfo(48263),
-		BUFF_UNHOLY_PRESENCE = GetSpellInfo(48265),
-		MOONKIN_FORM = GetSpellInfo(24858),
-		TREE_OF_LIFE = GetSpellInfo(65139),
-		SHADOWFORM = GetSpellInfo(15473),
-		DRUID_SHIFT_CAT = GetSpellInfo(768),
-		DRUID_SHIFT_BEAR = GetSpellInfo(5487),
-		DRUID_SHIFT_DIREBEAR = GetSpellInfo(9634),
-		DRUID_SHIFT_MOONKIN = GetSpellInfo(24858)
-	},
-
-	ExtraUnitEvent = { },
-	CastOnMe = { },
-	CastByMe = { },
-
-	DoCheck =
-	{
-		Buffs = false,
-		TargetBuffs = false,
-		PartyBuffs = false,
-		RaidBuffs = false,
-		GroupOrSelfBuffs = false,
-		UnitBuffs = false,
-		FocusBuffs = false,
-
-		Health = false,
-		TargetHealth = false,
-		PartyHealth = false,
-		RaidHealth = false,
-		FocusHealth = false,
-		NamedUnitHealth = false,
-
-		Mana = false,
-		TargetMana = false,
-		PartyMana = false,
-		RaidMana = false,
-		FocusMana = false,
-		NamedUnitMana = false,
-
-		Power = false,
-		TargetPower = false,
-		PartyPower = false,
-		RaidPower = false,
-		FocusPower = false,
-		UnitPower = false,
-
-		Combo = false,
-		Aoe = false,
-
-		Pet = false,
-
-		Stance = false,
-		Actions = false,
-		Enchants = false,
-
-		All = false,
-
-		PvP = false,
-		PartyPvP = false,
-		RaidPvP = false,
-		TargetPvP = false,
-
-		Aggro = false,
-		PartyAggro = false,
-		RaidAggro = false,
-
-		Spells = false,
-		TargetSpells = false,
-		FocusSpells = false,
-		PlayerSpells = false,
-		PartySpells = false,
-		RaidSpells = false,
-
-		SpellCooldowns = false,
-
-		Totems = false,
-		Runes = false,
-		Items = false,
-		Slots = false,
-		Tracking = false,
-
-		GTFO = false,
-		UnitMatch = false,
-		PetStance = false,
-
-		-- True if any type should be checked
-		CheckIt = false
-	},
-
-	BuffTypes =
-	{
-		Buff = 1,
-		Debuff = 2,
-		TypeDebuff = 3,
-		AoE = 4,
-		Enchant = 5,
-		Combo = 6,
-		ActionReady = 7,
-		Health = 8,
-		Mana = 9,
-		EnergyRagePower = 10,
-		Aggro = 11,
-		PvP = 12,
-		SpellAlert = 13,
-		Stance = 14,
-		SpellCooldown = 15,
-		StealableSpell = 16,
-		PurgeableSpell = 17,
-		Static = 18,
-		Totems = 19,
-		Pet = 20,
-		Runes = 21,
-		Items = 22,
-		Slots = 23,
-		Tracking = 24,
-		TypeBuff = 25,
-		UnitMatch = 26,
-		PetStance = 27,
-		GTFO = 50
-	},
-
-	AnimationBeginTypes =
-	{
-		None = 0,
-		ZoomIn = 1,
-		ZoomOut = 2,
-		FadeIn = 3,
-		TranslateLeft = 4,
-		TranslateTopLeft = 5,
-		TranslateTop = 6,
-		TranslateTopRight = 7,
-		TranslateRight = 8,
-		TranslateBottomRight = 9,
-		TranslateBottom = 10,
-		TranslateBottomLeft = 11,
-		Bounce = 12
-	},
-
-	AnimationEndTypes =
-	{
-		None = 0,
-		GrowAndFade = 1,
-		ShrinkAndFade = 2,
-		Fade = 3,
-		SpinAndFade = 4,
-		SpinShrinkAndFade = 5
-	},
-
-	AnimationTypes =
-	{
-		Invisible = 0,
-		Static = 1,
-		Flashing = 2,
-		Growing = 3,
-		Pulse = 4,
-		Bubble = 5,
-		WaterDrop = 6,
-		Electric = 7,
-		Shrinking = 8,
-		Flame = 9,
-		Orbit = 10,
-		SpinClockwise = 11,
-		SpinAntiClockwise = 12
-	},
-
-	-- Aura name -> Auras array
-	AurasByType = { },
-
-	-- Index -> Aura name
-	AurasByTypeList = { },
-
-	DebuffCatType =
-	{
-		CC = 1,
-		Silence = 2,
-		Snare = 3,
-		Root = 4,
-		Disarm = 5,
-		Stun = 6,
-		PvE = 10
-	},
-
-	WowTextures =
-	{
-		-- Auras Types
-		[1] = "Spells\\AuraRune_B",
-		[2] = "Spells\\AuraRune256b",
-		[3] = "Spells\\Circle",
-		[4] = "Spells\\GENERICGLOW2B",
-		[5] = "Spells\\GenericGlow2b1",
-		[6] = "Spells\\ShockRingCrescent256",
-		[7] = "Spells\\AuraRune1",
-		[8] = "Spells\\AuraRune5Green",
-		[9] = "Spells\\AuraRune7",
-		[10] = "Spells\\AuraRune8",
-		[11] = "Spells\\AuraRune9",
-		[12] = "Spells\\AuraRune11",
-		[13] = "Spells\\AuraRune_A",
-		[14] = "Spells\\AuraRune_C",
-		[15] = "Spells\\AuraRune_D",
-		[16] = "Spells\\Holy_Rune1",
-		[17] = "Spells\\Rune1d_GLOWless",
-		[18] = "Spells\\Rune4blue",
-		[19] = "Spells\\RuneBC1",
-		[20] = "Spells\\RuneBC2",
-		[21] = "Spells\\RUNEFROST",
-		[22] = "Spells\\Holy_Rune_128",
-		[23] = "Spells\\Nature_Rune_128",
-		[24] = "Spells\\Death_Rune",
-		[25] = "Spells\\DemonRune6",
-		[26] = "Spells\\DemonRune7",
-		[27] = "Spells\\DemonRune5backup",
-		-- Icon Types
-		[28] = "Particles\\Intellect128_outline",
-		[29] = "Spells\\Intellect_128",
-		[30] = "Spells\\GHOST1",
-		[31] = "Spells\\Aspect_Beast",
-		[32] = "Spells\\Aspect_Hawk",
-		[33] = "Spells\\Aspect_Wolf",
-		[34] = "Spells\\Aspect_Snake",
-		[35] = "Spells\\Aspect_Cheetah",
-		[36] = "Spells\\Aspect_Monkey",
-		[37] = "Spells\\Blobs",
-		[38] = "Spells\\Blobs2",
-		[39] = "Spells\\GradientCrescent2",
-		[40] = "Spells\\InnerFire_Rune_128",
-		[41] = "Spells\\RapidFire_Rune_128",
-		[42] = "Spells\\Protect_128",
-		[43] = "Spells\\Reticle_128",
-		[44] = "Spells\\Star2A",
-		[45] = "Spells\\Star4",
-		[46] = "Spells\\Strength_128",
-		[47] = "Particles\\STUNWHIRL",
-		[48] = "Spells\\BloodSplash1",
-		[49] = "Spells\\DarkSummon",
-		[50] = "Spells\\EndlessRage",
-		[51] = "Spells\\Rampage",
-		[52] = "Spells\\Eye",
-		[53] = "Spells\\Eyes",
-		[54] = "Spells\\Zap1b",
-		[55] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-1",
-		[56] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-2",
-		[57] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-3",
-		[58] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-4",
-		[59] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-5",
-		[60] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-6",
-		[61] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-7",
-		[62] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-8",
-		[63] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-9",
-		[64] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-10",
-		[65] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-11",
-		[66] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-12",
-		[67] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-13",
-		[68] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-14",
-		[69] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-15",
-		[70] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-16",
-		[71] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-17",
-		[72] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-18",
-		[73] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-19",
-		[74] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-20",
-		[75] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-21",
-		[76] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-22",
-		[77] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-23",
-		[78] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-24",
-		[79] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-25",
-		[80] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-26",
-		[81] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-27",
-		[82] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-28",
-		[83] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-29",
-		[84] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-30",
-		[85] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-31",
-		[86] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-32",
-		[87] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-33",
-		[88] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-34",
-		[89] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-35",
-		[90] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-36",
-		[91] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-37",
-		[92] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-38",
-		[93] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-39",
-		[94] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-40",
-		[95] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-41",
-		[96] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-42",
-		[97] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-43",
-		[98] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-44",
-		[99] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-45",
-		[100] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-46",
-		[101] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-47",
-		[102] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-48",
-		[103] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-49",
-		[104] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-50",
-		[105] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-51",
-		[106] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-52",
-		[107] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-53",
-		[108] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-54",
-		[109] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-55",
-		[110] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-56",
-		[111] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-57",
-		[112] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-58",
-		[113] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-59",
-		[114] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-60",
-		[115] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-61",
-		[116] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-62",
-		[117] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-63",
-		[118] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-64",
-		[119] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-65",
-		[120] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-66",
-		[121] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-67",
-		[122] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-68",
-		[123] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-69",
-		[124] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-70",
-		[125] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-71",
-		[126] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-72",
-		[127] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-73",
-		[128] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-74",
-		[129] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-75",
-		[130] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-76",
-		[131] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-77",
-		[132] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-78",
-		[133] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-79",
-		[134] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-80",
-		[135] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-81",
-		[136] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-82",
-		[137] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-83",
-		[138] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-84",
-		[139] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-85",
-		[140] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-86",
-		[141] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-87",
-		[142] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-88",
-		[143] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-89",
-		[144] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-90",
-		[145] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-91",
-		[146] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-92",
-		[147] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-93",
-		[148] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-94",
-		[149] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-95",
-		[150] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-96",
-		[151] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-97",
-		[152] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-98",
-		[153] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-99",
-		[154] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-100",
-		[155] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-101",
-		[156] = "Interface\\Spellbook\\UI-Glyph-Rune1",
-		[157] = "Interface\\Spellbook\\UI-Glyph-Rune-1",
-		[158] = "Interface\\Spellbook\\UI-Glyph-Rune-2",
-		[159] = "Interface\\Spellbook\\UI-Glyph-Rune-3",
-		[160] = "Interface\\Spellbook\\UI-Glyph-Rune-4",
-		[161] = "Interface\\Spellbook\\UI-Glyph-Rune-5",
-		[162] = "Interface\\Spellbook\\UI-Glyph-Rune-6",
-		[163] = "Interface\\Spellbook\\UI-Glyph-Rune-7",
-		[164] = "Interface\\Spellbook\\UI-Glyph-Rune-8",
-		[165] = "Interface\\Spellbook\\UI-Glyph-Rune-9",
-		[166] = "Interface\\Spellbook\\UI-Glyph-Rune-10",
-		[167] = "Interface\\Spellbook\\UI-Glyph-Rune-11",
-		[168] = "Interface\\Spellbook\\UI-Glyph-Rune-12",
-		[169] = "Interface\\Spellbook\\UI-Glyph-Rune-13",
-		[170] = "Interface\\Spellbook\\UI-Glyph-Rune-14",
-		[171] = "Interface\\Spellbook\\UI-Glyph-Rune-15",
-		[172] = "Interface\\Spellbook\\UI-Glyph-Rune-16",
-		[173] = "Interface\\Spellbook\\UI-Glyph-Rune-17",
-		[174] = "Interface\\Spellbook\\UI-Glyph-Rune-18",
-		[175] = "Interface\\Spellbook\\UI-Glyph-Rune-19",
-		[176] = "Interface\\Spellbook\\UI-Glyph-Rune-20"
-
-	},
-
-	Fonts =
-	{
-		-- Wow Fonts
-		[1] = STANDARD_TEXT_FONT, -- "Fonts\\FRIZQT__.ttf"
-		[2] = "Fonts\\ARIALN.ttf",
-		[3] = "Fonts\\skurri.ttf",
-		-- External Fonts
-		[4] = "Interface\\Addons\\PowerAuras\\Fonts\\AllStar.ttf",
-		[5] = "Interface\\Addons\\PowerAuras\\Fonts\\Army.ttf",
-		[6] = "Interface\\Addons\\PowerAuras\\Fonts\\Army Condensed.ttf",
-		[7] = "Interface\\Addons\\PowerAuras\\Fonts\\Army Expanded.ttf",
-		[8] = "Interface\\Addons\\PowerAuras\\Fonts\\Blazed.ttf",
-		[9] = "Interface\\Addons\\PowerAuras\\Fonts\\Blox.ttf",
-		[10] = "Interface\\Addons\\PowerAuras\\Fonts\\Cloister Black.ttf",
-		[11] = "Interface\\Addons\\PowerAuras\\Fonts\\Diediedie.ttf",
-		[12] = "Interface\\Addons\\PowerAuras\\Fonts\\Hexagon.ttf",
-		[13] = "Interface\\Addons\\PowerAuras\\Fonts\\Moonstar.ttf",
-		[14] = "Interface\\Addons\\PowerAuras\\Fonts\\Morpheus.ttf",
-		[15] = "Interface\\Addons\\PowerAuras\\Fonts\\Neon.ttf",
-		[16] = "Interface\\Addons\\PowerAuras\\Fonts\\Pulse Virgin.ttf",
-		[17] = "Interface\\Addons\\PowerAuras\\Fonts\\Punks Not Dead.ttf",
-		[18] = "Interface\\Addons\\PowerAuras\\Fonts\\Starcraft.ttf",
-		[19] = "Interface\\Addons\\PowerAuras\\Fonts\\Whoa.ttf"
-	},
-
-	Sound =
-	{
-		-- Blizzard Sounds
-		[1] = "AuctionWindowClose",
-		[2] = "AuctionWindowOpen",
-		[3] = "Fishing Reel in",
-		[4] = "GAMEDIALOGOPEN",
-		[5] = "GAMEDIALOGCLOSE",
-		[6] = "HumanExploration",
-		[7] = "igAbilityOpen",
-		[8] = "igAbilityClose",
-		[9] = "igBackPackOpen",
-		[10] = "igBackPackClose",
-		[11] = "igInventoryOepn",
-		[12] = "igInventoryClose",
-		[13] = "igMainMenuOpen",
-		[14] = "igMainMenuClose",
-		[15] = "igMiniMapOpen",
-		[16] = "igMiniMapClose",
-		[17] = "igPlayerInvite",
-		[18] = "igPVPUpdate",
-		[19] = "LEVELUP",
-		[20] = "LOOTWINDOWCOINSOUND",
-		[21] = "MapPing",
-		[22] = "PVPENTERQUEUE",
-		[23] = "PVPTHROUGHQUEUE",
-		[24] = "QUESTADDED",
-		[25] = "QUESTCOMPLETED",
-		[26] = "RaidWarning",
-		[27] = "ReadyCheck",
-		[28] = "TalentScreenOpen",
-		[29] = "TalentScreenClose",
-		[30] = "TellMessage",
-		-- Second Tab
-		-- Custom Sounds
-		[31] = "Aggro.mp3",
-		[32] = "Arrow Swoosh.mp3",
-		[33] = "Bam.mp3",
-		[34] = "Bear Polar.mp3",
-		[35] = "Big Kiss.mp3",
-		[36] = "Bite.mp3",
-		[37] = "Bloodbath.mp3",
-		[38] = "Burp.mp3",
-		[39] = "Cat.mp3",
-		[40] = "Chant1.mp3",
-		[41] = "Chant2.mp3",
-		[42] = "Chimes.mp3",
-		[43] = "Cookie.mp3",
-		[44] = "Espark.mp3",
-		[45] = "Fireball.mp3",
-		[46] = "Gasp.mp3",
-		[47] = "Heartbeat.mp3",
-		[48] = "Hic.mp3",
-		[59] = "Huh.mp3",
-		[50] = "Hurricane.mp3",
-		[51] = "Hyena.mp3",
-		[52] = "Kaching.mp3",
-		[53] = "Moan.mp3",
-		[54] = "Panther.mp3",
-		[55] = "Phone.mp3",
-		[56] = "Punch.mp3",
-		[57] = "Rainroof.mp3",
-		[58] = "Rocket.mp3",
-		[69] = "Ship Horn.mp3",
-		[60] = "Shot.mp3",
-		[61] = "Snake.mp3",
-		[62] = "Sneeze.mp3",
-		[63] = "Sonar.mp3",
-		[64] = "Splash.mp3",
-		[65] = "Squeaky.mp3",
-		[66] = "Sword.mp3",
-		[67] = "Throw.mp3",	
-		[68] = "Thunder.mp3",
-		[69] = "Vengeance.mp3",
-		[70] = "Warpath.mp3",
-		[71] = "Wicked Laugh Female.mp3",
-		[72] = "Wicked Laugh Male.mp3",
-		[73] = "Wilhelm.mp3",
-		[74] = "Wolf.mp3",
-		[75] = "Yeehaw.mp3"
-	},
-
-	TimerTextures =
-	{
-		"Original",
-		"AccidentalPresidency",
-		"Crystal",
-		"Digital",
-		"Monofonto",
-		"OCR",
-		"WhiteRabbit"
-	},
-
-	-- Colors used in messages
-	Colors =
-	{
-		["Blue"] = "|cff6666ff",
-		["Grey"] = "|cff999999",
-		["Green"] = "|cff66cc33",
-		["Red"] = "|cffff2020",
-		["Yellow"] = "|cffffff40",
-		["BGrey"] = "|c00D0D0D0",
-		["White"] = "|c00FFFFFF",
-		["Orange"] = "|cffff9930",
-		["Purple"] = "|cffB0A0ff",
-		["Gold"] = "|cffffff00"
-	},
-
-	SetColours =
-	{
-		["PowaTargetButton"] = {r = 1.0, g = 0.2, b = 0.2},
-		["PowaTargetFriendButton"] = {r = 0.2, g = 1.0, b = 0.2},
-		["PowaPartyButton"] = {r = 0.2, g = 1.0, b = 0.2},
-		["PowaGroupOrSelfButton"] = {r = 0.2, g = 1.0, b = 0.2},
-		["PowaFocusButton"] = {r = 0.2, g = 1.0, b = 0.2},
-		["PowaRaidButton"] = {r = 0.2, g = 1.0, b = 0.2},
-		["PowaOptunitnButton"] = {r = 0.2, g = 1.0, b = 0.2},
-		["PowaGroupAnyButton"] = {r = 0.2, g = 1.0, b = 0.2}
-	},
-
-	OptionCheckBoxes =
-	{
-		"PowaTargetButton",
-		"PowaPartyButton",
-		"PowaGroupOrSelfButton",
-		"PowaRaidButton",
-		"PowaIngoreCaseButton",
-		"PowaOwntexButton",
-		"PowaInverseButton",
-		"PowaFocusButton",
-		"PowaOptunitnButton",
-		"PowaGroupAnyButton",
-		"PowaRoleTankButton",
-		"PowaRoleHealerButton",
-		"PowaRoleMeleDpsButton",
-		"PowaRoleRangeDpsButton"
-	},
-
-	OptionTernary = { },
-
-	OptionHideables =
-	{
-		"PowaGroupAnyButton",
-		"PowaBarTooltipCheck",
-		"PowaBarThresholdSlider",
-		"PowaThresholdInvertButton",
-		"PowaBarBuffStacks",
-		"PowaDropDownStance",
-		"PowaDropDownGTFO",
-		"PowaDropDownPowerType"
-	},
-
-	Backdrop =
-	{
-		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
-		insets = {left = 0, top = 0, right = 0, bottom = 0},
-		tile = true
-	}
-}
+Version = GetAddOnMetadata("PowerAuras", "Version");
+
+VersionPattern = "(%d+)%.(%d+)";
+
+WoWBuild = tonumber(select(4, GetBuildInfo()), 10);
+
+IconSource = "Interface\\Icons\\";
+
+CurrentAuraId = 1;
+NextCheck = 0.2;
+Tstep = 0.09765625;
+NextDebugCheck = 0.0;
+InspectTimeOut = 12;
+InspectDelay = 2;
+ExportMaxSize = 4000;
+ExportWidth = 500;
+TextureCount = 254;
+
+DebugEvents = false;
+--DebugAura = 1;
+
+-- Internal counters
+DebugTimer = 0;
+ChecksTimer = 0;
+ThrottleTimer = 0;
+TimerUpdateThrottleTimer = 0;
+NextInspectTimeOut = 0;
+
+--[[
+-- Profiling
+NextProfileCheck = 0;
+ProfileTimer = 0;
+UpdateCount = 0;
+CheckCount = 0;
+EffectCount = 0;
+AuraCheckCount = 0;
+AuraCheckShowCount = 0;
+BuffRaidCount = 0;
+BuffUnitSetCount = 0;
+BuffUnitCount = 0;
+BuffSlotCount = 0;
+AuraTypeCount = {};
+]]--
+
+VariablesLoaded = false;
+SetupDone = false;
+ModTest = false;
+DebugCycle = false;
+ResetTargetTimers = false;
+
+ActiveTalentGroup = GetActiveSpecGroup();
+
+WeAreInCombat = false;
+WeAreInRaid = false;
+WeAreInParty = false;
+WeAreMounted = false;
+WeAreInVehicle = false;
+WeAreAlive = true;
+PvPFlagSet = false;
+Instance = "none";
+
+GroupUnits = { };
+GroupNames = { };
+
+Pending = { }; -- Workaround for 'silent' cooldown end (no event fired)
+Cascade = { }; -- Dependant auras that need checking
+
+UsedInMultis = { };
+
+PowaStance =
+{
+	[0] = "Humanoid"
+};
+
+PowaGTFO = {[0] = "High Damage", [1] = "Low Damage", [2] = "Fail Alert", [3] = "Friendly Fire"};
+
+allowedOperators =
+{
+	["="] = true,
+	[">"] = true,
+	["<"] = true,
+	["!"] = true,
+	[">="] = true,
+	["<="] = true,
+	["-"] = true,
+};
+
+DefaultOperator = ">=";
+
+CurrentAuraPage = 1;
+
+MoveEffect = 0; -- 1 = Copy, 2 = Move
+
+Auras = { };
+SecondaryAuras = { };
+Frames = { };
+SecondaryFrames = { };
+Textures = { };
+SecondaryTextures = { };
+
+Models = { };
+SecondaryModels = { };
+
+TimerFrame = { };
+StacksFrames = { };
+
+Sound = { };
+BeginAnimDisplay = { };
+EndAnimDisplay = { };
+Text = { };
+Anim = { };
+
+DebuffCatSpells = { };
+
+AoeAuraAdded = { };
+AoeAuraFaded = { };
+AoeAuraTexture = { };
+
+playerclass = "unknown";
+
+Events = { };
+AlwaysEvents =
+{
+	ACTIVE_TALENT_GROUP_CHANGED = true,
+	CHAT_MSG_ADDON = true,
+	INSPECT_TALENT_READY = true,
+	PLAYER_ALIVE = true,
+	PLAYER_DEAD = true,
+	PLAYER_REGEN_DISABLED = true,
+	PLAYER_REGEN_ENABLED = true,
+	PLAYER_TALENT_UPDATE = true,
+	PLAYER_UNGHOST = true,
+	PLAYER_UPDATE_RESTING = true,
+	GROUP_ROSTER_UPDATE = true,
+	UNIT_ENTERED_VEHICLE = true,
+	UNIT_EXITED_VEHICLE = true,
+	UNIT_FACTION = true,
+	UNIT_SPELLCAST_SUCCEEDED = true,
+	ZONE_CHANGED_NEW_AREA = true,
+};
+
+RelativeToParent =
+{
+	TOPLEFT = "BOTTOMRIGHT",
+	TOP = "BOTTOM",
+	TOPRIGHT = "BOTTOMLEFT",
+	RIGHT = "LEFT",
+	BOTTOMRIGHT = "TOPLEFT",
+	BOTTOM = "TOP",
+	BOTTOMLEFT = "TOPRIGHT",
+	LEFT = "RIGHT",
+	CENTER = "CENTER",
+};
+
+BlendModeList =
+{
+	"Add",
+	"Alphakey",
+	"Blend",
+	"Disable",
+	"Mod",
+};
+
+StrataList =
+{
+	"Background",
+	"Low",
+	"Medium",
+	"High",
+	"Dialog",
+	"Fullscreen",
+	"Fullscreen_Dialog",
+	"Tooltip",
+};
+
+TextureStrataList =
+{
+	"Background",
+	"Border",
+	"Artwork",
+	"Overlay",
+};
+
+GradientStyleList =
+{
+	"None",
+	"Horizontal",
+	"Vertical",
+};
+
+ChangedUnits =
+{
+	Buffs = { },
+	Targets = { };
+};
+
+InspectedRoles = { };
+FixRoles = { };
+
+Spells =
+{
+	ACTIVATE_FIRST_TALENT = GetSpellInfo(63645),
+	ACTIVATE_SECOND_TALENT = GetSpellInfo(63644),
+	BUFF_BLOOD_PRESENCE = GetSpellInfo(48266),
+	BUFF_FROST_PRESENCE = GetSpellInfo(48263),
+	BUFF_UNHOLY_PRESENCE = GetSpellInfo(48265),
+	MOONKIN_FORM = GetSpellInfo(24858),
+	TREE_OF_LIFE = GetSpellInfo(65139),
+	SHADOWFORM = GetSpellInfo(15473),
+	DRUID_SHIFT_CAT = GetSpellInfo(768),
+	DRUID_SHIFT_BEAR = GetSpellInfo(5487),
+	DRUID_SHIFT_DIREBEAR = GetSpellInfo(9634),
+	DRUID_SHIFT_MOONKIN = GetSpellInfo(24858),
+};
+
+ExtraUnitEvent = { };
+CastOnMe = { };
+CastByMe = { };
+
+DoCheck =
+{
+	Buffs = false,
+	TargetBuffs = false,
+	PartyBuffs = false,
+	RaidBuffs = false,
+	GroupOrSelfBuffs = false,
+	UnitBuffs = false,
+	FocusBuffs = false,
+
+	Health = false,
+	TargetHealth = false,
+	PartyHealth = false,
+	RaidHealth = false,
+	FocusHealth = false,
+	NamedUnitHealth = false,
+
+	Mana = false,
+	TargetMana = false,
+	PartyMana = false,
+	RaidMana = false,
+	FocusMana = false,
+	NamedUnitMana = false,
+
+	Power = false,
+	TargetPower = false,
+	PartyPower = false,
+	RaidPower = false,
+	FocusPower = false,
+	UnitPower = false,
+
+	Combo = false,
+	Aoe = false,
+
+	Pet = false,
+
+	Stance = false,
+	Actions = false,
+	Enchants = false,
+
+	All = false,
+
+	PvP = false,
+	PartyPvP = false,
+	RaidPvP = false,
+	TargetPvP = false,
+
+	Aggro = false,
+	PartyAggro = false,
+	RaidAggro = false,
+
+	Spells = false,
+	TargetSpells = false,
+	FocusSpells = false,
+	PlayerSpells = false,
+	PartySpells = false,
+	RaidSpells = false,
+
+	SpellCooldowns = false,
+
+	Totems = false,
+	Runes = false,
+	Items = false,
+	Slots = false,
+	Tracking = false,
+
+	GTFO = false,
+	UnitMatch = false,
+	PetStance = false,
+
+	-- True if any type should be checked
+	CheckIt = false,
+};
+
+BuffTypes =
+{
+	Buff = 1,
+	Debuff = 2,
+	TypeDebuff = 3,
+	AoE = 4,
+	Enchant = 5,
+	Combo = 6,
+	ActionReady = 7,
+	Health = 8,
+	Mana = 9,
+	EnergyRagePower = 10,
+	Aggro = 11,
+	PvP = 12,
+	SpellAlert = 13,
+	Stance = 14,
+	SpellCooldown = 15,
+	StealableSpell = 16,
+	PurgeableSpell = 17,
+	Static = 18,
+	Totems = 19,
+	Pet = 20,
+	Runes = 21,
+	Items = 22,
+	Slots = 23,
+	Tracking = 24,
+	TypeBuff = 25,
+	UnitMatch = 26,
+	PetStance = 27,
+	GTFO = 50,
+};
+
+AnimationBeginTypes =
+{
+	None = 0,
+	ZoomIn = 1,
+	ZoomOut = 2,
+	FadeIn = 3,
+	TranslateLeft = 4,
+	TranslateTopLeft = 5,
+	TranslateTop = 6,
+	TranslateTopRight = 7,
+	TranslateRight = 8,
+	TranslateBottomRight = 9,
+	TranslateBottom = 10,
+	TranslateBottomLeft = 11,
+	Bounce = 12,
+};
+
+AnimationEndTypes =
+{
+	None = 0,
+	GrowAndFade = 1,
+	ShrinkAndFade = 2,
+	Fade = 3,
+	SpinAndFade = 4,
+	SpinShrinkAndFade = 5,
+};
+
+AnimationTypes =
+{
+	Invisible = 0,
+	Static = 1,
+	Flashing = 2,
+	Growing = 3,
+	Pulse = 4,
+	Bubble = 5,
+	WaterDrop = 6,
+	Electric = 7,
+	Shrinking = 8,
+	Flame = 9,
+	Orbit = 10,
+	SpinClockwise = 11,
+	SpinAntiClockwise = 12,
+};
+
+-- Aura name -> Auras array
+AurasByType = { };
+
+-- Index -> Aura name
+AurasByTypeList = { };
+
+DebuffCatType =
+{
+	CC = 1,
+	Silence = 2,
+	Snare = 3,
+	Root = 4,
+	Disarm = 5,
+	Stun = 6,
+	PvE = 10,
+};
+
+WowTextures =
+{
+	-- Auras Types
+	[1] = "Spells\\AuraRune_B",
+	[2] = "Spells\\AuraRune256b",
+	[3] = "Spells\\Circle",
+	[4] = "Spells\\GENERICGLOW2B",
+	[5] = "Spells\\GenericGlow2b1",
+	[6] = "Spells\\ShockRingCrescent256",
+	[7] = "Spells\\AuraRune1",
+	[8] = "Spells\\AuraRune5Green",
+	[9] = "Spells\\AuraRune7",
+	[10] = "Spells\\AuraRune8",
+	[11] = "Spells\\AuraRune9",
+	[12] = "Spells\\AuraRune11",
+	[13] = "Spells\\AuraRune_A",
+	[14] = "Spells\\AuraRune_C",
+	[15] = "Spells\\AuraRune_D",
+	[16] = "Spells\\Holy_Rune1",
+	[17] = "Spells\\Rune1d_GLOWless",
+	[18] = "Spells\\Rune4blue",
+	[19] = "Spells\\RuneBC1",
+	[20] = "Spells\\RuneBC2",
+	[21] = "Spells\\RUNEFROST",
+	[22] = "Spells\\Holy_Rune_128",
+	[23] = "Spells\\Nature_Rune_128",
+	[24] = "Spells\\Death_Rune",
+	[25] = "Spells\\DemonRune6",
+	[26] = "Spells\\DemonRune7",
+	[27] = "Spells\\DemonRune5backup",
+	-- Icon Types
+	[28] = "Particles\\Intellect128_outline",
+	[29] = "Spells\\Intellect_128",
+	[30] = "Spells\\GHOST1",
+	[31] = "Spells\\Aspect_Beast",
+	[32] = "Spells\\Aspect_Hawk",
+	[33] = "Spells\\Aspect_Wolf",
+	[34] = "Spells\\Aspect_Snake",
+	[35] = "Spells\\Aspect_Cheetah",
+	[36] = "Spells\\Aspect_Monkey",
+	[37] = "Spells\\Blobs",
+	[38] = "Spells\\Blobs2",
+	[39] = "Spells\\GradientCrescent2",
+	[40] = "Spells\\InnerFire_Rune_128",
+	[41] = "Spells\\RapidFire_Rune_128",
+	[42] = "Spells\\Protect_128",
+	[43] = "Spells\\Reticle_128",
+	[44] = "Spells\\Star2A",
+	[45] = "Spells\\Star4",
+	[46] = "Spells\\Strength_128",
+	[47] = "Particles\\STUNWHIRL",
+	[48] = "Spells\\BloodSplash1",
+	[49] = "Spells\\DarkSummon",
+	[50] = "Spells\\EndlessRage",
+	[51] = "Spells\\Rampage",
+	[52] = "Spells\\Eye",
+	[53] = "Spells\\Eyes",
+	[54] = "Spells\\Zap1b",
+	[55] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-1",
+	[56] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-2",
+	[57] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-3",
+	[58] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-4",
+	[59] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-5",
+	[60] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-6",
+	[61] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-7",
+	[62] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-8",
+	[63] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-9",
+	[64] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-10",
+	[65] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-11",
+	[66] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-12",
+	[67] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-13",
+	[68] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-14",
+	[69] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-15",
+	[70] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-16",
+	[71] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-17",
+	[72] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-18",
+	[73] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-19",
+	[74] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-20",
+	[75] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-21",
+	[76] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-22",
+	[77] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-23",
+	[78] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-24",
+	[79] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-25",
+	[80] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-26",
+	[81] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-27",
+	[82] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-28",
+	[83] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-29",
+	[84] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-30",
+	[85] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-31",
+	[86] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-32",
+	[87] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-33",
+	[88] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-34",
+	[89] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-35",
+	[90] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-36",
+	[91] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-37",
+	[92] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-38",
+	[93] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-39",
+	[94] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-40",
+	[95] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-41",
+	[96] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-42",
+	[97] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-43",
+	[98] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-44",
+	[99] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-45",
+	[100] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-46",
+	[101] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-47",
+	[102] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-48",
+	[103] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-49",
+	[104] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-50",
+	[105] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-51",
+	[106] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-52",
+	[107] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-53",
+	[108] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-54",
+	[109] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-55",
+	[110] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-56",
+	[111] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-57",
+	[112] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-58",
+	[113] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-59",
+	[114] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-60",
+	[115] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-61",
+	[116] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-62",
+	[117] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-63",
+	[118] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-64",
+	[119] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-65",
+	[120] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-66",
+	[121] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-67",
+	[122] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-68",
+	[123] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-69",
+	[124] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-70",
+	[125] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-71",
+	[126] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-72",
+	[127] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-73",
+	[128] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-74",
+	[129] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-75",
+	[130] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-76",
+	[131] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-77",
+	[132] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-78",
+	[133] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-79",
+	[134] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-80",
+	[135] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-81",
+	[136] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-82",
+	[137] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-83",
+	[138] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-84",
+	[139] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-85",
+	[140] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-86",
+	[141] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-87",
+	[142] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-88",
+	[143] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-89",
+	[144] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-90",
+	[145] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-91",
+	[146] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-92",
+	[147] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-93",
+	[148] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-94",
+	[149] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-95",
+	[150] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-96",
+	[151] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-97",
+	[152] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-98",
+	[153] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-99",
+	[154] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-100",
+	[155] = "Interface\\PVPFrame\\Icons\\PVP-Banner-Emblem-101",
+	[156] = "Interface\\Spellbook\\UI-Glyph-Rune1",
+	[157] = "Interface\\Spellbook\\UI-Glyph-Rune-1",
+	[158] = "Interface\\Spellbook\\UI-Glyph-Rune-2",
+	[159] = "Interface\\Spellbook\\UI-Glyph-Rune-3",
+	[160] = "Interface\\Spellbook\\UI-Glyph-Rune-4",
+	[161] = "Interface\\Spellbook\\UI-Glyph-Rune-5",
+	[162] = "Interface\\Spellbook\\UI-Glyph-Rune-6",
+	[163] = "Interface\\Spellbook\\UI-Glyph-Rune-7",
+	[164] = "Interface\\Spellbook\\UI-Glyph-Rune-8",
+	[165] = "Interface\\Spellbook\\UI-Glyph-Rune-9",
+	[166] = "Interface\\Spellbook\\UI-Glyph-Rune-10",
+	[167] = "Interface\\Spellbook\\UI-Glyph-Rune-11",
+	[168] = "Interface\\Spellbook\\UI-Glyph-Rune-12",
+	[169] = "Interface\\Spellbook\\UI-Glyph-Rune-13",
+	[170] = "Interface\\Spellbook\\UI-Glyph-Rune-14",
+	[171] = "Interface\\Spellbook\\UI-Glyph-Rune-15",
+	[172] = "Interface\\Spellbook\\UI-Glyph-Rune-16",
+	[173] = "Interface\\Spellbook\\UI-Glyph-Rune-17",
+	[174] = "Interface\\Spellbook\\UI-Glyph-Rune-18",
+	[175] = "Interface\\Spellbook\\UI-Glyph-Rune-19",
+	[176] = "Interface\\Spellbook\\UI-Glyph-Rune-20",
+
+};
+
+Fonts =
+{
+	-- Wow Fonts
+	[1] = STANDARD_TEXT_FONT, -- "Fonts\\FRIZQT__.ttf"
+	[2] = "Fonts\\ARIALN.ttf",
+	[3] = "Fonts\\skurri.ttf",
+	-- External Fonts
+	[4] = "Interface\\Addons\\PowerAuras\\Fonts\\AllStar.ttf",
+	[5] = "Interface\\Addons\\PowerAuras\\Fonts\\Army.ttf",
+	[6] = "Interface\\Addons\\PowerAuras\\Fonts\\Army Condensed.ttf",
+	[7] = "Interface\\Addons\\PowerAuras\\Fonts\\Army Expanded.ttf",
+	[8] = "Interface\\Addons\\PowerAuras\\Fonts\\Blazed.ttf",
+	[9] = "Interface\\Addons\\PowerAuras\\Fonts\\Blox.ttf",
+	[10] = "Interface\\Addons\\PowerAuras\\Fonts\\Cloister Black.ttf",
+	[11] = "Interface\\Addons\\PowerAuras\\Fonts\\Diediedie.ttf",
+	[12] = "Interface\\Addons\\PowerAuras\\Fonts\\Hexagon.ttf",
+	[13] = "Interface\\Addons\\PowerAuras\\Fonts\\Moonstar.ttf",
+	[14] = "Interface\\Addons\\PowerAuras\\Fonts\\Morpheus.ttf",
+	[15] = "Interface\\Addons\\PowerAuras\\Fonts\\Neon.ttf",
+	[16] = "Interface\\Addons\\PowerAuras\\Fonts\\Pulse Virgin.ttf",
+	[17] = "Interface\\Addons\\PowerAuras\\Fonts\\Punks Not Dead.ttf",
+	[18] = "Interface\\Addons\\PowerAuras\\Fonts\\Starcraft.ttf",
+	[19] = "Interface\\Addons\\PowerAuras\\Fonts\\Whoa.ttf",
+};
+
+Sound =
+{
+	-- Blizzard Sounds
+	[1] = "AuctionWindowClose",
+	[2] = "AuctionWindowOpen",
+	[3] = "Fishing Reel in",
+	[4] = "GAMEDIALOGOPEN",
+	[5] = "GAMEDIALOGCLOSE",
+	[6] = "HumanExploration",
+	[7] = "igAbilityOpen",
+	[8] = "igAbilityClose",
+	[9] = "igBackPackOpen",
+	[10] = "igBackPackClose",
+	[11] = "igInventoryOepn",
+	[12] = "igInventoryClose",
+	[13] = "igMainMenuOpen",
+	[14] = "igMainMenuClose",
+	[15] = "igMiniMapOpen",
+	[16] = "igMiniMapClose",
+	[17] = "igPlayerInvite",
+	[18] = "igPVPUpdate",
+	[19] = "LEVELUP",
+	[20] = "LOOTWINDOWCOINSOUND",
+	[21] = "MapPing",
+	[22] = "PVPENTERQUEUE",
+	[23] = "PVPTHROUGHQUEUE",
+	[24] = "QUESTADDED",
+	[25] = "QUESTCOMPLETED",
+	[26] = "RaidWarning",
+	[27] = "ReadyCheck",
+	[28] = "TalentScreenOpen",
+	[29] = "TalentScreenClose",
+	[30] = "TellMessage",
+	-- Second Tab
+	-- Custom Sounds
+	[31] = "Aggro.mp3",
+	[32] = "Arrow Swoosh.mp3",
+	[33] = "Bam.mp3",
+	[34] = "Bear Polar.mp3",
+	[35] = "Big Kiss.mp3",
+	[36] = "Bite.mp3",
+	[37] = "Bloodbath.mp3",
+	[38] = "Burp.mp3",
+	[39] = "Cat.mp3",
+	[40] = "Chant1.mp3",
+	[41] = "Chant2.mp3",
+	[42] = "Chimes.mp3",
+	[43] = "Cookie.mp3",
+	[44] = "Espark.mp3",
+	[45] = "Fireball.mp3",
+	[46] = "Gasp.mp3",
+	[47] = "Heartbeat.mp3",
+	[48] = "Hic.mp3",
+	[59] = "Huh.mp3",
+	[50] = "Hurricane.mp3",
+	[51] = "Hyena.mp3",
+	[52] = "Kaching.mp3",
+	[53] = "Moan.mp3",
+	[54] = "Panther.mp3",
+	[55] = "Phone.mp3",
+	[56] = "Punch.mp3",
+	[57] = "Rainroof.mp3",
+	[58] = "Rocket.mp3",
+	[69] = "Ship Horn.mp3",
+	[60] = "Shot.mp3",
+	[61] = "Snake.mp3",
+	[62] = "Sneeze.mp3",
+	[63] = "Sonar.mp3",
+	[64] = "Splash.mp3",
+	[65] = "Squeaky.mp3",
+	[66] = "Sword.mp3",
+	[67] = "Throw.mp3",	
+	[68] = "Thunder.mp3",
+	[69] = "Vengeance.mp3",
+	[70] = "Warpath.mp3",
+	[71] = "Wicked Laugh Female.mp3",
+	[72] = "Wicked Laugh Male.mp3",
+	[73] = "Wilhelm.mp3",
+	[74] = "Wolf.mp3",
+	[75] = "Yeehaw.mp3",
+};
+
+TimerTextures =
+{
+	"Original",
+	"AccidentalPresidency",
+	"Crystal",
+	"Digital",
+	"Monofonto",
+	"OCR",
+	"WhiteRabbit",
+};
+
+-- Colors used in messages
+Colors =
+{
+	["Blue"] = "|cff6666ff",
+	["Grey"] = "|cff999999",
+	["Green"] = "|cff66cc33",
+	["Red"] = "|cffff2020",
+	["Yellow"] = "|cffffff40",
+	["BGrey"] = "|c00D0D0D0",
+	["White"] = "|c00FFFFFF",
+	["Orange"] = "|cffff9930",
+	["Purple"] = "|cffB0A0ff",
+	["Gold"] = "|cffffff00",
+};
+
+SetColours =
+{
+	["PowaTargetButton"] = {r = 1.0, g = 0.2, b = 0.2},
+	["PowaTargetFriendButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaPartyButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaGroupOrSelfButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaFocusButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaRaidButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaOptunitnButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaGroupAnyButton"] = {r = 0.2, g = 1.0, b = 0.2},
+};
+
+OptionCheckBoxes =
+{
+	"PowaTargetButton",
+	"PowaPartyButton",
+	"PowaGroupOrSelfButton",
+	"PowaRaidButton",
+	"PowaIngoreCaseButton",
+	"PowaOwntexButton",
+	"PowaInverseButton",
+	"PowaFocusButton",
+	"PowaOptunitnButton",
+	"PowaGroupAnyButton",
+	"PowaRoleTankButton",
+	"PowaRoleHealerButton",
+	"PowaRoleMeleDpsButton",
+	"PowaRoleRangeDpsButton",
+};
+
+OptionTernary = { };
+
+OptionHideables =
+{
+	"PowaGroupAnyButton",
+	"PowaBarTooltipCheck",
+	"PowaBarThresholdSlider",
+	"PowaThresholdInvertButton",
+	"PowaBarBuffStacks",
+	"PowaDropDownStance",
+	"PowaDropDownGTFO",
+	"PowaDropDownPowerType",
+};
+
+Backdrop =
+{
+	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+	insets = {left = 0, top = 0, right = 0, bottom = 0},
+	tile = true
+};
+};
 
 PowaAurasModels =
 {
@@ -798,93 +792,93 @@ PowaAurasModels =
 	[32] = "Spells\\Astral_Recall_Impact_Base.m2",
 	[33] = "Spells\\AvengingWrath_State_Chest.m2",
 	[34] = "Creature\\Alexstrasza\\LadyAlexstrasa.m2",
-	[35] = "Creature\\Arthaslichking\\arthaslichking.m2"
-}
+	[35] = "Creature\\Arthaslichking\\arthaslichking.m2",
+};
 
 function PowaAuras:RegisterAuraType(auraType)
-	self.AurasByType[auraType] = { }
-	table.insert(self.AurasByTypeList, auraType)
+	self.AurasByType[auraType] = { };
+	table.insert(self.AurasByTypeList, auraType);
 end
 
-PowaAuras:RegisterAuraType('Buffs')
-PowaAuras:RegisterAuraType('TargetBuffs')
-PowaAuras:RegisterAuraType('PartyBuffs')
-PowaAuras:RegisterAuraType('RaidBuffs')
-PowaAuras:RegisterAuraType('GroupOrSelfBuffs')
-PowaAuras:RegisterAuraType('UnitBuffs')
-PowaAuras:RegisterAuraType('FocusBuffs')
+PowaAuras:RegisterAuraType('Buffs');
+PowaAuras:RegisterAuraType('TargetBuffs');
+PowaAuras:RegisterAuraType('PartyBuffs');
+PowaAuras:RegisterAuraType('RaidBuffs');
+PowaAuras:RegisterAuraType('GroupOrSelfBuffs');
+PowaAuras:RegisterAuraType('UnitBuffs');
+PowaAuras:RegisterAuraType('FocusBuffs');
 
-PowaAuras:RegisterAuraType('Health')
-PowaAuras:RegisterAuraType('TargetHealth')
-PowaAuras:RegisterAuraType('FocusHealth')
-PowaAuras:RegisterAuraType('PartyHealth')
-PowaAuras:RegisterAuraType('RaidHealth')
-PowaAuras:RegisterAuraType('NamedUnitHealth')
+PowaAuras:RegisterAuraType('Health');
+PowaAuras:RegisterAuraType('TargetHealth');
+PowaAuras:RegisterAuraType('FocusHealth');
+PowaAuras:RegisterAuraType('PartyHealth');
+PowaAuras:RegisterAuraType('RaidHealth');
+PowaAuras:RegisterAuraType('NamedUnitHealth');
 
-PowaAuras:RegisterAuraType('Mana')
-PowaAuras:RegisterAuraType('TargetMana')
-PowaAuras:RegisterAuraType('FocusMana')
-PowaAuras:RegisterAuraType('PartyMana')
-PowaAuras:RegisterAuraType('RaidMana')
-PowaAuras:RegisterAuraType('NamedUnitMana')
+PowaAuras:RegisterAuraType('Mana');
+PowaAuras:RegisterAuraType('TargetMana');
+PowaAuras:RegisterAuraType('FocusMana');
+PowaAuras:RegisterAuraType('PartyMana');
+PowaAuras:RegisterAuraType('RaidMana');
+PowaAuras:RegisterAuraType('NamedUnitMana');
 
-PowaAuras:RegisterAuraType('Power')
-PowaAuras:RegisterAuraType('TargetPower')
-PowaAuras:RegisterAuraType('PartyPower')
-PowaAuras:RegisterAuraType('RaidPower')
-PowaAuras:RegisterAuraType('FocusPower')
-PowaAuras:RegisterAuraType('NamedUnitPower')
+PowaAuras:RegisterAuraType('Power');
+PowaAuras:RegisterAuraType('TargetPower');
+PowaAuras:RegisterAuraType('PartyPower');
+PowaAuras:RegisterAuraType('RaidPower');
+PowaAuras:RegisterAuraType('FocusPower');
+PowaAuras:RegisterAuraType('NamedUnitPower');
 
-PowaAuras:RegisterAuraType('Combo')
-PowaAuras:RegisterAuraType('Aoe')
+PowaAuras:RegisterAuraType('Combo');
+PowaAuras:RegisterAuraType('Aoe');
 
-PowaAuras:RegisterAuraType('Stance')
-PowaAuras:RegisterAuraType('Actions')
-PowaAuras:RegisterAuraType('Enchants')
+PowaAuras:RegisterAuraType('Stance');
+PowaAuras:RegisterAuraType('Actions');
+PowaAuras:RegisterAuraType('Enchants');
 
-PowaAuras:RegisterAuraType('PvP')
-PowaAuras:RegisterAuraType('PartyPvP')
-PowaAuras:RegisterAuraType('RaidPvP')
-PowaAuras:RegisterAuraType('TargetPvP')
+PowaAuras:RegisterAuraType('PvP');
+PowaAuras:RegisterAuraType('PartyPvP');
+PowaAuras:RegisterAuraType('RaidPvP');
+PowaAuras:RegisterAuraType('TargetPvP');
 
-PowaAuras:RegisterAuraType('Aggro')
-PowaAuras:RegisterAuraType('PartyAggro')
-PowaAuras:RegisterAuraType('RaidAggro')
+PowaAuras:RegisterAuraType('Aggro');
+PowaAuras:RegisterAuraType('PartyAggro');
+PowaAuras:RegisterAuraType('RaidAggro');
 
-PowaAuras:RegisterAuraType('Spells')
-PowaAuras:RegisterAuraType('TargetSpells')
-PowaAuras:RegisterAuraType('FocusSpells')
-PowaAuras:RegisterAuraType('PlayerSpells')
-PowaAuras:RegisterAuraType('PartySpells')
-PowaAuras:RegisterAuraType('RaidSpells')
-PowaAuras:RegisterAuraType('GroupOrSelfSpells')
+PowaAuras:RegisterAuraType('Spells');
+PowaAuras:RegisterAuraType('TargetSpells');
+PowaAuras:RegisterAuraType('FocusSpells');
+PowaAuras:RegisterAuraType('PlayerSpells');
+PowaAuras:RegisterAuraType('PartySpells');
+PowaAuras:RegisterAuraType('RaidSpells');
+PowaAuras:RegisterAuraType('GroupOrSelfSpells');
 
-PowaAuras:RegisterAuraType('StealableSpells')
-PowaAuras:RegisterAuraType('StealableTargetSpells')
-PowaAuras:RegisterAuraType('StealableFocusSpells')
+PowaAuras:RegisterAuraType('StealableSpells');
+PowaAuras:RegisterAuraType('StealableTargetSpells');
+PowaAuras:RegisterAuraType('StealableFocusSpells');
 
-PowaAuras:RegisterAuraType('PurgeableSpells')
-PowaAuras:RegisterAuraType('PurgeableTargetSpells')
-PowaAuras:RegisterAuraType('PurgeableFocusSpells')
+PowaAuras:RegisterAuraType('PurgeableSpells');
+PowaAuras:RegisterAuraType('PurgeableTargetSpells');
+PowaAuras:RegisterAuraType('PurgeableFocusSpells');
 
-PowaAuras:RegisterAuraType('SpellCooldowns')
+PowaAuras:RegisterAuraType('SpellCooldowns');
 
-PowaAuras:RegisterAuraType('Static')
+PowaAuras:RegisterAuraType('Static');
 
-PowaAuras:RegisterAuraType('Totems')
-PowaAuras:RegisterAuraType('Pet')
-PowaAuras:RegisterAuraType('Runes')
-PowaAuras:RegisterAuraType('Slots')
-PowaAuras:RegisterAuraType('Items')
-PowaAuras:RegisterAuraType('Tracking')
+PowaAuras:RegisterAuraType('Totems');
+PowaAuras:RegisterAuraType('Pet');
+PowaAuras:RegisterAuraType('Runes');
+PowaAuras:RegisterAuraType('Slots');
+PowaAuras:RegisterAuraType('Items');
+PowaAuras:RegisterAuraType('Tracking');
 
-PowaAuras:RegisterAuraType('UnitMatch')
-PowaAuras:RegisterAuraType("PetStance")
+PowaAuras:RegisterAuraType('UnitMatch');
+PowaAuras:RegisterAuraType("PetStance");
 
-PowaAuras:RegisterAuraType('GTFOHigh')
-PowaAuras:RegisterAuraType('GTFOLow')
-PowaAuras:RegisterAuraType('GTFOFail')
-PowaAuras:RegisterAuraType('GTFOFriendlyFire')
+PowaAuras:RegisterAuraType('GTFOHigh');
+PowaAuras:RegisterAuraType('GTFOLow');
+PowaAuras:RegisterAuraType('GTFOFail');
+PowaAuras:RegisterAuraType('GTFOFriendlyFire');
 
 -- Use these spells to detect GCD, ideally these should be spells classes have from the beginning
 PowaAuras.GCDSpells =
@@ -899,12 +893,12 @@ PowaAuras.GCDSpells =
 	ROGUE = 1752, -- Sinister Strike
 	HUNTER = 982, -- Revive Pet
 	DEATHKNIGHT = 45902, -- Blood Strike
-	MONK = 100780 -- Jab
-}
+	MONK = 100780, -- Jab
+};
 
 -- Invented so we can distinquish them two types
-SPELL_POWER_LUNAR_ECLIPSE = 108
-SPELL_POWER_SOLAR_ECLIPSE = 208
+SPELL_POWER_LUNAR_ECLIPSE = 108;
+SPELL_POWER_SOLAR_ECLIPSE = 208;
 
 PowaAuras.PowerRanges =
 {
@@ -925,7 +919,7 @@ PowaAuras.PowerRanges =
 	[SPELL_POWER_SHADOW_ORBS] = 3,
 	[SPELL_POWER_BURNING_EMBERS] = 4,
 	[SPELL_POWER_DEMONIC_FURY] = 1000
-}
+};
 
 PowaAuras.RangeType =
 {
@@ -946,7 +940,7 @@ PowaAuras.RangeType =
 	[SPELL_POWER_SHADOW_ORBS] = "",
 	[SPELL_POWER_BURNING_EMBERS] = "",
 	[SPELL_POWER_DEMONIC_FURY] = ""
-}
+};
 
 PowaAuras.PowerTypeIcon =
 {
@@ -967,7 +961,7 @@ PowaAuras.PowerTypeIcon =
 	[SPELL_POWER_SHADOW_ORBS] = "spell_priest_shadoworbs",
 	[SPELL_POWER_BURNING_EMBERS] = "ability_warlock_burningembers",
 	[SPELL_POWER_DEMONIC_FURY] = "ability_warlock_eradication"
-}
+};
 
 PowaAuras.TalentChangeSpells =
 {
@@ -975,8 +969,8 @@ PowaAuras.TalentChangeSpells =
 	[PowaAuras.Spells.ACTIVATE_SECOND_TALENT] = true,
 	--[PowaAuras.Spells.BUFF_FROST_PRESENCE] = true,
 	--[PowaAuras.Spells.BUFF_BLOOD_PRESENCE] = true,
-	--[PowaAuras.Spells.BUFF_UNHOLY_PRESENCE] = true
-}
+	--[PowaAuras.Spells.BUFF_UNHOLY_PRESENCE] = true,
+};
 
 PowaAuras.DebuffTypeSpellIds =
 {
@@ -1161,10 +1155,10 @@ PowaAuras.DebuffTypeSpellIds =
 	[50613]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (death knight)
 	[69179]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (warrior)
 	-- Other
-	[29703]	= PowaAuras.DebuffCatType.Snare		-- Dazed
-}
+	[29703]	= PowaAuras.DebuffCatType.Snare,	-- Dazed
+};
 
-PowaAuras.Text = { }
+PowaAuras.Text = { };
 
 function PowaAuras:UnitTestDebug(...)
 
@@ -1178,39 +1172,39 @@ function PowaAuras:Debug(...)
 	if (PowaMisc.debug == true) then
 		self:Message(...) -- OK
 	end
-	--self:UnitTestDebug(...)
+	--self:UnitTestDebug(...);
 end
 
 function PowaAuras:Message(...)
-	args = {...}
+	args = {...};
 	if (args == nil or #args == 0) then
-		return
+		return;
 	end
-	local Message = ""
+	local Message = "";
 	for i = 1, #args do
-		Message = Message..tostring(args[i])
+		Message = Message..tostring(args[i]);
 	end
-	DEFAULT_CHAT_FRAME:AddMessage(Message)
+	DEFAULT_CHAT_FRAME:AddMessage(Message);
 end
 
 -- Use this for temp debug messages
 function PowaAuras:ShowText(...)
-	self:Message(...) -- OK
+	self:Message(...); -- OK
 end
 
 -- Use this for real messages instead of ShowText
 function PowaAuras:DisplayText(...)
-	self:Message(...)
+	self:Message(...);
 end
 
 function PowaAuras:DisplayTable(t, indent)
 	if (not t or type(t) ~= "table") then
-		return "No table"
+		return "No table";
 	end
 	if (indent == nil) then
-		indent = ""
+		indent = "";
 	else
-		indent = indent .. "  "
+		indent = indent .. "  ";
 	end
 	for i, v in pairs(t) do
 		if (type(v) ~= "function") then
@@ -1218,7 +1212,7 @@ function PowaAuras:DisplayTable(t, indent)
 				self:Message(indent..tostring(i).." = "..tostring(v))
 			else
 				self:Message(indent..tostring(i))
-				self:DisplayTable(v, indent)
+				self:DisplayTable(v, indent);
 			end
 		end
 	end
@@ -1227,68 +1221,68 @@ end
 -- This function will print a Message to the GUI screen (not the chat window) then fade.
 function PowaAuras:Error( msg, holdtime )
 	if (holdtime == nil) then
-		holdtime = UIERRORS_HOLD_TIME
+		holdtime = UIERRORS_HOLD_TIME;
 	end
-	UIErrorsFrame:AddMessage(msg, 0.75, 0.75, 1.0, 1.0, holdtime)
+	UIErrorsFrame:AddMessage(msg, 0.75, 0.75, 1.0, 1.0, holdtime);
 end
 
 function PowaAuras:IsNumeric(a)
-	return type(tonumber(a)) == "number"
+	return type(tonumber(a)) == "number";
 end
 
 function PowaAuras:ReverseTable(t)
 	if (type(t) ~= "table") then
-		return nil
+		return nil;
 	end
-	local newTable = { }
+	local newTable = { };
 	for k, v in pairs(t) do
-		newTable[v] = k
+		newTable[v] = k;
 	end
-	return newTable
+	return newTable;
 end
 
 function PowaAuras:TableEmpty(t)
 	if (type(t) ~= "table") then
-		return nil
+		return nil;
 	end
 	for k in pairs(t) do
-		return false
+		return false;
 	end
-	return true
+	return true;
 end
 
 function PowaAuras:TableSize(t)
 	if (type(t) ~= "table") then
-		return nil
+		return nil;
 	end
-	local size = 0
+	local size = 0;
 	for k in pairs(t) do
-		size = size + 1
+		size = size + 1;
 	end
-	return size
+	return size;
 end
 
 function PowaAuras:CopyTable(t, lookup_table, original)
 	if (type(t) ~= "table") then
-		return t
+		return t;
 	end
-	local copy
+	local copy;
 	if (original == nil) then
-		copy = { }
+		copy = { };
 	else
-		copy = original
+		copy = original;
 	end
 	for i,v in pairs(t) do
 		if (type(v) ~= "function") then
 			if (type(v) ~= "table") then
-				copy[i] = v
+				copy[i] = v;
 			else
-				lookup_table = lookup_table or { }
-				lookup_table[t] = copy
+				lookup_table = lookup_table or { };
+				lookup_table[t] = copy;
 				if lookup_table[v] then
-					copy[i] = lookup_table[v] -- We already copied this table. Reuse the copy.
+					copy[i] = lookup_table[v]; -- We already copied this table. Reuse the copy.
 				else
-					copy[i] = self:CopyTable(v, lookup_table) -- Not yet copied. Copy it.
+					copy[i] = self:CopyTable(v, lookup_table); -- Not yet copied. Copy it.
 				end
 			end
 		end
@@ -1298,96 +1292,96 @@ end
 
 function PowaAuras:MergeTables(desTable, sourceTable)
 	if (not sourceTable or type(sourceTable) ~= "table") then
-		return
+		return;
 	end
 	if (not desTable or type(desTable) ~= "table") then
-		desTable = sourceTable
-		return
+		desTable = sourceTable;
+		return;
 	end
 	for i,v in pairs(sourceTable) do
 		if (type(v) ~= "function") then
 			if (type(v) ~= "table") then
-				desTable[i] = v
+				desTable[i] = v;
 			else
 				if (not desTable[i] or type(desTable[i]) ~= "table") then
-					desTable[i] = { }
+					desTable[i] = { };
 				end
-				self:MergeTables(desTable[i], v)
+				self:MergeTables(desTable[i], v);
 			end
 		end
 	end
 end
 
 function PowaAuras:InsertText(text, ...)
-	args = {...}
+	args = {...};
 	if (args == nil or #args == 0) then
-		return text
+		return text;
 	end
 	for k, v in pairs(args) do
-		text = string.gsub(text, "$"..k, tostring(v))
+		text = string.gsub(text, "$"..k, tostring(v));
 	end
-	return text
+	return text;
 end
 
 function PowaAuras:MatchString(textToSearch, textToFind, ingoreCase)
 	if (textToSearch == nil) then
-		return textToFind == nil
+		return textToFind == nil;
 	end
 	if (ingoreCase) then
-		textToFind = string.upper(textToFind)
-		textToSearch = string.upper(textToSearch)
+		textToFind = string.upper(textToFind);
+		textToSearch = string.upper(textToSearch);
 	end
 	return string.find(textToSearch, textToFind, 1, true)
 end
 
 function PowaAuras:Different(o1, o2)
-	local t1 = type(t1)
-	local t2 = type(t2)
+	local t1 = type(t1);
+	local t2 = type(t2);
 	if (t1 ~= t2 or t1 == "string" or t2 == "string") then
-		return tostring(o1) ~= tostring(o2)
+		return tostring(o1) ~= tostring(o2);
 	end
 	if (t1 == "number") then
-		return math.abs(o1 - o2) > 1e-9
+		return math.abs(o1 - o2) > 1e-9;
 	end
-	return o1 ~= o2
+	return o1 ~= o2;
 end
 
 function PowaAuras:GetSettingForExport(prefix, k, v, default)
 	-- Causes an unreproducable bug. Will increase size of export codes, but at least they work.
 	if (not self:Different(v, default) and not PowaGlobalMisc.FixExports) then
-		return ""
+		return "";
 	end
-	local varType = type(v)
-	local setting = prefix..k..":"
+	local varType = type(v);
+	local setting = prefix..k..":";
 	if (varType == "string") then
-		setting = setting..v
+		setting = setting..v;
 	elseif(varType == "number") then
-		local round = math.floor(v * 10000 + 0.5) / 10000
-		setting = setting..tostring(round)
+		local round = math.floor(v * 10000 + 0.5) / 10000;
+		setting = setting..tostring(round);
 	else
-		setting = setting..tostring(v)
+		setting = setting..tostring(v);
 	end
-	return setting.." "
+	return setting.."; ";
 end
 
 -- PowaAura Classes
 function PowaClass(base, ctor)
 	local c = { } -- A new class instance
 	if not ctor and type(base) == 'function' then
-		ctor = base
-		base = nil
+		ctor = base;
+		base = nil;
 	elseif type(base) == 'table' then
 		-- Our new class is a shallow copy of the base class!
 		for i,v in pairs(base) do
-			c[i] = v
+			c[i] = v;
 		end
 		if (type(ctor) == "table") then
 			for i,v in pairs(ctor) do
-				c[i] = v
+				c[i] = v;
 			end
-			ctor = nil
+			ctor = nil;
 		end
-		c._base = base
+		c._base = base;
 	end
 	-- The class will be the metatable for all its objects,
 	-- And they will look up their methods in it.
@@ -1398,17 +1392,17 @@ function PowaClass(base, ctor)
 		local obj = { }
 		setmetatable(obj, c)
 		if ctor then
-			--PowaAuras:ShowText("Call constructor "..tostring(ctor))
+			--PowaAuras:ShowText("Call constructor "..tostring(ctor));
 			ctor(obj, ...)
 		end
 		return obj
 	end
 	if ctor then
-		c.init = ctor
+		c.init = ctor;
 	else
 		if base and base.init then
-			c.init = base.init
-			ctor = base.init
+			c.init = base.init;
+			ctor = base.init;
 		end
 	end
 	c.is_a = function(self,klass)
