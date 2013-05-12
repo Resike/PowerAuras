@@ -1,40 +1,40 @@
-﻿PowaAuras.Anim[0] = "[Invisible]";
-PowaAuras.Anim[1] = "Static";
-PowaAuras.Anim[2] = "Flashing";
-PowaAuras.Anim[3] = "Growing";
-PowaAuras.Anim[4] = "Pulse";
-PowaAuras.Anim[5] = "Bubble";
-PowaAuras.Anim[6] = "Water drop";
-PowaAuras.Anim[7] = "Electric";
-PowaAuras.Anim[8] = "Shrinking";
-PowaAuras.Anim[9] = "Flame";
-PowaAuras.Anim[10] = "Orbit";
-PowaAuras.Anim[11] = "Spin Clockwise";
-PowaAuras.Anim[12] = "Spin Anti-Clockwise";
+﻿PowaAuras.Anim[0] = "[Invisible]"
+PowaAuras.Anim[1] = "Static"
+PowaAuras.Anim[2] = "Flashing"
+PowaAuras.Anim[3] = "Growing"
+PowaAuras.Anim[4] = "Pulse"
+PowaAuras.Anim[5] = "Bubble"
+PowaAuras.Anim[6] = "Water drop"
+PowaAuras.Anim[7] = "Electric"
+PowaAuras.Anim[8] = "Shrinking"
+PowaAuras.Anim[9] = "Flame"
+PowaAuras.Anim[10] = "Orbit"
+PowaAuras.Anim[11] = "Spin Clockwise"
+PowaAuras.Anim[12] = "Spin Anti-Clockwise"
 
-PowaAuras.BeginAnimDisplay[0] = "[None]";
-PowaAuras.BeginAnimDisplay[1] = "Zoom In";
-PowaAuras.BeginAnimDisplay[2] = "Zoom Out";
-PowaAuras.BeginAnimDisplay[3] = "Fade In";
-PowaAuras.BeginAnimDisplay[4] = "Left";
-PowaAuras.BeginAnimDisplay[5] = "Top-Left";
-PowaAuras.BeginAnimDisplay[6] = "Top";
-PowaAuras.BeginAnimDisplay[7] = "Top-Right";
-PowaAuras.BeginAnimDisplay[8] = "Right";
-PowaAuras.BeginAnimDisplay[9] = "Bottom-Right";
-PowaAuras.BeginAnimDisplay[10] = "Bottom";
-PowaAuras.BeginAnimDisplay[11] = "Bottom-Left";
-PowaAuras.BeginAnimDisplay[12] = "Bounce";
+PowaAuras.BeginAnimDisplay[0] = "[None]"
+PowaAuras.BeginAnimDisplay[1] = "Zoom In"
+PowaAuras.BeginAnimDisplay[2] = "Zoom Out"
+PowaAuras.BeginAnimDisplay[3] = "Fade In"
+PowaAuras.BeginAnimDisplay[4] = "Left"
+PowaAuras.BeginAnimDisplay[5] = "Top-Left"
+PowaAuras.BeginAnimDisplay[6] = "Top"
+PowaAuras.BeginAnimDisplay[7] = "Top-Right"
+PowaAuras.BeginAnimDisplay[8] = "Right"
+PowaAuras.BeginAnimDisplay[9] = "Bottom-Right"
+PowaAuras.BeginAnimDisplay[10] = "Bottom"
+PowaAuras.BeginAnimDisplay[11] = "Bottom-Left"
+PowaAuras.BeginAnimDisplay[12] = "Bounce"
 
-PowaAuras.EndAnimDisplay[0] = "[None]";
-PowaAuras.EndAnimDisplay[1] = "Grow";
-PowaAuras.EndAnimDisplay[2] = "Shrink";
-PowaAuras.EndAnimDisplay[3] = "Fade Out";
-PowaAuras.EndAnimDisplay[4] = "Spin";
-PowaAuras.EndAnimDisplay[5] = "Spin In";
+PowaAuras.EndAnimDisplay[0] = "[None]"
+PowaAuras.EndAnimDisplay[1] = "Grow"
+PowaAuras.EndAnimDisplay[2] = "Shrink"
+PowaAuras.EndAnimDisplay[3] = "Fade Out"
+PowaAuras.EndAnimDisplay[4] = "Spin"
+PowaAuras.EndAnimDisplay[5] = "Spin In"
 
-PowaAuras.Sound[0] = NONE;
-PowaAuras.Sound[30] = NONE;
+PowaAuras.Sound[0] = NONE
+PowaAuras.Sound[30] = NONE
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
