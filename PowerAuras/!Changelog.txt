@@ -1,6 +1,6 @@
 ﻿* 4.23.23
 - Fixed a bug when you disabled not the currently active aura pages with shif+click, and incorrectly shown "OFF" text for auras which wasn't actually disabled.
-- Fixed a bug where icon alpha havn't decreased properly on other then Page 1 tabs.
+- Fixed a bug where icon alpha didn't decreased properly on other then "Page 1" tabs.
 - Rename editbox now going to rename the current Page when it's focus is lost or esc is beeing pressed.
 
 * 4.23.22
@@ -130,43 +130,43 @@ Merged localizations.
 Fixed bugged "Send" and "Cancel" buttons on "Export" and "Export Set" dialog.
 
 * 4.23.12
-Support for Patch 5.2
+Support for Patch 5.2.
 
 * 4.23.11
-Support for Patch 5.1
+Support for Patch 5.1.
 
 * 4.23.10
-Fixed Warlock Shards max power from 3 to 4
-Fixed incorrect version numbering
+Fixed Warlock Shards max power from 3 to 4.
+Fixed incorrect version numbering.
 
 * 4.3.9
-Fixed map taint issues (thanks to Resike)
+Fixed map taint issues. (thanks to Resike)
 
 * 4.3.8
-Non-Fire Mage GCDs are properly ignored in auras
+Non-Fire Mage GCDs are properly ignored in auras.
 
 * 4.3.7
-Fixed Chi (Light Power) max power from 4 to 5
+Fixed Chi (Light Power) max power from 4 to 5.
 
 * 4.3.6
-Fixed totem aura update lag
+Fixed totem aura update lag.
 
 * 4.3.5
-Warrior GCDs are properly ignored in auras, for reals this time...
+Warrior GCDs are properly ignored in auras, for reals this time.
 
 * 4.3.4
-Master of Ghouls is now properly detected
-Paladin, Warrior, and Monk GCDs are properly ignored in auras
+Master of Ghouls is now properly detected.
+Paladin, Warrior, and Monk GCDs are properly ignored in auras.
 
 * 4.3.3
-Fixed glyph taint issues (thanks to Resike)
-Fixed action usable so abilities that are charging up but still have active charges on them show up as usable
+Fixed glyph taint issues. (thanks to Resike)
+Fixed action usable so abilities that are charging up but still have active charges on them show up as usable.
 
 * 4.3.2
-Added support for special power tracking for Shadow Orbs, Burning Embers, Demonic Fury, and Chi
+Added support for special power tracking for Shadow Orbs, Burning Embers, Demonic Fury, and Chi.
 
 * 4.3.1
-Updated Paladin Holy Power from 3 to 5
+Updated Paladin Holy Power from 3 to 5.
 
 * 4.3
-Updated the code to be compatible with MoP 5.0.4
+Updated the code to be compatible with MoP 5.0.4.

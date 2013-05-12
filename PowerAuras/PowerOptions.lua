@@ -381,9 +381,7 @@ function PowaAuras:DeleteAura(aura)
 	if (PowaBarConfigFrame:IsVisible()) then
 		PowaBarConfigFrame:Hide();
 	end
-	if (self.isSecondary) then
-		PowaAuras.SecondaryModels[aura.id] = nil;
-	end
+	PowaAuras.SecondaryModels[aura.id] = nil;
 	PowaAuras.Models[aura.id] = nil;
 	self.Auras[aura.id] = nil;
 	if (aura.id > 120) then
@@ -2974,13 +2972,17 @@ function PowaAuras.DropDownMenu_OnClickAnim1(owner)
 end
 
 function PowaAuras.DropDownMenu_OnClickAnim2(owner)
-	local optionID = owner:GetID();
-	local auraId = PowaAuras.CurrentAuraId;
-	UIDropDownMenu_SetSelectedID(PowaDropDownAnim2, optionID);
-	--local optionName = UIDropDownMenu_GetText(PowaDropDownAnim2);
-	--UIDropDownMenu_SetSelectedValue(PowaDropDownAnim2, optionName);
-	PowaAuras.Auras[auraId].anim2 = optionID - 1;
-	PowaAuras:RedisplayAura(auraId);
+	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
+	local optionID = owner:GetID()
+	local auraId = PowaAuras.CurrentAuraId
+	if (optionID == 1) then
+		PowaAuras.SecondaryModels[aura.id] = nil
+	end
+	UIDropDownMenu_SetSelectedID(PowaDropDownAnim2, optionID)
+	--local optionName = UIDropDownMenu_GetText(PowaDropDownAnim2)
+	--UIDropDownMenu_SetSelectedValue(PowaDropDownAnim2, optionName)
+	PowaAuras.Auras[auraId].anim2 = optionID - 1
+	PowaAuras:RedisplayAura(auraId)
 end
 
 function PowaAuras.DropDownMenu_OnClickSound(self)
