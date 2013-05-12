@@ -1,40 +1,40 @@
-﻿PowaAuras.Anim[0] = "[Invisible]";
-PowaAuras.Anim[1] = "Static";
-PowaAuras.Anim[2] = "Flashing";
-PowaAuras.Anim[3] = "Growing";
-PowaAuras.Anim[4] = "Pulse";
-PowaAuras.Anim[5] = "Bubble";
-PowaAuras.Anim[6] = "Water drop";
-PowaAuras.Anim[7] = "Electric";
-PowaAuras.Anim[8] = "Shrinking";
-PowaAuras.Anim[9] = "Flame";
-PowaAuras.Anim[10] = "Orbit";
-PowaAuras.Anim[11] = "Spin Clockwise";
-PowaAuras.Anim[12] = "Spin Anti-Clockwise";
+﻿PowaAuras.Anim[0] = "[Invisible]"
+PowaAuras.Anim[1] = "Static"
+PowaAuras.Anim[2] = "Flashing"
+PowaAuras.Anim[3] = "Growing"
+PowaAuras.Anim[4] = "Pulse"
+PowaAuras.Anim[5] = "Bubble"
+PowaAuras.Anim[6] = "Water drop"
+PowaAuras.Anim[7] = "Electric"
+PowaAuras.Anim[8] = "Shrinking"
+PowaAuras.Anim[9] = "Flame"
+PowaAuras.Anim[10] = "Orbit"
+PowaAuras.Anim[11] = "Spin Clockwise"
+PowaAuras.Anim[12] = "Spin Anti-Clockwise"
 
-PowaAuras.BeginAnimDisplay[0] = "[None]";
-PowaAuras.BeginAnimDisplay[1] = "Zoom In";
-PowaAuras.BeginAnimDisplay[2] = "Zoom Out";
-PowaAuras.BeginAnimDisplay[3] = "Fade In";
-PowaAuras.BeginAnimDisplay[4] = "Left";
-PowaAuras.BeginAnimDisplay[5] = "Top-Left";
-PowaAuras.BeginAnimDisplay[6] = "Top";
-PowaAuras.BeginAnimDisplay[7] = "Top-Right";
-PowaAuras.BeginAnimDisplay[8] = "Right";
-PowaAuras.BeginAnimDisplay[9] = "Bottom-Right";
-PowaAuras.BeginAnimDisplay[10] = "Bottom";
-PowaAuras.BeginAnimDisplay[11] = "Bottom-Left";
-PowaAuras.BeginAnimDisplay[12] = "Bounce";
+PowaAuras.BeginAnimDisplay[0] = "[None]"
+PowaAuras.BeginAnimDisplay[1] = "Zoom In"
+PowaAuras.BeginAnimDisplay[2] = "Zoom Out"
+PowaAuras.BeginAnimDisplay[3] = "Fade In"
+PowaAuras.BeginAnimDisplay[4] = "Left"
+PowaAuras.BeginAnimDisplay[5] = "Top-Left"
+PowaAuras.BeginAnimDisplay[6] = "Top"
+PowaAuras.BeginAnimDisplay[7] = "Top-Right"
+PowaAuras.BeginAnimDisplay[8] = "Right"
+PowaAuras.BeginAnimDisplay[9] = "Bottom-Right"
+PowaAuras.BeginAnimDisplay[10] = "Bottom"
+PowaAuras.BeginAnimDisplay[11] = "Bottom-Left"
+PowaAuras.BeginAnimDisplay[12] = "Bounce"
 
-PowaAuras.EndAnimDisplay[0] = "[None]";
-PowaAuras.EndAnimDisplay[1] = "Grow";
-PowaAuras.EndAnimDisplay[2] = "Shrink";
-PowaAuras.EndAnimDisplay[3] = "Fade Out";
-PowaAuras.EndAnimDisplay[4] = "Spin";
-PowaAuras.EndAnimDisplay[5] = "Spin In";
+PowaAuras.EndAnimDisplay[0] = "[None]"
+PowaAuras.EndAnimDisplay[1] = "Grow"
+PowaAuras.EndAnimDisplay[2] = "Shrink"
+PowaAuras.EndAnimDisplay[3] = "Fade Out"
+PowaAuras.EndAnimDisplay[4] = "Spin"
+PowaAuras.EndAnimDisplay[5] = "Spin In"
 
-PowaAuras.Sound[0] = NONE;
-PowaAuras.Sound[30] = NONE;
+PowaAuras.Sound[0] = NONE
+PowaAuras.Sound[30] = NONE
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -54,7 +54,7 @@ DebuffType =
 	Curse = "Curse",
 	Poison = "Poison",
 	-- Non standard types below here.
-	Enrage = "Enrage",
+	Enrage = "Enrage"
 },
 
 DebuffCatType =
@@ -65,7 +65,7 @@ DebuffCatType =
 	[PowaAuras.DebuffCatType.Stun] = "Stun",
 	[PowaAuras.DebuffCatType.Root] = "Root",
 	[PowaAuras.DebuffCatType.Disarm] = "Disarm",
-	[PowaAuras.DebuffCatType.PvE] = "PvE",
+	[PowaAuras.DebuffCatType.PvE] = "PvE"
 },
 
 Role =
@@ -73,7 +73,7 @@ Role =
 	RoleTank = "Tank",
 	RoleHealer = "Healer",
 	RoleMeleDps = "Melee DPS",
-	RoleRangeDps = "Ranged DPS",
+	RoleRangeDps = "Ranged DPS"
 },
 
 nomReasonRole =
@@ -81,7 +81,7 @@ nomReasonRole =
 	RoleTank = "Is a Tank",
 	RoleHealer = "Is a Healer",
 	RoleMeleDps = "Is a Melee DPS",
-	RoleRangeDps = "Is a Ranged DPS",
+	RoleRangeDps = "Is a Ranged DPS"
 },
 
 nomReasonNotRole =
@@ -89,7 +89,7 @@ nomReasonNotRole =
 	RoleTank = "Not a Tank",
 	RoleHealer = "Not a Healer",
 	RoleMeleDps = "Not a Melee DPS",
-	RoleRangeDps = "Not a Ranged DPS",
+	RoleRangeDps = "Not a Ranged DPS"
 },
 
 AuraType =
@@ -121,7 +121,7 @@ AuraType =
 	[PowaAuras.BuffTypes.TypeBuff] = "Buff type",
 	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match",
 	[PowaAuras.BuffTypes.PetStance] = "Pet Stance",
-	[PowaAuras.BuffTypes.GTFO] = "GTFO Alert",
+	[PowaAuras.BuffTypes.GTFO] = "GTFO Alert"
 },
 
 PowerType =
@@ -140,7 +140,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -154,7 +154,7 @@ Relative =
 	BOTTOM = "Bottom",
 	BOTTOMLEFT = "Bottom-Left",
 	LEFT = "Left",
-	CENTER = "Center",
+	CENTER = "Center"
 },
 
 Slots =
@@ -178,7 +178,7 @@ Slots =
 	Trinket0 = "Trinket1",
 	Trinket1 = "Trinket2",
 	Waist = "Waist",
-	Wrist = "Wrist",
+	Wrist = "Wrist"
 },
 
 SlotsToCheck = "Select Slots to Check",
@@ -405,8 +405,8 @@ aideAuraDebug = "Enable debugging this Aura.",
 nomDuration = "Animation duration",
 aideDuration = "After this time, this effect will disapear. (0 to deactivate)",
 
-nomOldAnimations = "Old Animations";
-aideOldAnimations = "Use Old Animations";
+nomOldAnimations = "Old Animations",
+aideOldAnimations = "Use Old Animations",
 
 nomCentiemes = "Show hundredths",
 nomDual = "Show two timers",
@@ -474,7 +474,7 @@ Ternary =
 	Instance25Man = "25 Man",
 	Instance25ManHeroic = "25 Man Hc",
 	InstanceBg = "Battleground",
-	InstanceArena = "Arena",
+	InstanceArena = "Arena"
 },
 
 nomWhatever = "Ignored",
@@ -500,7 +500,7 @@ TernaryYes =
 	RoleTank = "Only when a Tank",
 	RoleHealer = "Only when a Healer",
 	RoleMeleDps = "Only when a Melee DPS",
-	RoleRangeDps = "Only when a Ranged DPS",
+	RoleRangeDps = "Only when a Ranged DPS"
 },
 
 TernaryNo =
@@ -524,7 +524,7 @@ TernaryNo =
 	RoleTank = "Only when Not a Tank",
 	RoleHealer = "Only when Not a Healer",
 	RoleMeleDps = "Only when Not a Melee DPS",
-	RoleRangeDps = "Only when Not a Ranged DPS",
+	RoleRangeDps = "Only when Not a Ranged DPS"
 },
 
 TernaryAide =
@@ -548,7 +548,7 @@ TernaryAide =
 	RoleTank = "Effect modified by being a Tank.",
 	RoleHealer = "Effect modified by being a Healer.",
 	RoleMeleDps = "Effect modified by being a Melee DPS.",
-	RoleRangeDps = "Effect modified by being a Ranged DPS.",
+	RoleRangeDps = "Effect modified by being a Ranged DPS."
 },
 
 nomTimerInvertAura = "Invert Aura Timer",
@@ -700,7 +700,7 @@ nomReasonAoENoTrigger = "AoE no trigger for $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "Main Hand $1 enchant found, timer invert", -- $1=Enchant match
 nomReasonEnchantMain = "Main Hand $1 enchant found", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert"; -- $1=Enchant match
+nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert", -- $1=Enchant match
 nomReasonEnchantOff = "Off Hand $1 enchant found", -- $1=Enchant match
 nomReasonNoEnchant = "No enchant found on weapons for $1", -- $1=Enchant match
 
@@ -760,7 +760,7 @@ ReasonStat =
 	Power = {MatchReason = "$1 $3 past limit", NoMatchReason = "$1 $3 not past limit", NilReason = "$1 has wrong Power Type"},
 	Aggro = {MatchReason = "$1 has aggro", NoMatchReason = "$1 does not have aggro"},
 	PvP = {MatchReason = "$1 PvP flag set", NoMatchReason = "$1 PvP flag not set"},
-	SpellAlert = {MatchReason = "$1 casting $2", NoMatchReason = "$1 not casting $2"},
+	SpellAlert = {MatchReason = "$1 casting $2", NoMatchReason = "$1 not casting $2"}
 },
 
 -- Import dialog
@@ -805,43 +805,43 @@ nomFixExports = "Alternative Exports",
 aideAnimationsAreBrokenSorry = "If your animations appear to skip or increase in size randomly, you should enable Old Animations.",
 });
 if (GetLocale() == "deDE") then
-PowaAuras.Anim[0] = "[Nichts]";
-PowaAuras.Anim[1] = "Statisch";
-PowaAuras.Anim[2] = "Blitzend";
-PowaAuras.Anim[3] = "Wachsend";
-PowaAuras.Anim[4] = "Pulsierend";
-PowaAuras.Anim[5] = "Blase";
-PowaAuras.Anim[6] = "Wassertropfen";
-PowaAuras.Anim[7] = "Elektrisch";
-PowaAuras.Anim[8] = "Schrumpfend";
-PowaAuras.Anim[9] = "Flamme";
-PowaAuras.Anim[10] = "Orbit";
-PowaAuras.Anim[11] = "Im Uhrzeigersinn drehend";
-PowaAuras.Anim[12] = "Gegen den Uhrzeigersinn drehend";
+PowaAuras.Anim[0] = "[Nichts]"
+PowaAuras.Anim[1] = "Statisch"
+PowaAuras.Anim[2] = "Blitzend"
+PowaAuras.Anim[3] = "Wachsend"
+PowaAuras.Anim[4] = "Pulsierend"
+PowaAuras.Anim[5] = "Blase"
+PowaAuras.Anim[6] = "Wassertropfen"
+PowaAuras.Anim[7] = "Elektrisch"
+PowaAuras.Anim[8] = "Schrumpfend"
+PowaAuras.Anim[9] = "Flamme"
+PowaAuras.Anim[10] = "Orbit"
+PowaAuras.Anim[11] = "Im Uhrzeigersinn drehend"
+PowaAuras.Anim[12] = "Gegen den Uhrzeigersinn drehend"
 
-PowaAuras.BeginAnimDisplay[0] = "[Nichts]";
-PowaAuras.BeginAnimDisplay[1] = "Reinzoomend";
-PowaAuras.BeginAnimDisplay[2] = "Rauszoomend";
-PowaAuras.BeginAnimDisplay[3] = "Nur Alpha";
-PowaAuras.BeginAnimDisplay[4] = "Links";
-PowaAuras.BeginAnimDisplay[5] = "Oben links";
-PowaAuras.BeginAnimDisplay[6] = "Oben";
-PowaAuras.BeginAnimDisplay[7] = "Oben rechts";
-PowaAuras.BeginAnimDisplay[8] = "Rechts";
-PowaAuras.BeginAnimDisplay[9] = "Unten rechts";
-PowaAuras.BeginAnimDisplay[10] = "Unten";
-PowaAuras.BeginAnimDisplay[11] = "Unten links";
-PowaAuras.BeginAnimDisplay[12] = "Hüpfen";
+PowaAuras.BeginAnimDisplay[0] = "[Nichts]"
+PowaAuras.BeginAnimDisplay[1] = "Reinzoomend"
+PowaAuras.BeginAnimDisplay[2] = "Rauszoomend"
+PowaAuras.BeginAnimDisplay[3] = "Nur Alpha"
+PowaAuras.BeginAnimDisplay[4] = "Links"
+PowaAuras.BeginAnimDisplay[5] = "Oben links"
+PowaAuras.BeginAnimDisplay[6] = "Oben"
+PowaAuras.BeginAnimDisplay[7] = "Oben rechts"
+PowaAuras.BeginAnimDisplay[8] = "Rechts"
+PowaAuras.BeginAnimDisplay[9] = "Unten rechts"
+PowaAuras.BeginAnimDisplay[10] = "Unten"
+PowaAuras.BeginAnimDisplay[11] = "Unten links"
+PowaAuras.BeginAnimDisplay[12] = "Hüpfen"
 
-PowaAuras.EndAnimDisplay[0] = "[Nichts]";
-PowaAuras.EndAnimDisplay[1] = "Wachsen";
-PowaAuras.EndAnimDisplay[2] = "Schrumpfen";
-PowaAuras.EndAnimDisplay[3] = "Nur Alpha";
-PowaAuras.EndAnimDisplay[4] = "Drehen";
-PowaAuras.EndAnimDisplay[5] = "Reindrehen";
+PowaAuras.EndAnimDisplay[0] = "[Nichts]"
+PowaAuras.EndAnimDisplay[1] = "Wachsen"
+PowaAuras.EndAnimDisplay[2] = "Schrumpfen"
+PowaAuras.EndAnimDisplay[3] = "Nur Alpha"
+PowaAuras.EndAnimDisplay[4] = "Drehen"
+PowaAuras.EndAnimDisplay[5] = "Reindrehen"
 
-PowaAuras.Sound[0] = NONE;
-PowaAuras.Sound[30] = NONE;
+PowaAuras.Sound[0] = NONE
+PowaAuras.Sound[30] = NONE
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -1039,14 +1039,14 @@ aideSound = "Spielt einen Sound am Anfang ab.",
 nomSound2 = "Noch mehr Sounds zum abspielen:",
 aideSound2 = "Spielt einen Sound am Anfang ab",
 nomCustomSound = "ODER Sounddatei:",
-aideCustomSound = "Dateiname der Sounddatei eingeben, die VOR dem Starten von WoW im Sounds Verzeichniss war. mp3 und wav werden unterstützt. Bsp.: 'cookie.mp3' ;)",
+aideCustomSound = "Dateiname der Sounddatei eingeben, die VOR dem Starten von WoW im Sounds Verzeichniss war. mp3 und wav werden unterstützt. Bsp.: 'cookie.mp3')",
 
 nomSoundEnd = "Sound abspielen:",
 nomSound2End = "Noch mehr Sounds zum abspielen:",
 aideSoundEnd = "Spielt einen Sound am Ende ab",
 aideSound2End = "Spielt einen Sound am Ende ab",
 nomCustomSoundEnd = "ODER Sounddatei:",
-aideCustomSoundEnd = "Dateiname der Sounddatei eingeben, die VOR dem Starten von WoW im Sounds Verzeichniss war. mp3 und wav werden unterstützt. Bsp.: 'cookie.mp3' ;)",
+aideCustomSoundEnd = "Dateiname der Sounddatei eingeben, die VOR dem Starten von WoW im Sounds Verzeichniss war. mp3 und wav werden unterstützt. Bsp.: 'cookie.mp3')",
 nomTexture = "Grafik",
 aideTexture = "Die Grafik die angezeigt werden soll. Du kannst ganz leicht Grafiken austauschen, indem du die Aura#.tga Dateien im Verzeichnis des Addons veränderst.",
 
@@ -1179,8 +1179,8 @@ aideAuraDebug = "Diese Aura debuggen",
 nomDuration = "Animationsdauer",
 aideDuration = "Nach dieser Zeit wird die Aura verschwinden (0 um zu deaktivieren)",
 
-nomOldAnimations = "Alte Animationen";
-aideOldAnimations = "Benutze die alten Animationen";
+nomOldAnimations = "Alte Animationen",
+aideOldAnimations = "Benutze die alten Animationen",
 
 nomCentiemes = "Zeige hundertstel",
 nomDual = "Zeige zwei Timer",
@@ -1461,7 +1461,7 @@ nomReasonAoENoTrigger = "AoE no trigger for $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "Main Hand $1 enchant found, timer invert", -- $1=Enchant match
 nomReasonEnchantMain = "Main Hand $1 enchant found", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert"; -- $1=Enchant match
+nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert", -- $1=Enchant match
 nomReasonEnchantOff = "Off Hand $1 enchant found", -- $1=Enchant match
 nomReasonNoEnchant = "No enchant found on weapons for $1", -- $1=Enchant match
 
@@ -1553,43 +1553,43 @@ aideBlockIncomingAuras = "Prevent anybody sending you auras",
 nomBlockIncomingAuras = "Block Incoming Auras",
 });
 elseif (GetLocale() == "esES") then
-PowaAuras.Anim[0] = "[Invisible]";
-PowaAuras.Anim[1] = "Estático";
-PowaAuras.Anim[2] = "Brillante";
-PowaAuras.Anim[3] = "Aumento";
-PowaAuras.Anim[4] = "Pulsación";
-PowaAuras.Anim[5] = "Burbujeo";
-PowaAuras.Anim[6] = "Gota";
-PowaAuras.Anim[7] = "Electrico";
-PowaAuras.Anim[8] = "Contracción";
-PowaAuras.Anim[9] = "Llama";
-PowaAuras.Anim[10] = "Orbita";
-PowaAuras.Anim[11] = "Giro horario";
-PowaAuras.Anim[12] = "Giro antihorario";
+PowaAuras.Anim[0] = "[Invisible]"
+PowaAuras.Anim[1] = "Estático"
+PowaAuras.Anim[2] = "Brillante"
+PowaAuras.Anim[3] = "Aumento"
+PowaAuras.Anim[4] = "Pulsación"
+PowaAuras.Anim[5] = "Burbujeo"
+PowaAuras.Anim[6] = "Gota"
+PowaAuras.Anim[7] = "Electrico"
+PowaAuras.Anim[8] = "Contracción"
+PowaAuras.Anim[9] = "Llama"
+PowaAuras.Anim[10] = "Orbita"
+PowaAuras.Anim[11] = "Giro horario"
+PowaAuras.Anim[12] = "Giro antihorario"
 
-PowaAuras.BeginAnimDisplay[0] = "[Nada]";
-PowaAuras.BeginAnimDisplay[1] = "Zoom";
-PowaAuras.BeginAnimDisplay[2] = "Zoom fuera";
-PowaAuras.BeginAnimDisplay[3] = "Desaparecer";
-PowaAuras.BeginAnimDisplay[4] = "Izquierda";
-PowaAuras.BeginAnimDisplay[5] = "Arriba-izquierda";
-PowaAuras.BeginAnimDisplay[6] = "Arriba";
-PowaAuras.BeginAnimDisplay[7] = "Arriba-derecha";
-PowaAuras.BeginAnimDisplay[8] = "Derecha";
-PowaAuras.BeginAnimDisplay[9] = "Abajo-derecha";
-PowaAuras.BeginAnimDisplay[10] = "Abajo";
-PowaAuras.BeginAnimDisplay[11] = "Abajo-Izquierda";
-PowaAuras.BeginAnimDisplay[12] = "Rebote";
+PowaAuras.BeginAnimDisplay[0] = "[Nada]"
+PowaAuras.BeginAnimDisplay[1] = "Zoom"
+PowaAuras.BeginAnimDisplay[2] = "Zoom fuera"
+PowaAuras.BeginAnimDisplay[3] = "Desaparecer"
+PowaAuras.BeginAnimDisplay[4] = "Izquierda"
+PowaAuras.BeginAnimDisplay[5] = "Arriba-izquierda"
+PowaAuras.BeginAnimDisplay[6] = "Arriba"
+PowaAuras.BeginAnimDisplay[7] = "Arriba-derecha"
+PowaAuras.BeginAnimDisplay[8] = "Derecha"
+PowaAuras.BeginAnimDisplay[9] = "Abajo-derecha"
+PowaAuras.BeginAnimDisplay[10] = "Abajo"
+PowaAuras.BeginAnimDisplay[11] = "Abajo-Izquierda"
+PowaAuras.BeginAnimDisplay[12] = "Rebote"
 
-PowaAuras.EndAnimDisplay[0] = "[Nada]";
-PowaAuras.EndAnimDisplay[1] = "Aumentar";
-PowaAuras.EndAnimDisplay[2] = "Encoger";
-PowaAuras.EndAnimDisplay[3] = "Desaparecer";
-PowaAuras.EndAnimDisplay[4] = "Girar";
-PowaAuras.EndAnimDisplay[5] = "Girar adentro";
+PowaAuras.EndAnimDisplay[0] = "[Nada]"
+PowaAuras.EndAnimDisplay[1] = "Aumentar"
+PowaAuras.EndAnimDisplay[2] = "Encoger"
+PowaAuras.EndAnimDisplay[3] = "Desaparecer"
+PowaAuras.EndAnimDisplay[4] = "Girar"
+PowaAuras.EndAnimDisplay[5] = "Girar adentro"
 
-PowaAuras.Sound[0] = NONE;
-PowaAuras.Sound[30] = NONE;
+PowaAuras.Sound[0] = NONE
+PowaAuras.Sound[30] = NONE
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -1798,7 +1798,7 @@ nomSound2 = "Más sonidos para reproducir",
 aideSound = "Reproduce un sonido al inicio",
 aideSound2 = "Reproduce un sonido al inicio",
 nomCustomSound = "O archivo de sonido",
-aideCustomSound = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3'; o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
+aideCustomSound = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
 
 nomCustomSoundPath = "Ruta sonidos personalizados:",
 aideCustomSoundPath = "Publica tu propia ruta (within the WoW install) para evitar sobreescribirlos al actualizar Power Auras",
@@ -1811,7 +1811,7 @@ nomSound2End = "Más sonidos para reproducir",
 aideSoundEnd = "Reproduce un sonido al final",
 aideSound2End = "Reproduce un sonido al final",
 nomCustomSoundEnd = "O archivo de sonido",
-aideCustomSoundEnd = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3'; o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
+aideCustomSoundEnd = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
 nomTexture = "Textura",
 aideTexture = "Textura para mostrar. Puedes cambiar las texturas facilmente cambiando el archivo Aura#.tga en la carpeta Addons",
 
@@ -1951,8 +1951,8 @@ aideAuraDebug = "Depurar este aura",
 nomDuration = "Duración de la animación",
 aideDuration = "Después de este tiempo, el aura desaparecerá (0 para desactivar)",
 
-nomOldAnimations = "Animaciones antiguas";
-aideOldAnimations = "Usar animaciones antiguas";
+nomOldAnimations = "Animaciones antiguas",
+aideOldAnimations = "Usar animaciones antiguas",
 
 nomCentiemes = "Mostrar centésimas",
 nomDual = "Mostrar dos relojes",
@@ -2236,7 +2236,7 @@ nomReasonAoENoTrigger = "AoE no activada $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "Mano derecha $1 encantamiento encontrado, reloj invertido", -- $1=Enchant match
 nomReasonEnchantMain = "Mano derecha $1 encantamiento encontrado", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Mano izquierda $1 encantamiento encontrado, reloj invertido"; -- $1=Enchant match
+nomReasonEnchantOffInvert = "Mano izquierda $1 encantamiento encontrado, reloj invertido", -- $1=Enchant match
 nomReasonEnchantOff = "Mano izquierda $1 encantamiento encontrado", -- $1=Enchant match
 nomReasonNoEnchant = "Encantamiento no encontrado en armas $1", -- $1=Enchant match
 
@@ -2333,43 +2333,43 @@ aideBlockIncomingAuras = "Evita que otros te envíen sus auras",
 nomBlockIncomingAuras = "Bloque de auras entrante",
 });
 elseif (GetLocale() == "esMX") then
-PowaAuras.Anim[0] = "[Invisible]";
-PowaAuras.Anim[1] = "Estático";
-PowaAuras.Anim[2] = "Brillante";
-PowaAuras.Anim[3] = "Aumento";
-PowaAuras.Anim[4] = "Pulsación";
-PowaAuras.Anim[5] = "Burbujeo";
-PowaAuras.Anim[6] = "Gota";
-PowaAuras.Anim[7] = "Electrico";
-PowaAuras.Anim[8] = "Contracción";
-PowaAuras.Anim[9] = "Llama";
-PowaAuras.Anim[10] = "Orbita";
-PowaAuras.Anim[11] = "Giro horario";
-PowaAuras.Anim[12] = "Giro antihorario";
+PowaAuras.Anim[0] = "[Invisible]"
+PowaAuras.Anim[1] = "Estático"
+PowaAuras.Anim[2] = "Brillante"
+PowaAuras.Anim[3] = "Aumento"
+PowaAuras.Anim[4] = "Pulsación"
+PowaAuras.Anim[5] = "Burbujeo"
+PowaAuras.Anim[6] = "Gota"
+PowaAuras.Anim[7] = "Electrico"
+PowaAuras.Anim[8] = "Contracción"
+PowaAuras.Anim[9] = "Llama"
+PowaAuras.Anim[10] = "Orbita"
+PowaAuras.Anim[11] = "Giro horario"
+PowaAuras.Anim[12] = "Giro antihorario"
 
-PowaAuras.BeginAnimDisplay[0] = "[Nada]";
-PowaAuras.BeginAnimDisplay[1] = "Zoom";
-PowaAuras.BeginAnimDisplay[2] = "Zoom fuera";
-PowaAuras.BeginAnimDisplay[3] = "Desaparecer";
-PowaAuras.BeginAnimDisplay[4] = "Izquierda";
-PowaAuras.BeginAnimDisplay[5] = "Arriba-izquierda";
-PowaAuras.BeginAnimDisplay[6] = "Arriba";
-PowaAuras.BeginAnimDisplay[7] = "Arriba-derecha";
-PowaAuras.BeginAnimDisplay[8] = "Derecha";
-PowaAuras.BeginAnimDisplay[9] = "Abajo-derecha";
-PowaAuras.BeginAnimDisplay[10] = "Abajo";
-PowaAuras.BeginAnimDisplay[11] = "Abajo-Izquierda";
-PowaAuras.BeginAnimDisplay[12] = "Rebote";
+PowaAuras.BeginAnimDisplay[0] = "[Nada]"
+PowaAuras.BeginAnimDisplay[1] = "Zoom"
+PowaAuras.BeginAnimDisplay[2] = "Zoom fuera"
+PowaAuras.BeginAnimDisplay[3] = "Desaparecer"
+PowaAuras.BeginAnimDisplay[4] = "Izquierda"
+PowaAuras.BeginAnimDisplay[5] = "Arriba-izquierda"
+PowaAuras.BeginAnimDisplay[6] = "Arriba"
+PowaAuras.BeginAnimDisplay[7] = "Arriba-derecha"
+PowaAuras.BeginAnimDisplay[8] = "Derecha"
+PowaAuras.BeginAnimDisplay[9] = "Abajo-derecha"
+PowaAuras.BeginAnimDisplay[10] = "Abajo"
+PowaAuras.BeginAnimDisplay[11] = "Abajo-Izquierda"
+PowaAuras.BeginAnimDisplay[12] = "Rebote"
 
-PowaAuras.EndAnimDisplay[0] = "[Nada]";
-PowaAuras.EndAnimDisplay[1] = "Aumentar";
-PowaAuras.EndAnimDisplay[2] = "Encoger";
-PowaAuras.EndAnimDisplay[3] = "Desaparecer";
-PowaAuras.EndAnimDisplay[4] = "Girar";
-PowaAuras.EndAnimDisplay[5] = "Girar adentro";
+PowaAuras.EndAnimDisplay[0] = "[Nada]"
+PowaAuras.EndAnimDisplay[1] = "Aumentar"
+PowaAuras.EndAnimDisplay[2] = "Encoger"
+PowaAuras.EndAnimDisplay[3] = "Desaparecer"
+PowaAuras.EndAnimDisplay[4] = "Girar"
+PowaAuras.EndAnimDisplay[5] = "Girar adentro"
 
-PowaAuras.Sound[0] = NONE;
-PowaAuras.Sound[30] = NONE;
+PowaAuras.Sound[0] = NONE
+PowaAuras.Sound[30] = NONE
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -2578,7 +2578,7 @@ nomSound2 = "Más sonidos para reproducir",
 aideSound = "Reproduce un sonido al inicio",
 aideSound2 = "Reproduce un sonido al inicio",
 nomCustomSound = "O archivo de sonido",
-aideCustomSound = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3'; o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
+aideCustomSound = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
 
 nomCustomSoundPath = "Ruta sonidos personalizados:",
 aideCustomSoundPath = "Publica tu propia ruta (within the WoW install) para evitar sobreescribirlos al actualizar Power Auras",
@@ -2591,7 +2591,7 @@ nomSound2End = "Más sonidos para reproducir",
 aideSoundEnd = "Reproduce un sonido al final",
 aideSound2End = "Reproduce un sonido al final",
 nomCustomSoundEnd = "O archivo de sonido",
-aideCustomSoundEnd = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3'; o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
+aideCustomSoundEnd = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
 nomTexture = "Textura",
 aideTexture = "Textura para mostrar. Puedes cambiar las texturas facilmente cambiando el archivo Aura#.tga en la carpeta Addons",
 
@@ -2635,7 +2635,7 @@ aideMaxTex = "Define el número máximo de texturas en el editor. Si añades tex
 aideWowTextures = "Activa esto para usar texturas de WoW en lugar de las texturas en la carpeta de Power Auras para este aura",
 aideTextAura = "Activa esto para poner texto en lugar de textura",
 aideRealaura = "Aura auténtica",
-aideCustomTextures = "Activa esto para usar texturas de  la subcarpeta 'Custom'. Introduce el nombre de la textura debajo (ej: miTextura.tga). Puedes usar un nombre de habilidad (ej: lluvia de fuego) o ID de habilidad (ej: 5384)",
+aideCustomTextures = "Activa esto para usar texturas de la subcarpeta 'Custom'. Introduce el nombre de la textura debajo (ej: miTextura.tga). Puedes usar un nombre de habilidad (ej: lluvia de fuego) o ID de habilidad (ej: 5384)",
 aideRandomColor = "Activa esto para que este aura use color aleatorio cada vez que se active",
 
 aideTexMode = "Desactiva esto para usar la opacidad de la textura. Por defecto, los colores más oscuros serán más transparentes",
@@ -2731,8 +2731,8 @@ aideAuraDebug = "Depurar este aura",
 nomDuration = "Duración de la animación",
 aideDuration = "Después de este tiempo, el aura desaparecerá (0 para desactivar)",
 
-nomOldAnimations = "Animaciones antiguas";
-aideOldAnimations = "Usar animaciones antiguas";
+nomOldAnimations = "Animaciones antiguas",
+aideOldAnimations = "Usar animaciones antiguas",
 
 nomCentiemes = "Mostrar centésimas",
 nomDual = "Mostrar dos relojes",
@@ -3016,7 +3016,7 @@ nomReasonAoENoTrigger = "AoE no activada $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "Mano derecha $1 encantamiento encontrado, reloj invertido", -- $1=Enchant match
 nomReasonEnchantMain = "Mano derecha $1 encantamiento encontrado", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Mano izquierda $1 encantamiento encontrado, reloj invertido"; -- $1=Enchant match
+nomReasonEnchantOffInvert = "Mano izquierda $1 encantamiento encontrado, reloj invertido", -- $1=Enchant match
 nomReasonEnchantOff = "Mano izquierda $1 encantamiento encontrado", -- $1=Enchant match
 nomReasonNoEnchant = "Encantamiento no encontrado en armas $1", -- $1=Enchant match
 
@@ -3113,43 +3113,43 @@ aideBlockIncomingAuras = "Evita que otros te envíen sus auras",
 nomBlockIncomingAuras = "Bloque de auras entrante",
 });
 elseif (GetLocale() == "frFR") then
-PowaAuras.Anim[0] = "[Invisible]";
-PowaAuras.Anim[1] = "Statique";
-PowaAuras.Anim[2] = "Clignotement";
-PowaAuras.Anim[3] = "Agrandir";
-PowaAuras.Anim[4] = "Pulsation";
-PowaAuras.Anim[5] = "Effet bulle";
-PowaAuras.Anim[6] = "Goutte d'eau";
-PowaAuras.Anim[7] = "Electrique";
-PowaAuras.Anim[8] = "R\195\169tr\195\169cir";
-PowaAuras.Anim[9] = "Flamme";
-PowaAuras.Anim[10] = "Orbite";
-PowaAuras.Anim[11] = "Tournoiement sens horaire";
-PowaAuras.Anim[12] = "Tournoiement sens horaire inverse";
+PowaAuras.Anim[0] = "[Invisible]"
+PowaAuras.Anim[1] = "Statique"
+PowaAuras.Anim[2] = "Clignotement"
+PowaAuras.Anim[3] = "Agrandir"
+PowaAuras.Anim[4] = "Pulsation"
+PowaAuras.Anim[5] = "Effet bulle"
+PowaAuras.Anim[6] = "Goutte d'eau"
+PowaAuras.Anim[7] = "Electrique"
+PowaAuras.Anim[8] = "R\195\169tr\195\169cir"
+PowaAuras.Anim[9] = "Flamme"
+PowaAuras.Anim[10] = "Orbite"
+PowaAuras.Anim[11] = "Tournoiement sens horaire"
+PowaAuras.Anim[12] = "Tournoiement sens horaire inverse"
 
-PowaAuras.BeginAnimDisplay[0] = "[Aucun]";
-PowaAuras.BeginAnimDisplay[1] = "Zoom Avant";
-PowaAuras.BeginAnimDisplay[2] = "Zoom Arriere";
-PowaAuras.BeginAnimDisplay[3] = "Transparence seule";
-PowaAuras.BeginAnimDisplay[4] = "Gauche";
-PowaAuras.BeginAnimDisplay[5] = "Haut-Gauche";
-PowaAuras.BeginAnimDisplay[6] = "Haut";
-PowaAuras.BeginAnimDisplay[7] = "Haut-Droite";
-PowaAuras.BeginAnimDisplay[8] = "Droite";
-PowaAuras.BeginAnimDisplay[9] = "Bas-Droite";
-PowaAuras.BeginAnimDisplay[10] = "Bas";
-PowaAuras.BeginAnimDisplay[11] = "Bas-Gauche";
-PowaAuras.BeginAnimDisplay[12] = "Rebondissement";
+PowaAuras.BeginAnimDisplay[0] = "[Aucun]"
+PowaAuras.BeginAnimDisplay[1] = "Zoom Avant"
+PowaAuras.BeginAnimDisplay[2] = "Zoom Arriere"
+PowaAuras.BeginAnimDisplay[3] = "Transparence seule"
+PowaAuras.BeginAnimDisplay[4] = "Gauche"
+PowaAuras.BeginAnimDisplay[5] = "Haut-Gauche"
+PowaAuras.BeginAnimDisplay[6] = "Haut"
+PowaAuras.BeginAnimDisplay[7] = "Haut-Droite"
+PowaAuras.BeginAnimDisplay[8] = "Droite"
+PowaAuras.BeginAnimDisplay[9] = "Bas-Droite"
+PowaAuras.BeginAnimDisplay[10] = "Bas"
+PowaAuras.BeginAnimDisplay[11] = "Bas-Gauche"
+PowaAuras.BeginAnimDisplay[12] = "Rebondissement"
 
-PowaAuras.EndAnimDisplay[0] = "[Aucun]";
-PowaAuras.EndAnimDisplay[1] = "Zoom Avant";
-PowaAuras.EndAnimDisplay[2] = "Zoom Arriere";
-PowaAuras.EndAnimDisplay[3] = "Transparence seule";
-PowaAuras.EndAnimDisplay[4] = "Tournoiement";
-PowaAuras.EndAnimDisplay[5] = "Tournoiement zoom arrière";
+PowaAuras.EndAnimDisplay[0] = "[Aucun]"
+PowaAuras.EndAnimDisplay[1] = "Zoom Avant"
+PowaAuras.EndAnimDisplay[2] = "Zoom Arriere"
+PowaAuras.EndAnimDisplay[3] = "Transparence seule"
+PowaAuras.EndAnimDisplay[4] = "Tournoiement"
+PowaAuras.EndAnimDisplay[5] = "Tournoiement zoom arrière"
 
-PowaAuras.Sound[0] = NONE;
-PowaAuras.Sound[30] = NONE;
+PowaAuras.Sound[0] = NONE
+PowaAuras.Sound[30] = NONE
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -3510,8 +3510,8 @@ aideAuraDebug = "Debug this Aura",
 nomDuration = "Durée de l'animation",
 aideDuration = "Pass\195\169 ce d\195\169lai, l'animation sera masqu\195\169e (0 pour d\195\169sactiver)",
 
-nomOldAnimations = "Anciennes animations";
-aideOldAnimations = "Utiliser les anciennes animations.";
+nomOldAnimations = "Anciennes animations",
+aideOldAnimations = "Utiliser les anciennes animations.",
 
 nomCentiemes = "Afficher centiemes",
 nomDual = "Afficher 2 dur\195\169es",
@@ -3794,7 +3794,7 @@ nomReasonAoENoTrigger = "AoE no trigger for $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "Main Hand $1 enchant found, timer invert", -- $1=Enchant match
 nomReasonEnchantMain = "Main Hand $1 enchant found", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert"; -- $1=Enchant match
+nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert", -- $1=Enchant match
 nomReasonEnchantOff = "Off Hand $1 enchant found", -- $1=Enchant match
 nomReasonNoEnchant = "No enchant found on weapons for $1", -- $1=Enchant match
 
@@ -3891,43 +3891,43 @@ aideBlockIncomingAuras = "Prevent anybody sending you auras",
 nomBlockIncomingAuras = "Block Incoming Auras",
 });
 elseif (GetLocale() == "koKR") then
-PowaAuras.Anim[0] = "[보이지 않음]";
-PowaAuras.Anim[1] = "공전";
-PowaAuras.Anim[2] = "점멸";
-PowaAuras.Anim[3] = "성장";
-PowaAuras.Anim[4] = "파동";
-PowaAuras.Anim[5] = "거품";
-PowaAuras.Anim[6] = "낙수";
-PowaAuras.Anim[7] = "전기장";
-PowaAuras.Anim[8] = "꽁무니";
-PowaAuras.Anim[9] = "화염";
-PowaAuras.Anim[10] = "궤도";
-PowaAuras.Anim[11] = "Spin Clockwise";
-PowaAuras.Anim[12] = "Spin Anti-Clockwise";
+PowaAuras.Anim[0] = "[보이지 않음]"
+PowaAuras.Anim[1] = "공전"
+PowaAuras.Anim[2] = "점멸"
+PowaAuras.Anim[3] = "성장"
+PowaAuras.Anim[4] = "파동"
+PowaAuras.Anim[5] = "거품"
+PowaAuras.Anim[6] = "낙수"
+PowaAuras.Anim[7] = "전기장"
+PowaAuras.Anim[8] = "꽁무니"
+PowaAuras.Anim[9] = "화염"
+PowaAuras.Anim[10] = "궤도"
+PowaAuras.Anim[11] = "Spin Clockwise"
+PowaAuras.Anim[12] = "Spin Anti-Clockwise"
 
-PowaAuras.BeginAnimDisplay[0] = "[없음]";
-PowaAuras.BeginAnimDisplay[1] = "확대";
-PowaAuras.BeginAnimDisplay[2] = "축소";
-PowaAuras.BeginAnimDisplay[3] = "불투명도만";
-PowaAuras.BeginAnimDisplay[4] = "좌측";
-PowaAuras.BeginAnimDisplay[5] = "상단-좌측";
-PowaAuras.BeginAnimDisplay[6] = "상단";
-PowaAuras.BeginAnimDisplay[7] = "상단-우측";
-PowaAuras.BeginAnimDisplay[8] = "우측";
-PowaAuras.BeginAnimDisplay[9] = "하단-우측";
-PowaAuras.BeginAnimDisplay[10] = "하단";
-PowaAuras.BeginAnimDisplay[11] = "하단-좌측";
-PowaAuras.BeginAnimDisplay[12] = "Bounce";
+PowaAuras.BeginAnimDisplay[0] = "[없음]"
+PowaAuras.BeginAnimDisplay[1] = "확대"
+PowaAuras.BeginAnimDisplay[2] = "축소"
+PowaAuras.BeginAnimDisplay[3] = "불투명도만"
+PowaAuras.BeginAnimDisplay[4] = "좌측"
+PowaAuras.BeginAnimDisplay[5] = "상단-좌측"
+PowaAuras.BeginAnimDisplay[6] = "상단"
+PowaAuras.BeginAnimDisplay[7] = "상단-우측"
+PowaAuras.BeginAnimDisplay[8] = "우측"
+PowaAuras.BeginAnimDisplay[9] = "하단-우측"
+PowaAuras.BeginAnimDisplay[10] = "하단"
+PowaAuras.BeginAnimDisplay[11] = "하단-좌측"
+PowaAuras.BeginAnimDisplay[12] = "Bounce"
 
-PowaAuras.EndAnimDisplay[0] = "[없음]";
-PowaAuras.EndAnimDisplay[1] = "확대";
-PowaAuras.EndAnimDisplay[2] = "축소";
-PowaAuras.EndAnimDisplay[3] = "불투명도만";
-PowaAuras.EndAnimDisplay[4] = "Spin"; -- untranslated
-PowaAuras.EndAnimDisplay[5] = "Spin In"; -- untranslated
+PowaAuras.EndAnimDisplay[0] = "[없음]"
+PowaAuras.EndAnimDisplay[1] = "확대"
+PowaAuras.EndAnimDisplay[2] = "축소"
+PowaAuras.EndAnimDisplay[3] = "불투명도만"
+PowaAuras.EndAnimDisplay[4] = "Spin" -- untranslated
+PowaAuras.EndAnimDisplay[5] = "Spin In" -- untranslated
 
-PowaAuras.Sound[0] = NONE;
-PowaAuras.Sound[30] = NONE;
+PowaAuras.Sound[0] = NONE
+PowaAuras.Sound[30] = NONE
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -4089,7 +4089,7 @@ aideEffectTooltip = "(효과 켜기/끄기를 전환하려면 Shift-클릭하십
 nomSound = "재생할 소리",
 aideSound = "애니메이션 시작시 소리를 재생합니다.",
 nomCustomSound = "혹은 소리 파일:",
-aideCustomSound = "게임을 시작하기 전에, Sounds 폴더내의 소리 파일의 이름을 아래의 빈칸에 입력하십시오. mp3 및 wav 확장자를 지원합니다. (예: 'cookie.mp3' ;)",
+aideCustomSound = "게임을 시작하기 전에, Sounds 폴더내의 소리 파일의 이름을 아래의 빈칸에 입력하십시오. mp3 및 wav 확장자를 지원합니다. (예: 'cookie.mp3')",
 
 nomTexture = "텍스쳐",
 aideTexture = "보여지게 될 텍스쳐를 선택합니다. 애드온 폴더내의 Aura#.tga 파일의 변경을 통해 텍스쳐를 쉽게 바꿀 수 있습니다.",
@@ -4377,7 +4377,7 @@ nomReasonAoENoTrigger = "AoE no trigger for $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "Main Hand $1 enchant found, timer invert", -- $1=Enchant match
 nomReasonEnchantMain = "Main Hand $1 enchant found", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert"; -- $1=Enchant match
+nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert", -- $1=Enchant match
 nomReasonEnchantOff = "Off Hand $1 enchant found", -- $1=Enchant match
 nomReasonNoEnchant = "No enchant found on weapons for $1", -- $1=Enchant match
 
@@ -4450,43 +4450,43 @@ aideBlockIncomingAuras = "Prevent anybody sending you auras",
 nomBlockIncomingAuras = "Block Incoming Auras",
 });
 elseif (GetLocale() == "ruRU") then
-PowaAuras.Anim[0] = "[Cкрытый]";
-PowaAuras.Anim[1] = "Статический";
-PowaAuras.Anim[2] = "Мигание";
-PowaAuras.Anim[3] = "Увеличение";
-PowaAuras.Anim[4] = "Пульсация";
-PowaAuras.Anim[5] = "Пузыриться";
-PowaAuras.Anim[6] = "Капанье воды";
-PowaAuras.Anim[7] = "Электрический";
-PowaAuras.Anim[8] = "Стягивание";
-PowaAuras.Anim[9] = "Огонь";
-PowaAuras.Anim[10] = "Вращаться";
-PowaAuras.Anim[11] = "Поворот по часовой стрелке";
-PowaAuras.Anim[12] = "Поворот против часовой стрелки";
+PowaAuras.Anim[0] = "[Cкрытый]"
+PowaAuras.Anim[1] = "Статический"
+PowaAuras.Anim[2] = "Мигание"
+PowaAuras.Anim[3] = "Увеличение"
+PowaAuras.Anim[4] = "Пульсация"
+PowaAuras.Anim[5] = "Пузыриться"
+PowaAuras.Anim[6] = "Капанье воды"
+PowaAuras.Anim[7] = "Электрический"
+PowaAuras.Anim[8] = "Стягивание"
+PowaAuras.Anim[9] = "Огонь"
+PowaAuras.Anim[10] = "Вращаться"
+PowaAuras.Anim[11] = "Поворот по часовой стрелке"
+PowaAuras.Anim[12] = "Поворот против часовой стрелки"
 
-PowaAuras.BeginAnimDisplay[0] = "[Нету]";
-PowaAuras.BeginAnimDisplay[1] = "Увеличить масштаб";
-PowaAuras.BeginAnimDisplay[2] = "Уменьшить масштаб";
-PowaAuras.BeginAnimDisplay[3] = "Только матовость";
-PowaAuras.BeginAnimDisplay[4] = "Слева";
-PowaAuras.BeginAnimDisplay[5] = "Вверху-слева";
-PowaAuras.BeginAnimDisplay[6] = "Вверху";
-PowaAuras.BeginAnimDisplay[7] = "Вверху-справа";
-PowaAuras.BeginAnimDisplay[8] = "Справа";
-PowaAuras.BeginAnimDisplay[9] = "Внизу-справа";
-PowaAuras.BeginAnimDisplay[10] = "Внизу";
-PowaAuras.BeginAnimDisplay[11] = "Внизу-слева";
-PowaAuras.BeginAnimDisplay[12] = "Bounce";
+PowaAuras.BeginAnimDisplay[0] = "[Нету]"
+PowaAuras.BeginAnimDisplay[1] = "Увеличить масштаб"
+PowaAuras.BeginAnimDisplay[2] = "Уменьшить масштаб"
+PowaAuras.BeginAnimDisplay[3] = "Только матовость"
+PowaAuras.BeginAnimDisplay[4] = "Слева"
+PowaAuras.BeginAnimDisplay[5] = "Вверху-слева"
+PowaAuras.BeginAnimDisplay[6] = "Вверху"
+PowaAuras.BeginAnimDisplay[7] = "Вверху-справа"
+PowaAuras.BeginAnimDisplay[8] = "Справа"
+PowaAuras.BeginAnimDisplay[9] = "Внизу-справа"
+PowaAuras.BeginAnimDisplay[10] = "Внизу"
+PowaAuras.BeginAnimDisplay[11] = "Внизу-слева"
+PowaAuras.BeginAnimDisplay[12] = "Bounce"
 
-PowaAuras.EndAnimDisplay[0] = "[Нету]";
-PowaAuras.EndAnimDisplay[1] = "Увеличить масштаб";
-PowaAuras.EndAnimDisplay[2] = "Уменьшить масштаб";
-PowaAuras.EndAnimDisplay[3] = "Только матовость";
-PowaAuras.EndAnimDisplay[4] = "Поворот";
-PowaAuras.EndAnimDisplay[5] = "Spin In"; -- untranslated
+PowaAuras.EndAnimDisplay[0] = "[Нету]"
+PowaAuras.EndAnimDisplay[1] = "Увеличить масштаб"
+PowaAuras.EndAnimDisplay[2] = "Уменьшить масштаб"
+PowaAuras.EndAnimDisplay[3] = "Только матовость"
+PowaAuras.EndAnimDisplay[4] = "Поворот"
+PowaAuras.EndAnimDisplay[5] = "Spin In" -- untranslated
 
-PowaAuras.Sound[0] = NONE;
-PowaAuras.Sound[30] = NONE;
+PowaAuras.Sound[0] = NONE
+PowaAuras.Sound[30] = NONE
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -4693,14 +4693,14 @@ nomSound2 = "Еще звуки",
 aideSound = "Проиграть звук при начале.",
 aideSound2 = "Проиграть звук при начале.",
 nomCustomSound = "или звуковой файл:",
-aideCustomSound = "Введите название звукового файла, который поместили в папку Sounds, ПРЕЖДЕ чем запустили игру. Поддерживаются mp3 и WAV. Например: 'cookie.mp3' ;)",
+aideCustomSound = "Введите название звукового файла, который поместили в папку Sounds, ПРЕЖДЕ чем запустили игру. Поддерживаются mp3 и WAV. Например: 'cookie.mp3')",
 
 nomSoundEnd = "Sound to play",
 nomSound2End = "More sounds to play",
 aideSoundEnd = "Plays a sound at the end.",
 aideSound2End = "Plays a sound at the end.",
 nomCustomSoundEnd = "OR soundfile:",
-aideCustomSoundEnd = "Enter a soundfile that is in the Sounds folder, BEFORE you started the game. mp3 and wav are supported. example: 'cookie.mp3' ;)",
+aideCustomSoundEnd = "Enter a soundfile that is in the Sounds folder, BEFORE you started the game. mp3 and wav are supported. example: 'cookie.mp3')",
 nomTexture = "Текстура",
 aideTexture = "Выбор отображаемой текстуры. Вы можете легко заменить текстуры путем изменения файлов Aura#.tga в директории модификации.",
 
@@ -4833,8 +4833,8 @@ aideAuraDebug = "Отлажывать данную ауру",
 nomDuration = "Длина анимации:",
 aideDuration = "После истечения этого времени, данный эффект исчезнет (0 - дезактивировать)",
 
-nomOldAnimations = "Старая анимация";
-aideOldAnimations = "Использовать старую анимацию";
+nomOldAnimations = "Старая анимация",
+aideOldAnimations = "Использовать старую анимацию",
 
 nomCentiemes = "Показывать сотую часть",
 nomDual = "Показывать 2 таймера",
@@ -5115,7 +5115,7 @@ nomReasonAoENoTrigger = "AoE no trigger for $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "Найдено улучшение $1 на правой руке, инверсия таймера", -- $1=Enchant match
 nomReasonEnchantMain = "Найдено улучшение $1 на правой руке", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Найдено улучшение $1 на левой руке, инверсия таймера"; -- $1=Enchant match
+nomReasonEnchantOffInvert = "Найдено улучшение $1 на левой руке, инверсия таймера", -- $1=Enchant match
 nomReasonEnchantOff = "Найдено улучшение $1 на левой руке", -- $1=Enchant match
 nomReasonNoEnchant = "Улучшений оружия ненайдено на $1", -- $1=Enchant match
 
@@ -5210,40 +5210,40 @@ aideBlockIncomingAuras = "Prevent anybody sending you auras",
 nomBlockIncomingAuras = "Block Incoming Auras",
 });
 elseif (GetLocale() == "zhCN") then
-PowaAuras.Anim[0] = "[无]";
-PowaAuras.Anim[1] = "静止";
-PowaAuras.Anim[2] = "闪光效果";
-PowaAuras.Anim[3] = "生长效果";
-PowaAuras.Anim[4] = "脉搏效果";
-PowaAuras.Anim[5] = "气泡效果";
-PowaAuras.Anim[6] = "水滴效果";
-PowaAuras.Anim[7] = "漏电效果";
-PowaAuras.Anim[8] = "收缩效果";
-PowaAuras.Anim[9] = "火焰效果";
-PowaAuras.Anim[10] = "盘旋效果";
+PowaAuras.Anim[0] = "[无]"
+PowaAuras.Anim[1] = "静止"
+PowaAuras.Anim[2] = "闪光效果"
+PowaAuras.Anim[3] = "生长效果"
+PowaAuras.Anim[4] = "脉搏效果"
+PowaAuras.Anim[5] = "气泡效果"
+PowaAuras.Anim[6] = "水滴效果"
+PowaAuras.Anim[7] = "漏电效果"
+PowaAuras.Anim[8] = "收缩效果"
+PowaAuras.Anim[9] = "火焰效果"
+PowaAuras.Anim[10] = "盘旋效果"
 
-PowaAuras.BeginAnimDisplay[0] = "[无]";
-PowaAuras.BeginAnimDisplay[1] = "由小放大";
-PowaAuras.BeginAnimDisplay[2] = "由大渐小";
-PowaAuras.BeginAnimDisplay[3] = "逐渐清晰";
-PowaAuras.BeginAnimDisplay[4] = "左边进入";
-PowaAuras.BeginAnimDisplay[5] = "左上进入";
-PowaAuras.BeginAnimDisplay[6] = "上部进入";
-PowaAuras.BeginAnimDisplay[7] = "右上进入";
-PowaAuras.BeginAnimDisplay[8] = "右边进入";
-PowaAuras.BeginAnimDisplay[9] = "右下进入";
-PowaAuras.BeginAnimDisplay[10] = "下部进入";
-PowaAuras.BeginAnimDisplay[11] = "左下进入";
-PowaAuras.BeginAnimDisplay[12] = "弹跳进入";
+PowaAuras.BeginAnimDisplay[0] = "[无]"
+PowaAuras.BeginAnimDisplay[1] = "由小放大"
+PowaAuras.BeginAnimDisplay[2] = "由大渐小"
+PowaAuras.BeginAnimDisplay[3] = "逐渐清晰"
+PowaAuras.BeginAnimDisplay[4] = "左边进入"
+PowaAuras.BeginAnimDisplay[5] = "左上进入"
+PowaAuras.BeginAnimDisplay[6] = "上部进入"
+PowaAuras.BeginAnimDisplay[7] = "右上进入"
+PowaAuras.BeginAnimDisplay[8] = "右边进入"
+PowaAuras.BeginAnimDisplay[9] = "右下进入"
+PowaAuras.BeginAnimDisplay[10] = "下部进入"
+PowaAuras.BeginAnimDisplay[11] = "左下进入"
+PowaAuras.BeginAnimDisplay[12] = "弹跳进入"
 
-PowaAuras.EndAnimDisplay[0] = "[无]";
-PowaAuras.EndAnimDisplay[1] = "放大消失";
-PowaAuras.EndAnimDisplay[2] = "缩小消失";
-PowaAuras.EndAnimDisplay[3] = "淡化消失";
-PowaAuras.EndAnimDisplay[4] = "旋转渐隐";
-PowaAuras.EndAnimDisplay[5] = "旋转缩小";
+PowaAuras.EndAnimDisplay[0] = "[无]"
+PowaAuras.EndAnimDisplay[1] = "放大消失"
+PowaAuras.EndAnimDisplay[2] = "缩小消失"
+PowaAuras.EndAnimDisplay[3] = "淡化消失"
+PowaAuras.EndAnimDisplay[4] = "旋转渐隐"
+PowaAuras.EndAnimDisplay[5] = "旋转缩小"
 
-PowaAuras.Sound[0] = "[无]";
+PowaAuras.Sound[0] = "[无]"
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -5647,7 +5647,7 @@ nomReasonAoENoTrigger = "没有检测到AoE法术 $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "找到主手武器强化效果 $1, 计时器倒置", -- $1=Enchant match
 nomReasonEnchantMain = "找到主手武器强化效果 $1", -- $1=Enchant match
-nomReasonEnchantOffInvert = "找到副手武器强化效果 $1, 计时器倒置"; -- $1=Enchant match
+nomReasonEnchantOffInvert = "找到副手武器强化效果 $1, 计时器倒置", -- $1=Enchant match
 nomReasonEnchantOff = "找到副手武器强化效果 $1", -- $1=Enchant match
 nomReasonNoEnchant = "没有在任何武器上找到强化效果 $1", -- $1=Enchant match
 
@@ -5719,40 +5719,40 @@ aideBlockIncomingAuras = "Prevent anybody sending you auras",
 nomBlockIncomingAuras = "Block Incoming Auras",
 });
 elseif (GetLocale() == "zhTW") then
-PowaAuras.Anim[0] = "[無]";
-PowaAuras.Anim[1] = "靜止";
-PowaAuras.Anim[2] = "閃光效果";
-PowaAuras.Anim[3] = "生長效果";
-PowaAuras.Anim[4] = "脈搏效果";
-PowaAuras.Anim[5] = "氣泡效果";
-PowaAuras.Anim[6] = "水滴效果";
-PowaAuras.Anim[7] = "漏電效果";
-PowaAuras.Anim[8] = "收縮效果";
-PowaAuras.Anim[9] = "火焰效果";
-PowaAuras.Anim[10] = "盤旋效果";
+PowaAuras.Anim[0] = "[無]"
+PowaAuras.Anim[1] = "靜止"
+PowaAuras.Anim[2] = "閃光效果"
+PowaAuras.Anim[3] = "生長效果"
+PowaAuras.Anim[4] = "脈搏效果"
+PowaAuras.Anim[5] = "氣泡效果"
+PowaAuras.Anim[6] = "水滴效果"
+PowaAuras.Anim[7] = "漏電效果"
+PowaAuras.Anim[8] = "收縮效果"
+PowaAuras.Anim[9] = "火焰效果"
+PowaAuras.Anim[10] = "盤旋效果"
 
-PowaAuras.BeginAnimDisplay[0] = "[無]";
-PowaAuras.BeginAnimDisplay[1] = "由小放大";
-PowaAuras.BeginAnimDisplay[2] = "由大漸小";
-PowaAuras.BeginAnimDisplay[3] = "逐漸清晰";
-PowaAuras.BeginAnimDisplay[4] = "左邊進入";
-PowaAuras.BeginAnimDisplay[5] = "左上進入";
-PowaAuras.BeginAnimDisplay[6] = "上部進入";
-PowaAuras.BeginAnimDisplay[7] = "右上進入";
-PowaAuras.BeginAnimDisplay[8] = "右邊進入";
-PowaAuras.BeginAnimDisplay[9] = "右下進入";
-PowaAuras.BeginAnimDisplay[10] = "下部進入";
-PowaAuras.BeginAnimDisplay[11] = "左下進入";
-PowaAuras.BeginAnimDisplay[12] = "彈跳進入";
+PowaAuras.BeginAnimDisplay[0] = "[無]"
+PowaAuras.BeginAnimDisplay[1] = "由小放大"
+PowaAuras.BeginAnimDisplay[2] = "由大漸小"
+PowaAuras.BeginAnimDisplay[3] = "逐漸清晰"
+PowaAuras.BeginAnimDisplay[4] = "左邊進入"
+PowaAuras.BeginAnimDisplay[5] = "左上進入"
+PowaAuras.BeginAnimDisplay[6] = "上部進入"
+PowaAuras.BeginAnimDisplay[7] = "右上進入"
+PowaAuras.BeginAnimDisplay[8] = "右邊進入"
+PowaAuras.BeginAnimDisplay[9] = "右下進入"
+PowaAuras.BeginAnimDisplay[10] = "下部進入"
+PowaAuras.BeginAnimDisplay[11] = "左下進入"
+PowaAuras.BeginAnimDisplay[12] = "彈跳進入"
 
-PowaAuras.EndAnimDisplay[0] = "[無]";
-PowaAuras.EndAnimDisplay[1] = "放大消失";
-PowaAuras.EndAnimDisplay[2] = "縮小消失";
-PowaAuras.EndAnimDisplay[3] = "淡化消失";
-PowaAuras.EndAnimDisplay[4] = "旋轉漸隱";
-PowaAuras.EndAnimDisplay[5] = "旋轉縮小";
+PowaAuras.EndAnimDisplay[0] = "[無]"
+PowaAuras.EndAnimDisplay[1] = "放大消失"
+PowaAuras.EndAnimDisplay[2] = "縮小消失"
+PowaAuras.EndAnimDisplay[3] = "淡化消失"
+PowaAuras.EndAnimDisplay[4] = "旋轉漸隱"
+PowaAuras.EndAnimDisplay[5] = "旋轉縮小"
 
-PowaAuras.Sound[0] = "[無]";
+PowaAuras.Sound[0] = "[無]"
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -6159,7 +6159,7 @@ nomReasonAoENoTrigger = "沒有檢測到AoE法術 $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "找到主手武器強化效果 $1, 計時器倒置", -- $1=Enchant match
 nomReasonEnchantMain = "找到主手武器強化效果 $1", -- $1=Enchant match
-nomReasonEnchantOffInvert = "找到副手武器強化效果 $1, 計時器倒置"; -- $1=Enchant match
+nomReasonEnchantOffInvert = "找到副手武器強化效果 $1, 計時器倒置", -- $1=Enchant match
 nomReasonEnchantOff = "找到副手武器強化效果 $1", -- $1=Enchant match
 nomReasonNoEnchant = "沒有在任何武器上找到強化效果 $1", -- $1=Enchant match
 
