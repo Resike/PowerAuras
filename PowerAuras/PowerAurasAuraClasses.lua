@@ -65,6 +65,7 @@ cPowaAura.ExportSettings =
 	mz = 0,
 	mx = 0,
 	my = 0,
+	animationsequence = -1,
 	customtex = false,
 	textaura = false,
 	owntex = false,

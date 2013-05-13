@@ -2,6 +2,7 @@
 - Fixed a bug when you disabled not the currently active aura pages with shif+click, and incorrectly shown "OFF" text for auras which wasn't actually disabled.
 - Fixed a bug where icon alpha didn't decreased properly on other then "Page 1" tabs.
 - Rename editbox now going to rename the current Page when it's focus is lost or esc is beeing pressed.
+- Fixed a bug with icon highlight beeing displayed when you open the options tab with 0 auras.
 
 * 4.23.22
 Fixed a leaked global from 4.23.21.

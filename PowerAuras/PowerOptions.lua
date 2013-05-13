@@ -1322,6 +1322,9 @@ function PowaAuras:MainOptionShow()
 	if (PowaOptionsFrame:IsVisible()) then
 		self:MainOptionClose();
 	else
+		if (aura == nil) then
+			PowaSelected:Hide();
+		end
 		PowaAuras_InitalizeOnMenuOpen();
 		self:OptionHideAll();
 		self.ModTest = true;
@@ -1700,23 +1703,27 @@ function PowaAuras:InitPage(aura)
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+		PowaBarAuraSymSlider:Show();
 		PowaModelPositionZSlider:Hide();
 		PowaModelPositionXSlider:Hide();
 		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
+		PowaBarAnimationSlider:Hide();
 	elseif (aura.wowtex) then
 		PowaBarAuraTextureSlider:Show();
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+		PowaBarAuraSymSlider:Show();
 		PowaModelPositionZSlider:Hide();
 		PowaModelPositionXSlider:Hide();
 		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
+		PowaBarAnimationSlider:Hide();
 		if (#self.WowTextures > self.MaxTextures) or (#self.WowTextures > #PowaAurasModels) then
 			PowaBarAuraTextureSlider:SetMinMaxValues(1, #self.WowTextures);
 			PowaBarAuraTextureSlider:SetValue(aura.texture);
@@ -1731,12 +1738,14 @@ function PowaAuras:InitPage(aura)
 		PowaModelPositionXSlider:Show();
 		PowaModelPositionYSlider:Show();
 		PowaBarAuraTextureSlider:Show();
+		PowaBarAnimationSlider:Show();
 		PowaBlendModeDropDown:Hide();
 		PowaTextureStrataDropDown:Hide();
 		PowaTextureStrataSublevelSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
+		PowaBarAuraSymSlider:Hide();
 		if (#PowaAurasModels > self.MaxTextures) or (#PowaAurasModels > #self.WowTextures) then
 			PowaBarAuraTextureSlider:SetMinMaxValues(1, #PowaAurasModels);
 			PowaBarAuraTextureSlider:SetValue(aura.texture);
@@ -1751,6 +1760,8 @@ function PowaAuras:InitPage(aura)
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+
+		PowaBarAuraSymSlider:Show();
 		PowaModelPositionZSlider:Hide();
 		PowaModelPositionXSlider:Hide();
 		PowaModelPositionYSlider:Hide();
@@ -1758,12 +1769,14 @@ function PowaAuras:InitPage(aura)
 		PowaFontButton:Hide();
 		PowaBarCustomTexName:Show();
 		PowaBarCustomTexName:SetText(aura.customname);
+		PowaBarAnimationSlider:Hide();
 		checkTexture = AuraTexture:SetTexture(self:CustomTexPath(aura.customname));
 	elseif (aura.textaura) then
 		PowaBarAuraTextureSlider:Hide();
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+		PowaBarAuraSymSlider:Show();
 		PowaModelPositionZSlider:Hide();
 		PowaModelPositionXSlider:Hide();
 		PowaModelPositionYSlider:Hide();
@@ -1772,18 +1785,21 @@ function PowaAuras:InitPage(aura)
 		PowaFontButton:Show();
 		--self:ShowText("InitPage: set aurastext to ", aura.aurastext);
 		PowaBarAurasText:SetText(aura.aurastext);
+		PowaBarAnimationSlider:Hide();
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\INV_Scroll_02");
 	else
 		PowaBarAuraTextureSlider:Show();
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+		PowaBarAuraSymSlider:Show();
 		PowaModelPositionZSlider:Hide();
 		PowaModelPositionXSlider:Hide();
 		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
+		PowaBarAnimationSlider:Hide();
 		if (#self.WowTextures < self.MaxTextures) or (#PowaAurasModels < #self.MaxTextures) then
 			PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures);
 			PowaBarAuraTextureSlider:SetValue(aura.texture);
@@ -2000,6 +2016,18 @@ function PowaAuras:BarAuraSymSliderChanged()
 		--AuraTexture:SetTexCoord(1, 0, 1, 0);
 	end
 	self.Auras[self.CurrentAuraId].symetrie = SliderValue;
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:BarAnimationSliderChanged()
+	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
+	local SliderValue = PowaBarAnimationSlider:GetValue();
+	if (SliderValue == - 1) then
+		PowaBarAnimationSliderText:SetText("Animation: Default");
+	else
+		PowaBarAnimationSliderText:SetText("Animation: "..SliderValue);
+	end
+	self.Auras[self.CurrentAuraId].animationsequence = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
 
@@ -2268,12 +2296,14 @@ function PowaAuras:OwntexChecked()
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+		PowaBarAuraSymSlider:Show();
 		PowaModelPositionZSlider:Hide();
 		PowaModelPositionXSlider:Hide();
 		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
+		PowaBarAnimationSlider:Hide();
 	else
 		aura.owntex = false;
 	end
@@ -2302,12 +2332,14 @@ function PowaAuras:WowTexturesChecked()
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+		PowaBarAuraSymSlider:Show();
 		PowaModelPositionZSlider:Hide();
 		PowaModelPositionXSlider:Hide();
 		PowaModelPositionYSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
+		PowaBarAnimationSlider:Hide();
 	else
 		aura.wowtex = false;
 		if (PowaBarAuraTextureSlider:GetValue() > self.MaxTextures) then
@@ -2343,21 +2375,25 @@ function PowaAuras:ModelsChecked()
 		PowaModelPositionXSlider:Show();
 		PowaModelPositionYSlider:Show();
 		PowaBarAuraTextureSlider:Show();
+		PowaBarAnimationSlider:Show();
 		PowaBlendModeDropDown:Hide();
 		PowaTextureStrataDropDown:Hide();
 		PowaTextureStrataSublevelSlider:Hide();
 		PowaBarCustomTexName:Hide();
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
+		PowaBarAuraSymSlider:Hide();
 	else
 		aura.model = false;
 		aura.UseOldAnimations = false;
 		PowaModelPositionZSlider:Hide();
 		PowaModelPositionXSlider:Hide();
 		PowaModelPositionYSlider:Hide();
+		PowaBarAnimationSlider:Hide();
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+		PowaBarAuraSymSlider:Show();
 		if (PowaBarAuraTextureSlider:GetValue() > self.MaxTextures) then
 			PowaBarAuraTextureSlider:SetValue(1);
 		end
@@ -2392,7 +2428,9 @@ function PowaAuras:CustomTexturesChecked()
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+		PowaBarAuraSymSlider:Show();
 		PowaFontButton:Hide();
+		PowaBarAnimationSlider:Hide();
 	else
 		aura.customtex = false;
 		PowaBarAuraTextureSlider:Show();
@@ -2418,6 +2456,7 @@ function PowaAuras:TextAuraChecked()
 		PowaBlendModeDropDown:Show();
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
+		PowaBarAuraSymSlider:Show();
 		PowaBarAurasText:Show();
 		PowaFontButton:Show();
 		--self:ShowText("TextAuraChecked: aura text changed to ", aura.aurastext);
@@ -2431,6 +2470,7 @@ function PowaAuras:TextAuraChecked()
 		PowaModelsButton:SetChecked(false);
 		PowaCustomTextureButton:SetChecked(false);
 		PowaBarCustomTexName:Hide();
+		PowaBarAnimationSlider:Hide();
 		if (PowaBarAuraSizeSlider:GetValue() > 1.61) then
 			PowaBarAuraSizeSlider:SetValue(1.61);
 		end
@@ -3500,7 +3540,7 @@ function PowaAuras_CommanLine(msg)
 	if (msg == "dump") then
 		PowaAuras:Dump();
 		PowaAuras:Message("State dumped to"); -- OK
-		PowaAuras:Message("WTF \\ Account \\ <ACCOUNT> \\ "..GetRealmName().." \\ "..UnitName("player").." \\ SavedVariables \\ PowerAuras.lua"); -- OK
+		PowaAuras:Message("WTF\\Account\\<ACCOUNT>\\"..GetRealmName().."\\"..UnitName("player").."\\SavedVariables\\PowerAuras.lua"); -- OK
 		PowaAuras:Message("You must log-out to save the values to disk (at end of fight/raid is fine)"); -- OK
 	elseif (msg=="toggle" or msg=="tog") then
 		PowaAuras:Toggle();

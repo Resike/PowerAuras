@@ -1032,6 +1032,36 @@
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
+					<!-- Animation Slider -->
+					<Slider name = "PowaBarAnimationSlider" inherits = "PowaBarSliderTemplate">
+						<Size>
+							<AbsDimension x = "140" y = "16"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraAlphaSlider" relativePoint = "BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x = "0" y = "-22"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self:EnableMouseWheel(true)
+								self:SetMinMaxValues(-1, 250)
+								self:SetValue(-1)
+								self:SetValueStep(1)
+								PowaBarAnimationSliderText:SetText("Animation: Default")
+								PowaBarAnimationSliderLow:SetText("Default")
+								PowaBarAnimationSliderHigh:SetText("250")
+							</OnLoad>
+							<OnValueChanged>
+								PowaAuras:BarAnimationSliderChanged()
+							</OnValueChanged>
+							<OnMouseWheel>
+								PowaAuras.OnMouseWheel(self, delta)
+							</OnMouseWheel>
+						</Scripts>
+					</Slider>
 					<!-- Deformation Slider -->
 					<Slider name = "PowaBarAuraDeformSlider" inherits = "PowaBarSliderTemplate">
 						<Size>
