@@ -1,4 +1,5 @@
 local string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select = string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select;
+-- Power Auras Classic 4.23.23
 
 -- Exposed for Saving
 PowaMisc =
