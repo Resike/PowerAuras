@@ -1451,8 +1451,8 @@ function PowaAuras:MatchString(textToSearch, textToFind, ingoreCase)
 end
 
 function PowaAuras:Different(o1, o2)
-	local t1 = type(t1);
-	local t2 = type(t2);
+	local t1 = type(o1);
+	local t2 = type(o2);
 	if (t1 ~= t2 or t1 == "string" or t2 == "string") then
 		return tostring(o1) ~= tostring(o2);
 	end

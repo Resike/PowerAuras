@@ -106,7 +106,7 @@ AuraType =
 	[PowaAuras.BuffTypes.EnergyRagePower] = "Rage/Energy/Power",
 	[PowaAuras.BuffTypes.Aggro] = "Aggro",
 	[PowaAuras.BuffTypes.PvP] = "PvP",
-	[PowaAuras.BuffTypes.Stance] = "Stance",
+	[PowaAuras.BuffTypes.Stance] = "Stance/Seal",
 	[PowaAuras.BuffTypes.SpellAlert] = "Spell Alert",
 	[PowaAuras.BuffTypes.SpellCooldown] = "Spell Cooldown",
 	[PowaAuras.BuffTypes.StealableSpell] = "Stealable Spell",
@@ -455,6 +455,7 @@ nomDefaultStacksTexture = "Default Stacks Texture:",
 nomStacksTexture = "Stacks Texture:",
 
 Enabled = "Enabled",
+Disabled = "Disabled",
 Default = "Default",
 
 Ternary =

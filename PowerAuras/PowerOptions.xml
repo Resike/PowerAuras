@@ -1,4 +1,5 @@
 ﻿<Ui>
+	<!-- Icon Template -->
 	<Button name = "PowaIconeTemplate" virtual = "true">
 		<Size>
 			<AbsDimension x = "38" y = "38"/>
@@ -21,6 +22,7 @@
 		<NormalTexture file = "Interface\PaperDoll\UI-Backpack-EmptySlot"/>
 		<HighlightTexture alphaMode = "ADD" file = "Interface\Buttons\ButtonHilight-Square"/>
 	</Button>
+	<!-- List Template -->
 	<Button name = "PowaListTemplate" inherits = "OptionsButtonTemplate" virtual = "true">
 		<Size>
 			<AbsDimension x = "82" y = "25"/>
@@ -199,7 +201,7 @@
 			</OnShow>
 		</Scripts>
 	</Frame>
-	<!-- Cross-client import dialog, do not use for general imports -->
+	<!-- Cross-client Import Dialog -->
 	<Frame name = "PowaAuraPlayerImportDialog" frameStrata = "DIALOG" hidden = "true" toplevel = "true" parent = "UIParent">
 		<Size>
 			<AbsDimension x = "384" y = "135"/>
@@ -243,7 +245,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<!-- Accept -->
+			<!-- Accept Button -->
 			<Button name = "$parentAcceptButton" inherits = "OptionsButtonTemplate">
 				<Size>
 					<AbsDimension x = "118" y = "22"/>
@@ -260,7 +262,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<!-- Reject -->
+			<!-- Cancel Button -->
 			<Button name = "$parentCancelButton" inherits = "OptionsButtonTemplate">
 				<Size>
 					<AbsDimension x = "118" y = "22"/>

@@ -1,5 +1,19 @@
+--[[
+	   _          _           _    _       _        _              _          _      _          _        _            _        _           _        _       _       _       _      
+	 _/\\___   __/\\___  ___ /\\  /\\   __/\\___  _/\\___       __/\\__  ___ /\\   _/\\___   __/\\__    /\\__      __/\\___  _/\\_      __/\\__    /\\__   /\\__  _/\\_  __/\\___  
+	(_   _ _))(_     _))/   |  \\/  \\ (_  ____))(_   _  ))    (_  ____)/  //\ \\ (_   _  ))(_  ____)  /    \\    (_  ____))(_  _))    (_  ____)  /    \\ /    \\(____))(_  ____)) 
+	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
+	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
+	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.23.23  \//      \// \//    \\/     \\/      \//  \//       
+
+	Power Auras Classic
+	Current author/maintainter: Resike
+	E-Mail: resike@gmail.com
+	All rights reserved.
+]]--
+
 local string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select = string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select;
--- Power Auras Classic 4.23.23
 
 -- Exposed for Saving
 PowaMisc =
@@ -17,7 +31,7 @@ PowaMisc =
 	UserSetMaxTextures = PowaAuras.TextureCount,
 	OverrideMaxTextures = false,
 	Locked = true,
-	SoundChannel = "Master",
+	SoundChannel = "Master"
 };
 
 PowaGlobalMisc =
@@ -25,7 +39,7 @@ PowaGlobalMisc =
 	PathToSounds = "Interface\\AddOns\\PowerAuras\\Sounds\\",
 	PathToAuras = "Interface\\Addons\\PowerAuras\\Custom\\",
 	BlockIncomingAuras = false,
-	FixExports = false,
+	FixExports = false
 };
 
 PowaAuras.PowaMiscDefault = PowaAuras:CopyTable(PowaMisc);
@@ -62,7 +76,7 @@ function PowaAuras:Toggle(enable)
 		end
 		PowaMisc.Disabled = false;
 		self:Setup();
-		self:DisplayText("Power Auras "..self.Colors.Green..PowaAuras.Text.Enabled.."|r");
+		self:DisplayText("Power Auras: "..self.Colors.Green..PowaAuras.Text.Enabled.."|r");
 	else
 		if (PowaMisc.Disabled) then
 			return;
@@ -73,7 +87,7 @@ function PowaAuras:Toggle(enable)
 		end
 		self:OptionHideAll(true);
 		PowaMisc.Disabled = true;
-		self:DisplayText("Power Auras "..self.Colors.Red..ADDON_DISABLED.."|r");
+		self:DisplayText("Power Auras: "..self.Colors.Red..PowaAuras.Text.Disabled.."|r");
 	end
 	--self:ShowText("Setting Enabled button to: ", PowaMisc.Disabled~=true);
 	PowaEnableButton:SetChecked(PowaMisc.Disabled ~= true);

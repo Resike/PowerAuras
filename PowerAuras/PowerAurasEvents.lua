@@ -74,7 +74,7 @@ function PowaAuras:Setup()
 	self.GCDSpellName = GetSpellInfo(spellId);
 	--self:ShowText("GCD spell = ", self.GCDSpellName, "(", spellId, ") CD=", GetSpellCooldown(self.GCDSpellName));
 	-- Look-up spells by spellId for debuff types
-	self.DebuffCatSpells = {}
+	self.DebuffCatSpells = { }
 	for k, v in pairs(self.DebuffTypeSpellIds) do
 		local spellName = GetSpellInfo(k);
 		if spellName then

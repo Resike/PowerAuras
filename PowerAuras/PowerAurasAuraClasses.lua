@@ -3810,7 +3810,7 @@ function PowaAuras:AuraFactory(auraType, id, base)
 	if (class) then
 		--self:ShowText("AuraFactory "..tostring(auraType).." id="..tostring(id).." type="..tostring(PowaAuras.Text.AuraType[auraType]));
 		if (base == nil) then
-			base = {};
+			base = { };
 		end
 		base.bufftype = auraType;
 		base.Debug = nil;
