@@ -2044,7 +2044,7 @@ end
 function PowaAuras:BarAuraDeformSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraDeformSlider:GetValue();
-	PowaBarAuraDeformSliderText:SetText(self.Text.nomDeform..": "..format("%.3f", SliderValue));
+	PowaBarAuraDeformSliderText:SetText(self.Text.nomDeform..": "..format("%.2f", SliderValue));
 	self.Auras[self.CurrentAuraId].torsion = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -2346,6 +2346,7 @@ function PowaAuras:ModelsChecked()
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
 		PowaBarAuraSymSlider:Hide();
+		PowaShowSpinAtBeginning:Hide();
 	else
 		aura.model = false;
 		aura.UseOldAnimations = false;
@@ -2357,6 +2358,7 @@ function PowaAuras:ModelsChecked()
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
 		PowaBarAuraSymSlider:Show();
+		PowaShowSpinAtBeginning:Show();
 		if (PowaBarAuraTextureSlider:GetValue() > self.MaxTextures) then
 			PowaBarAuraTextureSlider:SetValue(1);
 		end
@@ -4053,7 +4055,7 @@ function PowaAuras:EquipmentSlot_OnClick(slotButton)
 	--self:Message("aura.buffname=", aura.buffname);
 end
 
-function PowaAuras.OnMouseWheel(self, delta)
+function PowaAuras.SliderOnMouseWheel(self, delta)
 	if delta > 0 then
 		self:SetValue(self:GetValue() + self:GetValueStep());
 	else
@@ -4061,37 +4063,37 @@ function PowaAuras.OnMouseWheel(self, delta)
 	end
 end
 
-function PowaAuras.OnMouseUpX(self)
+function PowaAuras.SliderOnMouseUp(self, x, decimals)
 	local frame = self:GetName();
-	self:SetMinMaxValues(self:GetValue() - 700, self:GetValue() + 700);
-	_G[frame.."Low"]:SetText(self:GetValue() - 700);
-	_G[frame.."High"]:SetText(self:GetValue() + 700);
+	local min = format("%."..decimals.."f", (self:GetValue() - x));
+	local max = format("%."..decimals.."f", (self:GetValue() + x));
+	self:SetMinMaxValues(min, max);
+	_G[frame.."Low"]:SetText(min);
+	_G[frame.."High"]:SetText(max);
+	PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
 end
 
-function PowaAuras.OnMouseUpY(self)
-	local frame = self:GetName();
-	self:SetMinMaxValues(self:GetValue() - 400, self:GetValue() + 400);
-	_G[frame.."Low"]:SetText(self:GetValue() - 400);
-	_G[frame.."High"]:SetText(self:GetValue() + 400);
-end
-
-function PowaAuras.SliderSetValuesX(slider, editbox)
+function PowaAuras.SliderSetValues(slider, editbox, x, decimals)
 	local frame = slider:GetName();
-	local text = tonumber(editbox:GetText());
-	print(text)
-	slider:SetMinMaxValues(text - 700, text + 700);
-	slider:SetValue(text);
-	_G[frame.."Low"]:SetText(text - 700);
-	_G[frame.."High"]:SetText(text + 700);
-end
-
-function PowaAuras.SliderSetValuesY(slider, editbox)
-	local frame = slider:GetName();
-	local text = tonumber(editbox:GetText());
-	slider:SetMinMaxValues(text - 400, text + 400);
-	slider:SetValue(text);
-	_G[frame.."Low"]:SetText(text - 400);
-	_G[frame.."High"]:SetText(text + 400);
+	local slidervalue = slider:GetValue();
+	local value = tonumber(editbox:GetText());
+	if (value ~= nil) then
+		value = format("%."..decimals.."f", value);
+		local min = format("%."..decimals.."f", (value - x));
+		local max = format("%."..decimals.."f", (value + x));
+		slider:SetMinMaxValues(min, max);
+		slider:SetValue(value);
+		editbox:SetText(format("%."..decimals.."f", value));
+		_G[frame.."Low"]:SetText(min);
+		_G[frame.."High"]:SetText(max);
+	else
+		slider:SetMinMaxValues(slidervalue - x, slidervalue + x);
+		slider:SetValue(slidervalue);
+		editbox:SetText(format("%."..decimals.."f", slidervalue));
+		_G[frame.."Low"]:SetText(slidervalue - x);
+		_G[frame.."High"]:SetText(slidervalue + x);
+	end
+	PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId);
 end
 
 function PowaAuras.SliderEditBoxChanged(self)
@@ -4099,9 +4101,13 @@ function PowaAuras.SliderEditBoxChanged(self)
 	local slider = _G[string.sub(frame, 1, - 1 * (string.len("EditBox") + 1))];
 	local postfix = tostring(string.sub(self:GetText(), - 1));
 	if (slider == PowaBarAuraCoordXSlider or slider == PowaTimerCoordXSlider or slider == PowaStacksCoordXSlider) then
-		PowaAuras.SliderSetValuesX(slider, self);
+		PowaAuras.SliderSetValues(slider, self, 700, 0);
 	elseif (slider == PowaBarAuraCoordYSlider or slider == PowaTimerCoordYSlider or slider == PowaStacksCoordYSlider) then
-		PowaAuras.SliderSetValuesY(slider, self);
+		PowaAuras.SliderSetValues(slider, self, 400, 0);
+	elseif (slider == PowaModelPositionZSlider) then
+		PowaAuras.SliderSetValues(slider, self, 1, 2);
+	elseif (slider == PowaModelPositionXSlider or slider == PowaModelPositionYSlider) then
+		PowaAuras.SliderSetValues(slider, self, 0.5, 2);
 	end
 	if ((postfix == "%") and (slider == PowaBarAuraAlphaSlider or slider == PowaBarAuraSizeSlider or slider == PowaBarAuraAnimSpeedSlider or slider == PowaTimerSizeSlider or slider == PowaTimerAlphaSlider or slider == PowaStacksSizeSlider or slider == PowaStacksAlphaSlider)) then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2));
@@ -4177,9 +4183,21 @@ function PowaAuras.SliderEditBoxChanged(self)
 		else
 			self:SetText(format("%.0f", slider:GetValue()).."°");
 		end
+	elseif (slider == PowaModelPositionZSlider or slider == PowaModelPositionXSlider or slider == PowaModelPositionYSlider or slider == PowaBarAuraDeformSlider or slider == PowaBarAuraDurationSlider or slider == PowaTimerDurationSlider or slider == PowaTimerInvertAuraSlider) then
+		if (tonumber(self:GetText()) ~= nil) then
+			slider:SetValue(tonumber(self:GetText()));
+			self:SetText(format("%.2f", slider:GetValue()));
+			local sliderlow, sliderhigh = slider:GetMinMaxValues();
+			if (tonumber(self:GetText()) < sliderlow) or (tonumber(self:GetText()) > sliderhigh) then
+				self:SetText(slider:GetValue());
+			end
+		else
+			self:SetText(slider:GetValue());
+		end
 	else
 		if (tonumber(self:GetText()) ~= nil) then
 			slider:SetValue(tonumber(self:GetText()));
+			self:SetText(format("%.0f", slider:GetValue()));
 			local sliderlow, sliderhigh = slider:GetMinMaxValues();
 			if (tonumber(self:GetText()) < sliderlow) or (tonumber(self:GetText()) > sliderhigh) then
 				self:SetText(slider:GetValue());
