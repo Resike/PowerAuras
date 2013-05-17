@@ -1662,14 +1662,12 @@ function PowaAuras:InitPage(aura)
 	PowaBarAuraCoordXSliderHigh:SetText(aura.x + 700);
 	PowaBarAuraCoordXSlider:SetValue(aura.x);
 	PowaBarAuraCoordXSlider:SetMinMaxValues(aura.x - 700, aura.x + 700);
-	PowaBarAuraCoordXEdit:SetText(aura.x);
 	-- Texture Position Slider Y
 	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y - 10000, aura.y + 10000);
 	PowaBarAuraCoordYSliderLow:SetText(aura.y - 400);
 	PowaBarAuraCoordYSliderHigh:SetText(aura.y + 400);
 	PowaBarAuraCoordYSlider:SetValue(aura.y);
 	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y - 400, aura.y + 400);
-	PowaBarAuraCoordYEdit:SetText(aura.y);
 	PowaBarAuraAnimSpeedSlider:SetValue(aura.speed);
 	PowaBarAuraDurationSlider:SetValue(aura.duration);
 	PowaBarAuraDurationSlider:SetMinMaxValues(aura.minDuration or 0, 60);
@@ -1970,9 +1968,6 @@ function PowaAuras:BarAuraCoordXSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraCoordXSlider:GetValue();
 	PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X: "..SliderValue);
-	if (PowaBarAuraCoordXEdit) then
-		PowaBarAuraCoordXEdit:SetText(SliderValue);
-	end
 	self.Auras[self.CurrentAuraId].x = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -1981,9 +1976,6 @@ function PowaAuras:BarAuraCoordYSliderChanged()
 	if (not (self.VariablesLoaded and self.SetupDone)) then return; end
 	local SliderValue = PowaBarAuraCoordYSlider:GetValue();
 	PowaBarAuraCoordYSliderText:SetText(self.Text.nomPos.." Y: "..SliderValue);
-	if (PowaBarAuraCoordYEdit) then
-		PowaBarAuraCoordYEdit:SetText(SliderValue);
-	end
 	self.Auras[self.CurrentAuraId].y = SliderValue;
 	self:RedisplayAura(self.CurrentAuraId);
 end
@@ -2068,41 +2060,6 @@ function PowaAuras:BarThresholdSliderChanged()
 	PowaBarThresholdSliderText:SetText(self.Text.nomThreshold..": "..SliderValue..aura.RangeType);
 	aura.threshold = SliderValue;
 	--PowaAuras:ShowText("New Threshold=", aura.threshold);
-end
-
--- Text Changed
-function PowaAuras:TextCoordXChanged()
-	local thisText = PowaBarAuraCoordXEdit:GetText();
-	local thisNumber = tonumber(thisText);
-	local auraId = self.CurrentAuraId;
-	if (thisNumber == nil) then
-		PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X: "..0);
-		PowaBarAuraCoordXSlider:SetValue(0);
-		PowaBarAuraCoordXEdit:SetText(0);
-		self.Auras[auraId].x = 0;
-	else
-		PowaBarAuraCoordXSliderText:SetText(self.Text.nomPos.." X: "..thisNumber);
-		PowaBarAuraCoordXSlider:SetValue(thisNumber);
-		self.Auras[auraId].x = thisNumber;
-	end
-	self:RedisplayAura(self.CurrentAuraId);
-end
-
-function PowaAuras:TextCoordYChanged()
-	local thisText = PowaBarAuraCoordYEdit:GetText();
-	local thisNumber = tonumber(thisText);
-	local auraId = self.CurrentAuraId;
-	if (thisNumber == nil) then
-		PowaBarAuraCoordYSliderText:SetText(self.Text.nomPos.." Y: "..0);
-		PowaBarAuraCoordYSlider:SetValue(0);
-		PowaBarAuraCoordYEdit:SetText(0);
-		self.Auras[auraId].y = 0;
-	else
-		PowaBarAuraCoordYSliderText:SetText(self.Text.nomPos.." Y: "..thisNumber);
-		PowaBarAuraCoordYSlider:SetValue(thisNumber);
-		self.Auras[auraId].y = thisNumber;
-	end
-	self:RedisplayAura(self.CurrentAuraId);
 end
 
 function PowaAuras:TextChanged()
@@ -3680,6 +3637,7 @@ end
 local function OptionsOK()
 	--PowaAuras:DisplayText("OptionsOK");
 	PowaMisc.OnUpdateLimit = (100 - PowaOptionsUpdateSlider2:GetValue()) / 200;
+	PowaMisc.AnimationLimit = (100 - PowaOptionsTimerUpdateSlider2:GetValue()) / 1000;
 	PowaMisc.UserSetMaxTextures = PowaOptionsTextureCount:GetValue();
 	if (PowaMisc.OverrideMaxTextures) then
 		PowaAuras.MaxTextures = PowaMisc.UserSetMaxTextures;
@@ -4115,4 +4073,119 @@ function PowaAuras.OnMouseUpY(self)
 	self:SetMinMaxValues(self:GetValue() - 400, self:GetValue() + 400);
 	_G[frame.."Low"]:SetText(self:GetValue() - 400);
 	_G[frame.."High"]:SetText(self:GetValue() + 400);
+end
+
+function PowaAuras.SliderSetValuesX(slider, editbox)
+	local frame = slider:GetName();
+	local text = tonumber(editbox:GetText());
+	print(text)
+	slider:SetMinMaxValues(text - 700, text + 700);
+	slider:SetValue(text);
+	_G[frame.."Low"]:SetText(text - 700);
+	_G[frame.."High"]:SetText(text + 700);
+end
+
+function PowaAuras.SliderSetValuesY(slider, editbox)
+	local frame = slider:GetName();
+	local text = tonumber(editbox:GetText());
+	slider:SetMinMaxValues(text - 400, text + 400);
+	slider:SetValue(text);
+	_G[frame.."Low"]:SetText(text - 400);
+	_G[frame.."High"]:SetText(text + 400);
+end
+
+function PowaAuras.SliderEditBoxChanged(self)
+	local frame = self:GetName();
+	local slider = _G[string.sub(frame, 1, - 1 * (string.len("EditBox") + 1))];
+	local postfix = tostring(string.sub(self:GetText(), - 1));
+	if (slider == PowaBarAuraCoordXSlider or slider == PowaTimerCoordXSlider or slider == PowaStacksCoordXSlider) then
+		PowaAuras.SliderSetValuesX(slider, self);
+	elseif (slider == PowaBarAuraCoordYSlider or slider == PowaTimerCoordYSlider or slider == PowaStacksCoordYSlider) then
+		PowaAuras.SliderSetValuesY(slider, self);
+	end
+	if ((postfix == "%") and (slider == PowaBarAuraAlphaSlider or slider == PowaBarAuraSizeSlider or slider == PowaBarAuraAnimSpeedSlider or slider == PowaTimerSizeSlider or slider == PowaTimerAlphaSlider or slider == PowaStacksSizeSlider or slider == PowaStacksAlphaSlider)) then
+		local text = tonumber(string.sub(self:GetText(), 1, - 2));
+		if (text ~= nil) then
+			text = text / 100;
+			slider:SetValue(tonumber(text));
+			self:SetText(format("%.0f", (slider:GetValue() * 100)).."%");
+			local sliderlow, sliderhigh = slider:GetMinMaxValues();
+			if (text <= sliderlow) or (text >= sliderhigh) then
+				self:SetText(format("%.0f", (slider:GetValue() * 100)).."%");
+			end
+		else
+			self:SetText(format("%.0f", (slider:GetValue() * 100)).."%");
+		end
+	elseif ((postfix == "%") and (slider == PowaBarThresholdSlider or slider == PowaOptionsUpdateSlider2 or slider == PowaOptionsTimerUpdateSlider2)) then
+		local text = tonumber(string.sub(self:GetText(), 1, - 2));
+		if (text ~= nil) then
+			slider:SetValue(tonumber(text));
+			self:SetText(format("%.0f", (slider:GetValue())).."%");
+			local sliderlow, sliderhigh = slider:GetMinMaxValues();
+			if (text <= sliderlow) or (text >= sliderhigh) then
+				self:SetText(format("%.0f", slider:GetValue()).."%");
+			end
+		else
+			self:SetText(format("%.0f", slider:GetValue()).."%");
+		end
+	elseif (slider == PowaBarAuraAlphaSlider or slider == PowaBarAuraSizeSlider or slider == PowaBarAuraAnimSpeedSlider or slider == PowaTimerSizeSlider or slider == PowaTimerAlphaSlider or slider == PowaStacksSizeSlider or slider == PowaStacksAlphaSlider) then
+		local text = tonumber(self:GetText());
+		if (text ~= nil) then
+			text = text / 100;
+			slider:SetValue(tonumber(text));
+			self:SetText(format("%.0f", (slider:GetValue() * 100)).."%");
+			local sliderlow, sliderhigh = slider:GetMinMaxValues();
+			if (text < sliderlow) or (text > sliderhigh) then
+				self:SetText(format("%.0f", (slider:GetValue() * 100)).."%");
+			end
+		else
+			self:SetText(format("%.0f", (slider:GetValue() * 100)).."%");
+		end
+	elseif (slider == PowaBarThresholdSlider or slider == PowaOptionsUpdateSlider2 or slider == PowaOptionsTimerUpdateSlider2) then
+		local text = tonumber(self:GetText());
+		if (text ~= nil) then
+			slider:SetValue(tonumber(text));
+			self:SetText(format("%.0f", (slider:GetValue())).."%");
+			local sliderlow, sliderhigh = slider:GetMinMaxValues();
+			if (text <= sliderlow) or (text >= sliderhigh) then
+				self:SetText(format("%.0f", slider:GetValue()).."%");
+			end
+		else
+			self:SetText(format("%.0f", slider:GetValue()).."%");
+		end
+	elseif (postfix == "°") and (slider == PowaBarAuraRotateSlider) then
+		local text = tonumber(string.sub(self:GetText(), 1, - 2));
+		if (text ~= nil) then
+			slider:SetValue(tonumber(text));
+			self:SetText(format("%.0f", slider:GetValue()).."°");
+			local sliderlow, sliderhigh = slider:GetMinMaxValues();
+			if (text < sliderlow) or (text > sliderhigh) then
+				self:SetText(format("%.0f", slider:GetValue()).."°");
+			end
+		else
+			self:SetText(format("%.0f", slider:GetValue()).."°");
+		end
+	elseif (slider == PowaBarAuraRotateSlider) then
+		local text = tonumber(self:GetText());
+		if (text ~= nil) then
+			slider:SetValue(tonumber(text));
+			self:SetText(format("%.0f", slider:GetValue()).."°");
+			local sliderlow, sliderhigh = slider:GetMinMaxValues();
+			if (text < sliderlow) or (text > sliderhigh) then
+				self:SetText(format("%.0f", slider:GetValue()).."°");
+			end
+		else
+			self:SetText(format("%.0f", slider:GetValue()).."°");
+		end
+	else
+		if (tonumber(self:GetText()) ~= nil) then
+			slider:SetValue(tonumber(self:GetText()));
+			local sliderlow, sliderhigh = slider:GetMinMaxValues();
+			if (tonumber(self:GetText()) < sliderlow) or (tonumber(self:GetText()) > sliderhigh) then
+				self:SetText(slider:GetValue());
+			end
+		else
+			self:SetText(slider:GetValue());
+		end
+	end
 end

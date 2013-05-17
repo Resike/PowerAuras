@@ -1,11 +1,71 @@
 ﻿<Ui>
+	<!-- Blizzard Slider Template -->
+	<Slider name = "PowaBarBlizzSliderTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
+		<Size>
+			<AbsDimension x = "144" y = "17"/>
+		</Size>
+		<HitRectInsets>
+			<AbsInset left = "0" right = "0" top = "-2" bottom = "1"/>
+		</HitRectInsets>
+		<Backdrop bgFile = "Interface\Buttons\UI-SliderBar-Background" edgeFile = "Interface\Buttons\UI-SliderBar-Border" tile = "true">
+			<EdgeSize>
+				<AbsValue val = "8"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val = "8"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left = "3" right = "3" top = "6" bottom = "6"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level = "ARTWORK">
+				<FontString name = "$parentText" inherits = "GameFontNormalSmall">
+					<Anchors>
+						<Anchor point = "BOTTOM" relativePoint = "TOP"/>
+					</Anchors>
+				</FontString>
+				<FontString name = "$parentLow" inherits = "GameFontHighlightSmall" text = "LOW">
+					<Anchors>
+						<Anchor point = "TOPLEFT" relativePoint = "BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x = "0" y = "3"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name = "$parentHigh" inherits = "GameFontHighlightSmall" text = "HIGH">
+					<Anchors>
+						<Anchor point = "TOPRIGHT" relativePoint = "BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x = "0" y = "3"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+				if (self:IsEnabled()) then
+					if (self.aide) then
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+						GameTooltip:SetText(self.aide, nil, nil, nil, nil, 1)
+					end
+				end
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide()
+			</OnLeave>
+		</Scripts>
+		<ThumbTexture name = "$parentThumb" file = "Interface\Buttons\UI-SliderBar-Button-Horizontal">
+			<Size>
+				<AbsDimension x = "32" y = "32"/>
+			</Size>
+		</ThumbTexture>
+	</Slider>
 	<!-- Main Frame -->
 	<Frame name = "PowaOptionsCpuFrame2" parent = "UIParent">
-		<Scripts>
-			<OnLoad>
-				PowaOptionsCpuFrame2_OnLoad(self)
-			</OnLoad>
-		</Scripts>
 		<Frames>
 			<!-- Enable Power Auras CheckButton -->
 			<CheckButton name = "PowaEnableButton" inherits = "PowaCheckTemplate">
@@ -140,7 +200,7 @@
 				</Scripts>
 			</CheckButton>
 			<!-- Update Speed Slider -->
-			<Slider name = "PowaOptionsUpdateSlider2" inherits = "PowaBarSliderTemplate">
+			<Slider name = "PowaOptionsUpdateSlider2" inherits = "PowaBarBlizzSliderTemplate">
 				<Size>
 					<AbsDimension x = "580" y = "16"/>
 				</Size>
@@ -170,7 +230,7 @@
 				</Scripts>
 			</Slider>
 			<!-- Timer Update Speed Slider -->
-			<Slider name = "PowaOptionsTimerUpdateSlider2" inherits = "PowaBarSliderTemplate">
+			<Slider name = "PowaOptionsTimerUpdateSlider2" inherits = "PowaBarBlizzSliderTemplate">
 				<Size>
 					<AbsDimension x = "580" y = "16"/>
 				</Size>
@@ -222,7 +282,7 @@
 				</Scripts>
 			</CheckButton>
 			<!-- Max Custom Textures Slider -->
-			<Slider name = "PowaOptionsTextureCount" inherits = "PowaBarSliderTemplate">
+			<Slider name = "PowaOptionsTextureCount" inherits = "PowaBarBlizzSliderTemplate">
 				<Size>
 					<AbsDimension x = "580" y = "16"/>
 				</Size>
@@ -456,5 +516,10 @@
 				</Scripts>
 			</EditBox>
 		</Frames>
+		<Scripts>
+			<OnLoad>
+				PowaOptionsCpuFrame2_OnLoad(self)
+			</OnLoad>
+		</Scripts>
 	</Frame>
 </Ui>
