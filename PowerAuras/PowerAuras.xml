@@ -532,13 +532,35 @@
 							</OnClick>
 						</Scripts>
 					</CheckButton>
+					<!-- Desaturate CheckButton -->
+					<CheckButton name = "PowaDesaturateButton" inherits = "PowaCheckTemplate">
+						<Size>
+							<AbsDimension x = "25" y = "25"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "TOPLEFT" relativeTo = "PowaRandomColorButton" relativePoint = "BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x = "0" y = "4"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.tooltipText = PowaAuras.Text.aideDesaturate
+								PowaDesaturateButtonText:SetText(PowaAuras.Text.nomDesaturate)
+							</OnLoad>
+							<OnClick>
+								PowaAuras:DesaturationChecked()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
 					<!-- Enable Full Rotation CheckButton -->
 					<CheckButton name = "PowaEnableFullRotationButton" inherits = "PowaCheckTemplate">
 						<Size>
 							<AbsDimension x = "25" y = "25"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "TOPLEFT" relativeTo = "PowaRandomColorButton" relativePoint = "BOTTOMLEFT">
+							<Anchor point = "TOPLEFT" relativeTo = "PowaDesaturateButton" relativePoint = "BOTTOMLEFT">
 								<Offset>
 									<AbsDimension x = "0" y = "4"/>
 								</Offset>
@@ -3240,7 +3262,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaShowTimerButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "4" y = "-15"/>
+											<AbsDimension x = "4" y = "-12"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3310,7 +3332,7 @@
 								<Anchors>
 									<Anchor point = "TOP" relativeTo = "PowaTimerCoordXSlider" relativePoint = "BOTTOM">
 										<Offset>
-											<AbsDimension x = "0" y = "-22"/>
+											<AbsDimension x = "0" y = "-28"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3372,7 +3394,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaTimerSizeSlider" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "0" y = "-22"/>
+											<AbsDimension x = "0" y = "-28"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3538,7 +3560,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBuffTimerUseOwnColorButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "-15" y = "-25"/>
+											<AbsDimension x = "-15" y = "-18"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3681,7 +3703,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownTimerTexture" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "18" y = "-22"/>
+											<AbsDimension x = "18" y = "-14"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3767,7 +3789,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaShowStacksButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "4" y = "-15"/>
+											<AbsDimension x = "4" y = "-12"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3837,7 +3859,7 @@
 								<Anchors>
 									<Anchor point = "TOP" relativeTo = "PowaStacksCoordXSlider" relativePoint = "BOTTOM">
 										<Offset>
-											<AbsDimension x = "0" y = "-22"/>
+											<AbsDimension x = "0" y = "-28"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3991,7 +4013,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBuffStacksUseOwnColorButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "-15" y = "-25"/>
+											<AbsDimension x = "-15" y = "-22"/>
 										</Offset>
 									</Anchor>
 								</Anchors>

@@ -1057,7 +1057,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		texture:SetTexture(self:CustomTexPath(aura.customname));
 	elseif (aura.textaura == true) then
 		texture:Show();
-		aura:UpdateText(texture);
+		texture:SetText(aura.aurastext);
 	elseif (aura.model == true) then
 		texture:Hide();
 		model:SetModel(PowaAurasModels[aura.texture]);
@@ -1068,17 +1068,31 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	local r1, r2, r3, r4, r5, r6
 	if (aura.randomcolor) then
 		if (aura.model ~= true) then
+			r1 = random(20, 100) / 100;
+			r2 = random(20, 100) / 100;
+			r3 = random(20, 100) / 100;
+			r4 = random(20, 100) / 100;
+			r5 = random(20, 100) / 100;
+			r6 = random(20, 100) / 100;
 			if (aura.textaura ~= true) then
-				r1 = random(20, 100) / 100;
-				r2 = random(20, 100) / 100;
-				r3 = random(20, 100) / 100;
-				r4 = random(20, 100) / 100;
-				r5 = random(20, 100) / 100;
-				r6 = random(20, 100) / 100;
 				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
 					texture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
 				else
 					texture:SetVertexColor(r1, r2, r3);
+				end
+				if (aura.desaturation == true) then
+					local shaderSupported = texture:SetDesaturated(1);
+					if (shaderSupported) then
+						texture:SetDesaturated(1);
+					else
+						if (desaturation) then
+							texture:SetVertexColor(0.5, 0.5, 0.5);
+						else
+							texture:SetVertexColor(1.0, 1.0, 1.0);
+						end
+					end
+				else
+					texture:SetDesaturated(nil);
 				end
 			else
 				texture:SetVertexColor(r1, r2, r3);
@@ -1089,6 +1103,20 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 						AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
 					else
 						AuraTexture:SetVertexColor(r1, r2, r3);
+					end
+					if (aura.desaturation == true) then
+						local shaderSupported = AuraTexture:SetDesaturated(1);
+						if (shaderSupported) then
+							AuraTexture:SetDesaturated(1);
+						else
+							if (desaturation) then
+								AuraTexture:SetVertexColor(0.5, 0.5, 0.5);
+							else
+								AuraTexture:SetVertexColor(1.0, 1.0, 1.0);
+							end
+						end
+					else
+						AuraTexture:SetDesaturated(nil);
 					end
 				end
 			else
@@ -1103,6 +1131,20 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 				else
 					texture:SetVertexColor(aura.r, aura.g, aura.b);
 				end
+				if (aura.desaturation == true) then
+					local shaderSupported = texture:SetDesaturated(1);
+					if (shaderSupported) then
+						texture:SetDesaturated(1);
+					else
+						if (desaturation) then
+							texture:SetVertexColor(0.5, 0.5, 0.5);
+						else
+							texture:SetVertexColor(1.0, 1.0, 1.0);
+						end
+					end
+				else
+					texture:SetDesaturated(nil);
+				end
 			else
 				texture:SetVertexColor(aura.r, aura.g, aura.b);
 			end
@@ -1112,6 +1154,20 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 						AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 					else
 						AuraTexture:SetVertexColor(aura.r, aura.g, aura.b);
+					end
+					if (aura.desaturation == true) then
+						local shaderSupported = AuraTexture:SetDesaturated(1);
+						if (shaderSupported) then
+							AuraTexture:SetDesaturated(1);
+						else
+							if (desaturation) then
+								AuraTexture:SetVertexColor(0.5, 0.5, 0.5);
+							else
+								AuraTexture:SetVertexColor(1.0, 1.0, 1.0);
+							end
+						end
+					else
+						AuraTexture:SetDesaturated(nil);
 					end
 				end
 			else
@@ -1322,16 +1378,52 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	end
 	if (aura.randomcolor) then
 		if (aura.model ~= true) then
-			if texture:GetObjectType() == "Texture" then
-				secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
-			elseif texture:GetObjectType() == "FontString" then
-				secondaryTexture:SetVertexColor(texture:GetTextColor());
+			if (aura.textaura ~= true) then
+				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+					secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0);
+				else
+					secondaryTexture:SetVertexColor(r1, r2, r3);
+				end
+				if (aura.desaturation == true) then
+					local shaderSupported = secondaryTexture:SetDesaturated(1);
+					if (shaderSupported) then
+						secondaryTexture:SetDesaturated(1);
+					else
+						if (desaturation) then
+							secondaryTexture:SetVertexColor(0.5, 0.5, 0.5);
+						else
+							secondaryTexture:SetVertexColor(1.0, 1.0, 1.0);
+						end
+					end
+				else
+					secondaryTexture:SetDesaturated(nil);
+				end
+			else
+				secondaryTexture:SetVertexColor(r1, r2, r3);
 			end
 		end
 	else
 		if (aura.model ~= true) then
-			if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
-				secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			if (aura.textaura ~= true) then
+				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+					secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+				else
+					secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b);
+				end
+				if (aura.desaturation == true) then
+					local shaderSupported = secondaryTexture:SetDesaturated(1);
+					if (shaderSupported) then
+						secondaryTexture:SetDesaturated(1);
+					else
+						if (desaturation) then
+							secondaryTexture:SetVertexColor(0.5, 0.5, 0.5);
+						else
+							secondaryTexture:SetVertexColor(1.0, 1.0, 1.0);
+						end
+					end
+				else
+					secondaryTexture:SetDesaturated(nil);
+				end
 			else
 				secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b);
 			end
@@ -1413,7 +1505,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 		--self:UnitTestInfo("secondaryFrame:Show()", aura.id);
 		secondaryFrame:Show(); -- Show Secondary Aura Frame
 		--self:Message("Show #2");
-	else
+	elseif (aura.textaura ~= true) then -- Text aura animations is broken
 		if (not secondaryAura.MainAnimation) then
 			secondaryAura.MainAnimation = self:AddMainAnimation(secondaryAura, secondaryFrame);
 		end

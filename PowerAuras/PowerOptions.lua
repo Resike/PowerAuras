@@ -1604,6 +1604,7 @@ function PowaAuras:InitPage(aura)
 	PowaMineButton:SetChecked(aura.mine);
 	PowaThresholdInvertButton:SetChecked(aura.thresholdinvert);
 	PowaExtraButton:SetChecked(aura.Extra);
+	PowaDesaturateButton:SetChecked(aura.desaturation);
 	PowaEnableFullRotationButton:SetChecked(aura.enablefullrotation);
 	-- Ternary Logic
 	self:TernarySetState(PowaInCombatButton, aura.combat);
@@ -2324,7 +2325,6 @@ function PowaAuras:ModelsChecked()
 		aura.owntex = false;
 		aura.customtex = false;
 		aura.textaura = false;
-		aura.UseOldAnimations = true;
 		if (PowaBarAuraTextureSlider:GetValue() > #PowaAurasModels) then
 			PowaBarAuraTextureSlider:SetValue(1);
 		end
@@ -2346,10 +2346,8 @@ function PowaAuras:ModelsChecked()
 		PowaBarAurasText:Hide();
 		PowaFontButton:Hide();
 		PowaBarAuraSymSlider:Hide();
-		PowaShowSpinAtBeginning:Hide();
 	else
 		aura.model = false;
-		aura.UseOldAnimations = false;
 		PowaModelPositionZSlider:Hide();
 		PowaModelPositionXSlider:Hide();
 		PowaModelPositionYSlider:Hide();
@@ -2358,7 +2356,6 @@ function PowaAuras:ModelsChecked()
 		PowaTextureStrataDropDown:Show();
 		PowaTextureStrataSublevelSlider:Show();
 		PowaBarAuraSymSlider:Show();
-		PowaShowSpinAtBeginning:Show();
 		if (PowaBarAuraTextureSlider:GetValue() > self.MaxTextures) then
 			PowaBarAuraTextureSlider:SetValue(1);
 		end
@@ -2426,10 +2423,6 @@ function PowaAuras:TextAuraChecked()
 		PowaFontButton:Show();
 		--self:ShowText("TextAuraChecked: aura text changed to ", aura.aurastext);
 		PowaBarAurasText:SetText(aura.aurastext);
-		PowaBarAurasText:SetText(aura.aurastext.."!");
-		PowaAuras:AurasTextChanged()
-		PowaBarAurasText:SetText(string.sub(aura.aurastext, 1, -2));
-		PowaAuras:AurasTextChanged()
 		PowaOwntexButton:SetChecked(false);
 		PowaWowTextureButton:SetChecked(false);
 		PowaModelsButton:SetChecked(false);
@@ -2448,6 +2441,16 @@ function PowaAuras:TextAuraChecked()
 	end
 	PowaAuras:BarAuraSizeSliderChanged();
 	self:BarAuraTextureSliderChanged();
+	self:RedisplayAura(self.CurrentAuraId);
+end
+
+function PowaAuras:DesaturationChecked()
+	local aura = self.Auras[self.CurrentAuraId];
+	if (PowaDesaturateButton:GetChecked()) then
+		aura.desaturation = true;
+	else
+		aura.desaturation = false;
+	end
 	self:RedisplayAura(self.CurrentAuraId);
 end
 

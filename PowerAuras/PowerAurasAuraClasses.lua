@@ -98,6 +98,7 @@ cPowaAura.ExportSettings =
 	duration = 0,
 	-- Appearance Settings
 	alpha = 0.85,
+	desaturation = false,
 	enablefullrotation = true,
 	rotate = 0,
 	size = 1,

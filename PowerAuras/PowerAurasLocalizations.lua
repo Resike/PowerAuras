@@ -306,8 +306,9 @@ aideWowTextures = "Check this to use the texture of WoW instead of textures in t
 aideTextAura = "Check this to type text instead of texture.",
 aideRealaura = "Real Aura",
 aideCustomTextures = "Check this to use textures in the 'Custom' subdirectory. Put the name of the texture below (ex: myTexture.tga). You can also use a Spell Name (ex: Feign Death) or SpellID (ex: 5384).",
-aideRandomColor = "Check this to tell this effect to use random color each time it will be activated.",
-aideEnableFullRotation = "Uncheck this if you experience any errors with the current texture.",
+aideRandomColor = "Check this to use random color for the aura each time it will be activated.",
+aideDesaturate = "Check this to desaturate the current aura's color.",
+aideEnableFullRotation = "Check this to enable whole 0-360° rotation for the rotation slider.",
 
 aideTexMode = "Uncheck this to use the texture opacity. By default, the darkest colors will be more transparent.",
 
@@ -400,7 +401,7 @@ nomCheckIgnoreMaj = "Ignore Case",
 aideIgnoreMaj = "Check this to ignore upper/lowercase of buff/debuff names.",
 
 nomAuraDebug = "Debug",
-aideAuraDebug = "Enable debugging this Aura.",
+aideAuraDebug = "Enable debugging this aura.",
 
 nomDuration = "Animation duration",
 aideDuration = "After this time, this effect will disapear. (0 to deactivate)",
@@ -439,6 +440,7 @@ nomColorPicker = "Base Color",
 nomGradientStyle = "Gradient Style",
 nomSecondaryColorPicker = "Secondary Color",
 nomRandomColor = "Random Colors",
+nomDesaturate = "Desaturate",
 nomEnableFullRotation = "Enable Full Rotation",
 
 nomTalentGroup1 = "Primary Spec",
