@@ -4125,7 +4125,7 @@ function PowaAuras.SliderEditBoxChanged(self)
 		else
 			self:SetText(format("%.0f", (slider:GetValue() * 100)).."%");
 		end
-	elseif ((postfix == "%") and (slider == PowaBarThresholdSlider or slider == PowaOptionsUpdateSlider2 or slider == PowaOptionsTimerUpdateSlider2)) then
+	elseif ((postfix == "%") and slider == PowaBarThresholdSlider) then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2));
 		if (text ~= nil) then
 			slider:SetValue(tonumber(text));

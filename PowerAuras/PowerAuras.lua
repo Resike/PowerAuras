@@ -1444,7 +1444,15 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	if (aura.textaura ~= true) and (aura.model ~= true) then
 		secondaryTexture:SetRotation(math.rad(aura.rotate));
 	elseif (aura.model == true) then
+		secondaryModel:SetPosition(aura.mz, aura.mx, aura.my)
 		secondaryModel:SetRotation(math.rad(aura.rotate));
+		if (aura.animationsequence > -1 and aura.animationsequence ~= nil and aura.animationsequence < 802) then
+			local elapsed = 0;
+			secondaryModel:SetScript("OnUpdate", function(self, elaps)
+				elapsed = elapsed + (elaps * 1000);
+				secondaryModel:SetSequenceTime(aura.animationsequence, elapsed);
+			end);
+		end
 	end
 	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord();
