@@ -1286,7 +1286,7 @@ end
 
 function PowaAuras:Debug(...)
 	if (PowaMisc.debug == true) then
-		self:Message(...) -- OK
+		self:Message(...)
 	end
 	--self:UnitTestDebug(...);
 end
@@ -1303,12 +1303,10 @@ function PowaAuras:Message(...)
 	DEFAULT_CHAT_FRAME:AddMessage(Message);
 end
 
--- Use this for temp debug messages
 function PowaAuras:ShowText(...)
-	self:Message(...); -- OK
+	self:Message(...);
 end
 
--- Use this for real messages instead of ShowText
 function PowaAuras:DisplayText(...)
 	self:Message(...);
 end
@@ -1320,7 +1318,7 @@ function PowaAuras:DisplayTable(t, indent)
 	if (indent == nil) then
 		indent = "";
 	else
-		indent = indent .. "  ";
+		indent = indent.."  ";
 	end
 	for i, v in pairs(t) do
 		if (type(v) ~= "function") then
@@ -1334,7 +1332,6 @@ function PowaAuras:DisplayTable(t, indent)
 	end
 end
 
--- This function will print a Message to the GUI screen (not the chat window) then fade.
 function PowaAuras:Error( msg, holdtime )
 	if (holdtime == nil) then
 		holdtime = UIERRORS_HOLD_TIME;
@@ -1396,9 +1393,9 @@ function PowaAuras:CopyTable(t, lookup_table, original)
 				lookup_table = lookup_table or { };
 				lookup_table[t] = copy;
 				if lookup_table[v] then
-					copy[i] = lookup_table[v]; -- We already copied this table. Reuse the copy.
+					copy[i] = lookup_table[v];
 				else
-					copy[i] = self:CopyTable(v, lookup_table); -- Not yet copied. Copy it.
+					copy[i] = self:CopyTable(v, lookup_table);
 				end
 			end
 		end
@@ -1463,7 +1460,6 @@ function PowaAuras:Different(o1, o2)
 end
 
 function PowaAuras:GetSettingForExport(prefix, k, v, default)
-	-- Causes an unreproducable bug. Will increase size of export codes, but at least they work.
 	if (not self:Different(v, default) and not PowaGlobalMisc.FixExports) then
 		return "";
 	end
@@ -1482,12 +1478,11 @@ end
 
 -- PowaAura Classes
 function PowaClass(base, ctor)
-	local c = { } -- A new class instance
+	local c = { }
 	if not ctor and type(base) == 'function' then
 		ctor = base;
 		base = nil;
 	elseif type(base) == 'table' then
-		-- Our new class is a shallow copy of the base class!
 		for i,v in pairs(base) do
 			c[i] = v;
 		end
@@ -1499,16 +1494,12 @@ function PowaClass(base, ctor)
 		end
 		c._base = base;
 	end
-	-- The class will be the metatable for all its objects,
-	-- And they will look up their methods in it.
 	c.__index = c
-	-- Expose a ctor which can be called by <classname>(<args>)
 	local mt = { }
 	mt.__call = function(class_tbl, ...)
 		local obj = { }
 		setmetatable(obj, c)
 		if ctor then
-			--PowaAuras:ShowText("Call constructor "..tostring(ctor));
 			ctor(obj, ...)
 		end
 		return obj
