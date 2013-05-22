@@ -11,7 +11,7 @@
 	Current author/maintainter: Resike
 	E-Mail: resike@gmail.com
 	All rights reserved.
-]]--
+--]]
 
 local string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select = string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select
 
@@ -492,7 +492,9 @@ function PowaAuras:MemorizeActions(actionIndex)
 end
 
 function PowaAuras:AddChildrenToCascade(aura, originalId)
-	if (not aura or not aura.Children) then return end
+	if (not aura or not aura.Children) then
+		return
+	end
 	for id in pairs(aura.Children) do
 		if (not self.Cascade[id] and id ~= originalId) then
 			self.Cascade[id] = true
@@ -503,7 +505,9 @@ end
 
 -- Runtime
 function PowaAuras:OnUpdate(elapsed)
-	if (not (self.VariablesLoaded and self.SetupDone)) then return end
+	if (not (self.VariablesLoaded and self.SetupDone)) then
+		return
+	end
 	self.ChecksTimer = self.ChecksTimer + elapsed
 	self.TimerUpdateThrottleTimer = self.TimerUpdateThrottleTimer + elapsed
 	self.ThrottleTimer = self.ThrottleTimer + elapsed
@@ -966,7 +970,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			r5 = random(20, 100) / 100
 			r6 = random(20, 100) / 100
 			if (aura.textaura ~= true) then
-				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 					texture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
 				else
 					texture:SetVertexColor(r1, r2, r3)
@@ -988,9 +992,9 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			else
 				texture:SetVertexColor(r1, r2, r3)
 			end
-			if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
+			if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
 				if (aura.off ~= true) then
-					if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+					if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 						AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
 					else
 						AuraTexture:SetVertexColor(r1, r2, r3)
@@ -1017,7 +1021,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	else
 		if (aura.model ~= true) then
 			if (aura.textaura ~= true) then
-				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 					texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 				else
 					texture:SetVertexColor(aura.r, aura.g, aura.b)
@@ -1039,9 +1043,9 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			else
 				texture:SetVertexColor(aura.r, aura.g, aura.b)
 			end
-			if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait") and (AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
+			if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
 				if (aura.off ~= true) then
-					if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+					if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 						AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 					else
 						AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
@@ -1267,7 +1271,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	if (aura.randomcolor) then
 		if (aura.model ~= true) then
 			if (aura.textaura ~= true) then
-				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 					secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
 				else
 					secondaryTexture:SetVertexColor(r1, r2, r3)
@@ -1293,7 +1297,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	else
 		if (aura.model ~= true) then
 			if (aura.textaura ~= true) then
-				if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
+				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 					secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 				else
 					secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b)

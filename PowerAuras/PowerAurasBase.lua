@@ -1,82 +1,82 @@
-local string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select = string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select;
+local string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select = string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select
 
 PowaAuras =
 {
-Version = GetAddOnMetadata("PowerAuras", "Version");
+Version = GetAddOnMetadata("PowerAuras", "Version"),
 
-VersionPattern = "(%d+)%.(%d+)";
+VersionPattern = "(%d+)%.(%d+)",
 
-WoWBuild = tonumber(select(4, GetBuildInfo()), 10);
+WoWBuild = tonumber(select(4, GetBuildInfo()), 10),
 
-IconSource = "Interface\\Icons\\";
+IconSource = "Interface\\Icons\\",
 
-CurrentAuraId = 1;
-NextCheck = 0.2;
-Tstep = 0.09765625;
-NextDebugCheck = 0.0;
-InspectTimeOut = 12;
-InspectDelay = 2;
-ExportMaxSize = 4000;
-ExportWidth = 500;
-TextureCount = 254;
+CurrentAuraId = 1,
+NextCheck = 0.2,
+Tstep = 0.09765625,
+NextDebugCheck = 0.0,
+InspectTimeOut = 12,
+InspectDelay = 2,
+ExportMaxSize = 4000,
+ExportWidth = 500,
+TextureCount = 254,
 
-DebugEvents = false;
---DebugAura = 1;
+DebugEvents = false,
+--DebugAura = 1,
 
 -- Internal counters
-DebugTimer = 0;
-ChecksTimer = 0;
-ThrottleTimer = 0;
-TimerUpdateThrottleTimer = 0;
-NextInspectTimeOut = 0;
+DebugTimer = 0,
+ChecksTimer = 0,
+ThrottleTimer = 0,
+TimerUpdateThrottleTimer = 0,
+NextInspectTimeOut = 0,
 
 --[[
 -- Profiling
-NextProfileCheck = 0;
-ProfileTimer = 0;
-UpdateCount = 0;
-CheckCount = 0;
-EffectCount = 0;
-AuraCheckCount = 0;
-AuraCheckShowCount = 0;
-BuffRaidCount = 0;
-BuffUnitSetCount = 0;
-BuffUnitCount = 0;
-BuffSlotCount = 0;
-AuraTypeCount = {};
+NextProfileCheck = 0,
+ProfileTimer = 0,
+UpdateCount = 0,
+CheckCount = 0,
+EffectCount = 0,
+AuraCheckCount = 0,
+AuraCheckShowCount = 0,
+BuffRaidCount = 0,
+BuffUnitSetCount = 0,
+BuffUnitCount = 0,
+BuffSlotCount = 0,
+AuraTypeCount = { },
 ]]--
 
-VariablesLoaded = false;
-SetupDone = false;
-ModTest = false;
-DebugCycle = false;
-ResetTargetTimers = false;
+VariablesLoaded = false,
+SetupDone = false,
+ModTest = false,
+DebugCycle = false,
+ResetTargetTimers = false,
 
-ActiveTalentGroup = GetActiveSpecGroup();
+ActiveTalentGroup = GetActiveSpecGroup(),
 
-WeAreInCombat = false;
-WeAreInRaid = false;
-WeAreInParty = false;
-WeAreMounted = false;
-WeAreInVehicle = false;
-WeAreAlive = true;
-PvPFlagSet = false;
-Instance = "none";
+WeAreInCombat = false,
+WeAreInRaid = false,
+WeAreInParty = false,
+WeAreMounted = false,
+WeAreInVehicle = false,
+WeAreAlive = true,
+PvPFlagSet = false,
+Instance = "none",
 
-GroupUnits = { };
-GroupNames = { };
+GroupUnits = { },
+GroupNames = { },
 
-Pending = { }; -- Workaround for 'silent' cooldown end (no event fired)
-Cascade = { }; -- Dependant auras that need checking
+Pending = { }, -- Workaround for 'silent' cooldown end (no event fired)
+Cascade = { }, -- Dependant auras that need checking
 
-UsedInMultis = { };
+UsedInMultis = { },
 
 PowaStance =
 {
 	[0] = "Humanoid"
-};
+},
 
-PowaGTFO = {[0] = "High Damage", [1] = "Low Damage", [2] = "Fail Alert", [3] = "Friendly Fire"};
+PowaGTFO = {[0] = "High Damage", [1] = "Low Damage", [2] = "Fail Alert", [3] = "Friendly Fire"},
 
 allowedOperators =
 {
@@ -87,42 +87,42 @@ allowedOperators =
 	[">="] = true,
 	["<="] = true,
 	["-"] = true
-};
+},
 
-DefaultOperator = ">=";
+DefaultOperator = ">=",
 
-CurrentAuraPage = 1;
+CurrentAuraPage = 1,
 
-MoveEffect = 0; -- 1 = Copy, 2 = Move
+MoveEffect = 0, -- 1 = Copy, 2 = Move
 
-Auras = { };
-SecondaryAuras = { };
-Frames = { };
-SecondaryFrames = { };
-Textures = { };
-SecondaryTextures = { };
+Auras = { },
+SecondaryAuras = { },
+Frames = { },
+SecondaryFrames = { },
+Textures = { },
+SecondaryTextures = { },
 
-Models = { };
-SecondaryModels = { };
+Models = { },
+SecondaryModels = { },
 
-TimerFrame = { };
-StacksFrames = { };
+TimerFrame = { },
+StacksFrames = { },
 
-Sound = { };
-BeginAnimDisplay = { };
-EndAnimDisplay = { };
-Text = { };
-Anim = { };
+Sound = { },
+BeginAnimDisplay = { },
+EndAnimDisplay = { },
+Text = { },
+Anim = { },
 
-DebuffCatSpells = { };
+DebuffCatSpells = { },
 
-AoeAuraAdded = { };
-AoeAuraFaded = { };
-AoeAuraTexture = { };
+AoeAuraAdded = { },
+AoeAuraFaded = { },
+AoeAuraTexture = { },
 
-playerclass = "unknown";
+playerclass = "unknown",
 
-Events = { };
+Events = { },
 AlwaysEvents =
 {
 	ACTIVE_TALENT_GROUP_CHANGED = true,
@@ -141,7 +141,7 @@ AlwaysEvents =
 	UNIT_FACTION = true,
 	UNIT_SPELLCAST_SUCCEEDED = true,
 	ZONE_CHANGED_NEW_AREA = true
-};
+},
 
 RelativeToParent =
 {
@@ -154,7 +154,7 @@ RelativeToParent =
 	BOTTOMLEFT = "TOPRIGHT",
 	LEFT = "RIGHT",
 	CENTER = "CENTER"
-};
+},
 
 BlendModeList =
 {
@@ -163,7 +163,7 @@ BlendModeList =
 	"Blend",
 	"Disable",
 	"Mod"
-};
+},
 
 StrataList =
 {
@@ -175,7 +175,7 @@ StrataList =
 	"Fullscreen",
 	"Fullscreen_Dialog",
 	"Tooltip"
-};
+},
 
 TextureStrataList =
 {
@@ -183,23 +183,23 @@ TextureStrataList =
 	"Border",
 	"Artwork",
 	"Overlay"
-};
+},
 
 GradientStyleList =
 {
 	"None",
 	"Horizontal",
 	"Vertical"
-};
+},
 
 ChangedUnits =
 {
 	Buffs = { },
-	Targets = { };
-};
+	Targets = { }
+},
 
-InspectedRoles = { };
-FixRoles = { };
+InspectedRoles = { },
+FixRoles = { },
 
 Spells =
 {
@@ -215,11 +215,11 @@ Spells =
 	DRUID_SHIFT_BEAR = GetSpellInfo(5487),
 	DRUID_SHIFT_DIREBEAR = GetSpellInfo(9634),
 	DRUID_SHIFT_MOONKIN = GetSpellInfo(24858)
-};
+},
 
-ExtraUnitEvent = { };
-CastOnMe = { };
-CastByMe = { };
+ExtraUnitEvent = { },
+CastOnMe = { },
+CastByMe = { },
 
 DoCheck =
 {
@@ -293,7 +293,7 @@ DoCheck =
 
 	-- True if any type should be checked
 	CheckIt = false
-};
+},
 
 BuffTypes =
 {
@@ -325,7 +325,7 @@ BuffTypes =
 	UnitMatch = 26,
 	PetStance = 27,
 	GTFO = 50
-};
+},
 
 AnimationBeginTypes =
 {
@@ -342,7 +342,7 @@ AnimationBeginTypes =
 	TranslateBottom = 10,
 	TranslateBottomLeft = 11,
 	Bounce = 12
-};
+},
 
 AnimationEndTypes =
 {
@@ -352,7 +352,7 @@ AnimationEndTypes =
 	Fade = 3,
 	SpinAndFade = 4,
 	SpinShrinkAndFade = 5
-};
+},
 
 AnimationTypes =
 {
@@ -369,13 +369,13 @@ AnimationTypes =
 	Orbit = 10,
 	SpinClockwise = 11,
 	SpinAntiClockwise = 12
-};
+},
 
 -- Aura name -> Auras array
-AurasByType = { };
+AurasByType = { },
 
 -- Index -> Aura name
-AurasByTypeList = { };
+AurasByTypeList = { },
 
 DebuffCatType =
 {
@@ -386,7 +386,7 @@ DebuffCatType =
 	Disarm = 5,
 	Stun = 6,
 	PvE = 10
-};
+},
 
 WowTextures =
 {
@@ -568,7 +568,7 @@ WowTextures =
 	"Interface\\Spellbook\\UI-Glyph-Rune-18",
 	"Interface\\Spellbook\\UI-Glyph-Rune-19",
 	"Interface\\Spellbook\\UI-Glyph-Rune-20"
-};
+},
 
 Fonts =
 {
@@ -593,7 +593,7 @@ Fonts =
 	"Interface\\Addons\\PowerAuras\\Fonts\\Punks Not Dead.ttf",
 	"Interface\\Addons\\PowerAuras\\Fonts\\Starcraft.ttf",
 	"Interface\\Addons\\PowerAuras\\Fonts\\Whoa.ttf",
-};
+},
 
 Sound =
 {
@@ -675,7 +675,7 @@ Sound =
 	"Wilhelm.mp3",
 	"Wolf.mp3",
 	"Yeehaw.mp3"
-};
+},
 
 TimerTextures =
 {
@@ -686,7 +686,7 @@ TimerTextures =
 	"Monofonto",
 	"OCR",
 	"WhiteRabbit"
-};
+},
 
 -- Colors used in messages
 Colors =
@@ -701,9 +701,9 @@ Colors =
 	["Orange"] = "|cffff9930",
 	["Purple"] = "|cffB0A0ff",
 	["Gold"] = "|cffffff00"
-};
+},
 
-SetColours =
+SetColors =
 {
 	["PowaTargetButton"] = {r = 1.0, g = 0.2, b = 0.2},
 	["PowaTargetFriendButton"] = {r = 0.2, g = 1.0, b = 0.2},
@@ -712,8 +712,10 @@ SetColours =
 	["PowaFocusButton"] = {r = 0.2, g = 1.0, b = 0.2},
 	["PowaRaidButton"] = {r = 0.2, g = 1.0, b = 0.2},
 	["PowaOptunitnButton"] = {r = 0.2, g = 1.0, b = 0.2},
-	["PowaGroupAnyButton"] = {r = 0.2, g = 1.0, b = 0.2}
-};
+	["PowaGroupAnyButton"] = {r = 0.2, g = 1.0, b = 0.2},
+	["PowaOwntexButton"] = {r = 0.5, g = 0.8, b = 0.9},
+	["PowaRoundIconsButton"] = {r = 0.5, g = 0.8, b = 0.9}
+},
 
 OptionCheckBoxes =
 {
@@ -723,6 +725,7 @@ OptionCheckBoxes =
 	"PowaRaidButton",
 	"PowaIngoreCaseButton",
 	"PowaOwntexButton",
+	"PowaRoundIconsButton",
 	"PowaInverseButton",
 	"PowaFocusButton",
 	"PowaOptunitnButton",
@@ -731,9 +734,9 @@ OptionCheckBoxes =
 	"PowaRoleHealerButton",
 	"PowaRoleMeleDpsButton",
 	"PowaRoleRangeDpsButton"
-};
+},
 
-OptionTernary = { };
+OptionTernary = { },
 
 OptionHideables =
 {
@@ -745,15 +748,15 @@ OptionHideables =
 	"PowaDropDownStance",
 	"PowaDropDownGTFO",
 	"PowaDropDownPowerType"
-};
+},
 
 Backdrop =
 {
 	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
 	insets = {left = 0, top = 0, right = 0, bottom = 0},
 	tile = true
-};
-};
+},
+}
 
 PowaAurasModels =
 {
@@ -909,92 +912,92 @@ PowaAurasModels =
 	"Creature\\Yoggsaron\\Yoggsaron.m2",
 	"Creature\\Ysera\\Ysera.m2",
 	"Creature\\Zuljin\\Zuljin.m2"
-};
+}
 
 function PowaAuras:RegisterAuraType(auraType)
-	self.AurasByType[auraType] = { };
-	table.insert(self.AurasByTypeList, auraType);
+	self.AurasByType[auraType] = { }
+	table.insert(self.AurasByTypeList, auraType)
 end
 
-PowaAuras:RegisterAuraType('Buffs');
-PowaAuras:RegisterAuraType('TargetBuffs');
-PowaAuras:RegisterAuraType('PartyBuffs');
-PowaAuras:RegisterAuraType('RaidBuffs');
-PowaAuras:RegisterAuraType('GroupOrSelfBuffs');
-PowaAuras:RegisterAuraType('UnitBuffs');
-PowaAuras:RegisterAuraType('FocusBuffs');
+PowaAuras:RegisterAuraType('Buffs')
+PowaAuras:RegisterAuraType('TargetBuffs')
+PowaAuras:RegisterAuraType('PartyBuffs')
+PowaAuras:RegisterAuraType('RaidBuffs')
+PowaAuras:RegisterAuraType('GroupOrSelfBuffs')
+PowaAuras:RegisterAuraType('UnitBuffs')
+PowaAuras:RegisterAuraType('FocusBuffs')
 
-PowaAuras:RegisterAuraType('Health');
-PowaAuras:RegisterAuraType('TargetHealth');
-PowaAuras:RegisterAuraType('FocusHealth');
-PowaAuras:RegisterAuraType('PartyHealth');
-PowaAuras:RegisterAuraType('RaidHealth');
-PowaAuras:RegisterAuraType('NamedUnitHealth');
+PowaAuras:RegisterAuraType('Health')
+PowaAuras:RegisterAuraType('TargetHealth')
+PowaAuras:RegisterAuraType('FocusHealth')
+PowaAuras:RegisterAuraType('PartyHealth')
+PowaAuras:RegisterAuraType('RaidHealth')
+PowaAuras:RegisterAuraType('NamedUnitHealth')
 
-PowaAuras:RegisterAuraType('Mana');
-PowaAuras:RegisterAuraType('TargetMana');
-PowaAuras:RegisterAuraType('FocusMana');
-PowaAuras:RegisterAuraType('PartyMana');
-PowaAuras:RegisterAuraType('RaidMana');
-PowaAuras:RegisterAuraType('NamedUnitMana');
+PowaAuras:RegisterAuraType('Mana')
+PowaAuras:RegisterAuraType('TargetMana')
+PowaAuras:RegisterAuraType('FocusMana')
+PowaAuras:RegisterAuraType('PartyMana')
+PowaAuras:RegisterAuraType('RaidMana')
+PowaAuras:RegisterAuraType('NamedUnitMana')
 
-PowaAuras:RegisterAuraType('Power');
-PowaAuras:RegisterAuraType('TargetPower');
-PowaAuras:RegisterAuraType('PartyPower');
-PowaAuras:RegisterAuraType('RaidPower');
-PowaAuras:RegisterAuraType('FocusPower');
-PowaAuras:RegisterAuraType('NamedUnitPower');
+PowaAuras:RegisterAuraType('Power')
+PowaAuras:RegisterAuraType('TargetPower')
+PowaAuras:RegisterAuraType('PartyPower')
+PowaAuras:RegisterAuraType('RaidPower')
+PowaAuras:RegisterAuraType('FocusPower')
+PowaAuras:RegisterAuraType('NamedUnitPower')
 
-PowaAuras:RegisterAuraType('Combo');
-PowaAuras:RegisterAuraType('Aoe');
+PowaAuras:RegisterAuraType('Combo')
+PowaAuras:RegisterAuraType('Aoe')
 
-PowaAuras:RegisterAuraType('Stance');
-PowaAuras:RegisterAuraType('Actions');
-PowaAuras:RegisterAuraType('Enchants');
+PowaAuras:RegisterAuraType('Stance')
+PowaAuras:RegisterAuraType('Actions')
+PowaAuras:RegisterAuraType('Enchants')
 
-PowaAuras:RegisterAuraType('PvP');
-PowaAuras:RegisterAuraType('PartyPvP');
-PowaAuras:RegisterAuraType('RaidPvP');
-PowaAuras:RegisterAuraType('TargetPvP');
+PowaAuras:RegisterAuraType('PvP')
+PowaAuras:RegisterAuraType('PartyPvP')
+PowaAuras:RegisterAuraType('RaidPvP')
+PowaAuras:RegisterAuraType('TargetPvP')
 
-PowaAuras:RegisterAuraType('Aggro');
-PowaAuras:RegisterAuraType('PartyAggro');
-PowaAuras:RegisterAuraType('RaidAggro');
+PowaAuras:RegisterAuraType('Aggro')
+PowaAuras:RegisterAuraType('PartyAggro')
+PowaAuras:RegisterAuraType('RaidAggro')
 
-PowaAuras:RegisterAuraType('Spells');
-PowaAuras:RegisterAuraType('TargetSpells');
-PowaAuras:RegisterAuraType('FocusSpells');
-PowaAuras:RegisterAuraType('PlayerSpells');
-PowaAuras:RegisterAuraType('PartySpells');
-PowaAuras:RegisterAuraType('RaidSpells');
-PowaAuras:RegisterAuraType('GroupOrSelfSpells');
+PowaAuras:RegisterAuraType('Spells')
+PowaAuras:RegisterAuraType('TargetSpells')
+PowaAuras:RegisterAuraType('FocusSpells')
+PowaAuras:RegisterAuraType('PlayerSpells')
+PowaAuras:RegisterAuraType('PartySpells')
+PowaAuras:RegisterAuraType('RaidSpells')
+PowaAuras:RegisterAuraType('GroupOrSelfSpells')
 
-PowaAuras:RegisterAuraType('StealableSpells');
-PowaAuras:RegisterAuraType('StealableTargetSpells');
-PowaAuras:RegisterAuraType('StealableFocusSpells');
+PowaAuras:RegisterAuraType('StealableSpells')
+PowaAuras:RegisterAuraType('StealableTargetSpells')
+PowaAuras:RegisterAuraType('StealableFocusSpells')
 
-PowaAuras:RegisterAuraType('PurgeableSpells');
-PowaAuras:RegisterAuraType('PurgeableTargetSpells');
-PowaAuras:RegisterAuraType('PurgeableFocusSpells');
+PowaAuras:RegisterAuraType('PurgeableSpells')
+PowaAuras:RegisterAuraType('PurgeableTargetSpells')
+PowaAuras:RegisterAuraType('PurgeableFocusSpells')
 
-PowaAuras:RegisterAuraType('SpellCooldowns');
+PowaAuras:RegisterAuraType('SpellCooldowns')
 
-PowaAuras:RegisterAuraType('Static');
+PowaAuras:RegisterAuraType('Static')
 
-PowaAuras:RegisterAuraType('Totems');
-PowaAuras:RegisterAuraType('Pet');
-PowaAuras:RegisterAuraType('Runes');
-PowaAuras:RegisterAuraType('Slots');
-PowaAuras:RegisterAuraType('Items');
-PowaAuras:RegisterAuraType('Tracking');
+PowaAuras:RegisterAuraType('Totems')
+PowaAuras:RegisterAuraType('Pet')
+PowaAuras:RegisterAuraType('Runes')
+PowaAuras:RegisterAuraType('Slots')
+PowaAuras:RegisterAuraType('Items')
+PowaAuras:RegisterAuraType('Tracking')
 
-PowaAuras:RegisterAuraType('UnitMatch');
-PowaAuras:RegisterAuraType("PetStance");
+PowaAuras:RegisterAuraType('UnitMatch')
+PowaAuras:RegisterAuraType("PetStance")
 
-PowaAuras:RegisterAuraType('GTFOHigh');
-PowaAuras:RegisterAuraType('GTFOLow');
-PowaAuras:RegisterAuraType('GTFOFail');
-PowaAuras:RegisterAuraType('GTFOFriendlyFire');
+PowaAuras:RegisterAuraType('GTFOHigh')
+PowaAuras:RegisterAuraType('GTFOLow')
+PowaAuras:RegisterAuraType('GTFOFail')
+PowaAuras:RegisterAuraType('GTFOFriendlyFire')
 
 -- Use these spells to detect GCD, ideally these should be spells classes have from the beginning
 PowaAuras.GCDSpells =
@@ -1010,11 +1013,11 @@ PowaAuras.GCDSpells =
 	HUNTER = 982, -- Revive Pet
 	DEATHKNIGHT = 45902, -- Blood Strike
 	MONK = 100780, -- Jab
-};
+}
 
 -- Invented so we can distinquish them two types
-SPELL_POWER_LUNAR_ECLIPSE = 108;
-SPELL_POWER_SOLAR_ECLIPSE = 208;
+SPELL_POWER_LUNAR_ECLIPSE = 108
+SPELL_POWER_SOLAR_ECLIPSE = 208
 
 PowaAuras.PowerRanges =
 {
@@ -1035,7 +1038,7 @@ PowaAuras.PowerRanges =
 	[SPELL_POWER_SHADOW_ORBS] = 3,
 	[SPELL_POWER_BURNING_EMBERS] = 4,
 	[SPELL_POWER_DEMONIC_FURY] = 1000
-};
+}
 
 PowaAuras.RangeType =
 {
@@ -1056,7 +1059,7 @@ PowaAuras.RangeType =
 	[SPELL_POWER_SHADOW_ORBS] = "",
 	[SPELL_POWER_BURNING_EMBERS] = "",
 	[SPELL_POWER_DEMONIC_FURY] = ""
-};
+}
 
 PowaAuras.PowerTypeIcon =
 {
@@ -1077,16 +1080,16 @@ PowaAuras.PowerTypeIcon =
 	[SPELL_POWER_SHADOW_ORBS] = "spell_priest_shadoworbs",
 	[SPELL_POWER_BURNING_EMBERS] = "ability_warlock_burningembers",
 	[SPELL_POWER_DEMONIC_FURY] = "ability_warlock_eradication"
-};
+}
 
 PowaAuras.TalentChangeSpells =
 {
 	[PowaAuras.Spells.ACTIVATE_FIRST_TALENT] = true,
-	[PowaAuras.Spells.ACTIVATE_SECOND_TALENT] = true,
+	[PowaAuras.Spells.ACTIVATE_SECOND_TALENT] = true
 	--[PowaAuras.Spells.BUFF_FROST_PRESENCE] = true,
 	--[PowaAuras.Spells.BUFF_BLOOD_PRESENCE] = true,
-	--[PowaAuras.Spells.BUFF_UNHOLY_PRESENCE] = true,
-};
+	--[PowaAuras.Spells.BUFF_UNHOLY_PRESENCE] = true
+}
 
 PowaAuras.DebuffTypeSpellIds =
 {
@@ -1272,9 +1275,9 @@ PowaAuras.DebuffTypeSpellIds =
 	[69179]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (warrior)
 	-- Other
 	[29703]	= PowaAuras.DebuffCatType.Snare,	-- Dazed
-};
+}
 
-PowaAuras.Text = { };
+PowaAuras.Text = { }
 
 function PowaAuras:UnitTestDebug(...)
 
@@ -1288,37 +1291,36 @@ function PowaAuras:Debug(...)
 	if (PowaMisc.debug == true) then
 		self:Message(...)
 	end
-	--self:UnitTestDebug(...);
 end
 
 function PowaAuras:Message(...)
-	args = {...};
+	args = {...}
 	if (args == nil or #args == 0) then
-		return;
+		return
 	end
-	local Message = "";
+	local Message = ""
 	for i = 1, #args do
-		Message = Message..tostring(args[i]);
+		Message = Message..tostring(args[i])
 	end
-	DEFAULT_CHAT_FRAME:AddMessage(Message);
+	DEFAULT_CHAT_FRAME:AddMessage(Message)
 end
 
 function PowaAuras:ShowText(...)
-	self:Message(...);
+	self:Message(...)
 end
 
 function PowaAuras:DisplayText(...)
-	self:Message(...);
+	self:Message(...)
 end
 
 function PowaAuras:DisplayTable(t, indent)
 	if (not t or type(t) ~= "table") then
-		return "No table";
+		return "No table"
 	end
 	if (indent == nil) then
-		indent = "";
+		indent = ""
 	else
-		indent = indent.."  ";
+		indent = indent.."  "
 	end
 	for i, v in pairs(t) do
 		if (type(v) ~= "function") then
@@ -1326,76 +1328,76 @@ function PowaAuras:DisplayTable(t, indent)
 				self:Message(indent..tostring(i).." = "..tostring(v))
 			else
 				self:Message(indent..tostring(i))
-				self:DisplayTable(v, indent);
+				self:DisplayTable(v, indent)
 			end
 		end
 	end
 end
 
-function PowaAuras:Error( msg, holdtime )
+function PowaAuras:Error(msg, holdtime)
 	if (holdtime == nil) then
-		holdtime = UIERRORS_HOLD_TIME;
+		holdtime = UIERRORS_HOLD_TIME
 	end
-	UIErrorsFrame:AddMessage(msg, 0.75, 0.75, 1.0, 1.0, holdtime);
+	UIErrorsFrame:AddMessage(msg, 0.75, 0.75, 1.0, 1.0, holdtime)
 end
 
 function PowaAuras:IsNumeric(a)
-	return type(tonumber(a)) == "number";
+	return type(tonumber(a)) == "number"
 end
 
 function PowaAuras:ReverseTable(t)
 	if (type(t) ~= "table") then
-		return nil;
+		return nil
 	end
-	local newTable = { };
+	local newTable = { }
 	for k, v in pairs(t) do
-		newTable[v] = k;
+		newTable[v] = k
 	end
-	return newTable;
+	return newTable
 end
 
 function PowaAuras:TableEmpty(t)
 	if (type(t) ~= "table") then
-		return nil;
+		return nil
 	end
 	for k in pairs(t) do
-		return false;
+		return false
 	end
-	return true;
+	return true
 end
 
 function PowaAuras:TableSize(t)
 	if (type(t) ~= "table") then
-		return nil;
+		return nil
 	end
-	local size = 0;
+	local size = 0
 	for k in pairs(t) do
-		size = size + 1;
+		size = size + 1
 	end
-	return size;
+	return size
 end
 
 function PowaAuras:CopyTable(t, lookup_table, original)
 	if (type(t) ~= "table") then
-		return t;
+		return t
 	end
-	local copy;
+	local copy
 	if (original == nil) then
-		copy = { };
+		copy = { }
 	else
-		copy = original;
+		copy = original
 	end
 	for i,v in pairs(t) do
 		if (type(v) ~= "function") then
 			if (type(v) ~= "table") then
-				copy[i] = v;
+				copy[i] = v
 			else
-				lookup_table = lookup_table or { };
-				lookup_table[t] = copy;
+				lookup_table = lookup_table or { }
+				lookup_table[t] = copy
 				if lookup_table[v] then
-					copy[i] = lookup_table[v];
+					copy[i] = lookup_table[v]
 				else
-					copy[i] = self:CopyTable(v, lookup_table);
+					copy[i] = self:CopyTable(v, lookup_table)
 				end
 			end
 		end
@@ -1405,94 +1407,94 @@ end
 
 function PowaAuras:MergeTables(desTable, sourceTable)
 	if (not sourceTable or type(sourceTable) ~= "table") then
-		return;
+		return
 	end
 	if (not desTable or type(desTable) ~= "table") then
-		desTable = sourceTable;
-		return;
+		desTable = sourceTable
+		return
 	end
 	for i,v in pairs(sourceTable) do
 		if (type(v) ~= "function") then
 			if (type(v) ~= "table") then
-				desTable[i] = v;
+				desTable[i] = v
 			else
 				if (not desTable[i] or type(desTable[i]) ~= "table") then
-					desTable[i] = { };
+					desTable[i] = { }
 				end
-				self:MergeTables(desTable[i], v);
+				self:MergeTables(desTable[i], v)
 			end
 		end
 	end
 end
 
 function PowaAuras:InsertText(text, ...)
-	args = {...};
+	args = {...}
 	if (args == nil or #args == 0) then
-		return text;
+		return text
 	end
 	for k, v in pairs(args) do
-		text = string.gsub(text, "$"..k, tostring(v));
+		text = string.gsub(text, "$"..k, tostring(v))
 	end
-	return text;
+	return text
 end
 
 function PowaAuras:MatchString(textToSearch, textToFind, ingoreCase)
 	if (textToSearch == nil) then
-		return textToFind == nil;
+		return textToFind == nil
 	end
 	if (ingoreCase) then
-		textToFind = string.upper(textToFind);
-		textToSearch = string.upper(textToSearch);
+		textToFind = string.upper(textToFind)
+		textToSearch = string.upper(textToSearch)
 	end
 	return string.find(textToSearch, textToFind, 1, true)
 end
 
 function PowaAuras:Different(o1, o2)
-	local t1 = type(o1);
-	local t2 = type(o2);
+	local t1 = type(o1)
+	local t2 = type(o2)
 	if (t1 ~= t2 or t1 == "string" or t2 == "string") then
-		return tostring(o1) ~= tostring(o2);
+		return tostring(o1) ~= tostring(o2)
 	end
 	if (t1 == "number") then
-		return math.abs(o1 - o2) > 1e-9;
+		return math.abs(o1 - o2) > 1e-9
 	end
-	return o1 ~= o2;
+	return o1 ~= o2
 end
 
 function PowaAuras:GetSettingForExport(prefix, k, v, default)
 	if (not self:Different(v, default) and not PowaGlobalMisc.FixExports) then
-		return "";
+		return ""
 	end
-	local varType = type(v);
-	local setting = prefix..k..":";
+	local varType = type(v)
+	local setting = prefix..k..":"
 	if (varType == "string") then
-		setting = setting..v;
+		setting = setting..v
 	elseif(varType == "number") then
-		local round = math.floor(v * 10000 + 0.5) / 10000;
-		setting = setting..tostring(round);
+		local round = math.floor(v * 10000 + 0.5) / 10000
+		setting = setting..tostring(round)
 	else
-		setting = setting..tostring(v);
+		setting = setting..tostring(v)
 	end
-	return setting.."; ";
+	return setting.."; "
 end
 
 -- PowaAura Classes
 function PowaClass(base, ctor)
 	local c = { }
 	if not ctor and type(base) == 'function' then
-		ctor = base;
-		base = nil;
+		ctor = base
+		base = nil
 	elseif type(base) == 'table' then
 		for i,v in pairs(base) do
-			c[i] = v;
+			c[i] = v
 		end
 		if (type(ctor) == "table") then
 			for i,v in pairs(ctor) do
-				c[i] = v;
+				c[i] = v
 			end
-			ctor = nil;
+			ctor = nil
 		end
-		c._base = base;
+		c._base = base
 	end
 	c.__index = c
 	local mt = { }
@@ -1505,11 +1507,11 @@ function PowaClass(base, ctor)
 		return obj
 	end
 	if ctor then
-		c.init = ctor;
+		c.init = ctor
 	else
 		if base and base.init then
-			c.init = base.init;
-			ctor = base.init;
+			c.init = base.init
+			ctor = base.init
 		end
 	end
 	c.is_a = function(self,klass)

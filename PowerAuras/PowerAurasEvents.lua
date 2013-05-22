@@ -28,11 +28,7 @@ function PowaAuras:ADDON_LOADED(addon)
 			PowaGlobalMisc[k] = nil
 		end
 	end
-	--[[if (PowaMisc.OverrideMaxTextures) then
-		self.MaxTextures = PowaMisc.UserSetMaxTextures
-	else]]--
-		self.MaxTextures = PowaAuras.TextureCount
-	--end
+	self.MaxTextures = PowaAuras.TextureCount
 	local _, _, major, minor = string.find(self.Version, self.VersionPattern)
 	self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
 	_, _, major, minor = string.find(PowaMisc.Version, self.VersionPattern)
@@ -124,10 +120,6 @@ function PowaAuras:GetInstanceType()
 		instanceType = "None"
 	end
 	return instanceType
-end
-
-function PowaAuras:PLAYER_ENTERING_WORLD(...)
-	--self:Setup()
 end
 
 function PowaAuras:ACTIVE_TALENT_GROUP_CHANGED(...)

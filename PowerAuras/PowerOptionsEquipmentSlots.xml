@@ -39,7 +39,7 @@
 		</NormalTexture>
 		<HighlightTexture file = "Interface\Buttons\ButtonHilight-Square" alphaMode = "ADD"/>
 	</Button>
-	<!-- ItemSlot Template -->
+	<!-- Item Slot Template -->
 	<Button name = "PowaItemSlotTemplate" inherits = "ItemButtonTemplate" virtual = "true">
 		<Scripts>
 			<OnLeave>
@@ -52,7 +52,7 @@
 			</OnClick>
 		</Scripts>
 	</Button>
-	<!-- Character Frame -->
+	<!-- Equipment Slots Frame -->
 	<Frame name = "PowaEquipmentSlotsFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<TitleRegion>
 			<Size>
@@ -86,9 +86,6 @@
 			<OnShow>
 				PowaAuras:EquipmentSlotsShow()
 			</OnShow>
-			<OnHide>
-				PowaAuras:EquipmentSlotsHide()
-			</OnHide>
 		</Scripts>
 		<Backdrop bgFile = "Interface\ChatFrame\ChatFrameBackground" edgeFile = "Interface\ChatFrame\ChatFrameBackground" tile = "false">
 			<BackgroundInsets>
@@ -112,6 +109,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
+			<!-- Close Button -->
 			<Button name = "PowaFrameCloseButton" inherits = "UIPanelCloseButton">
 				<Anchors>
 					<Anchor point = "CENTER" relativeTo = "PowaEquipmentSlotsFrame" relativePoint = "TOPRIGHT">

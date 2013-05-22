@@ -33,8 +33,8 @@ PowaAuras.EndAnimDisplay[3] = "Fade Out"
 PowaAuras.EndAnimDisplay[4] = "Spin"
 PowaAuras.EndAnimDisplay[5] = "Spin In"
 
-PowaAuras.Sound[0] = NONE
-PowaAuras.Sound[30] = NONE
+PowaAuras.Sound[0] = "None"
+PowaAuras.Sound[30] = "None"
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -53,7 +53,6 @@ DebuffType =
 	Disease = "Disease",
 	Curse = "Curse",
 	Poison = "Poison",
-	-- Non standard types below here.
 	Enrage = "Enrage"
 },
 
@@ -238,7 +237,7 @@ aideUnitMatch = "Enter the names of the units that need to match, separated by a
 aidePetStance = "Enter the ID numbers of pet stances that need to be active in order for the aura to show. You can specify multiple stances to trigger an aura by separating them with a forward slash (/).\n\n|cFFEFEFEFStance ID Numbers|r\nAssist = 1\nDefensive = 2\nPassive = 3\n\n|cFFFF0000Note: |rYou must have the three stances on your pet action bar for this to work.",
 
 -- Editor
-aideCustomText = "Enter text to display. (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, %agl=agl, %sta=sta, %int=int, %spi=spi, %sp=spell power, %ap=attack power, %df=defence)",
+aideCustomText = "Enter text to display. (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, %agl=agl, %sta=sta, %int=int, %spi=spi, %sp=spell power, %ap=attack power)",
 
 nomSound = "Starting Sound:",
 
@@ -482,6 +481,7 @@ Ternary =
 
 nomWhatever = "Ignored",
 aideTernary = "Sets how the status effects how this aura is shown.",
+
 TernaryYes =
 {
 	combat = "Only When In Combat",
@@ -805,8 +805,8 @@ aideBlockIncomingAuras = "Prevent anybody sending you auras.",
 nomBlockIncomingAuras = "Block Incoming Auras",
 aideFixExports = "Check this when aura exports are not functioning correctly and leave you with a blank textbox.",
 nomFixExports = "Alternative Exports",
-aideAnimationsAreBrokenSorry = "If your animations appear to skip or increase in size randomly, you should enable Old Animations.",
-});
+aideAnimationsAreBrokenSorry = "If your animations appear to skip or increase in size randomly, you should enable Old Animations."
+})
 if (GetLocale() == "deDE") then
 PowaAuras.Anim[0] = "[Nichts]"
 PowaAuras.Anim[1] = "Statisch"
@@ -843,9 +843,6 @@ PowaAuras.EndAnimDisplay[3] = "Nur Alpha"
 PowaAuras.EndAnimDisplay[4] = "Drehen"
 PowaAuras.EndAnimDisplay[5] = "Reindrehen"
 
-PowaAuras.Sound[0] = NONE
-PowaAuras.Sound[30] = NONE
-
 PowaAuras:MergeTables(PowaAuras.Text,
 {
 welcome = "Gib /powa ein, um die Optionen zu öffnen.",
@@ -864,7 +861,6 @@ DebuffType =
 	Disease = "Krankheit",
 	Curse = "Fluch",
 	Poison = "Gift",
-	-- Non standard types below here.
 	Enrage = "Enrage"
 },
 
@@ -934,25 +930,6 @@ AuraType =
 	[PowaAuras.BuffTypes.GTFO] = "GTFO Alert"
 },
 
-PowerType =
-{
-	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage",
-	[SPELL_POWER_FOCUS] = "Focus",
-	[SPELL_POWER_ENERGY] = "Energy",
-	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
-	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
-	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
-	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
-	[SPELL_POWER_HOLY_POWER] = "Holy Power",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "Chi",
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
-},
-
 Relative =
 {
 	NONE = "Frei",
@@ -965,30 +942,6 @@ Relative =
 	BOTTOMLEFT = "Unten links",
 	LEFT = "Links",
 	CENTER = "Mitte"
-},
-
-Slots =
-{
-	Ammo = "Ammo",
-	Back = "Back",
-	Chest = "Chest",
-	Feet = "Feet",
-	Finger0 = "Finger1",
-	Finger1 = "Finger2",
-	Hands = "Hands",
-	Head = "Head",
-	Legs = "Legs",
-	MainHand = "MainHand",
-	Neck = "Neck",
-	Ranged = "Ranged",
-	SecondaryHand = "OffHand",
-	Shirt = "Shirt",
-	Shoulder = "Shoulder",
-	Tabard = "Tabard",
-	Trinket0 = "Trinket1",
-	Trinket1 = "Trinket2",
-	Waist = "Waist",
-	Wrist = "Wrist"
 },
 
 SlotsToCheck = "Wähle zu überprüfende Slots",
@@ -1029,13 +982,6 @@ nomPlayerEffects = "Charakter Effekte",
 nomGlobalEffects = "Globale\nEffekte",
 aideEffectTooltip = "(Shift-Klick um Effekt ein oder auszuschalten)",
 aideEffectTooltip2 = "(Strg-Klick um Aktivierungsbedingungen anzuzeigen)",
-
-aideItems = "Enter full name of Item or [xxx] for Id",
-aideSlots = "Enter name of slot to track: Ammo, Back, Chest, Feet, Finger0, Finger1, Hands, Head, Legs, MainHand, Neck, Ranged, SecondaryHand, Shirt, Shoulder, Tabard, Trinket0, Trinket1, Waist, Wrist",
-aideTracking = "Enter name of Tracking type e.g. fish",
-
--- Editor
-aideCustomText = "Enter text to display (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, agl=agl, %sta=sta, %int=int, %sp1=spi, %sp=spell power, %ap=attack power, %df=defence)",
 
 nomSound = "Sound abspielen:",
 aideSound = "Spielt einen Sound am Anfang ab.",
@@ -1154,7 +1100,6 @@ aideOptunitn = "Aktivieren um nur einen bestimmten Char in der Gruppe bzw. im Sc
 aideExact = "Aktivieren um den exakten Namen des Buffs/Debuff/Aktion zu überprüfen.",
 aideStance = "Haltung, Aura oder Form auswählen, die die Aura aktivieren soll.",
 aideGTFO = "Select which GTFO Alert will trigger the event.",
-nomPowerType = "Power Type:",
 
 aideShowSpinAtBeginning = "Zeige am Ende der Anfangsanimation eine 360 Grad Drehung",
 nomCheckShowSpinAtBeginning = "Zeige Drehung am Ende der Anfangsanimation",
@@ -1246,6 +1191,7 @@ Ternary =
 
 nomWhatever = "Ignorieren",
 aideTernary = "Legt fest, wie der Status die Aura ein/ausschaltet.",
+
 TernaryYes =
 {
 	combat = "Nur wenn im Kampf",
@@ -1269,6 +1215,7 @@ TernaryYes =
 	RoleMeleDps = "Nur wenn Nahkämpfer",
 	RoleRangeDps = "Nur wenn Fernkämpfer"
 },
+
 TernaryNo =
 {
 	combat = "Nur wenn nicht im Kampf",
@@ -1292,6 +1239,7 @@ TernaryNo =
 	RoleMeleDps = "Nur wenn kein Nahkämpfer",
 	RoleRangeDps = "Nur wenn kein Fernkämpfer"
 },
+
 TernaryAide =
 {
 	combat = "Effekt beeinflusst durch Kampfstatus.",
@@ -1324,17 +1272,8 @@ aidePowaTimerHideAuraSlider = "Verstecke die Aura und den Timer, wenn die Dauer 
 aideTimerRounding = "Aktivieren um den Timer aufzurunden.",
 nomTimerRounding = "Timer aufrunden",
 
-aideAllowInspections = "Allow Power Auras to Inspect players to determine roles, turning this off will sacrifice accuracy for speed",
-nomAllowInspections = "Allow Inspections",
-
 nomIgnoreUseable = "Anzeige nur vom CD abhängig",
 aideIgnoreUseable = "Ignoriert, wenn der Zauber benutzbar ist (benutzt nur die Abklingzeit)",
-
-nomIgnoreItemUseable = "Equipped Only",
-aideIgnoreItemUseable = "Ignores if item is usable (just if equipped)",
-
-nomCarried = "Only if in bags",
-aideCarried = "Ignores if item is usable (just if in a bag)",
 
 -- Diagnostic reason text, these have substitutions (using $1, $2 etc) to allow for different sententance constructions
 nomReasonShouldShow = "Sollte angezeigt werden, weil $1",
@@ -1393,27 +1332,6 @@ nomReasonNotInVehicle = "in keinem Fahrzeug",
 nomReasonInVehicle = "in einem Fahrzeug",
 nomReasonNotResting = "nicht eholend",
 nomReasonResting = "erholend",
-nomReasonStateOK = "Status OK",
-
-nomReasonNotIn5ManInstance = "Not in 5-Man Instance",
-nomReasonIn5ManInstance = "In 5-Man Instance",
-nomReasonNotIn5ManHeroicInstance = "Not in 5-Man Heroic Instance",
-nomReasonIn5ManHeroicInstance = "In 5-Man Heroic Instance",
-
-nomReasonNotIn10ManInstance = "Not in 10-Man Instance",
-nomReasonIn10ManInstance = "In 10-Man Instance",
-nomReasonNotIn10ManHeroicInstance = "Not in 10-Man Heroic Instance",
-nomReasonIn10ManHeroicInstance = "In 10-Man Heroic Instance",
-
-nomReasonNotIn25ManInstance = "Not in 25-Man Instance",
-nomReasonIn25ManInstance = "In 25-Man Instance",
-nomReasonNotIn25ManHeroicInstance = "Not in 25-Man Heroic Instance",
-nomReasonIn25ManHeroicInstance = "In 25-Man Heroic Instance",
-
-nomReasonNotInBgInstance = "Not in Battleground Instance",
-nomReasonInBgInstance = "In Battleground Instance",
-nomReasonNotInArenaInstance = "Not in Arena Instance",
-nomReasonInArenaInstance = "In Arena Instance",
 
 nomReasonInverted = "$1 (umgekehrt)", -- $1 is the reason, but the inverted flag is set so the logic is reversed
 
@@ -1422,92 +1340,6 @@ nomReasonSpellNotUsable = "Zauber $1 nicht benutzbar ist",
 nomReasonSpellNotReady = "Zauber $1 nicht bereit ist, Abklingzeit, Timer umgekehrt",
 nomReasonSpellNotEnabled = "Zauber $1 nicht aktiviert ist",
 nomReasonSpellNotFound = "Zauber $1 nicht gefunden wurde",
-nomReasonSpellOnCooldown = "Spell $1 on Cooldown",
-
-nomReasonCastingOnMe = "$1 is casting $2 on me", --$1=CasterName $2=SpellName (e.g. "Rotface is casting Slime Spray on me")
-nomReasonNotCastingOnMe = "No matching spell being cast on me",
-
-nomReasonItemUsable = "Item $1 usable",
-nomReasonItemNotUsable = "Item $1 not usable",
-nomReasonItemNotReady = "Item $1 Not Ready, on cooldown, timer invert",
-nomReasonItemNotEnabled = "Item $1 not enabled ",
-nomReasonItemNotFound = "Item $1 not found",
-nomReasonItemOnCooldown = "Item $1 on Cooldown",
-
-nomReasonItemEquipped = "Item $1 equipped",
-nomReasonItemNotEquipped = "Item $1 not equipped",
-
-nomReasonItemInBags = "Item $1 in bags",
-nomReasonItemNotInBags = "Item $1 not in bags",
-nomReasonItemNotOnPlayer = "Item $1 not carried",
-
-nomReasonSlotUsable = "$1 Slot usable",
-nomReasonSlotNotUsable = "$1 Slot not usable",
-nomReasonSlotNotReady = "$1 Slot Not Ready, on cooldown, timer invert",
-nomReasonSlotNotEnabled = "$1 Slot has no cooldown effect",
-nomReasonSlotNotFound = "$1 Slot not found",
-nomReasonSlotOnCooldown = "$1 Slot on Cooldown",
-nomReasonSlotNone = "$1 Slot is empty",
-
-nomReasonStealablePresent = "$1 has Stealable spell $2", --$1=Target $2=SpellName (e.g. "Focus has Stealable spell Blessing of Wisdom")
-nomReasonNoStealablePresent = "Nobody has Stealable spell $1", --$1=SpellName (e.g. "Nobody has Stealable spell Blessing of Wisdom")
-nomReasonRaidTargetStealablePresent = "Raid$1Target has has Stealable spell $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Stealable spell Blessing of Wisdom")
-nomReasonPartyTargetStealablePresent = "Party$1Target has has Stealable spell $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Stealable spell Blessing of Wisdom")
-
-nomReasonPurgeablePresent = "$1 has Purgeable spell $2", --$1=Target $2=SpellName (e.g. "Focus has Purgeable spell Blessing of Wisdom")
-nomReasonNoPurgeablePresent = "Nobody has Purgeable spell $1", --$1=SpellName (e.g. "Nobody has Purgeable spell Blessing of Wisdom")
-nomReasonRaidTargetPurgeablePresent = "Raid$1Target has has Purgeable spell $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Purgeable spell Blessing of Wisdom")
-nomReasonPartyTargetPurgeablePresent = "Party$1Target has has Purgeable spell $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Purgeable spell Blessing of Wisdom")
-
-nomReasonAoETrigger = "AoE $1 triggered", -- $1=AoE spell name
-nomReasonAoENoTrigger = "AoE no trigger for $1", -- $1=AoE spell match
-
-nomReasonEnchantMainInvert = "Main Hand $1 enchant found, timer invert", -- $1=Enchant match
-nomReasonEnchantMain = "Main Hand $1 enchant found", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert", -- $1=Enchant match
-nomReasonEnchantOff = "Off Hand $1 enchant found", -- $1=Enchant match
-nomReasonNoEnchant = "No enchant found on weapons for $1", -- $1=Enchant match
-
-nomReasonNoUseCombo = "You do not use combo points",
-nomReasonComboMatch = "Combo points $1 match $2",-- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "Combo points $1 no match with $2",-- $1=Combo Points, $2=Combo Match
-
-nomReasonActionNotFound = "not found on Action Bar",
-nomReasonActionReady = "Action Ready",
-nomReasonActionNotReadyInvert = "Action Not Ready (on cooldown), timer invert",
-nomReasonActionNotReady = "Action Not Ready (on cooldown)",
-nomReasonActionlNotEnabled = "Action not enabled",
-nomReasonActionNotUsable = "Action not usable",
-
-nomReasonYouAreCasting = "You are casting $1", -- $1=Casting match
-nomReasonYouAreNotCasting = "You are not casting $1", -- $1=Casting match
-nomReasonTargetCasting = "Target casting $1", -- $1=Casting match
-nomReasonFocusCasting = "Focus casting $1", -- $1=Casting match
-nomReasonRaidTargetCasting = "Raid$1Target casting $2", --$1=RaidId $2=Casting match
-nomReasonPartyTargetCasting = "Party$1Target casting $2", --$1=PartyId $2=Casting match
-nomReasonNoCasting = "Nobody's target casting $1", -- $1=Casting match
-
-nomReasonStance = "Current Stance $1, matches $2", -- $1=Current Stance, $2=Match Stance
-nomReasonNoStance = "Current Stance $1, does not match $2", -- $1=Current Stance, $2=Match Stance
-
-nomReasonRunesNotReady = "Runes not Ready",
-nomReasonRunesReady = "Runes Ready",
-
-nomReasonPetExists= "Player has Pet",
-nomReasonPetMissing = "Player Pet Missing",
-
-nomReasonTrackingMissing = "Tracking not set to $1",
-nomTrackingSet = "Tracking set to $1",
-
-nomNotInInstance = "Not in correct instance",
-
-nomReasonStatic = "Static Aura",
-
-nomReasonUnknownName = "Unit name unknown",
-nomReasonRoleUnknown = "Role unknown",
-nomReasonRoleNoMatch = "No matching Role",
-
-nomReasonGTFOAlerts = "GTFO alerts are never always on.",
 
 ReasonStat =
 {
@@ -1521,40 +1353,8 @@ ReasonStat =
 
 -- Import dialog
 ImportDialogAccept = "Importieren",
-ImportDialogCancel = "Schließen",
-
--- Export dialog
-ExportDialogTopTitle = "Export Auras",
-ExportDialogCopyTitle = "Press Ctrl-C to copy the below aura string.",
-ExportDialogMidTitle = "Send to Player",
-ExportDialogSendTitle1 = "Enter a player name below and click 'Send'.",
-ExportDialogSendTitle2 = "Contacting %s (%d seconds remaining)...", -- The 1/2/3/4 suffix denotes the internal status of the frame.
-ExportDialogSendTitle3a = "%s is in combat and cannot accept the offer.",
-ExportDialogSendTitle3b = "%s is not accepting export requests.",
-ExportDialogSendTitle3c = "%s has not responded, they may be away or offline.",
-ExportDialogSendTitle3d = "%s is currently receiving another export request.",
-ExportDialogSendTitle3e = "%s has declined the offer.",
-ExportDialogSendTitle4 = "Sending auras...",
-ExportDialogSendTitle5 = "Send successful!",
-ExportDialogSendButton1 = "Send",
-ExportDialogSendButton2 = "Back",
-ExportDialogCancelButton = "Close",
--- Cross-client import dialog
-PlayerImportDialogTopTitle = "You Have Auras!",
-PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
-PlayerImportDialogDescTitle2 = "Receiving auras...",
-PlayerImportDialogDescTitle3 = "The offer has expired.",
-PlayerImportDialogDescTitle4 = "Select a page to save the auras to.",
-PlayerImportDialogWarningTitle = "|cFFFF0000Note: |rYou are being sent an aura set, this will overwrite any existing auras on the selected page.",
-PlayerImportDialogDescTitle5 = "Auras saved!",
-PlayerImportDialogDescTitle6 = "No aura slots are available.",
-PlayerImportDialogAcceptButton1 = "Accept",
-PlayerImportDialogAcceptButton2 = "Save",
-PlayerImportDialogCancelButton1 = "Reject",
-
-aideBlockIncomingAuras = "Prevent anybody sending you auras",
-nomBlockIncomingAuras = "Block Incoming Auras",
-});
+ImportDialogCancel = "Schließen"
+})
 elseif (GetLocale() == "esES") then
 PowaAuras.Anim[0] = "[Invisible]"
 PowaAuras.Anim[1] = "Estático"
@@ -1591,9 +1391,6 @@ PowaAuras.EndAnimDisplay[3] = "Desaparecer"
 PowaAuras.EndAnimDisplay[4] = "Girar"
 PowaAuras.EndAnimDisplay[5] = "Girar adentro"
 
-PowaAuras.Sound[0] = NONE
-PowaAuras.Sound[30] = NONE
-
 PowaAuras:MergeTables(PowaAuras.Text,
 {
 welcome = "Teclea /powa para ver las opciones",
@@ -1612,8 +1409,7 @@ DebuffType =
 	Disease = "Enfermedad",
 	Curse = "Maldición",
 	Poison = "Veneno",
-	-- Non standard types below here.
-	Enrage = "Enrage",
+	Enrage = "Enrage"
 },
 
 DebuffCatType =
@@ -1624,7 +1420,7 @@ DebuffCatType =
 	[PowaAuras.DebuffCatType.Stun] = "Aturdido",
 	[PowaAuras.DebuffCatType.Root] = "Enraizado",
 	[PowaAuras.DebuffCatType.Disarm] = "Desarmado",
-	[PowaAuras.DebuffCatType.PvE] = "PvE",
+	[PowaAuras.DebuffCatType.PvE] = "PvE"
 },
 
 Role =
@@ -1632,7 +1428,7 @@ Role =
 	RoleTank = "Tanque",
 	RoleHealer = "Curador",
 	RoleMeleDps = "DPS cuerpo a cuerpo",
-	RoleRangeDps = "DPS a distancia",
+	RoleRangeDps = "DPS a distancia"
 },
 
 nomReasonRole =
@@ -1640,7 +1436,7 @@ nomReasonRole =
 	RoleTank = "Es tanque",
 	RoleHealer = "Es curador",
 	RoleMeleDps = "Es DPS cuerpo a cuerpo",
-	RoleRangeDps = "Es DPS a distancia",
+	RoleRangeDps = "Es DPS a distancia"
 },
 
 nomReasonNotRole =
@@ -1648,7 +1444,7 @@ nomReasonNotRole =
 	RoleTank = "No es tanque",
 	RoleHealer = "No es curador",
 	RoleMeleDps = "No es DPS cuerpo a cuerpo",
-	RoleRangeDps = "No es DPS a distancia",
+	RoleRangeDps = "No es DPS a distancia"
 },
 
 AuraType =
@@ -1679,7 +1475,7 @@ AuraType =
 	[PowaAuras.BuffTypes.Tracking] = "Rastreo",
 	[PowaAuras.BuffTypes.TypeBuff] = "Bufo (tipo)",
 	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match",
-	[PowaAuras.BuffTypes.GTFO] = "Alerta ¡Muévete!",
+	[PowaAuras.BuffTypes.GTFO] = "Alerta ¡Muévete!"
 },
 
 PowerType =
@@ -1698,7 +1494,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -1712,7 +1508,7 @@ Relative =
 	BOTTOM = "Abajo",
 	BOTTOMLEFT = "Abajo-Izquierda",
 	LEFT = "Izquierda",
-	CENTER = "Centro",
+	CENTER = "Centro"
 },
 
 Slots =
@@ -1736,12 +1532,8 @@ Slots =
 	Trinket0 = "Abalorio1",
 	Trinket1 = "Abalorio2",
 	Waist = "Cintura",
-	Wrist = "Muñeca",
+	Wrist = "Muñeca"
 },
-
-SlotsToCheck = "Select Slots to Check",
-
-Cancel = "Cancel",
 
 -- Main
 nomEnable = "Activar Power Auras",
@@ -1794,7 +1586,7 @@ aideSlots = "Introduce el nombre de la ranura a rastrear: Munición, Espalda, Pe
 aideTracking = "Introduce el nombre del tipo de rastreo ej. pescado",
 
 -- Editor
-aideCustomText = "Introduce texto para mostrar (%t=nombre del objetivo, %f=nombre del foco, %v=valor de visualización, %u=nombre de la unidad, %str=fuerza, agl=agilidad, %sta=aguante, %int=intelecto, %sp1=espíritu, %sp=poder con hechizos, %ap=poder de ataque, %df=defensa)",
+aideCustomText = "Introduce texto para mostrar (%t=nombre del objetivo, %f=nombre del foco, %v=valor de visualización, %u=nombre de la unidad, %str=fuerza, agl=agilidad, %sta=aguante, %int=intelecto, %sp1=espíritu, %sp=poder con hechizos, %ap=poder de ataque)",
 
 nomSound = "Sonido para reproducir",
 nomSound2 = "Más sonidos para reproducir",
@@ -2015,11 +1807,12 @@ Ternary =
 	Instance25Man = "25-Normal",
 	Instance25ManHeroic = "25-Heróico",
 	InstanceBg = "Campo de batalla",
-	InstanceArena = "Arena",
+	InstanceArena = "Arena"
 },
 
 nomWhatever = "Ignorado",
 aideTernary = "Establece cuando este aura se muestra.",
+
 TernaryYes =
 {
 	combat = "Sólo en combate",
@@ -2041,8 +1834,9 @@ TernaryYes =
 	RoleTank = "Sólo cuando tanque",
 	RoleHealer = "Sólo cuando curador",
 	RoleMeleDps = "Sólo cuando DPS cuerpo a cuerpo",
-	RoleRangeDps = "Sólo cuando DPS a distancia",
+	RoleRangeDps = "Sólo cuando DPS a distancia"
 },
+
 TernaryNo =
 {
 	combat = "Sólo cuando no en combate",
@@ -2064,8 +1858,9 @@ TernaryNo =
 	RoleTank = "Sólo cuando no tanque",
 	RoleHealer = "Sólo cuando no curador",
 	RoleMeleDps = "Sólo cuando no DPS cuerpo a cuerpo",
-	RoleRangeDps = "Sólo cuando no DPS a distancia",
+	RoleRangeDps = "Sólo cuando no DPS a distancia"
 },
+
 TernaryAide =
 {
 	combat = "Efecto modificado por estado de combate",
@@ -2087,7 +1882,7 @@ TernaryAide =
 	RoleTank = "Efecto modificado por ser tanque",
 	RoleHealer = "Efecto modificado por ser curador",
 	RoleMeleDps = "Efecto modificado por ser DPS cuerpo a cuerpo",
-	RoleRangeDps = "Efecto modificado por ser DPS a distancia",
+	RoleRangeDps = "Efecto modificado por ser DPS a distancia"
 },
 
 nomTimerInvertAura = "Invertir aura cuando tiempo inferior a",
@@ -2294,12 +2089,8 @@ ReasonStat =
 	Power = {MatchReason = "$1 poco poder", NoMatchReason = "$1 demasiado poder", NilReason = "$1 tiene un tipo de poder distinto"},
 	Aggro = {MatchReason = "$1 tiene aggro", NoMatchReason = "$1 no tiene aggro"},
 	PvP = {MatchReason = "$1 PvP activado", NoMatchReason = "$1 PvP no activado"},
-	SpellAlert = {MatchReason = "$1 lanzando $2", NoMatchReason = "$1 no está lanzando $2"},
+	SpellAlert = {MatchReason = "$1 lanzando $2", NoMatchReason = "$1 no está lanzando $2"}
 },
-
--- Import dialog
-ImportDialogAccept = "Import",
-ImportDialogCancel = "Close",
 
 -- Export dialog
 ExportDialogTopTitle = "Exportar Auras",
@@ -2334,7 +2125,7 @@ PlayerImportDialogCancelButton1 = "Rechazar",
 aideCommsRegisterFailure = "There was an error when setting up addon communications.",
 aideBlockIncomingAuras = "Evita que otros te envíen sus auras",
 nomBlockIncomingAuras = "Bloque de auras entrante",
-});
+})
 elseif (GetLocale() == "esMX") then
 PowaAuras.Anim[0] = "[Invisible]"
 PowaAuras.Anim[1] = "Estático"
@@ -2371,9 +2162,6 @@ PowaAuras.EndAnimDisplay[3] = "Desaparecer"
 PowaAuras.EndAnimDisplay[4] = "Girar"
 PowaAuras.EndAnimDisplay[5] = "Girar adentro"
 
-PowaAuras.Sound[0] = NONE
-PowaAuras.Sound[30] = NONE
-
 PowaAuras:MergeTables(PowaAuras.Text,
 {
 welcome = "Teclea /powa para ver las opciones",
@@ -2392,8 +2180,7 @@ DebuffType =
 	Disease = "Enfermedad",
 	Curse = "Maldición",
 	Poison = "Veneno",
-	-- Non standard types below here.
-	Enrage = "Enrage",
+	Enrage = "Enrage"
 },
 
 DebuffCatType =
@@ -2404,7 +2191,7 @@ DebuffCatType =
 	[PowaAuras.DebuffCatType.Stun] = "Aturdido",
 	[PowaAuras.DebuffCatType.Root] = "Enraizado",
 	[PowaAuras.DebuffCatType.Disarm] = "Desarmado",
-	[PowaAuras.DebuffCatType.PvE] = "PvE",
+	[PowaAuras.DebuffCatType.PvE] = "PvE"
 },
 
 Role =
@@ -2412,7 +2199,7 @@ Role =
 	RoleTank = "Tanque",
 	RoleHealer = "Curador",
 	RoleMeleDps = "DPS cuerpo a cuerpo",
-	RoleRangeDps = "DPS a distancia",
+	RoleRangeDps = "DPS a distancia"
 },
 
 nomReasonRole =
@@ -2420,7 +2207,7 @@ nomReasonRole =
 	RoleTank = "Es tanque",
 	RoleHealer = "Es curador",
 	RoleMeleDps = "Es DPS cuerpo a cuerpo",
-	RoleRangeDps = "Es DPS a distancia",
+	RoleRangeDps = "Es DPS a distancia"
 },
 
 nomReasonNotRole =
@@ -2428,7 +2215,7 @@ nomReasonNotRole =
 	RoleTank = "No es tanque",
 	RoleHealer = "No es curador",
 	RoleMeleDps = "No es DPS cuerpo a cuerpo",
-	RoleRangeDps = "No es DPS a distancia",
+	RoleRangeDps = "No es DPS a distancia"
 },
 
 AuraType =
@@ -2459,7 +2246,7 @@ AuraType =
 	[PowaAuras.BuffTypes.Tracking] = "Rastreo",
 	[PowaAuras.BuffTypes.TypeBuff] = "Bufo (tipo)",
 	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match",
-	[PowaAuras.BuffTypes.GTFO] = "Alerta ¡Muévete!",
+	[PowaAuras.BuffTypes.GTFO] = "Alerta ¡Muévete!"
 },
 
 PowerType =
@@ -2478,7 +2265,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -2492,7 +2279,7 @@ Relative =
 	BOTTOM = "Abajo",
 	BOTTOMLEFT = "Abajo-Izquierda",
 	LEFT = "Izquierda",
-	CENTER = "Centro",
+	CENTER = "Centro"
 },
 
 Slots =
@@ -2516,12 +2303,8 @@ Slots =
 	Trinket0 = "Abalorio1",
 	Trinket1 = "Abalorio2",
 	Waist = "Cintura",
-	Wrist = "Muñeca",
+	Wrist = "Muñeca"
 },
-
-SlotsToCheck = "Select Slots to Check",
-
-Cancel = "Cancel",
 
 -- Main
 nomEnable = "Activar Power Auras",
@@ -2574,7 +2357,7 @@ aideSlots = "Introduce el nombre de la ranura a rastrear: Munición, Espalda, Pe
 aideTracking = "Introduce el nombre del tipo de rastreo ej. pescado",
 
 -- Editor
-aideCustomText = "Introduce texto para mostrar (%t=nombre del objetivo, %f=nombre del foco, %v=valor de visualización, %u=nombre de la unidad, %str=fuerza, agl=agilidad, %sta=aguante, %int=intelecto, %sp1=espíritu, %sp=poder con hechizos, %ap=poder de ataque, %df=defensa)",
+aideCustomText = "Introduce texto para mostrar (%t=nombre del objetivo, %f=nombre del foco, %v=valor de visualización, %u=nombre de la unidad, %str=fuerza, agl=agilidad, %sta=aguante, %int=intelecto, %sp1=espíritu, %sp=poder con hechizos, %ap=poder de ataque)",
 
 nomSound = "Sonido para reproducir",
 nomSound2 = "Más sonidos para reproducir",
@@ -2800,6 +2583,7 @@ Ternary =
 
 nomWhatever = "Ignorado",
 aideTernary = "Establece cuando este aura se muestra.",
+
 TernaryYes =
 {
 	combat = "Sólo en combate",
@@ -2823,6 +2607,7 @@ TernaryYes =
 	RoleMeleDps = "Sólo cuando DPS cuerpo a cuerpo",
 	RoleRangeDps = "Sólo cuando DPS a distancia",
 },
+
 TernaryNo =
 {
 	combat = "Sólo cuando no en combate",
@@ -2844,8 +2629,9 @@ TernaryNo =
 	RoleTank = "Sólo cuando no tanque",
 	RoleHealer = "Sólo cuando no curador",
 	RoleMeleDps = "Sólo cuando no DPS cuerpo a cuerpo",
-	RoleRangeDps = "Sólo cuando no DPS a distancia",
+	RoleRangeDps = "Sólo cuando no DPS a distancia"
 },
+
 TernaryAide =
 {
 	combat = "Efecto modificado por estado de combate",
@@ -2867,7 +2653,7 @@ TernaryAide =
 	RoleTank = "Efecto modificado por ser tanque",
 	RoleHealer = "Efecto modificado por ser curador",
 	RoleMeleDps = "Efecto modificado por ser DPS cuerpo a cuerpo",
-	RoleRangeDps = "Efecto modificado por ser DPS a distancia",
+	RoleRangeDps = "Efecto modificado por ser DPS a distancia"
 },
 
 nomTimerInvertAura = "Invertir aura cuando tiempo inferior a",
@@ -3074,7 +2860,7 @@ ReasonStat =
 	Power = {MatchReason = "$1 poco poder", NoMatchReason = "$1 demasiado poder", NilReason = "$1 tiene un tipo de poder distinto"},
 	Aggro = {MatchReason = "$1 tiene aggro", NoMatchReason = "$1 no tiene aggro"},
 	PvP = {MatchReason = "$1 PvP activado", NoMatchReason = "$1 PvP no activado"},
-	SpellAlert = {MatchReason = "$1 lanzando $2", NoMatchReason = "$1 no está lanzando $2"},
+	SpellAlert = {MatchReason = "$1 lanzando $2", NoMatchReason = "$1 no está lanzando $2"}
 },
 
 -- Import dialog
@@ -3114,7 +2900,7 @@ PlayerImportDialogCancelButton1 = "Rechazar",
 aideCommsRegisterFailure = "There was an error when setting up addon communications.",
 aideBlockIncomingAuras = "Evita que otros te envíen sus auras",
 nomBlockIncomingAuras = "Bloque de auras entrante",
-});
+})
 elseif (GetLocale() == "frFR") then
 PowaAuras.Anim[0] = "[Invisible]"
 PowaAuras.Anim[1] = "Statique"
@@ -3151,9 +2937,6 @@ PowaAuras.EndAnimDisplay[3] = "Transparence seule"
 PowaAuras.EndAnimDisplay[4] = "Tournoiement"
 PowaAuras.EndAnimDisplay[5] = "Tournoiement zoom arrière"
 
-PowaAuras.Sound[0] = NONE
-PowaAuras.Sound[30] = NONE
-
 PowaAuras:MergeTables(PowaAuras.Text,
 {
 welcome = "Tapez /powa pour afficher les options.",
@@ -3164,16 +2947,13 @@ mainHand = "Droite",
 offHand = "Dauche",
 bothHands = "Toutes",
 
-Unknown = "unknown",
-
 DebuffType =
 {
 	Magic = "Magie",
 	Disease = "Maladie",
 	Curse = "Malédiction",
 	Poison = "Poison",
-	-- Non standard types below here.
-	Enrage = "Enrager",
+	Enrage = "Enrager"
 },
 
 DebuffCatType =
@@ -3184,7 +2964,7 @@ DebuffCatType =
 	[PowaAuras.DebuffCatType.Stun] = "Étourdissement",
 	[PowaAuras.DebuffCatType.Root] = "Enracinement",
 	[PowaAuras.DebuffCatType.Disarm] = "Désarmement",
-	[PowaAuras.DebuffCatType.PvE] = "JcE",
+	[PowaAuras.DebuffCatType.PvE] = "JcE"
 },
 
 Role =
@@ -3192,7 +2972,7 @@ Role =
 	RoleTank = "Tank",
 	RoleHealer = "Soigneur",
 	RoleMeleDps = "DPS de mêlée",
-	RoleRangeDps = "DPS à distance",
+	RoleRangeDps = "DPS à distance"
 },
 
 nomReasonRole =
@@ -3200,7 +2980,7 @@ nomReasonRole =
 	RoleTank = "Est un tank",
 	RoleHealer = "Est un soigneur",
 	RoleMeleDps = "Est un DPS de mêlée",
-	RoleRangeDps = "Est un DPS à distance",
+	RoleRangeDps = "Est un DPS à distance"
 },
 
 nomReasonNotRole =
@@ -3208,7 +2988,7 @@ nomReasonNotRole =
 	RoleTank = "N'est pas un tank",
 	RoleHealer = "N'est pas un soigneur",
 	RoleMeleDps = "N'est pas un DPS de mêlée",
-	RoleRangeDps = "N'est pas un DPS à distance",
+	RoleRangeDps = "N'est pas un DPS à distance"
 },
 
 AuraType =
@@ -3239,7 +3019,7 @@ AuraType =
 	[PowaAuras.BuffTypes.Tracking] = "Pistage",
 	[PowaAuras.BuffTypes.TypeBuff] = "Type d'amélioration",
 	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match",
-	[PowaAuras.BuffTypes.GTFO] = "Alerte GTFO",
+	[PowaAuras.BuffTypes.GTFO] = "Alerte GTFO"
 },
 
 PowerType =
@@ -3257,7 +3037,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -3271,7 +3051,7 @@ Relative =
 	BOTTOM = "En bas",
 	BOTTOMLEFT = "En bas à gauche",
 	LEFT = "À gauche",
-	CENTER = "Au centre",
+	CENTER = "Au centre"
 },
 
 Slots =
@@ -3295,24 +3075,14 @@ Slots =
 	Trinket0 = "Bijou 1",
 	Trinket1 = "Bijou 2",
 	Waist = "Taille",
-	Wrist = "Poignets",
+	Wrist = "Poignets"
 },
-
-SlotsToCheck = "Select Slots to Check",
-
-Cancel = "Cancel",
 
 -- Main
 nomEnable = "Activer Power Auras",
 aideEnable = "Active tous les effets de Power Auras",
 
 nomDebug = "Activer Debug Messages",
-aideDebug = "Shows Debug Messages in the chat",
-nomTextureCount = "Max Textures",
-aideTextureCount = "Change this if you add your own textures",
-
-aideOverrideTextureCount = "Override the number of textures",
-nomOverrideTextureCount = "Set this if you are adding your own textures",
 
 ListePlayer = "Page",
 ListeGlobal = "Global",
@@ -3334,10 +3104,6 @@ nomExportSet = "Exporter Set",
 nomUnlock = "Unlock",
 nomLock = "Lock",
 
-aideImport = "Paste the Aura String to the editbox and press \'Accept\'", -- untranslated
-aideExport = "Copy the Aura String from the editbox to share with others.", -- untranslated
-aideImportSet = "Press Ctrl-V to paste the Aura-Set-string and press \'Accept\' this will erase all auras on this page",
-aideExportSet = "Press Ctrl-C to copy all the Auras on this page for sharing.",
 aideDel = "Supprime l'effet séléctionné (appuyez sur CTRL pour autoriser la suppression)",
 
 nomMove = "Déplacer",
@@ -3346,34 +3112,15 @@ nomPlayerEffects = "Effets du personnage",
 nomGlobalEffects = "Effets\nglobaux",
 
 aideEffectTooltip = "(Maj-click pour mettre cet effet sur ON ou OFF)",
-aideEffectTooltip2 = "(Ctrl-click to give reason for activation)",
-
-aideItems = "Enter full name of Item or [xxx] for Id",
-aideSlots = "Enter name of slot to track: Ammo, Back, Chest, Feet, Finger0, Finger1, Hands, Head, Legs, MainHand, Neck, Ranged, SecondaryHand, Shirt, Shoulder, Tabard, Trinket0, Trinket1, Waist, Wrist",
-aideTracking = "Enter name of Tracking type e.g. fish",
 
 -- Editor
-aideCustomText = "Enter text to display (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, agl=agl, %sta=sta, %int=int, %sp1=spi, %sp=spell power, %ap=attack power, %df=defence)",
-
 nomSound = "Son à jouer",
 nomSound2 = "Son à jouer supplémentaire",
-aideSound = "Plays a sound at the beginning.",
-aideSound2 = "Plays a sound at the beginning.",
 nomCustomSound = "Fichier de son:",
-aideCustomSound = "Enter a soundfile that is in the Sounds folder, BEFORE you started the game. mp3 and wav are supported. example: 'cookie.mp3'\nOr\nEnter the full path to play any WoW sound e.g. Sound\\Events\\GuldanCheers.wav",
-
-nomCustomSoundPath = "Path to custom sounds:",
-aideCustomSoundPath = "Set this to your own path (within the WoW install) to prevent your own sounds being overwritten by updating Power Auras.",
-
-nomCustomAuraPath = "Path to custom aura textures:",
-aideCustomAuraPath = "Set this to your own path (within the WoW install) to prevent your own textures being overwritten by updating Power Auras.",
 
 nomSoundEnd = "Son à jouer",
 nomSound2End = "Son à jouer supplémentaire",
-aideSoundEnd = "Plays a sound at the end.",
-aideSound2End = "Plays a sound at the end.",
 nomCustomSoundEnd = "Fichier de son:",
-aideCustomSoundEnd = "Enter a soundfile that is in the Sounds folder, BEFORE you started the game. mp3 and wav are supported. example: 'cookie.mp3'\nOr\nEnter the full path to play any WoW sound e.g. Sound\\Events\\GuldanCheers.wav",
 nomTexture = "Texture",
 aideTexture = "La texture à afficher. Vous pouvez facilement remplacer les textures en changeant les fichier Aura#.tga du dossier de l'AddOn.",
 
@@ -3385,39 +3132,21 @@ aideAnim2 = "Cette animation sera affichée avec moins d'opacité que la princip
 nomDeform = "Déformation",
 
 aideColor = "Cliquez ici pour changer la couleur de la texture.",
-aideTimerColor = "Click here to change the color of the timer.",
-aideStacksColor = "Click here to change the color of the stacks.",
-aideFont = "Click here to pick Font. Press OK to apply the selection.", -- untranslated
-aideMultiID = "Enter here other Aura IDs to combine checks. Multiple IDs must be separated with '/'. Aura ID can be found as [#] on first line of Aura tooltip.", -- untranslated
-aideTooltipCheck = "Also check the tooltip contains this text", -- untranslated
 
 aideBuff = "Entrez ici le nom du buff, ou une partie du nom, qui doit activer/désactiver l'effet. Vous pouvez entrer plusieurs noms s'ils sont séparé comme il convient (ex: Super Buff/Puissance)",
 aideBuff2 = "Entrez ici le nom du débuff, ou une partie du nom, qui doit activer/désactiver l'effet. Vous pouvez entrer plusieurs noms s'ils sont séparé comme il convient (ex: Maladie noire/Peste)",
 aideBuff3 = "Entrez ici le type du débuff qui doit activer ou désactiver l'effet (Poison, Maladie, Malédiction, Magie ou Aucun). Vous pouvez aussi entrer plusieurs types de débuffs à la fois.",
 aideBuff4 = "Entrez ici le nom de l'effet de zone qui activera l'effet (comme une pluie de feu par exemple, généralement le nom de l'effet est disponible dans le journal de combat)",
-aideBuff5 = "Enter here the temporary enchant which must activate this effect : optionally prepend it with 'main/' or 'off/ to designate mainhand or offhand slot. (ex: main/crippling)", -- untranslated
 aideBuff6 = "Vous pouvez entrez ici le ou les chiffres des points de combos qui activeront l'effet (ex : 1 ou 1/2/3 ou 0/4/5 etc...) ",
 aideBuff7 = "Indiquez ici le nom, ou une partie du nom, d'une des actions dans vos barres. L'effet sera actif si l'action est utilisable.",
-aideBuff8 = "Enter here the name, or a part of the name, of a spell from your spellbook. You can enter a spell id [12345].",
-
-aideSpells = "Enter here the Spell Name that will trigger a spell alert Aura.", -- untranslated
-aideStacks = "Enter here the operator and the amount of stacks, which must activate/deactivate the effect. It works only with an operator! ex: '<5' '>3' '=11' '!5' '>=0' '<=6' '2-8'", -- untranslated
-
-aideStealableSpells = "Enter here the Stealable Spell Name that will trigger the Aura (use * for any stealable spell).",
-aidePurgeableSpells = "Enter here the Purgeable Spell Name that will trigger the Aura (use * for any purgeable spell).",
-
-aideTotems = "Enter here the Totem Name that will trigger the Aura or a number 1=Fire, 2=Earth, 3=Water, 4=Air (use * for any totem).",
-
-aideRunes = "Enter here the Runes that will trigger the Aura B=Blood, F=frost, U=Unholy, D=Death (Death runes will also count as the other types) ex: 'BF' 'BFU' 'DDD'",
 
 aideUnitn = "Entrez ici le nom du unit, qui doit activer/désactiver l'effet. Works only for raid/partymembers.",
 aideUnitn2 = "Only for raid/group.",
 
 aideMaxTex = "Defini le maximum de textures disponibles dans l'Editeur d'Effets. Si vous rajoutez des textures en les mettant dans le dossier de l'AddOn (nommées de AURA1.tga à AURA50.tga) c'est ici qu'il faudra le signaler.",
 aideWowTextures = "Cochez cette case pour utiliser les textures internes du jeu plutôt que le dossier de l'addon pour cet effet.",
-aideTextAura = "Check this to type text instead of texture.", -- untranslated
 aideRealaura = "Reale Aura",
-aideCustomTextures = "Cochez cette case pour utiliser les textures présentes dans le sous-dossier 'Custom'. Vous devez connaitre le nom du fichier et indiquer son nom (ex : myTexture.tga)", -- untraslated (needs update to match enGB string)
+aideCustomTextures = "Cochez cette case pour utiliser les textures présentes dans le sous-dossier 'Custom'. Vous devez connaitre le nom du fichier et indiquer son nom (ex : myTexture.tga)",
 aideRandomColor = "Cochez cette case pour que l'effet prenne des couleurs au hasard à chaque activation.",
 
 aideTexMode = "Decochez cette case pour utiliser la transparence de la texture. Par defaut, les couleurs sombres seront plus transparentes.",
@@ -3425,7 +3154,7 @@ aideTexMode = "Decochez cette case pour utiliser la transparence de la texture. 
 nomActivationBy = "Activation par :",
 
 nomOwnTex = "Utiliser la propre texture",
-aideOwnTex = "Utiliser la propre texture du sort/technique/objet à la place de l'aura.", -- untranslated
+aideOwnTex = "Utiliser la propre texture du sort/technique/objet à la place de l'aura.",
 nomStacks = "Pile",
 
 nomUpdateSpeed = "Update speed",
@@ -3447,23 +3176,8 @@ nomGTFO = "Type d'alerte",
 nomPowerType = "Type de puissance",
 
 nomMine = "Lancé par moi",
-aideMine = "Check this to test only buffs/debuffs cast by the player",
-nomDispellable = "I can dispell",
-aideDispellable = "Check to show only buffs that are dispellable",
-nomCanInterrupt = "Can be Interrupted",
-aideCanInterrupt = "Check to show only for spells that can be Interrupted",
-nomIgnoreUseable = "Cooldown Only",
-aideIgnoreUseable = "Ignores if spell is usable (just uses cooldown)",
 nomIgnoreItemUseable = "Équipé uniquement",
 aideIgnoreItemUseable = "Ignore si l'objet est utilisable ou non.",
-nomCheckPet = "Pet",
-aideCheckPet = "Check to Monitor only Pet Spells",
-
-nomOnMe = "Cast On Me",
-aideOnMe = "Only show if being Cast On Me",
-
-nomPlayerSpell = "Player Casting",
-aidePlayerSpell = "Check if Player is casting a spell",
 
 nomCheckTarget = "Cible ennemie",
 nomCheckFriend = "Cible amie",
@@ -3477,15 +3191,9 @@ nomCheckOptunitn = "Cible spécifique",
 aideTarget = "Cochez cette case pour vérifier plutôt les buffs/débuffs d'une cible ennemie.",
 aideTargetFriend = "Cochez cette case pour vérifier plutôt les buffs/débuffs d'une cible amie.",
 aideParty = "Cochez cette case pour vérifier plutôt les buffs/débuffs d'une cible partie.",
-aideGroupOrSelf = "Check this to test a party or raid member or self.",
 aideFocus = "Cochez cette case pour vérifier plutôt les buffs/débuffs d'une cible focus.",
 aideRaid = "Cochez cette case pour vérifier plutôt les buffs/débuffs d'une cible raid.",
 aideGroupAny = "Cochez cette case pour contrôler les améliorations de n'importe-quelle unité de raid ou groupe.",
-aideOptunitn = "Check this to test a special char in raid/group only.",
-aideExact = "Check this to test the exact name of the buff/debuff.",
-aideStance = "Select which Stance,Aura or Form trigger the event.",
-aideGTFO = "Select which GTFO Alert will trigger the event.",
-aidePowerType = "Select which type of resource to track",
 
 aideShowSpinAtBeginning = "Un tournoiement de 360° après l'animation de départ.",
 nomCheckShowSpinAtBeginning = "Tournoiement après l'animation de début.",
@@ -3506,9 +3214,6 @@ aideInverse = "Cochez cette case pour afficher cet effet uniquement quand le buf
 
 nomCheckIgnoreMaj = "Ignorer les majuscules",
 aideIgnoreMaj = "Cochez cette case pour ignorer les majuscules/minuscules du nom des buffs/débuffs.",
-
-nomAuraDebug = "Debug",
-aideAuraDebug = "Debug this Aura",
 
 nomDuration = "Durée de l'animation",
 aideDuration = "Passé ce délai, l'animation sera masquée (0 pour désactiver)",
@@ -3542,20 +3247,10 @@ nomRealaura = "Reale Aura",
 nomRandomColor = "Couleurs aléatoires",
 
 nomTalentGroup1 = "Spé. 1",
-aideTalentGroup1 = "Show this effect only when you are in your primary talent spec.",
 nomTalentGroup2 = "Spé. 2",
-aideTalentGroup2 = "Show this effect only when you are in your secondary talent spec.",
 
-nomReset = "Reset Editor Positions",
-nomPowaShowAuraBrowser = "Show Aura Browser",
-
-nomDefaultTimerTexture = "Default Timer Texture",
 nomTimerTexture = "Police du compteur",
-nomDefaultStacksTexture = "Default Stacks Texture",
 nomStacksTexture = "Police de l'empilement",
-
-Enabled = "Enabled",
-Default = "Default",
 
 Ternary =
 {
@@ -3574,325 +3269,19 @@ Ternary =
 	Instance25Man = "25 joueurs",
 	Instance25ManHeroic = "25 joueurs H",
 	InstanceBg = "Champ de bataille",
-	InstanceArena = "Arène",
+	InstanceArena = "Arène"
 },
 
-nomWhatever = "Ignored",
-aideTernary = "Sets how the status effects how this aura is shown.",
-TernaryYes = {
-	combat = "Only When In Combat",
-	inRaid = "Only When In Raid",
-	inParty = "Only When In Party",
-	isResting = "Only When Resting",
-	ismounted = "Only When Mounted",
-	inVehicle = "Only When In Vehicle",
-	isAlive = "Only When Alive",
-	PvP = "Only when PvP flag set",
-	Instance5Man = "Only when in a 5-Man Normal instance",
-	Instance5ManHeroic = "Only when in a 5-Man Heroic instance",
-	Instance10Man = "Only when in a 10-Man Normal instance",
-	Instance10ManHeroic = "Only when in a 10-Man Heroic instance",
-	Instance25Man = "Only when in a 25-Man Normal instance",
-	Instance25ManHeroic = "Only when in a 25-Man Heroic instance",
-	InstanceBg = "Only when in a Battleground",
-	InstanceArena = "Only when in an Arena instance",
-	RoleTank = "Only when a Tank",
-	RoleHealer = "Only when a Healer",
-	RoleMeleDps = "Only when a Melee DPS",
-	RoleRangeDps = "Only when a Ranged DPS",
-},
-TernaryNo =
-{
-	combat = "Only When Not in Combat",
-	inRaid = "Only When Not in Raid",
-	inParty = "Only When Not in Party",
-	isResting = "Only When Not Resting",
-	ismounted = "Only When Not Mounted",
-	inVehicle = "Only When Not in Vehicle",
-	isAlive = "Only When Dead",
-	PvP = "Only when PvP flag Not set",
-	Instance5Man = "Only when Not in a 5-Man Normal instance",
-	Instance5ManHeroic = "Only when Not in a 5-Man Heroic instance",
-	Instance10Man = "Only when Not in a 10-Man Normal instance",
-	Instance10ManHeroic = "Only when Not in a 10-Man Heroic instance",
-	Instance25Man = "Only when Not in a 25-Man Normal instance",
-	Instance25ManHeroic = "Only when Not in a 25-Man Heroic instance",
-	InstanceBg = "Only when Not in a Battleground",
-	InstanceArena = "Only when Not in an Arena instance",
-	RoleTank = "Only when Not a Tank",
-	RoleHealer = "Only when Not a Healer",
-	RoleMeleDps = "Only when Not a Melee DPS",
-	RoleRangeDps = "Only when Not a Ranged DPS",
-},
-TernaryAide =
-{
-	combat = "Effect modified by Combat status.",
-	inRaid = "Effect modified by Raid status.",
-	inParty = "Effect modified by Party status.",
-	isResting = "Effect modified by Resting status.",
-	ismounted = "Effect modified by Mounted status.",
-	inVehicle = "Effect modified by Vehicle status.",
-	isAlive = "Effect modified by Alive status.",
-	PvP = "Effect modified by PvP flag",
-	Instance5Man = "Effect modified by being in a 5-Man Normal instance",
-	Instance5ManHeroic = "Effect modified by being in a 5-Man Heroic instance",
-	Instance10Man = "Effect modified by being in a 10-Man Normal instance",
-	Instance10ManHeroic = "Effect modified by being in a 10-Man Heroic instance",
-	Instance25Man = "Effect modified by being in a 25-Man Normal instance",
-	Instance25ManHeroic = "Effect modified by being in a 25-Man Heroic instance",
-	InstanceBg = "Effect modified by being in a Battleground",
-	InstanceArena = "Effect modified by being in an Arena instance",
-	RoleTank = "Effect modified by being a Tank",
-	RoleHealer = "Effect modified by being a Healer",
-	RoleMeleDps = "Effect modified by being a Melee DPS",
-	RoleRangeDps = "Effect modified by being a Ranged DPS",
-},
-
-nomTimerInvertAura = "Cacher l'aura et le compteur lorsque le temps restant est supérieur à ",
+nomTimerInvertAura = "Cacher l'aura et le compteur lorsque le temps restant est supérieur à",
 aidePowaTimerInvertAuraSlider = "0 pour désactiver",
-nomTimerHideAura = "Cacher l'aura et le compteur lorsque le temps restant est supérieur à ",
+nomTimerHideAura = "Cacher l'aura et le compteur lorsque le temps restant est supérieur à",
 aidePowaTimerHideAuraSlider = "0 pour désactiver",
-
-aideTimerRounding = "When checked will round the timer up",
-nomTimerRounding = "Round Timer Up",
-
-aideAllowInspections = "Allow Power Auras to Inspect players to determine roles, turning this off will sacrifice accuracy for speed",
-nomAllowInspections = "Allow Inspections",
 
 nomCarried = "Dans le sac uniquement",
 aideCarried = "Ignore si l'objet est utilisable ou non",
 
--- Diagnostic reason text, these have substitutions (using $1, $2 etc) to allow for different sententance constructions
-nomReasonShouldShow = "Should show because $1",
-nomReasonWontShow = "Won't show because $1",
-
-nomReasonMulti = "All multiples match $1", --$1=Multiple match ID list
-
-nomReasonDisabled = "Power Auras Disabled",
-nomReasonGlobalCooldown = "Ignore Global Cooldown",
-
-nomReasonBuffPresent = "$1 has $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 has Debuff Misery")
-nomReasonBuffMissing = "$1 doesn't have $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 doesn't have Debuff Misery")
-nomReasonBuffFoundButIncomplete = "$2 $3 found for $1 but\n$4", --$1=Target $2=BuffType, $3=BuffName, $4=IncompleteReason (e.g. "Debuff Sunder Armor found for Target but\nStacks<=2")
-
-nomReasonOneInGroupHasBuff = "$1 has $2 $3", --$1=GroupId $2=BuffType, $3=BuffName (e.g. "Raid23 has Buff Blessing of Kings")
-nomReasonNotAllInGroupHaveBuff = "Not all in $1 have $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "Not all in Raid have Buff Blessing of Kings")
-nomReasonAllInGroupHaveBuff = "All in $1 have $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "All in Raid have Buff Blessing of Kings")
-nomReasonNoOneInGroupHasBuff = "No one in $1 has $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "No one in Raid has Buff Blessing of Kings")
-
-nomReasonBuffPresentTimerInvert = "Buff present, timer invert",
 nomReasonBuffPresentNotMine = "Pas lancé par moi",
-nomReasonBuffFound = "Buff present",
-nomReasonStacksMismatch = "Stacks = $1 expecting $2", --$1=Actual Stack count, $2=Expected Stack logic match (e.g. ">=0")
-
-nomReasonAuraMissing = "Aura missing",
-nomReasonAuraOff = "Aura off",
-nomReasonAuraBad = "Aura bad",
-
-nomReasonNotForTalentSpec = "Aura not active for this talent spec",
-
-nomReasonPlayerDead = "Player is DEAD",
-nomReasonPlayerAlive = "Player is Alive",
-nomReasonNoTarget = "No Target",
-nomReasonTargetPlayer = "Target is you",
-nomReasonTargetDead = "Target is Dead",
-nomReasonTargetAlive = "Target is Alive",
-nomReasonTargetFriendly = "Target is Friendly",
-nomReasonTargetNotFriendly = "Target not Friendly",
-
-nomReasonNoPet = "Player has no Pet",
-
-nomReasonNotInCombat = "Not in combat",
-nomReasonInCombat = "In combat",
-
-nomReasonInParty = "In Party",
-nomReasonInRaid = "In Raid",
-nomReasonNotInParty = "Not in Party",
-nomReasonNotInRaid = "Not in Raid",
-nomReasonNotInGroup = "Not in Party/Raid",
-nomReasonNoFocus = "No focus",
-nomReasonNoCustomUnit = "Can't find custom unit not in party, raid or with pet unit=$1",
-nomReasonPvPFlagNotSet = "PvP flag not set",
-nomReasonPvPFlagSet = "PvP flag set",
-
-nomReasonNotMounted = "Not Mounted",
-nomReasonMounted = "Mounted",
-nomReasonNotInVehicle = "Not In Vehicle",
-nomReasonInVehicle = "In Vehicle",
-nomReasonNotResting = "Not Resting",
-nomReasonResting = "Resting",
-nomReasonStateOK = "State OK",
-
-nomReasonNotIn5ManInstance = "Not in 5-Man Instance",
-nomReasonIn5ManInstance = "In 5-Man Instance",
-nomReasonNotIn5ManHeroicInstance = "Not in 5-Man Heroic Instance",
-nomReasonIn5ManHeroicInstance = "In 5-Man Heroic Instance",
-
-nomReasonNotIn10ManInstance = "Not in 10-Man Instance",
-nomReasonIn10ManInstance = "In 10-Man Instance",
-nomReasonNotIn10ManHeroicInstance = "Not in 10-Man Heroic Instance",
-nomReasonIn10ManHeroicInstance = "In 10-Man Heroic Instance",
-
-nomReasonNotIn25ManInstance = "Not in 25-Man Instance",
-nomReasonIn25ManInstance = "In 25-Man Instance",
-nomReasonNotIn25ManHeroicInstance = "Not in 25-Man Heroic Instance",
-nomReasonIn25ManHeroicInstance = "In 25-Man Heroic Instance",
-
-nomReasonNotInBgInstance = "Not in Battleground Instance",
-nomReasonInBgInstance = "In Battleground Instance",
-nomReasonNotInArenaInstance = "Not in Arena Instance",
-nomReasonInArenaInstance = "In Arena Instance",
-
-nomReasonInverted = "$1 (inverted)", -- $1 is the reason, but the inverted flag is set so the logic is reversed
-
-nomReasonSpellUsable = "Spell $1 usable",
-nomReasonSpellNotUsable = "Spell $1 not usable",
-nomReasonSpellNotReady = "Spell $1 Not Ready, on cooldown, timer invert",
-nomReasonSpellNotEnabled = "Spell $1 not enabled ",
-nomReasonSpellNotFound = "Spell $1 not found",
-nomReasonSpellOnCooldown = "Spell $1 on Cooldown",
-
-nomReasonCastingOnMe = "$1 is casting $2 on me", --$1=CasterName $2=SpellName (e.g. "Rotface is casting Slime Spray on me")
-nomReasonNotCastingOnMe = "No matching spell being cast on me",
-
-nomReasonCastingByMe = "I am casting $1 on $2", --$1=SpellName $2=TargetName (e.g. "I am casting Holy Light on Fred")
-nomReasonNotCastingByMe = "No matching spell being cast by me",
-
-nomReasonAnimationDuration = "Still within custom duration",
-
-nomReasonItemUsable = "Item $1 usable",
-nomReasonItemNotUsable = "Item $1 not usable",
-nomReasonItemNotReady = "Item $1 Not Ready, on cooldown, timer invert",
-nomReasonItemNotEnabled = "Item $1 not enabled ",
-nomReasonItemNotFound = "Item $1 not found",
-nomReasonItemOnCooldown = "Item $1 on Cooldown",
-
-nomReasonItemEquipped = "Item $1 equipped",
-nomReasonItemNotEquipped = "Item $1 not equipped",
-
-nomReasonItemInBags = "Item $1 in bags",
-nomReasonItemNotInBags = "Item $1 not in bags",
-nomReasonItemNotOnPlayer = "Item $1 not carried",
-
-nomReasonSlotUsable = "$1 Slot usable",
-nomReasonSlotNotUsable = "$1 Slot not usable",
-nomReasonSlotNotReady = "$1 Slot Not Ready, on cooldown, timer invert",
-nomReasonSlotNotEnabled = "$1 Slot has no cooldown effect",
-nomReasonSlotNotFound = "$1 Slot not found",
-nomReasonSlotOnCooldown = "$1 Slot on Cooldown",
-nomReasonSlotNone = "$1 Slot is empty",
-
-nomReasonStealablePresent = "$1 has Stealable spell $2", --$1=Target $2=SpellName (e.g. "Focus has Stealable spell Blessing of Wisdom")
-nomReasonNoStealablePresent = "Nobody has Stealable spell $1", --$1=SpellName (e.g. "Nobody has Stealable spell Blessing of Wisdom")
-nomReasonRaidTargetStealablePresent = "Raid$1Target has has Stealable spell $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Stealable spell Blessing of Wisdom")
-nomReasonPartyTargetStealablePresent = "Party$1Target has has Stealable spell $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Stealable spell Blessing of Wisdom")
-
-nomReasonPurgeablePresent = "$1 has Purgeable spell $2", --$1=Target $2=SpellName (e.g. "Focus has Purgeable spell Blessing of Wisdom")
-nomReasonNoPurgeablePresent = "Nobody has Purgeable spell $1", --$1=SpellName (e.g. "Nobody has Purgeable spell Blessing of Wisdom")
-nomReasonRaidTargetPurgeablePresent = "Raid$1Target has has Purgeable spell $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Purgeable spell Blessing of Wisdom")
-nomReasonPartyTargetPurgeablePresent = "Party$1Target has has Purgeable spell $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Purgeable spell Blessing of Wisdom")
-
-nomReasonAoETrigger = "AoE $1 triggered", -- $1=AoE spell name
-nomReasonAoENoTrigger = "AoE no trigger for $1", -- $1=AoE spell match
-
-nomReasonEnchantMainInvert = "Main Hand $1 enchant found, timer invert", -- $1=Enchant match
-nomReasonEnchantMain = "Main Hand $1 enchant found", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert", -- $1=Enchant match
-nomReasonEnchantOff = "Off Hand $1 enchant found", -- $1=Enchant match
-nomReasonNoEnchant = "No enchant found on weapons for $1", -- $1=Enchant match
-
-nomReasonNoUseCombo = "You do not use combo points",
-nomReasonNoUseComboInForm = "You don't use combo points in this form",
-nomReasonComboMatch = "Combo points $1 match $2",-- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "Combo points $1 no match with $2",-- $1=Combo Points, $2=Combo Match
-
-nomReasonActionNotFound = "not found on Action Bar",
-nomReasonActionReady = "Action Ready",
-nomReasonActionNotReadyInvert = "Action Not Ready (on cooldown), timer invert",
-nomReasonActionNotReady = "Action Not Ready (on cooldown)",
-nomReasonActionlNotEnabled = "Action not enabled",
-nomReasonActionNotUsable = "Action not usable",
-
-nomReasonYouAreCasting = "You are casting $1", -- $1=Casting match
-nomReasonYouAreNotCasting = "You are not casting $1", -- $1=Casting match
-nomReasonTargetCasting = "Target casting $1", -- $1=Casting match
-nomReasonFocusCasting = "Focus casting $1", -- $1=Casting match
-nomReasonRaidTargetCasting = "Raid$1Target casting $2", --$1=RaidId $2=Casting match
-nomReasonPartyTargetCasting = "Party$1Target casting $2", --$1=PartyId $2=Casting match
-nomReasonNoCasting = "Nobody's target casting $1", -- $1=Casting match
-
-nomReasonStance = "Current Stance $1, matches $2", -- $1=Current Stance, $2=Match Stance
-nomReasonNoStance = "Current Stance $1, does not match $2", -- $1=Current Stance, $2=Match Stance
-
-nomReasonRunesNotReady = "Runes not Ready",
-nomReasonRunesReady = "Runes Ready",
-
-nomReasonPetExists= "Player has Pet",
-nomReasonPetMissing = "Player Pet Missing",
-
-nomReasonTrackingMissing = "Tracking not set to $1",
-nomTrackingSet = "Tracking set to $1",
-
-nomNotInInstance = "Not in correct instance",
-
-nomReasonStatic = "Static Aura",
-
-nomReasonUnknownName = "Unit name unknown",
-nomReasonRoleUnknown = "Role unknown",
-nomReasonRoleNoMatch = "No matching Role",
-
-nomUnknownSpellId = "PowerAuras: Aura $1 references an unknown spellId: ", -- $1=SpellID
-
-nomReasonGTFOAlerts = "GTFO alerts are never always on.",
-
-ReasonStat =
-{
-	Health = {MatchReason = "$1 Health past limit", NoMatchReason = "$1 Health not past limit"},
-	Mana = {MatchReason = "$1 Mana past limit", NoMatchReason = "$1 Mana not past limit"},
-	Power = {MatchReason = "$1 $3 past limit", NoMatchReason = "$1 $3 not past limit", NilReason = "$1 has wrong Power Type"},
-	Aggro = {MatchReason = "$1 has aggro", NoMatchReason = "$1 does not have aggro"},
-	PvP = {MatchReason = "$1 PvP flag set", NoMatchReason = "$1 PvP flag not set"},
-	SpellAlert = {MatchReason = "$1 casting $2", NoMatchReason = "$1 not casting $2"},
-},
-
--- Import dialog
-ImportDialogAccept = "Import",
-ImportDialogCancel = "Close",
-
--- Export dialog
-ExportDialogTopTitle = "Export Auras",
-ExportDialogCopyTitle = "Press Ctrl-C to copy the below aura string.",
-ExportDialogMidTitle = "Send to Player",
-ExportDialogSendTitle1 = "Enter a player name below and click 'Send'.",
-ExportDialogSendTitle2 = "Contacting %s (%d seconds remaining)...", -- The 1/2/3/4 suffix denotes the internal status of the frame.
-ExportDialogSendTitle3a = "%s is in combat and cannot accept the offer.",
-ExportDialogSendTitle3b = "%s is not accepting export requests.",
-ExportDialogSendTitle3c = "%s has not responded, they may be away or offline.",
-ExportDialogSendTitle3d = "%s is currently receiving another export request.",
-ExportDialogSendTitle3e = "%s has declined the offer.",
-ExportDialogSendTitle4 = "Sending auras...",
-ExportDialogSendTitle5 = "Send successful!",
-ExportDialogSendButton1 = "Send",
-ExportDialogSendButton2 = "Back",
-ExportDialogCancelButton = "Close",
-
--- Cross-client import dialog
-PlayerImportDialogTopTitle = "You Have Auras!",
-PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
-PlayerImportDialogDescTitle2 = "Receiving auras...",
-PlayerImportDialogDescTitle3 = "The offer has expired.",
-PlayerImportDialogDescTitle4 = "Select a page to save the auras to.",
-PlayerImportDialogWarningTitle = "|cFFFF0000Note: |rYou are being sent an aura set, this will overwrite any existing auras on the selected page.",
-PlayerImportDialogDescTitle5 = "Auras saved!",
-PlayerImportDialogDescTitle6 = "No aura slots are available.",
-PlayerImportDialogAcceptButton1 = "Accept",
-PlayerImportDialogAcceptButton2 = "Save",
-PlayerImportDialogCancelButton1 = "Reject",
-
-aideCommsRegisterFailure = "There was an error when setting up addon communications.",
-aideBlockIncomingAuras = "Prevent anybody sending you auras",
-nomBlockIncomingAuras = "Block Incoming Auras",
-});
+})
 elseif (GetLocale() == "koKR") then
 PowaAuras.Anim[0] = "[보이지 않음]"
 PowaAuras.Anim[1] = "공전"
@@ -3926,11 +3315,8 @@ PowaAuras.EndAnimDisplay[0] = "[없음]"
 PowaAuras.EndAnimDisplay[1] = "확대"
 PowaAuras.EndAnimDisplay[2] = "축소"
 PowaAuras.EndAnimDisplay[3] = "불투명도만"
-PowaAuras.EndAnimDisplay[4] = "Spin" -- untranslated
-PowaAuras.EndAnimDisplay[5] = "Spin In" -- untranslated
-
-PowaAuras.Sound[0] = NONE
-PowaAuras.Sound[30] = NONE
+PowaAuras.EndAnimDisplay[4] = "Spin"
+PowaAuras.EndAnimDisplay[5] = "Spin In"
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -3948,8 +3334,7 @@ DebuffType =
 	Disease = "질병",
 	Curse = "저주",
 	Poison = "독",
-	-- Non standard types below here.
-	Enrage = "Enrage",
+	Enrage = "Enrage"
 },
 
 DebuffCatType =
@@ -3960,7 +3345,7 @@ DebuffCatType =
 	[PowaAuras.DebuffCatType.Stun] = "기절",
 	[PowaAuras.DebuffCatType.Root] = "올가미",
 	[PowaAuras.DebuffCatType.Disarm] = "무장해제",
-	[PowaAuras.DebuffCatType.PvE] = "PvE",
+	[PowaAuras.DebuffCatType.PvE] = "PvE"
 },
 
 AuraType =
@@ -3991,69 +3376,8 @@ AuraType =
 	[PowaAuras.BuffTypes.Tracking] = "Tracking",
 	[PowaAuras.BuffTypes.TypeBuff] = "Buff type",
 	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match",
-	[PowaAuras.BuffTypes.GTFO] = "GTFO Alert",
+	[PowaAuras.BuffTypes.GTFO] = "GTFO Alert"
 },
-
-PowerType =
-{
-	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage",
-	[SPELL_POWER_FOCUS] = "Focus",
-	[SPELL_POWER_ENERGY] = "Energy",
-	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
-	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
-	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
-	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
-	[SPELL_POWER_HOLY_POWER] = "Holy Power",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "Chi",
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
-},
-
-Relative =
-{
-	NONE = "Free",
-	TOPLEFT = "Top-Left",
-	TOP = "Top",
-	TOPRIGHT = "Top-Right",
-	RIGHT = "Right",
-	BOTTOMRIGHT = "BottomRight",
-	BOTTOM = "Bottom",
-	BOTTOMLEFT = "Bottom-Left",
-	LEFT = "Left",
-	CENTER = "Center",
-},
-
-Slots =
-{
-	Ammo = "Ammo",
-	Back = "Back",
-	Chest = "Chest",
-	Feet = "Feet",
-	Finger0 = "Finger1",
-	Finger1 = "Finger2",
-	Hands = "Hands",
-	Head = "Head",
-	Legs = "Legs",
-	MainHand = "MainHand",
-	Neck = "Neck",
-	Ranged = "Ranged",
-	SecondaryHand = "OffHand",
-	Shirt = "Shirt",
-	Shoulder = "Shoulder",
-	Tabard = "Tabard",
-	Trinket0 = "Trinket1",
-	Trinket1 = "Trinket2",
-	Waist = "Waist",
-	Wrist = "Wrist",
-},
-
-SlotsToCheck = "Select Slots to Check",
-
-Cancel = "Cancel",
 
 -- Main
 nomEnable = "Power Auras 활성화",
@@ -4107,7 +3431,6 @@ nomDeform = "형태 변경",
 aideColor = "텍스쳐의 색상을 변경하려면 여기를 클릭하십시오.",
 aideFont = "글꼴을 선택하려면 여기를 클릭하십시오. 선택한 것을 적용하려면 '확인'을 누르십시오.",
 aideMultiID = "체크한 것과 연결시키기 위해 다른 오라 ID를 여기에 입력합니다. 다중 ID는 '/'로 구별지워져야만 합니다. 오라 ID는 오라 툴팁의 첫번째 줄에서 [#]로 찾을 수 있습니다.",
-aideTooltipCheck = "Also check the tooltip starts with this text",
 
 aideBuff = "여기에 이 효과를 활성/비활성화해야만 하는 버프의 이름을, 혹은 이름의 일부분을 입력합니다. 구분되어 있어야 할 이름이라면 각각의 이름을 ('/'로 분리해) 입력할 수 있습니다(예: Super Buff/Power).",
 aideBuff2 = "여기에 이 효과를 활성/비활성화해야만 하는 디버프의 이름을, 혹은 이름의 일부분을 입력합니다. 구분되어 있어야 할 이름이라면 각각의 이름을 ('/'로 분리해) 입력할 수 있습니다(예: Dark Disease/Plague).",
@@ -4162,12 +3485,6 @@ nomStance = "태세",
 nomMine = "나에 의해 시전된",
 aideMine = "플레이어에 의해 시전된 버프/디버프에 한해 테스트하려면 이곳에 체크하십시오.",
 nomDispellable = "내가 해제할 수 있는",
-aideDispellable = "Check to show only buffs that are dispellable", -- untranslated
-nomCanInterrupt = "Can be Interrupted",
-aideCanInterrupt = "Check to show only for spells that can be Interrupted", -- untranslated
-
-nomPlayerSpell = "Player Casting", -- untranslated
-aidePlayerSpell = "Check if Player is casting a spell", -- untranslated
 
 nomCheckTarget = "적대적 대상",
 nomCheckFriend = "우호적 대상",
@@ -4188,9 +3505,6 @@ aideGroupAny = "'특정' 파티/공격대원에 대해 버프를 테스트하려
 aideOptunitn = "공격대/그룹에 속해 있는 특정 캐릭터에 한해 테스트하려면 이곳에 체크하십시오.",
 aideExact = "버프/디버프/행동의 정확한 이름을 테스트하려면 이곳에 체크하십시오.",
 aideStance = "이벤트에 적용할 태세, 오라 혹은 변신을 선택하십시오.",
-
-aideShowSpinAtBeginning = "At the end of the begin animation show a 360 degree spin",
-nomCheckShowSpinAtBeginning = "Show Spin after begin animation ends",
 
 nomCheckShowTimer = "보이기",
 nomTimerDuration = "지속시간",
@@ -4254,11 +3568,12 @@ Ternary = {
 	isResting = "휴식 중",
 	ismounted = "탈것 중",
 	inVehicle = "운송수단 중",
-	isAlive= "살아 있을 때",
+	isAlive= "살아 있을 때"
 },
 
 nomWhatever = "무시",
 aideTernary = "오라표시 조건을 설정",
+
 TernaryYes = {
 	combat = "오직 전투중일 때",
 	inRaid = "오직 공격대에 속해 있을 때",
@@ -4266,8 +3581,9 @@ TernaryYes = {
 	isResting = "오직 휴식상태일 때",
 	ismounted = "오직 탈것 상태일 때",
 	inVehicle = "오직 운송수단 타고 있을 때",
-	isAlive= "오직 살아 있을 때만",
+	isAlive= "오직 살아 있을 때만"
 },
+
 TernaryNo = {
 	combat = "전투중이 아닐 때",
 	inRaid = "공격대가 아닐 때",
@@ -4275,8 +3591,9 @@ TernaryNo = {
 	isResting = "휴식 상태가 아닐 때",
 	ismounted = "탈것을 탄 상태가 아닐 때",
 	inVehicle = "운송수단을 타고 있지 않을 때",
-	isAlive= "죽었을 때",
+	isAlive= "죽었을 때"
 },
+
 TernaryAide = {
 	combat = "전투 상황에 의한 효능 상태.",
 	inRaid = "공격대 상황에 의한 효능 상태.",
@@ -4284,174 +3601,14 @@ TernaryAide = {
 	isResting = "휴식상황에 의한 효능 상태.",
 	ismounted = "탈것 상황에 의한 효능 상태.",
 	inVehicle = "운송수단 상황에 의한 효능 상태.",
-	isAlive= "살아 있는 상황에 의한 효능 상태.",
+	isAlive= "살아 있는 상황에 의한 효능 상태."
 },
 
 nomTimerInvertAura = "시간 이하일 때 오라 반전",
 aidePowaTimerInvertAuraSlider = "제한시간보다 지속시간이 적을 때 오라 반전(0일 때 비활성화)",
 nomTimerHideAura = "오라 숨김 & 상기 시간까지",
-aidePowaTimerHideAuraSlider = "제한 시간보다 지속시간이 더 중요할 때 오라와 시간 숨김 (0일 때 비활성화)",
-
-aideTimerRounding = "When checked will round the timer up",
-nomTimerRounding = "Round Timer Up",
-
-aideGTFO = "Use GTFO (Boss) spell matches for AoE detection",
-nomGTFO = "Use GTFO for AoE",
-
-nomIgnoreUseable = "Display Only Depends on Cooldown",
-aideIgnoreUseable = "Ignores if spell is usable (just uses cooldown)",
-
--- Diagnostic reason text, these have substitutions (using $1, $2 etc) to allow for different sententance constructions
-nomReasonShouldShow = "Should show because $1",
-nomReasonWontShow = "Won't show because $1",
-
-nomReasonMulti = "All multiples match $1", --$1=Multiple match ID list
-
-nomReasonDisabled = "Power Auras Disabled",
-nomReasonGlobalCooldown = "Ignore Global Cooldown",
-
-nomReasonBuffPresent = "$1 has $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 has Debuff Misery")
-nomReasonBuffMissing = "$1 doesn't have $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 doesn't have Debuff Misery")
-nomReasonBuffFoundButIncomplete = "$2 $3 found for $1 but\n$4", --$1=Target $2=BuffType, $3=BuffName, $4=IncompleteReason (e.g. "Debuff Sunder Armor found for Target but\nStacks<=2")
-
-nomReasonOneInGroupHasBuff = "$1 has $2 $3", --$1=GroupId $2=BuffType, $3=BuffName (e.g. "Raid23 has Buff Blessing of Kings")
-nomReasonNotAllInGroupHaveBuff = "Not all in $1 have $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "Not all in Raid have Buff Blessing of Kings")
-nomReasonAllInGroupHaveBuff = "All in $1 have $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "All in Raid have Buff Blessing of Kings")
-nomReasonNoOneInGroupHasBuff = "No one in $1 has $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "No one in Raid has Buff Blessing of Kings")
-
-nomReasonBuffPresentTimerInvert = "Buff present, timer invert",
-nomReasonBuffFound = "Buff present",
-nomReasonStacksMismatch = "Stacks = $1 expecting $2", --$1=Actual Stack count, $2=Expected Stack logic match (e.g. ">=0")
-
-nomReasonAuraMissing = "Aura missing",
-nomReasonAuraOff = "Aura off",
-nomReasonAuraBad = "Aura bad",
-
-nomReasonNotForTalentSpec = "Aura not active for this talent spec",
-
-nomReasonPlayerDead = "Player is DEAD",
-nomReasonPlayerAlive = "Player is Alive",
-nomReasonNoTarget = "No Target",
-nomReasonTargetPlayer = "Target is you",
-nomReasonTargetDead = "Target is Dead",
-nomReasonTargetAlive = "Target is Alive",
-nomReasonTargetFriendly = "Target is Friendly",
-nomReasonTargetNotFriendly = "Target not Friendly",
-
-nomReasonNotInCombat = "Not in combat",
-nomReasonInCombat = "In combat",
-
-nomReasonInParty = "In Party",
-nomReasonInRaid = "In Raid",
-nomReasonNotInParty = "Not in Party",
-nomReasonNotInRaid = "Not in Raid",
-nomReasonNoFocus = "No focus",
-nomReasonNoCustomUnit = "Can't find custom unit not in party, raid or with pet unit=$1",
-
-nomReasonNotMounted = "Not Mounted",
-nomReasonMounted = "Mounted",
-nomReasonNotInVehicle = "Not In Vehicle",
-nomReasonInVehicle = "In Vehicle",
-nomReasonNotResting = "Not Resting",
-nomReasonResting = "Resting",
-nomReasonStateOK = "State OK",
-
-nomReasonInverted = "$1 (inverted)", -- $1 is the reason, but the inverted flag is set so the logic is reversed
-
-nomReasonSpellUsable = "Spell $1 usable",
-nomReasonSpellNotUsable = "Spell $1 not usable",
-nomReasonSpellNotReady = "Spell $1 Not Ready, on cooldown, timer invert",
-nomReasonSpellNotEnabled = "Spell $1 not enabled ",
-nomReasonSpellNotFound = "Spell $1 not found",
-nomReasonSpellOnCooldown = "Spell $1 on Cooldown",
-
-nomReasonStealablePresent = "$1 has Stealable spell $2", --$1=Target $2=SpellName (e.g. "Focus has Stealable spell Blessing of Wisdom")
-nomReasonNoStealablePresent = "Nobody has Stealable spell $1", --$1=SpellName (e.g. "Nobody has Stealable spell Blessing of Wisdom")
-nomReasonRaidTargetStealablePresent = "Raid$1Target has has Stealable spell $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Stealable spell Blessing of Wisdom")
-nomReasonPartyTargetStealablePresent = "Party$1Target has has Stealable spell $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Stealable spell Blessing of Wisdom")
-
-nomReasonPurgeablePresent = "$1 has Purgeable spell $2", --$1=Target $2=SpellName (e.g. "Focus has Purgeable spell Blessing of Wisdom")
-nomReasonNoPurgeablePresent = "Nobody has Purgeable spell $1", --$1=SpellName (e.g. "Nobody has Purgeable spell Blessing of Wisdom")
-nomReasonRaidTargetPurgeablePresent = "Raid$1Target has has Purgeable spell $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Purgeable spell Blessing of Wisdom")
-nomReasonPartyTargetPurgeablePresent = "Party$1Target has has Purgeable spell $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Purgeable spell Blessing of Wisdom")
-
-nomReasonAoETrigger = "AoE $1 triggered", -- $1=AoE spell name
-nomReasonAoENoTrigger = "AoE no trigger for $1", -- $1=AoE spell match
-
-nomReasonEnchantMainInvert = "Main Hand $1 enchant found, timer invert", -- $1=Enchant match
-nomReasonEnchantMain = "Main Hand $1 enchant found", -- $1=Enchant match
-nomReasonEnchantOffInvert = "Off Hand $1 enchant found, timer invert", -- $1=Enchant match
-nomReasonEnchantOff = "Off Hand $1 enchant found", -- $1=Enchant match
-nomReasonNoEnchant = "No enchant found on weapons for $1", -- $1=Enchant match
-
-nomReasonNoUseCombo = "You do not use combo points",
-nomReasonComboMatch = "Combo points $1 match $2",-- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "Combo points $1 no match with $2",-- $1=Combo Points, $2=Combo Match
-
-nomReasonActionNotFound = "not found on Action Bar",
-nomReasonActionReady = "Action Ready",
-nomReasonActionNotReadyInvert = "Action Not Ready (on cooldown), timer invert",
-nomReasonActionNotReady = "Action Not Ready (on cooldown)",
-nomReasonActionlNotEnabled = "Action not enabled",
-nomReasonActionNotUsable = "Action not usable",
-
-nomReasonYouAreCasting = "You are casting $1", -- $1=Casting match
-nomReasonYouAreNotCasting = "You are not casting $1", -- $1=Casting match
-nomReasonTargetCasting = "Target casting $1", -- $1=Casting match
-nomReasonFocusCasting = "Focus casting $1", -- $1=Casting match
-nomReasonRaidTargetCasting = "Raid$1Target casting $2", --$1=RaidId $2=Casting match
-nomReasonPartyTargetCasting = "Party$1Target casting $2", --$1=PartyId $2=Casting match
-nomReasonNoCasting = "Nobody's target casting $1", -- $1=Casting match
-
-nomReasonStance = "Current Stance $1, matches $2", -- $1=Current Stance, $2=Match Stance
-nomReasonNoStance = "Current Stance $1, does not match $2", -- $1=Current Stance, $2=Match Stance
-
-ReasonStat =
-{
-	Health = {MatchReason = "$1 Health low", NoMatchReason = "$1 Health not low enough"},
-	Mana = {MatchReason = "$1 Mana low", NoMatchReason = "$1 Mana not low enough"},
-	RageEnergy = {MatchReason = "$1 EnergyRagePower low", NoMatchReason = "$1 EnergyRagePower not low enough"},
-	Aggro = {MatchReason = "$1 has aggro", NoMatchReason = "$1 does not have aggro"},
-	PvP = {MatchReason = "$1 PvP flag set", NoMatchReason = "$1 PvP flag not set"},
-},
-
--- Import dialog
-ImportDialogAccept = "Import",
-ImportDialogCancel = "Close",
-
--- Export dialog
-ExportDialogTopTitle = "Export Auras",
-ExportDialogCopyTitle = "Press Ctrl-C to copy the below aura string.",
-ExportDialogMidTitle = "Send to Player",
-ExportDialogSendTitle1 = "Enter a player name below and click 'Send'.",
-ExportDialogSendTitle2 = "Contacting %s (%d seconds remaining)...", -- The 1/2/3/4 suffix denotes the internal status of the frame.
-ExportDialogSendTitle3a = "%s is in combat and cannot accept the offer.",
-ExportDialogSendTitle3b = "%s is not accepting export requests.",
-ExportDialogSendTitle3c = "%s has not responded, they may be away or offline.",
-ExportDialogSendTitle3d = "%s is currently receiving another export request.",
-ExportDialogSendTitle3e = "%s has declined the offer.",
-ExportDialogSendTitle4 = "Sending auras...",
-ExportDialogSendTitle5 = "Send successful!",
-ExportDialogSendButton1 = "Send",
-ExportDialogSendButton2 = "Back",
-ExportDialogCancelButton = "Close",
-
--- Cross-client import dialog
-PlayerImportDialogTopTitle = "You Have Auras!",
-PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
-PlayerImportDialogDescTitle2 = "Receiving auras...",
-PlayerImportDialogDescTitle3 = "The offer has expired.",
-PlayerImportDialogDescTitle4 = "Select a page to save the auras to.",
-PlayerImportDialogWarningTitle = "|cFFFF0000Note: |rYou are being sent an aura set, this will overwrite any existing auras on the selected page.",
-PlayerImportDialogDescTitle5 = "Auras saved!",
-PlayerImportDialogDescTitle6 = "No aura slots are available.",
-PlayerImportDialogAcceptButton1 = "Accept",
-PlayerImportDialogAcceptButton2 = "Save",
-PlayerImportDialogCancelButton1 = "Reject",
-
-aideBlockIncomingAuras = "Prevent anybody sending you auras",
-nomBlockIncomingAuras = "Block Incoming Auras",
-});
+aidePowaTimerHideAuraSlider = "제한 시간보다 지속시간이 더 중요할 때 오라와 시간 숨김 (0일 때 비활성화)"
+})
 elseif (GetLocale() == "ruRU") then
 PowaAuras.Anim[0] = "[Cкрытый]"
 PowaAuras.Anim[1] = "Статический"
@@ -4486,10 +3643,7 @@ PowaAuras.EndAnimDisplay[1] = "Увеличить масштаб"
 PowaAuras.EndAnimDisplay[2] = "Уменьшить масштаб"
 PowaAuras.EndAnimDisplay[3] = "Только матовость"
 PowaAuras.EndAnimDisplay[4] = "Поворот"
-PowaAuras.EndAnimDisplay[5] = "Spin In" -- untranslated
-
-PowaAuras.Sound[0] = NONE
-PowaAuras.Sound[30] = NONE
+PowaAuras.EndAnimDisplay[5] = "Spin In"
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -4509,7 +3663,6 @@ DebuffType =
 	Disease = "Болезнь",
 	Curse = "Проклятие",
 	Poison = "Яд",
-	-- Non standard types below here.
 	Enrage = "Enrage",
 },
 
@@ -4521,7 +3674,7 @@ DebuffCatType =
 	[PowaAuras.DebuffCatType.Stun] = "Stun",
 	[PowaAuras.DebuffCatType.Root] = "Root",
 	[PowaAuras.DebuffCatType.Disarm] = "Disarm",
-	[PowaAuras.DebuffCatType.PvE] = "PvE",
+	[PowaAuras.DebuffCatType.PvE] = "PvE"
 },
 
 Role =
@@ -4529,23 +3682,7 @@ Role =
 	RoleTank = "Танк",
 	RoleHealer = "Лекарь",
 	RoleMeleDps = "Ближний бой",
-	RoleRangeDps = "Дальний бой",
-},
-
-nomReasonRole =
-{
-	RoleTank = "Is a Tank",
-	RoleHealer = "Is a Healer",
-	RoleMeleDps = "Is a Melee DPS",
-	RoleRangeDps = "Is a Ranged DPS",
-},
-
-nomReasonNotRole =
-{
-	RoleTank = "Not a Tank",
-	RoleHealer = "Not a Healer",
-	RoleMeleDps = "Not a Melee DPS",
-	RoleRangeDps = "Not a Ranged DPS",
+	RoleRangeDps = "Дальний бой"
 },
 
 AuraType =
@@ -4576,7 +3713,7 @@ AuraType =
 	[PowaAuras.BuffTypes.Tracking] = "Выслеживание",
 	[PowaAuras.BuffTypes.GTFO] = "Предупреждение GTFO",
 	[PowaAuras.BuffTypes.TypeBuff] = "Buff type",
-	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match",
+	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match"
 },
 
 PowerType =
@@ -4594,21 +3731,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
-},
-
-Relative =
-{
-	NONE = "Free",
-	TOPLEFT = "Top-Left",
-	TOP = "Top",
-	TOPRIGHT = "Top-Right",
-	RIGHT = "Right",
-	BOTTOMRIGHT = "BottomRight",
-	BOTTOM = "Bottom",
-	BOTTOMLEFT = "Bottom-Left",
-	LEFT = "Left",
-	CENTER = "Center",
+	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Slots =
@@ -4632,12 +3755,8 @@ Slots =
 	Trinket0 = "Аксессуар1",
 	Trinket1 = "Аксессуар2",
 	Waist = "Пояс",
-	Wrist = "Запястье",
+	Wrist = "Запястье"
 },
-
-SlotsToCheck = "Select Slots to Check",
-
-Cancel = "Cancel",
 
 -- Main
 nomEnable = "Активировать Power Auras",
@@ -4645,9 +3764,6 @@ aideEnable = "Включить все эффекты Power Auras",
 
 nomDebug = "Активировать сообщения отладки",
 aideDebug = "Включить сообщения отладки",
-nomTextureCount = "Max Textures",
-aideTextureCount = "Change this if you add your own textures",
-
 
 ListePlayer = "Страница",
 ListeGlobal = "Глобальное",
@@ -4683,14 +3799,7 @@ nomGlobalEffects = "Глобальные\nэффекты",
 aideEffectTooltip = "([Shift-клик] - вкл/выкл эффект)",
 aideEffectTooltip2 = "([Ctrl--клик] - задать причину для активации)",
 
-
-aideItems = "Enter full name of Item or [xxx] for Id",
-aideSlots = "Enter name of slot to track: Ammo, Back, Chest, Feet, Finger0, Finger1, Hands, Head, Legs, MainHand, Neck, Ranged, SecondaryHand, Shirt, Shoulder, Tabard, Trinket0, Trinket1, Waist, Wrist",
-aideTracking = "Enter name of Tracking type e.g. fish",
-
 -- Editor
-aideCustomText = "Enter text to display (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, agl=agl, %sta=sta, %int=int, %sp1=spi, %sp=spell power, %ap=attack power, %df=defence)",
-
 nomSound = "Проигрываемый звук",
 nomSound2 = "Еще звуки",
 aideSound = "Проиграть звук при начале.",
@@ -4698,12 +3807,6 @@ aideSound2 = "Проиграть звук при начале.",
 nomCustomSound = "или звуковой файл:",
 aideCustomSound = "Введите название звукового файла, который поместили в папку Sounds, ПРЕЖДЕ чем запустили игру. Поддерживаются mp3 и WAV. Например: 'cookie.mp3')",
 
-nomSoundEnd = "Sound to play",
-nomSound2End = "More sounds to play",
-aideSoundEnd = "Plays a sound at the end.",
-aideSound2End = "Plays a sound at the end.",
-nomCustomSoundEnd = "OR soundfile:",
-aideCustomSoundEnd = "Enter a soundfile that is in the Sounds folder, BEFORE you started the game. mp3 and wav are supported. example: 'cookie.mp3')",
 nomTexture = "Текстура",
 aideTexture = "Выбор отображаемой текстуры. Вы можете легко заменить текстуры путем изменения файлов Aura#.tga в директории модификации.",
 
@@ -4735,10 +3838,6 @@ aideStacks = "Здесь введите оператор и значение с�
 
 aideStealableSpells = "Здесь введите название крадущего заклинания, которое вызовет оповещение (используйте * для любого крадущего заклинания).",
 aidePurgeableSpells = "Здесь введите название очищающего заклинания, которое вызовет оповещение (используйте * для любого очищающего заклинания).",
-
-aideTotems = "Enter here the Totem Name that will trigger the Aura or a number 1=Fire, 2=Earth, 3=Water, 4=Air (use * for any totem).",
-
-aideRunes = "Enter here the Runes that will trigger the Aura B=Blood, F=frost, U=Unholy, D=Death (Death runes will also count as the other types) ex: 'BF' 'BFU' 'DDD'",
 
 aideUnitn = "Здесь введите название существа/игрока, который должен активировать/дезактивировать эффект. Можно ввести только имена, если они находятся в вашей группе или рейде.",
 aideUnitn2 = "Только в группе/рейде.",
@@ -4782,8 +3881,6 @@ nomDispellable = "Могу рассеять",
 aideDispellable = "Отметив это, будут отображаться только те баффы, которые можно рассеить",
 nomCanInterrupt = "Может быть прерван",
 aideCanInterrupt = "Отметив это, будут отображаться только те заклинания которые могут быть прерваны",
-nomOnMe = "Cast On Me",
-aideOnMe = "Only show if being Cast On Me",
 
 nomPlayerSpell = "Игрок применяет",
 aidePlayerSpell = "Проверять, применяет ли игрок заклинание",
@@ -4808,10 +3905,9 @@ aideOptunitn = "Отметив это, будет происходить про�
 aideExact = "Отметив это, будет происходить проверка точного названия баффа/дебаффа/действия.",	
 aideStance = "Выберите, какая стойка, форма или аура вызовет событие.",
 aideGTFO = "Выберите, какое предупреждение GTFO вызовет событие.",
-aidePowerType = "Select which type of resource to track",
 
 aideShowSpinAtBeginning = "В конце начать отображать анимацию с поворотом на 360 градусов",
-nomCheckShowSpinAtBeginning = "Показать поворот после начала конца анимации", -- ???
+nomCheckShowSpinAtBeginning = "Показать поворот после начала конца анимации",
 
 nomCheckShowTimer = "Показать",
 nomTimerDuration = "Длительность",
@@ -4822,7 +3918,6 @@ aideSelectTimerBuff = "Выберите, который таймер будет 
 aideSelectTimerDebuff = "Выберите, который таймер будет отображать длительность (это предназначено для баффов игроков)",
 
 nomCheckShowStacks = "Показать",
-aideShowStacks = "Activate this to show the stacks for this effect.",
 
 nomCheckInverse = "Инвертировать",
 aideInverse = "Инвертировать логику отображение этого эффекта только когда бафф/дебафф неактивен.",
@@ -4845,8 +3940,6 @@ nomHideLeadingZeros = "Убрать нули",
 nomTransparent = "Прозрачные текстуры",
 nomActivationTime = "Показать время после активации",
 nomUseOwnColor = "ТИспользовать свой цвет:",
-nomUpdatePing = "Animate on refresh", -- untranslated
-nomRelative = "Relative to Main Aura",
 nomClose = "Закрыть",
 nomEffectEditor = "Редактор эффектов",
 nomAdvOptions = "Опции",
@@ -4895,11 +3988,12 @@ Ternary =
 	Instance25Man = "25-чел",
 	Instance25ManHeroic = "25-чел Гер",
 	InstanceBg = "Поле боя",
-	InstanceArena = "Арена",
+	InstanceArena = "Арена"
 },
 
 nomWhatever = "Игнорировать",
 aideTernary = "Установите в каком состоянии, будет отображаться эта ауры.",
+
 TernaryYes =
 {
 	combat = "Только когда в бою",
@@ -4921,8 +4015,9 @@ TernaryYes =
 	RoleTank = "Only when a Tank",
 	RoleHealer = "Only when a Healer",
 	RoleMeleDps = "Only when a Melee DPS",
-	RoleRangeDps = "Only when a Ranged DPS",
+	RoleRangeDps = "Only when a Ranged DPS"
 },
+
 TernaryNo =
 {
 	combat = "Только когда НЕ в бою",
@@ -4944,8 +4039,9 @@ TernaryNo =
 	RoleTank = "Only when Not a Tank",
 	RoleHealer = "Only when Not a Healer",
 	RoleMeleDps = "Only when Not a Melee DPS",
-	RoleRangeDps = "Only when Not a Ranged DPS",
+	RoleRangeDps = "Only when Not a Ranged DPS"
 },
+
 TernaryAide =
 {
 	combat = "Эффект изменен статусом боя.",
@@ -4967,7 +4063,7 @@ TernaryAide =
 	RoleTank = "Effect modified by being a Tank",
 	RoleHealer = "Effect modified by being a Healer",
 	RoleMeleDps = "Effect modified by being a Melee DPS",
-	RoleRangeDps = "Effect modified by being a Ranged DPS",
+	RoleRangeDps = "Effect modified by being a Ranged DPS"
 },
 
 nomTimerInvertAura = "Инвертировать ауру когда время ниже",
@@ -5078,31 +4174,6 @@ nomReasonSpellNotEnabled = "Заклинание $1 не включено ",
 nomReasonSpellNotFound = "Заклинание $1 не найдено",
 nomReasonSpellOnCooldown = "Заклинание $1 на восстановлении",
 
-nomReasonCastingOnMe = "$1 is casting $2 on me", --$1=CasterName $2=SpellName (e.g. "Rotface is casting Slime Spray on me")
-nomReasonNotCastingOnMe = "No matching spell being cast on me",
-
-nomReasonItemUsable = "Item $1 usable",
-nomReasonItemNotUsable = "Item $1 not usable",
-nomReasonItemNotReady = "Item $1 Not Ready, on cooldown, timer invert",
-nomReasonItemNotEnabled = "Item $1 not enabled ",
-nomReasonItemNotFound = "Item $1 not found",
-nomReasonItemOnCooldown = "Item $1 on Cooldown",
-
-nomReasonItemEquipped = "Item $1 equipped",
-nomReasonItemNotEquipped = "Item $1 not equipped",
-
-nomReasonItemInBags = "Item $1 in bags",
-nomReasonItemNotInBags = "Item $1 not in bags",
-nomReasonItemNotOnPlayer = "Item $1 not carried",
-
-nomReasonSlotUsable = "$1 Slot usable",
-nomReasonSlotNotUsable = "$1 Slot not usable",
-nomReasonSlotNotReady = "$1 Slot Not Ready, on cooldown, timer invert",
-nomReasonSlotNotEnabled = "$1 Slot has no cooldown effect",
-nomReasonSlotNotFound = "$1 Slot not found",
-nomReasonSlotOnCooldown = "$1 Slot on Cooldown",
-nomReasonSlotNone = "$1 Slot is empty",
-
 nomReasonStealablePresent = "$1 имеет похищающее заклинание $2", --$1=Target $2=SpellName (e.g. "Focus has Stealable spell Blessing of Wisdom")
 nomReasonNoStealablePresent = "Никто не имеет похищающее заклинание $1", --$1=SpellName (e.g. "Nobody has Stealable spell Blessing of Wisdom")
 nomReasonRaidTargetStealablePresent = "Raid$1Target имеет похищающее заклинание $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Stealable spell Blessing of Wisdom")
@@ -5112,9 +4183,6 @@ nomReasonPurgeablePresent = "$1 имеет очищающее заклинани
 nomReasonNoPurgeablePresent = "Никто не имеет очищающее заклинание $1", --$1=SpellName (e.g. "Nobody has Purgeable spell Blessing of Wisdom")
 nomReasonRaidTargetPurgeablePresent = "Raid$1Target имеет очищающее заклинание $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Purgeable spell Blessing of Wisdom")
 nomReasonPartyTargetPurgeablePresent = "Party$1Target имеет очищающее заклинание $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Purgeable spell Blessing of Wisdom")
-
-nomReasonAoETrigger = "AoE $1 triggered", -- $1=AoE spell name
-nomReasonAoENoTrigger = "AoE no trigger for $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "Найдено улучшение $1 на правой руке, инверсия таймера", -- $1=Enchant match
 nomReasonEnchantMain = "Найдено улучшение $1 на правой руке", -- $1=Enchant match
@@ -5147,24 +4215,6 @@ nomReasonNoStance = "Текущая стойка $1, не совпадает с 
 nomReasonRunesNotReady = "Руны не готовы",
 nomReasonRunesReady = "Руны готовы",
 
-nomReasonPetExists= "Player has Pet",
-nomReasonPetMissing = "Player Pet Missing",
-
-nomReasonTrackingMissing = "Tracking not set to $1",
-nomTrackingSet = "Tracking set to $1",
-
-nomNotInInstance = "Not in correct instance",
-
-nomReasonStatic = "Static Aura",
-
-nomReasonUnknownName = "Unit name unknown",
-nomReasonRoleUnknown = "Role unknown",
-nomReasonRoleNoMatch = "No matching Role",
-
-nomUnknownSpellId = "PowerAuras: Aura $1 references an unknown spellId: ", -- $1=SpellID
-
-nomReasonGTFOAlerts = "GTFO alerts are never always on.",
-
 ReasonStat =
 {
 	Health = {MatchReason="$1 Низкий уровень здоровья", NoMatchReason="$1 Уровень здоровье не достаточно низкий"},
@@ -5172,46 +4222,9 @@ ReasonStat =
 	RageEnergy = {MatchReason="$1 Низкий уровень энергии", NoMatchReason="$1 Уровень энергия не достаточно низкий"},
 	Aggro = {MatchReason="$1 присутствует угроза", NoMatchReason="$1 без угрозы"},
 	PvP = {MatchReason="$1 с меткой PvP", NoMatchReason="$1 без метки PvP"},
-	SpellAlert = {MatchReason="$1 casting $2", NoMatchReason="$1 not casting $2"},
-},
-
--- Import dialog
-ImportDialogAccept = "Import",
-ImportDialogCancel = "Close",
-
--- Export dialog
-ExportDialogTopTitle = "Export Auras",
-ExportDialogCopyTitle = "Press Ctrl-C to copy the below aura string.",
-ExportDialogMidTitle = "Send to Player",
-ExportDialogSendTitle1 = "Enter a player name below and click 'Send'.",
-ExportDialogSendTitle2 = "Contacting %s (%d seconds remaining)...", -- The 1/2/3/4 suffix denotes the internal status of the frame.
-ExportDialogSendTitle3a = "%s is in combat and cannot accept the offer.",
-ExportDialogSendTitle3b = "%s is not accepting export requests.",
-ExportDialogSendTitle3c = "%s has not responded, they may be away or offline.",
-ExportDialogSendTitle3d = "%s is currently receiving another export request.",
-ExportDialogSendTitle3e = "%s has declined the offer.",
-ExportDialogSendTitle4 = "Sending auras...",
-ExportDialogSendTitle5 = "Send successful!",
-ExportDialogSendButton1 = "Send",
-ExportDialogSendButton2 = "Back",
-ExportDialogCancelButton = "Close",
-
--- Cross-client import dialog
-PlayerImportDialogTopTitle = "You Have Auras!",
-PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
-PlayerImportDialogDescTitle2 = "Receiving auras...",
-PlayerImportDialogDescTitle3 = "The offer has expired.",
-PlayerImportDialogDescTitle4 = "Select a page to save the auras to.",
-PlayerImportDialogWarningTitle = "|cFFFF0000Note: |rYou are being sent an aura set, this will overwrite any existing auras on the selected page.",
-PlayerImportDialogDescTitle5 = "Auras saved!",
-PlayerImportDialogDescTitle6 = "No aura slots are available.",
-PlayerImportDialogAcceptButton1 = "Accept",
-PlayerImportDialogAcceptButton2 = "Save",
-PlayerImportDialogCancelButton1 = "Reject",
-
-aideBlockIncomingAuras = "Prevent anybody sending you auras",
-nomBlockIncomingAuras = "Block Incoming Auras",
-});
+	SpellAlert = {MatchReason="$1 casting $2", NoMatchReason="$1 not casting $2"}
+}
+})
 elseif (GetLocale() == "zhCN") then
 PowaAuras.Anim[0] = "[无]"
 PowaAuras.Anim[1] = "静止"
@@ -5264,19 +4277,18 @@ DebuffType =
 	Disease = "疾病",
 	Curse = "诅咒",
 	Poison = "中毒",
-	-- Non standard types below here.
-	Enrage = "Enrage",
+	Enrage = "Enrage"
 },
 
 DebuffCatType =
 {
-	[PowaAuras.DebuffCatType.CC] = "CC", -- need confirm this translation. by doomiris
+	[PowaAuras.DebuffCatType.CC] = "CC",
 	[PowaAuras.DebuffCatType.Silence] = "沉默",
 	[PowaAuras.DebuffCatType.Snare] = "诱捕",
 	[PowaAuras.DebuffCatType.Stun] = "昏迷",
 	[PowaAuras.DebuffCatType.Root] = "无法行动",
 	[PowaAuras.DebuffCatType.Disarm] = "缴械",
-	[PowaAuras.DebuffCatType.PvE] = "PvE",
+	[PowaAuras.DebuffCatType.PvE] = "PvE"
 },
 
 AuraType =
@@ -5299,31 +4311,8 @@ AuraType =
 	[PowaAuras.BuffTypes.StealableSpell] = "可偷取法术",
 	[PowaAuras.BuffTypes.PurgeableSpell] = "可净化法术",
 	[PowaAuras.BuffTypes.TypeBuff] = "Buff type",
-	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match",
+	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match"
 },
-
-PowerType =
-{
-	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage",
-	[SPELL_POWER_FOCUS] = "Focus",
-	[SPELL_POWER_ENERGY] = "Energy",
-	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
-	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
-	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
-	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
-	[SPELL_POWER_HOLY_POWER] = "Holy Power",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "Chi",
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
-},
-
-SlotsToCheck = "Select Slots to Check",
-
-Cancel = "Cancel",
 
 -- Main
 nomEnable = "启用",
@@ -5411,7 +4400,7 @@ nomActivationBy = "激活条件",
 
 nomOwnTex = "使用技能图标",
 aideOwnTex = "使用buff/debuff或技能的默认图标做为材质",
-nomStacks = "叠加", --no longer used?
+nomStacks = "叠加",
 
 nomUpdateSpeed = "更新速度",
 nomSpeed = "运动速度",
@@ -5524,11 +4513,12 @@ Ternary = {
 	isResting = "休息状态",
 	ismounted = "骑乘状态",
 	inVehicle = "载具状态",
-	isAlive= "存活状态",
+	isAlive= "存活状态"
 },
 
 nomWhatever = "忽略",
 aideTernary = "设置这些状态将影响特效显示的方式",
+
 TernaryYes = {
 	combat = "在战斗状态时触发",
 	inRaid = "在团队状态时触发",
@@ -5536,8 +4526,9 @@ TernaryYes = {
 	isResting = "在休息状态时触发",
 	ismounted = "在骑乘状态时触发",
 	inVehicle = "在载具状态时触发",
-	isAlive= "在存活状态时触发",
+	isAlive= "在存活状态时触发"
 },
+
 TernaryNo = {
 	combat = "非战斗状态时触发",
 	inRaid = "非团队状态时触发",
@@ -5545,8 +4536,9 @@ TernaryNo = {
 	isResting = "非休息状态时触发",
 	ismounted = "非骑乘状态时触发",
 	inVehicle = "非载具状态时触发",
-	isAlive= "在死亡状态时触发",
+	isAlive= "在死亡状态时触发"
 },
+
 TernaryAide = {
 	combat = "此效果受战斗状态影响",
 	inRaid = "此效果受团队状态影响",
@@ -5554,7 +4546,7 @@ TernaryAide = {
 	isResting = "此效果受休息状态影响",
 	ismounted = "此效果受骑乘状态影响",
 	inVehicle = "此效果受载具状态影响",
-	isAlive= "此效果受存活状态影响",
+	isAlive= "此效果受存活状态影响"
 },
 
 nomTimerInvertAura = "超时颠倒材质",
@@ -5682,45 +4674,9 @@ ReasonStat =
 	Mana = {MatchReason = "$1 法术值低", NoMatchReason = "$1法术值不够低"},
 	RageEnergy = {MatchReason = "$1 能量值低", NoMatchReason = "$1 能量值不够低"},
 	Aggro = {MatchReason = "$1 获得仇恨", NoMatchReason = "$1 没有获得仇恨"},
-	PvP = {MatchReason = "$1 PVP状态", NoMatchReason = "$1 不在PVP状态"},
-},
-
--- Import dialog
-ImportDialogAccept = "Import",
-ImportDialogCancel = "Close",
-
--- Export dialog
-ExportDialogTopTitle = "Export Auras",
-ExportDialogCopyTitle = "Press Ctrl-C to copy the below aura string.",
-ExportDialogMidTitle = "Send to Player",
-ExportDialogSendTitle1 = "Enter a player name below and click 'Send'.",
-ExportDialogSendTitle2 = "Contacting %s (%d seconds remaining)...", -- The 1/2/3/4 suffix denotes the internal status of the frame.
-ExportDialogSendTitle3a = "%s is in combat and cannot accept the offer.",
-ExportDialogSendTitle3b = "%s is not accepting export requests.",
-ExportDialogSendTitle3c = "%s has not responded, they may be away or offline.",
-ExportDialogSendTitle3d = "%s is currently receiving another export request.",
-ExportDialogSendTitle3e = "%s has declined the offer.",
-ExportDialogSendTitle4 = "Sending auras...",
-ExportDialogSendTitle5 = "Send successful!",
-ExportDialogSendButton1 = "Send",
-ExportDialogSendButton2 = "Back",
-ExportDialogCancelButton = "Close",
--- Cross-client import dialog
-PlayerImportDialogTopTitle = "You Have Auras!",
-PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
-PlayerImportDialogDescTitle2 = "Receiving auras...",
-PlayerImportDialogDescTitle3 = "The offer has expired.",
-PlayerImportDialogDescTitle4 = "Select a page to save the auras to.",
-PlayerImportDialogWarningTitle = "|cFFFF0000Note: |rYou are being sent an aura set, this will overwrite any existing auras on the selected page.",
-PlayerImportDialogDescTitle5 = "Auras saved!",
-PlayerImportDialogDescTitle6 = "No aura slots are available.",
-PlayerImportDialogAcceptButton1 = "Accept",
-PlayerImportDialogAcceptButton2 = "Save",
-PlayerImportDialogCancelButton1 = "Reject",
-
-aideBlockIncomingAuras = "Prevent anybody sending you auras",
-nomBlockIncomingAuras = "Block Incoming Auras",
-});
+	PvP = {MatchReason = "$1 PVP状态", NoMatchReason = "$1 不在PVP状态"}
+}
+})
 elseif (GetLocale() == "zhTW") then
 PowaAuras.Anim[0] = "[無]"
 PowaAuras.Anim[1] = "靜止"
@@ -5773,19 +4729,18 @@ DebuffType =
 	Disease = "疾病",
 	Curse = "詛咒",
 	Poison = "中毒",
-	-- Non standard types below here.
-	Enrage = "Enrage",
+	Enrage = "Enrage"
 },
 
 DebuffCatType =
 {
-	[PowaAuras.DebuffCatType.CC] = "CC", -- need confirm this translation. by doomiris
+	[PowaAuras.DebuffCatType.CC] = "CC",
 	[PowaAuras.DebuffCatType.Silence] = "沈默",
 	[PowaAuras.DebuffCatType.Snare] = "誘捕",
 	[PowaAuras.DebuffCatType.Stun] = "昏迷",
 	[PowaAuras.DebuffCatType.Root] = "無法行動",
 	[PowaAuras.DebuffCatType.Disarm] = "繳械",
-	[PowaAuras.DebuffCatType.PvE] = "PvE",
+	[PowaAuras.DebuffCatType.PvE] = "PvE"
 },
 
 AuraType =
@@ -5808,31 +4763,8 @@ AuraType =
 	[PowaAuras.BuffTypes.StealableSpell] = "可偷取法術",
 	[PowaAuras.BuffTypes.PurgeableSpell] = "可凈化法術",
 	[PowaAuras.BuffTypes.TypeBuff] = "Buff type",
-	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match",
+	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match"
 },
-
-PowerType =
-{
-	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage",
-	[SPELL_POWER_FOCUS] = "Focus",
-	[SPELL_POWER_ENERGY] = "Energy",
-	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
-	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
-	[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
-	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
-	[SPELL_POWER_HOLY_POWER] = "Holy Power",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "Chi",
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury",
-},
-
-SlotsToCheck = "Select Slots to Check",
-
-Cancel = "Cancel",
 
 -- Main
 nomEnable = "啟用",
@@ -5920,7 +4852,7 @@ nomActivationBy = "激活條件",
 
 nomOwnTex = "使用技能圖標",
 aideOwnTex = "使用buff/debuff或技能的默認圖標做為材質",
-nomStacks = "疊加", --no longer used?
+nomStacks = "疊加",
 
 nomUpdateSpeed = "更新速度",
 nomSpeed = "運動速度",
@@ -6034,11 +4966,12 @@ Ternary =
 	isResting = "休息狀態",
 	ismounted = "騎乘狀態",
 	inVehicle = "載具狀態",
-	isAlive= "存活狀態",
+	isAlive= "存活狀態"
 },
 
 nomWhatever = "忽略",
 aideTernary = "設置這些狀態將影響特效顯示的方式",
+
 TernaryYes = {
 	combat = "在戰鬥狀態時觸發",
 	inRaid = "在團隊狀態時觸發",
@@ -6046,8 +4979,9 @@ TernaryYes = {
 	isResting = "在休息狀態時觸發",
 	ismounted = "在騎乘狀態時觸發",
 	inVehicle = "在載具狀態時觸發",
-	isAlive= "在存活狀態時觸發",
+	isAlive= "在存活狀態時觸發"
 },
+
 TernaryNo =
 {
 	combat = "非戰鬥狀態時觸發",
@@ -6056,8 +4990,9 @@ TernaryNo =
 	isResting = "非休息狀態時觸發",
 	ismounted = "非騎乘狀態時觸發",
 	inVehicle = "非載具狀態時觸發",
-	isAlive= "在死亡狀態時觸發",
+	isAlive= "在死亡狀態時觸發"
 },
+
 TernaryAide =
 {
 	combat = "此效果受戰鬥狀態影響",
@@ -6066,7 +5001,7 @@ TernaryAide =
 	isResting = "此效果受休息狀態影響",
 	ismounted = "此效果受騎乘狀態影響",
 	inVehicle = "此效果受載具狀態影響",
-	isAlive= "此效果受存活狀態影響",
+	isAlive= "此效果受存活狀態影響"
 },
 
 nomTimerInvertAura = "超時顛倒材質",
@@ -6194,44 +5129,7 @@ ReasonStat =
 	Mana = {MatchReason="$1 法術值低", NoMatchReason="$1法術值不夠低"},
 	RageEnergy = {MatchReason="$1 能量值低", NoMatchReason="$1 能量值不夠低"},
 	Aggro = {MatchReason="$1 獲得仇恨", NoMatchReason="$1 沒有獲得仇恨"},
-	PvP = {MatchReason="$1 PVP狀態", NoMatchReason="$1 不在PVP狀態"},
-},
-
--- Import dialog
-ImportDialogAccept = "Import",
-ImportDialogCancel = "Close",
-
--- Export dialog
-ExportDialogTopTitle = "Export Auras",
-ExportDialogCopyTitle = "Press Ctrl-C to copy the below aura string.",
-ExportDialogMidTitle = "Send to Player",
-ExportDialogSendTitle1 = "Enter a player name below and click 'Send'.",
-ExportDialogSendTitle2 = "Contacting %s (%d seconds remaining)...", -- The 1/2/3/4 suffix denotes the internal status of the frame.
-ExportDialogSendTitle3a = "%s is in combat and cannot accept the offer.",
-ExportDialogSendTitle3b = "%s is not accepting export requests.",
-ExportDialogSendTitle3c = "%s has not responded, they may be away or offline.",
-ExportDialogSendTitle3d = "%s is currently receiving another export request.",
-ExportDialogSendTitle3e = "%s has declined the offer.",
-ExportDialogSendTitle4 = "Sending auras...",
-ExportDialogSendTitle5 = "Send successful!",
-ExportDialogSendButton1 = "Send",
-ExportDialogSendButton2 = "Back",
-ExportDialogCancelButton = "Close",
-
--- Cross-client import dialog
-PlayerImportDialogTopTitle = "You Have Auras!",
-PlayerImportDialogDescTitle1 = "%s would like to send you some auras.",
-PlayerImportDialogDescTitle2 = "Receiving auras...",
-PlayerImportDialogDescTitle3 = "The offer has expired.",
-PlayerImportDialogDescTitle4 = "Select a page to save the auras to.",
-PlayerImportDialogWarningTitle = "|cFFFF0000Note: |rYou are being sent an aura set, this will overwrite any existing auras on the selected page.",
-PlayerImportDialogDescTitle5 = "Auras saved!",
-PlayerImportDialogDescTitle6 = "No aura slots are available.",
-PlayerImportDialogAcceptButton1 = "Accept",
-PlayerImportDialogAcceptButton2 = "Save",
-PlayerImportDialogCancelButton1 = "Reject",
-
-aideBlockIncomingAuras = "Prevent anybody sending you auras",
-nomBlockIncomingAuras = "Block Incoming Auras",
-});
+	PvP = {MatchReason="$1 PVP狀態", NoMatchReason="$1 不在PVP狀態"}
+}
+})
 end

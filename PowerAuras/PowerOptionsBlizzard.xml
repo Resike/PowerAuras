@@ -64,7 +64,7 @@
 			</Size>
 		</ThumbTexture>
 	</Slider>
-	<!-- Main Frame -->
+	<!-- Blizzard Options Frame -->
 	<Frame name = "PowaOptionsCpuFrame2" parent = "UIParent">
 		<Frames>
 			<!-- Enable Power Auras CheckButton -->

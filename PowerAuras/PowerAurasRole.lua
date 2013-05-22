@@ -1,3 +1,5 @@
+local pairs = pairs
+
 -- Reset if spec changed or slash command
 function PowaAuras:ResetTalentScan(unit)
 	if (unit == nil) then
@@ -38,7 +40,7 @@ function PowaAuras:ShouldBeInspected(unit)
 		return false
 	end
 	local class = self.GroupUnits[unit].Class
-	if (class == "ROGUE") or (class == "HUNTER") or (class == "MAGE") or (class == "WARLOCK") or (class == "DEATHKNIGHT") then
+	if (class == "ROGUE" or class == "HUNTER" or class == "MAGE" or class == "WARLOCK") then
 		return false
 	end
 	local name = self.GroupUnits[unit].Name
@@ -125,7 +127,7 @@ function PowaAuras:DetermineRole(unit)
 		return
 	end
 	local _, class = UnitClass(unit)
-	if (class=="ROGUE") then
+	if (class == "ROGUE") then
 		return "RoleMeleDps", "Preset"
 	elseif (class == "HUNTER") then
 		return "RoleRangeDps", "Preset"
@@ -142,13 +144,7 @@ function PowaAuras:DetermineRole(unit)
 		return self.FixRoles[unitName], "Fixed"
 	end
 	if (class == "DEATHKNIGHT") then
-		local _, _, buffExist = UnitBuff(unit, self.Spells.BUFF_BLOOD_PRESENCE)
-		if (buffExist) then
-			self.FixRoles[unitName] = "RoleTank"
-		else
-			self.FixRoles[unitName] = "RoleMeleDps"
-		end
-		return self.FixRoles[unitName], "Guess"
+		return RoleMeleDps, "Guess"
 	elseif (class == "PRIEST") then
 		local _, _, buffExist = UnitBuff(unit, self.Spells.SHADOWFORM)
 		if (buffExist) then
@@ -157,16 +153,12 @@ function PowaAuras:DetermineRole(unit)
 		end
 		return "RoleHealer", "Guess"
 	elseif (class == "WARRIOR") then
-		local defense = select(2, UnitDefense(unit)) / UnitLevel(unit)
-		if (defense > 2) then
-			return "RoleTank", "Guess"
-		end
 		return "RoleMeleDps", "Guess"
 	elseif (class == "DRUID") then
 		local _, powerType = UnitPowerType(unit)
 		if (powerType == "MANA") then
-			_, _, tBuffExist = UnitBuff(unit, self.Spells.MOONKIN_FORM)
-			if (tBuffExist) then
+			local _, _, buffExist = UnitBuff(unit, self.Spells.MOONKIN_FORM)
+			if (buffExist) then
 				self.FixRoles[unitName] = "RoleRangeDps"
 				return "RoleRangeDps", "Guess"
 			else
@@ -180,10 +172,6 @@ function PowaAuras:DetermineRole(unit)
 			return "RoleMeleDps", "Guess"
 		end
 	elseif (class == "PALADIN") then
-		local defense = select(2, UnitDefense(unit)) / UnitLevel(unit)
-		if (defense > 2) then
-			return "RoleTank", "Guess"
-		end
 		if (UnitStat(unit, 4) > UnitStat(unit, 1)) then
 			return "RoleHealer", "Guess"
 		end
@@ -192,7 +180,7 @@ function PowaAuras:DetermineRole(unit)
 		if (UnitStat(unit, 2) > UnitStat(unit, 4)) then
 			return "RoleMeleDps", "Guess"
 		end
-		return "RoleHealer", "Guess" -- Can't tell, assume it's a healer
+		return "RoleHealer", "Guess"
 	end
 	return nil
 end
