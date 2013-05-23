@@ -1456,6 +1456,7 @@ function PowaAuras:InitPage(aura)
 	PowaRoundIconsButton:SetChecked(aura.roundicons)
 	PowaWowTextureButton:SetChecked(aura.wowtex)
 	PowaModelsButton:SetChecked(aura.model)
+	PowaCustomModelsButton:SetChecked(aura.modelcustom)
 	PowaCustomTextureButton:SetChecked(aura.customtex)
 	PowaTextAuraButton:SetChecked(aura.textaura)
 	PowaRandomColorButton:SetChecked(aura.randomcolor)
@@ -1583,6 +1584,7 @@ function PowaAuras:InitPage(aura)
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
 		PowaBarCustomTexName:Hide()
+		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAnimationSlider:Hide()
@@ -1596,6 +1598,7 @@ function PowaAuras:InitPage(aura)
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
 		PowaBarCustomTexName:Hide()
+		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAnimationSlider:Hide()
@@ -1620,6 +1623,7 @@ function PowaAuras:InitPage(aura)
 		PowaBarCustomTexName:Hide()
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
+		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAuraSymSlider:Hide()
 		if (#PowaAurasModels > self.MaxTextures) or (#PowaAurasModels > #self.WowTextures) then
 			PowaBarAuraTextureSlider:SetMinMaxValues(1, #PowaAurasModels)
@@ -1630,17 +1634,34 @@ function PowaAuras:InitPage(aura)
 		end
 		PowaBarAuraTextureSliderHigh:SetText(#PowaAurasModels)
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP")
+	elseif (aura.modelcustom) then
+		PowaModelPositionZSlider:Show()
+		PowaModelPositionXSlider:Show()
+		PowaModelPositionYSlider:Show()
+		PowaBarAuraTextureSlider:Show()
+		PowaBarAnimationSlider:Show()
+		PowaBarCustomModelsEditBox:SetText(aura.modelcustompath)
+		PowaBlendModeDropDown:Hide()
+		PowaTextureStrataDropDown:Hide()
+		PowaTextureStrataSublevelSlider:Hide()
+		PowaBarCustomTexName:Hide()
+		PowaBarAuraTextureSlider:Hide()
+		PowaBarCustomModelsEditBox:Show()
+		PowaBarAurasText:Hide()
+		PowaFontButton:Hide()
+		PowaBarAuraSymSlider:Hide()
+		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP")
 	elseif (aura.customtex) then
 		PowaBarAuraTextureSlider:Hide()
 		PowaBlendModeDropDown:Show()
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
-
 		PowaBarAuraSymSlider:Show()
 		PowaModelPositionZSlider:Hide()
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
 		PowaBarAurasText:Hide()
+		PowaBarCustomModelsEditBox:Hide()
 		PowaFontButton:Hide()
 		PowaBarCustomTexName:Show()
 		PowaBarCustomTexName:SetText(aura.customname)
@@ -1656,6 +1677,7 @@ function PowaAuras:InitPage(aura)
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
 		PowaBarCustomTexName:Hide()
+		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAurasText:Show()
 		PowaFontButton:Show()
 		PowaBarAurasText:SetText(aura.aurastext)
@@ -1671,6 +1693,7 @@ function PowaAuras:InitPage(aura)
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
 		PowaBarCustomTexName:Hide()
+		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAnimationSlider:Hide()
@@ -1734,6 +1757,8 @@ function PowaAuras:BarAuraTextureSliderChanged()
 	elseif (self.Auras[auraId].wowtex == true) then
 		checkTexture = AuraTexture:SetTexture(self.WowTextures[SliderValue])
 	elseif (self.Auras[auraId].model == true) then
+		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP")or (aura.model == true)
+	elseif (self.Auras[auraId].modelcustom == true) then
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP")
 	elseif (self.Auras[auraId].customtex == true) then
 		checkTexture = AuraTexture:SetTexture(self:CustomTexPath(self.Auras[auraId].customname))
@@ -1755,8 +1780,10 @@ function PowaAuras:BarAuraTextureSliderChanged()
 			AuraTexture:SetVertexColor(self.Auras[auraId].r, self.Auras[auraId].g, self.Auras[auraId].b)
 		end
 	end
-	self.Auras[auraId].texture = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].texture) then
+		self.Auras[auraId].texture = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:FrameStrataLevelSliderChanged()
@@ -1764,8 +1791,10 @@ function PowaAuras:FrameStrataLevelSliderChanged()
 		return
 	end
 	local SliderValue = PowaFrameStrataLevelSlider:GetValue()
-	self.Auras[self.CurrentAuraId].stratalevel = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].stratalevel) then
+		self.Auras[self.CurrentAuraId].stratalevel = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:TextureStrataSublevelSliderChanged()
@@ -1773,8 +1802,10 @@ function PowaAuras:TextureStrataSublevelSliderChanged()
 		return
 	end
 	local SliderValue = PowaTextureStrataSublevelSlider:GetValue()
-	self.Auras[self.CurrentAuraId].texturesublevel = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].texturesublevel) then
+		self.Auras[self.CurrentAuraId].texturesublevel = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:ModelPositionZSliderChanged()
@@ -1782,8 +1813,10 @@ function PowaAuras:ModelPositionZSliderChanged()
 		return
 	end
 	local SliderValue = PowaModelPositionZSlider:GetValue()
-	self.Auras[self.CurrentAuraId].mz = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].mz) then
+		self.Auras[self.CurrentAuraId].mz = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:ModelPositionXSliderChanged()
@@ -1791,8 +1824,10 @@ function PowaAuras:ModelPositionXSliderChanged()
 		return
 	end
 	local SliderValue = PowaModelPositionXSlider:GetValue()
-	self.Auras[self.CurrentAuraId].mx = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].mx) then
+		self.Auras[self.CurrentAuraId].mx = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:ModelPositionYSliderChanged()
@@ -1800,8 +1835,10 @@ function PowaAuras:ModelPositionYSliderChanged()
 		return
 	end
 	local SliderValue = PowaModelPositionYSlider:GetValue()
-	self.Auras[self.CurrentAuraId].my = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].my) then
+		self.Auras[self.CurrentAuraId].my = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:BarAuraAlphaSliderChanged()
@@ -1809,8 +1846,10 @@ function PowaAuras:BarAuraAlphaSliderChanged()
 		return
 	end
 	local SliderValue = PowaBarAuraAlphaSlider:GetValue()
-	self.Auras[self.CurrentAuraId].alpha = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].alpha) then
+		self.Auras[self.CurrentAuraId].alpha = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:BarAuraSizeSliderChanged()
@@ -1822,11 +1861,14 @@ function PowaAuras:BarAuraSizeSliderChanged()
 	if (aura.textaura == true) then
 		if (SliderValue < 1.61) then
 			self.Auras[self.CurrentAuraId].size = SliderValue
+			self:RedisplayAura(self.CurrentAuraId)
 		end
 	else
-		self.Auras[self.CurrentAuraId].size = SliderValue
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].size) then
+			self.Auras[self.CurrentAuraId].size = SliderValue
+			self:RedisplayAura(self.CurrentAuraId)
+		end
 	end
-	self:RedisplayAura(self.CurrentAuraId)
 end
 
 function PowaAuras:BarAuraCoordXSliderChanged()
@@ -1834,8 +1876,10 @@ function PowaAuras:BarAuraCoordXSliderChanged()
 		return
 	end
 	local SliderValue = PowaBarAuraCoordXSlider:GetValue()
-	self.Auras[self.CurrentAuraId].x = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].x) then
+		self.Auras[self.CurrentAuraId].x = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:BarAuraCoordYSliderChanged()
@@ -1843,8 +1887,10 @@ function PowaAuras:BarAuraCoordYSliderChanged()
 		return
 	end
 	local SliderValue = PowaBarAuraCoordYSlider:GetValue()
-	self.Auras[self.CurrentAuraId].y = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].y) then
+		self.Auras[self.CurrentAuraId].y = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:BarAuraAnimSpeedSliderChanged()
@@ -1852,8 +1898,10 @@ function PowaAuras:BarAuraAnimSpeedSliderChanged()
 		return
 	end
 	local SliderValue = PowaBarAuraAnimSpeedSlider:GetValue()
-	self.Auras[self.CurrentAuraId].speed = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].speed) then
+		self.Auras[self.CurrentAuraId].speed = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:BarAuraAnimDurationSliderChanged(control)
@@ -1861,8 +1909,10 @@ function PowaAuras:BarAuraAnimDurationSliderChanged(control)
 		return
 	end
 	local SliderValue = control:GetValue()
-	self.Auras[self.CurrentAuraId].duration = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].duration) then
+		self.Auras[self.CurrentAuraId].duration = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:BarAuraSymSliderChanged()
@@ -1883,8 +1933,10 @@ function PowaAuras:BarAuraSymSliderChanged()
 		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie..": XY")
 		--AuraTexture:SetTexCoord(1, 0, 1, 0)
 	end
-	self.Auras[self.CurrentAuraId].symetrie = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].symetrie) then
+		self.Auras[self.CurrentAuraId].symetrie = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:BarAnimationSliderChanged()
@@ -1897,8 +1949,10 @@ function PowaAuras:BarAnimationSliderChanged()
 	else
 		PowaBarAnimationSliderText:SetText("Animation: "..SliderValue)
 	end
-	self.Auras[self.CurrentAuraId].modelanimation = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].modelanimation) then
+		self.Auras[self.CurrentAuraId].modelanimation = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:BarAuraRotateSliderChanged()
@@ -1910,8 +1964,10 @@ function PowaAuras:BarAuraRotateSliderChanged()
 		AuraTexture:SetPoint("CENTER")
 		AuraTexture:SetRotation(math.rad(SliderValue))
 	end]]--
-	self.Auras[self.CurrentAuraId].rotate = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].rotate) then
+		self.Auras[self.CurrentAuraId].rotate = SliderValue
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:BarAuraDeformSliderChanged()
@@ -1983,6 +2039,12 @@ function PowaAuras:CustomTextChanged()
 			PowaBarAuraRotateSlider:SetValue(0)
 		end
 	end
+	self:RedisplayAura(self.CurrentAuraId)
+end
+
+function PowaAuras:CustomModelsChanged()
+	local aura = self.Auras[self.CurrentAuraId]
+	aura.modelcustompath = PowaBarCustomModelsEditBox:GetText()
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -2100,6 +2162,7 @@ function PowaAuras:OwntexChecked()
 	if (PowaOwntexButton:GetChecked()) then
 		aura.owntex = true
 		aura.model = false
+		aura.modelcustom = false
 		aura.wowtex = false
 		aura.customtex = false
 		aura.textaura = false
@@ -2108,6 +2171,7 @@ function PowaAuras:OwntexChecked()
 		PowaModelsButton:SetChecked(false)
 		PowaCustomTextureButton:SetChecked(false)
 		PowaTextAuraButton:SetChecked(false)
+		PowaCustomModelsButton:SetChecked(false)
 		if (aura.rotate ~= 0) and (aura.rotate ~= 90) and (aura.rotate ~= 180) and (aura.rotate ~= 270) and (aura.rotate ~= 360) then
 			PowaBarAuraRotateSlider:SetValue(0)
 		end
@@ -2137,6 +2201,7 @@ function PowaAuras:WowTexturesChecked()
 	if (PowaWowTextureButton:GetChecked()) then
 		aura.wowtex = true
 		aura.model = false
+		aura.modelcustom = false
 		aura.owntex = false
 		aura.customtex = false
 		aura.textaura = false
@@ -2149,6 +2214,7 @@ function PowaAuras:WowTexturesChecked()
 		PowaModelsButton:SetChecked(false)
 		PowaCustomTextureButton:SetChecked(false)
 		PowaTextAuraButton:SetChecked(false)
+		PowaCustomModelsButton:SetChecked(false)
 		PowaBarAuraTextureSlider:Show()
 		PowaBlendModeDropDown:Show()
 		PowaTextureStrataDropDown:Show()
@@ -2178,6 +2244,7 @@ function PowaAuras:ModelsChecked()
 	local aura = self.Auras[self.CurrentAuraId]
 	if (PowaModelsButton:GetChecked()) then
 		aura.model = true
+		aura.modelcustom = false
 		aura.wowtex = false
 		aura.owntex = false
 		aura.customtex = false
@@ -2191,6 +2258,7 @@ function PowaAuras:ModelsChecked()
 		PowaOwntexButton:SetChecked(false)
 		PowaCustomTextureButton:SetChecked(false)
 		PowaTextAuraButton:SetChecked(false)
+		PowaCustomModelsButton:SetChecked(false)
 		PowaModelPositionZSlider:Show()
 		PowaModelPositionXSlider:Show()
 		PowaModelPositionYSlider:Show()
@@ -2200,6 +2268,7 @@ function PowaAuras:ModelsChecked()
 		PowaTextureStrataDropDown:Hide()
 		PowaTextureStrataSublevelSlider:Hide()
 		PowaBarCustomTexName:Hide()
+		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAuraSymSlider:Hide()
@@ -2219,7 +2288,52 @@ function PowaAuras:ModelsChecked()
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
 	end
-	PowaOldAnimation:SetChecked(aura.UseOldAnimations)
+	PowaAuras:BarAuraSizeSliderChanged()
+	PowaAuras:BarAuraTextureSliderChanged()
+	self:RedisplayAura(self.CurrentAuraId)
+end
+
+function PowaAuras:CustomModelsChecked()
+	local aura = self.Auras[self.CurrentAuraId]
+	if (PowaCustomModelsButton:GetChecked()) then
+		aura.modelcustom = true
+		aura.model = false
+		aura.customtex = false
+		aura.owntex = false
+		aura.wowtex = false
+		aura.textaura = false
+		PowaModelPositionZSlider:Show()
+		PowaModelPositionXSlider:Show()
+		PowaModelPositionYSlider:Show()
+		PowaBarAuraTextureSlider:Hide()
+		PowaBarCustomModelsEditBox:Show()
+		PowaBarAnimationSlider:Show()
+		PowaBarCustomTexName:Hide()
+		PowaBarCustomModelsEditBox:SetText(aura.modelcustompath)
+		PowaOwntexButton:SetChecked(false)
+		PowaModelsButton:SetChecked(false)
+		PowaWowTextureButton:SetChecked(false)
+		PowaTextAuraButton:SetChecked(false)
+		PowaCustomTextureButton:SetChecked(false)
+		PowaBarAurasText:Hide()
+		PowaBlendModeDropDown:Hide()
+		PowaTextureStrataDropDown:Hide()
+		PowaTextureStrataSublevelSlider:Hide()
+		PowaBarAuraSymSlider:Hide()
+		PowaFontButton:Hide()
+	else
+		aura.modelcustom = false
+		PowaModelPositionZSlider:Hide()
+		PowaModelPositionXSlider:Hide()
+		PowaModelPositionYSlider:Hide()
+		PowaBarAnimationSlider:Hide()
+		PowaBarCustomModelsEditBox:Hide()
+		PowaBarAuraTextureSlider:Show()
+		PowaBlendModeDropDown:Show()
+		PowaTextureStrataDropDown:Show()
+		PowaTextureStrataSublevelSlider:Show()
+		PowaBarAuraSymSlider:Show()
+	end
 	PowaAuras:BarAuraSizeSliderChanged()
 	PowaAuras:BarAuraTextureSliderChanged()
 	self:RedisplayAura(self.CurrentAuraId)
@@ -2230,6 +2344,7 @@ function PowaAuras:CustomTexturesChecked()
 	if (PowaCustomTextureButton:GetChecked()) then
 		aura.customtex = true
 		aura.model = false
+		aura.modelcustom = false
 		aura.owntex = false
 		aura.wowtex = false
 		aura.textaura = false
@@ -2243,6 +2358,7 @@ function PowaAuras:CustomTexturesChecked()
 		PowaModelsButton:SetChecked(false)
 		PowaWowTextureButton:SetChecked(false)
 		PowaTextAuraButton:SetChecked(false)
+		PowaCustomModelsButton:SetChecked(false)
 		PowaBarAurasText:Hide()
 		PowaBlendModeDropDown:Show()
 		PowaTextureStrataDropDown:Show()
@@ -2264,6 +2380,8 @@ function PowaAuras:TextAuraChecked()
 	local aura = self.Auras[self.CurrentAuraId]
 	if (PowaTextAuraButton:GetChecked()) then
 		aura.textaura = true
+		aura.model = false
+		aura.modelcustom = false
 		aura.owntex = false
 		aura.wowtex = false
 		aura.customtex = false
@@ -2282,6 +2400,7 @@ function PowaAuras:TextAuraChecked()
 		PowaWowTextureButton:SetChecked(false)
 		PowaModelsButton:SetChecked(false)
 		PowaCustomTextureButton:SetChecked(false)
+		PowaCustomModelsButton:SetChecked(false)
 		PowaBarCustomTexName:Hide()
 		PowaBarAnimationSlider:Hide()
 		if (PowaBarAuraSizeSlider:GetValue() > 1.61) then

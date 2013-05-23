@@ -956,13 +956,20 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	elseif (aura.model == true) then
 		texture:Hide()
 		model:SetModel(PowaAurasModels[aura.texture])
+	elseif (aura.modelcustom == true) then
+		texture:Hide()
+		if (aura.modelcustom ~= nil and aura.modelcustom ~= "") then
+			if (string.find(aura.modelcustompath, "%.m2")) then
+				model:SetModel(aura.modelcustompath)
+			end
+		end
 	else
 		texture:Show()
 		texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
 	end
 	local r1, r2, r3, r4, r5, r6
 	if (aura.randomcolor) then
-		if (aura.model ~= true) then
+		if (aura.model ~= true and aura.modelcustom ~= true) then
 			r1 = random(20, 100) / 100
 			r2 = random(20, 100) / 100
 			r3 = random(20, 100) / 100
@@ -1019,7 +1026,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			end
 		end
 	else
-		if (aura.model ~= true) then
+		if (aura.model ~= true and aura.modelcustom ~= true) then
 			if (aura.textaura ~= true) then
 				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 					texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
@@ -1070,7 +1077,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			end
 		end
 	end
-	if (aura.model ~= true) then
+	if (aura.model ~= true and aura.modelcustom ~= true) then
 		if (aura.textaura ~= true) then
 			texture:SetBlendMode(aura.blendmode)
 		else
@@ -1080,17 +1087,17 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	end
 	frame:SetFrameStrata(aura.strata)
 	frame:SetFrameLevel(aura.stratalevel)
-	if (aura.model ~= true) then
+	if (aura.model ~= true and aura.modelcustom ~= true) then
 		texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel)
 	end
 	local height = 256
 	local width = 256
-	if (aura.textaura ~= true) and (aura.model ~= true) then
+	if (aura.textaura ~= true and aura.model ~= true and aura.modelcustom ~= true) then
 		texture:SetRotation(math.rad(aura.rotate))
-	elseif (aura.model == true) then
+	elseif (aura.model == true or aura.modelcustom == true) then
 		model:SetPosition(aura.mz, aura.mx, aura.my)
 		model:SetRotation(math.rad(aura.rotate))
-		if (aura.modelanimation > -1 and aura.modelanimation ~= nil and aura.modelanimation < 802) then
+		if (aura.modelanimation > - 1 and aura.modelanimation ~= nil and aura.modelanimation < 802) then
 			local elapsed = 0
 			model:SetScript("OnUpdate", function(self, elaps)
 				elapsed = elapsed + (elaps * 1000)
@@ -1098,7 +1105,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			end)
 		end
 	end
-	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
+	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.modelcustom ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord()
 		local x = (math.sqrt(2) - 1) / 2
 		if (aura.rotate == 0) or (aura.rotate == 360) then
@@ -1125,7 +1132,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			end
 		end
 	end
-	if (aura.textaura ~= true) and (aura.model ~= true) then
+	if (aura.textaura ~= true and aura.model ~= true and aura.modelcustom ~= true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord()
 		if (aura.symetrie == 1) then
 			texture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy) -- Inverse X
@@ -1145,8 +1152,8 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		end
 		frame.baseH = height * aura.size * (2 - aura.torsion)
 		frame.baseL = texture:GetStringWidth() + 5
-	elseif (aura.customtex == true) or (aura.wowtex == true) or (aura.model == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
-		if ((aura.rotate == 0) or (aura.rotate == 90) or (aura.rotate == 180) or (aura.rotate == 270) or (aura.rotate == 360)) and (aura.model ~= true) then
+	elseif (aura.customtex == true) or (aura.wowtex == true) or (aura.model == true) or (aura.modelcustom == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.modelcustom ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
+		if ((aura.rotate == 0) or (aura.rotate == 90) or (aura.rotate == 180) or (aura.rotate == 270) or (aura.rotate == 360)) and (aura.model ~= true) and (aura.modelcustom ~= true) then
 			frame.baseH = height * aura.size * (2 - aura.torsion)
 			frame.baseL = width * aura.size * aura.torsion
 		else
@@ -1264,12 +1271,19 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	elseif (aura.model == true) then
 		secondaryTexture:Hide()
 		secondaryModel:SetModel(PowaAurasModels[aura.texture])
+	elseif (aura.modelcustom == true) then
+		secondaryTexture:Hide()
+		if (aura.modelcustom ~= nil and aura.modelcustom ~= "") then
+			if (string.find(aura.modelcustompath, "%.m2")) then
+				secondaryModel:SetModel(aura.modelcustompath)
+			end
+		end
 	else
 		secondaryTexture:Show()
 		secondaryTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
 	end
 	if (aura.randomcolor) then
-		if (aura.model ~= true) then
+		if (aura.model ~= true and aura.modelcustom ~= true) then
 			if (aura.textaura ~= true) then
 				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 					secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
@@ -1295,7 +1309,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 			end
 		end
 	else
-		if (aura.model ~= true) then
+		if (aura.model ~= true and aura.modelcustom ~= true) then
 			if (aura.textaura ~= true) then
 				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 					secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
@@ -1330,15 +1344,15 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	end
 	secondaryFrame:SetFrameStrata("BACKGROUND")
 	secondaryFrame:SetFrameLevel(aura.stratalevel)
-	if (aura.model ~= true) then
+	if (aura.model ~= true and aura.modelcustom ~= true) then
 		secondaryTexture:SetDrawLayer("BACKGROUND", aura.texturesublevel)
 	end
-	if (aura.textaura ~= true) and (aura.model ~= true) then
+	if (aura.textaura ~= true and aura.model ~= true and aura.modelcustom ~= true) then
 		secondaryTexture:SetRotation(math.rad(aura.rotate))
-	elseif (aura.model == true) then
+	elseif (aura.model == true or aura.modelcustom == true) then
 		secondaryModel:SetPosition(aura.mz, aura.mx, aura.my)
 		secondaryModel:SetRotation(math.rad(aura.rotate))
-		if (aura.modelanimation > -1 and aura.modelanimation ~= nil and aura.modelanimation < 802) then
+		if (aura.modelanimation > - 1 and aura.modelanimation ~= nil and aura.modelanimation < 802) then
 			local elapsed = 0
 			secondaryModel:SetScript("OnUpdate", function(self, elaps)
 				elapsed = elapsed + (elaps * 1000)
@@ -1346,7 +1360,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 			end)
 		end
 	end
-	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
+	if (aura.customtex == true) or (aura.wowtex == true) or (aura.owntex == true) or ((aura.customtex ~= true) and (aura.wowtex ~= true) and (aura.model ~= true) and (aura.modelcustom ~= true) and (aura.textaura ~= true) and (aura.owntex ~= true)) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord()
 		local x = (math.sqrt(2) - 1) / 2
 		if (aura.rotate == 0) or (aura.rotate == 360) then
@@ -1373,7 +1387,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 			end
 		end
 	end
-	if (aura.textaura ~= true) and (aura.model ~= true) then
+	if (aura.textaura ~= true and aura.model ~= true and aura.modelcustom ~= true) then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord()
 		if (aura.symetrie == 1) then
 			secondaryTexture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy) -- Inverse X

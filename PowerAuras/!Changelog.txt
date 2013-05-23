@@ -10,6 +10,7 @@
 - Fixed a coloring bug when using "Own Texutre".
 - Fixed a bug when closed "Equipement Slots".
 - Some class role inspectation fixes.
+- Sliders now won't redisplay the aura when they reach their minimum/maximum values.
 - You can enable "Own Texture" and "Round Icons" for: Stances/Pet Stances/Seals/Totems/AOE Debuffs.
 - Fixed a bug when you disabled not the currently active aura pages with shif+click, and incorrectly shown "OFF" text for auras which wasn't actually disabled.
 - Fixed a bug where icon alpha didn't decreased properly on other then "Page 1" tabs.

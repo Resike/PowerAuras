@@ -1875,11 +1875,33 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								--self.tooltipText = PowaAuras.Text.aideWowTextures
+								self.tooltipText = PowaAuras.Text.aideModels
 								PowaModelsButtonText:SetText("Models")
 							</OnLoad>
 							<OnClick>
 								PowaAuras:ModelsChecked()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<!-- Custom Models CheckButton -->
+					<CheckButton name = "PowaCustomModelsButton" inherits = "PowaCheckTemplate">
+						<Size>
+							<AbsDimension x = "25" y = "25"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "LEFT" relativeTo = "PowaModelsButton" relativePoint = "RIGHT">
+								<Offset>
+									<AbsDimension x = "52" y = "0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self.tooltipText = PowaAuras.Text.aideModelsCustom
+								PowaCustomModelsButtonText:SetText("Custom")
+							</OnLoad>
+							<OnClick>
+								PowaAuras:CustomModelsChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -2252,6 +2274,38 @@
 							</OnEditFocusLost>
 							<OnEscapePressed>
 								PowaAuras:CustomTextChanged()
+								PowaAuras:InitPage()
+								self:ClearFocus()
+							</OnEscapePressed>
+						</Scripts>
+					</EditBox>
+					<!-- Custom Models EditBox -->
+					<EditBox name = "PowaBarCustomModelsEditBox" autoFocus = "false" inherits = "InputBoxTemplate">
+						<Size>
+							<AbsDimension x = "285" y = "16"/>
+						</Size>
+						<Anchors>
+							<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraTextureSlider" relativePoint = "TOPLEFT">
+								<Offset>
+									<AbsDimension x = "5" y = "0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								self:SetMaxLetters(256)
+							</OnLoad>
+							<OnEnterPressed>
+								PowaAuras:CustomModelsChanged()
+								PowaAuras:InitPage()
+								self:ClearFocus()
+							</OnEnterPressed>
+							<OnEditFocusLost>
+								PowaAuras:CustomModelsChanged()
+								PowaAuras:InitPage()
+							</OnEditFocusLost>
+							<OnEscapePressed>
+								PowaAuras:CustomModelsChanged()
 								PowaAuras:InitPage()
 								self:ClearFocus()
 							</OnEscapePressed>
