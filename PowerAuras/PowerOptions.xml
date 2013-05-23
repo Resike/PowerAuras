@@ -2128,23 +2128,23 @@
 						<Scripts>
 							<OnLoad>
 								self:EnableMouseWheel(true)
-								self:SetMinMaxValues(-1, 1)
+								self:SetMinMaxValues(-100, 100)
 								self:SetValue(0)
-								self:SetValueStep(0.01)
+								self:SetValueStep(1)
 								PowaModelPositionZSliderText:SetText(PowaAuras.Text.nomModelZ)
-								PowaModelPositionZSliderLow:SetText("-1.00")
-								PowaModelPositionZSliderHigh:SetText("1.00")
+								PowaModelPositionZSliderLow:SetText("-100")
+								PowaModelPositionZSliderHigh:SetText("100")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:ModelPositionZSliderChanged()
-								PowaModelPositionZSliderEditBox:SetText(format("%.2f", self:GetValue()))
+								PowaModelPositionZSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 1, 2)
+								PowaAuras.SliderOnMouseUp(self, 100, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 1, 2)
+								PowaAuras.SliderOnMouseUp(self, 100, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2163,23 +2163,23 @@
 						<Scripts>
 							<OnLoad>
 								self:EnableMouseWheel(true)
-								self:SetMinMaxValues(-0.5, 0.5)
+								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
-								self:SetValueStep(0.01)
+								self:SetValueStep(1)
 								PowaModelPositionXSliderText:SetText(PowaAuras.Text.nomModelX)
-								PowaModelPositionXSliderLow:SetText("-0.50")
-								PowaModelPositionXSliderHigh:SetText("0.50")
+								PowaModelPositionXSliderLow:SetText("-50")
+								PowaModelPositionXSliderHigh:SetText("50")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:ModelPositionXSliderChanged()
-								PowaModelPositionXSliderEditBox:SetText(format("%.2f", self:GetValue()))
+								PowaModelPositionXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 0.5, 2)
+								PowaAuras.SliderOnMouseUp(self, 50, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 0.5, 2)
+								PowaAuras.SliderOnMouseUp(self, 50, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2198,23 +2198,23 @@
 						<Scripts>
 							<OnLoad>
 								self:EnableMouseWheel(true)
-								self:SetMinMaxValues(-0.5, 0.5)
+								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
-								self:SetValueStep(0.01)
+								self:SetValueStep(1)
 								PowaModelPositionYSliderText:SetText(PowaAuras.Text.nomModelY)
-								PowaModelPositionYSliderLow:SetText("-0.50")
-								PowaModelPositionYSliderHigh:SetText("0.50")
+								PowaModelPositionYSliderLow:SetText("-50")
+								PowaModelPositionYSliderHigh:SetText("50")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:ModelPositionYSliderChanged()
-								PowaModelPositionYSliderEditBox:SetText(format("%.2f", self:GetValue()))
+								PowaModelPositionYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 0.5, 2)
+								PowaAuras.SliderOnMouseUp(self, 50, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 0.5, 2)
+								PowaAuras.SliderOnMouseUp(self, 50, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>

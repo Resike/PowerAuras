@@ -967,8 +967,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			if (string.find(aura.modelcustompath, "%.m2")) then
 				model:SetUnit("none")
 				model:SetModel(aura.modelcustompath)
-			elseif (string.lower(aura.modelcustompath) == "player" or string.lower(aura.modelcustompath) == "target" or string.lower(aura.modelcustompath) == "focus") then
-				model:SetUnit("none")
+			else
 				model:SetUnit(string.lower(aura.modelcustompath))
 			end
 		end
@@ -1292,8 +1291,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 			if (string.find(aura.modelcustompath, "%.m2")) then
 				secondaryModel:SetUnit("none")
 				secondaryModel:SetModel(aura.modelcustompath)
-			elseif (string.lower(aura.modelcustompath) == "player" or string.lower(aura.modelcustompath) == "target" or string.lower(aura.modelcustompath) == "focus") then
-				secondaryModel:SetUnit("none")
+			else
 				secondaryModel:SetUnit(string.lower(aura.modelcustompath))
 			end
 		end

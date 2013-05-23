@@ -1,8 +1,12 @@
-﻿* 4.23.23
+﻿* 4.23.24
+- Fixed Model X, Y, Z slider bugs.
+- Custom Models now accept any units. (player, target, focus, party1-5, raid1-25, boss1-3)
+
+* 4.23.23
 - Updated for 5.3.
 - Reduced CPU usage by approx 10-15%.
 - Added an option to display 3D models from the game.
-- Added 163 pre definied models.
+- Added 163 predefinied models.
 - Added an option to display custom 3D models from the game.
 - Added X, Y, Z postiton sliders for models.
 - Added animation sequence slider for 3D models.

@@ -1530,23 +1530,23 @@ function PowaAuras:InitPage(aura)
 	end
 	PowaBarAuraSizeSlider:SetValue(aura.size)
 	-- Model Postition Z Slider
-	PowaModelPositionZSlider:SetMinMaxValues(aura.mz - 1000, aura.mz + 1000)
-	PowaModelPositionZSliderLow:SetText(format("%.2f", aura.mz - 1))
-	PowaModelPositionZSliderHigh:SetText(format("%.2f", aura.mz + 1))
-	PowaModelPositionZSlider:SetValue(aura.mz)
-	PowaModelPositionZSlider:SetMinMaxValues(aura.mz - 1, aura.mz + 1)
+	PowaModelPositionZSlider:SetMinMaxValues((aura.mz * 100)- 10000, (aura.mz * 100) + 10000)
+	PowaModelPositionZSliderLow:SetText(format("%.0f", (aura.mz * 100) - 100))
+	PowaModelPositionZSliderHigh:SetText(format("%.0f", (aura.mz * 100) + 100))
+	PowaModelPositionZSlider:SetValue(aura.mz * 100)
+	PowaModelPositionZSlider:SetMinMaxValues((aura.mz * 100) - 100, (aura.mz * 100) + 100)
 	-- Model Postition X Slider
-	PowaModelPositionXSlider:SetMinMaxValues(aura.mx - 1000, aura.mx + 1000)
-	PowaModelPositionXSliderLow:SetText(format("%.2f", aura.mx - 0.5))
-	PowaModelPositionXSliderHigh:SetText(format("%.2f", aura.mx + 0.5))
-	PowaModelPositionXSlider:SetValue(aura.mx)
-	PowaModelPositionXSlider:SetMinMaxValues(aura.mx - 0.5, aura.mx + 0.5)
+	PowaModelPositionXSlider:SetMinMaxValues((aura.mx * 100)- 10000, (aura.mx * 100) + 10000)
+	PowaModelPositionXSliderLow:SetText(format("%.0f", (aura.mx * 100) - 50))
+	PowaModelPositionXSliderHigh:SetText(format("%.0f", (aura.mx * 100) + 50))
+	PowaModelPositionXSlider:SetValue(aura.mx * 100)
+	PowaModelPositionXSlider:SetMinMaxValues((aura.mx * 100) - 50, (aura.mx * 100) + 50)
 	-- Model Postition Y Slider
-	PowaModelPositionYSlider:SetMinMaxValues(aura.my - 1000, aura.my + 1000)
-	PowaModelPositionYSliderLow:SetText(format("%.2f", aura.my - 0.5))
-	PowaModelPositionYSliderHigh:SetText(format("%.2f", aura.my + 0.5))
-	PowaModelPositionYSlider:SetValue(aura.my)
-	PowaModelPositionYSlider:SetMinMaxValues(aura.my - 0.5, aura.my + 0.5)
+	PowaModelPositionYSlider:SetMinMaxValues((aura.my * 100)- 10000, (aura.my * 100) + 10000)
+	PowaModelPositionYSliderLow:SetText(format("%.0f", (aura.my * 100) - 50))
+	PowaModelPositionYSliderHigh:SetText(format("%.0f", (aura.my * 100) + 50))
+	PowaModelPositionYSlider:SetValue(aura.my * 100)
+	PowaModelPositionYSlider:SetMinMaxValues((aura.my * 100) - 50, (aura.my * 100) + 50)
 	-- Texture Position X Slider
 	PowaBarAuraCoordXSlider:SetMinMaxValues(aura.x - 10000, aura.x + 10000)
 	PowaBarAuraCoordXSliderLow:SetText(aura.x - 700)
@@ -1752,7 +1752,7 @@ function PowaAuras:SetThresholdSlider(aura)
 		return
 	end
 	local curThreshold = aura.threshold
-	PowaBarThresholdSlider:SetMinMaxValues(0,aura.MaxRange)
+	PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
 	PowaBarThresholdSlider:SetValue(curThreshold)
 	PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
 	PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
@@ -1831,8 +1831,8 @@ function PowaAuras:ModelPositionZSliderChanged()
 		return
 	end
 	local SliderValue = PowaModelPositionZSlider:GetValue()
-	if (SliderValue ~= self.Auras[self.CurrentAuraId].mz) then
-		self.Auras[self.CurrentAuraId].mz = SliderValue
+	if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].mz) then
+		self.Auras[self.CurrentAuraId].mz = SliderValue / 100
 		self:RedisplayAura(self.CurrentAuraId)
 	end
 end
@@ -1842,8 +1842,8 @@ function PowaAuras:ModelPositionXSliderChanged()
 		return
 	end
 	local SliderValue = PowaModelPositionXSlider:GetValue()
-	if (SliderValue ~= self.Auras[self.CurrentAuraId].mx) then
-		self.Auras[self.CurrentAuraId].mx = SliderValue
+	if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].mx) then
+		self.Auras[self.CurrentAuraId].mx = SliderValue / 100
 		self:RedisplayAura(self.CurrentAuraId)
 	end
 end
@@ -1853,8 +1853,8 @@ function PowaAuras:ModelPositionYSliderChanged()
 		return
 	end
 	local SliderValue = PowaModelPositionYSlider:GetValue()
-	if (SliderValue ~= self.Auras[self.CurrentAuraId].my) then
-		self.Auras[self.CurrentAuraId].my = SliderValue
+	if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].my) then
+		self.Auras[self.CurrentAuraId].my = SliderValue / 100
 		self:RedisplayAura(self.CurrentAuraId)
 	end
 end
@@ -4063,9 +4063,9 @@ function PowaAuras.SliderEditBoxChanged(self)
 	elseif (slider == PowaBarAuraCoordYSlider or slider == PowaTimerCoordYSlider or slider == PowaStacksCoordYSlider) then
 		PowaAuras.SliderSetValues(slider, self, 400, 0)
 	elseif (slider == PowaModelPositionZSlider) then
-		PowaAuras.SliderSetValues(slider, self, 1, 2)
+		PowaAuras.SliderSetValues(slider, self, 100, 0)
 	elseif (slider == PowaModelPositionXSlider or slider == PowaModelPositionYSlider) then
-		PowaAuras.SliderSetValues(slider, self, 0.5, 2)
+		PowaAuras.SliderSetValues(slider, self, 50, 0)
 	end
 	if ((postfix == "%") and (slider == PowaBarAuraAlphaSlider or slider == PowaBarAuraSizeSlider or slider == PowaBarAuraAnimSpeedSlider or slider == PowaTimerSizeSlider or slider == PowaTimerAlphaSlider or slider == PowaStacksSizeSlider or slider == PowaStacksAlphaSlider)) then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2))
@@ -4141,7 +4141,7 @@ function PowaAuras.SliderEditBoxChanged(self)
 		else
 			self:SetText(format("%.0f", slider:GetValue()).."°")
 		end
-	elseif (slider == PowaModelPositionZSlider or slider == PowaModelPositionXSlider or slider == PowaModelPositionYSlider or slider == PowaBarAuraDeformSlider or slider == PowaBarAuraDurationSlider or slider == PowaTimerDurationSlider or slider == PowaTimerInvertAuraSlider) then
+	elseif (slider == PowaBarAuraDeformSlider or slider == PowaBarAuraDurationSlider or slider == PowaTimerDurationSlider or slider == PowaTimerInvertAuraSlider) then
 		if (tonumber(self:GetText()) ~= nil) then
 			slider:SetValue(tonumber(self:GetText()))
 			self:SetText(format("%.2f", slider:GetValue()))
