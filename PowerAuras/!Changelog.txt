@@ -1,15 +1,20 @@
 ﻿* 4.23.23
 - Updated for 5.3.
-- Reduced CPU usage by approx 50-60%.
+- Reduced CPU usage by approx 10-15%.
 - Added an option to display 3D models from the game.
+- Added 163 pre definied models.
+- Added an option to display custom 3D models from the game.
 - Added X, Y, Z postiton sliders for models.
 - Added animation sequence slider for 3D models.
+- Added "Desaturate" check button, to decolorize textures.
 - Added an editbox for all sliders.
 - Fixed French localization.
 - Removed unused/untranslated localizations.
 - Fixed a coloring bug when using "Own Texutre".
 - Fixed a bug when closed "Equipement Slots".
 - Some class role inspectation fixes.
+- Fixed a glitch with "Aura138.tga".
+- Some database tweaks.
 - Sliders now won't redisplay the aura when they reach their minimum/maximum values.
 - You can enable "Own Texture" and "Round Icons" for: Stances/Pet Stances/Seals/Totems/AOE Debuffs.
 - Fixed a bug when you disabled not the currently active aura pages with shif+click, and incorrectly shown "OFF" text for auras which wasn't actually disabled.
@@ -25,6 +30,7 @@
 - Fixed a bug with "Alternative Exports" check button.
 - Fixed a bug with "Timer Update Speed" Slider.
 - Fixed a major import/export aura bug.
+- Added info and logo to lua.
 
 * 4.23.22
 Fixed a leaked global from 4.23.21.

@@ -1649,7 +1649,7 @@ end
 
 -- Buff
 cPowaBuffBase.ShowOptions = {["PowaBarBuffStacks"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaBarTooltipCheck"] = 1}
-cPowaBuffBase.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1, ["PowaRoleTankButton"] = 1, ["PowaRoleHealerButton"] = 1, ["PowaRoleMeleDpsButton"] = 1, ["PowaRoleRangeDpsButton"] = 1}
+cPowaBuffBase.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoleTankButton"] = 1, ["PowaRoleHealerButton"] = 1, ["PowaRoleMeleDpsButton"] = 1, ["PowaRoleRangeDpsButton"] = 1}
 cPowaBuff = PowaClass(cPowaBuffBase, {buffAuraType = "HELPFUL", AuraType = "Buff"})
 cPowaBuff.OptionText =
 {
@@ -1686,7 +1686,7 @@ cPowaTypeDebuff.OptionText =
 	targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend
 }
 cPowaTypeDebuff.ShowOptions = {["PowaGroupAnyButton"] = 1, ["PowaBarTooltipCheck"] = 1}
-cPowaTypeDebuff.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaTypeDebuff.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaTypeDebuff.TooltipOptions = {r = 0.8, g = 1.0, b = 0.8, showBuffName = true}
 
 function cPowaTypeDebuff:IsPresent(target, z)
@@ -1756,7 +1756,7 @@ cPowaTypeBuff.OptionText =
 	targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend
 }
 cPowaTypeBuff.ShowOptions = {["PowaGroupAnyButton"] = 1, ["PowaBarTooltipCheck"] = 1}
-cPowaTypeBuff.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaTypeBuff.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaTypeBuff.TooltipOptions = {r = 0.8, g = 1.0, b = 0.8, showBuffName = true}
 
 function cPowaTypeBuff:IsPresent(target, z)
@@ -1818,7 +1818,7 @@ end
 -- Special spell
 cPowaSpecialSpellBase = PowaClass(cPowaBuffBase, {buffAuraType = "HARMFUL", target = true, CanHaveTimer = true, CanHaveTimerOnInverse = false, CanHaveStacks = true, CanHaveInvertTime = true})
 cPowaSpecialSpellBase.ShowOptions = {["PowaBarTooltipCheck"] = 1}
-cPowaSpecialSpellBase.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaFocusButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaSpecialSpellBase.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaFocusButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1}
 
 function cPowaSpecialSpellBase:CheckIfShouldShow(giveReason)
 	PowaAuras:Debug("Check if target/focus for ", self.buffname)
@@ -2025,7 +2025,7 @@ end
 cPowaAoE = PowaClass(cPowaAura, {AuraType = "Aoe"})
 cPowaAoE.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff4, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.AoE]}
 cPowaAoE.ShowOptions = {["PowaBarTooltipCheck"] = 1}
-cPowaAoE.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaAoE.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaAoE.TooltipOptions = {r = 0.6, g = 0.4, b = 1.0, showBuffName = true}
 
 function cPowaAoE:AddEffectAndEvents()
@@ -2061,7 +2061,7 @@ end
 cPowaEnchant = PowaClass(cPowaAura, {AuraType = "Enchants", CanHaveTimer = true, CanHaveTimerOnInverse = true, CanHaveStacks = true, CanHaveInvertTime = true, InvertTimeHides = true})
 cPowaEnchant.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff5, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Enchant]}
 cPowaEnchant.ShowOptions = {["PowaBarBuffStacks"] = 1}
-cPowaEnchant.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaEnchant.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaEnchant.TooltipOptions = {r = 1.0, g = 0.8, b = 1.0, showBuffName = true}
 
 function cPowaEnchant:AddEffectAndEvents()
@@ -2240,7 +2240,7 @@ cPowaActionReady.OptionText =
 	typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.ActionReady],
 	mineText = PowaAuras.Text.nomIgnoreUseable, mineTooltip = PowaAuras.Text.aideIgnoreUseable,
 }
-cPowaActionReady.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaActionReady.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaActionReady.TooltipOptions = {r = 0.8, g = 0.8, b = 1.0, showBuffName = true}
 
 function cPowaActionReady:AddEffectAndEvents()
@@ -2344,7 +2344,7 @@ cPowaSpellCooldown.OptionText =
 	targetFriendTooltip = PowaAuras.Text.aideCheckPet,
 }
 cPowaSpellCooldown.ShowOptions = {["PowaBarTooltipCheck"] = 1}
-cPowaSpellCooldown.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaSpellCooldown.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaSpellCooldown.TooltipOptions = {r = 1.0, g = 0.6, b = 0.2, showBuffName = true}
 
 function cPowaSpellCooldown:AddEffectAndEvents()
@@ -2785,7 +2785,7 @@ end
 -- Spell Alert
 cPowaSpellAlert = PowaClass(cPowaAura, {AuraType = "SpellAlert", CanHaveInvertTime = true, ValueName = "SpellAlert", ForceIconCheck = true})
 cPowaSpellAlert.OptionText = {buffNameTooltip = PowaAuras.Text.aideSpells, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellAlert], mineText = PowaAuras.Text.nomCanInterrupt, mineTooltip = PowaAuras.Text.aideCanInterrupt, extraText = PowaAuras.Text.nomOnMe, extraTooltip = PowaAuras.Text.aideOnMe, targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend}
-cPowaSpellAlert.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaFocusButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1, ["PowaPartyButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaRaidButton"] = 1, ["PowaOptunitnButton"] = 1}
+cPowaSpellAlert.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaFocusButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaPartyButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaRaidButton"] = 1, ["PowaOptunitnButton"] = 1}
 cPowaSpellAlert.TooltipOptions = {r = 0.4, g = 0.4, b = 1.0, showBuffName = true}
 
 function cPowaSpellAlert:AddEffectAndEvents()
@@ -2987,7 +2987,7 @@ end
 cPowaStance = PowaClass(cPowaAura, {AuraType = "Stance"})
 cPowaStance.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Stance]}
 cPowaStance.ShowOptions = {["PowaDropDownStance"] = 1}
-cPowaStance.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaStance.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaStance.TooltipOptions = {r = 1.0, g = 0.6, b = 0.2, showStance = true}
 
 function cPowaStance:AddEffectAndEvents()
@@ -3061,7 +3061,7 @@ end
 -- Totem Aura
 cPowaTotems = PowaClass(cPowaAura, {AuraType = "Totems", CanHaveTimer = true, CanHaveInvertTime = true, InvertTimeHides = true})
 cPowaTotems.OptionText = {buffNameTooltip = PowaAuras.Text.aideTotems, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Totems]}
-cPowaTotems.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaTotems.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaTotems.TooltipOptions = {r = 1.0, g = 1.0, b = 0.4, showBuffName = true}
 
 function cPowaTotems:AddEffectAndEvents()
@@ -3460,7 +3460,7 @@ end
 cPowaSlots = PowaClass(cPowaAura, {AuraType = "Slots", ValueName = "Slots", CooldownAura = true, CanHaveTimerOnInverse = true})
 cPowaSlots.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Slots]}
 cPowaSlots.ShowOptions = {["PowaBarTooltipCheck"] = 1}
-cPowaSlots.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaSlots.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaSlots.TooltipOptions = {r = 0.8, g = 0.8, b = 0.2}
 
 function cPowaSlots:AddEffectAndEvents()
@@ -3554,7 +3554,7 @@ cPowaItems.OptionText =
 	extraText = PowaAuras.Text.nomCarried, extraTooltip = PowaAuras.Text.aideCarried
 }
 cPowaItems.ShowOptions = {["PowaBarTooltipCheck"] = 1, ["PowaBarBuffStacks"] = 1}
-cPowaItems.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaItems.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaItems.TooltipOptions = {r = 0.8, g = 0.8, b = 0.0}
 
 function cPowaItems:AddEffectAndEvents()
@@ -3746,7 +3746,7 @@ end
 -- Tracking Aura
 cPowaTracking = PowaClass(cPowaAura, {AuraType = "Tracking", ValueName = "Tracking"})
 cPowaTracking.OptionText = {buffNameTooltip = PowaAuras.Text.aideTracking, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Tracking], exactTooltip = PowaAuras.Text.aideExact}
-cPowaTracking.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaTracking.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaTracking.TooltipOptions = {r = 0.4, g = 1.0, b = 0.4}
 
 function cPowaTracking:AddEffectAndEvents()
@@ -3852,7 +3852,7 @@ end
 cPowaPetStance = PowaClass(cPowaAura, { AuraType = "PetStance", ValueName = "Pet Stance"})
 cPowaPetStance.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.PetStance], buffNameTooltip = PowaAuras.Text.aidePetStance}
 cPowaPetStance.TooltipOptions = {r = 0.8, g = 0.6, b = 0.4}
-cPowaPetStance.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1, ["PowaRoundIconsButton"] = 1}
+cPowaPetStance.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 
 function cPowaPetStance:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)

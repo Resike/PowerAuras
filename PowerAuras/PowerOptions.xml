@@ -1876,7 +1876,7 @@
 						<Scripts>
 							<OnLoad>
 								self.tooltipText = PowaAuras.Text.aideModels
-								PowaModelsButtonText:SetText("Models")
+								PowaModelsButtonText:SetText(PowaAuras.Text.nomModels)
 							</OnLoad>
 							<OnClick>
 								PowaAuras:ModelsChecked()
@@ -1897,8 +1897,8 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideModelsCustom
-								PowaCustomModelsButtonText:SetText("Custom")
+								self.tooltipText = PowaAuras.Text.aideCustomModels
+								PowaCustomModelsButtonText:SetText(PowaAuras.Text.nomCustomModels)
 							</OnLoad>
 							<OnClick>
 								PowaAuras:CustomModelsChecked()
@@ -2001,7 +2001,7 @@
 								self:SetMinMaxValues(0, 20)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaFrameStrataLevelSliderText:SetText("Level")
+								PowaFrameStrataLevelSliderText:SetText(PowaAuras.Text.nomLevel)
 								PowaFrameStrataLevelSliderLow:SetText("0")
 								PowaFrameStrataLevelSliderHigh:SetText("20")
 							</OnLoad>
@@ -2066,7 +2066,7 @@
 								self:SetMinMaxValues(-8, 7)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaTextureStrataSublevelSliderText:SetText("Sublevel")
+								PowaTextureStrataSublevelSliderText:SetText(PowaAuras.Text.nomSublevel)
 								PowaTextureStrataSublevelSliderLow:SetText("-8")
 								PowaTextureStrataSublevelSliderHigh:SetText("7")
 							</OnLoad>
@@ -2131,7 +2131,7 @@
 								self:SetMinMaxValues(-1, 1)
 								self:SetValue(0)
 								self:SetValueStep(0.01)
-								PowaModelPositionZSliderText:SetText("Model Z")
+								PowaModelPositionZSliderText:SetText(PowaAuras.Text.nomModelZ)
 								PowaModelPositionZSliderLow:SetText("-1.00")
 								PowaModelPositionZSliderHigh:SetText("1.00")
 							</OnLoad>
@@ -2166,7 +2166,7 @@
 								self:SetMinMaxValues(-0.5, 0.5)
 								self:SetValue(0)
 								self:SetValueStep(0.01)
-								PowaModelPositionXSliderText:SetText("Model X:")
+								PowaModelPositionXSliderText:SetText(PowaAuras.Text.nomModelX)
 								PowaModelPositionXSliderLow:SetText("-0.50")
 								PowaModelPositionXSliderHigh:SetText("0.50")
 							</OnLoad>
@@ -2201,7 +2201,7 @@
 								self:SetMinMaxValues(-0.5, 0.5)
 								self:SetValue(0)
 								self:SetValueStep(0.01)
-								PowaModelPositionYSliderText:SetText("Model Y")
+								PowaModelPositionYSliderText:SetText(PowaAuras.Text.nomModelY)
 								PowaModelPositionYSliderLow:SetText("-0.50")
 								PowaModelPositionYSliderHigh:SetText("0.50")
 							</OnLoad>
@@ -2456,8 +2456,8 @@
 								self:SetMinMaxValues(-1, 250)
 								self:SetValue(-1)
 								self:SetValueStep(1)
-								PowaBarAnimationSliderText:SetText("Animation: Default")
-								PowaBarAnimationSliderLow:SetText("Default")
+								PowaBarAnimationSliderText:SetText(PowaAuras.Text.nomAnimation..": "..PowaAuras.Text.nomDefault)
+								PowaBarAnimationSliderLow:SetText(PowaAuras.Text.nomDefault)
 								PowaBarAnimationSliderHigh:SetText("250")
 							</OnLoad>
 							<OnValueChanged>
@@ -2858,7 +2858,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "19" y = "-8"/>
+											<AbsDimension x = "19" y = "-5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>

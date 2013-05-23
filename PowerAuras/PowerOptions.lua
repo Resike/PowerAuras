@@ -432,7 +432,7 @@ function PowaAuras:OptionNewEffect()
 	self:CalculateAuraSequence()
 	aura.Active = true
 	aura:CreateFrames()
-	self.SecondaryAuras[i] = nil -- Force recreate
+	self.SecondaryAuras[i] = nil
 	self:DisplayAura(i)
 	self:UpdateMainOption()
 	self:UpdateTimerOptions()
@@ -1261,13 +1261,13 @@ function PowaAuras:UpdateTimerOptions()
 		PowaShowTimerButton:SetChecked(timer.enabled)
 		PowaTimerAlphaSlider:SetValue(timer.a)
 		PowaTimerSizeSlider:SetValue(timer.h)
-		-- Timer slider X
+		-- Timer Postion X Slider
 		PowaTimerCoordXSlider:SetMinMaxValues(timer.x - 10000, timer.x + 10000)
 		PowaTimerCoordXSliderLow:SetText(timer.x - 700)
 		PowaTimerCoordXSliderHigh:SetText(timer.x + 700)
 		PowaTimerCoordXSlider:SetValue(timer.x)
 		PowaTimerCoordXSlider:SetMinMaxValues(timer.x - 700, timer.x + 700)
-		-- Timer slider Y
+		-- Timer Postion Y Slider
 		PowaTimerCoordYSlider:SetMinMaxValues(timer.y - 10000, timer.y + 10000)
 		PowaTimerCoordYSliderLow:SetText(timer.y - 400)
 		PowaTimerCoordYSliderHigh:SetText(timer.y + 400)
@@ -1304,13 +1304,13 @@ function PowaAuras:UpdateStacksOptions()
 		PowaShowStacksButton:SetChecked(stacks.enabled)
 		PowaStacksAlphaSlider:SetValue(stacks.a)
 		PowaStacksSizeSlider:SetValue(stacks.h)
-		-- Stacks slider X
+		-- Stacks Postion X Slider
 		PowaStacksCoordXSlider:SetMinMaxValues(stacks.x - 10000, stacks.x + 10000)
 		PowaStacksCoordXSliderLow:SetText(stacks.x - 700)
 		PowaStacksCoordXSliderHigh:SetText(stacks.x + 700)
 		PowaStacksCoordXSlider:SetValue(stacks.x)
 		PowaStacksCoordXSlider:SetMinMaxValues(stacks.x - 700, stacks.x + 700)
-		-- Stacks slider Y
+		-- Stacks Postion Y Slider
 		PowaStacksCoordYSlider:SetMinMaxValues(stacks.y - 10000, stacks.y + 10000)
 		PowaStacksCoordYSliderLow:SetText(stacks.y - 400)
 		PowaStacksCoordYSliderHigh:SetText(stacks.y + 400)
@@ -1328,6 +1328,7 @@ end
 
 function PowaAuras:SetOptionText(aura)
 	PowaDropDownBuffTypeText:SetText(aura.OptionText.typeText)
+	PowaRoundIconsButtonText:SetTextColor(0.5, 0.8, 0.9)
 	if (aura.OptionText.buffNameTooltip) then
 		PowaBarBuffName:Show()
 		PowaBarBuffName.aide = aura.OptionText.buffNameTooltip
@@ -1424,7 +1425,6 @@ function PowaAuras:InitPage(aura)
 	UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, aura.gradientstyle)
 	PowaFrameStrataLevelSlider:SetValue(aura.stratalevel)
 	PowaTextureStrataSublevelSlider:SetValue(aura.texturesublevel)
-	PowaModelPositionZSlider:SetValue(aura.mz)
 	PowaStrataDropDownText:SetText(aura.strata)
 	PowaTextureStrataDropDownText:SetText(aura.texturestrata)
 	PowaBlendModeDropDownText:SetText(aura.blendmode)
@@ -1529,13 +1529,31 @@ function PowaAuras:InitPage(aura)
 		PowaBarAuraRotateSlider:SetValueStep(90)
 	end
 	PowaBarAuraSizeSlider:SetValue(aura.size)
-	-- Texture Position Slider X
+	-- Model Postition Z Slider
+	PowaModelPositionZSlider:SetMinMaxValues(aura.mz - 1000, aura.mz + 1000)
+	PowaModelPositionZSliderLow:SetText(format("%.2f", aura.mz - 1))
+	PowaModelPositionZSliderHigh:SetText(format("%.2f", aura.mz + 1))
+	PowaModelPositionZSlider:SetValue(aura.mz)
+	PowaModelPositionZSlider:SetMinMaxValues(aura.mz - 1, aura.mz + 1)
+	-- Model Postition X Slider
+	PowaModelPositionXSlider:SetMinMaxValues(aura.mx - 1000, aura.mx + 1000)
+	PowaModelPositionXSliderLow:SetText(format("%.2f", aura.mx - 0.5))
+	PowaModelPositionXSliderHigh:SetText(format("%.2f", aura.mx + 0.5))
+	PowaModelPositionXSlider:SetValue(aura.mx)
+	PowaModelPositionXSlider:SetMinMaxValues(aura.mx - 0.5, aura.mx + 0.5)
+	-- Model Postition Y Slider
+	PowaModelPositionYSlider:SetMinMaxValues(aura.my - 1000, aura.my + 1000)
+	PowaModelPositionYSliderLow:SetText(format("%.2f", aura.my - 0.5))
+	PowaModelPositionYSliderHigh:SetText(format("%.2f", aura.my + 0.5))
+	PowaModelPositionYSlider:SetValue(aura.my)
+	PowaModelPositionYSlider:SetMinMaxValues(aura.my - 0.5, aura.my + 0.5)
+	-- Texture Position X Slider
 	PowaBarAuraCoordXSlider:SetMinMaxValues(aura.x - 10000, aura.x + 10000)
 	PowaBarAuraCoordXSliderLow:SetText(aura.x - 700)
 	PowaBarAuraCoordXSliderHigh:SetText(aura.x + 700)
 	PowaBarAuraCoordXSlider:SetValue(aura.x)
 	PowaBarAuraCoordXSlider:SetMinMaxValues(aura.x - 700, aura.x + 700)
-	-- Texture Position Slider Y
+	-- Texture Position Y Slider
 	PowaBarAuraCoordYSlider:SetMinMaxValues(aura.y - 10000, aura.y + 10000)
 	PowaBarAuraCoordYSliderLow:SetText(aura.y - 400)
 	PowaBarAuraCoordYSliderHigh:SetText(aura.y + 400)
@@ -2850,9 +2868,15 @@ function PowaAuras:ChangeAuraType(id, newType)
 	local oldAura = self.Auras[id]
 	local showing = oldAura.Showing
 	oldAura:Hide()
-	if (oldAura.Timer) then oldAura.Timer:Dispose() end
-	if (oldAura.Stacks) then oldAura.Stacks:Dispose() end
-	oldAura:Dispose()
+	if (oldAura.Timer) then
+		oldAura.Timer:Dispose()
+	end
+	if (oldAura.Stacks) then
+		oldAura.Stacks:Dispose()
+	end
+	if (oldAura.model ~=  true and oldAura.modelcustom ~= true) then
+		oldAura:Dispose()
+	end
 	local aura = self:AuraFactory(newType, id, oldAura)
 	aura.icon = ""
 	aura.Showing = showing
