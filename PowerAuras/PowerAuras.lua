@@ -783,7 +783,7 @@ local function stopFrameMoving(frame)
 	frame.aura.x = math.floor(frame:GetLeft() + (frame:GetWidth() - UIParent:GetWidth()) / 2 + 0.5)
 	frame.aura.y = math.floor(frame:GetTop() - (frame:GetHeight() + UIParent:GetHeight()) / 2 + 0.5)
 	frame:ClearAllPoints()
-    frame:SetPoint("CENTER", frame.aura.x, frame.aura.y)
+	frame:SetPoint("CENTER", frame.aura.x, frame.aura.y)
 	if (PowaAuras.CurrentAuraId == frame.aura.id) then
 		PowaAuras:InitPage(frame.aura)
 	end

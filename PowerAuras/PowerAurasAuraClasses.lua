@@ -338,7 +338,7 @@ function cPowaAura:UpdateText(texture)
 	local newText = self:GetAuraText()
 	if (self.Debug) then
 		PowaAuras:Message("CurrentText=", self.CurrentText)
-		PowaAuras:Message("newText    =", newText)
+		PowaAuras:Message("newText=", newText)
 	end
 	if (newText ~= self.CurrentText or texture == nil) then
 		if (texture == nil) then
@@ -687,7 +687,7 @@ end
 function cPowaAura:ShouldShowForInstanceType(instanceType, giveReason)
 	local flag = "Instance"..instanceType
 	if (self.Debug) then
-		PowaAuras:DisplayText(PowaAuras.Instance, "  ", instanceType, "  ", flag, "=", self[flag])
+		PowaAuras:DisplayText(PowaAuras.Instance, " ", instanceType, " ", flag, "=", self[flag])
 	end
 	if (self[flag] == 0) then
 		return
@@ -749,7 +749,7 @@ end
 function cPowaAura:Display()
 	PowaAuras:Message("Aura Display id=", self.id)
 	for k, v in pairs (self) do
-		PowaAuras:Message("  "..tostring(k).." = "..tostring(v))
+		PowaAuras:Message(" "..tostring(k).." = "..tostring(v))
 	end
 end
 
@@ -1318,7 +1318,7 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		return false
 	end
 	if (self.Debug) then
-		PowaAuras:DisplayText("  Present!")
+		PowaAuras:DisplayText("Present!")
 	end
 	local isMine = (caster ~= nil) and UnitExists(caster) and UnitIsUnit("player", caster)
 	local bemine = self.mine
@@ -1699,7 +1699,7 @@ function cPowaTypeDebuff:IsPresent(target, z)
 		return nil
 	end
 	if (self.Debug) then
-		PowaAuras:Message("TypeDebuff ", name, " IsPresent on ", target,"  buffid ", z,"  removeable ", removeable)
+		PowaAuras:Message("TypeDebuff ", name, " IsPresent on ", target," buffid ", z," removeable ", removeable)
 	end
 	self.DisplayUnit = target
 	if (self.mine and typeDebuff == nil) then
@@ -1723,7 +1723,7 @@ function cPowaTypeDebuff:IsPresent(target, z)
 		typeDebuffName = PowaAuras.Text.aucun
 	end
 	if (self.Debug) then
-		PowaAuras:Message("typeDebuffName ", typeDebuffName, " typeDebuffCatName ", typeDebuffCatName,"  self.buffname ", self.buffname)
+		PowaAuras:Message("typeDebuffName ", typeDebuffName, " typeDebuffCatName ", typeDebuffCatName," self.buffname ", self.buffname)
 	end
 	if self:MatchText(typeDebuffName, self.buffname)
 	or self:MatchText(typeDebuffCatName, self.buffname) then
@@ -1769,7 +1769,7 @@ function cPowaTypeBuff:IsPresent(target, z)
 		return nil
 	end
 	if (self.Debug) then
-		PowaAuras:Message("TypeBuff ", name, " IsPresent on ", target,"  buffid ", z,"  removeable ", removeable)
+		PowaAuras:Message("TypeBuff ", name, " IsPresent on ", target," buffid ", z," removeable ", removeable)
 	end
 	self.DisplayUnit = target
 	if (self.mine and typeBuff == nil) then
@@ -1793,7 +1793,7 @@ function cPowaTypeBuff:IsPresent(target, z)
 		typeBuffName = PowaAuras.Text.aucun
 	end
 	if (self.Debug) then
-		PowaAuras:Message("typeBuffName ", typeBuffName, " typeBuffCatName ", typeBuffCatName,"  self.buffname ", self.buffname)
+		PowaAuras:Message("typeBuffName ", typeBuffName, " typeBuffCatName ", typeBuffCatName," self.buffname ", self.buffname)
 	end
 	if self:MatchText(typeBuffName, self.buffname)
 	or self:MatchText(typeBuffCatName, self.buffname) then
@@ -2625,7 +2625,6 @@ function cPowaPowerType:DisplayType()
 end
 
 function cPowaPowerType:UnitValue(unit)
-	PowaAuras:Debug("UnitValue for ", unit, " type=", self.PowerType)
 	if (self.Debug) then
 		PowaAuras:DisplayText("UnitValue for ", unit, " type=", self.PowerType)
 	end
@@ -2646,7 +2645,6 @@ function cPowaPowerType:UnitValue(unit)
 end
 
 function cPowaPowerType:UnitValueMax(unit)
-	PowaAuras:Debug("UnitValueMax for ", unit)
 	if (self.Debug) then
 		PowaAuras:DisplayText("UnitValueMax for ", unit, " type=", self.PowerType)
 	end
@@ -2672,7 +2670,9 @@ function cPowaPowerType:IsCorrectPowerType(unit)
 	or (self.PowerType == SPELL_POWER_CHI and PowaAuras.playerclass == "MONK")
 	or (self.PowerType == SPELL_POWER_SHADOW_ORBS and PowaAuras.playerclass == "PRIEST")
 	or ((self.PowerType == SPELL_POWER_SOUL_SHARDS or self.PowerType == SPELL_POWER_BURNING_EMBERS or self.PowerType == SPELL_POWER_DEMONIC_FURY) and PowaAuras.playerclass == "WARLOCK")
-	or ((self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE) and PowaAuras.playerclass == "DRUID") then return true end
+	or ((self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE) and PowaAuras.playerclass == "DRUID") then 
+		return true
+	end
 	local unitPowerType = UnitPowerType(unit)
 	if (self.Debug) then
 		PowaAuras:DisplayText("cPowaPowerType IsCorrectPowerType powerType=", unitPowerType, " expected=", self.PowerType)
@@ -2866,7 +2866,7 @@ function cPowaSpellAlert:CheckSpellName(unit, spellname, spellicon, endtime, spe
 			if (self.Debug) then
 				PowaAuras:DisplayText("Set to Hide in=", self.duration or 1, "s")
 			end
-			PowaAuras.Pending[self.id] =  GetTime() + (self.duration or 1) -- Instant spells may have no complete event
+			PowaAuras.Pending[self.id] = GetTime() + (self.duration or 1) -- Instant spells may have no complete event
 		end
 		return true
 	end
@@ -3394,7 +3394,7 @@ function cPowaRunes:RunesPresent(giveReason)
 			end
 		end
 		if (self.Debug) then
-			PowaAuras:Message("self.Timer=", self.Timer, "  self.inverse=", self.inverse)
+			PowaAuras:Message("self.Timer=", self.Timer, " self.inverse=", self.inverse)
 		end
 		if (self.Timer and self.inverse) then
 			local maxTime = 0
@@ -3422,18 +3422,18 @@ function cPowaRunes:RunesPresent(giveReason)
 					gaps = gaps + self:AddRuneTimeLeft(runeType * 2 - 1, self.runesMissingPlusDeath[runeType])
 				end
 				if (self.Debug) then
-					PowaAuras:Message("  #self.timeList=", #self.timeList, " deathRunesAvailable=", deathRunesAvailable, " missing=", missing)
+					PowaAuras:Message("#self.timeList=", #self.timeList, " deathRunesAvailable=", deathRunesAvailable, " missing=", missing)
 				end
 				if (#self.timeList > deathRunesAvailable) then
 					table.sort(self.timeList)
 					local endTime = self.timeList[#self.timeList - gaps + missing]
 					if (self.Debug) then
-						PowaAuras:Message("  endTime=", endTime)
+						PowaAuras:Message("endTime=", endTime)
 					end
 					if (endTime > maxTime) then
 						maxTime = endTime
 						if (self.Debug) then
-							PowaAuras:Message("  maxTime=", maxTime)
+							PowaAuras:Message("maxTime=", maxTime)
 						end
 					end
 				end
@@ -3446,7 +3446,7 @@ function cPowaRunes:RunesPresent(giveReason)
 	end
 	if (self.Timer and minTimeToActivate ~= nil and minTimeToActivate > 0) then
 		if (self.Debug) then
-			PowaAuras:Message("  minTimeToActivate=", minTimeToActivate)
+			PowaAuras:Message("minTimeToActivate=", minTimeToActivate)
 		end
 		self.Timer:SetDurationInfo(minTimeToActivate)
 	end

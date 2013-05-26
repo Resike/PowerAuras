@@ -1551,7 +1551,7 @@
 		</Layers>
 		<Frames>
 			<!-- Exit Button -->
-			<Button name = "PowaCloseButton"  inherits = "UIPanelCloseButton">
+			<Button name = "PowaCloseButton" inherits = "UIPanelCloseButton">
 				<Anchors>
 					<Anchor point = "TOPRIGHT" relativeTo = "PowaBarConfigFrame" relativePoint = "TOPRIGHT">
 						<Offset>
@@ -2348,7 +2348,7 @@
 							</OnLeave>
 						</Scripts>
 					</EditBox>
-					<!--  Text Aura Font Button -->
+					<!-- Text Aura Font Button -->
 					<Button name = "PowaFontButton" inherits = "OptionsButtonTemplate" text = "[T]">
 						<Size>
 							<AbsDimension x = "50" y = "20"/>
@@ -5749,12 +5749,12 @@
 				<Frames>
 					<ScrollFrame name = "$parentScrollFrame" inherits = "FauxScrollFrameTemplate">
 						<Anchors>
-							<Anchor point = "TOPLEFT"  relativeTo = "FontSelectorEditor">
+							<Anchor point = "TOPLEFT" relativeTo = "FontSelectorEditor">
 								<Offset>
 									<AbsDimension x = "-22" y = "-3"/>
 								</Offset>
 							</Anchor>
-							<Anchor point = "BOTTOMRIGHT"  relativeTo = "FontSelectorEditor">
+							<Anchor point = "BOTTOMRIGHT" relativeTo = "FontSelectorEditor">
 								<Offset>
 									<AbsDimension x = "-22" y = "2"/>
 								</Offset>

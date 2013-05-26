@@ -102,7 +102,7 @@ function PowaAuras:GetInstanceType()
 	elseif (instanceType == "arena") then
 		instanceType = "Arena"
 	elseif (instanceType == "party" or instanceType == "raid") then
-		instanceDifficulty = select(3, GetInstanceInfo())
+		local _, _, instanceDifficulty = GetInstanceInfo()
 		if (instanceDifficulty == 1) then
 			instanceType = "5Man"
 		elseif (instanceDifficulty == 2 or instanceDifficulty == 8) then
@@ -115,6 +115,13 @@ function PowaAuras:GetInstanceType()
 			instanceType = "10ManHeroic"
 		else
 			instanceType = "25ManHeroic"
+		end
+	elseif (instanceType == nil) then
+		local _, _, instanceDifficulty = GetInstanceInfo()
+		if (instanceDifficulty == 9) then
+			instanceType = "Scenario"
+		elseif (instanceDifficulty == 10) then
+			instanceType = "ScenarioHeroic"
 		end
 	else
 		instanceType = "None"
@@ -405,7 +412,7 @@ function PowaAuras:BuffsChanged(unit)
 end
 
 function PowaAuras:UNIT_AURA(...)
-	local unit = select(1, ...)
+	local unit = ...
 	if (self.DebugEvents) then
 		self:DisplayText("UNIT_AURA ", unit)
 	end
@@ -413,7 +420,7 @@ function PowaAuras:UNIT_AURA(...)
 end
 
 function PowaAuras:UNIT_AURASTATE(...)
-	local unit = select(1, ...)
+	local unit = ...
 	if (self.DebugEvents) then
 		self:DisplayText("UNIT_AURASTATE ", unit)
 	end
@@ -430,7 +437,7 @@ function PowaAuras:PLAYER_DEAD(...)
 end
 
 function PowaAuras:PLAYER_ALIVE(...)
-	if not UnitIsDeadOrGhost("player") then
+	if (not UnitIsDeadOrGhost("player")) then
 		self.WeAreAlive = true
 		if (self.ModTest == false) then
 			self.DoCheck.All = true
@@ -439,7 +446,7 @@ function PowaAuras:PLAYER_ALIVE(...)
 end
 
 function PowaAuras:PLAYER_UNGHOST(...)
-	if not UnitIsDeadOrGhost("player") then
+	if (not UnitIsDeadOrGhost("player")) then
 		self.WeAreAlive = true
 		if (self.ModTest == false) then
 			self.DoCheck.All = true
@@ -464,7 +471,7 @@ function PowaAuras:PLAYER_TARGET_CHANGED(...)
 end
 
 function PowaAuras:UNIT_TARGET(...)
-	local unit = select(1, ...)
+	local unit = ...
 	local target = unit.."target"
 	if (self.DebugEvents) then
 		self:DisplayText("UNIT_TARGET ", unit)
@@ -639,7 +646,7 @@ function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 	end
 	if (sourceGUID == UnitGUID("player") and event == "SPELL_CAST_SUCCESS") then
 		if (self.DebugEvents) then
-			self:DisplayText("COMBAT_LOG_EVENT_UNFILTERED", "-  By Me! ", event)
+			self:DisplayText("COMBAT_LOG_EVENT_UNFILTERED", "- By Me! ", event)
 		end
 		self.CastByMe[spellName] = {SpellName = spellName, SpellId = spellId, DestGUID = destGUID, DestName = destName, Hostile = bit.band(destFlags, COMBATLOG_OBJECT_REACTION_HOSTILE)}
 		self.DoCheck.PlayerSpells = true
@@ -647,7 +654,7 @@ function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 	end
 	if (destGUID == UnitGUID("player")) then
 		if (self.DebugEvents) then
-			self:DisplayText("COMBAT_LOG_EVENT_UNFILTERED", "-  On Me! ", event)
+			self:DisplayText("COMBAT_LOG_EVENT_UNFILTERED", "- On Me! ", event)
 		end
 		if (PowaAuras.StringStarts(event,"SPELL_") and sourceName) then
 			self.CastOnMe[sourceName] = {SpellName = spellName, SpellId = spellId, SourceGUID = sourceGUID, Hostile = bit.band(sourceFlags, COMBATLOG_OBJECT_REACTION_HOSTILE)}
@@ -656,7 +663,7 @@ function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 			return
 		end
 		if (event == "ENVIRONMENTAL_DAMAGE") then
-			if  (spellId ~= "FALLING") then
+			if (spellId ~= "FALLING") then
 				self.AoeAuraAdded[0] = spellId
 				self.DoCheck.Aoe = true
 				self.DoCheck.CheckIt = true
@@ -707,16 +714,16 @@ end
 
 function PowaAuras:GetStances()
 	if (self.playerclass == "WARLOCK") then -- Fix for Warlock metamorphosis
-		self.PowaStance[2] = select(2,GetShapeshiftFormInfo(1))
+		self.PowaStance[2] = select(2, GetShapeshiftFormInfo(1))
 		return
 	end
 	if(self.playerclass == "ROGUE") then -- Fix for shadow dance (which is apparently at index 3)
-		self.PowaStance[1] = select(2,GetShapeshiftFormInfo(1))
-		self.PowaStance[3] = select(2,GetShapeshiftFormInfo(3))
+		self.PowaStance[1] = select(2, GetShapeshiftFormInfo(1))
+		self.PowaStance[3] = select(2, GetShapeshiftFormInfo(3))
 		return
 	end
-	for iForm = 1, GetNumShapeshiftForms() do
-		self.PowaStance[iForm] = select(2,GetShapeshiftFormInfo(iForm))
+	for i = 1, GetNumShapeshiftForms() do
+		self.PowaStance[i] = select(2, GetShapeshiftFormInfo(i))
 	end
 end
 

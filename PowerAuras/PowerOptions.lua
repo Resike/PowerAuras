@@ -2684,7 +2684,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 					UIDropDownMenu_AddButton(info)
 				end
 			else
-				for i = 0, #PowaAuras.EndAnimDisplay - 2  do
+				for i = 0, #PowaAuras.EndAnimDisplay - 2 do
 					info.text = PowaAuras.EndAnimDisplay[i]
 					info.value = i
 					UIDropDownMenu_AddButton(info)
@@ -2692,7 +2692,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			end
 			UIDropDownMenu_SetSelectedValue(PowaDropDownAnimEnd, aura.finish)
 		else
-			for i = 0, #PowaAuras.EndAnimDisplay - 2  do
+			for i = 0, #PowaAuras.EndAnimDisplay - 2 do
 				info.text = PowaAuras.EndAnimDisplay[i]
 				info.value = i
 				UIDropDownMenu_AddButton(info)
@@ -2874,7 +2874,7 @@ function PowaAuras:ChangeAuraType(id, newType)
 	if (oldAura.Stacks) then
 		oldAura.Stacks:Dispose()
 	end
-	if (oldAura.model ~=  true and oldAura.modelcustom ~= true) then
+	if (oldAura.model ~= true and oldAura.modelcustom ~= true) then
 		oldAura:Dispose()
 	end
 	local aura = self:AuraFactory(newType, id, oldAura)
