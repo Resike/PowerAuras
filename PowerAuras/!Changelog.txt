@@ -4,6 +4,7 @@
 Issues:
 - Coloring bug when using "Test all" button, and has both global and player auras.
 - Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
+- Enablefullrotation unchecked import bug.
 
 * 4.23.25
 - Fixed incorrect version number in toc.
