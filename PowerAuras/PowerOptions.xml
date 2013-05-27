@@ -1363,6 +1363,7 @@
 				</Backdrop>
 				<Scripts>
 					<OnLoad>
+						self:EnableMouseWheel(true)
 						self:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
 						self:SetBackdropColor(0, 0, 0, 0.5)
 						self:SetJustifyH("CENTER")
@@ -1385,6 +1386,10 @@
 						PowaAuras.SliderEditBoxChanged(self)
 						self:ClearFocus()
 					</OnEscapePressed>
+					<OnMouseWheel>
+						local slider = _G[string.sub(self:GetName(), 1, - 1 * (string.len("EditBox") + 1))]
+						PowaAuras.SliderOnMouseWheel(slider, delta)
+					</OnMouseWheel>
 				</Scripts>
 			</EditBox>
 		</Frames>
