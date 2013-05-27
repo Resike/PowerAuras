@@ -8,6 +8,7 @@ Issues:
 
 * 4.23.25
 - Fixed incorrect version number in toc.
+- Fixed some dropdown menu taint issues.
 - Fixed a global.
 - Some other combatlog and event fixes.
 

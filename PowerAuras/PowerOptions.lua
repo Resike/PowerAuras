@@ -3518,6 +3518,10 @@ function PowaAuras_CommanLine(msg)
 end
 
 function PowaAuras_InitalizeOnMenuOpen()
+	UIDropDownMenu_Initialize(PowaStrataDropDown, PowaAuras.DropDownMenu_Initialize)
+	UIDropDownMenu_Initialize(PowaTextureStrataDropDown, PowaAuras.DropDownMenu_Initialize)
+	UIDropDownMenu_Initialize(PowaBlendModeDropDown, PowaAuras.DropDownMenu_Initialize)
+	UIDropDownMenu_Initialize(PowaGradientStyleDropDown, PowaAuras.DropDownMenu_Initialize)
 	UIDropDownMenu_Initialize(PowaDropDownBuffType, PowaAuras.DropDownMenu_Initialize)
 	UIDropDownMenu_Initialize(PowaDropDownPowerType, PowaAuras.DropDownMenu_Initialize)
 	UIDropDownMenu_Initialize(PowaDropDownStance, PowaAuras.DropDownMenu_Initialize)
