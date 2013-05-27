@@ -762,6 +762,7 @@ PowaAurasModels =
 	-- Particles
 	"Particles\\MorphFX.m2",
 	-- Spells
+	-- A
 	"Spells\\AbolishMagic_Base.m2",
 	"Spells\\Abyssal_Ball.m2",
 	"Spells\\AllianceCTFflag_Generic_spell.m2",
@@ -794,6 +795,7 @@ PowaAurasModels =
 	"Spells\\Assassinate_Missile.m2",
 	"Spells\\Astral_Recall_Impact_Base.m2",
 	"Spells\\AvengingWrath_State_Chest.m2",
+	-- B
 	"Spells\\Backstab_impact_chest.m2",
 	"Spells\\Ball_of_shadow.m2",
 	"Spells\\Banish_chest.m2",
@@ -840,6 +842,7 @@ PowaAurasModels =
 	"Spells\\BurningIntellect_Impact_Base.m2",
 	"Spells\\BurningSpirit_Impact_Base.m2",
 	"Spells\\BurningSpirit_Impact_Head.m2",
+	-- C
 	"Spells\\Camouflage_Hands.m2",
 	"Spells\\Camouflage_Head.m2",
 	"Spells\\Camouflage_Impact.m2",
@@ -852,6 +855,7 @@ PowaAurasModels =
 	"Spells\\CatMark_White.m2",
 	"Spells\\CatMark_Yellow.m2",
 	"Spells\\ChallengingShout_Cast_Base.m2",
+	-- S
 	"Spells\\Sha_bolt_missile_fear_v2.m2",
 	"Spells\\Sha_bolt_missile_v2.m2",
 	"Spells\\Sha_fireball_missile_high.m2",

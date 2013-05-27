@@ -2576,7 +2576,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				UIDropDownMenu_SetSelectedName(PowaStrataDropDown, strata)
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 			end
-			UIDropDownMenu_AddButton(info, level)
+			UIDropDownMenu_AddButton(info)
 		end
 	elseif (name == "PowaTextureStrataDropDown") then
 		UIDropDownMenu_SetWidth(owner, 125)
@@ -2594,7 +2594,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, texturestrata)
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 			end
-			UIDropDownMenu_AddButton(info, level)
+			UIDropDownMenu_AddButton(info)
 		end
 	elseif (name == "PowaBlendModeDropDown") then
 		UIDropDownMenu_SetWidth(owner, 125)
@@ -2612,7 +2612,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				UIDropDownMenu_SetSelectedName(PowaBlendModeDropDown, blendmode)
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 			end
-			UIDropDownMenu_AddButton(info, level)
+			UIDropDownMenu_AddButton(info)
 		end
 	elseif (name == "PowaGradientStyleDropDown") then
 		UIDropDownMenu_SetWidth(owner, 120)
@@ -2630,7 +2630,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, gradientstyle)
 				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 			end
-			UIDropDownMenu_AddButton(info, level)
+			UIDropDownMenu_AddButton(info)
 		end
 	elseif (name == "PowaDropDownBuffType") then
 		UIDropDownMenu_SetWidth(owner, 175)
