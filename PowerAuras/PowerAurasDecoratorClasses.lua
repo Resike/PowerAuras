@@ -338,7 +338,7 @@ function cPowaTimer:SetDurationInfo(endtime)
 	if (self.DurationInfo ~= endtime) then
 		self.DurationInfo = endtime
 		if (PowaAuras.TimerFrame[self.id]) then
-			for frameIndex = 1,2 do
+			for frameIndex = 1, 2 do
 				local timerFrame = PowaAuras.TimerFrame[self.id][frameIndex]
 				if (timerFrame and self.UpdatePing and timerFrame.PingAnimationGroup) then
 					timerFrame.PingAnimationGroup:Play()
@@ -355,10 +355,16 @@ function cPowaTimer:ExtractDigits(displayValue)
 end
 
 function cPowaTimer:ShowValue(aura, frameIndex, displayValue)
-	if (PowaAuras.TimerFrame == nil) then return end
-	if (PowaAuras.TimerFrame[self.id] == nil) then return end
+	if (PowaAuras.TimerFrame == nil) then
+		return
+	end
+	if (PowaAuras.TimerFrame[self.id] == nil)
+		then return
+	end
 	local timerFrame = PowaAuras.TimerFrame[self.id][frameIndex]
-	if (timerFrame == nil) then return end
+	if (timerFrame == nil) then
+		return
+	end
 	if (aura.texmode == 1) then
 		timerFrame.texture:SetBlendMode("ADD")
 	else

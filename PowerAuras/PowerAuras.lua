@@ -25,12 +25,12 @@ PowaMisc =
 	Version = GetAddOnMetadata("PowerAuras", "Version"),
 	DefaultTimerTexture = "Original",
 	DefaultStacksTexture = "Original",
-	TimerRoundUp = true,
+	TimerRoundUp = false,
 	AllowInspections = false,
 	UseGTFO = nil,
 	UserSetMaxTextures = PowaAuras.TextureCount,
 	OverrideMaxTextures = false,
-	Locked = true,
+	Locked = false,
 	SoundChannel = "Master"
 }
 
@@ -164,7 +164,9 @@ function PowaAuras:DiscoverLinkedAuras()
 end
 
 function PowaAuras:DiscoverLinksForAura(aura, ignoreOff)
-	if (not aura or (ignoreOff and aura.off) or not aura.multiids or aura.multiids == "" or self.UsedInMultis[aura.id]) then return end
+	if (not aura or (ignoreOff and aura.off) or not aura.multiids or aura.multiids == "" or self.UsedInMultis[aura.id]) then
+		return
+	end
 	for pword in string.gmatch(aura.multiids, "[^/]+") do
 		if (string.sub(pword, 1, 1) == "!") then
 			pword = string.sub(pword, 2)

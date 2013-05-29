@@ -2432,7 +2432,7 @@ aideMaxTex = "Define el número máximo de texturas en el editor. Si añades tex
 aideWowTextures = "Activa esto para usar texturas de WoW en lugar de las texturas en la carpeta de Power Auras para este aura",
 aideTextAura = "Activa esto para poner texto en lugar de textura",
 aideRealaura = "Aura auténtica",
-aideCustomTextures = "Activa esto para usar texturas de  la subcarpeta 'Custom'. Introduce el nombre de la textura debajo (ej: miTextura.tga). Puedes usar un nombre de habilidad (ej: lluvia de fuego) o ID de habilidad (ej: 5384)",
+aideCustomTextures = "Activa esto para usar texturas de la subcarpeta 'Custom'. Introduce el nombre de la textura debajo (ej: miTextura.tga). Puedes usar un nombre de habilidad (ej: lluvia de fuego) o ID de habilidad (ej: 5384)",
 aideRandomColor = "Activa esto para que este aura use color aleatorio cada vez que se active",
 
 aideTexMode = "Desactiva esto para usar la opacidad de la textura. Por defecto, los colores más oscuros serán más transparentes",
