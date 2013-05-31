@@ -37,7 +37,6 @@ cPowaAura = PowaClass(function(aura, id, base)
 		if (base.Timer and not aura.isSecondary) then
 			aura.Timer = cPowaTimer(aura, base.Timer)
 		end
-		
 		if (base.Stacks and not base.isSecondary and tempForSettings:StacksAllowed()) then
 			aura.Stacks = cPowaStacks(aura, base.Stacks)
 		end
@@ -54,7 +53,7 @@ cPowaAura.ExportSettings =
 	wowtex = false,
 	model = false,
 	modelcustom = false,
-	modelcustompath = "";
+	modelcustompath = "",
 	mz = 0,
 	mx = 0,
 	my = 0,
@@ -160,7 +159,7 @@ cPowaAura.ExportSettings =
 }
 
 function cPowaAura:Init()
-	self:SetFixedIcon();
+	self:SetFixedIcon()
 end
 
 -- Do not delete this

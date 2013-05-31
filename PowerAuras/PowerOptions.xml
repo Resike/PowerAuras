@@ -2145,11 +2145,11 @@
 								PowaModelPositionZSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 100, 0)
+								PowaAuras.SliderOnMouseUp(self, 100, 100, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 100, 0)
+								PowaAuras.SliderOnMouseUp(self, 100, 100, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2180,11 +2180,11 @@
 								PowaModelPositionXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 50, 0)
+								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 50, 0)
+								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2215,11 +2215,11 @@
 								PowaModelPositionYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 50, 0)
+								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 50, 0)
+								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2551,19 +2551,23 @@
 						<Scripts>
 							<OnLoad>
 								self:EnableMouseWheel(true)
-								self:SetMinMaxValues(0.01, 5.0)
-								self:SetValue(1)
-								self:SetValueStep(0.01)
+								self:SetMinMaxValues(1, 200)
+								self:SetValue(100)
+								self:SetValueStep(1)
 								PowaBarAuraSizeSliderText:SetText(PowaAuras.Text.nomTaille)
 								PowaBarAuraSizeSliderLow:SetText("1%")
-								PowaBarAuraSizeSliderHigh:SetText("500%")
+								PowaBarAuraSizeSliderHigh:SetText("200%")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:BarAuraSizeSliderChanged()
-								PowaBarAuraSizeSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
+								PowaBarAuraSizeSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 							</OnValueChanged>
+							<OnMouseUp>
+								PowaAuras.SliderOnMouseUp(self, 0, 100, 0, "%")
+							</OnMouseUp>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
+								PowaAuras.SliderOnMouseUp(self, 0, 100, 0, "%")
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2594,11 +2598,11 @@
 								PowaBarAuraCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 700, 0)
+								PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 700, 0)
+								PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2629,11 +2633,11 @@
 								PowaBarAuraCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 400, 0)
+								PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 400, 0)
+								PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -4604,11 +4608,11 @@
 										PowaTimerCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
-										PowaAuras.SliderOnMouseUp(self, 700, 0)
+										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
 										PowaAuras.SliderOnMouseWheel(self, delta)
-										PowaAuras.SliderOnMouseUp(self, 700, 0)
+										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
@@ -4639,11 +4643,11 @@
 										PowaTimerCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
-										PowaAuras.SliderOnMouseUp(self, 400, 0)
+										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
 										PowaAuras.SliderOnMouseWheel(self, delta)
-										PowaAuras.SliderOnMouseUp(self, 400, 0)
+										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
@@ -5131,11 +5135,11 @@
 										PowaStacksCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
-										PowaAuras.SliderOnMouseUp(self, 700, 0)
+										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
 										PowaAuras.SliderOnMouseWheel(self, delta)
-										PowaAuras.SliderOnMouseUp(self, 700, 0)
+										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
@@ -5166,11 +5170,11 @@
 										PowaStacksCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
-										PowaAuras.SliderOnMouseUp(self, 400, 0)
+										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
 										PowaAuras.SliderOnMouseWheel(self, delta)
-										PowaAuras.SliderOnMouseUp(self, 400, 0)
+										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>

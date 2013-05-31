@@ -1,8 +1,8 @@
 ﻿ToDo List:
 - Add scenarios, heroic scenarios, and challange modes , 40 man raids, and lfr for the instance type
-		CreateFrame("Cooldown", "PlayerCooldown")
-		PlayerCooldown:SetAllPoints(frame)
-		PlayerCooldown:SetCooldown(GetTime(), 10)
+	CreateFrame("Cooldown", "SpellCooldown")
+	SpellCooldown:SetAllPoints(frame)
+	SpellCooldown:SetCooldown(GetTime(), 10)
 
 Issues:
 - Coloring bug when using "Test all" button, and has both global and player auras.

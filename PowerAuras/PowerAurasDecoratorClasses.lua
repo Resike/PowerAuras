@@ -245,7 +245,7 @@ function cPowaTimer:Update(elapsed)
 		return
 	end
 	if (PowaAuras.DebugCycle) then
-		PowaAuras:DisplayText("Timer.Update ",self.id)
+		PowaAuras:DisplayText("Timer.Update ", self.id)
 	end
 	if (self.enabled == false and aura.InvertAuraBelow == 0) then
 		if (PowaAuras.DebugCycle) then
@@ -255,7 +255,7 @@ function cPowaTimer:Update(elapsed)
 	end
 	local newvalue = 0
 	if (PowaAuras.DebugCycle) then
-		PowaAuras:DisplayText("newvalue=",newvalue)
+		PowaAuras:DisplayText("newvalue=", newvalue)
 	end
 	if (PowaAuras.ModTest) then
 		newvalue = math.random(0, 99) + (math.random(0, 99) / 100)
@@ -300,7 +300,7 @@ function cPowaTimer:Update(elapsed)
 				small = math.ceil(small)
 			end
 			if (PowaAuras.DebugCycle) then
-				PowaAuras:Message("small=",small)
+				PowaAuras:Message("small=", small)
 			end
 			if (self.lastShownSmall ~= small) then
 				self:ShowValue(aura, 2, small)
@@ -318,7 +318,7 @@ function cPowaTimer:Update(elapsed)
 			large = math.floor(large)
 		end
 		if (PowaAuras.DebugCycle) then
-			PowaAuras:Message("large=",large)
+			PowaAuras:Message("large=", large)
 		end
 		if (self.lastShownLarge ~= large) then
 			self:ShowValue(aura, 1, large)
@@ -406,7 +406,9 @@ function cPowaTimer:HideFrame(i)
 end
 
 function cPowaTimer:Hide()
-	if (not self.Showing) then return end
+	if (not self.Showing) then
+		return
+	end
 	if PowaAuras.TimerFrame[self.id] then
 		self:HideFrame(1)
 		self:HideFrame(2)
