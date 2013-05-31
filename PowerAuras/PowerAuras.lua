@@ -1453,9 +1453,13 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 end
 
 function PowaAuras:DisplayAura(auraId)
-	if (not (self.VariablesLoaded and self.SetupDone)) then return end
+	if (not (self.VariablesLoaded and self.SetupDone)) then
+		return
+	end
 	local aura = self.Auras[auraId]
-	if (aura == nil or aura.off) then return end
+	if (aura == nil or aura.off)then
+		return
+	end
 	self:ShowAuraForFirstTime(aura)
 end
 

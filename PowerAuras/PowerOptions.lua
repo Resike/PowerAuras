@@ -1217,7 +1217,6 @@ function PowaAuras:MainOptionShow()
 		if (aura == nil) then
 			PowaSelected:Hide()
 		end
-		PowaAuras_InitalizeOnMenuOpen()
 		self:OptionHideAll()
 		self.ModTest = true
 		self:UpdateMainOption()
@@ -1418,6 +1417,7 @@ function PowaAuras:InitPage(aura)
 	if (aura == nil) then
 		aura = self.Auras[self.CurrentAuraId]
 	end
+	PowaAuras_InitalizeOnMenuOpen()
 	self:UpdateTimerOptions()
 	UIDropDownMenu_SetSelectedName(PowaStrataDropDown, aura.strata)
 	UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, aura.texturestrata)
@@ -1528,21 +1528,21 @@ function PowaAuras:InitPage(aura)
 		PowaBarAuraRotateSlider:SetValueStep(90)
 	end
 	-- Model Postition Z Slider
-	PowaModelPositionZSlider:SetMinMaxValues((aura.mz * 100)- 10000, (aura.mz * 100) + 10000)
-	PowaModelPositionZSliderLow:SetText(format("%.0f", (aura.mz * 100) - 100))
-	PowaModelPositionZSliderHigh:SetText(format("%.0f", (aura.mz * 100) + 100))
+	PowaModelPositionZSlider:SetMinMaxValues((aura.mz * 100) - 10000, (aura.mz * 100) + 10000)
+	PowaModelPositionZSliderLow:SetText((aura.mz * 100) - 100)
+	PowaModelPositionZSliderHigh:SetText((aura.mz * 100) + 100)
 	PowaModelPositionZSlider:SetValue(aura.mz * 100)
 	PowaModelPositionZSlider:SetMinMaxValues((aura.mz * 100) - 100, (aura.mz * 100) + 100)
 	-- Model Postition X Slider
-	PowaModelPositionXSlider:SetMinMaxValues((aura.mx * 100)- 10000, (aura.mx * 100) + 10000)
-	PowaModelPositionXSliderLow:SetText(format("%.0f", (aura.mx * 100) - 50))
-	PowaModelPositionXSliderHigh:SetText(format("%.0f", (aura.mx * 100) + 50))
+	PowaModelPositionXSlider:SetMinMaxValues((aura.mx * 100) - 10000, (aura.mx * 100) + 10000)
+	PowaModelPositionXSliderLow:SetText((aura.mx * 100) - 50)
+	PowaModelPositionXSliderHigh:SetText((aura.mx * 100) + 50)
 	PowaModelPositionXSlider:SetValue(aura.mx * 100)
 	PowaModelPositionXSlider:SetMinMaxValues((aura.mx * 100) - 50, (aura.mx * 100) + 50)
 	-- Model Postition Y Slider
-	PowaModelPositionYSlider:SetMinMaxValues((aura.my * 100)- 10000, (aura.my * 100) + 10000)
-	PowaModelPositionYSliderLow:SetText(format("%.0f", (aura.my * 100) - 50))
-	PowaModelPositionYSliderHigh:SetText(format("%.0f", (aura.my * 100) + 50))
+	PowaModelPositionYSlider:SetMinMaxValues((aura.my * 100) - 10000, (aura.my * 100) + 10000)
+	PowaModelPositionYSliderLow:SetText((aura.my * 100) - 50)
+	PowaModelPositionYSliderHigh:SetText((aura.my * 100) + 50)
 	PowaModelPositionYSlider:SetValue(aura.my * 100)
 	PowaModelPositionYSlider:SetMinMaxValues((aura.my * 100) - 50, (aura.my * 100) + 50)
 	-- Texture Size Slider
@@ -3512,11 +3512,11 @@ function PowaAuras_CommanLine(msg)
 		PowaAuras:Message("State dumped to")
 		PowaAuras:Message("WTF\\Account\\<ACCOUNT>\\"..GetRealmName().."\\"..UnitName("player").."\\SavedVariables\\PowerAuras.lua")
 		PowaAuras:Message("You must log-out to save the values to disk (at end of fight/raid is fine)")
-	elseif (msg=="toggle" or msg=="tog") then
+	elseif (msg == "toggle" or msg == "tog") then
 		PowaAuras:Toggle()
-	elseif (msg=="showbuffs") then
+	elseif (msg == "showbuffs") then
 		PowaAuras:ShowAurasOnUnit("Buffs", "HELPFUL")
-	elseif (msg=="showdebuffs") then
+	elseif (msg == "showdebuffs") then
 		PowaAuras:ShowAurasOnUnit("Debuffs", "HARMFUL")
 	else
 		PowaAuras:MainOptionShow()
@@ -3891,8 +3891,12 @@ function PowaAuras:OptionHideAll(now)
 		self:ResetDragging(aura, self.Frames[aura.id])
 		if now then
 			aura:Hide()
-			if (aura.Timer) then aura.Timer:Hide() end
-			if (aura.Stacks) then aura.Stacks:Hide() end
+			if (aura.Timer) then
+				aura.Timer:Hide()
+			end
+			if (aura.Stacks) then
+				aura.Stacks:Hide()
+			end
 		else
 			self:SetAuraHideRequest(aura)
 			if (aura.Timer) then aura.Timer.HideRequest = true end
@@ -3906,8 +3910,12 @@ function PowaAuras:RedisplayAuras()
 		aura.Active = false
 		if (aura.Showing) then
 			aura:Hide()
-			if (aura.Timer) then aura.Timer:Hide() end
-			if (aura.Stacks) then aura.Stacks:Hide() end
+			if (aura.Timer) then
+				aura.Timer:Hide()
+			end
+			if (aura.Stacks) then
+				aura.Stacks:Hide()
+			end
 			aura.Active = true
 			aura:CreateFrames()
 			self.SecondaryAuras[aura.id] = nil
@@ -4250,7 +4258,7 @@ function PowaAuras.SliderEditBoxChanged(self)
 		local text = tonumber(self:GetText())
 		if (text ~= nil) then
 			slider:SetValue(tonumber(self:GetText()))
-			self:SetText(format("%.0f", slider:GetValue()))
+			self:SetText(format("%.0f", slider:GetValue()).."%")
 			local sliderlow, sliderhigh = slider:GetMinMaxValues()
 			if (text <= sliderlow or text >= sliderhigh) then
 				self:SetText(format("%.0f", slider:GetValue()).."%")
@@ -4261,7 +4269,7 @@ function PowaAuras.SliderEditBoxChanged(self)
 	else
 		if (tonumber(self:GetText()) ~= nil) then
 			slider:SetValue(tonumber(self:GetText()))
-			self:SetText(format("%.0f", slider:GetValue()).."%")
+			self:SetText(format("%.0f", slider:GetValue()))
 			local sliderlow, sliderhigh = slider:GetMinMaxValues()
 			if (tonumber(self:GetText()) < sliderlow) or (tonumber(self:GetText()) > sliderhigh) then
 				self:SetText(slider:GetValue())
