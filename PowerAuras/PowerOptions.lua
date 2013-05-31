@@ -2890,6 +2890,8 @@ function PowaAuras:ChangeAuraType(id, newType)
 		PowaGlobalSet[id] = aura
 	end
 	self:CalculateAuraSequence()
+	PowaAuras.Models[id] = nil
+	PowaAuras.SecondaryModels[id] = nil
 	if (aura.bufftype == self.BuffTypes.Slots) then
 		if (not PowaEquipmentSlotsFrame:IsVisible()) then
 			PowaEquipmentSlotsFrame:Show()

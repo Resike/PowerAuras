@@ -1,8 +1,6 @@
 ﻿ToDo List:
 - Add scenarios, heroic scenarios, and challange modes , 40 man raids, and lfr for the instance type
-	CreateFrame("Cooldown", "SpellCooldown")
-	SpellCooldown:SetAllPoints(frame)
-	SpellCooldown:SetCooldown(GetTime(), 10)
+- Add SetCooldown type animation.
 
 Issues:
 - Coloring bug when using "Test all" button, and has both global and player auras.
@@ -10,6 +8,10 @@ Issues:
 - Enablefullrotation unchecked import bug.
 
 * 4.23.26
+- Fixed a bug which caused models to disappear when changed aura type.
+- Size slider now has unlimited maximum value.
+- Size slider changes.
+- Added new Custom textures.
 - Now you can use mousewheel up/down on the sliders editboxes too, to increase and decrease the slider's value by the value step.
 - Fixed a bug with the "Opacity" slider.
 
