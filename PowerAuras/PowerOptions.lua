@@ -2890,6 +2890,8 @@ function PowaAuras:ChangeAuraType(id, newType)
 		PowaGlobalSet[id] = aura
 	end
 	self:CalculateAuraSequence()
+	local _, model, _ = aura:CreateFrames()
+	model:SetUnit("none")
 	PowaAuras.Models[id] = nil
 	PowaAuras.SecondaryModels[id] = nil
 	if (aura.bufftype == self.BuffTypes.Slots) then

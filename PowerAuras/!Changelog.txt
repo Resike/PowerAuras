@@ -10,6 +10,7 @@ Issues:
 
 * 4.23.26
 - Fixed a bug which caused models to disappear when changed aura type.
+- Fixed a bug when addon draw multiple models for the same aura.
 - Size slider now has unlimited maximum value.
 - Size slider changes.
 - Added new Custom textures.

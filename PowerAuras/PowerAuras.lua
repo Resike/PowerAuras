@@ -970,6 +970,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 				model:SetUnit("none")
 				model:SetModel(aura.modelcustompath)
 			else
+				model:SetUnit("none")
 				model:SetUnit(string.lower(aura.modelcustompath))
 			end
 		end
@@ -1294,6 +1295,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 				secondaryModel:SetUnit("none")
 				secondaryModel:SetModel(aura.modelcustompath)
 			else
+				model:SetUnit("none")
 				secondaryModel:SetUnit(string.lower(aura.modelcustompath))
 			end
 		end
