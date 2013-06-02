@@ -2124,9 +2124,9 @@
 							<AbsDimension x = "140" y = "16"/>
 						</Size>
 						<Anchors>
-							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaTextureStrataDropDown" relativePoint = "TOPLEFT">
+							<Anchor point = "TOPLEFT" relativeTo = "PowaModelsButton" relativePoint = "BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x = "18" y = "28"/>
+									<AbsDimension x = "2" y = "-13"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -4213,7 +4213,7 @@
 										self.aide = PowaAuras.Text.aideDuration
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
-										self:SetValueStep(0.25)
+										self:SetValueStep(0.01)
 										PowaBarAuraDurationSliderText:SetText(PowaAuras.Text.nomDuration)
 										PowaBarAuraDurationSliderLow:SetText("0 sec")
 										PowaBarAuraDurationSliderHigh:SetText("60 sec")
