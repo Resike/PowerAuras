@@ -1578,9 +1578,7 @@ function PowaAuras:InitPage(aura)
 	PowaBarMultiID:SetText(aura.multiids)
 	PowaBarTooltipCheck:SetText(aura.tooltipCheck)
 	PowaBarCustomSound:SetText(aura.customsound)
-	PowaAuras:CustomSoundTextChanged(true)
 	PowaBarCustomSoundEnd:SetText(aura.customsoundend)
-	PowaAuras:CustomSoundEndTextChanged(true)
 	PowaBarUnitn:SetText(aura.unitn)
 	PowaBarBuffStacks:SetText(aura:StacksText())
 	PowaAuras:UpdateStacksOptions()
@@ -2892,8 +2890,6 @@ function PowaAuras:ChangeAuraType(id, newType)
 	self:CalculateAuraSequence()
 	local _, model, _ = aura:CreateFrames()
 	model:SetUnit("none")
-	PowaAuras.Models[id] = nil
-	PowaAuras.SecondaryModels[id] = nil
 	if (aura.bufftype == self.BuffTypes.Slots) then
 		if (not PowaEquipmentSlotsFrame:IsVisible()) then
 			PowaEquipmentSlotsFrame:Show()
@@ -3847,6 +3843,29 @@ function PowaAuras:OptionTest()
 	if (aura.Showing) then
 		self:SetAuraHideRequest(aura)
 		aura.Active = false
+		if (aura.customsoundend ~= "") then
+			if (aura.Debug) then
+				self:Message("Playing Custom end sound ", aura.customsoundend)
+			end
+			local pathToSound
+			if (string.find(aura.customsoundend, "\\")) then
+				pathToSound = aura.customsoundend
+			else
+				pathToSound = PowaGlobalMisc.PathToSounds..aura.customsoundend
+			end
+			PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
+		elseif (aura.soundend > 0) then
+			if (PowaAuras.Sound[aura.soundend] ~= nil and string.len(PowaAuras.Sound[aura.soundend]) > 0) then
+				if (aura.Debug) then
+					self:Message("Playing end sound ", PowaAuras.Sound[aura.soundend])
+				end
+				if (string.find(PowaAuras.Sound[aura.soundend], "%.")) then
+					PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAuras.Sound[aura.soundend], PowaMisc.SoundChannel)
+				else
+					PlaySound(PowaAuras.Sound[aura.soundend], PowaMisc.SoundChannel)
+				end
+			end
+		end
 		if (owner ~= nil) then
 			owner:SetAlpha(0.33)
 		end
@@ -3854,7 +3873,25 @@ function PowaAuras:OptionTest()
 		aura:CreateFrames()
 		self.SecondaryAuras[aura.id] = nil
 		self:DisplayAura(aura.id)
+		self:RedisplayAura(aura.id)
 		aura.Active = true
+		if (aura.customsound ~= "") then
+			local pathToSound
+			if (string.find(aura.customsound, "\\")) then
+				pathToSound = aura.customsound
+			else
+				pathToSound = PowaGlobalMisc.PathToSounds .. aura.customsound
+			end
+			PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
+		elseif (aura.sound > 0) then
+			if (PowaAuras.Sound[aura.sound] ~= nil and string.len(PowaAuras.Sound[aura.sound]) > 0) then
+				if (string.find(PowaAuras.Sound[aura.sound], "%.")) then
+					PlaySoundFile(PowaGlobalMisc.PathToSounds .. PowaAuras.Sound[aura.sound], PowaMisc.SoundChannel)
+				else
+					PlaySound(PowaAuras.Sound[aura.sound], PowaMisc.SoundChannel)
+				end
+			end
+		end
 		if (owner ~= nil) then
 			owner:SetAlpha(1)
 		end
