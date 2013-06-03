@@ -640,7 +640,15 @@ function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 		return
 	end
 	-- Args
-	local timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, spellId, spellName, _, spellType = ...
+	local _
+	local timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, spellId, spellName, spellType
+	if WoWBuild >= 40200 then
+		timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, spellId, spellName, _, spellType = ...
+	elseif WoWBuild >= 40100 then
+		timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags2, destGUID, destName, destFlags, spellId, spellName, _, spellType = ...
+	else
+		timestamp, event, sourceGUID, sourceName, sourceFlags2, destGUID, destName, destFlags, spellId, spellName, _, spellType = ...
+	end
 	if (not spellName) then
 		return
 	end

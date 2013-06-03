@@ -9,6 +9,7 @@ Issues:
 - Enablefullrotation and isAlive unchecked import bug on some aura types.
 
 * 4.23.26
+- Added support for older WoW versions.
 - Fixed a bug which caused models to disappear when changed aura type.
 - Fixed a bug when addon draw multiple models for the same aura.
 - Size slider now has unlimited maximum value.

@@ -3078,7 +3078,7 @@ end
 
 -- Options Deplacement
 function PowaAuras:Bar_MouseDown(frame, button)
-	if( button == "LeftButton") then
+	if(button == "LeftButton") then
 		frame:StartMoving()
 	end
 end
