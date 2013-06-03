@@ -12,7 +12,7 @@ Issues:
 - Fixed a bug which caused models to disappear when changed aura type.
 - Fixed a bug which caused models to change position sometimes when you loaded the addon, or changed aura type.
 - Fixed a bug when addon draw multiple models for the same aura.
-- Add will no longer play custom sounds when you click on an arua.
+- The addon will no longer play custom sounds when you click on an arua.
 - Sounds will be played when you test or hide and aura, and sound is assigned for that aura.
 - Sounds wont be played when you click on the "Test All" button to prevent spam.
 - Size slider now has unlimited maximum value.

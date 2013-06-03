@@ -2230,7 +2230,7 @@ function cPowaCombo:CheckIfShouldShow(giveReason)
 	return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonNoComboMatch, combo, self.buffname)
 end
 
--- Action Ready
+-- Action Usable
 cPowaActionReady = PowaClass(cPowaAura, {AuraType = "Actions", CanHaveTimer = true, CanHaveTimerOnInverse = true, CooldownAura = true, CanHaveInvertTime = true})
 cPowaActionReady.OptionText =
 {

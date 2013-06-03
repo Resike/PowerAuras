@@ -469,11 +469,10 @@ function PowaAuras:MemorizeActions(actionIndex)
 				for k, v in pairs(self.AurasByType.Actions) do
 					local actionAura = self.Auras[v]
 					if (actionAura == nil) then
-						self.AurasByType.Actions[k] = nil -- aura deleted
+						self.AurasByType.Actions[k] = nil -- Aura deleted
 					elseif (not actionAura.slot) then
-						if (self:MatchString(name, actionAura.buffname, actionAura.ignoremaj)
-						 or self:MatchString(text, actionAura.buffname, actionAura.ignoremaj)) then
-							actionAura.slot = i -- remember the slot
+						if (self:MatchString(name, actionAura.buffname, actionAura.ignoremaj) or self:MatchString(text, actionAura.buffname, actionAura.ignoremaj)) then
+							actionAura.slot = i -- Remember the slot
 							-- Remember the texture
 							local tempicon
 							if (actionAura.owntex == true) then
@@ -584,10 +583,7 @@ function PowaAuras:OnUpdate(elapsed)
 				self.NextInspectUnit = nil
 				self.InspectAgain = GetTime() + self.InspectDelay
 			end
-		elseif (not self.InspectsDone
-				and self.InspectAgain ~= nil
-				and not UnitOnTaxi("player")
-				and GetTime() > self.InspectAgain) then
+		elseif (not self.InspectsDone and self.InspectAgain ~= nil and not UnitOnTaxi("player") and GetTime() > self.InspectAgain) then
 			self:TryInspectNext()
 			self.InspectAgain = GetTime() + self.InspectDelay
 		end
@@ -610,11 +606,11 @@ function PowaAuras:IsDruidTravelForm()
 	end
 	local nStance = GetShapeshiftForm()
 	-- If stance 4 or 6, we're in travel/flight form.
-	if(nStance == 4 or nStance == 6) then
+	if (nStance == 4 or nStance == 6) then
 		return true
 	end
 	-- If in stance 5, it's complicated. Moonkin/Tree form take index 5 if learned, but if not learned then flight form is here.
-	if(nStance == 5 and select(5, GetTalentInfo(3, 21)) == 0 and select(5, GetTalentInfo(1, 8)) == 0) then
+	if (nStance == 5 and (select(5, GetTalentInfo(3, 21))) == 0 and (select(5, GetTalentInfo(1, 8))) == 0) then
 		return true
 	end
 	-- Otherwise we're not in it.
@@ -661,7 +657,6 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 	end
 	local debugEffectTest = PowaAuras.DebugCycle or aura.Debug
 	if (debugEffectTest) then
-		self:Message("===================================")
 		self:Message("Test Aura for Hide or Show= ", auraId)
 		self:Message("Active= ", aura.Active)
 		self:Message("Showing= ", aura.Showing)
@@ -695,12 +690,12 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 		end
 	end
 	if (debugEffectTest) then
-		self:Message("shouldShow=", shouldShow, " because ", reason)
+		self:Message("shouldShow= ", shouldShow, " because ", reason)
 	end
 	if shouldShow then
 		if (not aura.Active) then
 			if (debugEffectTest) then
-				self:Message("ShowAura ", aura.buffname, " (", auraId,")", reason)
+				self:Message("ShowAura ", aura.buffname, " (", auraId, ")", reason)
 			end
 			self:DisplayAura(auraId)
 			if (not ignoreCascade) then self:AddChildrenToCascade(aura) end
@@ -710,7 +705,7 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 		local secondaryAura = self.SecondaryAuras[aura.id]
 		if (aura.Showing) then
 			if (debugEffectTest) then
-				self:Message("HideAura ", aura.buffname, " (", auraId,")", reason)
+				self:Message("HideAura ", aura.buffname, " (", auraId, ")", reason)
 			end
 			self:SetAuraHideRequest(aura, secondaryAura)
 		end
