@@ -618,12 +618,26 @@ function cPowaAura:CheckInstanceType(giveReason)
 	end
 	local show, reason, now, noShowReason
 	local showTotal = true
+	show, now, reason = self:ShouldShowForInstanceType("Scenario", giveReason)
+	if (now) then
+		return show, reason
+	end
+	if (show == false) then 
+		showTotal = false
+	end
+	show, now, reason = self:ShouldShowForInstanceType("ScenarioHeroic", giveReason)
+	if (now) then
+		return show, reason
+	end
+	if (show == false) then 
+		showTotal = false
+	end
 	show, now, reason = self:ShouldShowForInstanceType("5Man", giveReason)
 	if (now) then
 		return show, reason
 	end
 	if (show == false) then 
-		howTotal = false
+		showTotal = false
 	end
 	show, now, reason = self:ShouldShowForInstanceType("5ManHeroic", giveReason)
 	if (now) then

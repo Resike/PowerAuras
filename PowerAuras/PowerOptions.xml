@@ -2915,7 +2915,7 @@
 							<!-- Stacks EditBox -->
 							<EditBox name = "PowaBarBuffStacks" autoFocus = "false" inherits = "InputBoxTemplate">
 								<Size>
-									<AbsDimension x = "100" y = "16"/>
+									<AbsDimension x = "115" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "RIGHT">
@@ -2961,7 +2961,7 @@
 							<!-- Buff Name EditBox -->
 							<EditBox name = "PowaBarBuffName" autoFocus = "false" inherits = "InputBoxTemplate" historyLines = "5">
 								<Size>
-									<AbsDimension x = "300" y = "16"/>
+									<AbsDimension x = "315" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "BOTTOMLEFT">
@@ -3009,7 +3009,7 @@
 							<!-- Multiple ID EditBox -->
 							<EditBox name = "PowaBarMultiID" autoFocus = "false" inherits = "InputBoxTemplate">
 								<Size>
-									<AbsDimension x = "300" y = "16"/>
+									<AbsDimension x = "315" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarBuffName" relativePoint = "BOTTOMLEFT">
@@ -3057,7 +3057,7 @@
 							<!-- Tooltip Check EditBox -->
 							<EditBox name = "PowaBarTooltipCheck" autoFocus = "false" inherits = "InputBoxTemplate">
 								<Size>
-									<AbsDimension x = "300" y = "16"/>
+									<AbsDimension x = "315" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarMultiID" relativePoint = "BOTTOMLEFT">
@@ -3580,7 +3580,7 @@
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup2Button" relativePoint = "RIGHT">
 										<Offset>
-											<AbsDimension x = "185" y = "0"/>
+											<AbsDimension x = "195" y = "0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3594,8 +3594,8 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<!-- PVP Flag CheckButton -->
-							<CheckButton name = "PowaPvPButton" inherits = "PowaTernarySelectorTemplate">
+							<!-- Scenario CheckButton -->
+							<CheckButton name = "PowaScenarioInstanceButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
@@ -3608,18 +3608,18 @@
 								</Anchors>
 								<Scripts>
 									<OnShow>
-										self.Parameter = "PvP"
-										PowaPvPButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										self.Parameter = "InstanceScenario"
+										PowaScenarioInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
-							<!-- Alive CheckButton -->
-							<CheckButton name = "PowaIsAliveButton" inherits = "PowaTernarySelectorTemplate">
+							<!-- Scenario Hc CheckButton -->
+							<CheckButton name = "PowaScenarioHeroicInstanceButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaPvPButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaScenarioInstanceButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "5"/>
 										</Offset>
@@ -3627,8 +3627,8 @@
 								</Anchors>
 								<Scripts>
 									<OnShow>
-										self.Parameter = "isAlive"
-										PowaIsAliveButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										self.Parameter = "InstanceScenarioHeroic"
+										PowaScenarioHeroicInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3638,7 +3638,7 @@
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaIsAliveButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaScenarioHeroicInstanceButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "5"/>
 										</Offset>
@@ -3765,26 +3765,42 @@
 									</OnShow>
 								</Scripts>
 							</CheckButton>
-							<!-- Own Texture CheckButton -->
-							<CheckButton name = "PowaOwntexButton" inherits = "PowaCheckTemplate">
+							<!-- Alive CheckButton -->
+							<CheckButton name = "PowaIsAliveButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaPvPButton" relativePoint = "RIGHT">
+									<Anchor point = "LEFT" relativeTo = "PowaScenarioInstanceButton" relativePoint = "RIGHT">
 										<Offset>
-											<AbsDimension x = "70" y = "0"/>
+											<AbsDimension x = "80" y = "0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
 								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideOwnTex
-										PowaOwntexButtonText:SetText(PowaAuras.Text.nomOwnTex)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:OwntexChecked()
-									</OnClick>
+									<OnShow>
+										self.Parameter = "isAlive"
+										PowaIsAliveButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
+								</Scripts>
+							</CheckButton>
+							<!-- PVP Flag CheckButton -->
+							<CheckButton name = "PowaPvPButton" inherits = "PowaTernarySelectorTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaIsAliveButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										self.Parameter = "PvP"
+										PowaPvPButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
 								</Scripts>
 							</CheckButton>
 							<!-- Round Icons CheckButton -->
@@ -3793,9 +3809,9 @@
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaOwntexButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "BOTTOMLEFT" relativeTo = "PowaIsAliveButton" relativePoint = "TOPLEFT">
 										<Offset>
-											<AbsDimension x = "0" y = "5"/>
+											<AbsDimension x = "0" y = "0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3809,13 +3825,35 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<!-- Own Texture CheckButton -->
+							<CheckButton name = "PowaOwntexButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "BOTTOMLEFT" relativeTo = "PowaRoundIconsButton" relativePoint = "TOPLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "-5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideOwnTex
+										PowaOwntexButtonText:SetText(PowaAuras.Text.nomOwnTex)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:OwntexChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<!-- Tank CheckButton -->
 							<CheckButton name = "PowaRoleTankButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaRoundIconsButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaPvPButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "5"/>
 										</Offset>
