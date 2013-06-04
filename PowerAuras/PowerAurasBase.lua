@@ -61,7 +61,7 @@ WeAreMounted = false,
 WeAreInVehicle = false,
 WeAreAlive = true,
 PvPFlagSet = false,
-Instance = "none",
+Instance = "None",
 
 GroupUnits = { },
 GroupNames = { },
@@ -125,6 +125,7 @@ playerclass = "unknown",
 Events = { },
 AlwaysEvents =
 {
+	PLAYER_DIFFICULTY_CHANGED = true,
 	ACTIVE_TALENT_GROUP_CHANGED = true,
 	CHAT_MSG_ADDON = true,
 	INSPECT_TALENT_READY = true,

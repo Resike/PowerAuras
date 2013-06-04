@@ -1489,6 +1489,7 @@ function PowaAuras:InitPage(aura)
 	self:TernarySetState(PowaPvPButton, aura.PvP)
 	self:TernarySetState(Powa5ManInstanceButton, aura.Instance5Man)
 	self:TernarySetState(Powa5ManHeroicInstanceButton, aura.Instance5ManHeroic)
+	self:TernarySetState(PowaChallangeModeInstanceButton, aura.InstanceChallangeMode)
 	self:TernarySetState(Powa10ManInstanceButton, aura.Instance10Man)
 	self:TernarySetState(Powa10ManHeroicInstanceButton, aura.Instance10ManHeroic)
 	self:TernarySetState(Powa25ManInstanceButton, aura.Instance25Man)
@@ -4019,18 +4020,20 @@ function PowaAuras:EquipmentSlotsShow()
 	for pword in string.gmatch(aura.buffname, "[^/]+") do
 		pword = aura:Trim(pword)
 		if (string.len(pword) > 0 and pword ~= "???") then
-			local slotId = GetInventorySlotInfo(pword.."Slot")
-			if (slotId) then
-				local ok, texture = pcall(GetInventoryItemTexture, "player", slotId)
-				if (not ok) then
-					self:Message("Slot definitions are invalid!")
-					self:ResetSlotsToEmpty()
-					aura.buffname = ""
-					return
-				end
-				if (texture ~= nil) then
-					getglobal("Powa"..pword.."SlotIconTexture"):SetTexture(texture)
-					getglobal("Powa"..pword.."Slot").Set = true
+			if (pword == "Head" or pword == "Neck" or pword == "Shoulder" or pword == "Back" or pword == "Chest" or pword == "Shirt" or pword == "Tabard" or pword == "Wrist" or pword == "Hands" or pword == "Waist" or pword == "Legs" or pword == "Feet" or pword == "Finger0" or pword == "Finger1" or pword == "Trinket0" or pword == "Trinket1" or pword == "MainHand" or pword == "SecondaryHand") then
+				local slotId = GetInventorySlotInfo(pword.."Slot")
+				if (slotId) then
+					local ok, texture = pcall(GetInventoryItemTexture, "player", slotId)
+					if (not ok) then
+						self:Message("Slot definitions are invalid!")
+						self:ResetSlotsToEmpty()
+						aura.buffname = ""
+						return
+					end
+					if (texture ~= nil) then
+						getglobal("Powa"..pword.."SlotIconTexture"):SetTexture(texture)
+						getglobal("Powa"..pword.."Slot").Set = true
+					end
 				end
 			end
 		end

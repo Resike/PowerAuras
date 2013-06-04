@@ -604,16 +604,12 @@ function PowaAuras:IsDruidTravelForm()
 	if (self.playerclass ~= "DRUID") then
 		return false
 	end
-	local nStance = GetShapeshiftForm()
-	-- If stance 4 or 6, we're in travel/flight form.
-	if (nStance == 4 or nStance == 6) then
+	local id = GetShapeshiftFormID()
+	-- Travel form, Swift Flight form, Flight form
+	if (id == 3 or id == 27 or id == 29) then
 		return true
 	end
-	-- If in stance 5, it's complicated. Moonkin/Tree form take index 5 if learned, but if not learned then flight form is here.
-	if (nStance == 5 and (select(5, GetTalentInfo(3, 21))) == 0 and (select(5, GetTalentInfo(1, 8))) == 0) then
-		return true
-	end
-	-- Otherwise we're not in it.
+	-- Otherwise we're not in it
 	return false
 end
 
@@ -754,7 +750,9 @@ function PowaAuras:CheckMultiple(aura, reason, giveReason)
 			end
 		end
 	end
-	if (not giveReason) then return true end
+	if (not giveReason) then
+		return true
+	end
 	return true, self:InsertText(self.Text.nomReasonMulti, aura.multiids)
 end
 
@@ -1538,7 +1536,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 				if (aura.Stacks.SetStackCount) then
 					aura.Stacks:SetStackCount(random(1, 12))
 				else
-					self:Message("aura.Stacks:SetStackCount nil!! ", aura.id)
+					self:Message("aura.Stacks:SetStackCount nil!", aura.id)
 				end
 			end
 			aura.Stacks:Update()

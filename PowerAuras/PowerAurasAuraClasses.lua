@@ -135,8 +135,11 @@ cPowaAura.ExportSettings =
 	combat = 0,
 	isAlive = true,
 	PvP = 0,
+	InstanceScenario = 0,
+	InstanceScenarioHeroic = 0,
 	Instance5Man = 0,
 	Instance5ManHeroic = 0,
+	InstanceChallangeMode = 0,
 	Instance10Man = 0,
 	Instance10ManHeroic = 0,
 	Instance25Man = 0,
@@ -606,7 +609,7 @@ function cPowaAura:CheckState(giveReason)
 end
 
 function cPowaAura:AnyInstanceTypeChecksRequired()
-	return self.Instance5Man ~= 0 or self.Instance5ManHeroic ~= 0 or self.Instance10Man ~= 0 or self.Instance10ManHeroic ~= 0 or self.Instance25Man ~= 0 or self.Instance25ManHeroic ~= 0 or self.InstanceBg ~= 0 or self.InstanceArena ~= 0
+	return self.InstanceScenario ~= 0 or self.InstanceScenarioHeroic ~= 0 or self.Instance5Man ~= 0 or self.Instance5ManHeroic ~= 0 or self.InstanceChallangeMode ~= 0 or self.Instance10Man ~= 0 or self.Instance10ManHeroic ~= 0 or self.Instance25Man ~= 0 or self.Instance25ManHeroic ~= 0 or self.InstanceBg ~= 0 or self.InstanceArena ~= 0
 end
 
 function cPowaAura:CheckInstanceType(giveReason)
@@ -623,6 +626,13 @@ function cPowaAura:CheckInstanceType(giveReason)
 		howTotal = false
 	end
 	show, now, reason = self:ShouldShowForInstanceType("5ManHeroic", giveReason)
+	if (now) then
+		return show, reason
+	end
+	if (show == false) then
+		showTotal = false
+	end
+	show, now, reason = self:ShouldShowForInstanceType("ChallangeMode", giveReason)
 	if (now) then
 		return show, reason
 	end
@@ -3358,9 +3368,9 @@ function cPowaRunes:RunesPresent(giveReason)
 			self.runesMissingIgnoreDeath[3] = 0
 			if (self.Debug) then
 				for runeType = 1, 3 do
-					PowaAuras:Message("runeType=", runeType, " runes=", self.runes[runeType], " Missing +Death=", self.runesMissingPlusDeath[runeType])
+					PowaAuras:Message("runeType= ", runeType, " runes= ", self.runes[runeType], " Missing +Death= ", self.runesMissingPlusDeath[runeType])
 				end
-				PowaAuras:Message("deathRunesRequired=", deathRunesRequired, " deathRunesAvailable=", deathRunesAvailable)
+				PowaAuras:Message("deathRunesRequired= ", deathRunesRequired, " deathRunesAvailable= ", deathRunesAvailable)
 			end
 			if (deathRunesAvailable >= deathRunesRequired and self.runes[4] >= deathRunes) then
 				if (not giveReason) then
@@ -3381,9 +3391,9 @@ function cPowaRunes:RunesPresent(giveReason)
 			local runeMatches = (self.runesMissingIgnoreDeath[1] + self.runesMissingIgnoreDeath[2] + self.runesMissingIgnoreDeath[3]) == 0
 			if (self.Debug) then
 				for runeType = 1, 3 do
-					PowaAuras:Message("runeType=", runeType, " runes=", self.runes[runeType], " Missing +Death=", self.runesMissingPlusDeath[runeType], " Missing -Death=", self.runesMissingIgnoreDeath[runeType])
+					PowaAuras:Message("runeType= ", runeType, " runes= ", self.runes[runeType], " Missing +Death=", self.runesMissingPlusDeath[runeType], " Missing -Death= ", self.runesMissingIgnoreDeath[runeType])
 				end
-				PowaAuras:Message("deathRunesRequired=", deathRunesRequired, " deathRunesAvailable=", deathRunesAvailable, " runeMatches=", runeMatches, " self.runes[4]=", self.runes[4], " deathRunes=", deathRunes)
+				PowaAuras:Message("deathRunesRequired= ", deathRunesRequired, " deathRunesAvailable= ", deathRunesAvailable, " runeMatches= ", runeMatches, " self.runes[4]= ", self.runes[4], " deathRunes= ", deathRunes)
 			end
 			if (deathRunesAvailable >= deathRunesRequired and self.runes[4] >= deathRunes and runeMatches) then
 				if (not giveReason) then
@@ -3393,7 +3403,7 @@ function cPowaRunes:RunesPresent(giveReason)
 			end
 		end
 		if (self.Debug) then
-			PowaAuras:Message("self.Timer=", self.Timer, " self.inverse=", self.inverse)
+			PowaAuras:Message("self.Timer= ", self.Timer, " self.inverse= ", self.inverse)
 		end
 		if (self.Timer and self.inverse) then
 			local maxTime = 0
@@ -3403,13 +3413,13 @@ function cPowaRunes:RunesPresent(giveReason)
 					self:AddRuneTimeLeft(runeType * 2 - 1, self.runesMissingIgnoreDeath[runeType])
 				end
 				if (self.Debug) then
-					PowaAuras:Message("#self.timeList=", #self.timeList)
+					PowaAuras:Message("#self.timeList= ", #self.timeList)
 				end
 				if (#self.timeList > 0) then
 					table.sort(self.timeList)
 					maxTime = self.timeList[#self.timeList]
 					if (self.Debug) then
-						PowaAuras:Message("maxTime=", maxTime)
+						PowaAuras:Message("maxTime= ", maxTime)
 					end
 				end
 			end
@@ -3421,18 +3431,18 @@ function cPowaRunes:RunesPresent(giveReason)
 					gaps = gaps + self:AddRuneTimeLeft(runeType * 2 - 1, self.runesMissingPlusDeath[runeType])
 				end
 				if (self.Debug) then
-					PowaAuras:Message("#self.timeList=", #self.timeList, " deathRunesAvailable=", deathRunesAvailable, " missing=", missing)
+					PowaAuras:Message("#self.timeList= ", #self.timeList, " deathRunesAvailable= ", deathRunesAvailable, " missing= ", missing)
 				end
 				if (#self.timeList > deathRunesAvailable) then
 					table.sort(self.timeList)
 					local endTime = self.timeList[#self.timeList - gaps + missing]
 					if (self.Debug) then
-						PowaAuras:Message("endTime=", endTime)
+						PowaAuras:Message("endTime= ", endTime)
 					end
 					if (endTime > maxTime) then
 						maxTime = endTime
 						if (self.Debug) then
-							PowaAuras:Message("maxTime=", maxTime)
+							PowaAuras:Message("maxTime= ", maxTime)
 						end
 					end
 				end
@@ -3445,7 +3455,7 @@ function cPowaRunes:RunesPresent(giveReason)
 	end
 	if (self.Timer and minTimeToActivate ~= nil and minTimeToActivate > 0) then
 		if (self.Debug) then
-			PowaAuras:Message("minTimeToActivate=", minTimeToActivate)
+			PowaAuras:Message("minTimeToActivate= ", minTimeToActivate)
 		end
 		self.Timer:SetDurationInfo(minTimeToActivate)
 	end
@@ -3694,7 +3704,7 @@ function cPowaItems:CheckIfShouldShow(giveReason)
 				if (itemId and enabled) then
 					if (cdstart == 0) then
 						if (self.Debug) then
-							PowaAuras:Message("SHOW!!")
+							PowaAuras:Message("SHOW!")
 						end
 						if (not giveReason) then
 							return true
@@ -3707,7 +3717,7 @@ function cPowaItems:CheckIfShouldShow(giveReason)
 						self:CheckTimerInvert()
 						if (self.ForceTimeInvert) then
 							if (self.Debug) then
-								PowaAuras:Message("SHOW2!!")
+								PowaAuras:Message("SHOW2!")
 							end
 							if (not giveReason) then
 								return true
@@ -3734,7 +3744,7 @@ function cPowaItems:CheckIfShouldShow(giveReason)
 		end
 	end
 	if (self.Debug) then
-		PowaAuras:Message("HIDE!!")
+		PowaAuras:Message("HIDE!")
 	end
 	if (not giveReason) then
 		return false
@@ -3945,6 +3955,6 @@ function PowaAuras:AuraFactory(auraType, id, base)
 		base.Debug = nil
 		return class(id, base)
 	end
-	self:Message("AuraFactory unknown type ("..tostring(auraType)..") id="..tostring(id))
+	self:Message("AuraFactory unknown type ("..tostring(auraType)..") id= "..tostring(id))
 	return nil
 end

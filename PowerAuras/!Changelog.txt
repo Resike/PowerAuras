@@ -15,6 +15,7 @@ Issues:
 - The addon will no longer play custom sounds when you click on an arua.
 - Sounds will be played when you test or hide and aura, and sound is assigned for that aura.
 - Sounds wont be played when you click on the "Test All" button to prevent spam.
+- Fixed a bug with Equipment Slots.
 - Size slider now has unlimited maximum value.
 - Size slider changes.
 - Added new Custom textures.

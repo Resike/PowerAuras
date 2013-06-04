@@ -2915,7 +2915,7 @@
 							<!-- Stacks EditBox -->
 							<EditBox name = "PowaBarBuffStacks" autoFocus = "false" inherits = "InputBoxTemplate">
 								<Size>
-									<AbsDimension x = "155" y = "16"/>
+									<AbsDimension x = "100" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "RIGHT">
@@ -2961,7 +2961,7 @@
 							<!-- Buff Name EditBox -->
 							<EditBox name = "PowaBarBuffName" autoFocus = "false" inherits = "InputBoxTemplate" historyLines = "5">
 								<Size>
-									<AbsDimension x = "355" y = "16"/>
+									<AbsDimension x = "300" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "BOTTOMLEFT">
@@ -3009,7 +3009,7 @@
 							<!-- Multiple ID EditBox -->
 							<EditBox name = "PowaBarMultiID" autoFocus = "false" inherits = "InputBoxTemplate">
 								<Size>
-									<AbsDimension x = "355" y = "16"/>
+									<AbsDimension x = "300" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarBuffName" relativePoint = "BOTTOMLEFT">
@@ -3057,7 +3057,7 @@
 							<!-- Tooltip Check EditBox -->
 							<EditBox name = "PowaBarTooltipCheck" autoFocus = "false" inherits = "InputBoxTemplate">
 								<Size>
-									<AbsDimension x = "355" y = "16"/>
+									<AbsDimension x = "300" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarMultiID" relativePoint = "BOTTOMLEFT">
@@ -3670,13 +3670,32 @@
 									</OnShow>
 								</Scripts>
 							</CheckButton>
+							<!-- Challange Mode CheckButton -->
+							<CheckButton name = "PowaChallangeModeInstanceButton" inherits = "PowaTernarySelectorTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "Powa5ManHeroicInstanceButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										self.Parameter = "InstanceChallangeMode"
+										PowaChallangeModeInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
+								</Scripts>
+							</CheckButton>
 							<!-- 10 Man CheckButton -->
 							<CheckButton name = "Powa10ManInstanceButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "Powa5ManHeroicInstanceButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaChallangeModeInstanceButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "5"/>
 										</Offset>
