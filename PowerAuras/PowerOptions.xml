@@ -2396,16 +2396,16 @@
 						<Scripts>
 							<OnLoad>
 								self:EnableMouseWheel(true)
-								self:SetMinMaxValues(0, 1)
-								self:SetValue(1)
-								self:SetValueStep(0.01)
+								self:SetMinMaxValues(0, 100)
+								self:SetValue(100)
+								self:SetValueStep(1)
 								PowaBarAuraAlphaSliderText:SetText(PowaAuras.Text.nomAlpha)
 								PowaBarAuraAlphaSliderLow:SetText("0%")
 								PowaBarAuraAlphaSliderHigh:SetText("100%")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAuras:BarAuraAlphaSliderChanged()
-								PowaBarAuraAlphaSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
+								PowaBarAuraAlphaSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 							</OnValueChanged>
 							<OnMouseWheel>
 								PowaAuras.SliderOnMouseWheel(self, delta)
@@ -4788,7 +4788,7 @@
 										self.aide = PowaAuras.Text.aideTimerDuration
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
-										self:SetValueStep(0.25)
+										self:SetValueStep(0.01)
 										PowaTimerDurationSliderText:SetText(PowaAuras.Text.nomTimerDuration)
 										PowaTimerDurationSliderLow:SetText("0 sec")
 										PowaTimerDurationSliderHigh:SetText("60 sec")
@@ -5097,7 +5097,7 @@
 										self.aide = PowaAuras.Text.aidePowaTimerInvertAuraSlider
 										self:SetMinMaxValues(0, 600)
 										self:SetValue(0)
-										self:SetValueStep(0.25)
+										self:SetValueStep(0.01)
 										PowaTimerInvertAuraSliderText:SetText(PowaAuras.Text.nomTimerInvertAura)
 										PowaTimerInvertAuraSliderLow:SetText("0 sec")
 										PowaTimerInvertAuraSliderHigh:SetText("600 sec")

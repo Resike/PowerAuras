@@ -1,5 +1,4 @@
 ﻿ToDo List:
-- Add scenarios, heroic scenarios, and challange modes , 40 man raids, and lfr for the instance type.
 - Add SetCooldown type animation.
 
 Issues:
@@ -10,18 +9,25 @@ Issues:
 * 4.23.26
 - Added support for older WoW versions.
 - Fixed a bug which caused models to disappear when changed aura type.
+- Fixed a bug which caused models to not appear, when you changed aura types, before creating the model.
 - Fixed a bug which caused models to change position sometimes when you loaded the addon, or changed aura type.
 - Fixed a bug when addon draw multiple models for the same aura.
+- Fixed a bug which caused the "Model Z" slider to broke off from it's frame.
+- Fixed a bug which caused lag spikes, while you hold down your mouse button over an unlocked aura, and moved the frame with the left, right, down, up keys.
+- From now you can use mousewheel up/down on the slider's editboxes too, to increase and decrease the slider's value by the value step.
+- Changed "Invert Aura Timer", "Animation Duration" and "Timer Duration" slider's values step to 0.01.
 - The addon will no longer play custom sounds when you click on an arua.
 - Sounds will be played when you test or hide and aura, and sound is assigned for that aura.
-- Sounds wont be played when you click on the "Test All" button to prevent spam.
+- Sounds wont be played when you click on the "Test All" or "Hide All" button to prevent spam.
+- Addon now going to recheck instance type when the leader changes difficulty of an instance.
 - Fixed a bug with Equipment Slots.
 - Druid Flight form fixes.
+- Fixed a bug which broke 5-Man instance check button's functionality.
 - Added Challange Mode instance check button.
+- Added Scenario instance check button.
+- Added Heroic Scenario instance check button. 
 - Size slider now has unlimited maximum value.
-- Size slider changes.
-- Added new Custom textures.
-- Now you can use mousewheel up/down on the sliders editboxes too, to increase and decrease the slider's value by the value step.
+- Fixed a bug with "Old Animations" check button.
 - Fixed a bug with the "Opacity" slider.
 
 * 4.23.25

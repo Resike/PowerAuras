@@ -863,7 +863,6 @@ local function leaveAura(frame)
 	frame:SetScript("OnDragStop", nil)
 	frame:SetScript("OnMouseDown", nil)
 	frame:SetScript("OnMouseUp", nil)
-	frame:SetScript("OnKeyUp", nil)
 end
 
 function PowaAuras:SetForDragging(aura, frame)
