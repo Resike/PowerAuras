@@ -6,6 +6,9 @@ Issues:
 - Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
 - Enablefullrotation and isAlive unchecked import bug on some aura types.
 
+* 4.23.27
+- Fixed a typo in CLEU.
+
 * 4.23.26
 - Added support for older WoW versions.
 - Fixed a bug which caused models to disappear when changed aura type.
@@ -19,7 +22,7 @@ Issues:
 - The addon will no longer play custom sounds when you click on an arua.
 - Sounds will be played when you test or hide and aura, and sound is assigned for that aura.
 - Sounds wont be played when you click on the "Test All" or "Hide All" button to prevent spam.
-- Addon now going to recheck instance type when the leader changes difficulty of an instance.
+- Addon now going to recheck instance type when the leader changes the difficulty of an instance.
 - Fixed a bug with Equipment Slots.
 - Druid Flight form fixes.
 - Fixed a bug which broke 5-Man instance check button's functionality.
@@ -27,6 +30,8 @@ Issues:
 - Added Scenario instance check button.
 - Added Heroic Scenario instance check button. 
 - Size slider now has unlimited maximum value.
+- From now "Auras Locked" value is false by default.
+- From now "Round Timers Up" value is false by default.
 - Fixed a bug with "Old Animations" check button.
 - Fixed a bug with the "Opacity" slider.
 
