@@ -4236,16 +4236,16 @@
 								<Scripts>
 									<OnLoad>
 										self:EnableMouseWheel(true)
-										self:SetMinMaxValues(0.01, 2)
-										self:SetValue(1)
-										self:SetValueStep(0.01)
+										self:SetMinMaxValues(1, 200)
+										self:SetValue(100)
+										self:SetValueStep(1)
 										PowaBarAuraAnimSpeedSliderText:SetText(PowaAuras.Text.nomSpeed)
 										PowaBarAuraAnimSpeedSliderLow:SetText("1%")
 										PowaBarAuraAnimSpeedSliderHigh:SetText("200%")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:BarAuraAnimSpeedSliderChanged(self)
-										PowaBarAuraAnimSpeedSliderEditBox:SetText(format("%.0f", (self:GetValue()) * 100).."%")
+										PowaBarAuraAnimSpeedSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 									</OnValueChanged>
 									<OnMouseWheel>
 										PowaAuras.SliderOnMouseWheel(self, delta)
