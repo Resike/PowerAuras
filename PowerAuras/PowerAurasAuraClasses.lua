@@ -2319,7 +2319,7 @@ function cPowaActionReady:CheckIfShouldShow(giveReason)
 		if (not giveReason) then
 			return - 1
 		end
-		return -1, PowaAuras:InsertText(PowaAuras.Text.nomReasonGlobalCooldown, spellName)
+		return - 1, PowaAuras:InsertText(PowaAuras.Text.nomReasonGlobalCooldown, spellName)
 	end
 	if (cdstart == 0 or self.CooldownOver or charges > 0) then
 		if (not giveReason) then

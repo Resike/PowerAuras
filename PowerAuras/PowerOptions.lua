@@ -1882,7 +1882,7 @@ function PowaAuras:BarAuraSizeSliderChanged()
 	local SliderValue = PowaBarAuraSizeSlider:GetValue()
 	if (aura.textaura == true) then
 		if ((SliderValue / 100) < 1.61) then
-			self.Auras[self.CurrentAuraId].size = SliderValue
+			self.Auras[self.CurrentAuraId].size = SliderValue / 100
 			self:RedisplayAura(self.CurrentAuraId)
 		end
 	else

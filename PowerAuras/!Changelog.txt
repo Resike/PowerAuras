@@ -6,6 +6,9 @@ Issues:
 - Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
 - Enablefullrotation and isAlive unchecked import bug on some aura types.
 
+* 4.23.29
+- Fixed a bug with "Text Aura" size.
+
 * 4.23.28
 - Fixed a bug with the "Animation Speed" slider.
 - Other slider tweaks.
@@ -119,7 +122,7 @@ Aura preview icon's color now will change immediately while changing color at th
 Aura preview icon's color now wont change on toggled off aruas, when the "Test all" button is being pushed.
 Text aura and TempPortrait icons now wont get modified by the current aura's choosen color.
 Added texture rotater slider.
-When more auras is opened at the same time, the effec editors icon will show the current auras color correctly.
+When more auras is opened at the same time, the effect editors icon will show the current auras color correctly.
 Fixed a bug where, aura icons didn't updated when loaded a custom texture.
 Removed value increaser and decreaser buttons from the sliders.
 Sliders now can be adjusted with mousewheel up/down.
@@ -143,7 +146,7 @@ Hide all button now properly decreases all icon's alpha immediately.
 Slider inherit changes, removed unused stuff.
 Test all button now wont hide the currently opened effect editor.
 Clicking on the Edit button or right clicking on an aura now going to increase it's icons alpha properly.
-When you hide an aura with the Test button, it's icon's alpha now gonna dcrease properly.
+When you hide an aura with the Test button, it's icon's alpha now gonna get decreased properly.
 When you open the aura browser while an aura is currently showing, now it's gonna decrease it's icons alpha properly.
 Fixed a bug when Texture slider value was 0 and show blank aura.
 Fixed a but with Electric animation both on main, and secondary animations.
