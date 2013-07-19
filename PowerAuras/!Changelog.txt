@@ -6,6 +6,13 @@ Issues:
 - Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
 - Enablefullrotation and isAlive unchecked import bug on some aura types.
 
+* 4.23.30
+- Fixed a GUI override bug with the "Unit Name" checkbutton.
+- Fixed a bug with the "Rotation" slider's editbox.
+- Fixed a bug with the "Animation Speed" slider's editobx.
+- Other smaller GUI changes.
+- Other minor fixes.
+
 * 4.23.29
 - Fixed a bug with "Text Aura" size.
 

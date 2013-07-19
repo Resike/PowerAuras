@@ -828,7 +828,7 @@ aideBlockIncomingAuras = "Prevent anybody sending you auras.",
 nomBlockIncomingAuras = "Block Incoming Auras",
 aideFixExports = "Check this when aura exports are not functioning correctly and leave you with a blank textbox.",
 nomFixExports = "Alternative Exports",
-aideAnimationsAreBrokenSorry = "If your animations appear to skip or increase in size randomly, you should enable Old Animations."
+aideAnimationsAreBrokenSorry = "If your animations appear to skip or increase in size randomly, you should enable this."
 })
 if (GetLocale() == "deDE") then
 PowaAuras.Anim[0] = "[Nichts]"

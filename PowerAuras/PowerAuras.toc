@@ -1,13 +1,12 @@
 ﻿## Interface: 50300
-## Title: Power Auras Classic
+## Title: Power Auras Classic |cFFFF0000v4|r
+## Version: 4.23.30
 ## Author: Smacker 'lolcat', Dridzt 'classic', Garstiger 'continued', Sinsthar 'base', Meorawr, modified by Zensunim and Resike
-## Version: 4.23.29
-## Notes: (v4.23.29) Cool Effects around the player for ingame events. Authors: |cFF7F7FFFSinsthar, Garstiger, Dridzt, and Smacker, Meorawr, modified by Zensunim and Resike|r.
+## Notes: Cool Effects around the player for ingame events. Authors: |cFF7F7FFFSinsthar, Garstiger, Dridzt, and Smacker, Meorawr, modified by Zensunim and Resike.|r
 ## Notes-frFR: Affiche des effets visuels autour du personnage.
 ## Notes-zhCN: 强大的条件触发式事件提示插件 |cff00ff00基尔罗格[|r末日彩虹|cff00ff00]汉化|r.
 ## Notes-zhTW: 強大的條件觸發式事件提示插件 |cff00ff00撒爾薩里安[|r末日彩虹|cff00ff00]漢化|r.
 ## DefaultState: Enabled
-## LoadOnDemand: 0
 ## SavedVariables: PowaGlobalSet, PowaGlobalListe, PowaGlobalMisc
 ## SavedVariablesPerCharacter: PowaSet, PowaMisc, PowaTimer, PowaPlayerListe, PowaState
 

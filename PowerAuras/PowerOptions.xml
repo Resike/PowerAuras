@@ -1480,7 +1480,7 @@
 	<!-- Aura Configuration Frame -->
 	<Frame name = "PowaBarConfigFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
-			<AbsDimension x = "488" y = "900"/>
+			<AbsDimension x = "488" y = "920"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "CENTER" relativeTo = "UIParent">
@@ -2644,7 +2644,7 @@
 					<!-- First Configuration Tab Panel (Activation) -->
 					<Frame name = "PowaBarConfigFrameEditor1">
 						<Size>
-							<AbsDimension x = "450" y = "352"/>
+							<AbsDimension x = "450" y = "372"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaBarConfigFrameEditor" relativePoint = "BOTTOM">
@@ -3269,13 +3269,83 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<!-- Unit Name CheckButton -->
+							<CheckButton name = "PowaOptunitnButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaPartyButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideOptunitn
+										PowaOptunitnButtonText:SetText(PowaAuras.Text.nomCheckOptunitn)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:OptunitnChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Unit Name EditBox -->
+							<EditBox name = "PowaBarUnitn" autoFocus = "false" inherits = "InputBoxTemplate">
+								<Size>
+									<AbsDimension x = "105" y = "16"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaOptunitnButtonText" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "20" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self:SetMaxLetters(256)
+										self.aide = PowaAuras.Text.aideUnitn
+									</OnLoad>
+									<OnEnterPressed>
+										self:ClearFocus()
+									</OnEnterPressed>
+									<OnTextChanged>
+										PowaAuras:UnitnTextChanged()
+									</OnTextChanged>
+									<OnEnter>
+										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+										GameTooltip:SetText(self.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+								<Layers>
+									<Layer level = "OVERLAY">
+										<FontString name = "PowaBarUnitnText" inherits = "GameFontNormalSmall" justifyH = "LEFT" text = "">
+											<Size>
+												<AbsDimension x = "150" y = "20"/>
+											</Size>
+											<Anchors>
+												<Anchor point = "BOTTOMLEFT" relativeTo = "PowaBarUnitn" relativePoint = "TOPLEFT">
+													<Offset>
+														<AbsDimension x = "0" y = "0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</EditBox>
 							<!-- Any Member CheckButton -->
 							<CheckButton name = "PowaGroupAnyButton" inherits = "PowaCheckTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaPartyButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaOptunitnButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "5"/>
 										</Offset>
@@ -3310,6 +3380,50 @@
 									</OnLoad>
 									<OnClick>
 										PowaAuras:SettingChecked(self, "spec1")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Spec 2 CheckButton -->
+							<CheckButton name = "PowaTalentGroup2Button" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup1Button" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "85" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideTalentGroup2
+										PowaTalentGroup2ButtonText:SetText(PowaAuras.Text.nomTalentGroup2)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:SettingChecked(self, "spec2")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Debug CheckButton -->
+							<CheckButton name = "PowaAuraDebugButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup2Button" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "195" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideAuraDebug
+										PowaAuraDebugButtonText:SetText(PowaAuras.Text.nomAuraDebug)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:SettingChecked(self, "Debug")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3477,120 +3591,6 @@
 									</OnLoad>
 									<OnClick>
 										PowaAuras:RaidChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Unit Name CheckButton -->
-							<CheckButton name = "PowaOptunitnButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaRaidButton" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "0" y = "5"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideOptunitn
-										PowaOptunitnButtonText:SetText(PowaAuras.Text.nomCheckOptunitn)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:OptunitnChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Unit Name EditBox -->
-							<EditBox name = "PowaBarUnitn" autoFocus = "false" inherits = "InputBoxTemplate">
-								<Size>
-									<AbsDimension x = "100" y = "16"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaOptunitnButtonText" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "20" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self:SetMaxLetters(256)
-										self.aide = PowaAuras.Text.aideUnitn
-									</OnLoad>
-									<OnEnterPressed>
-										self:ClearFocus()
-									</OnEnterPressed>
-									<OnTextChanged>
-										PowaAuras:UnitnTextChanged()
-									</OnTextChanged>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(self.aide, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
-								</Scripts>
-								<Layers>
-									<Layer level = "OVERLAY">
-										<FontString name = "PowaBarUnitnText" inherits = "GameFontNormalSmall" justifyH = "LEFT" text = "">
-											<Size>
-												<AbsDimension x = "150" y = "20"/>
-											</Size>
-											<Anchors>
-												<Anchor point = "BOTTOMLEFT" relativeTo = "PowaBarUnitn" relativePoint = "TOPLEFT">
-													<Offset>
-														<AbsDimension x = "0" y = "0"/>
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-								</Layers>
-							</EditBox>
-							<!-- Spec 2 CheckButton -->
-							<CheckButton name = "PowaTalentGroup2Button" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaOptunitnButton" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "0" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideTalentGroup2
-										PowaTalentGroup2ButtonText:SetText(PowaAuras.Text.nomTalentGroup2)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:SettingChecked(self, "spec2")
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Debug CheckButton -->
-							<CheckButton name = "PowaAuraDebugButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup2Button" relativePoint = "RIGHT">
-										<Offset>
-											<AbsDimension x = "195" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideAuraDebug
-										PowaAuraDebugButtonText:SetText(PowaAuras.Text.nomAuraDebug)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:SettingChecked(self, "Debug")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3988,7 +3988,7 @@
 					<!-- Second Configuration Tab Panel (Animation) -->
 					<Frame name = "PowaBarConfigFrameEditor2" hidden = "true">
 						<Size>
-							<AbsDimension x = "450" y = "250"/>
+							<AbsDimension x = "450" y = "255"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaBarConfigFrameEditor" relativePoint = "BOTTOM">
@@ -4589,7 +4589,7 @@
 					<!-- Fourth Configuration Tab Panel (Timer) -->
 					<Frame name = "PowaBarConfigFrameEditor4" hidden = "true">
 						<Size>
-							<AbsDimension x = "450" y = "352"/>
+							<AbsDimension x = "450" y = "357"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaBarConfigFrameEditor" relativePoint = "BOTTOM">
