@@ -1290,7 +1290,7 @@ function PowaAuras:UpdateTimerOptions()
 		PowaBuffTimerActivationTime:SetChecked(timer.ShowActivation)
 		PowaBuffTimer99:SetChecked(timer.Seconds99)
 		PowaBuffTimerUseOwnColorButton:SetChecked(timer.UseOwnColor)
-		PowaTimerColorNormalTexture:SetVertexColor(timer.r,timer.g,timer.b)
+		PowaTimerColorNormalTexture:SetVertexColor(timer.r, timer.g, timer.b)
 		--UIDropDownMenu_SetSelectedValue(PowaBuffTimerRelative, timer.Relative)
 		--UIDropDownMenu_SetSelectedValue(PowaDropDownTimerTexture, timer.Texture)
 		PowaTimerInvertAuraSlider:SetValue(aura.InvertAuraBelow)
@@ -1319,7 +1319,7 @@ function PowaAuras:UpdateStacksOptions()
 		PowaBuffStacksUpdatePingButton:SetChecked(stacks.UpdatePing)
 		PowaBuffStacksLegacySizing:SetChecked(stacks.LegacySizing)
 		PowaBuffStacksUseOwnColorButton:SetChecked(stacks.UseOwnColor)
-		PowaStacksColorNormalTexture:SetVertexColor(stacks.r,stacks.g,stacks.b)
+		PowaStacksColorNormalTexture:SetVertexColor(stacks.r, stacks.g, stacks.b)
 		--UIDropDownMenu_SetSelectedValue(PowaBuffStacksRelative, stacks.Relative)
 		--UIDropDownMenu_SetSelectedValue(PowaDropDownStacksTexture, stacks.Texture)
 	end
@@ -1737,7 +1737,7 @@ function PowaAuras:InitPage(aura)
 	else
 		AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
 	end
-	if (AuraTexture:GetTexture() == "Interface\\CharacterFrame\\TempPortrait") or (AuraTexture:GetTexture() == "Interface\\Icons\\INV_Scroll_02") then
+	if (AuraTexture:GetTexture() == "Interface\\CharacterFrame\\TempPortrait" or AuraTexture:GetTexture() == "Interface\\Icons\\INV_Scroll_02" or AuraTexture:GetTexture() == "Interface\\Icons\\TEMP") then
 		AuraTexture:SetVertexColor(1, 1, 1)
 	end
 	PowaColorNormalTexture:SetVertexColor(aura.r, aura.g, aura.b)
@@ -1779,7 +1779,7 @@ function PowaAuras:BarAuraTextureSliderChanged()
 	elseif (self.Auras[auraId].wowtex == true) then
 		checkTexture = AuraTexture:SetTexture(self.WowTextures[SliderValue])
 	elseif (self.Auras[auraId].model == true) then
-		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP")or (aura.model == true)
+		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP")
 	elseif (self.Auras[auraId].modelcustom == true) then
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP")
 	elseif (self.Auras[auraId].customtex == true) then
@@ -1793,7 +1793,7 @@ function PowaAuras:BarAuraTextureSliderChanged()
 		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga")
 	end
 	local aura = self.Auras[self.CurrentAuraId]
-	if (self.Auras[auraId].textaura == true) or AuraTexture:GetTexture() == "Interface\\CharacterFrame\\TempPortrait" then
+	if (self.Auras[auraId].textaura == true) or AuraTexture:GetTexture() == "Interface\\CharacterFrame\\TempPortrait" or AuraTexture:GetTexture() == "Interface\\Icons\\TEMP" then
 		AuraTexture:SetVertexColor(1, 1, 1)
 	else
 		if (aura.gradientstyle == "Horizontal") or (aura.gradientstyle == "Vertical") then
@@ -2167,7 +2167,9 @@ function PowaAuras:RandomColorChecked()
 	else
 		self.Auras[auraId].randomcolor = false
 	end
-	self:RedisplayAura(aura.id)
+	if self.Auras[auraId].model ~= true and self.Auras[auraId].custommodel ~= true then
+		self:RedisplayAura(aura.id)
+	end
 end
 
 function PowaAuras:ThresholdInvertChecked(owner)
@@ -2441,12 +2443,15 @@ end
 
 function PowaAuras:DesaturationChecked()
 	local aura = self.Auras[self.CurrentAuraId]
+	local auraId = self.CurrentAuraId
 	if (PowaDesaturateButton:GetChecked()) then
 		aura.desaturation = true
 	else
 		aura.desaturation = false
 	end
-	self:RedisplayAura(self.CurrentAuraId)
+	if self.Auras[auraId].model ~= true and self.Auras[auraId].custommodel ~= true then
+		self:RedisplayAura(self.CurrentAuraId)
+	end
 end
 
 function PowaAuras:EnableFullRotationChecked()
@@ -2632,7 +2637,9 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 				PowaSet[AuraID]["gradientstyle"] = gradientstyle
 				PowaGradientStyleDropDownText:SetText(gradientstyle)
 				UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, gradientstyle)
-				PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
+				if PowaAuras.Auras[AuraID].model ~= true and PowaAuras.Auras[AuraID].custommodel ~= true then
+					PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
+				end
 			end
 			UIDropDownMenu_AddButton(info)
 		end
@@ -3100,6 +3107,7 @@ function PowaAuras:SetAuraColor(r, g, b)
 	local swatch = getglobal(ColorPickerFrame.Button:GetName().."NormalTexture")
 	swatch:SetVertexColor(r, g, b)
 	local frame = getglobal(ColorPickerFrame.Button:GetName().."_SwatchBg")
+	local auraId = self.CurrentAuraId
 	frame.r = r
 	frame.g = g
 	frame.b = b
@@ -3107,9 +3115,13 @@ function PowaAuras:SetAuraColor(r, g, b)
 	ColorPickerFrame.Source.g = g
 	ColorPickerFrame.Source.b = b
 	if (ColorPickerFrame.setTexture) then
-		AuraTexture:SetVertexColor(r, g, b)
+		if self.Auras[auraId].model ~= true and self.Auras[auraId].custommodel ~= true then
+			AuraTexture:SetVertexColor(r, g, b)
+		end
 	end
-	self:RedisplayAura(self.CurrentAuraId)
+	if self.Auras[auraId].model ~= true and self.Auras[auraId].custommodel ~= true then
+		self:RedisplayAura(auraId)
+	end
 end
 
 function PowaAuras:OpenColorPicker(control, source, setTexture)
@@ -3143,13 +3155,16 @@ function PowaAuras:SetGradientAuraColor(r, g, b)
 	local swatch = getglobal(ColorPickerFrame.GradientButton:GetName().."NormalTexture")
 	swatch:SetVertexColor(r, g, b)
 	local frame = getglobal(ColorPickerFrame.GradientButton:GetName().."_SwatchBg")
+	local auraId = self.CurrentAuraId
 	frame.r = r
 	frame.g = g
 	frame.b = b
 	self.Auras[self.CurrentAuraId].gr = r
 	self.Auras[self.CurrentAuraId].gg = g
 	self.Auras[self.CurrentAuraId].gb = b
-	self:RedisplayAura(self.CurrentAuraId)
+	if self.Auras[auraId].model ~= true and self.Auras[auraId].custommodel ~= true then
+		self:RedisplayAura(auraId)
+	end
 end
 
 function PowaAuras:OpenGradientColorPicker(control, source, setTexture)
@@ -4253,7 +4268,10 @@ function PowaAuras.SliderEditBoxChanged(self)
 			self:SetText(format("%.0f", slider:GetValue()).."%")
 		end
 	elseif (tonumber(postfix) == nil and slider == PowaBarAuraRotateSlider) then
-		local text = tonumber(string.sub(self:GetText(), 1, - 3))
+		local text = tonumber(string.sub(self:GetText(), 1, - 2))
+		if text == nil then
+			text = tonumber(string.sub(self:GetText(), 1, - 3))
+		end
 		if (text ~= nil) then
 			slider:SetValue(text)
 			self:SetText(format("%.0f", slider:GetValue()).."°")

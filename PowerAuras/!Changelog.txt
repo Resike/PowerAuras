@@ -7,9 +7,16 @@ Issues:
 - Enablefullrotation and isAlive unchecked import bug on some aura types.
 
 * 4.23.30
+- Fixed an excessive CPU and memory usage when picking colors for models.
+- Changing color of a model won't redisplay the model itself.
+- Changing the value of the "Gradient Style" dropdown, won't redisplay models.
+- Changing the value of the "Random Color" checkbutton, won't redisplay models.
+- Changing the value of the "Desaturate" checkbutton, won't redisplay models.
 - Fixed a GUI override bug with the "Unit Name" checkbutton.
 - Fixed a bug with the "Rotation" slider's editbox.
 - Fixed a bug with the "Animation Speed" slider's editobx.
+- Fixed a coloring bug with model's and custom model's icon.
+- Fixed a bug with aura icons.
 - Other smaller GUI changes.
 - Other minor fixes.
 

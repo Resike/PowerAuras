@@ -1778,7 +1778,7 @@
 						</Scripts>
 						<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\ChatFrameColorSwatch"/>
 					</Button>
-					<!-- Ranom Color CheckButton -->
+					<!-- Random Color CheckButton -->
 					<CheckButton name = "PowaRandomColorButton" inherits = "PowaCheckTemplate">
 						<Size>
 							<AbsDimension x = "25" y = "25"/>
