@@ -954,6 +954,25 @@ AuraType =
 	[PowaAuras.BuffTypes.GTFO] = "GTFO-Alert"
 },
 
+PowerType =
+{
+        [-1] = "Standard",
+        [SPELL_POWER_ALTERNATE_POWER] = "Boss-Fähigkeit",
+        [SPELL_POWER_BURNING_EMBERS] = "Brennende Funken",
+        [SPELL_POWER_CHI] = "Chi",
+        [SPELL_POWER_DARK_FORCE] = "Dunkle Macht",
+        [SPELL_POWER_DEMONIC_FURY] = "Dämonischer Furor",
+        [SPELL_POWER_ENERGY] = "Energie",
+        [SPELL_POWER_FOCUS] = "Fokus",
+        [SPELL_POWER_HOLY_POWER] = "Heilige Kraft",
+        [SPELL_POWER_LUNAR_ECLIPSE] = "Mondfinsternis",
+        [SPELL_POWER_RAGE] = "Wut",
+        [SPELL_POWER_RUNIC_POWER] = "Runenmacht",
+        [SPELL_POWER_SHADOW_ORBS] = "Schattenkugeln",
+        [SPELL_POWER_SOLAR_ECLIPSE] = "Sonnenfinsternis",
+        [SPELL_POWER_SOUL_SHARDS] = "Seelensplitter",
+},
+
 Relative =
 {
 	NONE = "Frei",
@@ -1203,6 +1222,7 @@ Ternary =
 	inVehicle = "In Fahrzeug",
 	isAlive = "Am Leben",
 	PvP = "PvP aktiv",
+	InstanceChallangeMode = "Herausforderung",
 	InstanceScenario = "Szenario",
 	InstanceScenarioHeroic = "Szenario HC",
 	Instance5Man = "5-Mann",
@@ -1228,6 +1248,7 @@ TernaryYes =
 	inVehicle = "Nur wenn in einem Fahrzeug",
 	isAlive = "Nur wenn am Leben",
 	PvP = "Nur wenn PvP aktiv",
+        InstanceChallangeMode = "Nur in einer Herausforderungsmodus-Instanz",
 	InstanceScenario = "Nur in einem normalen Szenario",
 	InstanceScenarioHeroic = "Nur in einem heroischen Szenario",
 	Instance5Man = "Nur in einer normalen 5-Mann-Instanz",
@@ -1254,6 +1275,7 @@ TernaryNo =
 	inVehicle = "Nur wenn in keinem Fahrzeug",
 	isAlive = "Nur wenn tot",
 	PvP = "Nur wenn kein PvP aktiv",
+        InstanceChallangeMode = "Nur wenn nicht in einer Herausforderungsmodus-Instanz",
 	InstanceScenario = "Nur wenn nicht in einem normalen Szenario",
 	InstanceScenarioHeroic = "Nur wenn nicht in einem heroischen Szenario",
 	Instance5Man = "Nur wenn nicht in einer normalen 5-Mann-Instanz",
@@ -1280,6 +1302,7 @@ TernaryAide =
 	inVehicle = "Effekt beeinflusst durch Fahrzeugstatus.",
 	isAlive = "Effekt beeinflusst durch Lebensstatus.",
 	PvP = "Effekt beinflusst durch PvP-Status.",
+        InstanceChallangeMode = "Effekt beeinflusst durch Herausforderungsmodus-Instanz.",
 	InstanceScenario = "Effekt beeinflusst durch normales Szenario",
 	InstanceScenarioHeroic = "Effekt beeinflusse durch heroisches Szenario",
 	Instance5Man = "Effekt beeinflusst durch normale 5-Mann-Instanz.",
