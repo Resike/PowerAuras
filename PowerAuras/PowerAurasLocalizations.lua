@@ -947,7 +947,7 @@ AuraType =
 	[PowaAuras.BuffTypes.Runes] = "Runen",
 	[PowaAuras.BuffTypes.Slots] = "Ausrüstungsplatz",
 	[PowaAuras.BuffTypes.Items] = "Gegenstand",
-	[PowaAuras.BuffTypes.Tracking] = "Tracking",
+	[PowaAuras.BuffTypes.Tracking] = "Aufspüren",
 	[PowaAuras.BuffTypes.TypeBuff] = "Buff-Typ",
 	[PowaAuras.BuffTypes.UnitMatch] = "Spieler/Einheit",
 	[PowaAuras.BuffTypes.PetStance] = "Begleiter-Haltung",
@@ -1057,7 +1057,7 @@ aideMultiID = "Gib hier andere Aura-IDs für kombinierte Checks ein. Mehrere IDs
 aideTooltipCheck = "Checke auch die Tooltips, die diesen Text enthalten.",
 
 aideBuff = "Gib hier den Namen oder einen Teil vom Namen des Buffs ein, der die Aura auslösen soll. Mit einem Slash können mehrere Namen getrennt werden. Bsp.: 'Super Buff/Power'",
-aideBuff2 = "Gib hier den Namen oder einen Teil vom Namen des Debuffs ein, der die Aura auslösen soll. Mit einem Slash können mehrere Namen getrennt werden. Bsp.: 'Dunkle Krankheit/Seuche')",
+aideBuff2 = "Gib hier den Namen oder einen Teil vom Namen des Debuffs ein, der die Aura auslösen soll. Mit einem Slash können mehrere Namen getrennt werden. Bsp.: 'Dunkle Krankheit/Seuche'",
 aideBuff3 = "Gib hier den Typ (Gift, Krankheit, Fluch, Magie, CC, Stille, Betäubung, Fesseln, Wurzeln oder Nichts) des Debuffs ein, der die Aura auslösen soll. Mit einem Slash können mehrere Typen getrennt werden. Bsp.: 'Krankheit/Gift'",
 aideBuff4 = "Gib hier den Namen des Flächeneffekts (AoE) ein, der die Aura auslösen soll. Die Namen findest du z.B. im Kampflog. Bsp.: 'Feuerregen'",
 aideBuff5 = "Gib hier den Namen oder einen Teil vom Namen der temporären Waffenverzauberung ein, die die Aura auslösen soll. Schreibe optional 'Waffenhand/' oder 'Schildhand/' davor, um einen Slot festzulegen. Bsp.: 'Waffenhand/Verkrüppelndes'",
@@ -1319,6 +1319,9 @@ TernaryAide =
 	RoleRangeDps = "Effekt beeinflusst durch Fernkampfklasse."
 },
 
+aideTracking = "Gib die Art des Aufspürens an. Bsp.: 'Fischsuche'",
+nomTrackingSet = "Aufspüren auf $1 gesetzt",
+
 nomTimerInvertAura = "Kehre Aura um wenn Dauer unterhalb",
 aidePowaTimerInvertAuraSlider = "Kehre die Aura um, wenn die Dauer weniger als dieses Limit ist ('0' zum Deaktivieren).",
 nomTimerHideAura = "Verstecke Aura und Timer wenn Dauer oberhalb",
@@ -1399,9 +1402,64 @@ nomReasonInverted = "$1 (umgekehrt)", -- $1 is the reason, but the inverted flag
 
 nomReasonSpellUsable = "Zauber $1 benutzbar ist",
 nomReasonSpellNotUsable = "Zauber $1 nicht benutzbar ist",
-nomReasonSpellNotReady = "Zauber $1 nicht bereit ist, Abklingzeit, Timer umgekehrt",
+nomReasonSpellNotReady = "Zauber $1 nicht bereit ist (auf Abklingzeit), Timer umgekehrt",
 nomReasonSpellNotEnabled = "Zauber $1 nicht aktiviert ist",
 nomReasonSpellNotFound = "Zauber $1 nicht gefunden wurde",
+nomReasonSpellOnCooldown = "Zauber $1 auf Abklingzeit",
+
+nomReasonActionNotFound = "nicht in der Aktionsleiste gefunden",
+nomReasonActionNotReady = "Aktion nicht bereit (auf Abklingzeit)",
+nomReasonActionNotReadyInvert = "Aktion nicht bereit (auf Abklingzeit), Timer umgekehrt",
+nomReasonActionNotUsable = "Aktion nicht benutzbar",
+nomReasonActionReady = "Aktion bereit",
+nomReasonActionlNotEnabled = "Aktion nicht aktiviert",
+nomReasonAnimationDuration = "Noch in eigener Laufzeit", -- fuzzy
+nomReasonGTFOAlerts = "GTFO sind nie immer aktiv.",
+nomReasonIn10ManHeroicInstance = "In heroischer 10-Mann-Instanz",
+nomReasonIn10ManInstance = "In 10-Mann-Instanz",
+nomReasonIn25ManHeroicInstance = "In heroischer 25-Mann-Instanz",
+nomReasonIn25ManInstance = "In 25-Mann-Instanz",
+nomReasonIn5ManHeroicInstance = "In heroischer 5-Mann-Instanz",
+nomReasonIn5ManInstance = "In 5-Mann-Instanz",
+nomReasonInArenaInstance = "In einer Arena",
+nomReasonInBgInstance = "Auf einem Schlachtfeld",
+nomReasonItemEquipped = "Gegenstand $1 angelegt",
+nomReasonItemInBags = "Gegenstand $1 in Taschen",
+nomReasonItemNotEnabled = "Gegenstand $1 nicht aktiviert",
+nomReasonItemNotEquipped = "Gegenstand $1 nicht angelegt",
+nomReasonItemNotFound = "Gegenstand $1 nicht gefunden",
+nomReasonItemNotInBags = "Gegenstand $1 nicht in Taschen",
+nomReasonItemNotOnPlayer = "Gegenstand $1 nicht getragen",
+nomReasonItemNotReady = "Gegenstand $1 nicht bereit (auf Abklingzeit), Timer umgekehrt",
+nomReasonItemNotUsable = "Gegenstand $1 nicht benutzbar",
+nomReasonItemOnCooldown = "Gegenstand $1 auf Abklingzeit",
+nomReasonItemUsable = "Gegenstand $1 benutzbar",
+nomReasonNoPet = "Spieler hat keinen Begleiter",
+nomReasonNoUnitMatch = "Einheit $1 passt nicht auf Einheit $2.",
+nomReasonNoUseCombo = "Du benutzt keine Kombopunkte",
+nomReasonNoUseComboInForm = "Du benutzt keine Kombopunkte in dieser Form",
+nomReasonNotCastingByMe = "Kein passender Zauber durch mich gewirkt",
+nomReasonNotCastingOnMe = "Kein passender Zauber auf mich gewirkt",
+nomReasonNotIn10ManHeroicInstance = "Nicht in heroischer 10-Mann-Instanz",
+nomReasonNotIn10ManInstance = "Nicht in 10-Mann-Instanz",
+nomReasonNotIn25ManHeroicInstance = "Nicht in heroischer 25-Mann-Instanz",
+nomReasonNotIn25ManInstance = "Nicht in 25-Mann-Instanz",
+nomReasonNotIn5ManHeroicInstance = "Nicht in heroischer 5-Mann-Instanz",
+nomReasonNotIn5ManInstance = "Nicht in 5-Mann-Instanz",
+nomReasonNotInArenaInstance = "Nicht in einer Arena",
+nomReasonNotInBgInstance = "Nicht auf einem Schlachtfeld",
+nomReasonPetExists = "Spieler hat Begleiter",
+nomReasonPetMissing = "Begleiter des Spielers fehlt",
+nomReasonPetStance = "Begleiter ist in Haltung $1.",
+nomReasonRoleNoMatch = "Keine passende Rolle", -- fuzzy
+nomReasonRoleUnknown = "Unbekannte Rolle", -- fuzzy
+nomReasonRunesNotReady = "Runen nicht bereit",
+nomReasonRunesReady = "Runen bereit",
+nomReasonStateOK = "Status OK",
+nomReasonStatic = "Statische Aura",
+nomReasonTrackingMissing = "Aufspüren nicht auf $1 gesetzt",
+nomReasonUnitMatch = "Einheit $1 passt auf Einheit $2.",
+nomReasonUnknownName = "Einheitenname unbekannt",
 
 ReasonStat =
 {
@@ -1410,10 +1468,47 @@ ReasonStat =
 	Power = {MatchReason = "$1 EnergieWutRunen niedrig", NoMatchReason = "$1 EnergieWutRunen nicht niedrig genug", NilReason = "$1 has wrong Power Type"},
 	Aggro = {MatchReason = "$1 hat Aggro", NoMatchReason = "$1 hat keine Aggro"},
 	PvP = {MatchReason = "$1 PvP Markierung gesetzt", NoMatchReason = "$1 PvP Markierung nicht gesetzt"},
-	SpellAlert = {MatchReason = "$1 casting $2", NoMatchReason = "$1 not casting $2"}
+	SpellAlert = {MatchReason = "$1 zaubert $2", NoMatchReason = "$1 zaubert nicht $2"}
 },
 
+-- 3D models
+aideCustomModels = "Auswählen, um eigene 3D-Modelle zu benutzen.",
+aideModels = "Auswählen, um 3D-Modelle aus dem Spiel zu benutzen.",
+nomCustomModels = "Custom",
+nomModelX = "Modell X",
+nomModelY = "Modell Y",
+nomModelZ = "Modell Z",
+nomModels = "Modelle",
+
+-- Export dialog
+ExportDialogCancelButton = "Schließen",
+ExportDialogCopyTitle = "Drücke Strg-C um den untenstehenden Aura-Text zu kopieren.",
+ExportDialogMidTitle = "an Spieler senden",
+ExportDialogSendButton1 = "Senden",
+ExportDialogSendButton2 = "Zurück",
+ExportDialogSendTitle1 = "Gib unten einen Spielernamen ein und drücke 'Senden'.",
+ExportDialogSendTitle3a = "%s ist im Kampf und kann die Auren nicht annehmen.",
+ExportDialogSendTitle3b = "%s nimmt keine Auren an.",
+ExportDialogSendTitle3c = "%s hat nicht geantwortet, könnte AFK oder offline sein.",
+ExportDialogSendTitle3d = "%s empfängt derzeit bereits andere Auren.",
+ExportDialogSendTitle3e = "%s hat den Empfang der Auren abgelehnt.",
+ExportDialogSendTitle4 = "Sende Auren...",
+ExportDialogSendTitle5 = "Senden erfolgreich!",
+ExportDialogTopTitle = "Auren exportieren",
+
 -- Import dialog
+PlayerImportDialogAcceptButton1 = "Akzeptieren",
+PlayerImportDialogAcceptButton2 = "Speichern",
+PlayerImportDialogCancelButton1 = "Ablehnen",
+PlayerImportDialogDescTitle1 = "%s möchte dir einige Auren senden.",
+PlayerImportDialogDescTitle2 = "Empfange Auren...",
+PlayerImportDialogDescTitle3 = "Das Angebot der Auren ist abgelaufen.",
+PlayerImportDialogDescTitle4 = "Wähle eine Seite zum Speichern der Auren aus.",
+PlayerImportDialogDescTitle5 = "Auren gespeichert!",
+PlayerImportDialogDescTitle6 = "Es ist kein Platz für Auren vorhanden.",
+PlayerImportDialogTopTitle = "Du bekommst Auren!",
+PlayerImportDialogWarningTitle = "|cFFFF0000Hinweis: |rDir wird ein Satz Auren geschickt, dies wird alle bestehenden Auren auf der ausgewählten Seite überschreiben.",
+
 ImportDialogAccept = "Importieren",
 ImportDialogCancel = "Schließen"
 })
