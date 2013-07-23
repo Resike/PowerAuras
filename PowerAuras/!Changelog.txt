@@ -48,7 +48,7 @@ Issues:
 - Fixed a bug with Equipment Slots.
 - Druid Flight form fixes.
 - Fixed a bug which broke 5-Man instance check button's functionality.
-- Added Challange Mode instance check button.
+- Added Challenge Mode instance check button.
 - Added Scenario instance check button.
 - Added Heroic Scenario instance check button. 
 - Size slider now has unlimited maximum value.
