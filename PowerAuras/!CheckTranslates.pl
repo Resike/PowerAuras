@@ -43,6 +43,11 @@ while (my $line = <LUA>) {
 	$s{$lang}->{"${prefix}${1}${suffix}"} = $2;
 	$tmp = undef;
     }
+    elsif ($line =~ /^\s*([a-z._0-9[\]]+)\s*=\s*\{\s*$/i) {
+	$prefix = $1.' { ';
+	$suffix = ' }';
+	$tmp = undef;
+    }
     elsif ($line =~ /^\s*([a-z._0-9[\]]+)\s*=\s*$/i) {
 	$tmp = $1;
     }
