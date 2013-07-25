@@ -1,4 +1,4 @@
-﻿#!/usr/bin/perl -w
+#!/usr/bin/perl -w
 use strict;
 
 # THIS IS ONE UGLY DIRTY HACK to check the translation file of
