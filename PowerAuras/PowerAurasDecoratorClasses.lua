@@ -119,9 +119,6 @@ function cPowaStacks:SetStackCount(count)
 	if (self.enabled == false or aura.InactiveDueToMulti) then
 		return
 	end
-	if (aura.Debug) then
-		PowaAuras:DisplayText("SetStackCount Id=", self.id, " Count=", count)
-	end
 	if (not count or count == 0) then
 		local frame = PowaAuras.StacksFrames[self.id]
 		if (frame and frame:IsVisible()) then
@@ -132,9 +129,6 @@ function cPowaStacks:SetStackCount(count)
 	end
 	if (self.lastShownValue == count and self.Showing) then
 		self.UpdateValueTo = nil
-		if (aura.Debug) then
-			PowaAuras:DisplayText("Stacks unchanged")
-		end
 		return
 	end
 	self.UpdateValueTo = count
@@ -147,9 +141,6 @@ function cPowaStacks:Update()
 	local aura = PowaAuras.Auras[self.id]
 	if (aura == nil) then
 		return
-	end
-	if (aura.Debug) then
-		PowaAuras:DisplayText("Stacks Update UpdateValueTo=", self.UpdateValueTo)
 	end
 	self.lastShownValue = self.UpdateValueTo
 	PowaAuras:CreateStacksFrameIfMissing(self.id, self.UpdatePing)
@@ -239,24 +230,12 @@ end
 function cPowaTimer:Update(elapsed)
 	local aura = PowaAuras.Auras[self.id]
 	if (aura == nil) then
-		if (PowaAuras.DebugCycle) then
-			PowaAuras:DisplayText("Timer aura missing for id=", self.id)
-		end
 		return
 	end
-	if (PowaAuras.DebugCycle) then
-		PowaAuras:DisplayText("Timer.Update ", self.id)
-	end
 	if (self.enabled == false and aura.InvertAuraBelow == 0) then
-		if (PowaAuras.DebugCycle) then
-			PowaAuras:DisplayText("Timer disabled")
-		end
 		return
 	end
 	local newvalue = 0
-	if (PowaAuras.DebugCycle) then
-		PowaAuras:DisplayText("newvalue=", newvalue)
-	end
 	if (PowaAuras.ModTest) then
 		newvalue = math.random(0, 99) + (math.random(0, 99) / 100)
 	elseif (self.ShowActivation and self.Start ~= nil) then
@@ -274,9 +253,6 @@ function cPowaTimer:Update(elapsed)
 		end
 		aura:CheckTimerInvert()
 	end
-	if (PowaAuras.DebugCycle) then
-		PowaAuras:Message("newvalue=", newvalue)
-	end
 	if (self.enabled == false or (aura.ForceTimeInvert and aura.InvertTimeHides)) then
 		return
 	end
@@ -285,9 +261,6 @@ function cPowaTimer:Update(elapsed)
 		local split = 60
 		if (self.Seconds99) then
 			split = 100
-		end
-		if (PowaAuras.DebugCycle) then
-			PowaAuras:Message("cents=", self.cents)
 		end
 		if (self.cents) then
 			local small
@@ -317,18 +290,12 @@ function cPowaTimer:Update(elapsed)
 		else
 			large = math.floor(large)
 		end
-		if (PowaAuras.DebugCycle) then
-			PowaAuras:Message("large=", large)
-		end
 		if (self.lastShownLarge ~= large) then
 			self:ShowValue(aura, 1, large)
 			self.lastShownLarge = large
 		end
 		self.Showing = true
 	elseif (self.Showing) then
-		if (PowaAuras.DebugCycle) then
-			PowaAuras:Message("HideTimerFrames")
-		end
 		self:Hide()
 		PowaAuras:TestThisEffect(self.id)
 	end
@@ -392,9 +359,6 @@ function cPowaTimer:ShowValue(aura, frameIndex, displayValue)
 		timerFrame.texture:SetTexCoord(tStep * uni, tStep * (uni + 1), tStep * deci, tStep * (deci + 1))
 	end
 	if (not timerFrame:IsVisible()) then
-		if (aura.Debug) then
-			PowaAuras:DisplayText("Show timer frame id=", self.id, " index=", frameIndex)
-		end
 		timerFrame:Show()
 	end
 end

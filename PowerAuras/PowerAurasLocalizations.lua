@@ -105,7 +105,7 @@ AuraType =
 	[PowaAuras.BuffTypes.EnergyRagePower] = "Rage/Energy/Power",
 	[PowaAuras.BuffTypes.Aggro] = "Aggro",
 	[PowaAuras.BuffTypes.PvP] = "PvP",
-	[PowaAuras.BuffTypes.Stance] = "Stance/Seal",
+	[PowaAuras.BuffTypes.Stance] = "Stance/Seal/Form",
 	[PowaAuras.BuffTypes.SpellAlert] = "Spell Alert",
 	[PowaAuras.BuffTypes.SpellCooldown] = "Spell Cooldown",
 	[PowaAuras.BuffTypes.StealableSpell] = "Stealable Spell",
@@ -484,7 +484,7 @@ Ternary =
 	InstanceScenarioHeroic = "Scenario Hc",
 	Instance5Man = "5 Man",
 	Instance5ManHeroic = "5 Man Hc",
-	InstanceChallangeMode = "Chall Mode",
+	InstanceChallengeMode = "Chall Mode",
 	Instance10Man = "10 Man",
 	Instance10ManHeroic = "10 Man Hc",
 	Instance25Man = "25/40 Man",
@@ -510,7 +510,7 @@ TernaryYes =
 	InstanceScenarioHeroic = "Only when in a Scenario Heroic instance",
 	Instance5Man = "Only when in a 5-Man Normal instance",
 	Instance5ManHeroic = "Only when in a 5-Man Heroic instance",
-	InstanceChallangeMode = "Only when in a Challenge Mode instance",
+	InstanceChallengeMode = "Only when in a Challenge Mode instance",
 	Instance10Man = "Only when in a 10-Man Normal instance",
 	Instance10ManHeroic = "Only when in a 10-Man Heroic instance",
 	Instance25Man = "Only when in a 25-Man or 40-Man Normal instance",
@@ -537,7 +537,7 @@ TernaryNo =
 	InstanceScenarioHeroic = "Only when Notin a Scenario Heroic instance",
 	Instance5Man = "Only when Not in a 5-Man Normal instance",
 	Instance5ManHeroic = "Only when Not in a 5-Man Heroic instance",
-	InstanceChallangeMode = "Only when Not in a Challenge Mode instance",
+	InstanceChallengeMode = "Only when Not in a Challenge Mode instance",
 	Instance10Man = "Only when Not in a 10-Man Normal instance",
 	Instance10ManHeroic = "Only when Not in a 10-Man Heroic instance",
 	Instance25Man = "Only when Not in a 25-Man or 40-Man Normal instance",
@@ -564,7 +564,7 @@ TernaryAide =
 	InstanceScenarioHeroic = "Effect modified by being in a Scenario Heroic instance.",
 	Instance5Man = "Effect modified by being in a 5-Man Normal instance.",
 	Instance5ManHeroic = "Effect modified by being in a 5-Man Heroic instance.",
-	InstanceChallangeMode = "Effect modified by being in a Challenge Mode instance.",
+	InstanceChallengeMode = "Effect modified by being in a Challenge Mode instance.",
 	Instance10Man = "Effect modified by being in a 10-Man Normal instance.",
 	Instance10ManHeroic = "Effect modified by being in a 10-Man Heroic instance.",
 	Instance25Man = "Effect modified by being in a 25-Man or 40-Man Normal instance.",
@@ -732,8 +732,8 @@ nomReasonNoEnchant = "No enchant found on weapons for $1", -- $1=Enchant match
 
 nomReasonNoUseCombo = "You do not use combo points",
 nomReasonNoUseComboInForm = "You don't use combo points in this form",
-nomReasonComboMatch = "Combo points $1 match $2",-- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "Combo points $1 no match with $2",-- $1=Combo Points, $2=Combo Match
+nomReasonComboMatch = "Combo points $1 match $2", -- $1=Combo Points, $2=Combo Match
+nomReasonNoComboMatch = "Combo points $1 no match with $2", -- $1=Combo Points, $2=Combo Match
 
 nomReasonActionNotFound = "not found on Action Bar",
 nomReasonActionReady = "Action Ready",
@@ -1222,7 +1222,7 @@ Ternary =
 	inVehicle = "In Fahrzeug",
 	isAlive = "Am Leben",
 	PvP = "PvP aktiv",
-	InstanceChallangeMode = "Herausforderung",
+	InstanceChallengeMode = "Herausforderung",
 	InstanceScenario = "Szenario",
 	InstanceScenarioHeroic = "Szenario HC",
 	Instance5Man = "5-Mann",
@@ -1248,7 +1248,7 @@ TernaryYes =
 	inVehicle = "Nur wenn in einem Fahrzeug",
 	isAlive = "Nur wenn am Leben",
 	PvP = "Nur wenn PvP aktiv",
-        InstanceChallangeMode = "Nur in einer Herausforderungsmodus-Instanz",
+	InstanceChallengeMode = "Nur in einer Herausforderungsmodus-Instanz",
 	InstanceScenario = "Nur in einem normalen Szenario",
 	InstanceScenarioHeroic = "Nur in einem heroischen Szenario",
 	Instance5Man = "Nur in einer normalen 5-Mann-Instanz",
@@ -1275,7 +1275,7 @@ TernaryNo =
 	inVehicle = "Nur wenn in keinem Fahrzeug",
 	isAlive = "Nur wenn tot",
 	PvP = "Nur wenn kein PvP aktiv",
-        InstanceChallangeMode = "Nur wenn nicht in einer Herausforderungsmodus-Instanz",
+	InstanceChallengeMode = "Nur wenn nicht in einer Herausforderungsmodus-Instanz",
 	InstanceScenario = "Nur wenn nicht in einem normalen Szenario",
 	InstanceScenarioHeroic = "Nur wenn nicht in einem heroischen Szenario",
 	Instance5Man = "Nur wenn nicht in einer normalen 5-Mann-Instanz",
@@ -1302,7 +1302,7 @@ TernaryAide =
 	inVehicle = "Effekt beeinflusst durch Fahrzeugstatus.",
 	isAlive = "Effekt beeinflusst durch Lebensstatus.",
 	PvP = "Effekt beinflusst durch PvP-Status.",
-        InstanceChallangeMode = "Effekt beeinflusst durch Herausforderungsmodus-Instanz.",
+	InstanceChallengeMode = "Effekt beeinflusst durch Herausforderungsmodus-Instanz.",
 	InstanceScenario = "Effekt beeinflusst durch normales Szenario",
 	InstanceScenarioHeroic = "Effekt beeinflusse durch heroisches Szenario",
 	Instance5Man = "Effekt beeinflusst durch normale 5-Mann-Instanz.",
@@ -1333,7 +1333,6 @@ nomTimerRounding = "Timer aufrunden",
 nomIgnoreUseable = "Anzeige nur vom CD abhängig",
 aideIgnoreUseable = "Ignoriert, wenn der Zauber benutzbar ist (benutzt nur die Abklingzeit).",
 
--- TODO:
 aideAllowInspections = "Allow Power Auras to Inspect players to determine roles, turning this off will sacrifice accuracy for speed.",
 nomAllowInspections = "Allow Inspections",
 
@@ -2197,8 +2196,8 @@ nomReasonNoEnchant = "Encantamiento no encontrado en armas $1", -- $1=Enchant ma
 
 nomReasonNoUseCombo = "No usas puntos de combo",
 nomReasonNoUseComboInForm = "No usas puntos de combo bajo esta forma",
-nomReasonComboMatch = "Puntos de combo $1 concuerdan con $2",-- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "Puntos de combo $1 no concuerdan con $2",-- $1=Combo Points, $2=Combo Match
+nomReasonComboMatch = "Puntos de combo $1 concuerdan con $2", -- $1=Combo Points, $2=Combo Match
+nomReasonNoComboMatch = "Puntos de combo $1 no concuerdan con $2", -- $1=Combo Points, $2=Combo Match
 
 nomReasonActionNotFound = "No encontrado en barras de acción",
 nomReasonActionReady = "Habilidad preparada",
@@ -2968,8 +2967,8 @@ nomReasonNoEnchant = "Encantamiento no encontrado en armas $1", -- $1=Enchant ma
 
 nomReasonNoUseCombo = "No usas puntos de combo",
 nomReasonNoUseComboInForm = "No usas puntos de combo bajo esta forma",
-nomReasonComboMatch = "Puntos de combo $1 concuerdan con $2",-- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "Puntos de combo $1 no concuerdan con $2",-- $1=Combo Points, $2=Combo Match
+nomReasonComboMatch = "Puntos de combo $1 concuerdan con $2", -- $1=Combo Points, $2=Combo Match
+nomReasonNoComboMatch = "Puntos de combo $1 no concuerdan con $2", -- $1=Combo Points, $2=Combo Match
 
 nomReasonActionNotFound = "No encontrado en barras de acción",
 nomReasonActionReady = "Habilidad preparada",
@@ -3187,7 +3186,6 @@ PowerType =
 	[SPELL_POWER_ENERGY] = "Énergie",
 	[SPELL_POWER_RUNIC_POWER] = "Puissance runique",
 	[SPELL_POWER_SOUL_SHARDS] = "Fragment d'âme",
-	[SPELL_POWER_ECLIPSE] = "Eclipse",
 	[SPELL_POWER_HOLY_POWER] = "Puissance sacrée",
 	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
 	[SPELL_POWER_DARK_FORCE] = "Dark Force",
@@ -3608,7 +3606,6 @@ aideUnitn = "여기에 이 효과를 활성/비활성화해야만 하는 유닛�
 aideUnitn2 = "공격대/그룹에 한해",
 
 aideMaxTex = "효과 편집기에 가능한 텍스쳐의 최대 갯수를 정의 합니다. 애드온 폴더에 텍스쳐를 추가하려면(AURA1.tga에서 AURA50.tga까지 이름과 함께), 여기에 올바른 갯수를 지시해야만 합니다.",
-aideAddEffect = "편집을 위한 효과를 추가합니다.",
 aideWowTextures = "이 효과에 대해 Power Auras 폴더내의 텍스쳐 대신에 WoW의 텍스쳐를 사용하려면 이 옵션에 체크하십시오.",
 aideTextAura = "텍스쳐 대신에 문자를 입력하려면 이 옵션에 체크하십시오.",
 aideRealaura = "활성 오오라",
@@ -3718,7 +3715,8 @@ nomStacksTexture = "중첩 텍스쳐",
 Enabled = "활성화",
 Default = "기본값",
 
-Ternary = {
+Ternary =
+{
 	combat = "전투 중",
 	inRaid = "공격대 중",
 	inParty = "파티 중",
@@ -3731,7 +3729,8 @@ Ternary = {
 nomWhatever = "무시",
 aideTernary = "오라표시 조건을 설정",
 
-TernaryYes = {
+TernaryYes =
+{
 	combat = "오직 전투중일 때",
 	inRaid = "오직 공격대에 속해 있을 때",
 	inParty = "오직 5인 파티에 속해 있을 때",
@@ -3741,7 +3740,8 @@ TernaryYes = {
 	isAlive= "오직 살아 있을 때만"
 },
 
-TernaryNo = {
+TernaryNo =
+{
 	combat = "전투중이 아닐 때",
 	inRaid = "공격대가 아닐 때",
 	inParty = "파티가 아닐 때",
@@ -3751,7 +3751,8 @@ TernaryNo = {
 	isAlive= "죽었을 때"
 },
 
-TernaryAide = {
+TernaryAide =
+{
 	combat = "전투 상황에 의한 효능 상태.",
 	inRaid = "공격대 상황에 의한 효능 상태.",
 	inParty = "파티 상황에 의한 효능 상태.",
@@ -3881,7 +3882,6 @@ PowerType =
 	[SPELL_POWER_ENERGY] = "Энергия",
 	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
 	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
-	[SPELL_POWER_ECLIPSE] = "Eclipse",
 	[SPELL_POWER_HOLY_POWER] = "Holy Power",
 	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
 	[SPELL_POWER_DARK_FORCE] = "Dark Force",
@@ -4183,16 +4183,16 @@ TernaryNo =
 	isResting = "Только когда НЕ на отдыхе",
 	ismounted = "Только когда НЕ на средстве передвижения",
 	inVehicle = "Только когда НЕ в транспорте",
-	isAlive= "Только когда мёртв",
-	PvP= "Только когда НЕ включен PvP режим",
-	Instance5Man= "Только когда НЕ в обычном подземелье на 5-чел",
-	Instance5ManHeroic= "Только когда НЕ в героическом подземелье на 5-чел",
-	Instance10Man= "Только когда НЕ в обычном подземелье на 10-чел",
-	Instance10ManHeroic= "Только когда НЕ в героическом подземелье на 10-чел",
-	Instance25Man= "Только когда НЕ в обычном подземелье на 25-чел",
-	Instance25ManHeroic= "Только когда НЕ в героическом подземелье на 25-чел",
-	InstanceBg= "Только когда НЕ на поле боя",
-	InstanceArena= "Только когда НЕ на арене",
+	isAlive = "Только когда мёртв",
+	PvP = "Только когда НЕ включен PvP режим",
+	Instance5Man = "Только когда НЕ в обычном подземелье на 5-чел",
+	Instance5ManHeroic = "Только когда НЕ в героическом подземелье на 5-чел",
+	Instance10Man = "Только когда НЕ в обычном подземелье на 10-чел",
+	Instance10ManHeroic = "Только когда НЕ в героическом подземелье на 10-чел",
+	Instance25Man = "Только когда НЕ в обычном подземелье на 25-чел",
+	Instance25ManHeroic = "Только когда НЕ в героическом подземелье на 25-чел",
+	InstanceBg = "Только когда НЕ на поле боя",
+	InstanceArena = "Только когда НЕ на арене",
 	RoleTank = "Only when Not a Tank",
 	RoleHealer = "Only when Not a Healer",
 	RoleMeleDps = "Only when Not a Melee DPS",
@@ -4207,16 +4207,16 @@ TernaryAide =
 	isResting = "Эффект изменен статусом отдыха.",
 	ismounted = "Эффект изменен статусом - на средстве передвижения.",
 	inVehicle = "Эффект изменен статусом - в транспорте.",
-	isAlive= "Эффект изменен статусом - живой.",
-	PvP= "Эффект изменен статусом PvP",
-	Instance5Man= "Эффект изменен нахождением в обычном подземелье на 5-чел",
-	Instance5ManHeroic= "Эффект изменен нахождением в героическом подземелье на 5-чел",
-	Instance10Man= "Эффект изменен нахождением в обычном подземелье на 10-чел",
-	Instance10ManHeroic= "Эффект изменен нахождением в героическом подземелье на 10-чел",
-	Instance25Man= "Эффект изменен нахождением в обычном подземелье на 25-чел",
-	Instance25ManHeroic= "Эффект изменен нахождением в героическом подземелье на 25-чел",
-	InstanceBg= "Эффект изменен нахождением на поле боя",
-	InstanceArena= "Эффект изменен нахождением на арене",
+	isAlive = "Эффект изменен статусом - живой.",
+	PvP = "Эффект изменен статусом PvP",
+	Instance5Man = "Эффект изменен нахождением в обычном подземелье на 5-чел",
+	Instance5ManHeroic = "Эффект изменен нахождением в героическом подземелье на 5-чел",
+	Instance10Man = "Эффект изменен нахождением в обычном подземелье на 10-чел",
+	Instance10ManHeroic = "Эффект изменен нахождением в героическом подземелье на 10-чел",
+	Instance25Man = "Эффект изменен нахождением в обычном подземелье на 25-чел",
+	Instance25ManHeroic = "Эффект изменен нахождением в героическом подземелье на 25-чел",
+	InstanceBg = "Эффект изменен нахождением на поле боя",
+	InstanceArena = "Эффект изменен нахождением на арене",
 	RoleTank = "Effect modified by being a Tank",
 	RoleHealer = "Effect modified by being a Healer",
 	RoleMeleDps = "Effect modified by being a Melee DPS",
@@ -4348,8 +4348,8 @@ nomReasonEnchantOff = "Найдено улучшение $1 на левой ру
 nomReasonNoEnchant = "Улучшений оружия ненайдено на $1", -- $1=Enchant match
 
 nomReasonNoUseCombo = "Вы не используете длину серии приемов",
-nomReasonComboMatch = "Длина серии приемов $1, совпадает с $2",-- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "Длина серии приемов $1, не совпадает с $2",-- $1=Combo Points, $2=Combo Match
+nomReasonComboMatch = "Длина серии приемов $1, совпадает с $2", -- $1=Combo Points, $2=Combo Match
+nomReasonNoComboMatch = "Длина серии приемов $1, не совпадает с $2", -- $1=Combo Points, $2=Combo Match
 
 nomReasonActionNotFound = "не найдено на панеле команд",
 nomReasonActionReady = "Действие готово",
@@ -4374,12 +4374,12 @@ nomReasonRunesReady = "Руны готовы",
 
 ReasonStat =
 {
-	Health = {MatchReason="$1 Низкий уровень здоровья", NoMatchReason="$1 Уровень здоровье не достаточно низкий"},
-	Mana = {MatchReason="$1 Низкий уровень маны", NoMatchReason="$1 Уровень мана не достаточно низкий"},
-	RageEnergy = {MatchReason="$1 Низкий уровень энергии", NoMatchReason="$1 Уровень энергия не достаточно низкий"},
-	Aggro = {MatchReason="$1 присутствует угроза", NoMatchReason="$1 без угрозы"},
-	PvP = {MatchReason="$1 с меткой PvP", NoMatchReason="$1 без метки PvP"},
-	SpellAlert = {MatchReason="$1 casting $2", NoMatchReason="$1 not casting $2"}
+	Health = {MatchReason = "$1 Низкий уровень здоровья", NoMatchReason = "$1 Уровень здоровье не достаточно низкий"},
+	Mana = {MatchReason = "$1 Низкий уровень маны", NoMatchReason = "$1 Уровень мана не достаточно низкий"},
+	RageEnergy = {MatchReason = "$1 Низкий уровень энергии", NoMatchReason = "$1 Уровень энергия не достаточно низкий"},
+	Aggro = {MatchReason = "$1 присутствует угроза", NoMatchReason = "$1 без угрозы"},
+	PvP = {MatchReason = "$1 с меткой PvP", NoMatchReason = "$1 без метки PvP"},
+	SpellAlert = {MatchReason = "$1 casting $2", NoMatchReason = "$1 not casting $2"}
 }
 })
 elseif (GetLocale() == "zhCN") then
@@ -4544,7 +4544,6 @@ aideUnitn = "此处输入用于激活特效的特定成员名称,必须处于同
 aideUnitn2 = "仅用于团队/队伍模式",
 
 aideMaxTex = "定义特效编辑器使用的材质数量,如果你增加了自定义材质请修改此值.",
-aideAddEffect = "新增加一个特效",
 aideWowTextures = "使用游戏内置材质",
 aideTextAura = "使用文字做为特效材质(图形材质将被禁用)",
 aideRealaura = "清晰光环",
@@ -4663,47 +4662,51 @@ nomStacksTexture = "叠加次数材质",
 Enabled = "已启用",
 Default = "默认",
 
-Ternary = {
+Ternary =
+{
 	combat = "战斗状态",
 	inRaid = "团队状态",
 	inParty = "小队状态",
 	isResting = "休息状态",
 	ismounted = "骑乘状态",
 	inVehicle = "载具状态",
-	isAlive= "存活状态"
+	isAlive = "存活状态"
 },
 
 nomWhatever = "忽略",
 aideTernary = "设置这些状态将影响特效显示的方式",
 
-TernaryYes = {
+TernaryYes =
+{
 	combat = "在战斗状态时触发",
 	inRaid = "在团队状态时触发",
 	inParty = "在小队状态时触发",
 	isResting = "在休息状态时触发",
 	ismounted = "在骑乘状态时触发",
 	inVehicle = "在载具状态时触发",
-	isAlive= "在存活状态时触发"
+	isAlive = "在存活状态时触发"
 },
 
-TernaryNo = {
+TernaryNo =
+{
 	combat = "非战斗状态时触发",
 	inRaid = "非团队状态时触发",
 	inParty = "非小队状态时触发",
 	isResting = "非休息状态时触发",
 	ismounted = "非骑乘状态时触发",
 	inVehicle = "非载具状态时触发",
-	isAlive= "在死亡状态时触发"
+	isAlive = "在死亡状态时触发"
 },
 
-TernaryAide = {
+TernaryAide =
+{
 	combat = "此效果受战斗状态影响",
 	inRaid = "此效果受团队状态影响",
 	inParty = "此效果受小队状态影响",
 	isResting = "此效果受休息状态影响",
 	ismounted = "此效果受骑乘状态影响",
 	inVehicle = "此效果受载具状态影响",
-	isAlive= "此效果受存活状态影响"
+	isAlive = "此效果受存活状态影响"
 },
 
 nomTimerInvertAura = "超时颠倒材质",
@@ -4731,16 +4734,16 @@ nomReasonGlobalCooldown = "忽略了全局冷却时间(GCD)",
 
 nomReasonBuffPresent = "$1 获得了 $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 has Debuff Misery")
 nomReasonBuffMissing = "$1 没有获得 $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 doesn't have Debuff Misery")
-nomReasonBuffFoundButIncomplete = "$2 $3 作用在$1上,但是\n$4", --$1=Target $2=BuffType, $3=BuffName, $4=IncompleteReason (e.g. "Debuff Sunder Armor found for Target but\nStacks<=2")
+nomReasonBuffFoundButIncomplete = "$2 $3 作用在 $1 上,但是\n$4", --$1=Target $2=BuffType, $3=BuffName, $4=IncompleteReason (e.g. "Debuff Sunder Armor found for Target but\nStacks<=2")
 
 nomReasonOneInGroupHasBuff = "$1 获得了 $2 $3", --$1=GroupId $2=BuffType, $3=BuffName (e.g. "Raid23 has Buff Blessing of Kings")
-nomReasonNotAllInGroupHaveBuff = "不是所有$1的成员都获得了$2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "Not all in Raid have Buff Blessing of Kings")
-nomReasonAllInGroupHaveBuff = "所有$1的成员都获得了$2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "All in Raid have Buff Blessing of Kings")
-nomReasonNoOneInGroupHasBuff = "没有$1的成员获得了$2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "No one in Raid has Buff Blessing of Kings")
+nomReasonNotAllInGroupHaveBuff = "不是所有 $1 的成员都获得了$2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "Not all in Raid have Buff Blessing of Kings")
+nomReasonAllInGroupHaveBuff = "所有 $1 的成员都获得了 $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "All in Raid have Buff Blessing of Kings")
+nomReasonNoOneInGroupHasBuff = "没有 $1 的成员获得了 $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "No one in Raid has Buff Blessing of Kings")
 
 nomReasonBuffPresentTimerInvert = "Buff出现, 计时器倒置",
 nomReasonBuffFound = "Buff出现",
-nomReasonStacksMismatch = "叠加次数=$1 但预设值是$2", --$1=Actual Stack count, $2=Expected Stack logic match (e.g. ">=0")
+nomReasonStacksMismatch = "叠加次数 = $1 但预设值是 $2", --$1=Actual Stack count, $2=Expected Stack logic match (e.g. ">=0")
 
 nomReasonAuraMissing = "特效丢失",
 nomReasonAuraOff = "特效被禁用",
@@ -4786,26 +4789,26 @@ nomReasonSpellOnCooldown = "Spell $1 on Cooldown",
 
 nomReasonStealablePresent = "$1 有可偷取的法术 $2", --$1=Target $2=SpellName (e.g. "Focus has Stealable spell Blessing of Wisdom")
 nomReasonNoStealablePresent = "没有在任何目标上找到可偷取法术 $1", --$1=SpellName (e.g. "Nobody has Stealable spell Blessing of Wisdom")
-nomReasonRaidTargetStealablePresent = "团队目标$1有可偷取的法术 $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Stealable spell Blessing of Wisdom")
-nomReasonPartyTargetStealablePresent = "小队目标$1有可偷取的法术 $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Stealable spell Blessing of Wisdom")
+nomReasonRaidTargetStealablePresent = "团队目标$1 有可偷取的法术 $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Stealable spell Blessing of Wisdom")
+nomReasonPartyTargetStealablePresent = "小队目标$1 有可偷取的法术 $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Stealable spell Blessing of Wisdom")
 
 nomReasonPurgeablePresent = "$1 有可净化的法术 $2", --$1=Target $2=SpellName (e.g. "Focus has Purgeable spell Blessing of Wisdom")
 nomReasonNoPurgeablePresent = "没有在任何目标上找到可净化的法术 $1", --$1=SpellName (e.g. "Nobody has Purgeable spell Blessing of Wisdom")
-nomReasonRaidTargetPurgeablePresent = "团队目标$1有可净化的法术 $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Purgeable spell Blessing of Wisdom")
-nomReasonPartyTargetPurgeablePresent = "小队目标$1有可净化的法术 $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Purgeable spell Blessing of Wisdom")
+nomReasonRaidTargetPurgeablePresent = "团队目标$1 有可净化的法术 $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Purgeable spell Blessing of Wisdom")
+nomReasonPartyTargetPurgeablePresent = "小队目标$1 有可净化的法术 $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Purgeable spell Blessing of Wisdom")
 
 nomReasonAoETrigger = "检测到AoE法术 $1", -- $1=AoE spell name
 nomReasonAoENoTrigger = "没有检测到AoE法术 $1", -- $1=AoE spell match
 
-nomReasonEnchantMainInvert = "找到主手武器强化效果 $1, 计时器倒置", -- $1=Enchant match
+nomReasonEnchantMainInvert = "找到主手武器强化效果 $1 计时器倒置", -- $1=Enchant match
 nomReasonEnchantMain = "找到主手武器强化效果 $1", -- $1=Enchant match
-nomReasonEnchantOffInvert = "找到副手武器强化效果 $1, 计时器倒置", -- $1=Enchant match
+nomReasonEnchantOffInvert = "找到副手武器强化效果 $1 计时器倒置", -- $1=Enchant match
 nomReasonEnchantOff = "找到副手武器强化效果 $1", -- $1=Enchant match
 nomReasonNoEnchant = "没有在任何武器上找到强化效果 $1", -- $1=Enchant match
 
 nomReasonNoUseCombo = "你没有使用连击点数",
-nomReasonComboMatch = "目前连击点数是$1,与设置值$2相匹配",-- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "目前连击点数是$1,与设置值$2不匹配",-- $1=Combo Points, $2=Combo Match
+nomReasonComboMatch = "目前连击点数是 $1 与设置值 $2 相匹配", -- $1=Combo Points, $2=Combo Match
+nomReasonNoComboMatch = "目前连击点数是 $1 与设置值 $2 不匹配", -- $1=Combo Points, $2=Combo Match
 
 nomReasonActionNotFound = "没有在动作条上找到此技能",
 nomReasonActionReady = "技能可用了",
@@ -4814,7 +4817,7 @@ nomReasonActionNotReady = "技能不可用(冷却中)",
 nomReasonActionlNotEnabled = "技能没有启用",
 nomReasonActionNotUsable = "技能不可用",
 
-nomReasonYouAreCasting = "你正在施放法术$1", -- $1=Casting match
+nomReasonYouAreCasting = "你正在施放法术 $1", -- $1=Casting match
 nomReasonYouAreNotCasting = "你没有施放法术 $1", -- $1=Casting match
 nomReasonTargetCasting = "目标正在施放法术 $1", -- $1=Casting match
 nomReasonFocusCasting = "焦点目标正在施放法术 $1", -- $1=Casting match
@@ -4822,8 +4825,8 @@ nomReasonRaidTargetCasting = "团队目标$1正在施放法术 $2", --$1=RaidId 
 nomReasonPartyTargetCasting = "小队目标$1正在施放法术 $2", --$1=PartyId $2=Casting match
 nomReasonNoCasting = "没有任何人的目标在施放法术 $1", -- $1=Casting match
 
-nomReasonStance = "当前姿态$1, 与设置值$2相匹配", -- $1=Current Stance, $2=Match Stance
-nomReasonNoStance = "当前姿态$1, 与设置值$2不匹配", -- $1=Current Stance, $2=Match Stance
+nomReasonStance = "当前姿态 $1 与设置值 $2 相匹配", -- $1=Current Stance, $2=Match Stance
+nomReasonNoStance = "当前姿态 $1 与设置值 $2 不匹配", -- $1=Current Stance, $2=Match Stance
 
 ReasonStat =
 {
@@ -4996,7 +4999,6 @@ aideUnitn = "此處輸入用於激活特效的特定成員名稱,必須處於同
 aideUnitn2 = "僅用於團隊/隊伍模式",
 
 aideMaxTex = "定義特效編輯器使用的材質數量,如果你增加了自定義材質請修改此值.",
-aideAddEffect = "新增加一個特效",
 aideWowTextures = "使用遊戲內置材質",
 aideTextAura = "使用文字做為特效材質(圖形材質將被禁用)",
 aideRealaura = "清晰光環",
@@ -5123,20 +5125,21 @@ Ternary =
 	isResting = "休息狀態",
 	ismounted = "騎乘狀態",
 	inVehicle = "載具狀態",
-	isAlive= "存活狀態"
+	isAlive = "存活狀態"
 },
 
 nomWhatever = "忽略",
 aideTernary = "設置這些狀態將影響特效顯示的方式",
 
-TernaryYes = {
+TernaryYes =
+{
 	combat = "在戰鬥狀態時觸發",
 	inRaid = "在團隊狀態時觸發",
 	inParty = "在小隊狀態時觸發",
 	isResting = "在休息狀態時觸發",
 	ismounted = "在騎乘狀態時觸發",
 	inVehicle = "在載具狀態時觸發",
-	isAlive= "在存活狀態時觸發"
+	isAlive = "在存活狀態時觸發"
 },
 
 TernaryNo =
@@ -5147,7 +5150,7 @@ TernaryNo =
 	isResting = "非休息狀態時觸發",
 	ismounted = "非騎乘狀態時觸發",
 	inVehicle = "非載具狀態時觸發",
-	isAlive= "在死亡狀態時觸發"
+	isAlive = "在死亡狀態時觸發"
 },
 
 TernaryAide =
@@ -5158,7 +5161,7 @@ TernaryAide =
 	isResting = "此效果受休息狀態影響",
 	ismounted = "此效果受騎乘狀態影響",
 	inVehicle = "此效果受載具狀態影響",
-	isAlive= "此效果受存活狀態影響"
+	isAlive = "此效果受存活狀態影響"
 },
 
 nomTimerInvertAura = "超時顛倒材質",
@@ -5186,16 +5189,16 @@ nomReasonGlobalCooldown = "忽略了全局冷卻時間(GCD)",
 
 nomReasonBuffPresent = "$1 獲得了 $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 has Debuff Misery")
 nomReasonBuffMissing = "$1 沒有獲得 $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 doesn't have Debuff Misery")
-nomReasonBuffFoundButIncomplete = "$2 $3 作用在$1上,但是\n$4", --$1=Target $2=BuffType, $3=BuffName, $4=IncompleteReason (e.g. "Debuff Sunder Armor found for Target but\nStacks<=2")
+nomReasonBuffFoundButIncomplete = "$2 $3 作用在 $1 上,但是\n$4", --$1=Target $2=BuffType, $3=BuffName, $4=IncompleteReason (e.g. "Debuff Sunder Armor found for Target but\nStacks<=2")
 
 nomReasonOneInGroupHasBuff = "$1 獲得了 $2 $3", --$1=GroupId $2=BuffType, $3=BuffName (e.g. "Raid23 has Buff Blessing of Kings")
-nomReasonNotAllInGroupHaveBuff = "不是所有$1的成員都獲得了$2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "Not all in Raid have Buff Blessing of Kings")
-nomReasonAllInGroupHaveBuff = "所有$1的成員都獲得了$2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "All in Raid have Buff Blessing of Kings")
-nomReasonNoOneInGroupHasBuff = "沒有$1的成員獲得了$2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "No one in Raid has Buff Blessing of Kings")
+nomReasonNotAllInGroupHaveBuff = "不是所有 $1 的成員都獲得了 $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "Not all in Raid have Buff Blessing of Kings")
+nomReasonAllInGroupHaveBuff = "所有$1 的成員都獲得了 $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "All in Raid have Buff Blessing of Kings")
+nomReasonNoOneInGroupHasBuff = "沒有$1 的成員獲得了 $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "No one in Raid has Buff Blessing of Kings")
 
 nomReasonBuffPresentTimerInvert = "Buff出現, 計時器倒置",
 nomReasonBuffFound = "Buff出現",
-nomReasonStacksMismatch = "疊加次數=$1 但預設值是$2", --$1=Actual Stack count, $2=Expected Stack logic match (e.g. ">=0")
+nomReasonStacksMismatch = "疊加次數 = $1 但預設值是 $2", --$1=Actual Stack count, $2=Expected Stack logic match (e.g. ">=0")
 
 nomReasonAuraMissing = "特效丟失",
 nomReasonAuraOff = "特效被禁用",
@@ -5241,26 +5244,26 @@ nomReasonSpellOnCooldown = "Spell $1 on Cooldown",
 
 nomReasonStealablePresent = "$1 有可偷取的法術 $2", --$1=Target $2=SpellName (e.g. "Focus has Stealable spell Blessing of Wisdom")
 nomReasonNoStealablePresent = "沒有在任何目標上找到可偷取法術 $1", --$1=SpellName (e.g. "Nobody has Stealable spell Blessing of Wisdom")
-nomReasonRaidTargetStealablePresent = "團隊目標$1有可偷取的法術 $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Stealable spell Blessing of Wisdom")
-nomReasonPartyTargetStealablePresent = "小隊目標$1有可偷取的法術 $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Stealable spell Blessing of Wisdom")
+nomReasonRaidTargetStealablePresent = "團隊目標$1 有可偷取的法術 $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Stealable spell Blessing of Wisdom")
+nomReasonPartyTargetStealablePresent = "小隊目標$1 有可偷取的法術 $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Stealable spell Blessing of Wisdom")
 
 nomReasonPurgeablePresent = "$1 有可凈化的法術 $2", --$1=Target $2=SpellName (e.g. "Focus has Purgeable spell Blessing of Wisdom")
 nomReasonNoPurgeablePresent = "沒有在任何目標上找到可凈化的法術 $1", --$1=SpellName (e.g. "Nobody has Purgeable spell Blessing of Wisdom")
-nomReasonRaidTargetPurgeablePresent = "團隊目標$1有可凈化的法術 $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Purgeable spell Blessing of Wisdom")
-nomReasonPartyTargetPurgeablePresent = "小隊目標$1有可凈化的法術 $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Purgeable spell Blessing of Wisdom")
+nomReasonRaidTargetPurgeablePresent = "團隊目標$1 有可凈化的法術 $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Purgeable spell Blessing of Wisdom")
+nomReasonPartyTargetPurgeablePresent = "小隊目標$1 有可凈化的法術 $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Purgeable spell Blessing of Wisdom")
 
 nomReasonAoETrigger = "檢測到AoE法術 $1", -- $1=AoE spell name
 nomReasonAoENoTrigger = "沒有檢測到AoE法術 $1", -- $1=AoE spell match
 
-nomReasonEnchantMainInvert = "找到主手武器強化效果 $1, 計時器倒置", -- $1=Enchant match
+nomReasonEnchantMainInvert = "找到主手武器強化效果 $1 計時器倒置", -- $1=Enchant match
 nomReasonEnchantMain = "找到主手武器強化效果 $1", -- $1=Enchant match
 nomReasonEnchantOffInvert = "找到副手武器強化效果 $1, 計時器倒置", -- $1=Enchant match
 nomReasonEnchantOff = "找到副手武器強化效果 $1", -- $1=Enchant match
 nomReasonNoEnchant = "沒有在任何武器上找到強化效果 $1", -- $1=Enchant match
 
 nomReasonNoUseCombo = "你沒有使用連擊點數",
-nomReasonComboMatch = "目前連擊點數是$1,與設置值$2相匹配",-- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "目前連擊點數是$1,與設置值$2不匹配",-- $1=Combo Points, $2=Combo Match
+nomReasonComboMatch = "目前連擊點數是 $1 與設置值 $2 相匹配", -- $1=Combo Points, $2=Combo Match
+nomReasonNoComboMatch = "目前連擊點數是 $1 與設置值 $2 不匹配", -- $1=Combo Points, $2=Combo Match
 
 nomReasonActionNotFound = "沒有在動作條上找到此技能",
 nomReasonActionReady = "技能可用了",
@@ -5269,24 +5272,24 @@ nomReasonActionNotReady = "技能不可用(冷卻中)",
 nomReasonActionlNotEnabled = "技能沒有啟用",
 nomReasonActionNotUsable = "技能不可用",
 
-nomReasonYouAreCasting = "你正在施放法術$1", -- $1=Casting match
+nomReasonYouAreCasting = "你正在施放法術 $1", -- $1=Casting match
 nomReasonYouAreNotCasting = "你沒有施放法術 $1", -- $1=Casting match
 nomReasonTargetCasting = "目標正在施放法術 $1", -- $1=Casting match
 nomReasonFocusCasting = "焦點目標正在施放法術 $1", -- $1=Casting match
-nomReasonRaidTargetCasting = "團隊目標$1正在施放法術 $2", --$1=RaidId $2=Casting match
-nomReasonPartyTargetCasting = "小隊目標$1正在施放法術 $2", --$1=PartyId $2=Casting match
+nomReasonRaidTargetCasting = "團隊目標$1 正在施放法術 $2", --$1=RaidId $2=Casting match
+nomReasonPartyTargetCasting = "小隊目標$1 正在施放法術 $2", --$1=PartyId $2=Casting match
 nomReasonNoCasting = "沒有任何人的目標在施放法術 $1", -- $1=Casting match
 
-nomReasonStance = "當前姿態$1, 與設置值$2相匹配", -- $1=Current Stance, $2=Match Stance
-nomReasonNoStance = "當前姿態$1, 與設置值$2不匹配", -- $1=Current Stance, $2=Match Stance
+nomReasonStance = "當前姿態 $1, 與設置值 $2 相匹配", -- $1=Current Stance, $2=Match Stance
+nomReasonNoStance = "當前姿態 $1, 與設置值 $2 不匹配", -- $1=Current Stance, $2=Match Stance
 
 ReasonStat =
 {
-	Health = {MatchReason="$1 生命值低", NoMatchReason="$1 生命值不夠低"},
-	Mana = {MatchReason="$1 法術值低", NoMatchReason="$1法術值不夠低"},
-	RageEnergy = {MatchReason="$1 能量值低", NoMatchReason="$1 能量值不夠低"},
-	Aggro = {MatchReason="$1 獲得仇恨", NoMatchReason="$1 沒有獲得仇恨"},
-	PvP = {MatchReason="$1 PVP狀態", NoMatchReason="$1 不在PVP狀態"}
+	Health = {MatchReason = "$1 生命值低", NoMatchReason = "$1 生命值不夠低"},
+	Mana = {MatchReason = "$1 法術值低", NoMatchReason = "$1法術值不夠低"},
+	RageEnergy = {MatchReason = "$1 能量值低", NoMatchReason = "$1 能量值不夠低"},
+	Aggro = {MatchReason = "$1 獲得仇恨", NoMatchReason = "$1 沒有獲得仇恨"},
+	PvP = {MatchReason = "$1 PVP狀態", NoMatchReason = "$1 不在PVP狀態"}
 }
 })
 end

@@ -124,14 +124,14 @@ cPowaAura.ExportSettings =
 	raid = false,
 	groupOrSelf = false,
 	party = false,
-	groupany = true,
+	groupany = false,
 	optunitn = false,
 	unitn = "",
 	inRaid = 0,
 	inParty = 0,
-	ismounted = false,
+	ismounted = 0,
 	isResting = 0,
-	inVehicle = false,
+	inVehicle = 0,
 	combat = 0,
 	isAlive = true,
 	PvP = 0,
@@ -139,7 +139,7 @@ cPowaAura.ExportSettings =
 	InstanceScenarioHeroic = 0,
 	Instance5Man = 0,
 	Instance5ManHeroic = 0,
-	InstanceChallangeMode = 0,
+	InstanceChallengeMode = 0,
 	Instance10Man = 0,
 	Instance10ManHeroic = 0,
 	Instance25Man = 0,
@@ -609,7 +609,7 @@ function cPowaAura:CheckState(giveReason)
 end
 
 function cPowaAura:AnyInstanceTypeChecksRequired()
-	return self.InstanceScenario ~= 0 or self.InstanceScenarioHeroic ~= 0 or self.Instance5Man ~= 0 or self.Instance5ManHeroic ~= 0 or self.InstanceChallangeMode ~= 0 or self.Instance10Man ~= 0 or self.Instance10ManHeroic ~= 0 or self.Instance25Man ~= 0 or self.Instance25ManHeroic ~= 0 or self.InstanceBg ~= 0 or self.InstanceArena ~= 0
+	return self.InstanceScenario ~= 0 or self.InstanceScenarioHeroic ~= 0 or self.Instance5Man ~= 0 or self.Instance5ManHeroic ~= 0 or self.InstanceChallengeMode ~= 0 or self.Instance10Man ~= 0 or self.Instance10ManHeroic ~= 0 or self.Instance25Man ~= 0 or self.Instance25ManHeroic ~= 0 or self.InstanceBg ~= 0 or self.InstanceArena ~= 0
 end
 
 function cPowaAura:CheckInstanceType(giveReason)
@@ -3006,7 +3006,7 @@ function cPowaSpellAlert:ShowTimerDurationSlider()
 	return true
 end
 
--- Stance
+-- Stance/Seal/Form
 cPowaStance = PowaClass(cPowaAura, {AuraType = "Stance"})
 cPowaStance.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Stance]}
 cPowaStance.ShowOptions = {["PowaDropDownStance"] = 1}
@@ -3018,20 +3018,33 @@ function cPowaStance:AddEffectAndEvents()
 	PowaAuras.Events.ACTIONBAR_UPDATE_COOLDOWN = true
 	PowaAuras.Events.ACTIONBAR_UPDATE_USABLE = true
 	PowaAuras.Events.UPDATE_SHAPESHIFT_FORM = true
-	PowaAuras.Events.UPDATE_SHAPESHIFT_FORMS = true
 end
 
 function cPowaStance:CheckIfShouldShow(giveReason)
 	PowaAuras:Debug("Check Stance")
 	local nStance = GetShapeshiftForm(false)
-	if (nStance == self.stance) then
-		if (nStance > 0 and self:IconIsRequired()) then
-			self:SetIcon(GetShapeshiftFormInfo(nStance))
+	if (string.find(self.stance, "/")) then
+		for number in string.gmatch(self.stance, "%d+") do
+			if (nStance == tonumber(number)) then
+				if (nStance > 0 and self:IconIsRequired()) then
+					self:SetIcon(GetShapeshiftFormInfo(nStance))
+				end
+				if (not giveReason) then
+					return true
+				end
+				return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonStance, nStance, self.stance)
+			end
 		end
-		if (not giveReason) then
-			return true
+	else
+		if (nStance == tonumber(self.stance)) then
+			if (nStance > 0 and self:IconIsRequired()) then
+				self:SetIcon(GetShapeshiftFormInfo(nStance))
+			end
+			if (not giveReason) then
+				return true
+			end
+			return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonStance, nStance, self.stance)
 		end
-		return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonStance, nStance, self.stance)
 	end
 	if (not giveReason) then
 		return false
@@ -3658,7 +3671,6 @@ function cPowaItems:CheckIfShouldShow(giveReason)
 				if (self.Debug) then
 					PowaAuras:Message("isEquipped=", isEquipped," isBagged=", isBagged)
 				end
-				
 				if (not isEquipped and not isBagged) then
 					if (not giveReason) then
 						return false

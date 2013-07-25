@@ -1,6 +1,56 @@
 local string, find, sub, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit = string, find, sub, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit
 
 -- Main Options
+function PowaAuras:OptionsOnLoad()
+	SlashCmdList["POWA"] = PowaAuras_CommanLine
+	SLASH_POWA1 = "/pa"
+	SLASH_POWA2 = "/powa"
+	PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+	for i = 1, 5 do
+		getglobal("PowaOptionsList"..i):SetText(PowaPlayerListe[i])
+	end
+	for i = 1, 10 do
+		getglobal("PowaOptionsList"..i + 5):SetText(PowaGlobalListe[i])
+	end
+	self.Comms:Register()
+	PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
+	PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
+	PowaAuras:SetLockButtonText()
+end
+
+function PowaAuras:Toggle(enable)
+	if (not (self.VariablesLoaded and self.SetupDone)) then
+		return
+	end
+	if (enable == nil) then
+		enable = PowaMisc.Disabled
+	end
+	if enable then
+		if (not PowaMisc.Disabled) then
+			return
+		end
+		if PowaAuras_Frame and not PowaAuras_Frame:IsShown() then
+			PowaAuras_Frame:Show()
+			self:RegisterEvents(PowaAuras_Frame)
+		end
+		PowaMisc.Disabled = false
+		self:Setup()
+		self:DisplayText("Power Auras: "..self.Colors.Green..PowaAuras.Text.Enabled.."|r")
+	else
+		if (PowaMisc.Disabled) then
+			return
+		end
+		if PowaAuras_Frame and PowaAuras_Frame:IsShown() then
+			PowaAuras_Frame:UnregisterAllEvents()
+			PowaAuras_Frame:Hide()
+		end
+		self:OptionHideAll(true)
+		PowaMisc.Disabled = true
+		self:DisplayText("Power Auras: "..self.Colors.Red..PowaAuras.Text.Disabled.."|r")
+	end
+	PowaEnableButton:SetChecked(PowaMisc.Disabled ~= true)
+end
+
 function PowaAuras:ResetPositions()
 	PowaBarConfigFrame:ClearAllPoints()
 	PowaBarConfigFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 50)
@@ -10,6 +60,7 @@ end
 
 function PowaAuras:UpdateMainOption(hideAll)
 	PowaOptionsHeader:SetText("Power Auras "..self.Version)
+	PowaGroupButton:SetChecked(PowaMisc.Group)
 	PowaMainHideAllButton:SetText(self.Text.nomHide)
 	PowaMainTestButton:SetText(self.Text.nomTest)
 	PowaEditButton:SetText(self.Text.nomEdit)
@@ -141,8 +192,8 @@ function PowaAuras:SetCurrent(icon, auraId)
 end
 
 function PowaAuras:IconeEntered(owner)
-	local iconeID = owner:GetID()
-	local k = ((self.CurrentAuraPage - 1) * 24) + iconeID
+	local iconID = owner:GetID()
+	local k = ((self.CurrentAuraPage - 1) * 24) + iconID
 	local aura = self.Auras[k]
 	if (self.MoveEffect > 0) then
 		return
@@ -457,28 +508,6 @@ function PowaAuras:ExtractImportValue(valueType, value)
 		return true
 	end
 	return tonumber(value)
-end
-
-function PowaAuras:VersionGreater(v1, v2)
-	if (v1.Major > v2.Major) then
-		return true
-	end
-	if (v1.Major < v2.Major) then
-		return false
-	end
-	if (v1.Minor > v2.Minor) then
-		return true
-	end
-	if (v1.Minor < v2.Minor) then
-		return false
-	end
-	if (v1.Build > v2.Build) then
-		return true
-	end
-	if (v1.Build < v2.Build) then
-		return false
-	end
-	return v1.Revision > v2.Revision
 end
 
 function PowaAuras:ImportAura(aurastring, auraId, offset)
@@ -1016,6 +1045,10 @@ function PowaAuras:PlayerImportDialogInit(self)
 				PowaAuras:SetDialogTimeout(self, 0)
 			elseif (self.receiveStatus == 4) then
 				self.Title:SetText(PowaAuras.Text.PlayerImportDialogDescTitle4)
+				for i = 1, 15 do
+					getglobal("PowaOptionsList"..i.."Glow"):SetVertexColor(0.5, 0.5, 0.5)
+					getglobal("PowaOptionsList"..i.."Glow"):Show()
+				end
 				if (self.receiveType == 2) then
 					self.Warning:Show()
 				end
@@ -1026,6 +1059,9 @@ function PowaAuras:PlayerImportDialogInit(self)
 				PowaOptionsFrame:Show()
 			elseif (self.receiveStatus == 5) then
 				self.Title:SetText(PowaAuras.Text.PlayerImportDialogDescTitle5)
+				for i = 1, 15 do
+					getglobal("PowaOptionsList"..i.."Glow"):Hide()
+				end
 				self.AcceptButton:SetText(PowaAuras.Text.PlayerImportDialogAcceptButton2)
 				PowaAuras:SetDialogTimeout(self, 0)
 				self.AcceptButton:Disable()
@@ -1496,7 +1532,7 @@ function PowaAuras:InitPage(aura)
 	self:TernarySetState(PowaScenarioHeroicInstanceButton, aura.InstanceScenarioHeroic)
 	self:TernarySetState(Powa5ManInstanceButton, aura.Instance5Man)
 	self:TernarySetState(Powa5ManHeroicInstanceButton, aura.Instance5ManHeroic)
-	self:TernarySetState(PowaChallangeModeInstanceButton, aura.InstanceChallangeMode)
+	self:TernarySetState(PowaChallangeModeInstanceButton, aura.InstanceChallengeMode)
 	self:TernarySetState(Powa10ManInstanceButton, aura.Instance10Man)
 	self:TernarySetState(Powa10ManHeroicInstanceButton, aura.Instance10ManHeroic)
 	self:TernarySetState(Powa25ManInstanceButton, aura.Instance25Man)
@@ -1535,19 +1571,19 @@ function PowaAuras:InitPage(aura)
 	else
 		PowaBarAuraRotateSlider:SetValueStep(90)
 	end
-	-- Model Postition Z Slider
+	-- Model Position Z Slider
 	PowaModelPositionZSlider:SetMinMaxValues(format("%.0f", (aura.mz * 100) - 10000), format("%.0f", (aura.mz * 100) + 10000))
 	PowaModelPositionZSliderLow:SetText(format("%.0f", (aura.mz * 100) - 100))
 	PowaModelPositionZSliderHigh:SetText(format("%.0f", (aura.mz * 100) + 100))
 	PowaModelPositionZSlider:SetValue(format("%.0f", aura.mz * 100))
 	PowaModelPositionZSlider:SetMinMaxValues(format("%.0f", (aura.mz * 100) - 100), format("%.0f", (aura.mz * 100) + 100))
-	-- Model Postition X Slider
+	-- Model Position X Slider
 	PowaModelPositionXSlider:SetMinMaxValues(format("%.0f", (aura.mx * 100) - 10000), format("%.0f", (aura.mx * 100) + 10000))
 	PowaModelPositionXSliderLow:SetText(format("%.0f", (aura.mx * 100) - 50))
 	PowaModelPositionXSliderHigh:SetText(format("%.0f", (aura.mx * 100) + 50))
 	PowaModelPositionXSlider:SetValue(format("%.0f", aura.mx * 100))
 	PowaModelPositionXSlider:SetMinMaxValues(format("%.0f", (aura.mx * 100) - 50), format("%.0f", (aura.mx * 100) + 50))
-	-- Model Postition Y Slider
+	-- Model Position Y Slider
 	PowaModelPositionYSlider:SetMinMaxValues(format("%.0f", (aura.my * 100) - 10000), format("%.0f", (aura.my * 100) + 10000))
 	PowaModelPositionYSliderLow:SetText(format("%.0f", (aura.my * 100) - 50))
 	PowaModelPositionYSliderHigh:SetText(format("%.0f", (aura.my * 100) + 50))
@@ -1868,9 +1904,36 @@ function PowaAuras:BarAuraAlphaSliderChanged()
 		return
 	end
 	local SliderValue = PowaBarAuraAlphaSlider:GetValue()
-	if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].alpha) then
-		self.Auras[self.CurrentAuraId].alpha = SliderValue / 100
-		self:RedisplayAura(self.CurrentAuraId)
+	if (not PowaMisc.Group) then
+		if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].alpha) then
+			self.Auras[self.CurrentAuraId].alpha = SliderValue / 100
+			self:RedisplayAura(self.CurrentAuraId)
+		end
+	else
+		if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].alpha) then
+			local min = self.CurrentAuraId
+			local max = min + 4
+			local relativepos = { }
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					relativepos[i] = self.Auras[i].alpha
+				end
+			end
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					if (i == min) then
+						self.Auras[i].alpha = (SliderValue / 100)
+					else
+						if relativepos[min] < relativepos[i] then
+							self.Auras[i].alpha = (SliderValue / 100) + (relativepos[i] - relativepos[min])
+						else
+							self.Auras[i].alpha = (SliderValue / 100) + (relativepos[min] - relativepos[i])
+						end
+					end
+					self:RedisplayAura(i)
+				end
+			end
+		end
 	end
 end
 
@@ -1881,14 +1944,70 @@ function PowaAuras:BarAuraSizeSliderChanged()
 	local aura = self.Auras[self.CurrentAuraId]
 	local SliderValue = PowaBarAuraSizeSlider:GetValue()
 	if (aura.textaura == true) then
-		if ((SliderValue / 100) < 1.61) then
-			self.Auras[self.CurrentAuraId].size = SliderValue / 100
-			self:RedisplayAura(self.CurrentAuraId)
+		if (not PowaMisc.Group) then
+			if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].size) then
+				if ((SliderValue / 100) < 1.61) then
+					self.Auras[self.CurrentAuraId].size = SliderValue / 100
+					self:RedisplayAura(self.CurrentAuraId)
+				end
+			end
+		else
+			if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].size) then
+				local min = ((self.CurrentAuraPage - 1) * 24) + 1
+				local max = min + 4
+				local relativepos = { }
+				for i = min, max do
+					if self.Auras[i] ~= nil then
+						relativepos[i] = self.Auras[i].size
+					end
+				end
+				for i = min, max do
+					if self.Auras[i] ~= nil then
+						if (i == min) then
+							self.Auras[i].size = (SliderValue / 100)
+						else
+							if relativepos[min] < relativepos[i] then
+								self.Auras[i].size = (SliderValue / 100) + (relativepos[i] - relativepos[min])
+							else
+								self.Auras[i].size = (SliderValue / 100) + (relativepos[min] - relativepos[i])
+							end
+						end
+						self:RedisplayAura(i)
+					end
+				end
+			end
 		end
 	else
-		if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].size) then
-			self.Auras[self.CurrentAuraId].size = SliderValue / 100
-			self:RedisplayAura(self.CurrentAuraId)
+		if (not PowaMisc.Group) then
+			if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].size) then
+				self.Auras[self.CurrentAuraId].size = SliderValue / 100
+				self:RedisplayAura(self.CurrentAuraId)
+			end
+		else
+			if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].size) then
+				local min = ((self.CurrentAuraPage - 1) * 24) + 1
+				local max = min + 4
+				local relativepos = { }
+				for i = min, max do
+					if self.Auras[i] ~= nil then
+						relativepos[i] = self.Auras[i].size
+					end
+				end
+				for i = min, max do
+					if self.Auras[i] ~= nil then
+						if (i == min) then
+							self.Auras[i].size = (SliderValue / 100)
+						else
+							if relativepos[min] < relativepos[i] then
+								self.Auras[i].size = (SliderValue / 100) + (relativepos[i] - relativepos[min])
+							else
+								self.Auras[i].size = (SliderValue / 100) + (relativepos[min] - relativepos[i])
+							end
+						end
+						self:RedisplayAura(i)
+					end
+				end
+			end
 		end
 	end
 end
@@ -1898,9 +2017,32 @@ function PowaAuras:BarAuraCoordXSliderChanged()
 		return
 	end
 	local SliderValue = PowaBarAuraCoordXSlider:GetValue()
-	if (SliderValue ~= self.Auras[self.CurrentAuraId].x) then
-		self.Auras[self.CurrentAuraId].x = SliderValue
-		self:RedisplayAura(self.CurrentAuraId)
+	if (not PowaMisc.Group) then
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].x) then
+			self.Auras[self.CurrentAuraId].x = SliderValue
+			self:RedisplayAura(self.CurrentAuraId)
+		end
+	else
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].x) then
+			local min = self.CurrentAuraId
+			local max = min + 4
+			local relativepos = { }
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					relativepos[i] = self.Auras[i].x
+				end
+			end
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					if (i == min) then
+						self.Auras[i].x = SliderValue
+					else
+						self.Auras[i].x = SliderValue + (relativepos[i] - relativepos[min])
+					end
+					self:RedisplayAura(i)
+				end
+			end
+		end
 	end
 end
 
@@ -1909,9 +2051,32 @@ function PowaAuras:BarAuraCoordYSliderChanged()
 		return
 	end
 	local SliderValue = PowaBarAuraCoordYSlider:GetValue()
-	if (SliderValue ~= self.Auras[self.CurrentAuraId].y) then
-		self.Auras[self.CurrentAuraId].y = SliderValue
-		self:RedisplayAura(self.CurrentAuraId)
+	if (not PowaMisc.Group) then
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].y) then
+			self.Auras[self.CurrentAuraId].y = SliderValue
+			self:RedisplayAura(self.CurrentAuraId)
+		end
+	else
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].y) then
+			local min = self.CurrentAuraId
+			local max = min + 4
+			local relativepos = { }
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					relativepos[i] = self.Auras[i].y
+				end
+			end
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					if (i == min) then
+						self.Auras[i].y = SliderValue
+					else
+						self.Auras[i].y = SliderValue + (relativepos[i] - relativepos[min])
+					end
+					self:RedisplayAura(i)
+				end
+			end
+		end
 	end
 end
 
@@ -1955,9 +2120,36 @@ function PowaAuras:BarAuraSymSliderChanged()
 		PowaBarAuraSymSliderText:SetText(self.Text.nomSymetrie..": XY")
 		--AuraTexture:SetTexCoord(1, 0, 1, 0)
 	end
-	if (SliderValue ~= self.Auras[self.CurrentAuraId].symetrie) then
-		self.Auras[self.CurrentAuraId].symetrie = SliderValue
-		self:RedisplayAura(self.CurrentAuraId)
+	if (not PowaMisc.Group) then
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].symetrie) then
+			self.Auras[self.CurrentAuraId].symetrie = SliderValue
+			self:RedisplayAura(self.CurrentAuraId)
+		end
+	else
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].symetrie) then
+			local min = ((self.CurrentAuraPage - 1) * 24) + 1
+			local max = min + 4
+			local relativepos = { }
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					relativepos[i] = self.Auras[i].symetrie
+				end
+			end
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					if (i == min) then
+						self.Auras[i].symetrie = SliderValue
+					else
+						if relativepos[min] < relativepos[i] then
+							self.Auras[i].symetrie = SliderValue + (relativepos[i] - relativepos[min])
+						else
+							self.Auras[i].symetrie = SliderValue + (relativepos[min] - relativepos[i])
+						end
+					end
+					self:RedisplayAura(i)
+				end
+			end
+		end
 	end
 end
 
@@ -1986,9 +2178,36 @@ function PowaAuras:BarAuraRotateSliderChanged()
 		AuraTexture:SetPoint("CENTER")
 		AuraTexture:SetRotation(math.rad(SliderValue))
 	end]]--
-	if (SliderValue ~= self.Auras[self.CurrentAuraId].rotate) then
-		self.Auras[self.CurrentAuraId].rotate = SliderValue
-		self:RedisplayAura(self.CurrentAuraId)
+	if (not PowaMisc.Group) then
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].rotate) then
+			self.Auras[self.CurrentAuraId].rotate = SliderValue
+			self:RedisplayAura(self.CurrentAuraId)
+		end
+	else
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].rotate) then
+			local min = ((self.CurrentAuraPage - 1) * 24) + 1
+			local max = min + 4
+			local relativepos = { }
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					relativepos[i] = self.Auras[i].rotate
+				end
+			end
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					if (i == min) then
+						self.Auras[i].rotate = SliderValue
+					else
+						if relativepos[min] < relativepos[i] then
+							self.Auras[i].rotate = SliderValue + (relativepos[i] - relativepos[min])
+						else
+							self.Auras[i].rotate = SliderValue + (relativepos[min] - relativepos[i])
+						end
+					end
+					self:RedisplayAura(i)
+				end
+			end
+		end
 	end
 end
 
@@ -1997,8 +2216,37 @@ function PowaAuras:BarAuraDeformSliderChanged()
 		return
 	end
 	local SliderValue = PowaBarAuraDeformSlider:GetValue()
-	self.Auras[self.CurrentAuraId].torsion = SliderValue
-	self:RedisplayAura(self.CurrentAuraId)
+	if (not PowaMisc.Group) then
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].torsion) then
+			self.Auras[self.CurrentAuraId].torsion = SliderValue
+			self:RedisplayAura(self.CurrentAuraId)
+		end
+	else
+		if (SliderValue ~= self.Auras[self.CurrentAuraId].torsion) then
+			local min = ((self.CurrentAuraPage - 1) * 24) + 1
+			local max = min + 4
+			local relativepos = { }
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					relativepos[i] = self.Auras[i].torsion
+				end
+			end
+			for i = min, max do
+				if self.Auras[i] ~= nil then
+					if (i == min) then
+						self.Auras[i].torsion = SliderValue
+					else
+						if relativepos[min] < relativepos[i] then
+							self.Auras[i].torsion = SliderValue + (relativepos[i] - relativepos[min])
+						else
+							self.Auras[i].torsion = SliderValue + (relativepos[min] - relativepos[i])
+						end
+					end
+					self:RedisplayAura(i)
+				end
+			end
+		end
+	end
 end
 
 function PowaAuras:BarThresholdSliderChanged()
@@ -2006,8 +2254,10 @@ function PowaAuras:BarThresholdSliderChanged()
 		return
 	end
 	local SliderValue = PowaBarThresholdSlider:GetValue()
-	local aura = self.Auras[self.CurrentAuraId]
-	aura.threshold = SliderValue
+	if (SliderValue ~= self.Auras[self.CurrentAuraId].threshold) then
+		local aura = self.Auras[self.CurrentAuraId]
+		aura.threshold = SliderValue
+	end
 end
 
 function PowaAuras:TextChanged()
@@ -2127,6 +2377,41 @@ function PowaAuras:CustomSoundEndTextChanged(force)
 end
 
 -- Checkboxes Changed
+function PowaAuras:GroupButtonChecked()
+	if (PowaGroupButton:GetChecked()) then
+		PowaMisc.Group = true
+		local min = self.CurrentAuraId
+		local max = min + 4
+		for i = min, max do
+			if self.Auras[i] ~= nil then
+				local icon = getglobal("PowaIcone"..i)
+				icon:SetAlpha(1)
+				self:DisplayAura(i)
+			end
+		end
+	else
+		local min = self.CurrentAuraId
+		local max = min + 4
+		for i = min, max do
+			if self.Auras[i] ~= nil then
+				local aura = self.Auras[i]
+				aura.Active = false
+				self:ResetDragging(aura, self.Frames[i])
+				aura:Hide()
+				if (aura.Timer) then
+					aura.Timer:Hide()
+				end
+				if (aura.Stacks) then
+					aura.Stacks:Hide()
+				end
+				local icon = getglobal("PowaIcone"..i)
+				icon:SetAlpha(0.33)
+			end
+		end
+		PowaMisc.Group = false
+	end
+end
+
 function PowaAuras:InverseChecked()
 	local aura = self.Auras[self.CurrentAuraId]
 	if (PowaInverseButton:GetChecked()) then
@@ -3938,6 +4223,7 @@ function PowaAuras:OptionTestAll()
 			aura:CreateFrames()
 			self.SecondaryAuras[aura.id] = nil
 			self:DisplayAura(aura.id)
+			self:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 		end
 	end
 	
@@ -3961,25 +4247,6 @@ function PowaAuras:OptionHideAll(now)
 		end
 	end
 	--PowaBarConfigFrame:Hide()
-end
-
-function PowaAuras:RedisplayAuras()
-	for id, aura in pairs(self.Auras) do
-		aura.Active = false
-		if (aura.Showing) then
-			aura:Hide()
-			if (aura.Timer) then
-				aura.Timer:Hide()
-			end
-			if (aura.Stacks) then
-				aura.Stacks:Hide()
-			end
-			aura.Active = true
-			aura:CreateFrames()
-			self.SecondaryAuras[aura.id] = nil
-			self:DisplayAura(aura.id)
-		end
-	end
 end
 
 function PowaAuras:SetLockButtonText()

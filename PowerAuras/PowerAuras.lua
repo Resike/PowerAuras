@@ -27,10 +27,10 @@ PowaMisc =
 	DefaultStacksTexture = "Original",
 	TimerRoundUp = false,
 	AllowInspections = false,
-	UseGTFO = nil,
 	UserSetMaxTextures = PowaAuras.TextureCount,
 	OverrideMaxTextures = false,
 	Locked = false,
+	Group = false,
 	SoundChannel = "Master"
 }
 
@@ -60,44 +60,8 @@ for i = 1, 10 do
 	PowaGlobalListe[i] = PowaAuras.Text.ListeGlobal.." "..i
 end
 
-function PowaAuras:Toggle(enable)
-	if (not (self.VariablesLoaded and self.SetupDone)) then
-		return
-	end
-	if (enable == nil) then
-		enable = PowaMisc.Disabled
-	end
-	if enable then
-		if (not PowaMisc.Disabled) then
-			return
-		end
-		if PowaAuras_Frame and not PowaAuras_Frame:IsShown() then
-			PowaAuras_Frame:Show()
-			self:RegisterEvents(PowaAuras_Frame)
-		end
-		PowaMisc.Disabled = false
-		self:Setup()
-		self:DisplayText("Power Auras: "..self.Colors.Green..PowaAuras.Text.Enabled.."|r")
-	else
-		if (PowaMisc.Disabled) then
-			return
-		end
-		if PowaAuras_Frame and PowaAuras_Frame:IsShown() then
-			PowaAuras_Frame:UnregisterAllEvents()
-			PowaAuras_Frame:Hide()
-		end
-		self:OptionHideAll(true)
-		PowaMisc.Disabled = true
-		self:DisplayText("Power Auras: "..self.Colors.Red..PowaAuras.Text.Disabled.."|r")
-	end
-	PowaEnableButton:SetChecked(PowaMisc.Disabled ~= true)
-end
-
 function PowaAuras:OnLoad(frame)
 	frame:RegisterEvent("ADDON_LOADED")
-	SlashCmdList["POWA"] = PowaAuras_CommanLine
-	SLASH_POWA1 = "/pa"
-	SLASH_POWA2 = "/powa"
 end
 
 function PowaAuras:ReregisterEvents(frame)
@@ -112,10 +76,30 @@ function PowaAuras:RegisterEvents(frame)
 	for event in pairs(self.Events) do
 		if (self[event]) then
 			frame:RegisterEvent(event)
-		else
-			self:DisplayText("Event has no method ", event)
 		end
 	end
+end
+
+function PowaAuras:VersionGreater(v1, v2)
+	if (v1.Major > v2.Major) then
+		return true
+	end
+	if (v1.Major < v2.Major) then
+		return false
+	end
+	if (v1.Minor > v2.Minor) then
+		return true
+	end
+	if (v1.Minor < v2.Minor) then
+		return false
+	end
+	if (v1.Build > v2.Build) then
+		return true
+	end
+	if (v1.Build < v2.Build) then
+		return false
+	end
+	return v1.Revision > v2.Revision
 end
 
 function PowaAuras:LoadAuras()
@@ -437,6 +421,25 @@ function PowaAuras:InitialiseAllAuras()
 	self:RedisplayAuras()
 end
 
+function PowaAuras:RedisplayAuras()
+	for id, aura in pairs(self.Auras) do
+		aura.Active = false
+		if (aura.Showing) then
+			aura:Hide()
+			if (aura.Timer) then
+				aura.Timer:Hide()
+			end
+			if (aura.Stacks) then
+				aura.Stacks:Hide()
+			end
+			aura.Active = true
+			aura:CreateFrames()
+			self.SecondaryAuras[aura.id] = nil
+			self:DisplayAura(aura.id)
+		end
+	end
+end
+
 function PowaAuras:MemorizeActions(actionIndex)
 	local imin, imax
 	if (#self.AurasByType.Actions == 0) then
@@ -590,12 +593,18 @@ function PowaAuras:OnUpdate(elapsed)
 	end
 	for i = 1, #self.AuraSequence do
 		local aura = self.AuraSequence[i]
-		if (self:UpdateAura(aura, elapsed)) then
-			self:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
+		if (aura.Showing == true) then
+			if (self:UpdateAura(aura, elapsed)) then
+				if (aura.Timer.enabled == true) then
+					self:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
+				end
+			end
 		end
 	end
 	for _, aura in pairs(self.SecondaryAuras) do
-		self:UpdateAura(aura, elapsed)
+		if (aura.Showing == true) then
+			self:UpdateAura(aura, elapsed)
+		end
 	end
 	self.ResetTargetTimers = false
 end
@@ -900,6 +909,36 @@ function PowaAuras:ResetDragging(aura, frame)
 	frame.SetForDragging = nil
 end
 
+function PowaAuras:UpdatePreviewColor(aura)
+	if (AuraTexture ~= nil) then
+		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
+			if (aura.off ~= true) then
+				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
+					AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+				else
+					AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
+				end
+				if (aura.desaturation == true) then
+					local shaderSupported = AuraTexture:SetDesaturated(1)
+					if (shaderSupported) then
+						AuraTexture:SetDesaturated(1)
+					else
+						if (desaturation) then
+							AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
+						else
+							AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
+						end
+					end
+				else
+					AuraTexture:SetDesaturated(nil)
+				end
+			end
+		else
+			AuraTexture:SetVertexColor(1, 1, 1)
+		end
+	end
+end
+
 function PowaAuras:ShowAuraForFirstTime(aura)
 	local auraId = aura.id
 	if (not aura.UseOldAnimations and aura.EndAnimation and aura.EndAnimation:IsPlaying()) then
@@ -968,12 +1007,12 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	local r1, r2, r3, r4, r5, r6
 	if (aura.randomcolor) then
 		if (aura.model ~= true and aura.modelcustom ~= true) then
-			r1 = random(20, 100) / 100
-			r2 = random(20, 100) / 100
-			r3 = random(20, 100) / 100
-			r4 = random(20, 100) / 100
-			r5 = random(20, 100) / 100
-			r6 = random(20, 100) / 100
+			r1 = math.random(20, 100) / 100
+			r2 = math.random(20, 100) / 100
+			r3 = math.random(20, 100) / 100
+			r4 = math.random(20, 100) / 100
+			r5 = math.random(20, 100) / 100
+			r6 = math.random(20, 100) / 100
 			if (aura.textaura ~= true) then
 				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 					texture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
@@ -997,30 +1036,32 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			else
 				texture:SetVertexColor(r1, r2, r3)
 			end
-			if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-				if (aura.off ~= true) then
-					if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
-						AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
-					else
-						AuraTexture:SetVertexColor(r1, r2, r3)
-					end
-					if (aura.desaturation == true) then
-						local shaderSupported = AuraTexture:SetDesaturated(1)
-						if (shaderSupported) then
-							AuraTexture:SetDesaturated(1)
+			if (AuraTexture ~= nil) then
+				if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
+					if (aura.off ~= true) then
+						if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
+							AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
 						else
-							if (desaturation) then
-								AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
-							else
-								AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
-							end
+							AuraTexture:SetVertexColor(r1, r2, r3)
 						end
-					else
-						AuraTexture:SetDesaturated(nil)
+						if (aura.desaturation == true) then
+							local shaderSupported = AuraTexture:SetDesaturated(1)
+							if (shaderSupported) then
+								AuraTexture:SetDesaturated(1)
+							else
+								if (desaturation) then
+									AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
+								else
+									AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
+								end
+							end
+						else
+							AuraTexture:SetDesaturated(nil)
+						end
 					end
+				else
+					AuraTexture:SetVertexColor(1, 1, 1)
 				end
-			else
-				AuraTexture:SetVertexColor(1, 1, 1)
 			end
 		end
 	else
@@ -1048,30 +1089,32 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			else
 				texture:SetVertexColor(aura.r, aura.g, aura.b)
 			end
-			if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-				if (aura.off ~= true) then
-					if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
-						AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
-					else
-						AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
-					end
-					if (aura.desaturation == true) then
-						local shaderSupported = AuraTexture:SetDesaturated(1)
-						if (shaderSupported) then
-							AuraTexture:SetDesaturated(1)
+			if (AuraTexture ~= nil) then
+				if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
+					if (aura.off ~= true) then
+						if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
+							AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 						else
-							if (desaturation) then
-								AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
-							else
-								AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
-							end
+							AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
 						end
-					else
-						AuraTexture:SetDesaturated(nil)
+						if (aura.desaturation == true) then
+							local shaderSupported = AuraTexture:SetDesaturated(1)
+							if (shaderSupported) then
+								AuraTexture:SetDesaturated(1)
+							else
+								if (desaturation) then
+									AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
+								else
+									AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
+								end
+							end
+						else
+							AuraTexture:SetDesaturated(nil)
+						end
 					end
+				else
+					AuraTexture:SetVertexColor(1, 1, 1)
 				end
-			else
-				AuraTexture:SetVertexColor(1, 1, 1)
 			end
 		end
 	end
@@ -1438,7 +1481,7 @@ function PowaAuras:DisplayAura(auraId)
 		return
 	end
 	local aura = self.Auras[auraId]
-	if (aura == nil or aura.off)then
+	if (aura == nil or aura.off) then
 		return
 	end
 	self:ShowAuraForFirstTime(aura)
@@ -1460,7 +1503,6 @@ function PowaAuras:UpdateAura(aura, elapsed)
 	if (aura.Showing) then
 		local frame = aura:GetFrame()
 		if (frame == nil) then
-			self:ShowText("UpdateAura: Don't show, frame missing")
 			return false
 		end
 		if (not aura.HideRequest and not aura.isSecondary and not self.ModTest and aura.TimeToHide) then
@@ -1472,9 +1514,6 @@ function PowaAuras:UpdateAura(aura, elapsed)
 		if (aura.HideRequest) then
 			if (self.ModTest == false and not aura.EndSoundPlayed) then
 				if (aura.customsoundend ~= "") then
-					if (aura.Debug) then
-						self:Message("Playing Custom end sound ", aura.customsoundend)
-					end
 					local pathToSound
 					if (string.find(aura.customsoundend, "\\")) then
 						pathToSound = aura.customsoundend
@@ -1484,9 +1523,6 @@ function PowaAuras:UpdateAura(aura, elapsed)
 					PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
 				elseif (aura.soundend > 0) then
 					if (PowaAuras.Sound[aura.soundend] ~= nil and string.len(PowaAuras.Sound[aura.soundend]) > 0) then
-						if (aura.Debug) then
-							self:Message("Playing end sound ", PowaAuras.Sound[aura.soundend])
-						end
 						if (string.find(PowaAuras.Sound[aura.soundend], "%.")) then
 							PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAuras.Sound[aura.soundend], PowaMisc.SoundChannel)
 						else
@@ -1499,9 +1535,6 @@ function PowaAuras:UpdateAura(aura, elapsed)
 			if (aura.Stacks) then
 				aura.Stacks:Hide()
 			end
-			if (aura.Debug) then
-				self:Message("Hide Requested for ", aura.id)
-			end
 			if (aura.UseOldAnimations) then
 				aura.animation = self:AnimationEndFactory(aura.finish, aura, frame)
 				if (not aura.animation) then
@@ -1511,17 +1544,11 @@ function PowaAuras:UpdateAura(aura, elapsed)
 				if (not aura.EndAnimation) then
 					aura:Hide()
 				else
-					if (aura.Debug) then
-						self:Message("Stop current animations ", aura.id)
-					end
 					if (aura.BeginAnimation and aura.BeginAnimation:IsPlaying()) then
 						aura.BeginAnimation:Stop()
 					end
 					if (aura.MainAnimation and aura.MainAnimation:IsPlaying()) then
 						aura.MainAnimation:Stop()
-					end
-					if (aura.Debug) then
-						self:Message("Play end animation ", aura.id)
 					end
 					aura.EndAnimation:Play()
 				end
@@ -1533,9 +1560,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 		if (aura.Active and aura.Stacks and aura.Stacks.enabled) then
 			if (self.ModTest) then
 				if (aura.Stacks.SetStackCount) then
-					aura.Stacks:SetStackCount(random(1, 12))
-				else
-					self:Message("aura.Stacks:SetStackCount nil!", aura.id)
+					aura.Stacks:SetStackCount(math.random(1, 12))
 				end
 			end
 			aura.Stacks:Update()
@@ -1549,23 +1574,11 @@ function PowaAuras:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 	if (not aura.Timer or skipTimerUpdate) then
 		return
 	end
-	if (PowaAuras.DebugCycle) then
-		self:DisplayText("aura.Timer id=", aura.id)
-		self:DisplayText("ShowOnAuraHide=", aura.Timer.ShowOnAuraHide)
-		self:DisplayText("ForceTimeInvert=", aura.ForceTimeInvert)
-		self:DisplayText("InvertTimeHides=", aura.InvertTimeHides)
-		self:DisplayText("ModTest=", self.ModTest)
-		self:DisplayText("aura.Active=", aura.Active)
-	end
 	local timerHide
 	if (aura.Timer.ShowOnAuraHide and not self.ModTest and (not aura.ForceTimeInvert and not aura.InvertTimeHides) ) then
 		timerHide = aura.Active
 	else
 		timerHide = not aura.Active
-	end
-	if (PowaAuras.DebugCycle) then
-		self:Message("timerHide=", timerHide)
-		self:Message("InactiveDueToState=", aura.InactiveDueToState)
 	end
 	if (timerHide or (aura.InactiveDueToState and not aura.Active) or aura.InactiveDueToMulti) then
 		aura.Timer:Hide()

@@ -1,68 +1,109 @@
 local string, len, find, sub, tonumber, select, pairs = string, len, find, sub, tonumber, select, pairs
 
 function PowaAuras:ADDON_LOADED(addon)
-	if(addon ~= "PowerAuras") then
+	if (addon ~= "PowerAuras") then
 		return
 	end
-	PowaMisc.disabled = nil
-	-- Ensure PowaMisc gets any new values
-	for k, v in pairs(PowaAuras.PowaMiscDefault) do
-		if (PowaMisc[k] == nil) then
-			PowaMisc[k] = v
+	LoadAddOn("PowerAurasOptions")
+	if (IsAddOnLoaded("PowerAurasOptions")) then
+		PowaMisc.disabled = nil
+		-- Ensure PowaMisc gets any new values
+		for k, v in pairs(PowaAuras.PowaMiscDefault) do
+			if (PowaMisc[k] == nil) then
+				PowaMisc[k] = v
+			end
 		end
-	end
-	-- Remove redundant settings
-	for k in pairs(PowaMisc) do
-		if (PowaAuras.PowaMiscDefault[k] == nil) then
-			PowaMisc[k] = nil
+		-- Remove redundant settings
+		for k in pairs(PowaMisc) do
+			if (PowaAuras.PowaMiscDefault[k] == nil) then
+				PowaMisc[k] = nil
+			end
 		end
-	end
-	for k, v in pairs(PowaAuras.PowaGlobalMiscDefault) do
-		if (PowaGlobalMisc[k] == nil) then
-			PowaGlobalMisc[k] = v
+		for k, v in pairs(PowaAuras.PowaGlobalMiscDefault) do
+			if (PowaGlobalMisc[k] == nil) then
+				PowaGlobalMisc[k] = v
+			end
 		end
-	end
-	-- Remove redundant settings
-	for k in pairs(PowaGlobalMisc) do
-		if (PowaAuras.PowaGlobalMiscDefault[k] == nil) then
-			PowaGlobalMisc[k] = nil
+		-- Remove redundant settings
+		for k in pairs(PowaGlobalMisc) do
+			if (PowaAuras.PowaGlobalMiscDefault[k] == nil) then
+				PowaGlobalMisc[k] = nil
+			end
 		end
+		self.MaxTextures = PowaAuras.TextureCount
+		local _, _, major, minor = string.find(self.Version, self.VersionPattern)
+		self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
+		_, _, major, minor = string.find(PowaMisc.Version, self.VersionPattern)
+		self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
+		self.VersionUpgraded = self:VersionGreater(self.VersionParts, self.PreviousVersionParts)
+		if (self.VersionUpgraded) then
+			self:DisplayText(self.Colors.Purple.."<Power Auras Classic>|r "..self.Colors.Gold..self.Version.."|r - "..self.Text.welcome)
+			PowaMisc.Version = self.Version
+		end
+		if (TestPA == nil) then
+			PowaState = { }
+		end
+		_, self.playerclass = UnitClass("player")
+		self:LoadAuras()
+		self:OptionsOnLoad()
+		self:FindAllChildren()
+		self:CreateEffectLists()
+		if (not PowaMisc.Disabled) then
+			self:RegisterEvents(PowaAuras_Frame)
+		end
+		self.VariablesLoaded = true
+		self:Setup()
+	else
+		PowaMisc.disabled = nil
+		-- Ensure PowaMisc gets any new values
+		for k, v in pairs(PowaAuras.PowaMiscDefault) do
+			if (PowaMisc[k] == nil) then
+				PowaMisc[k] = v
+			end
+		end
+		-- Remove redundant settings
+		for k in pairs(PowaMisc) do
+			if (PowaAuras.PowaMiscDefault[k] == nil) then
+				PowaMisc[k] = nil
+			end
+		end
+		for k, v in pairs(PowaAuras.PowaGlobalMiscDefault) do
+			if (PowaGlobalMisc[k] == nil) then
+				PowaGlobalMisc[k] = v
+			end
+		end
+		-- Remove redundant settings
+		for k in pairs(PowaGlobalMisc) do
+			if (PowaAuras.PowaGlobalMiscDefault[k] == nil) then
+				PowaGlobalMisc[k] = nil
+			end
+		end
+		self.MaxTextures = PowaAuras.TextureCount
+		local _, _, major, minor = string.find(self.Version, self.VersionPattern)
+		self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
+		_, _, major, minor = string.find(PowaMisc.Version, self.VersionPattern)
+		self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
+		self.VersionUpgraded = self:VersionGreater(self.VersionParts, self.PreviousVersionParts)
+		if (self.VersionUpgraded) then
+			self:DisplayText(self.Colors.Purple.."<Power Auras Classic>|r "..self.Colors.Gold..self.Version.."|r - "..self.Text.welcome)
+			PowaMisc.Version = self.Version
+		end
+		if (TestPA == nil) then
+			PowaState = { }
+		end
+		_, self.playerclass = UnitClass("player")
+		self:LoadAuras()
+		self:FindAllChildren()
+		self:CreateEffectLists()
+		if (not PowaMisc.Disabled) then
+			self:RegisterEvents(PowaAuras_Frame)
+		end
+		self.VariablesLoaded = true
+		self:Setup()
 	end
-	self.MaxTextures = PowaAuras.TextureCount
-	local _, _, major, minor = string.find(self.Version, self.VersionPattern)
-	self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
-	_, _, major, minor = string.find(PowaMisc.Version, self.VersionPattern)
-	self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
-	self.VersionUpgraded = self:VersionGreater(self.VersionParts, self.PreviousVersionParts)
-	if (self.VersionUpgraded) then
-		self:DisplayText(self.Colors.Purple.."<Power Auras Classic>|r "..self.Colors.Gold..self.Version.."|r - "..self.Text.welcome)
-		PowaMisc.Version = self.Version
-	end
-	if (TestPA == nil) then
-		PowaState = { }
-	end
-	_, self.playerclass = UnitClass("player")
-	self:LoadAuras()
-	for i = 1, 5 do
-		getglobal("PowaOptionsList"..i):SetText(PowaPlayerListe[i])
-	end
-	for i = 1, 10 do
-		getglobal("PowaOptionsList"..i + 5):SetText(PowaGlobalListe[i])
-	end
-	PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
-	PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
-	PowaAuras:SetLockButtonText()
-	self:FindAllChildren()
-	self:CreateEffectLists()
-	if (not PowaMisc.Disabled) then
-		self:RegisterEvents(PowaAuras_Frame)
-	end
-	self.VariablesLoaded = true
-	self:Setup()
 end
 
 function PowaAuras:Setup()
-	PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	local spellId = self.GCDSpells[PowaAuras.playerclass]
 	if (not spellId) then
 		return false
@@ -85,7 +126,6 @@ function PowaAuras:Setup()
 	self.WeAreInParty = IsInGroup()
 	self.WeAreMounted = (IsMounted() == 1 and true or self:IsDruidTravelForm())
 	self.WeAreInVehicle = (UnitInVehicle("player") ~= nil)
-	self.Comms:Register()
 	self.ActiveTalentGroup = GetActiveSpecGroup()
 	self.Instance = self:GetInstanceType()
 	self:GetStances()
@@ -652,11 +692,11 @@ function PowaAuras:FlagsChanged(unit)
 	end
 end
 
-function PowaAuras.StringStarts(String,Start)
+function PowaAuras.StringStarts(String, Start)
 	return string.sub(String, 1, string.len(Start)) == Start
 end
 
-function PowaAuras.StringEnds(String,End)
+function PowaAuras.StringEnds(String, End)
 	return End == '' or string.sub(String, - string.len(End)) == End
 end
 
@@ -667,32 +707,22 @@ function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
 	-- Args
 	local _
 	local timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, spellId, spellName, spellType
-	if self.WoWBuild ~= nil then
-		if self.WoWBuild >= 40200 then
-			timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, spellId, spellName, _, spellType = ...
-		elseif self.WoWBuild >= 40100 then
-			timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags2, destGUID, destName, destFlags, spellId, spellName, _, spellType = ...
-		else
-			timestamp, event, sourceGUID, sourceName, sourceFlags2, destGUID, destName, destFlags, spellId, spellName, _, spellType = ...
-		end
-	else
+	if self.WoWBuild >= 40200 then
 		timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags, sourceFlags2, destGUID, destName, destFlags, destFlags2, spellId, spellName, _, spellType = ...
+	elseif self.WoWBuild >= 40100 then
+		timestamp, event, casterHidden, sourceGUID, sourceName, sourceFlags2, destGUID, destName, destFlags, spellId, spellName, _, spellType = ...
+	else
+		timestamp, event, sourceGUID, sourceName, sourceFlags2, destGUID, destName, destFlags, spellId, spellName, _, spellType = ...
 	end
 	if (not spellName) then
 		return
 	end
 	if (sourceGUID == UnitGUID("player") and event == "SPELL_CAST_SUCCESS") then
-		if (self.DebugEvents) then
-			self:DisplayText("COMBAT_LOG_EVENT_UNFILTERED", "- By Me! ", event)
-		end
 		self.CastByMe[spellName] = {SpellName = spellName, SpellId = spellId, DestGUID = destGUID, DestName = destName, Hostile = bit.band(destFlags, COMBATLOG_OBJECT_REACTION_HOSTILE)}
 		self.DoCheck.PlayerSpells = true
 		self.DoCheck.GroupOrSelfSpells = true
 	end
 	if (destGUID == UnitGUID("player")) then
-		if (self.DebugEvents) then
-			self:DisplayText("COMBAT_LOG_EVENT_UNFILTERED", "- On Me! ", event)
-		end
 		if (PowaAuras.StringStarts(event,"SPELL_") and sourceName) then
 			self.CastOnMe[sourceName] = {SpellName = spellName, SpellId = spellId, SourceGUID = sourceGUID, Hostile = bit.band(sourceFlags, COMBATLOG_OBJECT_REACTION_HOSTILE)}
 			self.DoCheck.Spells = true -- Scan party/raid targets for casting
@@ -754,7 +784,7 @@ function PowaAuras:GetStances()
 		self.PowaStance[2] = select(2, GetShapeshiftFormInfo(1))
 		return
 	end
-	if(self.playerclass == "ROGUE") then -- Fix for shadow dance (which is apparently at index 3)
+	if (self.playerclass == "ROGUE") then -- Fix for shadow dance (which is apparently at index 3)
 		self.PowaStance[1] = select(2, GetShapeshiftFormInfo(1))
 		self.PowaStance[3] = select(2, GetShapeshiftFormInfo(3))
 		return

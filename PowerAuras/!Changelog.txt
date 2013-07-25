@@ -1,22 +1,25 @@
-﻿ToDo List:
-- Add SetCooldown type animation.
-
-Issues:
-- Coloring bug when using "Test all" button, and has both global and player auras.
+﻿Issues:
 - Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
 - Enablefullrotation and isAlive unchecked import bug on some aura types.
 
 * 4.23.30
+- Reduced CPU usage by aprox 75%. Yes i'm that good.
 - Fixed an excessive CPU and memory usage when picking colors for models.
+- Split GUI options into another addon, to optionally save some CPU and memory usage.
+- Added groups. (Very alpha yet.)
+- Changed "Stance/Seal/Form" dropdown to handle multiple selections. (Dropdown need update still.)
 - Changing color of a model won't redisplay the model itself.
 - Changing the value of the "Gradient Style" dropdown, won't redisplay models.
 - Changing the value of the "Random Color" checkbutton, won't redisplay models.
 - Changing the value of the "Desaturate" checkbutton, won't redisplay models.
+- Added glow effect for character and global pages when you recieve an aura.
+- Fixed the layer of the glow effect itself.
 - Fixed a GUI override bug with the "Unit Name" checkbutton.
 - Fixed a bug with the "Rotation" slider's editbox.
 - Fixed a bug with the "Animation Speed" slider's editobx.
 - Fixed a coloring bug with model's and custom model's icon.
-- Fixed a bug with aura icons.
+- Fixed a preview texture coloring bug with the "Test All" button.
+- Fixed a bug with aura icons. (Gradient colored "Test All" still needs a fix.)
 - Other smaller GUI changes.
 - Other minor fixes.
 
