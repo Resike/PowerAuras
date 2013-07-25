@@ -20,7 +20,7 @@ use strict;
 
 #[ read ]###########################################################
 
-my %s;
+my (%s, %d);
 my $lang = '';
 my $prefix = '';
 my $suffix = '';
@@ -40,7 +40,12 @@ while (my $line = <LUA>) {
 
     }
     elsif ($line =~ /^\W*?([-a-z._0-9[\]]+)\s*=\s*"([^"]*)"\s*,?\s*$/i) {
-	$s{$lang}->{"${prefix}${1}${suffix}"} = $2;
+	my $key = "${prefix}${1}${suffix}";
+	if (exists $s{$lang}->{$key}) {
+	    $d{$lang}->{$key}++;
+	} else {
+	    $s{$lang}->{$key} = $2;
+	}
 	$tmp = undef;
     }
     elsif ($line =~ /^\s*([a-z._0-9[\]]+)\s*=\s*\{\s*$/i) {
@@ -119,6 +124,11 @@ if (defined $ARGV[0]) {
 	print "$k\n" unless exists $s{''}->{$k};
     }
 
+    print "\n ==== duplicate translations ====\n\n";
+    foreach my $k (sort keys %{$d{$l}}) {
+	print "$k  $d{$l}->{$k}x\n";
+    }
+
     print "\n ==== empty translations ====\n\n";
     foreach my $k (sort keys %{$s{$l}}) {
 	print "$k\n" unless length $s{$l}->{$k};
@@ -148,6 +158,9 @@ else {
 	    $n++ unless exists $s{''}->{$k};
 	}
 	printf "%5d unneeded translations\n", $n;
+	    
+	$n = keys %{$d{$l}};;
+	printf "%5d duplicate translations\n", $n;
 	    
 	$n = 0;
 	foreach my $k (sort keys %{$s{$l}}) {
