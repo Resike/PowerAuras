@@ -164,4 +164,8 @@ else {
 }
 
 print "\n";
-<STDIN>;
+
+# wait for enter - but only under Windows
+if ($^O eq 'MSWin32') {
+    <STDIN>;
+}
