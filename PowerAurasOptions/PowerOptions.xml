@@ -12,6 +12,7 @@
 		</Size>
 		<Scripts>
 			<OnLoad>
+				self:EnableMouseWheel(true)
 				self:RegisterForClicks("LeftButtonUp", "RightButtonDown")
 			</OnLoad>
 			<OnClick>
@@ -23,6 +24,9 @@
 			<OnLeave>
 				GameTooltip:Hide()
 			</OnLeave>
+			<OnMouseWheel>
+				PowaAuras:IconOnMouseWheel(delta)
+			</OnMouseWheel>
 		</Scripts>
 		<NormalFont style = "GameFontHighlight"/>
 		<NormalTexture file = "Interface\PaperDoll\UI-Backpack-EmptySlot"/>
@@ -1404,7 +1408,15 @@
 				</Scripts>
 			</EditBox>
 		</Frames>
+		<ThumbTexture name = "$parentThumb" file = "Interface\Buttons\UI-SliderBar-Button-Horizontal">
+			<Size>
+				<AbsDimension x = "32" y = "32"/>
+			</Size>
+		</ThumbTexture>
 		<Scripts>
+			<OnLoad>
+				self:EnableMouseWheel(true)
+			</OnLoad>
 			<OnEnter>
 				if (self:IsEnabled()) then
 					if (self.aide) then
@@ -1416,13 +1428,10 @@
 			<OnLeave>
 				GameTooltip:Hide()
 			</OnLeave>
-		</Scripts>
-		<ThumbTexture name = "$parentThumb" file = "Interface\Buttons\UI-SliderBar-Button-Horizontal">
-			<Size>
-				<AbsDimension x = "32" y = "32"/>
-			</Size>
-		</ThumbTexture>
-	</Slider>
+			<OnMouseWheel>
+				PowaAuras.SliderOnMouseWheel(self, delta)
+			</OnMouseWheel>
+		</Scripts>	</Slider>
 	<!-- Ternary Selector Template -->
 	<CheckButton name = "PowaTernarySelectorTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
 		<Size>
@@ -2007,7 +2016,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(0, 20)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2019,9 +2027,6 @@
 								PowaAuras:FrameStrataLevelSliderChanged()
 								PowaFrameStrataLevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
-							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
-							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<!-- Texture's Strata DropDown -->
@@ -2072,7 +2077,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(-8, 7)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2084,9 +2088,6 @@
 								PowaAuras:TextureStrataSublevelSliderChanged()
 								PowaTextureStrataSublevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
-							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
-							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<!-- Blend Mode DropDown -->
@@ -2137,7 +2138,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(-100, 100)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2172,7 +2172,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2207,7 +2206,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2242,7 +2240,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self.aide = PowaAuras.Text.aideTexture
 								self:SetValueStep(1)
 								PowaBarAuraTextureSliderText:SetText(PowaAuras.Text.nomTexture)
@@ -2252,9 +2249,6 @@
 								PowaAuras:BarAuraTextureSliderChanged()
 								PowaBarAuraTextureSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
-							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
-							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<!-- Custom Texure EditBox -->
@@ -2400,7 +2394,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(0, 100)
 								self:SetValue(100)
 								self:SetValueStep(1)
@@ -2412,9 +2405,6 @@
 								PowaAuras:BarAuraAlphaSliderChanged()
 								PowaBarAuraAlphaSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 							</OnValueChanged>
-							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
-							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<!-- Symmetry Slider -->
@@ -2431,7 +2421,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(0, 3)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2443,9 +2432,6 @@
 								PowaAuras:BarAuraSymSliderChanged()
 								PowaBarAuraSymSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
-							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
-							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<!-- Animation Slider -->
@@ -2462,7 +2448,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(-1, 250)
 								self:SetValue(-1)
 								self:SetValueStep(1)
@@ -2474,9 +2459,6 @@
 								PowaAuras:BarAnimationSliderChanged()
 								PowaBarAnimationSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
-							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
-							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<!-- Deformation Slider -->
@@ -2493,7 +2475,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(-0.01, 2.01)
 								self:SetValue(1)
 								self:SetValueStep(0.01)
@@ -2505,9 +2486,6 @@
 								PowaAuras:BarAuraDeformSliderChanged()
 								PowaBarAuraDeformSliderEditBox:SetText(format("%.2f", self:GetValue()))
 							</OnValueChanged>
-							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
-							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<!-- Rotation Slider -->
@@ -2524,7 +2502,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(0, 360)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2536,9 +2513,6 @@
 								PowaAuras:BarAuraRotateSliderChanged()
 								PowaBarAuraRotateSliderEditBox:SetText(format("%.0f", self:GetValue()).."°")
 							</OnValueChanged>
-							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
-							</OnMouseWheel>
 						</Scripts>
 					</Slider>
 					<!-- Texture Size Slider -->
@@ -2555,7 +2529,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(1, 200)
 								self:SetValue(100)
 								self:SetValueStep(1)
@@ -2590,7 +2563,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(-700, 700)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2625,7 +2597,6 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:EnableMouseWheel(true)
 								self:SetMinMaxValues(-400, 400)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2878,7 +2849,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(0, 100)
 										self:SetValue(50)
 										self:SetValueStep(1)
@@ -2890,9 +2860,6 @@
 										PowaAuras:BarThresholdSliderChanged()
 										PowaBarThresholdSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 									</OnValueChanged>
-									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
-									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<!-- Invert Treshold CheckButton -->
@@ -4240,7 +4207,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(1, 200)
 										self:SetValue(100)
 										self:SetValueStep(1)
@@ -4252,9 +4218,6 @@
 										PowaAuras:BarAuraAnimSpeedSliderChanged(self)
 										PowaBarAuraAnimSpeedSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 									</OnValueChanged>
-									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
-									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<!-- Animation Duration Slider -->
@@ -4271,7 +4234,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self.aide = PowaAuras.Text.aideDuration
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
@@ -4284,9 +4246,6 @@
 										PowaAuras:BarAuraAnimDurationSliderChanged(self)
 										PowaBarAuraDurationSliderEditBox:SetText(format("%.2f", self:GetValue()))
 									</OnValueChanged>
-									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
-									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 						</Frames>
@@ -4657,7 +4616,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(-700, 700)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -4673,7 +4631,7 @@
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
+								PowaAuras.SliderOnMouseWheel(self, delta)
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseWheel>
 								</Scripts>
@@ -4692,7 +4650,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(-400, 400)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -4708,7 +4665,7 @@
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
+								PowaAuras.SliderOnMouseWheel(self, delta)
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseWheel>
 								</Scripts>
@@ -4727,7 +4684,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(0.01, 5)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
@@ -4739,9 +4695,6 @@
 										PowaAuras:TimerSizeSliderChanged()
 										PowaTimerSizeSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
-									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
-									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<!-- Timer Alpha Slider -->
@@ -4758,7 +4711,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(0, 1)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
@@ -4770,9 +4722,6 @@
 										PowaAuras:TimerAlphaSliderChanged()
 										PowaTimerAlphaSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
-									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
-									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<!-- Timer Duration Slider -->
@@ -4789,7 +4738,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self.aide = PowaAuras.Text.aideTimerDuration
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
@@ -4802,9 +4750,6 @@
 										PowaAuras:TimerDurationSliderChanged()
 										PowaTimerDurationSliderEditBox:SetText(format("%.2f", self:GetValue()))
 									</OnValueChanged>
-									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
-									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<!-- Show Hundredths CheckButton -->
@@ -5098,7 +5043,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self.aide = PowaAuras.Text.aidePowaTimerInvertAuraSlider
 										self:SetMinMaxValues(0, 600)
 										self:SetValue(0)
@@ -5111,9 +5055,6 @@
 										PowaAuras:PowaTimerInvertAuraSliderChanged(self)
 										PowaTimerInvertAuraSliderEditBox:SetText(format("%.2f", self:GetValue()))
 									</OnValueChanged>
-									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
-									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 						</Frames>
@@ -5184,7 +5125,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(-700, 700)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -5219,7 +5159,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(-400, 400)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -5254,7 +5193,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(0.01, 5)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
@@ -5266,9 +5204,6 @@
 										PowaAuras:StacksSizeSliderChanged()
 										PowaStacksSizeSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
-									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
-									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<!-- Stacks Alpha Slider -->
@@ -5285,7 +5220,6 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self:EnableMouseWheel(true)
 										self:SetMinMaxValues(0, 1)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
@@ -5297,9 +5231,6 @@
 										PowaAuras:StacksAlphaSliderChanged()
 										PowaStacksAlphaSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
-									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
-									</OnMouseWheel>
 								</Scripts>
 							</Slider>
 							<!-- Use Transparent Textures CheckButton -->

@@ -1784,7 +1784,11 @@ function PowaAuras:InitPage(aura)
 	PowaGradientColor_SwatchBg.r = aura.gr
 	PowaGradientColor_SwatchBg.g = aura.gg
 	PowaGradientColor_SwatchBg.b = aura.gb
-	PowaHeader:SetText(self.Text.nomEffectEditor.." ("..aura.id..")")
+	if (PowaMisc.Group == false or PowaMisc.GroupSize == 1) then
+		PowaHeader:SetText(self.Text.nomEffectEditor.." ("..aura.id..")")
+	else
+		PowaHeader:SetText(self.Text.nomEffectEditor.." ("..aura.id.." - "..aura.id + (PowaMisc.GroupSize - 1)..")")
+	end
 end
 
 function PowaAuras:SetThresholdSlider(aura)
@@ -1912,7 +1916,7 @@ function PowaAuras:BarAuraAlphaSliderChanged()
 	else
 		if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].alpha) then
 			local min = self.CurrentAuraId
-			local max = min + 4
+			local max = min + (PowaMisc.GroupSize - 1)
 			local relativepos = { }
 			for i = min, max do
 				if self.Auras[i] ~= nil then
@@ -1933,6 +1937,8 @@ function PowaAuras:BarAuraAlphaSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
+			local aura = self.Auras[self.CurrentAuraId]
+			PowaAuras:UpdatePreviewColor(aura)
 		end
 	end
 end
@@ -1953,8 +1959,8 @@ function PowaAuras:BarAuraSizeSliderChanged()
 			end
 		else
 			if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].size) then
-				local min = ((self.CurrentAuraPage - 1) * 24) + 1
-				local max = min + 4
+				local min = self.CurrentAuraId
+				local max = min + (PowaMisc.GroupSize - 1)
 				local relativepos = { }
 				for i = min, max do
 					if self.Auras[i] ~= nil then
@@ -1985,8 +1991,8 @@ function PowaAuras:BarAuraSizeSliderChanged()
 			end
 		else
 			if (SliderValue / 100 ~= self.Auras[self.CurrentAuraId].size) then
-				local min = ((self.CurrentAuraPage - 1) * 24) + 1
-				local max = min + 4
+				local min = self.CurrentAuraId
+				local max = min + (PowaMisc.GroupSize - 1)
 				local relativepos = { }
 				for i = min, max do
 					if self.Auras[i] ~= nil then
@@ -2025,7 +2031,7 @@ function PowaAuras:BarAuraCoordXSliderChanged()
 	else
 		if (SliderValue ~= self.Auras[self.CurrentAuraId].x) then
 			local min = self.CurrentAuraId
-			local max = min + 4
+			local max = min + (PowaMisc.GroupSize - 1)
 			local relativepos = { }
 			for i = min, max do
 				if self.Auras[i] ~= nil then
@@ -2059,7 +2065,7 @@ function PowaAuras:BarAuraCoordYSliderChanged()
 	else
 		if (SliderValue ~= self.Auras[self.CurrentAuraId].y) then
 			local min = self.CurrentAuraId
-			local max = min + 4
+			local max = min + (PowaMisc.GroupSize - 1)
 			local relativepos = { }
 			for i = min, max do
 				if self.Auras[i] ~= nil then
@@ -2127,8 +2133,8 @@ function PowaAuras:BarAuraSymSliderChanged()
 		end
 	else
 		if (SliderValue ~= self.Auras[self.CurrentAuraId].symetrie) then
-			local min = ((self.CurrentAuraPage - 1) * 24) + 1
-			local max = min + 4
+			local min = self.CurrentAuraId
+			local max = min + (PowaMisc.GroupSize - 1)
 			local relativepos = { }
 			for i = min, max do
 				if self.Auras[i] ~= nil then
@@ -2149,6 +2155,8 @@ function PowaAuras:BarAuraSymSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
+			local aura = self.Auras[self.CurrentAuraId]
+			PowaAuras:UpdatePreviewColor(aura)
 		end
 	end
 end
@@ -2185,8 +2193,8 @@ function PowaAuras:BarAuraRotateSliderChanged()
 		end
 	else
 		if (SliderValue ~= self.Auras[self.CurrentAuraId].rotate) then
-			local min = ((self.CurrentAuraPage - 1) * 24) + 1
-			local max = min + 4
+			local min = self.CurrentAuraId
+			local max = min + (PowaMisc.GroupSize - 1)
 			local relativepos = { }
 			for i = min, max do
 				if self.Auras[i] ~= nil then
@@ -2207,6 +2215,8 @@ function PowaAuras:BarAuraRotateSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
+			local aura = self.Auras[self.CurrentAuraId]
+			PowaAuras:UpdatePreviewColor(aura)
 		end
 	end
 end
@@ -2223,8 +2233,8 @@ function PowaAuras:BarAuraDeformSliderChanged()
 		end
 	else
 		if (SliderValue ~= self.Auras[self.CurrentAuraId].torsion) then
-			local min = ((self.CurrentAuraPage - 1) * 24) + 1
-			local max = min + 4
+			local min = self.CurrentAuraId
+			local max = min + (PowaMisc.GroupSize - 1)
 			local relativepos = { }
 			for i = min, max do
 				if self.Auras[i] ~= nil then
@@ -2245,6 +2255,8 @@ function PowaAuras:BarAuraDeformSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
+			local aura = self.Auras[self.CurrentAuraId]
+			PowaAuras:UpdatePreviewColor(aura)
 		end
 	end
 end
@@ -2381,17 +2393,24 @@ function PowaAuras:GroupButtonChecked()
 	if (PowaGroupButton:GetChecked()) then
 		PowaMisc.Group = true
 		local min = self.CurrentAuraId
-		local max = min + 4
+		local max = min + (PowaMisc.GroupSize - 1)
 		for i = min, max do
-			if self.Auras[i] ~= nil then
+			if (self.Auras[i] ~= nil) then
 				local icon = getglobal("PowaIcone"..i)
 				icon:SetAlpha(1)
 				self:DisplayAura(i)
 			end
 		end
+		if (PowaMisc.GroupSize == 1) then
+			PowaHeader:SetText(self.Text.nomEffectEditor.." ("..self.CurrentAuraId..")")
+		else
+			PowaHeader:SetText(self.Text.nomEffectEditor.." ("..self.CurrentAuraId.." - "..self.CurrentAuraId + (PowaMisc.GroupSize - 1)..")")
+		end
+		local aura = self.Auras[self.CurrentAuraId]
+		PowaAuras:UpdatePreviewColor(aura)
 	else
 		local min = self.CurrentAuraId
-		local max = min + 4
+		local max = min + (PowaMisc.GroupSize - 1)
 		for i = min, max do
 			if self.Auras[i] ~= nil then
 				local aura = self.Auras[i]
@@ -2408,6 +2427,7 @@ function PowaAuras:GroupButtonChecked()
 				icon:SetAlpha(0.33)
 			end
 		end
+		PowaHeader:SetText(self.Text.nomEffectEditor.." ("..self.CurrentAuraId..")")
 		PowaMisc.Group = false
 	end
 end
@@ -4358,11 +4378,57 @@ function PowaAuras:EquipmentSlot_OnClick(slotButton)
 	end
 end
 
-function PowaAuras.SliderOnMouseWheel(self, delta)
-	if delta > 0 then
-		self:SetValue(self:GetValue() + self:GetValueStep())
+function PowaAuras:IconOnMouseWheel(delta)
+	if PowaMisc.Group == true then
+		if (delta > 0) then
+			if (PowaMisc.GroupSize < 8) then
+				PowaMisc.GroupSize = PowaMisc.GroupSize + 1
+			end
+		else
+			if (PowaMisc.GroupSize > 1) then
+				PowaMisc.GroupSize =  PowaMisc.GroupSize - 1
+			end
+		end
+		local min = self.CurrentAuraId
+		local max = min + (PowaMisc.GroupSize - 1)
+		for i = min, max do
+			if (self.Auras[i] ~= nil) then
+				local icon = getglobal("PowaIcone"..i)
+				icon:SetAlpha(1)
+				self:DisplayAura(i)
+			end
+		end
+		for i = max + 1, 24 do
+			if (self.Auras[i] ~= nil) then
+				local aura = self.Auras[i]
+				aura.Active = false
+				self:ResetDragging(aura, self.Frames[i])
+				aura:Hide()
+				if (aura.Timer) then
+					aura.Timer:Hide()
+				end
+				if (aura.Stacks) then
+					aura.Stacks:Hide()
+				end
+				local icon = getglobal("PowaIcone"..i)
+				icon:SetAlpha(0.33)
+			end
+		end
+		if (PowaMisc.GroupSize == 1) then
+			PowaHeader:SetText(self.Text.nomEffectEditor.." ("..self.CurrentAuraId..")")
+		else
+			PowaHeader:SetText(self.Text.nomEffectEditor.." ("..self.CurrentAuraId.." - "..self.CurrentAuraId + (PowaMisc.GroupSize - 1)..")")
+		end
+		local aura = self.Auras[self.CurrentAuraId]
+		PowaAuras:UpdatePreviewColor(aura)
+	end
+end
+
+function PowaAuras.SliderOnMouseWheel(slider, delta)
+	if (delta > 0) then
+		slider:SetValue(slider:GetValue() + slider:GetValueStep())
 	else
-		self:SetValue(self:GetValue() - self:GetValueStep())
+		slider:SetValue(slider:GetValue() - slider:GetValueStep())
 	end
 end
 
@@ -4398,7 +4464,7 @@ function PowaAuras.SliderSetValues(slider, editbox, x, y, decimals, endmark)
 	local slidervalue = slider:GetValue()
 	local postfix = tostring(string.sub(editbox:GetText(), - 1))
 	local value
-	if postfix == "%" then
+	if (postfix == "%") then
 		value = tonumber(string.sub(editbox:GetText(), 1, - 2))
 	else
 		value = tonumber(editbox:GetText())
@@ -4426,7 +4492,7 @@ function PowaAuras.SliderSetValues(slider, editbox, x, y, decimals, endmark)
 		elseif (endmark == "%") then
 			editbox:SetText(format("%."..decimals.."f", value)..endmark)
 		else
-			if postfix == "%" then
+			if (postfix == "%") then
 				editbox:SetText(format("%."..decimals.."f", slider:GetValue()).."%")
 			else
 				editbox:SetText(format("%."..decimals.."f", slider:GetValue()))

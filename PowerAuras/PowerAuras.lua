@@ -31,6 +31,7 @@ PowaMisc =
 	OverrideMaxTextures = false,
 	Locked = false,
 	Group = false,
+	GroupSize = 3,
 	SoundChannel = "Master"
 }
 

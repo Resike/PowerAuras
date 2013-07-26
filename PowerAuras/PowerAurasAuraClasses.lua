@@ -3018,6 +3018,7 @@ function cPowaStance:AddEffectAndEvents()
 	PowaAuras.Events.ACTIONBAR_UPDATE_COOLDOWN = true
 	PowaAuras.Events.ACTIONBAR_UPDATE_USABLE = true
 	PowaAuras.Events.UPDATE_SHAPESHIFT_FORM = true
+	PowaAuras.Events.UPDATE_SHAPESHIFT_FORMS = true
 end
 
 function cPowaStance:CheckIfShouldShow(giveReason)
@@ -3716,7 +3717,7 @@ function cPowaItems:CheckIfShouldShow(giveReason)
 					end
 					return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonItemNotOnPlayer, itemName)
 				end
-				local _, _, itemId = string.find(itemLink,"item:(%d+):(%d+):(%d+):(%d+)")
+				local _, _, itemId = string.find(itemLink, "item:(%d+):(%d+):(%d+):(%d+)")
 				if (self.Debug) then
 					PowaAuras:Message("itemLink= ", itemLink," itemName= ", itemName," itemId= ", itemId)
 				end
