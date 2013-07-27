@@ -511,39 +511,39 @@ end
 
 -- Runtime
 function PowaAuras:OnUpdate(elapsed)
-	if (not (self.VariablesLoaded and self.SetupDone)) then
+	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
 	self.ChecksTimer = self.ChecksTimer + elapsed
 	self.TimerUpdateThrottleTimer = self.TimerUpdateThrottleTimer + elapsed
 	self.ThrottleTimer = self.ThrottleTimer + elapsed
 	self.InGCD = nil
-	if (self.GCDSpellName) then
+	if self.GCDSpellName then
 		local gcdStart = GetSpellCooldown(self.GCDSpellName)
-		if (gcdStart) then
-			self.InGCD = (gcdStart > 0)
+		if gcdStart then
+			self.InGCD = gcdStart > 0
 		end
 	end
 	local checkAura = false
-	if (PowaMisc.OnUpdateLimit == 0 or self.ThrottleTimer >= PowaMisc.OnUpdateLimit) then
+	if PowaMisc.OnUpdateLimit == 0 or self.ThrottleTimer >= PowaMisc.OnUpdateLimit then
 		checkAura = true
 		self.ThrottleTimer = 0
 	end
-	if (not self.ModTest and checkAura) then
-		if ((self.ChecksTimer > (self.NextCheck + PowaMisc.OnUpdateLimit))) then
+	if not self.ModTest and checkAura then
+		if self.ChecksTimer > (self.NextCheck + PowaMisc.OnUpdateLimit) then
 			self.ChecksTimer = 0
-			local isMountedNow = (IsMounted() == 1 and true or self:IsDruidTravelForm())
-			if (isMountedNow ~= self.WeAreMounted) then
+			local isMountedNow = IsMounted() == 1 and true or self:IsDruidTravelForm()
+			if isMountedNow ~= self.WeAreMounted then
 				self.DoCheck.All = true
 				self.WeAreMounted = isMountedNow
 			end
-			local isInVehicledNow = (UnitInVehicle("player") ~= nil)
-			if (isInVehicledNow ~= self.WeAreInVehicle) then
+			local isInVehicledNow = UnitInVehicle("player") ~= nil
+			if isInVehicledNow ~= self.WeAreInVehicle then
 				self.DoCheck.All = true
 				self.WeAreInVehicle = isInVehicledNow
 			end
 		end
-		if (self.PendingRescan and GetTime() >= self.PendingRescan) then
+		if self.PendingRescan and GetTime() >= self.PendingRescan then
 			self:InitialiseAllAuras()
 			self:MemorizeActions()
 			self.DoCheck.All = true
@@ -551,9 +551,9 @@ function PowaAuras:OnUpdate(elapsed)
 		end
 		for id, cd in pairs(self.Pending) do
 			if cd and cd > 0 then
-				if (GetTime() >= cd) then
+				if GetTime() >= cd then
 					self.Pending[id] = nil
-					if (self.Auras[id]) then
+					if self.Auras[id] then
 						self.Auras[id].CooldownOver = true
 						self:TestThisEffect(id)
 						self.Auras[id].CooldownOver = nil
@@ -563,7 +563,7 @@ function PowaAuras:OnUpdate(elapsed)
 				self.Pending[id] = nil
 			end
 		end
-		if (self.DoCheck.CheckIt or self.DoCheck.All) then
+		if self.DoCheck.CheckIt or self.DoCheck.All then
 			self:NewCheckBuffs()
 			self.DoCheck.CheckIt = false
 		end
@@ -574,36 +574,36 @@ function PowaAuras:OnUpdate(elapsed)
 	end
 	local skipTimerUpdate = false
 	local timerElapsed = 0
-	if (PowaMisc.AnimationLimit > 0 and self.TimerUpdateThrottleTimer < PowaMisc.AnimationLimit) then
+	if PowaMisc.AnimationLimit > 0 and self.TimerUpdateThrottleTimer < PowaMisc.AnimationLimit then
 		skipTimerUpdate = true
 	else
 		timerElapsed = self.TimerUpdateThrottleTimer
 		self.TimerUpdateThrottleTimer = 0
 	end
-	if (PowaMisc.AllowInspections) then
-		if (self.NextInspectUnit ~= nil) then
-			if (GetTime() > self.NextInspectTimeOut) then
+	if PowaMisc.AllowInspections then
+		if self.NextInspectUnit ~= nil then
+			if GetTime() > self.NextInspectTimeOut then
 				self:SetRoleUndefined(self.NextInspectUnit)
 				self.NextInspectUnit = nil
 				self.InspectAgain = GetTime() + self.InspectDelay
 			end
-		elseif (not self.InspectsDone and self.InspectAgain ~= nil and not UnitOnTaxi("player") and GetTime() > self.InspectAgain) then
+		elseif not self.InspectsDone and self.InspectAgain ~= nil and not UnitOnTaxi("player") and GetTime() > self.InspectAgain then
 			self:TryInspectNext()
 			self.InspectAgain = GetTime() + self.InspectDelay
 		end
 	end
 	for i = 1, #self.AuraSequence do
 		local aura = self.AuraSequence[i]
-		if (aura.Showing == true) then
-			if (self:UpdateAura(aura, elapsed)) then
-				if (aura.Timer.enabled == true) then
+		if aura.Showing or aura.Timer.Showing then
+			if self:UpdateAura(aura, elapsed) then
+				if aura.Timer.enabled then
 					self:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 				end
 			end
 		end
 	end
 	for _, aura in pairs(self.SecondaryAuras) do
-		if (aura.Showing == true) then
+		if aura.Showing then
 			self:UpdateAura(aura, elapsed)
 		end
 	end
@@ -611,15 +611,13 @@ function PowaAuras:OnUpdate(elapsed)
 end
 
 function PowaAuras:IsDruidTravelForm()
-	if (self.playerclass ~= "DRUID") then
+	if self.playerclass ~= "DRUID" then
 		return false
 	end
 	local id = GetShapeshiftFormID()
-	-- Travel form, Swift Flight form, Flight form
-	if (id == 3 or id == 27 or id == 29) then
+	if id == 3 or id == 27 or id == 29 then
 		return true
 	end
-	-- Otherwise we're not in it
 	return false
 end
 
@@ -1489,42 +1487,42 @@ function PowaAuras:DisplayAura(auraId)
 end
 
 function PowaAuras:UpdateAura(aura, elapsed)
-	if (aura == nil) then
+	if aura == nil then
 		return false
 	end
-	if (aura.off) then
-		if (aura.Showing) then
+	if aura.off then
+		if aura.Showing then
 			aura:Hide()
 		end
-		if (aura.Timer and aura.Timer.Showing) then
+		if aura.Timer and aura.Timer.Showing then
 			aura.Timer:Hide()
 		end
 		return false
 	end
-	if (aura.Showing) then
+	if aura.Showing then
 		local frame = aura:GetFrame()
-		if (frame == nil) then
+		if frame == nil then
 			return false
 		end
-		if (not aura.HideRequest and not aura.isSecondary and not self.ModTest and aura.TimeToHide) then
-			if (GetTime() >= aura.TimeToHide) then
+		if not aura.HideRequest and not aura.isSecondary and not self.ModTest and aura.TimeToHide then
+			if GetTime() >= aura.TimeToHide then
 				self:SetAuraHideRequest(aura)
 				aura.TimeToHide = nil
 			end
 		end
-		if (aura.HideRequest) then
-			if (self.ModTest == false and not aura.EndSoundPlayed) then
-				if (aura.customsoundend ~= "") then
+		if aura.HideRequest then
+			if self.ModTest == false and not aura.EndSoundPlayed then
+				if aura.customsoundend ~= "" then
 					local pathToSound
-					if (string.find(aura.customsoundend, "\\")) then
+					if string.find(aura.customsoundend, "\\") then
 						pathToSound = aura.customsoundend
 					else
 						pathToSound = PowaGlobalMisc.PathToSounds..aura.customsoundend
 					end
 					PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
-				elseif (aura.soundend > 0) then
-					if (PowaAuras.Sound[aura.soundend] ~= nil and string.len(PowaAuras.Sound[aura.soundend]) > 0) then
-						if (string.find(PowaAuras.Sound[aura.soundend], "%.")) then
+				elseif aura.soundend > 0 then
+					if PowaAuras.Sound[aura.soundend] ~= nil and string.len(PowaAuras.Sound[aura.soundend]) > 0 then
+						if string.find(PowaAuras.Sound[aura.soundend], "%.") then
 							PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAuras.Sound[aura.soundend], PowaMisc.SoundChannel)
 						else
 							PlaySound(PowaAuras.Sound[aura.soundend], PowaMisc.SoundChannel)
@@ -1533,34 +1531,34 @@ function PowaAuras:UpdateAura(aura, elapsed)
 				end
 				aura.EndSoundPlayed = true
 			end
-			if (aura.Stacks) then
+			if aura.Stacks then
 				aura.Stacks:Hide()
 			end
-			if (aura.UseOldAnimations) then
+			if aura.UseOldAnimations then
 				aura.animation = self:AnimationEndFactory(aura.finish, aura, frame)
-				if (not aura.animation) then
+				if not aura.animation then
 					aura:Hide()
 				end
 			else
-				if (not aura.EndAnimation) then
+				if not aura.EndAnimation then
 					aura:Hide()
 				else
-					if (aura.BeginAnimation and aura.BeginAnimation:IsPlaying()) then
+					if aura.BeginAnimation and aura.BeginAnimation:IsPlaying() then
 						aura.BeginAnimation:Stop()
 					end
-					if (aura.MainAnimation and aura.MainAnimation:IsPlaying()) then
+					if aura.MainAnimation and aura.MainAnimation:IsPlaying() then
 						aura.MainAnimation:Stop()
 					end
 					aura.EndAnimation:Play()
 				end
 			end
 		end
-		if (aura.UseOldAnimations) then
+		if aura.UseOldAnimations then
 			self:UpdateAuraAnimation(aura, elapsed, frame)
 		end
-		if (aura.Active and aura.Stacks and aura.Stacks.enabled) then
-			if (self.ModTest) then
-				if (aura.Stacks.SetStackCount) then
+		if aura.Active and aura.Stacks and aura.Stacks.enabled then
+			if self.ModTest then
+				if aura.Stacks.SetStackCount then
 					aura.Stacks:SetStackCount(math.random(1, 12))
 				end
 			end
@@ -1572,18 +1570,18 @@ function PowaAuras:UpdateAura(aura, elapsed)
 end
 
 function PowaAuras:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
-	if (not aura.Timer or skipTimerUpdate) then
+	if not aura.Timer or skipTimerUpdate then
 		return
 	end
 	local timerHide
-	if (aura.Timer.ShowOnAuraHide and not self.ModTest and (not aura.ForceTimeInvert and not aura.InvertTimeHides) ) then
+	if aura.Timer.ShowOnAuraHide and not self.ModTest and not aura.ForceTimeInvert and not aura.InvertTimeHides then
 		timerHide = aura.Active
 	else
 		timerHide = not aura.Active
 	end
-	if (timerHide or (aura.InactiveDueToState and not aura.Active) or aura.InactiveDueToMulti) then
+	if timerHide or aura.InactiveDueToMulti or (aura.InactiveDueToState and not aura.Active) then
 		aura.Timer:Hide()
-		if (aura.ForceTimeInvert) then
+		if aura.ForceTimeInvert then
 			aura.Timer:Update(timerElapsed)
 		end
 	else
@@ -1592,34 +1590,34 @@ function PowaAuras:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 end
 
 function PowaAuras:UpdateAuraAnimation(aura, elapsed, frame)
-	if (not aura.Showing) then
+	if not aura.Showing then
 		return
 	end
-	if (not aura.animation or elapsed == 0) then
+	if not aura.animation or elapsed == 0 then
 		return
 	end
-	if (aura.isSecondary) then
+	if aura.isSecondary then
 		primaryAnimation = PowaAuras.Auras[aura.id].animation
-		if (primaryAnimation.IsBegin or primaryAnimation.IsEnd) then
+		if primaryAnimation.IsBegin or primaryAnimation.IsEnd then
 			return
 		end
 	end
 	local finished = aura.animation:Update(math.min(elapsed, 0.03))
-	if (not finished) then
+	if not finished then
 		return
 	end
-	if (aura.animation.IsBegin) then
+	if aura.animation.IsBegin then
 		aura.animation = self:AnimationMainFactory(aura.anim1, aura, frame)
 		local secondaryAura = self.SecondaryAuras[aura.id]
-		if (secondaryAura) then
+		if secondaryAura then
 			local secondaryAuraFrame = self.SecondaryFrames[aura.id]
-			if (secondaryAuraFrame) then
+			if secondaryAuraFrame then
 				secondaryAura.animation = self:AnimationMainFactory(aura.anim2, secondaryAura, secondaryAuraFrame)
 			end
 		end
 		return
 	end
-	if (aura.animation.IsEnd) then
+	if aura.animation.IsEnd then
 		aura:Hide()
 	end
 end

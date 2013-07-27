@@ -4379,7 +4379,7 @@ function PowaAuras:EquipmentSlot_OnClick(slotButton)
 end
 
 function PowaAuras:IconOnMouseWheel(delta)
-	if PowaMisc.Group == true then
+	if (PowaMisc.Group == true) then
 		if (delta > 0) then
 			if (PowaMisc.GroupSize < 8) then
 				PowaMisc.GroupSize = PowaMisc.GroupSize + 1

@@ -659,10 +659,10 @@
 							</Anchor>
 						</Anchors>
 					</Button>
-					<!-- Texture selected -->
+					<!-- Texture Selected -->
 					<Frame name = "PowaSelected" frameStrata = "HIGH">
 						<Size>
-						<AbsDimension x = "38" y = "38"/>
+							<AbsDimension x = "38" y = "38"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "CENTER">
@@ -4631,7 +4631,7 @@
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
+										PowaAuras.SliderOnMouseWheel(self, delta)
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseWheel>
 								</Scripts>
@@ -4665,7 +4665,7 @@
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
+										PowaAuras.SliderOnMouseWheel(self, delta)
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseWheel>
 								</Scripts>

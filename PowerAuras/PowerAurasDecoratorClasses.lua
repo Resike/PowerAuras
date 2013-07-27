@@ -237,7 +237,7 @@ function cPowaTimer:Update(elapsed)
 	end
 	local newvalue = 0
 	if (PowaAuras.ModTest) then
-		newvalue = math.random(0, 99) + (math.random(0, 99) / 100)
+		newvalue = math.random(0, 99) + (math.random(1, 99) / 100)
 	elseif (self.ShowActivation and self.Start ~= nil) then
 		newvalue = math.max(GetTime() - self.Start, 0)
 	elseif (aura.timerduration > 0) then
