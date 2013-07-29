@@ -2396,8 +2396,11 @@ function PowaAuras:GroupButtonChecked()
 		local max = min + (PowaMisc.GroupSize - 1)
 		for i = min, max do
 			if (self.Auras[i] ~= nil) then
-				local icon = getglobal("PowaIcone"..i)
-				icon:SetAlpha(1)
+				local slot = i - ((PowaAuras.CurrentAuraPage - 1) * 24)
+				local icon = getglobal("PowaIcone"..slot)
+				if icon then
+					icon:SetAlpha(1)
+				end
 				self:DisplayAura(i)
 			end
 		end
@@ -2423,8 +2426,11 @@ function PowaAuras:GroupButtonChecked()
 				if (aura.Stacks) then
 					aura.Stacks:Hide()
 				end
-				local icon = getglobal("PowaIcone"..i)
-				icon:SetAlpha(0.33)
+				local slot = i - ((PowaAuras.CurrentAuraPage - 1) * 24)
+				local icon = getglobal("PowaIcone"..slot)
+				if icon then
+					icon:SetAlpha(0.33)
+				end
 			end
 		end
 		PowaHeader:SetText(self.Text.nomEffectEditor.." ("..self.CurrentAuraId..")")
@@ -4393,12 +4399,15 @@ function PowaAuras:IconOnMouseWheel(delta)
 		local max = min + (PowaMisc.GroupSize - 1)
 		for i = min, max do
 			if (self.Auras[i] ~= nil) then
-				local icon = getglobal("PowaIcone"..i)
-				icon:SetAlpha(1)
+				local slot = i - ((PowaAuras.CurrentAuraPage - 1) * 24)
+				local icon = getglobal("PowaIcone"..slot)
+				if icon then
+					icon:SetAlpha(1)
+				end
 				self:DisplayAura(i)
 			end
 		end
-		for i = max + 1, 24 do
+		for i = max + 1, PowaAuras.CurrentAuraPage * 24 do
 			if (self.Auras[i] ~= nil) then
 				local aura = self.Auras[i]
 				aura.Active = false
@@ -4410,8 +4419,11 @@ function PowaAuras:IconOnMouseWheel(delta)
 				if (aura.Stacks) then
 					aura.Stacks:Hide()
 				end
-				local icon = getglobal("PowaIcone"..i)
-				icon:SetAlpha(0.33)
+				local slot = i - ((PowaAuras.CurrentAuraPage - 1) * 24)
+				local icon = getglobal("PowaIcone"..slot)
+				if icon then
+					icon:SetAlpha(0.33)
+				end
 			end
 		end
 		if (PowaMisc.GroupSize == 1) then

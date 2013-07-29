@@ -911,7 +911,7 @@ end
 function PowaAuras:UpdatePreviewColor(aura)
 	if (AuraTexture ~= nil) then
 		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-			if (aura.off ~= true) then
+			if (aura ~= nil and aura.off ~= true) then
 				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
 					AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 				else
