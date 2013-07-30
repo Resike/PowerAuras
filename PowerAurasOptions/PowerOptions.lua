@@ -1937,8 +1937,7 @@ function PowaAuras:BarAuraAlphaSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
-			local aura = self.Auras[self.CurrentAuraId]
-			PowaAuras:UpdatePreviewColor(aura)
+			PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 		end
 	end
 end
@@ -1981,6 +1980,7 @@ function PowaAuras:BarAuraSizeSliderChanged()
 						self:RedisplayAura(i)
 					end
 				end
+				PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 			end
 		end
 	else
@@ -2013,6 +2013,7 @@ function PowaAuras:BarAuraSizeSliderChanged()
 						self:RedisplayAura(i)
 					end
 				end
+				PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 			end
 		end
 	end
@@ -2048,6 +2049,7 @@ function PowaAuras:BarAuraCoordXSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
+			PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 		end
 	end
 end
@@ -2082,6 +2084,7 @@ function PowaAuras:BarAuraCoordYSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
+			PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 		end
 	end
 end
@@ -2155,8 +2158,7 @@ function PowaAuras:BarAuraSymSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
-			local aura = self.Auras[self.CurrentAuraId]
-			PowaAuras:UpdatePreviewColor(aura)
+			PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 		end
 	end
 end
@@ -2215,8 +2217,7 @@ function PowaAuras:BarAuraRotateSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
-			local aura = self.Auras[self.CurrentAuraId]
-			PowaAuras:UpdatePreviewColor(aura)
+			PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 		end
 	end
 end
@@ -2255,8 +2256,7 @@ function PowaAuras:BarAuraDeformSliderChanged()
 					self:RedisplayAura(i)
 				end
 			end
-			local aura = self.Auras[self.CurrentAuraId]
-			PowaAuras:UpdatePreviewColor(aura)
+			PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 		end
 	end
 end
@@ -2409,8 +2409,7 @@ function PowaAuras:GroupButtonChecked()
 		else
 			PowaHeader:SetText(self.Text.nomEffectEditor.." ("..self.CurrentAuraId.." - "..self.CurrentAuraId + (PowaMisc.GroupSize - 1)..")")
 		end
-		local aura = self.Auras[self.CurrentAuraId]
-		PowaAuras:UpdatePreviewColor(aura)
+		PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 	else
 		local min = self.CurrentAuraId
 		local max = min + (PowaMisc.GroupSize - 1)
@@ -4431,8 +4430,7 @@ function PowaAuras:IconOnMouseWheel(delta)
 		else
 			PowaHeader:SetText(self.Text.nomEffectEditor.." ("..self.CurrentAuraId.." - "..self.CurrentAuraId + (PowaMisc.GroupSize - 1)..")")
 		end
-		local aura = self.Auras[self.CurrentAuraId]
-		PowaAuras:UpdatePreviewColor(aura)
+		PowaAuras:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 	end
 end
 
