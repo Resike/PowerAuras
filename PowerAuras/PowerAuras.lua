@@ -385,9 +385,7 @@ function PowaAuras:CreateStacksFrameIfMissing(auraId, updatePing)
 		frame.texture:SetBlendMode("ADD")
 		frame.texture:SetAllPoints(frame)
 		frame.texture:SetTexture(aura.Stacks:GetTexture())
-		frame.textures = {
-			[1] = frame.texture
-		}
+		frame.textures = {[1] = frame.texture}
 		if (updatePing) then
 			frame.PingAnimationGroup = frame:CreateAnimationGroup("Ping")
 			self:AddJumpScaleAndReturn(frame.PingAnimationGroup, 1.1, 1.1, 0.3, 1)

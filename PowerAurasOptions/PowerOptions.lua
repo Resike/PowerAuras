@@ -147,6 +147,12 @@ function PowaAuras:IconClick(owner, button)
 		else
 			self:Message(self:InsertText(self.Text.nomReasonWontShow, reason))
 		end
+	elseif IsAltKeyDown() then
+		if (button == "RightButton") then
+			self:IconOnMouseWheel(1)
+		else
+			self:IconOnMouseWheel(0)
+		end
 	elseif (self.CurrentAuraId == aura.id) then
 		if (button == "RightButton") then
 			if aura.off == false then
