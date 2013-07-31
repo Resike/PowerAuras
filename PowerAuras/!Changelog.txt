@@ -7,6 +7,7 @@
 - Fixed an excessive CPU and memory usage when picking colors for models.
 - Split GUI options into another addon, to optionally save some CPU and memory usage.
 - Added groups. (Very alpha yet.)
+- Added .blp support for textures in the "Aura" folder.
 - Changed "Stance/Seal/Form" dropdown to handle multiple selections. (Dropdown need update still.)
 - "Mounted" option from now is ignored by default.
 - "In Vehice" option from now is ignored by default.

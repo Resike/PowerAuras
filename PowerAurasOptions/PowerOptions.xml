@@ -1617,7 +1617,7 @@
 				<!-- Aura Preview Icon -->
 				<Layers>
 					<Layer>
-						<Texture name = "AuraTexture" file = "Interface\AddOns\PowerAuras\Auras\Aura1.tga" alphaMode = "ADD">
+						<Texture name = "AuraTexture" file = "Interface\AddOns\PowerAuras\Auras\Aura1" alphaMode = "ADD">
 							<Size>
 								<AbsDimension x = "136" y = "136"/>
 							</Size>

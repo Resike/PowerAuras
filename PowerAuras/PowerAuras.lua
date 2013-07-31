@@ -999,7 +999,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		end
 	else
 		texture:Show()
-		texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
+		texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
 	end
 	local r1, r2, r3, r4, r5, r6
 	if (aura.randomcolor) then
@@ -1321,7 +1321,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 		end
 	else
 		secondaryTexture:Show()
-		secondaryTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
+		secondaryTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
 	end
 	if (aura.randomcolor) then
 		if (aura.model ~= true and aura.modelcustom ~= true) then
