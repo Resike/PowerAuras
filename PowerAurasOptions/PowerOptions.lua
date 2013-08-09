@@ -2535,7 +2535,7 @@ function PowaAuras:OwntexChecked()
 	else
 		aura.owntex = false
 	end
-	PowaAuras:InitPage(aura)
+	self:InitPage(aura)
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -2578,8 +2578,8 @@ function PowaAuras:WowTexturesChecked()
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
 	end
-	PowaAuras:BarAuraSizeSliderChanged()
-	PowaAuras:BarAuraTextureSliderChanged()
+	self:BarAuraSizeSliderChanged()
+	self:BarAuraTextureSliderChanged()
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -2631,8 +2631,8 @@ function PowaAuras:ModelsChecked()
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
 	end
-	PowaAuras:BarAuraSizeSliderChanged()
-	PowaAuras:BarAuraTextureSliderChanged()
+	self:BarAuraSizeSliderChanged()
+	self:BarAuraTextureSliderChanged()
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -2677,8 +2677,8 @@ function PowaAuras:CustomModelsChecked()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
 	end
-	PowaAuras:BarAuraSizeSliderChanged()
-	PowaAuras:BarAuraTextureSliderChanged()
+	self:BarAuraSizeSliderChanged()
+	self:BarAuraTextureSliderChanged()
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -2714,8 +2714,8 @@ function PowaAuras:CustomTexturesChecked()
 		PowaBarAuraTextureSlider:Show()
 		PowaBarCustomTexName:Hide()
 	end
-	PowaAuras:BarAuraSizeSliderChanged()
-	PowaAuras:BarAuraTextureSliderChanged()
+	self:BarAuraSizeSliderChanged()
+	self:BarAuraTextureSliderChanged()
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -2755,7 +2755,7 @@ function PowaAuras:TextAuraChecked()
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 	end
-	PowaAuras:BarAuraSizeSliderChanged()
+	self:BarAuraSizeSliderChanged()
 	self:BarAuraTextureSliderChanged()
 	self:RedisplayAura(self.CurrentAuraId)
 end
@@ -3216,6 +3216,9 @@ function PowaAuras:ChangeAuraType(id, newType)
 		PowaGlobalSet[id] = aura
 	end
 	self:CalculateAuraSequence()
+	if (aura.textaura == true) then
+		self:RedisplayAura(aura.id)
+	end
 	local _, model, _ = aura:CreateFrames()
 	model:SetUnit("none")
 	PowaAuras.Models[aura.id] = nil

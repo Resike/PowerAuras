@@ -984,7 +984,8 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		texture:SetTexture(self:CustomTexPath(aura.customname))
 	elseif (aura.textaura == true) then
 		texture:Show()
-		texture:SetText(aura.aurastext)
+		--texture:SetText(aura.aurastext)
+		aura:UpdateText(texture)
 	elseif (aura.model == true) then
 		texture:Hide()
 		model:SetModel(PowaAurasModels[aura.texture])
@@ -1306,7 +1307,8 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 		secondaryTexture:SetTexture(self:CustomTexPath(aura.customname))
 	elseif (aura.textaura == true) then
 		secondaryTexture:Show()
-		secondaryTexture:SetText(aura.aurastext)
+		--secondaryTexture:SetText(aura.aurastext)
+		aura:UpdateText(secondaryTexture)
 	elseif (aura.model == true) then
 		secondaryTexture:Hide()
 		secondaryModel:SetModel(PowaAurasModels[aura.texture])
@@ -1438,6 +1440,13 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 			secondaryTexture:SetTexCoord(LRx, LRy, URx, URy, LLx, LLy, ULx, ULy) -- Inverse XY
 		else
 			secondaryTexture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy) -- Normal
+		end
+	end
+	if (aura.textaura == true) then
+		local fontsize = math.min(33, math.max(10, math.floor(frame.baseH / 12.8)))
+		local checkfont = secondaryTexture:SetFont(self.Fonts[aura.aurastextfont], fontsize, "OUTLINE, MONOCHROME")
+		if not checkfont then
+			secondaryTexture:SetFont(STANDARD_TEXT_FONT, fontsize, "OUTLINE, MONOCHROME")
 		end
 	end
 	secondaryFrame.baseL = frame.baseL

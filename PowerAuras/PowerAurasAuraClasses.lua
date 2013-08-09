@@ -342,7 +342,7 @@ function cPowaAura:UpdateText(texture)
 		PowaAuras:Message("CurrentText=", self.CurrentText)
 		PowaAuras:Message("newText=", newText)
 	end
-	if (newText ~= self.CurrentText or texture == nil) then
+	--if (newText ~= self.CurrentText or texture == nil) then
 		if (texture == nil) then
 			texture = self:GetTexture()
 		end
@@ -353,7 +353,7 @@ function cPowaAura:UpdateText(texture)
 			texture:SetText(newText)
 			self.CurrentText = newText
 		end
-	end
+	--end
 end
 
 function cPowaAura:GetAuraText()
@@ -397,7 +397,7 @@ function cPowaAura:SubstituteInText(text, old, getNewText, nilText)
 end
 
 function cPowaAura:IsPlayerAura()
-	return (not self.target) and (not self.targetfriend) and (not self.party) and (not self.raid) and (not (self.groupOrSelf and (GetNumGroupMembers()>0))) and (not self.focus) and (not self.optunitn)
+	return (not self.target) and (not self.targetfriend) and (not self.party) and (not self.raid) and (not (self.groupOrSelf and (GetNumGroupMembers() > 0))) and (not self.focus) and (not self.optunitn)
 end
 
 function cPowaAura:ShowTimerDurationSlider()
