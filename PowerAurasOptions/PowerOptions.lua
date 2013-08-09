@@ -440,6 +440,9 @@ function PowaAuras:DeleteAura(aura)
 	if (PowaBarConfigFrame:IsVisible()) then
 		PowaBarConfigFrame:Hide()
 	end
+	if (FontSelectorFrame:IsVisible()) then
+		FontSelectorFrame:Hide()
+	end
 	PowaAuras.Models[aura.id] = nil
 	PowaAuras.SecondaryModels[aura.id] = nil
 	self.Auras[aura.id] = nil
@@ -4440,7 +4443,7 @@ function PowaAuras:IconOnMouseWheel(delta)
 	end
 end
 
-function PowaAuras.SliderOnMouseWheel(slider, delta)
+function PowaAuras.SliderSetValues(slider, delta)
 	if (delta > 0) then
 		slider:SetValue(slider:GetValue() + slider:GetValueStep())
 	else
@@ -4475,7 +4478,7 @@ function PowaAuras.SliderOnMouseUp(self, x, y, decimals, postfix)
 	PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 end
 
-function PowaAuras.SliderSetValues(slider, editbox, x, y, decimals, endmark)
+function PowaAuras.SliderEditBoxSetValues(slider, editbox, x, y, decimals, endmark)
 	local frame = slider:GetName()
 	local slidervalue = slider:GetValue()
 	local postfix = tostring(string.sub(editbox:GetText(), - 1))
@@ -4556,15 +4559,15 @@ function PowaAuras.SliderEditBoxChanged(self)
 	local slider = _G[string.sub(frame, 1, - 1 * (string.len("EditBox") + 1))]
 	local postfix = tostring(string.sub(self:GetText(), - 1))
 	if (slider == PowaBarAuraSizeSlider) then
-		PowaAuras.SliderSetValues(slider, self, 0, 100, 0, "%")
+		PowaAuras.SliderEditBoxSetValues(slider, self, 0, 100, 0, "%")
 	elseif (slider == PowaBarAuraCoordXSlider or slider == PowaTimerCoordXSlider or slider == PowaStacksCoordXSlider) then
-		PowaAuras.SliderSetValues(slider, self, 700, 700, 0)
+		PowaAuras.SliderEditBoxSetValues(slider, self, 700, 700, 0)
 	elseif (slider == PowaBarAuraCoordYSlider or slider == PowaTimerCoordYSlider or slider == PowaStacksCoordYSlider) then
-		PowaAuras.SliderSetValues(slider, self, 400, 400, 0)
+		PowaAuras.SliderEditBoxSetValues(slider, self, 400, 400, 0)
 	elseif (slider == PowaModelPositionZSlider) then
-		PowaAuras.SliderSetValues(slider, self, 100, 100, 0)
+		PowaAuras.SliderEditBoxSetValues(slider, self, 100, 100, 0)
 	elseif (slider == PowaModelPositionXSlider or slider == PowaModelPositionYSlider) then
-		PowaAuras.SliderSetValues(slider, self, 50, 50, 0)
+		PowaAuras.SliderEditBoxSetValues(slider, self, 50, 50, 0)
 	end
 	if ((postfix == "%") and (slider == PowaBarAuraAlphaSlider or slider == PowaTimerSizeSlider or slider == PowaTimerAlphaSlider or slider == PowaStacksSizeSlider or slider == PowaStacksAlphaSlider)) then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2))

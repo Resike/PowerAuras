@@ -182,6 +182,7 @@ Slots =
 
 SlotsToCheck = "Select Slots to Check",
 
+Okay = "Okay",
 Cancel = "Cancel",
 
 -- Main
@@ -273,7 +274,8 @@ aideColor = "Click here to change the base color of the texture.",
 aideTimerColor = "Click here to change the color of the timer.",
 aideStacksColor = "Click here to change the color of the stacks.",
 aideSecondaryColor = "Click here to change the secondary color of the texture.",
-font = "Font",
+nomFont = "Font",
+nomFontSelector = "Font Selector",
 aideFont = "Click here to pick Font. Press Okay to apply the selection.",
 aideMultiID = "Enter here other Aura IDs to combine checks. Multiple IDs must be separated with '/'. Aura ID can be found as [#] on first line of Aura tooltip.",
 aideTooltipCheck = "Also check the tooltip contains this text.",

@@ -7,11 +7,14 @@
 - Fixed an excessive CPU and memory usage when picking colors for models.
 - Split GUI options into another addon, to optionally save some CPU and memory usage.
 - Added groups. (Very alpha yet.)
+- Added increase and decrease value buttons for every slider.
 - Added .blp support for textures in the "Aura" folder.
 - Changed "Stance/Seal/Form" dropdown to handle multiple selections. (Dropdown need update still.)
 - "Mounted" option from now is ignored by default.
 - "In Vehice" option from now is ignored by default.
 - "Any Member" option from now is ignored by default.
+- Font Selector frame fixes.
+- Fixed a frame hide bug when you deleted an aura with "Font Selector" opened.
 - Changing color of a model won't redisplay the model itself.
 - Changing the value of the "Gradient Style" dropdown, won't redisplay models.
 - Changing the value of the "Random Color" checkbutton, won't redisplay models.
@@ -24,7 +27,8 @@
 - Fixed a coloring bug with model's and custom model's icon.
 - Fixed a preview texture coloring bug with the "Test All" button.
 - Fixed a bug with aura icons. (Gradient colored "Test All" still needs a fix.)
-- Other smaller GUI changes.
+- Updated localizations.
+- Thousands of other GUI changes.
 - Other minor fixes.
 
 * 4.23.29

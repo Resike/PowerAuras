@@ -305,7 +305,7 @@
 	<!-- Options Frame -->
 	<Frame name = "PowaOptionsFrame" toplevel = "true" movable = "true" parent = "UIParent" frameStrata = "MEDIUM" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
-			<AbsDimension x = "328" y = "470"/>
+			<AbsDimension x = "323" y = "470"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "CENTER" relativeTo = "UIParent">
@@ -420,7 +420,7 @@
 				<Anchors>
 					<Anchor point = "TOPRIGHT">
 						<Offset>
-							<AbsDimension x = "-20" y = "-30"/>
+							<AbsDimension x = "-18" y = "-30"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -1048,7 +1048,7 @@
 						</Scripts>
 					</Button>
 					<!-- New Button -->
-					<Button name = "PowaOptionsSelectorNew" inherits = "OptionsButtonTemplate" text = "Nouveau">
+					<Button name = "PowaOptionsSelectorNew" inherits = "OptionsButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1339,20 +1339,20 @@
 						<Anchor point = "BOTTOM" relativePoint = "TOP"/>
 					</Anchors>
 				</FontString>
-				<FontString name = "$parentLow" inherits = "GameFontHighlightSmall" text = "LOW">
+				<FontString name = "$parentLow" inherits = "GameFontHighlightSmall">
 					<Anchors>
 						<Anchor point = "TOPLEFT" relativePoint = "BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x = "0" y = "3"/>
+								<AbsDimension x = "0" y = "-2"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name = "$parentHigh" inherits = "GameFontHighlightSmall" text = "HIGH">
+				<FontString name = "$parentHigh" inherits = "GameFontHighlightSmall">
 					<Anchors>
 						<Anchor point = "TOPRIGHT" relativePoint = "BOTTOMRIGHT">
 							<Offset>
-								<AbsDimension x = "0" y = "3"/>
+								<AbsDimension x = "0" y = "-2"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -1403,10 +1403,56 @@
 					</OnEscapePressed>
 					<OnMouseWheel>
 						local slider = _G[string.sub(self:GetName(), 1, - 1 * (string.len("EditBox") + 1))]
-						PowaAuras.SliderOnMouseWheel(slider, delta)
+						PowaAuras.SliderSetValues(slider, delta)
 					</OnMouseWheel>
 				</Scripts>
 			</EditBox>
+			<Button name = "$parentPlus">
+				<Size>
+					<AbsDimension x = "18" y = "18"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "LEFT" relativeTo = "$parentEditBox" relativePoint = "RIGHT">
+						<Offset>
+							<AbsDimension x = "0" y = "0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file = "Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
+				<PushedTexture file = "Interface\Buttons\UI-SpellbookIcon-NextPage-Down"/>
+				<HighlightTexture file = "Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode = "ADD"/>
+				<Scripts>
+					<OnLoad>
+						self:RegisterForClicks("AnyUp")
+					</OnLoad>
+					<OnClick>
+						PowaAuras.SliderSetValues(self:GetParent(), 1)
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name = "$parentMinus">
+				<Size>
+					<AbsDimension x = "18" y = "18"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "RIGHT" relativeTo = "$parentEditBox" relativePoint = "LEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file = "Interface\Buttons\UI-SpellbookIcon-PrevPage-Up"/>
+				<PushedTexture file = "Interface\Buttons\UI-SpellbookIcon-PrevPage-Down"/>
+				<HighlightTexture file = "Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode = "ADD"/>
+				<Scripts>
+					<OnLoad>
+						self:RegisterForClicks("AnyUp")
+					</OnLoad>
+					<OnClick>
+						PowaAuras.SliderSetValues(self:GetParent(), 0)
+					</OnClick>
+				</Scripts>
+			</Button>
 		</Frames>
 		<ThumbTexture name = "$parentThumb" file = "Interface\Buttons\UI-SliderBar-Button-Horizontal">
 			<Size>
@@ -1429,7 +1475,7 @@
 				GameTooltip:Hide()
 			</OnLeave>
 			<OnMouseWheel>
-				PowaAuras.SliderOnMouseWheel(self, delta)
+				PowaAuras.SliderSetValues(self, delta)
 			</OnMouseWheel>
 		</Scripts>	</Slider>
 	<!-- Ternary Selector Template -->
@@ -1494,7 +1540,7 @@
 	<!-- Aura Configuration Frame -->
 	<Frame name = "PowaBarConfigFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
-			<AbsDimension x = "488" y = "920"/>
+			<AbsDimension x = "487" y = "920"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "CENTER" relativeTo = "UIParent">
@@ -1505,7 +1551,7 @@
 		</Anchors>
 		<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\DialogFrame\UI-DialogBox-Border" tile = "true">
 			<BackgroundInsets>
-				<AbsInset left = "11" right = "12" top = "12" bottom = "11"/>
+				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
 			</BackgroundInsets>
 			<TileSize>
 				<AbsValue val = "200"/>
@@ -1551,7 +1597,7 @@
 					</Anchors>
 					<TexCoords left = "0.2" right = "0.8" top = "0" bottom = "0.6"/>
 				</Texture>
-				<FontString name = "PowaHeader" inherits = "GameFontNormalSmall" text = "POWER AURAS">
+				<FontString name = "PowaHeader" inherits = "GameFontNormalSmall">
 					<Size>
 						<AbsDimension x = "140" y = "0"/>
 					</Size>
@@ -2153,7 +2199,7 @@
 								PowaAuras.SliderOnMouseUp(self, 100, 100, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
+								PowaAuras.SliderSetValues(self, delta)
 								PowaAuras.SliderOnMouseUp(self, 100, 100, 0)
 							</OnMouseWheel>
 						</Scripts>
@@ -2187,7 +2233,7 @@
 								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
+								PowaAuras.SliderSetValues(self, delta)
 								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseWheel>
 						</Scripts>
@@ -2221,7 +2267,7 @@
 								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
+								PowaAuras.SliderSetValues(self, delta)
 								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseWheel>
 						</Scripts>
@@ -2353,7 +2399,7 @@
 						</Scripts>
 					</EditBox>
 					<!-- Text Aura Font Button -->
-					<Button name = "PowaFontButton" inherits = "OptionsButtonTemplate" text = "[T]">
+					<Button name = "PowaFontButton" inherits = "OptionsButtonTemplate">
 						<Size>
 							<AbsDimension x = "50" y = "20"/>
 						</Size>
@@ -2366,9 +2412,14 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaFontButtonText:SetText(PowaAuras.Text.font)
+								PowaFontButtonText:SetText(PowaAuras.Text.nomFont)
 							</OnLoad>
 							<OnClick>
+								if FontSelectorFrame:IsVisible() then
+									PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
+								else
+									PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								end
 								PowaAuras:OpenFontSelector(self)
 							</OnClick>
 							<OnEnter>
@@ -2544,7 +2595,7 @@
 								PowaAuras.SliderOnMouseUp(self, 0, 100, 0, "%")
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
+								PowaAuras.SliderSetValues(self, delta)
 								PowaAuras.SliderOnMouseUp(self, 0, 100, 0, "%")
 							</OnMouseWheel>
 						</Scripts>
@@ -2578,7 +2629,7 @@
 								PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
+								PowaAuras.SliderSetValues(self, delta)
 								PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 							</OnMouseWheel>
 						</Scripts>
@@ -2612,7 +2663,7 @@
 								PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderOnMouseWheel(self, delta)
+								PowaAuras.SliderSetValues(self, delta)
 								PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 							</OnMouseWheel>
 						</Scripts>
@@ -4631,7 +4682,7 @@
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
+										PowaAuras.SliderSetValues(self, delta)
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseWheel>
 								</Scripts>
@@ -4665,7 +4716,7 @@
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
+										PowaAuras.SliderSetValues(self, delta)
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseWheel>
 								</Scripts>
@@ -5140,7 +5191,7 @@
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
+										PowaAuras.SliderSetValues(self, delta)
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseWheel>
 								</Scripts>
@@ -5174,7 +5225,7 @@
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderOnMouseWheel(self, delta)
+										PowaAuras.SliderSetValues(self, delta)
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseWheel>
 								</Scripts>
@@ -5608,7 +5659,7 @@
 	<!-- Font Selector Frame -->
 	<Frame name = "FontSelectorFrame" movable = "false" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
-			<AbsDimension x = "250" y = "225"/>
+			<AbsDimension x = "248" y = "236"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "TOPLEFT" relativeTo = "PowaBarConfigFrame" relativePoint = "TOPRIGHT">
@@ -5619,7 +5670,7 @@
 		</Anchors>
 		<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\DialogFrame\UI-DialogBox-Border" tile = "true">
 			<BackgroundInsets>
-				<AbsInset left = "11" right = "12" top = "12" bottom = "11"/>
+				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
 			</BackgroundInsets>
 			<TileSize>
 				<AbsValue val = "200"/>
@@ -5628,11 +5679,6 @@
 				<AbsValue val = "32"/>
 			</EdgeSize>
 		</Backdrop>
-		<Scripts>
-			<OnShow>
-				PowaAuras:FontSelectorOnShow(self)
-			</OnShow>
-		</Scripts>
 		<Layers>
 			<Layer>
 				<Texture file = "Interface\DialogFrame\UI-DialogBox-Header">
@@ -5648,7 +5694,7 @@
 					</Anchors>
 					<TexCoords left = "0.2" right = "0.8" top = "0" bottom = "0.6"/>
 				</Texture>
-				<FontString name = "PowaFontHeader" inherits = "GameFontNormalSmall" text = "Font Picker">
+				<FontString name = "PowaFontHeader" inherits = "GameFontNormalSmall">
 					<Size>
 						<AbsDimension x = "120" y = "0"/>
 					</Size>
@@ -5666,14 +5712,11 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name = "PowaFontsCloseButton">
-				<Size>
-					<AbsDimension x = "30" y = "30"/>
-				</Size>
+			<Button name = "PowaFontsCloseButton" inherits = "UIPanelCloseButton">
 				<Anchors>
 					<Anchor point = "TOPRIGHT" relativeTo = "FontSelectorFrame" relativePoint = "TOPRIGHT">
 						<Offset>
-							<AbsDimension x = "-4" y = "-4"/>
+							<AbsDimension x = "-5" y = "-5"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -5683,19 +5726,22 @@
 						PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
-				<NormalTexture file = "Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
-				<PushedTexture file = "Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
-				<HighlightTexture file = "Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode = "ADD"/>
 			</Button>
-			<Button name = "PowaFontsOkayButton" inherits = "OptionsButtonTemplate" text = "Okay">
+			<Button name = "PowaFontsOkayButton" inherits = "OptionsButtonTemplate">
+				<Size>
+					<AbsDimension x = "90" y = "22"/>
+				</Size>
 				<Anchors>
 					<Anchor point = "BOTTOMLEFT" relativeTo = "FontSelectorFrame" relativePoint = "BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x = "20" y = "15"/>
+							<AbsDimension x = "18" y = "17"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
 				<Scripts>
+					<OnLoad>
+						self:SetText(PowaAuras.Text.Okay)
+					</OnLoad>
 					<OnClick>
 						PowaAuras:FontSelectorOkay(self)
 						PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
@@ -5703,10 +5749,13 @@
 				</Scripts>
 			</Button>
 			<Button name = "PowaFontsCancelButton" inherits = "OptionsButtonTemplate">
+				<Size>
+					<AbsDimension x = "90" y = "22"/>
+				</Size>
 				<Anchors>
 					<Anchor point = "BOTTOMRIGHT" relativeTo = "FontSelectorFrame" relativePoint = "BOTTOMRIGHT">
 						<Offset>
-							<AbsDimension x = "-20" y = "15"/>
+							<AbsDimension x = "-18" y = "17"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -5716,18 +5765,18 @@
 					</OnLoad>
 					<OnClick>
 						PowaAuras:FontSelectorCancel(self)
-						PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+						PlaySound("igMainMenuClose", PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
 			</Button>
 			<Frame name = "FontSelectorEditor">
 				<Size>
-					<AbsDimension x = "210" y = "162"/>
+					<AbsDimension x = "211" y = "162"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOP">
 						<Offset>
-							<AbsDimension x = "0" y = "-25"/>
+							<AbsDimension x = "0" y = "-30"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -5753,12 +5802,12 @@
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "FontSelectorEditor">
 								<Offset>
-									<AbsDimension x = "-22" y = "-3"/>
+									<AbsDimension x = "-24" y = "-3"/>
 								</Offset>
 							</Anchor>
 							<Anchor point = "BOTTOMRIGHT" relativeTo = "FontSelectorEditor">
 								<Offset>
-									<AbsDimension x = "-22" y = "2"/>
+									<AbsDimension x = "-24" y = "2"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -5837,5 +5886,13 @@
 				</Frames>
 			</Frame>
 		</Frames>
+		<Scripts>
+			<OnLoad>
+				PowaFontHeader:SetText(PowaAuras.Text.nomFontSelector)
+			</OnLoad>
+			<OnShow>
+				PowaAuras:FontSelectorOnShow(self)
+			</OnShow>
+		</Scripts>
 	</Frame>
 </Ui>
