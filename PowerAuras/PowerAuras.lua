@@ -592,7 +592,7 @@ function PowaAuras:OnUpdate(elapsed)
 	end
 	for i = 1, #self.AuraSequence do
 		local aura = self.AuraSequence[i]
-		if aura.Showing or aura.Timer.Showing then
+		if aura.Showing or (aura.Timer and aura.Timer.Showing) then
 			if self:UpdateAura(aura, elapsed) then
 				if aura.Timer.enabled then
 					self:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
