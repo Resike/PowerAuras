@@ -400,7 +400,7 @@ function cPowaAura:SubstituteInText(text, old, getNewText, nilText)
 end
 
 function cPowaAura:IsPlayerAura()
-	return not self.target and not self.targetfriend and not self.party and not self.raid and (not (self.groupOrSelf and (GetNumGroupMembers() > 0))) and not self.focus and not self.optunitn
+	return not self.target and not self.targetfriend and not self.party and not self.raid and not (self.groupOrSelf and (GetNumGroupMembers() > 0)) and not self.focus and not self.optunitn
 end
 
 function cPowaAura:ShowTimerDurationSlider()
@@ -510,7 +510,7 @@ function cPowaAura:CheckState(giveReason)
 		return false, PowaAuras.Text.nomReasonNoPet
 	end
 	-- Party
-	if self.party and not GetNumGroupMembers() > 0) then -- Party check yes, but not in party
+	if self.party and not (GetNumGroupMembers() > 0) then -- Party check yes, but not in party
 		if not giveReason then
 			return false
 		end
