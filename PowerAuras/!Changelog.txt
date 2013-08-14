@@ -2,6 +2,7 @@
 * Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
 * Enablefullrotation and isAlive unchecked import bug on some aura types.
 
+
 **4.23.30**
 * Reduced CPU usage by aprox 75%. Yes i'm that good.
 * Fixed an excessive CPU and memory usage when picking colors for models.
