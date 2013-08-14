@@ -1,0 +1,5 @@
+package-as: PowerAuras
+
+move-folders:
+    PowerAuras/PowerAuras: PowerAuras
+    PowerAuras/PowerAurasOptions: PowerAurasOptions
