@@ -4,4 +4,6 @@ move-folders:
 	PowerAuras/PowerAuras: PowerAuras
 	PowerAuras/PowerAurasOptions: PowerAurasOptions
 
-manual-changelog: PowerAuras/!Changelog.txt
+manual-changelog:
+	filename: PowerAuras/!Changelog.txt
+	markup-type: creole
