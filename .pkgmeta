@@ -1,5 +1,7 @@
 package-as: PowerAuras
 
 move-folders:
-    PowerAuras/PowerAuras: PowerAuras
-    PowerAuras/PowerAurasOptions: PowerAurasOptions
+	PowerAuras/PowerAuras: PowerAuras
+	PowerAuras/PowerAurasOptions: PowerAurasOptions
+
+manual-changelog: PowerAuras/!Changelog.txt
