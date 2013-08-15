@@ -4,6 +4,9 @@ move-folders:
 	PowerAuras/PowerAuras: PowerAuras
 	PowerAuras/PowerAurasOptions: PowerAurasOptions
 
+ignore:
+	PowerAuras/!CheckTranslates.pl
+
 manual-changelog:
 	filename: PowerAuras/!Changelog.txt
 	markup-type: creole
