@@ -6,6 +6,10 @@
 ## DefaultState: Enabled
 ## Dependencies: PowerAuras
 ## LoadOnDemand: 1
+## X-Curse-Packaged-Version: r20130814234315
+## X-Curse-Project-Name: Power Auras Classic v4 - MoP Version
+## X-Curse-Project-ID: power-auras-classic-v4
+## X-Curse-Repository-ID: wow/power-auras-classic-v4/mainline
 
 PowerOptions.lua
 PowerComms.lua
