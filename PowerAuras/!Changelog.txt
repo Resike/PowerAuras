@@ -3,8 +3,6 @@
 * Enablefullrotation and isAlive unchecked import bug on some aura types.
 
 
-
-
 **4.23.30**
 * Reduced CPU usage by aprox 75%. Yes i'm that good.
 * Fixed an excessive CPU and memory usage when picking colors for models.
