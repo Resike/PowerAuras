@@ -67,7 +67,7 @@ function cPowaStacks:ShowValue(aura, newvalue)
 	local tStep = PowaAuras.Tstep
 	local w = (self.LegacySizing and 20 or 10)
 	for i = 1, (texcount > unitcount and texcount or unitcount) do
-		if(not frame.textures[i]) then
+		if not frame.textures[i] then
 			table.insert(frame.textures, i, frame:CreateTexture(nil, "BACKGROUND"))
 			frame.textures[i]:SetTexture(self:GetTexture())
 			texcount = texcount + 1
