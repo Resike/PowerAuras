@@ -1,8 +1,8 @@
 local math, min, max, floor, random, fmod, ceil, log10, table, insert, pairs = math, min, max, floor, random, fmod, ceil, log10, table, insert, pairs
 
 cPowaStacks = PowaClass(function(stacker, aura, base)
-	for k, v in pairs (cPowaStacks.ExportSettings) do
-		if (base and base[k] ~= nil) then
+	for k, v in pairs(cPowaStacks.ExportSettings) do
+		if base and base[k] ~= nil then
 			stacker[k] = base[k]
 		else
 			stacker[k] = v
@@ -39,16 +39,16 @@ function cPowaStacks:CreateAuraString()
 end
 
 function cPowaStacks:IsRelative()
-	return (self.Relative and self.Relative ~= "NONE")
+	return self.Relative and self.Relative ~= "NONE"
 end
 
 function cPowaStacks:GetTexture()
 	local texture = PowaMisc.DefaultStacksTexture
-	if (self.Texture ~= "Default") then
+	if self.Texture ~= "Default" then
 		texture = self.Texture
 	end
 	local postfix = ""
-	if (self.Transparent) then
+	if self.Transparent then
 		postfix = "Transparent"
 	end
 	return "Interface\\Addons\\PowerAuras\\TimerTextures\\"..texture.."\\Timers"..postfix..".tga"
@@ -56,7 +56,7 @@ end
 
 function cPowaStacks:ShowValue(aura, newvalue)
 	local frame = PowaAuras.StacksFrames[self.id]
-	if (frame == nil or newvalue == nil) then
+	if frame == nil or newvalue == nil then
 		return
 	end
 	if (PowaAuras.ModTest) then
