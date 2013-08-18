@@ -72,16 +72,16 @@ function cPowaStacks:ShowValue(aura, newvalue)
 			frame.textures[i]:SetTexture(self:GetTexture())
 			texcount = texcount + 1
 		end
-		if (aura.texmode == 1) then
+		if aura.texmode == 1 then
 			frame.textures[i]:SetBlendMode("Add")
 		else
 			frame.textures[i]:SetBlendMode("Disable")
 		end
-		if (self.UseOwnColor) then
+		if self.UseOwnColor then
 			frame.textures[i]:SetVertexColor(self.r,self.g,self.b)
 		else
 			local auraTexture = PowaAuras.Textures[self.id]
-			if (auraTexture) then
+			if auraTexture then
 				if auraTexture:GetObjectType() == "Texture" then
 					frame.textures[i]:SetVertexColor(auraTexture:GetVertexColor())
 				elseif auraTexture:GetObjectType() == "FontString" then
@@ -91,7 +91,7 @@ function cPowaStacks:ShowValue(aura, newvalue)
 				frame.textures[i]:SetVertexColor(aura.r,aura.g,aura.b)
 			end
 		end
-		if(i > unitcount) then
+		if i > unitcount then
 			frame.textures[i]:Hide()
 		else
 			frame.textures[i]:Show()
@@ -103,17 +103,17 @@ function cPowaStacks:ShowValue(aura, newvalue)
 			newvalue = floor(newvalue / 10)
 		end
 	end
-	if (not frame:IsVisible()) then
+	if not frame:IsVisible() then
 		frame:Show()
 	end
-	if (self.UpdatePing and frame.PingAnimationGroup) then
+	if self.UpdatePing and frame.PingAnimationGroup then
 		frame.PingAnimationGroup:Play()
 	end
 end
 
 function cPowaStacks:SetStackCount(count)
 	local aura = PowaAuras.Auras[self.id]
-	if (aura == nil) then
+	if aura == nil then
 		return
 	end
 	if (self.enabled == false or aura.InactiveDueToMulti) then
