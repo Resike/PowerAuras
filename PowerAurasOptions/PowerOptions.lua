@@ -1809,6 +1809,7 @@ function PowaAuras:SetThresholdSlider(aura)
 	PowaBarThresholdSlider:SetValue(curThreshold)
 	PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
 	PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
+	self.SliderEditBoxChanged(PowaBarThresholdSliderEditBox)
 end
 
 -- Sliders Changed
@@ -2278,6 +2279,7 @@ function PowaAuras:BarThresholdSliderChanged()
 	if (SliderValue ~= self.Auras[self.CurrentAuraId].threshold) then
 		local aura = self.Auras[self.CurrentAuraId]
 		aura.threshold = SliderValue
+		PowaBarThresholdSliderEditBox:SetText(format("%.0f", SliderValue)..aura.RangeType)
 	end
 end
 
@@ -4585,7 +4587,7 @@ function PowaAuras.SliderEditBoxChanged(self)
 		else
 			self:SetText(format("%.0f", (slider:GetValue() * 100)).."%")
 		end
-	elseif (postfix == "%" and (slider == PowaBarThresholdSlider or slider == PowaBarAuraSizeSlider or slider == PowaBarAuraAnimSpeedSlider)) then
+	elseif (postfix == "%" and (slider == PowaBarAuraSizeSlider or slider == PowaBarAuraAnimSpeedSlider)) then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2))
 		if (text ~= nil) then
 			slider:SetValue(text)
@@ -4596,6 +4598,19 @@ function PowaAuras.SliderEditBoxChanged(self)
 			end
 		else
 			self:SetText(format("%.0f", slider:GetValue()).."%")
+		end
+	elseif (postfix == "%" and (slider == PowaBarThresholdSlider)) then
+		local text = tonumber(string.sub(self:GetText(), 1, - 2))
+		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
+		if (text ~= nil and aura.RangeType == "%") then
+			slider:SetValue(text)
+			self:SetText(format("%.0f", (slider:GetValue()))..aura.RangeType)
+			local sliderlow, sliderhigh = slider:GetMinMaxValues()
+			if (text <= sliderlow or text >= sliderhigh) then
+				self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
+			end
+		else
+			self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
 		end
 	elseif (slider == PowaBarAuraAlphaSlider or slider == PowaTimerSizeSlider or slider == PowaTimerAlphaSlider or slider == PowaStacksSizeSlider or slider == PowaStacksAlphaSlider) then
 		local text = tonumber(self:GetText())
@@ -4610,7 +4625,7 @@ function PowaAuras.SliderEditBoxChanged(self)
 		else
 			self:SetText(format("%.0f", (slider:GetValue() * 100)).."%")
 		end
-	elseif (slider == PowaBarThresholdSlider or slider == PowaBarAuraSizeSlider or slider == PowaBarAuraAnimSpeedSlider) then
+	elseif (slider == PowaBarAuraSizeSlider or slider == PowaBarAuraAnimSpeedSlider) then
 		local text = tonumber(self:GetText())
 		if (text ~= nil) then
 			slider:SetValue(text)
@@ -4621,6 +4636,19 @@ function PowaAuras.SliderEditBoxChanged(self)
 			end
 		else
 			self:SetText(format("%.0f", slider:GetValue()).."%")
+		end
+	elseif (slider == PowaBarThresholdSlider) then
+		local text = tonumber(self:GetText())
+		local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
+		if (text ~= nil) then
+			slider:SetValue(text)
+			self:SetText(format("%.0f", (slider:GetValue()))..aura.RangeType)
+			local sliderlow, sliderhigh = slider:GetMinMaxValues()
+			if (text <= sliderlow or text >= sliderhigh) then
+				self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
+			end
+		else
+			self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
 		end
 	elseif (tonumber(postfix) == nil and slider == PowaBarAuraRotateSlider) then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2))

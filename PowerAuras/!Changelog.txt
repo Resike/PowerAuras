@@ -15,6 +15,8 @@
 * "In Vehice" option from now is ignored by default.
 * "Any Member" option from now is ignored by default.
 * "Font Selector" frame fixes.
+* Power treshold slider fixes.
+* Demonic Fury's slider tresholds in now in percentage.
 * Fixed a frame hide bug when you deleted an aura with "Font Selector" opened.
 * Changing color of a model won't redisplay the model itself.
 * Changing the value of the "Gradient Style" dropdown, won't redisplay models.

@@ -2480,7 +2480,7 @@ function cPowaAuraStats:CheckUnit(unit)
 		return false
 	end
 	if self.Debug then
-		PowaAuras:DisplayText("curValue=", curValue, " maxValue=", maxValue)
+		PowaAuras:DisplayText("curValue = ", curValue, " maxValue = ", maxValue)
 	end
 	if self.RangeType == "%" then
 		curValue = (curValue / maxValue) * 100
@@ -2489,7 +2489,7 @@ function cPowaAuraStats:CheckUnit(unit)
 		self.Stacks:SetStackCount(curValue)
 	end
 	if self.Debug then
-		PowaAuras:DisplayText(curValue..self.RangeType, " threshold=", self.threshold)
+		PowaAuras:DisplayText(curValue..self.RangeType, " threshold = ", self.threshold)
 	end
 	if self.thresholdinvert then
 		thresholdvalidate = (curValue >= self.threshold)
@@ -2601,7 +2601,7 @@ function cPowaPowerType:UnitValue(unit)
 	if not self.PowerType or self.PowerType == - 1 then
 		power = UnitPower(unit)
 	elseif self.PowerType == SPELL_POWER_LUNAR_ECLIPSE then
-		power = math.max( - UnitPower(unit, SPELL_POWER_ECLIPSE), 0)
+		power = math.max(- UnitPower(unit, SPELL_POWER_ECLIPSE), 0)
 	elseif self.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
 		power = math.max(UnitPower(unit, SPELL_POWER_ECLIPSE))
 	else

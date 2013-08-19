@@ -2909,7 +2909,6 @@
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:BarThresholdSliderChanged()
-										PowaBarThresholdSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
