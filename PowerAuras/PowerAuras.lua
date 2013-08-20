@@ -396,6 +396,44 @@ function PowaAuras:CreateStacksFrameIfMissing(auraId, updatePing)
 	return self.StacksFrames[auraId]
 end
 
+function PowaAuras:UpdateOptionsTimer(auraId)
+	if (not (self.VariablesLoaded and self.SetupDone)) then
+		return
+	end
+	local timer = self.Auras[auraId].Timer
+	local frame1 = self.TimerFrame[auraId][1]
+	frame1:SetAlpha(math.min(timer.a, 0.99))
+	frame1:SetWidth(20 * timer.h)
+	frame1:SetHeight(20 * timer.h)
+	if (timer:IsRelative()) then
+		frame1:SetPoint(self.RelativeToParent[timer.Relative], self.Frames[auraId], timer.Relative, timer.x, timer.y)
+	else
+		frame1:SetPoint("CENTER", timer.x, timer.y)
+	end
+	local frame2 = self.TimerFrame[auraId][2]
+	frame2:SetAlpha(timer.a * 0.75)
+	frame2:SetWidth(14 * timer.h)
+	frame2:SetHeight(14 * timer.h)
+	frame2:SetPoint("LEFT", frame1, "RIGHT", 1, - 1.5)
+end
+
+function PowaAuras:UpdateOptionsStacks(auraId)
+	if (not (self.VariablesLoaded and self.SetupDone)) then
+		return
+	end
+	local stacks = self.Auras[auraId].Stacks
+	local frame = self.StacksFrames[auraId]
+	frame:SetAlpha(math.min(stacks.a, 0.99))
+	frame:SetWidth(20 * stacks.h)
+	frame:SetHeight(20 * stacks.h)
+	frame:SetPoint("Center", stacks.x, stacks.y)
+	if (stacks:IsRelative()) then
+		frame:SetPoint(self.RelativeToParent[stacks.Relative], self.Frames[auraId], stacks.Relative, stacks.x, stacks.y)
+	else
+		frame:SetPoint("CENTER", stacks.x, stacks.y)
+	end
+end
+
 function PowaAuras:CreateEffectLists()
 	for k in pairs(self.AurasByType) do
 		wipe(self.AurasByType[k])
@@ -463,10 +501,12 @@ function PowaAuras:MemorizeActions(actionIndex)
 			if (type == "macro") then
 				name = GetMacroInfo(id)
 			end
-			PowaAction_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-			PowaAction_Tooltip:SetAction(i)
-			text = PowaAction_TooltipTextLeft1:GetText()
-			PowaAction_Tooltip:Hide()
+			if (PowaAction_Tooltip ~= nil) then
+				PowaAction_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+				PowaAction_Tooltip:SetAction(i)
+				text = PowaAction_TooltipTextLeft1:GetText()
+				PowaAction_Tooltip:Hide()
+			end
 			if (text ~= nil) then
 				for k, v in pairs(self.AurasByType.Actions) do
 					local actionAura = self.Auras[v]
