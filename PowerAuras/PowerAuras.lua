@@ -13,7 +13,7 @@
 	All rights reserved.
 --]]
 
-local string, len, tostring, tonumber, math, table, pairs, select = string, tostring, tonumber, math, table, pairs, select
+local string, tostring, tonumber, math, table, pairs, select = string, tostring, tonumber, math, table, pairs, select
 
 -- Exposed for Saving
 PowaMisc =

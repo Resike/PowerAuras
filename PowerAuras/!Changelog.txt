@@ -24,6 +24,7 @@
 * Fixed a frame hide bug when you deleted an aura with "Font Selector" opened.
 * Fixed a bug when stacks's texture got stuck when inverted an aura with stacks enabled.
 * Fixed a bug where timers/stacks wouldn't shown as soon as you enabled them in test mode, only on the next update.
+* Fixed a bug where you couldn't set stacks texture relatively to the aura's left side.
 * Changing color of a model won't redisplay the model itself.
 * Changing the value of the "Gradient Style" dropdown, won't redisplay models.
 * Changing the value of the "Random Color" checkbutton, won't redisplay models.
