@@ -1,4 +1,4 @@
-local string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select = string, find, gsub, tostring, tonumber, table, insert, math, floor, pairs, type, getmetatable, setmetatable, select
+local string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select = string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select
 
 PowaAuras =
 {

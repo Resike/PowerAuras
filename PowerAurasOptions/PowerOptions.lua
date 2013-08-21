@@ -1,4 +1,4 @@
-local string, find, sub, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit = string, find, sub, gsub, gmatch, len, tostring, tonumber, table, sort, math, min, pairs, ipairs, strsplit
+local string, tostring, tonumber, table, math, pairs, ipairs, strsplit = string, tostring, tonumber, table, math, pairs, ipairs, strsplit
 
 -- Main Options
 function PowaAuras:OptionsOnLoad()
@@ -2455,6 +2455,9 @@ function PowaAuras:InverseChecked()
 	else
 		aura.inverse = false
 	end
+	if (self.Auras[self.CurrentAuraId].Stacks.enabled == true) then
+		self.Auras[self.CurrentAuraId].Stacks:Dispose()
+	end
 	aura:HideShowTabs()
 end
 
@@ -3169,7 +3172,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 	elseif (name == "PowaBuffStacksRelative") then
 		UIDropDownMenu_SetWidth(owner, 190)
 		info = {func = PowaAuras.DropDownMenu_OnClickStacksRelative, owner = owner}
-		for _, v in pairs({"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "TOPLEFT", "CENTER"}) do
+		for _, v in pairs({"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "CENTER"}) do
 			info.text = PowaAuras.Text.Relative[v]
 			info.value = v
 			UIDropDownMenu_AddButton(info)
@@ -3632,6 +3635,7 @@ function PowaAuras:ShowTimerChecked(control)
 		self.Auras[self.CurrentAuraId].Timer.enabled = false
 		self.Auras[self.CurrentAuraId].Timer:Dispose()
 	end
+	self:RedisplayAura(self.CurrentAuraId)
 end
 
 function PowaAuras:TimerSizeSliderChanged()
@@ -3755,6 +3759,7 @@ function PowaAuras:ShowStacksChecked(control)
 		self.Auras[self.CurrentAuraId].Stacks.enabled = false
 		self.Auras[self.CurrentAuraId].Stacks:Dispose()
 	end
+	self:RedisplayAura(self.CurrentAuraId)
 end
 
 function PowaAuras:StacksAlphaSliderChanged()

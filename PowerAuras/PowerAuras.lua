@@ -13,7 +13,7 @@
 	All rights reserved.
 --]]
 
-local string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select = string, find, sub, gmatch, len, tostring, tonumber, math, min, max, floor, sqrt, table, insert, pairs, select
+local string, len, tostring, tonumber, math, table, pairs, select = string, tostring, tonumber, math, table, pairs, select
 
 -- Exposed for Saving
 PowaMisc =
@@ -426,7 +426,6 @@ function PowaAuras:UpdateOptionsStacks(auraId)
 	frame:SetAlpha(math.min(stacks.a, 0.99))
 	frame:SetWidth(20 * stacks.h)
 	frame:SetHeight(20 * stacks.h)
-	frame:SetPoint("Center", stacks.x, stacks.y)
 	if (stacks:IsRelative()) then
 		frame:SetPoint(self.RelativeToParent[stacks.Relative], self.Frames[auraId], stacks.Relative, stacks.x, stacks.y)
 	else
@@ -949,26 +948,24 @@ end
 function PowaAuras:UpdatePreviewColor(aura)
 	if (AuraTexture ~= nil) then
 		if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-			if (aura ~= nil and aura.off ~= true) then
-				if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
-					AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
+				AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			else
+				AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
+			end
+			if (aura.desaturation == true) then
+				local shaderSupported = AuraTexture:SetDesaturated(1)
+				if (shaderSupported) then
+					AuraTexture:SetDesaturated(1)
 				else
-					AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
-				end
-				if (aura.desaturation == true) then
-					local shaderSupported = AuraTexture:SetDesaturated(1)
-					if (shaderSupported) then
-						AuraTexture:SetDesaturated(1)
+					if (desaturation) then
+						AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
 					else
-						if (desaturation) then
-							AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
-						else
-							AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
-						end
+						AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
 					end
-				else
-					AuraTexture:SetDesaturated(nil)
 				end
+			else
+				AuraTexture:SetDesaturated(nil)
 			end
 		else
 			AuraTexture:SetVertexColor(1, 1, 1)
@@ -1076,26 +1073,24 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			end
 			if (AuraTexture ~= nil) then
 				if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-					if (aura.off ~= true) then
-						if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
-							AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
+					if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
+						AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
+					else
+						AuraTexture:SetVertexColor(r1, r2, r3)
+					end
+					if (aura.desaturation == true) then
+						local shaderSupported = AuraTexture:SetDesaturated(1)
+						if (shaderSupported) then
+							AuraTexture:SetDesaturated(1)
 						else
-							AuraTexture:SetVertexColor(r1, r2, r3)
-						end
-						if (aura.desaturation == true) then
-							local shaderSupported = AuraTexture:SetDesaturated(1)
-							if (shaderSupported) then
-								AuraTexture:SetDesaturated(1)
+							if (desaturation) then
+								AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
 							else
-								if (desaturation) then
-									AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
-								else
-									AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
-								end
+								AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
 							end
-						else
-							AuraTexture:SetDesaturated(nil)
 						end
+					else
+						AuraTexture:SetDesaturated(nil)
 					end
 				else
 					AuraTexture:SetVertexColor(1, 1, 1)
@@ -1127,33 +1122,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			else
 				texture:SetVertexColor(aura.r, aura.g, aura.b)
 			end
-			if (AuraTexture ~= nil) then
-				if (AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02") then
-					if (aura.off ~= true) then
-						if (aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical") then
-							AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
-						else
-							AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
-						end
-						if (aura.desaturation == true) then
-							local shaderSupported = AuraTexture:SetDesaturated(1)
-							if (shaderSupported) then
-								AuraTexture:SetDesaturated(1)
-							else
-								if (desaturation) then
-									AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
-								else
-									AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
-								end
-							end
-						else
-							AuraTexture:SetDesaturated(nil)
-						end
-					end
-				else
-					AuraTexture:SetVertexColor(1, 1, 1)
-				end
-			end
+			self:UpdatePreviewColor(aura)
 		end
 	end
 	if (aura.model ~= true and aura.modelcustom ~= true) then

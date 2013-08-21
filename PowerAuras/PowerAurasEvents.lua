@@ -1,106 +1,59 @@
-local string, len, find, sub, tonumber, select, pairs = string, len, find, sub, tonumber, select, pairs
+local string, tonumber, pairs, select = string, tonumber, pairs, select
 
 function PowaAuras:ADDON_LOADED(addon)
 	if (addon ~= "PowerAuras") then
 		return
 	end
 	LoadAddOn("PowerAurasOptions")
-	if (IsAddOnLoaded("PowerAurasOptions")) then
-		PowaMisc.disabled = nil
-		-- Ensure PowaMisc gets any new values
-		for k, v in pairs(PowaAuras.PowaMiscDefault) do
-			if (PowaMisc[k] == nil) then
-				PowaMisc[k] = v
-			end
+	PowaMisc.disabled = nil
+	-- Ensure PowaMisc gets any new values
+	for k, v in pairs(PowaAuras.PowaMiscDefault) do
+		if (PowaMisc[k] == nil) then
+			PowaMisc[k] = v
 		end
-		-- Remove redundant settings
-		for k in pairs(PowaMisc) do
-			if (PowaAuras.PowaMiscDefault[k] == nil) then
-				PowaMisc[k] = nil
-			end
-		end
-		for k, v in pairs(PowaAuras.PowaGlobalMiscDefault) do
-			if (PowaGlobalMisc[k] == nil) then
-				PowaGlobalMisc[k] = v
-			end
-		end
-		-- Remove redundant settings
-		for k in pairs(PowaGlobalMisc) do
-			if (PowaAuras.PowaGlobalMiscDefault[k] == nil) then
-				PowaGlobalMisc[k] = nil
-			end
-		end
-		self.MaxTextures = PowaAuras.TextureCount
-		local _, _, major, minor = string.find(self.Version, self.VersionPattern)
-		self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
-		_, _, major, minor = string.find(PowaMisc.Version, self.VersionPattern)
-		self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
-		self.VersionUpgraded = self:VersionGreater(self.VersionParts, self.PreviousVersionParts)
-		if (self.VersionUpgraded) then
-			self:DisplayText(self.Colors.Purple.."<Power Auras Classic>|r "..self.Colors.Gold..self.Version.."|r - "..self.Text.welcome)
-			PowaMisc.Version = self.Version
-		end
-		if (TestPA == nil) then
-			PowaState = { }
-		end
-		_, self.playerclass = UnitClass("player")
-		self:LoadAuras()
-		self:OptionsOnLoad()
-		self:FindAllChildren()
-		self:CreateEffectLists()
-		if (not PowaMisc.Disabled) then
-			self:RegisterEvents(PowaAuras_Frame)
-		end
-		self.VariablesLoaded = true
-		self:Setup()
-	else
-		PowaMisc.disabled = nil
-		-- Ensure PowaMisc gets any new values
-		for k, v in pairs(PowaAuras.PowaMiscDefault) do
-			if (PowaMisc[k] == nil) then
-				PowaMisc[k] = v
-			end
-		end
-		-- Remove redundant settings
-		for k in pairs(PowaMisc) do
-			if (PowaAuras.PowaMiscDefault[k] == nil) then
-				PowaMisc[k] = nil
-			end
-		end
-		for k, v in pairs(PowaAuras.PowaGlobalMiscDefault) do
-			if (PowaGlobalMisc[k] == nil) then
-				PowaGlobalMisc[k] = v
-			end
-		end
-		-- Remove redundant settings
-		for k in pairs(PowaGlobalMisc) do
-			if (PowaAuras.PowaGlobalMiscDefault[k] == nil) then
-				PowaGlobalMisc[k] = nil
-			end
-		end
-		self.MaxTextures = PowaAuras.TextureCount
-		local _, _, major, minor = string.find(self.Version, self.VersionPattern)
-		self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
-		_, _, major, minor = string.find(PowaMisc.Version, self.VersionPattern)
-		self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
-		self.VersionUpgraded = self:VersionGreater(self.VersionParts, self.PreviousVersionParts)
-		if (self.VersionUpgraded) then
-			self:DisplayText(self.Colors.Purple.."<Power Auras Classic>|r "..self.Colors.Gold..self.Version.."|r - "..self.Text.welcome)
-			PowaMisc.Version = self.Version
-		end
-		if (TestPA == nil) then
-			PowaState = { }
-		end
-		_, self.playerclass = UnitClass("player")
-		self:LoadAuras()
-		self:FindAllChildren()
-		self:CreateEffectLists()
-		if (not PowaMisc.Disabled) then
-			self:RegisterEvents(PowaAuras_Frame)
-		end
-		self.VariablesLoaded = true
-		self:Setup()
 	end
+	-- Remove redundant settings
+	for k in pairs(PowaMisc) do
+		if (PowaAuras.PowaMiscDefault[k] == nil) then
+			PowaMisc[k] = nil
+		end
+	end
+	for k, v in pairs(PowaAuras.PowaGlobalMiscDefault) do
+		if (PowaGlobalMisc[k] == nil) then
+			PowaGlobalMisc[k] = v
+		end
+	end
+	-- Remove redundant settings
+	for k in pairs(PowaGlobalMisc) do
+		if (PowaAuras.PowaGlobalMiscDefault[k] == nil) then
+			PowaGlobalMisc[k] = nil
+		end
+	end
+	self.MaxTextures = PowaAuras.TextureCount
+	local _, _, major, minor = string.find(self.Version, self.VersionPattern)
+	self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
+	_, _, major, minor = string.find(PowaMisc.Version, self.VersionPattern)
+	self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
+	self.VersionUpgraded = self:VersionGreater(self.VersionParts, self.PreviousVersionParts)
+	if (self.VersionUpgraded) then
+		self:DisplayText(self.Colors.Purple.."<Power Auras Classic>|r "..self.Colors.Gold..self.Version.."|r - "..self.Text.welcome)
+		PowaMisc.Version = self.Version
+	end
+	if (TestPA == nil) then
+		PowaState = { }
+	end
+	_, self.playerclass = UnitClass("player")
+	self:LoadAuras()
+	if (IsAddOnLoaded("PowerAurasOptions")) then
+		self:OptionsOnLoad()
+	end
+	self:FindAllChildren()
+	self:CreateEffectLists()
+	if (not PowaMisc.Disabled) then
+		self:RegisterEvents(PowaAuras_Frame)
+	end
+	self.VariablesLoaded = true
+	self:Setup()
 end
 
 function PowaAuras:Setup()
@@ -529,7 +482,7 @@ function PowaAuras:UNIT_TARGET(...)
 	end
 	if (self.ModTest == false) then
 		self.DoCheck.UnitMatch = true
-		for existingTarget in pairs (PowaAuras.ChangedUnits.Targets) do
+		for existingTarget in pairs(PowaAuras.ChangedUnits.Targets) do
 			if (UnitIsUnit(target, existingTarget)) then
 				return
 			end

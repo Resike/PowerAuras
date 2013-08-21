@@ -1,6 +1,7 @@
 ﻿**Issues:**
 * Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
 * Enablefullrotation and isAlive unchecked import bug on some aura types.
+* Test All preview texture coloring bug when the current aura's random color is enabled.
 
 
 **4.23.30**
@@ -10,19 +11,25 @@
 * Added groups. (Very alpha yet.)
 * Added increase and decrease value buttons for every slider.
 * Added .blp support for textures in the "Aura" folder.
+* Added .blp support for textures in the "TimerTextures" folder.
+* Fixed some font texture bugs for timers/stacks. (Need some more tuning.)
 * Changed "Stance/Seal/Form" dropdown to handle multiple selections. (Dropdown need update still.)
 * "Mounted" option from now is ignored by default.
 * "In Vehice" option from now is ignored by default.
 * "Any Member" option from now is ignored by default.
+* "Wider Digits" option for stacks from now is disabled by default.
 * "Font Selector" frame fixes.
 * Power treshold slider fixes.
 * Demonic Fury's slider tresholds in now in percentage.
 * Fixed a frame hide bug when you deleted an aura with "Font Selector" opened.
+* Fixed a bug when stacks's texture got stuck when inverted an aura with stacks enabled.
+* Fixed a bug where timers/stacks wouldn't shown as soon as you enabled them in test mode, only on the next update.
 * Changing color of a model won't redisplay the model itself.
 * Changing the value of the "Gradient Style" dropdown, won't redisplay models.
 * Changing the value of the "Random Color" checkbutton, won't redisplay models.
 * Changing the value of the "Desaturate" checkbutton, won't redisplay models.
-* Added glow effect for character and global pages when you recieve an aura.
+* Fixed a bug which didn't updated disabled aura's preview color when used the "Test All" button.
+* Added glow effect for character and global pages when you recieve an aura, and you choosing a page to save.
 * Fixed the layer of the glow effect itself.
 * Fixed a GUI override bug with the "Unit Name" checkbutton.
 * Fixed a bug with the "Rotation" slider's editbox.
