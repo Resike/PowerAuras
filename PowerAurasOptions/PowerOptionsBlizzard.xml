@@ -225,7 +225,7 @@
 						PowaAuras:PowaOptionsUpdateSliderChanged2(self)
 					</OnValueChanged>
 					<OnMouseWheel>
-						PowaAuras.SliderOnMouseWheel(self, delta)
+						PowaAuras.SliderSetValues(self, delta)
 					</OnMouseWheel>
 				</Scripts>
 			</Slider>
@@ -255,7 +255,7 @@
 						PowaAuras:PowaOptionsTimerUpdateSliderChanged2(self)
 					</OnValueChanged>
 					<OnMouseWheel>
-						PowaAuras.SliderOnMouseWheel(self, delta)
+						PowaAuras.SliderSetValues(self, delta)
 					</OnMouseWheel>
 				</Scripts>
 			</Slider>
@@ -308,7 +308,7 @@
 						PowaAuras:PowaOptionsMaxTexturesSliderChanged(self)
 					</OnValueChanged>
 					<OnMouseWheel>
-						PowaAuras.SliderOnMouseWheel(self, delta)
+						PowaAuras.SliderSetValues(self, delta)
 					</OnMouseWheel>
 				</Scripts>
 			</Slider>
