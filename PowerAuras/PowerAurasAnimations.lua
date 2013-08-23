@@ -1,4 +1,4 @@
-local math, min, max, sqrt = math, min, max, sqrt
+local math = math
 
 function PowaAuras:CalculateDurations(speed)
 	-- Speed ranges from 0.05 to 2
@@ -13,8 +13,7 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 	end
 	local animationGroup = frame:CreateAnimationGroup("Begin")
 	animationGroup.aura = aura
-	animationGroup:SetScript("OnFinished",
-	function(self, forced)
+	animationGroup:SetScript("OnFinished", function(self, forced)
 		local aura = self.aura
 		if (aura and aura.MainAnimation) then
 			aura.MainAnimation:Play()
@@ -56,7 +55,7 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 	elseif (aura.begin == PowaAuras.AnimationBeginTypes.TranslateBottomLeft) then
 		self:AddJumpTranslateAndReturn(animationGroup, - 75, - 75, duration, 1)
 	elseif (aura.begin == PowaAuras.AnimationBeginTypes.Bounce) then
-		self:AddAlpha(animationGroup, math.min(aura.alpha,0.99), 0, 0, 1)
+		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), 0, 0, 1)
 		local u = 0
 		local height = 100
 		local efficiency = 0.6
@@ -145,8 +144,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		local deltaAlpha = math.min(aura.alpha, 0.99) / steps
 		local stepDuration = duration * 4 / steps
 		animationGroup.speed = aura.speed
-		animationGroup:SetScript("OnPlay",
-		function(self)
+		animationGroup:SetScript("OnPlay", function(self)
 			self.Trigger = (random( 210 - self.speed * 100 ) < 4)
 		end)
 		for i = 1, steps do
@@ -217,8 +215,7 @@ function PowaAuras:AddMoveRandomLocation(animationGroup, xrangel, xrangeu, xoffs
 	trans.useTrigger = useTrigger
 	trans:SetOrder(order)
 	trans:SetDuration(duration)
-	trans:SetScript("OnPlay",
-	function(self)
+	trans:SetScript("OnPlay", function(self)
 		if (not self.useTrigger or self:GetParent().Trigger) then
 			self:SetOffset((random(self.xrangel,self.xrangeu) + self.xoffset) * self.speed, (random(self.yrangel,self.yrangeu) + self.yoffset) * self.speed)
 		else
@@ -232,8 +229,7 @@ function PowaAuras:AddAlphaOnTrigger(animationGroup, alphaTo, duration, order)
 	alpha:SetOrder(order)
 	alpha:SetDuration(duration)
 	alpha.alphaTo = alphaTo
-	alpha:SetScript("OnPlay",
-	function(self)
+	alpha:SetScript("OnPlay", function(self)
 		if (self:GetParent().Trigger) then
 			self:SetChange(self.alphaTo)
 		else
@@ -268,8 +264,7 @@ function PowaAuras:AddFade(animationGroup, duration, order)
 	local alpha = animationGroup:CreateAnimation("Alpha")
 	alpha:SetOrder(order)
 	alpha:SetDuration(duration)
-	alpha:SetScript("OnPlay",
-	function(self)
+	alpha:SetScript("OnPlay", function(self)
 		self:SetChange(- self:GetRegionParent():GetAlpha())
 	end)
 end
@@ -278,8 +273,7 @@ function PowaAuras:AddRelativeAlpha(animationGroup, change, duration, order)
 	local alpha = animationGroup:CreateAnimation("Alpha")
 	alpha:SetOrder(order)
 	alpha:SetDuration(duration)
-	alpha:SetScript("OnPlay",
-	function(self)
+	alpha:SetScript("OnPlay", function(self)
 		local alpha = self:GetRegionParent():GetAlpha()
 		self:SetChange(math.min((alpha * change), 0.99))
 	end)
@@ -289,8 +283,7 @@ function PowaAuras:AddAbsoluteAlpha(animationGroup, targetAlpha, duration, order
 	local alpha = animationGroup:CreateAnimation("Alpha")
 	alpha:SetOrder(order)
 	alpha:SetDuration(duration)
-	alpha:SetScript("OnPlay",
-	function(self)
+	alpha:SetScript("OnPlay", function(self)
 		self:SetChange(math.min(targetAlpha, 0.99) - self:GetRegionParent():GetAlpha())
 	end)
 end
@@ -313,8 +306,7 @@ function PowaAuras:AddEndAnimation(aura, frame)
 	end
 	local animationGroup = frame:CreateAnimationGroup("End")
 	animationGroup.aura = aura
-	animationGroup:SetScript("OnFinished",
-	function(self, forced)
+	animationGroup:SetScript("OnFinished", function(self, forced)
 		if (self.aura) then
 			self.aura:Hide(true)
 		end

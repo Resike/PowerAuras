@@ -1,4 +1,4 @@
-local math, min, max, pairs, type = math, min, max, pairs, type
+local math, pairs, type = math, pairs, type
 
 cPowaAnimationBase = PowaClass(function(animation, aura, frame, base)
 	animation.State = 0
@@ -10,10 +10,10 @@ cPowaAnimationBase = PowaClass(function(animation, aura, frame, base)
 	animation.Width = animation.TargetWidth
 	animation.Height = animation.TargetHeight
 	animation.Alpha = animation.TargetAlpha
-	if (base) then
+	if base then
 		for k, v in pairs(base) do
 			local varType = type(v)
-			if (varType == "string" or varType == "boolean" or varType == "number") then
+			if varType == "string" or varType == "boolean" or varType == "number" then
 				animation[k] = base[k]
 			end
 		end
@@ -70,7 +70,7 @@ function cPowaAnimationBaseTranslate:InitialiseBase()
 	self.TargetY = self.Aura.y
 	self.X = self.TargetX + self.OffsetX
 	self.Y = self.TargetY + self.OffsetY
-	self.StartAlpha = 0.0
+	self.StartAlpha = 0
 	self:ResetBase()
 end
 
@@ -83,7 +83,7 @@ cPowaAnimationBeginZoomIn = PowaClass(cPowaAnimationBase)
 function cPowaAnimationBeginZoomIn:Initialise()
 	self.StartWidth = self.TargetWidth * 1.5
 	self.StartHeight = self.TargetHeight * 1.5
-	self.StartAlpha = 0.0
+	self.StartAlpha = 0
 	self:ResetBase()
 end
 
@@ -93,7 +93,7 @@ function cPowaAnimationBeginZoomIn:Update(elapsed)
 	self.Height = self.Height - (step * (2 - self.Aura.torsion))
 	self.Alpha = self.TargetAlpha * (self.StartWidth - self.Width) / (self.StartWidth - self.TargetWidth)
 	local result = false
-	if (self.Width <= self.TargetWidth) then
+	if self.Width <= self.TargetWidth then
 		self.Width = self.TargetWidth
 		self.Height = self.TargetHeight
 		self.Alpha = self.TargetAlpha
@@ -107,17 +107,17 @@ cPowaAnimationBeginZoomOut = PowaClass(cPowaAnimationBase)
 function cPowaAnimationBeginZoomOut:Initialise()
 	self.StartWidth = self.TargetWidth * 0.5
 	self.StartHeight = self.TargetHeight * 0.5
-	self.StartAlpha = 0.0
+	self.StartAlpha = 0
 	self:Reset()
 end
 
 function cPowaAnimationBeginZoomOut:Update(elapsed)
 	local step = elapsed * 150 * self.Aura.speed
 	self.Width = self.Width + (step * self.Aura.torsion)
-	self.Height = self.Height + (step * (2-self.Aura.torsion))
+	self.Height = self.Height + (step * (2 - self.Aura.torsion))
 	self.Alpha = self.TargetAlpha * (self.StartWidth - self.Width) / (self.StartWidth - self.TargetWidth)
 	local result = false
-	if (self.Width >= self.TargetWidth) then
+	if self.Width >= self.TargetWidth then
 		self.Width = self.TargetWidth
 		self.Height = self.TargetHeight
 		self.Alpha = self.TargetAlpha
@@ -131,14 +131,14 @@ cPowaAnimationBeginFadeIn = PowaClass(cPowaAnimationBase)
 function cPowaAnimationBeginFadeIn:Initialise()
 	self.StartWidth = self.TargetWidth
 	self.StartHeight = self.TargetHeight
-	self.StartAlpha = 0.0
+	self.StartAlpha = 0
 	self:Reset()
 end
 
 function cPowaAnimationBeginFadeIn:Update(elapsed)
 	self.Alpha = self.Alpha + elapsed * 2 * self.Aura.speed * self.TargetAlpha
 	local result = false
-	if (self.Alpha >= self.TargetAlpha) then
+	if self.Alpha >= self.TargetAlpha then
 		self.Alpha = self.TargetAlpha
 		result = true
 	end
@@ -153,7 +153,7 @@ function cPowaAnimationBeginTranslate:Update(elapsed)
 	self.X = self.X + self.DirectionX * step
 	self.Y = self.Y + self.DirectionY * step
 	local result = false
-	if (((self.DirectionX * (self.X - self.TargetX)) >= 0) and (self.DirectionY * (self.Y - self.TargetY) >= 0)) then
+	if ((self.DirectionX * (self.X - self.TargetX)) >= 0) and (self.DirectionY * (self.Y - self.TargetY) >= 0) then
 		self.X = self.TargetX
 		self.Y = self.TargetY
 		self.Alpha = self.TargetAlpha
@@ -179,15 +179,14 @@ function cPowaAnimationBeginBounce:Initialise()
 end
 
 function cPowaAnimationBeginBounce:Update(elapsed)
-	--PowaAuras:UnitTestInfo("BeginBounce Update ", elapsed)
 	self.Alpha = math.max(self.TargetAlpha + elapsed * 2 * self.Aura.speed * self.TargetAlpha , self.TargetAlpha)
 	self.Velocity = math.max(math.min(self.Velocity + self.Acceleration * self.Aura.speed * elapsed, 1000), - 1000)
 	self.Y = self.Y - elapsed * (self.Velocity + self.Acceleration * self.Aura.speed * elapsed / 2)
 	local result = false
-	if (self.Y <= self.TargetY and self.Velocity > 0) then
+	if self.Y <= self.TargetY and self.Velocity > 0 then
 		self.Y = self.TargetY
 		self.Alpha = self.TargetAlpha
-		if (self.Velocity <= self.MinVelocity) then
+		if self.Velocity <= self.MinVelocity then
 			self.Velocity = 0
 			result = true
 		else
@@ -210,10 +209,10 @@ end
 cPowaAnimationEndResizeAndFade = PowaClass(cPowaAnimationEnd)
 function cPowaAnimationEndResizeAndFade:Update(elapsed)
 	self.Alpha = self.Alpha - (elapsed * 2)
-	if (self.Alpha <= 0) then
+	if self.Alpha <= 0 then
 		return true
 	end
-	local sizeStep = self.Direction * elapsed * 300
+	local sizeStep = self.Direction * elapsed * self.StartWidth
 	self.Width = math.max(0, self.Width + sizeStep)
 	self.Height = math.max(0, self.Height + sizeStep)
 	self:UpdateFrame()
@@ -226,7 +225,7 @@ cPowaAnimationEndShrinkAndFade = PowaClass(cPowaAnimationEndResizeAndFade, {Dire
 cPowaAnimationEndFade = PowaClass(cPowaAnimationEnd)
 function cPowaAnimationEndFade:Update(elapsed)
 	self.Alpha = self.Alpha - (elapsed * 2)
-	if (self.Alpha <= 0) then
+	if self.Alpha <= 0 then
 		return true
 	end
 	self:UpdateFrame()
@@ -243,10 +242,10 @@ end
 
 function cPowaAnimationFlashing:Update(elapsed)
 	self.Alpha = self.Alpha + self.Direction * elapsed / 2
-	if (self.Alpha <= self.MinAlpha) then
+	if self.Alpha <= self.MinAlpha then
 		self.Alpha = self.MinAlpha
 		self.Direction = 1
-	elseif (self.Alpha >= self.TargetAlpha) then
+	elseif self.Alpha >= self.TargetAlpha then
 		self.Alpha = self.TargetAlpha
 		self.Direction = - 1
 	end
@@ -268,7 +267,7 @@ function cPowaAnimationGrowing:Update(elapsed)
 	local step = elapsed * 25 * self.Aura.speed * self.Aura.size
 	self.Width = self.Width + step
 	self.Height = self.Height + step
-	if (self.Width >= self.MaxWidth) then
+	if self.Width >= self.MaxWidth then
 		self.Width = self.MinWidth
 		self.Height = self.MinHeight
 	end
@@ -291,11 +290,11 @@ function cPowaAnimationPulse:Update(elapsed)
 	local step = self.Direction * elapsed * 50 * self.Aura.speed * self.Aura.size
 	self.Width = self.Width + step * self.Aura.torsion
 	self.Height = self.Height + step * (2 - self.Aura.torsion)
-	if (self.Width >= self.MaxWidth) then
+	if self.Width >= self.MaxWidth then
 		self.Width = self.MaxWidth
 		self.Height = self.MaxHeight
 		self.Direction = -1
-	elseif (self.Width <= self.MinWidth) then
+	elseif self.Width <= self.MinWidth then
 		self.Width = self.MinWidth
 		self.Height = self.MinHeight
 		self.Direction = 1
@@ -318,11 +317,11 @@ function cPowaAnimationBubble:Update(elapsed)
 	local step = self.Direction * elapsed * 50 * self.Aura.speed * self.Aura.size
 	self.Width = self.Width + step * self.Aura.torsion
 	self.Height = self.Height - step * (2 - self.Aura.torsion)
-	if (self.Width >= self.MaxWidth) then
+	if self.Width >= self.MaxWidth then
 		self.Width = self.MaxWidth
 		self.Height = self.MinHeight
 		self.Direction = - 1
-	elseif (self.Width <= self.MinWidth) then
+	elseif self.Width <= self.MinWidth then
 		self.Width = self.MinWidth
 		self.Height = self.MaxHeight
 		self.Direction = 1
@@ -344,15 +343,15 @@ end
 
 function cPowaAnimationWaterDrop:Update(elapsed)
 	self.Alpha = self.Alpha - elapsed * self.TargetAlpha * 0.5 * self.Aura.speed
-	if (self.Alpha <= 0) then
+	if self.Alpha <= 0 then
 		self.Alpha = self.TargetAlpha
 		self.Width = self.TargetWidth * 0.85
 		self.Height = self.TargetHeight * 0.85
-		self.X = self.TargetX + (random(0, 20) - 10) * self.Aura.speed
-		self.Y = self.TargetY + (random(0, 20) - 10) * self.Aura.speed
+		self.X = self.TargetX + (math.random(0, 20) - 10) * self.Aura.speed
+		self.Y = self.TargetY + (math.random(0, 20) - 10) * self.Aura.speed
 	else
 		local width = self.Width + elapsed * 100 * self.Aura.speed * self.Aura.size
-		if ( (width * 1.5) > self.Width) then -- evite les lags
+		if (width * 1.5) > self.Width then
 			self.Width = width
 			self.Height = self.Height + elapsed * 100 * self.Aura.speed * self.Aura.size
 		end
@@ -373,10 +372,10 @@ function cPowaAnimationElectric:Initialise()
 end
 
 function cPowaAnimationElectric:Update(elapsed)
-	if (self.Status == 0) then
-		if (random( 210 - self.Aura.speed * 100 ) == 1) then
-			self.X = self.TargetX + random(0,10) - 5
-			self.Y = self.TargetY + random(0,10) - 5
+	if self.Status == 0 then
+		if math.random(210 - self.Aura.speed * 100) == 1 then
+			self.X = self.TargetX + math.random(0, 10) - 5
+			self.Y = self.TargetY + math.random(0, 10) - 5
 			self.Alpha = self.TargetAlpha
 			self.Status = 1
 		else
@@ -403,29 +402,29 @@ function cPowaAnimationShrinking:Initialise()
 end
 
 function cPowaAnimationShrinking:Update(elapsed)
-	if (self.Status == 0) then
+	if self.Status == 0 then
 		self.Width = self.MaxWidth
 		self.Height = self.MaxHeight
-		self.Alpha = 0.0
+		self.Alpha = 0
 		self.Status = 2
-	elseif (self.Status == 2) then
+	elseif self.Status == 2 then
 		local speedScale = 50 * self.Aura.speed * self.Aura.size
 		self.Width = self.Width - elapsed * speedScale * self.Aura.torsion
 		self.Height = self.Height - elapsed * speedScale * (2 - self.Aura.torsion)
 		self.Alpha = self.TargetAlpha * (self.MaxWidth - self.Width) / (self.MaxWidth - self.MinWidth)
-		if (self.Width <= self.MinWidth) then
+		if self.Width <= self.MinWidth then
 			self.Width = self.MinWidth
 			self.Height = self.MinHeight
 			self.Status = 1
 		end
-	elseif (self.Status == 1) then
+	elseif self.Status == 1 then
 		self.Width = self.MinWidth
 		self.Height = self.MinHeight
 		self.Alpha = self.TargetAlpha
 		self.Status = 3
-	elseif (self.Status == 3) then
-		self.Alpha = self.Alpha - (elapsed / random(1, 2))
-		if (self.Alpha <= 0.0) then
+	elseif self.Status == 3 then
+		self.Alpha = self.Alpha - (elapsed / math.random(1, 2))
+		if self.Alpha <= 0 then
 			self.Alpha = 0
 			self.Status = 0
 		end
@@ -446,7 +445,7 @@ function cPowaAnimationFlame:Initialise()
 end
 
 function cPowaAnimationFlame:Update(elapsed)
-	if (self.Status < 2) then
+	if self.Status < 2 then
 		self.Width = self.TargetWidth
 		self.Height = self.TargetHeight
 		self.Alpha = self.TargetAlpha
@@ -455,12 +454,12 @@ function cPowaAnimationFlame:Update(elapsed)
 		self.Status = 2
 	else
 		local speedScale = 50 * self.Aura.speed * self.Aura.size
-		self.X = self.X + random(1,3) - 2
-		self.Y = self.Y + elapsed * random(10,20)
-		self.Alpha = self.Alpha - self.TargetAlpha * elapsed / random(2,4)
+		self.X = self.X + math.random(1, 3) - 2
+		self.Y = self.Y + elapsed * math.random(10, 20)
+		self.Alpha = self.Alpha - self.TargetAlpha * elapsed / math.random(2, 4)
 		self.Width = self.Width - elapsed * speedScale * self.Aura.torsion
 		self.Height = self.Height - elapsed * speedScale * (2 - self.Aura.torsion)
-		if (self.Alpha < 0.0) then
+		if self.Alpha < 0 then
 			self.Alpha = 0
 			self.Status = 1
 		end
@@ -482,7 +481,7 @@ function cPowaAnimationOrbit:Initialise()
 	self.Angle = 0
 	if self.Aura.textaura ~= true then
 		local texture = self.Aura:GetTexture()
-		if (texture) then
+		if texture then
 			texture:SetTexCoord(0, 1, 0, 1)
 		end
 	end
@@ -490,23 +489,31 @@ end
 
 function cPowaAnimationOrbit:Update(elapsed)
 	local speedScale = elapsed * 75 * self.Aura.speed
-	if (self.Aura.isSecondary and (PowaAuras.Auras[self.Aura.id].anim1 == PowaAuras.AnimationTypes.Orbit)) then
-		if (self.Aura.symetrie < 2) then
+	if self.Aura.isSecondary and PowaAuras.Auras[self.Aura.id].anim1 == PowaAuras.AnimationTypes.Orbit then
+		if self.Aura.symetrie < 2 then
 			self.Angle = PowaAuras.Auras[self.Aura.id].animation.Angle + 180
-			if (self.Angle > 360) then self.Angle = self.Angle - 360 end
+			if self.Angle > 360 then
+				self.Angle = self.Angle - 360
+			end
 		else
 			self.Angle = 180 - PowaAuras.Auras[self.Aura.id].animation.Angle
-			if (self.Angle < 0) then self.Angle = self.Angle + 360 end
+			if self.Angle < 0 then
+				self.Angle = self.Angle + 360
+			end
 		end
-	elseif (self.Aura.symetrie == 1 or self.Aura.symetrie == 3) then
+	elseif self.Aura.symetrie == 1 or self.Aura.symetrie == 3 then
 		self.Angle = self.Angle - speedScale
-		if (self.Angle < 0) then self.Angle = 360 end
+		if self.Angle < 0 then
+			self.Angle = 360
+		end
 	else
 		self.Angle = self.Angle + speedScale
-		if (self.Angle > 360) then self.Angle = 0 end
+		if self.Angle > 360 then
+			self.Angle = 0
+		end
 	end
-	if (self.Angle < 180) then
-		if (self.Angle < 90) then
+	if self.Angle < 180 then
+		if self.Angle < 90 then
 			self.Alpha = self.TargetAlpha * (1 - self.Angle / 90)
 		else
 			self.Alpha = self.TargetAlpha * (self.Angle / 90 - 1)
@@ -516,7 +523,6 @@ function cPowaAnimationOrbit:Update(elapsed)
 	end
 	self.X = self.MaxWidth * cos(self.Angle)
 	self.Y = self.TargetY + self.MaxHeight * sin(self.Angle)
-		
 	self:UpdateFrame()
 end
 
@@ -531,7 +537,7 @@ PowaAuras.AnimationMainClasses = {
 	[PowaAuras.AnimationTypes.Electric] = cPowaAnimationElectric,
 	[PowaAuras.AnimationTypes.Shrinking] = cPowaAnimationShrinking,
 	[PowaAuras.AnimationTypes.Flame] = cPowaAnimationFlame,
-	[PowaAuras.AnimationTypes.Orbit] = cPowaAnimationOrbit,
+	[PowaAuras.AnimationTypes.Orbit] = cPowaAnimationOrbit
 }
 
 -- Concrete Animation Begin Classes
@@ -548,30 +554,30 @@ PowaAuras.AnimationBeginClasses = {
 	[PowaAuras.AnimationBeginTypes.TranslateBottomRight] = cPowaAnimationBeginTranslateBottomRight,
 	[PowaAuras.AnimationBeginTypes.TranslateBottom] = cPowaAnimationBeginTranslateBottom,
 	[PowaAuras.AnimationBeginTypes.TranslateBottomLeft] = cPowaAnimationBeginTranslateBottomLeft,
-	[PowaAuras.AnimationBeginTypes.Bounce] = cPowaAnimationBeginBounce,
+	[PowaAuras.AnimationBeginTypes.Bounce] = cPowaAnimationBeginBounce
 }
-
-function PowaAuras:AnimationBeginFactory(animationType, aura, frame, base)
-	if (not base) then
-		base = { }
-	end
-	base.IsBegin = true
-	return self:AnimationFactory(animationType, self.AnimationBeginClasses, aura, frame, base)
-end
 
 -- Concrete Animation End Classes
 PowaAuras.AnimationEndClasses = {
 	[PowaAuras.AnimationEndTypes.None] = cPowaAnimationEnd,
 	[PowaAuras.AnimationEndTypes.GrowAndFade] = cPowaAnimationEndGrowAndFade,
 	[PowaAuras.AnimationEndTypes.ShrinkAndFade] = cPowaAnimationEndShrinkAndFade,
-	[PowaAuras.AnimationEndTypes.Fade] = cPowaAnimationEndFade,
+	[PowaAuras.AnimationEndTypes.Fade] = cPowaAnimationEndFade
 }
 
+function PowaAuras:AnimationBeginFactory(animationType, aura, frame, base)
+	if not base then
+		base = { }
+	end
+	base.IsBegin = true
+	return self:AnimationFactory(animationType, self.AnimationBeginClasses, aura, frame, base)
+end
+
 function PowaAuras:AnimationEndFactory(animationType, aura, frame, base)
-	if (aura.isSecondary) then
+	if aura.isSecondary then
 		return nil
 	end
-	if (not base) then
+	if not base then
 		base = { }
 	end
 	base.IsEnd = true
@@ -579,7 +585,7 @@ function PowaAuras:AnimationEndFactory(animationType, aura, frame, base)
 end
 
 function PowaAuras:AnimationMainFactory(animationType, aura, frame, base)
-	if (animationType == PowaAuras.AnimationTypes.Invisible) then
+	if animationType == PowaAuras.AnimationTypes.Invisible then
 		return nil
 	end
 	return self:AnimationFactory(animationType, self.AnimationMainClasses, aura, frame, base)
@@ -587,17 +593,17 @@ end
 
 -- Instance concrete class based on animation type
 function PowaAuras:AnimationFactory(animationType, classList, aura, frame, base)
-	if (not frame) then
+	if not frame then
 		return nil
 	end
 	local class = classList[animationType]
-	if (class) then
-		if (not base) then
-			base = {}
+	if class then
+		if not base then
+			base = { }
 		end
 		base.AnimationType = animationType
 		local animation = class(aura, frame, base)
-		if (animation) then
+		if animation then
 			animation:Initialise()
 		end
 		return animation
