@@ -569,15 +569,20 @@ function PowaAuras:OnUpdate(elapsed)
 	if not self.ModTest and checkAura then
 		if self.ChecksTimer > (self.NextCheck + PowaMisc.OnUpdateLimit) then
 			self.ChecksTimer = 0
-			local isMountedNow = IsMounted() == 1 and true or self:IsDruidTravelForm()
-			if isMountedNow ~= self.WeAreMounted then
+			local isMounted = IsMounted() == 1 and true or self:IsDruidTravelForm()
+			if isMounted ~= self.WeAreMounted then
 				self.DoCheck.All = true
-				self.WeAreMounted = isMountedNow
+				self.WeAreMounted = isMounted
 			end
-			local isInVehicledNow = UnitInVehicle("player") ~= nil
-			if isInVehicledNow ~= self.WeAreInVehicle then
+			local isInVehicle = UnitInVehicle("player") ~= nil
+			if isInVehicle ~= self.WeAreInVehicle then
 				self.DoCheck.All = true
-				self.WeAreInVehicle = isInVehicledNow
+				self.WeAreInVehicle = isInVehicle
+			end
+			local isInPetBattle = C_PetBattles.IsInBattle()
+			if isInPetBattle ~= self.WeAreInPetBattle then
+				self.DoCheck.All = true
+				self.WeAreInPetBattle = isInPetBattle
 			end
 		end
 		if self.PendingRescan and GetTime() >= self.PendingRescan then

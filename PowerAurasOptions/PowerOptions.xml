@@ -3550,6 +3550,25 @@
 									</OnShow>
 								</Scripts>
 							</CheckButton>
+							<!-- In Pet Battle CheckButton -->
+							<CheckButton name = "PowaInPetBattleButton" inherits = "PowaTernarySelectorTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaInVehicleButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "-85"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										self.Parameter = "inPetBattle"
+										PowaInPetBattleButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
+								</Scripts>
+							</CheckButton>
 							<!-- Friendly Target CheckButton -->
 							<CheckButton name = "PowaTargetFriendButton" inherits = "PowaCheckTemplate">
 								<Size>

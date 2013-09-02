@@ -132,6 +132,7 @@ cPowaAura.ExportSettings =
 	ismounted = 0,
 	isResting = 0,
 	inVehicle = 0,
+	inPetBattle = 0,
 	combat = 0,
 	isAlive = true,
 	PvP = 0,
@@ -598,6 +599,15 @@ function cPowaAura:CheckState(giveReason)
 			return false, PowaAuras.Text.nomReasonNotInVehicle
 		end
 		return false, PowaAuras.Text.nomReasonInVehicle
+	end
+	if (PowaAuras.WeAreInPetBattle == true and self.inPetBattle == false) or (PowaAuras.WeAreInPetBattle == false and self.inPetBattle == true) then
+		if not giveReason then
+			return false
+		end
+		if self.inPetBattle == true then
+			return false, PowaAuras.Text.nomReasonNotInPetBattle
+		end
+		return false, PowaAuras.Text.nomReasonInPetBattle
 	end
 	if self:AnyInstanceTypeChecksRequired() then
 		local show, reason = self:CheckInstanceType(giveReason)
