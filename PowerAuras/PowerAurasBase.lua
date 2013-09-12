@@ -594,7 +594,7 @@ Fonts =
 	"Interface\\Addons\\PowerAuras\\Fonts\\Pulse Virgin.ttf",
 	"Interface\\Addons\\PowerAuras\\Fonts\\Punks Not Dead.ttf",
 	"Interface\\Addons\\PowerAuras\\Fonts\\Starcraft.ttf",
-	"Interface\\Addons\\PowerAuras\\Fonts\\Whoa.ttf",
+	"Interface\\Addons\\PowerAuras\\Fonts\\Whoa.ttf"
 },
 
 Sound =
@@ -1032,7 +1032,7 @@ PowaAuras.GCDSpells =
 	ROGUE = 1752, -- Sinister Strike
 	HUNTER = 982, -- Revive Pet
 	DEATHKNIGHT = 45902, -- Blood Strike
-	MONK = 100780, -- Jab
+	MONK = 100780 -- Jab
 }
 
 -- Invented so we can distinquish them two types
@@ -1294,7 +1294,7 @@ PowaAuras.DebuffTypeSpellIds =
 	[50613]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (death knight)
 	[69179]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (warrior)
 	-- Other
-	[29703]	= PowaAuras.DebuffCatType.Snare,	-- Dazed
+	[29703]	= PowaAuras.DebuffCatType.Snare	-- Dazed
 }
 
 PowaAuras.Text = { }

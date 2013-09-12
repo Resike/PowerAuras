@@ -388,7 +388,7 @@ function cPowaTimer:ShowValue(aura, frameIndex, displayValue)
 	elseif aura.Timer.Texture == "Digital" then
 		leftOffset = - 0.0010
 		rightOffset = - 0.0030
-	elseif aura.Stacks.Texture == "Monofonto" then
+	elseif aura.Timer.Texture == "Monofonto" then
 		leftOffset = 0
 		rightOffset = 0
 	elseif aura.Timer.Texture == "OCR" then
