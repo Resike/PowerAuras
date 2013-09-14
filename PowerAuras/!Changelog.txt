@@ -15,6 +15,7 @@
 * Fixed some font texture bugs for timers/stacks. (Need some more tuning.)
 * Changed "Stance/Seal/Form" dropdown to handle multiple selections. (Dropdown need update still.)
 * Added "In Pet Battle" tri-state checker.
+* Merged Flexible raids with "10 Man Normal" instances.
 * "Mounted" option from now is ignored by default.
 * "In Vehice" option from now is ignored by default.
 * "Any Member" option from now is ignored by default.

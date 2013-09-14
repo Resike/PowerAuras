@@ -3291,13 +3291,35 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<!-- Any Member CheckButton -->
+							<CheckButton name = "PowaGroupAnyButton" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaPartyButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAuras.Text.aideGroupAny
+										PowaGroupAnyButtonText:SetText(PowaAuras.Text.nomCheckGroupAny)
+									</OnLoad>
+									<OnClick>
+										PowaAuras:GroupAnyChecked()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<!-- Unit Name CheckButton -->
 							<CheckButton name = "PowaOptunitnButton" inherits = "PowaCheckTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaPartyButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaGroupAnyButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "5"/>
 										</Offset>
@@ -3361,35 +3383,13 @@
 									</Layer>
 								</Layers>
 							</EditBox>
-							<!-- Any Member CheckButton -->
-							<CheckButton name = "PowaGroupAnyButton" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaOptunitnButton" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "0" y = "5"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideGroupAny
-										PowaGroupAnyButtonText:SetText(PowaAuras.Text.nomCheckGroupAny)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:GroupAnyChecked()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
 							<!-- Spec 1 CheckButton -->
 							<CheckButton name = "PowaTalentGroup1Button" inherits = "PowaCheckTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaGroupAnyButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaOptunitnButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "0"/>
 										</Offset>
@@ -3558,7 +3558,7 @@
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaInVehicleButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "0" y = "-85"/>
+											<AbsDimension x = "0" y = "5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3575,7 +3575,7 @@
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaInVehicleButton" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaInPetBattleButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x = "0" y = "5"/>
 										</Offset>

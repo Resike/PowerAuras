@@ -107,7 +107,7 @@ function PowaAuras:GetInstanceType()
 		elseif (instanceDifficulty == 8) then
 			instanceType = "ChallangeMode"
 		-- 10 Man
-		elseif (instanceDifficulty == 3) then
+		elseif (instanceDifficulty == 3 or instanceDifficulty == 14) then
 			instanceType = "10Man"
 		-- 10 Man Heroic
 		elseif (instanceDifficulty == 5) then
