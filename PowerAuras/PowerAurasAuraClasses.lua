@@ -1,4 +1,4 @@
-local string, tostring, tonumber, table, math, pairs, strsplit, select = string, tostring, tonumber, table, math, pairs, strsplit, select
+local string, tostring, tonumber, format, table, math, pairs, strsplit, select, _G = string, tostring, tonumber, format, table, math, pairs, strsplit, select, _G
 
 -- cPowaAura is the base class and is not instanced directly, the other classes inherit properties and methods from it
 cPowaAura = PowaClass(function(aura, id, base)
@@ -373,7 +373,7 @@ function cPowaAura:GetAuraText()
 	text = self:SubstituteInText(text , "%%sta", function() return UnitStat("player", 3) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%int", function() return UnitStat("player", 4) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%spi", function() return UnitStat("player", 5) end, PowaAuras.Text.Unknown)
-	text = self:SubstituteInText(text , "%%crt", function() return string.format("%.2f", GetCritChance()) end, PowaAuras.Text.Unknown)
+	text = self:SubstituteInText(text , "%%crt", function() return format("%.2f", GetCritChance()) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%sp", function() return self:SpellPower() end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%ap", function() return UnitAttackPower("player") end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%u", function() if self.DisplayUnit == nil then return nil end local name = UnitName(self.DisplayUnit) if name ~= nil then return name end return self.DisplayUnit end, PowaAuras.Text.Unknown)
@@ -1396,13 +1396,13 @@ function cPowaBuffBase:CheckTooltip(text, target, index)
 	PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	PowaAuras_Tooltip:SetUnitAura(target, index, self.buffAuraType)
 	for z = 1, PowaAuras_Tooltip:NumLines() do
-		local textlinel = getglobal("PowaAuras_TooltipTextLeft"..z)
+		local textlinel = _G["PowaAuras_TooltipTextLeft"..z]
 		local textl = textlinel:GetText()
 		local tooltipText = ""
 		if textl then
 			tooltipText = tooltipText..textl
 		end
-		local textliner = getglobal("PowaAuras_TooltipTextRight"..z)
+		local textliner = _G["PowaAuras_TooltipTextRight"..z]
 		local textr = textliner:GetText()
 		if textr then
 			tooltipText = tooltipText..textr
@@ -2074,13 +2074,13 @@ function cPowaEnchant:CheckforEnchant(slot, enchantText, textToFind)
 	PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	PowaAuras_Tooltip:SetInventoryItem("player", slot)
 	for z = 1, PowaAuras_Tooltip:NumLines() do
-		local textlinel = getglobal("PowaAuras_TooltipTextLeft"..z)
+		local textlinel = _G["PowaAuras_TooltipTextLeft"..z]
 		local textl = textlinel:GetText()
 		local text = ""
 		if textl then
 			text = text..textl
 		end
-		local textliner = getglobal("PowaAuras_TooltipTextRight"..z)
+		local textliner = _G["PowaAuras_TooltipTextRight"..z]
 		local textr = textliner:GetText()
 		if textr then
 			text = text..textr
@@ -3098,13 +3098,13 @@ function cPowaTotems:CheckIfShouldShow(giveReason)
 						if not giveReason then
 							return false
 						end
-						return false, getglobal("BINDING_NAME_MULTICASTACTIONBUTTON"..pwordNumber).." found (slot "..pwordNumber..") - "..totemName
+						return false, _G["BINDING_NAME_MULTICASTACTIONBUTTON"..pwordNumber].." found (slot "..pwordNumber..") - "..totemName
 					end
 				end
 				if not giveReason then
 					return true
 				end
-				return true, getglobal("BINDING_NAME_MULTICASTACTIONBUTTON"..pwordNumber).." found (slot "..pwordNumber..") - "..totemName
+				return true, _G["BINDING_NAME_MULTICASTACTIONBUTTON"..pwordNumber].." found (slot "..pwordNumber..") - "..totemName
 			end
 		else
 			for slot = 1, 4 do

@@ -222,7 +222,7 @@
 						PowaOptionsUpdateSlider2High:SetText("100%")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAuras:PowaOptionsUpdateSliderChanged2(self)
+						PowaAuras:PowaOptionsUpdateSliderChanged2(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
 						PowaAuras.SliderSetValues(self, delta)
@@ -252,7 +252,7 @@
 						PowaOptionsTimerUpdateSlider2High:SetText("100%")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAuras:PowaOptionsTimerUpdateSliderChanged2(self)
+						PowaAuras:PowaOptionsTimerUpdateSliderChanged2(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
 						PowaAuras.SliderSetValues(self, delta)
@@ -305,7 +305,7 @@
 						PowaOptionsTextureCountHigh:SetText("1000")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAuras:PowaOptionsMaxTexturesSliderChanged(self)
+						PowaAuras:PowaOptionsMaxTexturesSliderChanged(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
 						PowaAuras.SliderSetValues(self, delta)

@@ -1,10 +1,4 @@
 <Ui>
-	<!-- Check Button Template -->
-	<CheckButton name = "PowaCheckTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
-		<HitRectInsets>
-			<AbsInset left = "4" right = "4" top = "4" bottom = "4"/>
-		</HitRectInsets>
-	</CheckButton>
 	<!-- Icon Template -->
 	<Button name = "PowaIconeTemplate" virtual = "true">
 		<Size>
@@ -390,28 +384,6 @@
 					</Anchor>
 				</Anchors>
 			</Button>
-			<!-- Group CheckButton -->
-			<CheckButton name = "PowaGroupButton" inherits = "PowaCheckTemplate">
-				<Size>
-					<AbsDimension x = "25" y = "25"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "RIGHT" relativeTo = "PowaOptionsFrameCloseButton" relativePoint = "LEFT">
-						<Offset>
-							<AbsDimension x = "-35" y = "0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						--self.tooltipText = "Handle this page as a group."
-						PowaGroupButtonText:SetText("Group")
-					</OnLoad>
-					<OnClick>
-						PowaAuras:GroupButtonChecked()
-					</OnClick>
-				</Scripts>
-			</CheckButton>
 			<!-- Icon Effects Window -->
 			<Frame name = "PowaOptionsSelectorFrame">
 				<Size>
@@ -1313,6 +1285,12 @@
 			</Anchor>
 		</Anchors>
 	</GameTooltip>
+	<!-- Check Button Template -->
+	<CheckButton name = "PowaCheckTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
+		<HitRectInsets>
+			<AbsInset left = "4" right = "4" top = "4" bottom = "4"/>
+		</HitRectInsets>
+	</CheckButton>
 	<!-- Slider Template -->
 	<Slider name = "PowaBarSliderTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
 		<Size>
@@ -1477,7 +1455,8 @@
 			<OnMouseWheel>
 				PowaAuras.SliderSetValues(self, delta)
 			</OnMouseWheel>
-		</Scripts>	</Slider>
+		</Scripts>
+	</Slider>
 	<!-- Ternary Selector Template -->
 	<CheckButton name = "PowaTernarySelectorTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
 		<Size>
@@ -2070,8 +2049,8 @@
 								PowaFrameStrataLevelSliderHigh:SetText("20")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:FrameStrataLevelSliderChanged()
-								PowaFrameStrataLevelSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:FrameStrataLevelSliderChanged(self, value)
+								PowaFrameStrataLevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2131,8 +2110,8 @@
 								PowaTextureStrataSublevelSliderHigh:SetText("7")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:TextureStrataSublevelSliderChanged()
-								PowaTextureStrataSublevelSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:TextureStrataSublevelSliderChanged(self, value)
+								PowaTextureStrataSublevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2192,8 +2171,8 @@
 								PowaModelPositionZSliderHigh:SetText("100")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:ModelPositionZSliderChanged()
-								PowaModelPositionZSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:ModelPositionZSliderChanged(self, value)
+								PowaModelPositionZSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAuras.SliderOnMouseUp(self, 100, 100, 0)
@@ -2226,8 +2205,8 @@
 								PowaModelPositionXSliderHigh:SetText("50")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:ModelPositionXSliderChanged()
-								PowaModelPositionXSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:ModelPositionXSliderChanged(self, value)
+								PowaModelPositionXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
@@ -2260,8 +2239,8 @@
 								PowaModelPositionYSliderHigh:SetText("50")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:ModelPositionYSliderChanged()
-								PowaModelPositionYSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:ModelPositionYSliderChanged(self, value)
+								PowaModelPositionYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
@@ -2292,8 +2271,8 @@
 								PowaBarAuraTextureSliderLow:SetText("1")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraTextureSliderChanged()
-								PowaBarAuraTextureSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:BarAuraTextureSliderChanged(self, value)
+								PowaBarAuraTextureSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2453,8 +2432,8 @@
 								PowaBarAuraAlphaSliderHigh:SetText("100%")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraAlphaSliderChanged()
-								PowaBarAuraAlphaSliderEditBox:SetText(string.format("%.0f", self:GetValue()).."%")
+								PowaAuras:BarAuraAlphaSliderChanged(self, value)
+								PowaBarAuraAlphaSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2480,8 +2459,8 @@
 								PowaBarAuraSymSliderHigh:SetText("XY")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraSymSliderChanged()
-								PowaBarAuraSymSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:BarAuraSymSliderChanged(self, value)
+								PowaBarAuraSymSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2507,8 +2486,8 @@
 								PowaBarAnimationSliderHigh:SetText("250")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAnimationSliderChanged()
-								PowaBarAnimationSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:BarAnimationSliderChanged(self, value)
+								PowaBarAnimationSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2534,8 +2513,8 @@
 								PowaBarAuraDeformSliderHigh:SetText("2.00")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraDeformSliderChanged()
-								PowaBarAuraDeformSliderEditBox:SetText(string.format("%.2f", self:GetValue()))
+								PowaAuras:BarAuraDeformSliderChanged(self, value)
+								PowaBarAuraDeformSliderEditBox:SetText(format("%.2f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2561,8 +2540,8 @@
 								PowaBarAuraRotateSliderHigh:SetText("360°")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraRotateSliderChanged()
-								PowaBarAuraRotateSliderEditBox:SetText(string.format("%.0f", self:GetValue()).."°")
+								PowaAuras:BarAuraRotateSliderChanged(self, value)
+								PowaBarAuraRotateSliderEditBox:SetText(format("%.0f", self:GetValue()).."°")
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2588,8 +2567,8 @@
 								PowaBarAuraSizeSliderHigh:SetText("200%")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraSizeSliderChanged()
-								PowaBarAuraSizeSliderEditBox:SetText(string.format("%.0f", self:GetValue()).."%")
+								PowaAuras:BarAuraSizeSliderChanged(self, value)
+								PowaBarAuraSizeSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAuras.SliderOnMouseUp(self, 0, 100, 0, "%")
@@ -2622,8 +2601,8 @@
 								PowaBarAuraCoordXSliderHigh:SetText("700")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraCoordXSliderChanged()
-								PowaBarAuraCoordXSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:BarAuraCoordXSliderChanged(self, value)
+								PowaBarAuraCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
@@ -2656,8 +2635,8 @@
 								PowaBarAuraCoordYSliderHigh:SetText("400")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraCoordYSliderChanged()
-								PowaBarAuraCoordYSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+								PowaAuras:BarAuraCoordYSliderChanged(self, value)
+								PowaBarAuraCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
@@ -2908,7 +2887,7 @@
 										PowaBarThresholdSliderHigh:SetText("100%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:BarThresholdSliderChanged()
+										PowaAuras:BarThresholdSliderChanged(self, value)
 										PowaBarThresholdSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 									</OnValueChanged>
 								</Scripts>
@@ -4285,8 +4264,8 @@
 										PowaBarAuraAnimSpeedSliderHigh:SetText("200%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:BarAuraAnimSpeedSliderChanged(self)
-										PowaBarAuraAnimSpeedSliderEditBox:SetText(string.format("%.0f", self:GetValue()).."%")
+										PowaAuras:BarAuraAnimSpeedSliderChanged(self, value)
+										PowaBarAuraAnimSpeedSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4313,8 +4292,8 @@
 										PowaBarAuraDurationSliderHigh:SetText("60 sec")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:BarAuraAnimDurationSliderChanged(self)
-										PowaBarAuraDurationSliderEditBox:SetText(string.format("%.2f", self:GetValue()))
+										PowaAuras:BarAuraAnimDurationSliderChanged(self, value)
+										PowaBarAuraDurationSliderEditBox:SetText(format("%.2f", self:GetValue()))
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4694,8 +4673,8 @@
 										PowaTimerCoordXSliderHigh:SetText("700")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerCoordXSliderChanged()
-										PowaTimerCoordXSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+										PowaAuras:TimerCoordXSliderChanged(self, value)
+										PowaTimerCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
@@ -4728,8 +4707,8 @@
 										PowaTimerCoordYSliderHigh:SetText("400")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerCoordYSliderChanged()
-										PowaTimerCoordYSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+										PowaAuras:TimerCoordYSliderChanged(self, value)
+										PowaTimerCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
@@ -4762,8 +4741,8 @@
 										PowaTimerSizeSliderHigh:SetText("500%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerSizeSliderChanged()
-										PowaTimerSizeSliderEditBox:SetText(string.format("%.0f", (self:GetValue() * 100)).."%")
+										PowaAuras:TimerSizeSliderChanged(self, value)
+										PowaTimerSizeSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4789,8 +4768,8 @@
 										PowaTimerAlphaSliderHigh:SetText("100%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerAlphaSliderChanged()
-										PowaTimerAlphaSliderEditBox:SetText(string.format("%.0f", (self:GetValue() * 100)).."%")
+										PowaAuras:TimerAlphaSliderChanged(self, value)
+										PowaTimerAlphaSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4817,8 +4796,8 @@
 										PowaTimerDurationSliderHigh:SetText("60 sec")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerDurationSliderChanged()
-										PowaTimerDurationSliderEditBox:SetText(string.format("%.2f", self:GetValue()))
+										PowaAuras:TimerDurationSliderChanged(self, value)
+										PowaTimerDurationSliderEditBox:SetText(format("%.2f", self:GetValue()))
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -5122,8 +5101,8 @@
 										PowaTimerInvertAuraSliderHigh:SetText("600 sec")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:PowaTimerInvertAuraSliderChanged(self)
-										PowaTimerInvertAuraSliderEditBox:SetText(string.format("%.2f", self:GetValue()))
+										PowaAuras:PowaTimerInvertAuraSliderChanged(self, value)
+										PowaTimerInvertAuraSliderEditBox:SetText(format("%.2f", self:GetValue()))
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -5203,8 +5182,8 @@
 										PowaStacksCoordXSliderHigh:SetText("700")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:StacksCoordXSliderChanged()
-										PowaStacksCoordXSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+										PowaAuras:StacksCoordXSliderChanged(self, value)
+										PowaStacksCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
 										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
@@ -5237,8 +5216,8 @@
 										PowaStacksCoordYSliderHigh:SetText("400")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:StacksCoordYSliderChanged()
-										PowaStacksCoordYSliderEditBox:SetText(string.format("%.0f", self:GetValue()))
+										PowaAuras:StacksCoordYSliderChanged(self, value)
+										PowaStacksCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
 										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
@@ -5271,8 +5250,8 @@
 										PowaStacksSizeSliderHigh:SetText("500%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:StacksSizeSliderChanged()
-										PowaStacksSizeSliderEditBox:SetText(string.format("%.0f", (self:GetValue() * 100)).."%")
+										PowaAuras:StacksSizeSliderChanged(self, value)
+										PowaStacksSizeSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -5298,8 +5277,8 @@
 										PowaStacksAlphaSliderHigh:SetText("100%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:StacksAlphaSliderChanged()
-										PowaStacksAlphaSliderEditBox:SetText(string.format("%.0f", (self:GetValue() * 100)).."%")
+										PowaAuras:StacksAlphaSliderChanged(self, value)
+										PowaStacksAlphaSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
 								</Scripts>
 							</Slider>

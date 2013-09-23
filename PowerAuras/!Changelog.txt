@@ -1,18 +1,23 @@
 ﻿**Issues:**
 * Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
-* Enablefullrotation and isAlive unchecked import bug on some aura types.
+* Incorrect Energy values compared to the set treshold.
+* Enable full rotation unchecked import bug on some aura types.
+* Tri State Checkbutton disabled import bugs.
 * Test All preview texture coloring bug when the current aura's random color is enabled.
+* "Stance/Seal/Form" multiple selection dropdown update.
 
 
-**4.23.30**
+**4.24.0**
+* Updated for 5.4.
+* Workaround for 5.4 Blizzard slider bug. (Sliders are still laggy untill blizz fixes this shit.)
 * Reduced CPU usage by aprox 75%. Yes i'm that good.
 * Fixed an excessive CPU and memory usage when picking colors for models.
 * Split GUI options into another addon, to optionally save some CPU and memory usage.
-* Added groups. (Very alpha yet.)
+* Added groups.
 * Added increase and decrease value buttons for every slider.
 * Added .blp support for textures in the "Aura" folder.
 * Added .blp support for textures in the "TimerTextures" folder.
-* Fixed some font texture bugs for timers/stacks. (Need some more tuning.)
+* Fixed some font texture bugs for timers/stacks. (Need some more tuning later.)
 * Changed "Stance/Seal/Form" dropdown to handle multiple selections. (Dropdown need update still.)
 * Added "In Pet Battle" tri-state checker.
 * Merged Flexible raids with "10 Man Normal" instances.
@@ -22,6 +27,7 @@
 * "Wider Digits" option for stacks from now is disabled by default.
 * "Font Selector" frame fixes.
 * Power treshold slider fixes.
+* Fixed a bug with Inspectation.
 * Demonic Fury's slider tresholds in now in percentage.
 * Fixed a frame hide bug when you deleted an aura with "Font Selector" opened.
 * Fixed a bug when stacks's texture got stuck when inverted an aura with stacks enabled.
@@ -44,6 +50,7 @@
 * Fixed a bug with aura icons. (Gradient colored "Test All" still needs a fix.)
 * Updated localizations.
 * Thousands of other GUI changes.
+* Code cleanup.
 * Other minor fixes.
 
 **4.23.29**

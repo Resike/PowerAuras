@@ -56,7 +56,7 @@ end
 
 function cPowaStacks:ShowValue(aura, newvalue)
 	local frame = PowaAuras.StacksFrames[self.id]
-	if frame == nil or newvalue == nil then
+	if not frame or not newvalue then
 		return
 	end
 	if PowaAuras.ModTest then
@@ -254,7 +254,7 @@ end
 
 function cPowaTimer:Update(elapsed)
 	local aura = PowaAuras.Auras[self.id]
-	if aura == nil then
+	if not aura then
 		return
 	end
 	if self.enabled == false and aura.InvertAuraBelow == 0 then
@@ -354,13 +354,13 @@ function cPowaTimer:ShowValue(aura, frameIndex, displayValue)
 		return
 	end
 	local timerFrame = PowaAuras.TimerFrame[self.id][frameIndex]
-	if timerFrame == nil then
+	if not timerFrame then
 		return
 	end
 	if aura.texmode == 1 then
-		timerFrame.texture:SetBlendMode("ADD")
+		timerFrame.texture:SetBlendMode("Add")
 	else
-		timerFrame.texture:SetBlendMode("DISABLE")
+		timerFrame.texture:SetBlendMode("Disable")
 	end
 	if self.UseOwnColor then
 		timerFrame.texture:SetVertexColor(self.r, self.g, self.b)
