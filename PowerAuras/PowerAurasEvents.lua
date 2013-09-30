@@ -28,10 +28,10 @@ function PowaAuras:ADDON_LOADED(addon)
 			end
 		end
 		self.MaxTextures = PowaAuras.TextureCount
-		local _, _, major, minor = string.find(self.Version, self.VersionPattern)
-		self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
-		_, _, major, minor = string.find(PowaMisc.Version, self.VersionPattern)
-		self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}
+		local _, _, major, minor, build = string.find(self.Version, self.VersionPattern)
+		self.VersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = tonumber(build)}
+		_, _, major, minor, build = string.find(PowaMisc.Version, self.VersionPattern)
+		self.PreviousVersionParts = {Major = tonumber(major), Minor = tonumber(minor), Build = tonumber(build)}
 		self.VersionUpgraded = self:VersionGreater(self.VersionParts, self.PreviousVersionParts)
 		if self.VersionUpgraded then
 			self:DisplayText(self.Colors.Purple.."<Power Auras Classic>|r "..self.Colors.Gold..self.Version.."|r - "..self.Text.welcome)
@@ -103,7 +103,7 @@ function PowaAuras:GetInstanceType()
 		elseif instanceDifficulty == 8 then
 			instanceType = "ChallangeMode"
 		-- 10 Man / 11 Man
-		elseif instanceDifficulty == 3 or instanceDifficulty == 14 then
+		elseif instanceDifficulty == 3 then
 			instanceType = "10Man"
 		-- 10 Man Heroic
 		elseif instanceDifficulty == 5 then
@@ -114,6 +114,9 @@ function PowaAuras:GetInstanceType()
 		-- 25 Man Heroic
 		elseif instanceDifficulty == 6 then
 			instanceType = "25ManHeroic"
+		-- Flexible
+		elseif instanceDifficulty == 14 then
+			instanceType = "Flexible"
 		end
 	elseif instanceType == "scenario" then
 		local _, _, instanceDifficulty = GetInstanceInfo()

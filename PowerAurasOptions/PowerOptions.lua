@@ -106,7 +106,7 @@ function PowaAuras:UpdateMainOption(hideAll)
 			if not aura.Showing then
 				icon:SetAlpha(0.33)
 			else
-				if hideAll == true then
+				if hideAll then
 					icon:SetAlpha(0.33)
 				else
 					icon:SetAlpha(1.0)
@@ -190,7 +190,7 @@ end
 
 function PowaAuras:SetCurrent(icon, auraId)
 	self.CurrentAuraId = auraId
-	if icon == nil then
+	if not icon then
 		return
 	end
 	PowaSelected:SetPoint("CENTER", icon, "CENTER")
@@ -238,6 +238,7 @@ function PowaAuras:IconeEntered(owner)
 			GameTooltip:AddLine("("..self.Text.nomCheckFriend..")", 0.2, 1.0, 0.2, 1)
 		end
 		GameTooltip:AddLine(self.Text.aideEffectTooltip, 1.0, 1.0, 1.0, 1)
+		GameTooltip:AddLine(self.Text.aideEffectTooltip3, 1.0, 1.0, 1.0, 1)
 		GameTooltip:AddLine(self.Text.aideEffectTooltip2, 1.0, 1.0, 1.0, 1)
 		GameTooltip:Show()
 	end
@@ -281,24 +282,27 @@ function PowaAuras:MainListClick(owner)
 		self.DoCheck.All = true
 		return
 	end
-	_G["PowaOptionsList"..self.CurrentAuraPage]:SetHighlightTexture("")
-	_G["PowaOptionsList"..self.CurrentAuraPage]:UnlockHighlight()
-	PowaSelected:Hide()
-	self.CurrentAuraPage = listID
-	self.CurrentAuraId = ((self.CurrentAuraPage - 1) * 24) + 1
-	local aura = self.Auras[self.CurrentAuraId]
-	if aura ~= nil and aura.buffname ~= "" and aura.buffname ~= " " then
-		self:InitPage(aura)
-	else
-		self:EditorClose()
+	if self.CurrentAuraPage ~= listID then
+		_G["PowaOptionsList"..self.CurrentAuraPage]:SetHighlightTexture("")
+		_G["PowaOptionsList"..self.CurrentAuraPage]:UnlockHighlight()
+		PowaMisc.GroupSize = 1
+		PowaSelected:Hide()
+		self.CurrentAuraPage = listID
+		self.CurrentAuraId = ((self.CurrentAuraPage - 1) * 24) + 1
+		local aura = self.Auras[self.CurrentAuraId]
+		if aura ~= nil and aura.buffname ~= "" and aura.buffname ~= " " then
+			self:InitPage(aura)
+		else
+			self:EditorClose()
+		end
+		-- Set text for rename
+		local currentText = _G["PowaOptionsList"..self.CurrentAuraPage]:GetText()
+		if currentText == nil then
+			currentText = ""
+		end
+		PowaOptionsRenameEditBox:SetText(currentText)
+		self:UpdateMainOption()
 	end
-	-- Set text for rename
-	local currentText = _G["PowaOptionsList"..self.CurrentAuraPage]:GetText()
-	if currentText == nil then
-		currentText = ""
-	end
-	PowaOptionsRenameEditBox:SetText(currentText)
-	self:UpdateMainOption()
 end
 
 function PowaAuras:MainListEntered(owner)
@@ -462,7 +466,7 @@ function PowaAuras:OptionDeleteEffect(auraId)
 end
 
 function PowaAuras:GetNextFreeSlot(page)
-	if page == nil then
+	if not page then
 		page = self.CurrentAuraPage
 	end
 	local min = ((page - 1) * 24) + 1
@@ -541,8 +545,8 @@ function PowaAuras:ImportAura(aurastring, auraId, offset)
 			local varType = string.sub(var, 1, 2)
 			var = string.sub(var, 3)
 			if key == "Version" then
-				local _, _, major, minor = string.find(var, self.VersionPattern)
-				if self:VersionGreater({Major = tonumber(major), Minor = tonumber(minor), Build = 0, Revision = ""}, {Major = 3, Minor = 0, Build = 0, Revision = "J"}) then
+				local _, _, major, minor, build = string.find(var, self.VersionPattern)
+				if self:VersionGreater({Major = tonumber(major), Minor = tonumber(minor), Build = tonumber(build)}, {Major = 3, Minor = 0, Build = 0}) then
 					oldSpellAlertLogic = false
 				end
 			elseif string.sub(key, 1, 6) == "timer." then
@@ -1260,7 +1264,7 @@ function PowaAuras:MainOptionShow()
 	if PowaOptionsFrame:IsVisible() then
 		self:MainOptionClose()
 	else
-		if aura == nil then
+		if not aura then
 			PowaSelected:Hide()
 		end
 		self:OptionHideAll()
@@ -2554,11 +2558,6 @@ function PowaAuras:ExactChecked()
 	end
 end
 
--- Marked for remove
-function PowaAuras:CheckedButtonOnClick(button, key)
-	self.Auras[self.CurrentAuraId][key] = button:GetChecked() ~= nil
-end
-
 function PowaAuras:RandomColorChecked()
 	local aura = self.Auras[self.CurrentAuraId]
 	local auraId = self.CurrentAuraId
@@ -3503,7 +3502,9 @@ function PowaAuras.SetColor()
 end
 
 function PowaAuras.CancelColor()
-	PowaAuras:SetAuraColor(ColorPickerFrame.previousValues.r, ColorPickerFrame.previousValues.g, ColorPickerFrame.previousValues.b)
+	if ColorPickerFrame.previousValues and ColorPickerFrame.previousValues.r and ColorPickerFrame.previousValues.g and ColorPickerFrame.previousValues.b then
+		PowaAuras:SetAuraColor(ColorPickerFrame.previousValues.r, ColorPickerFrame.previousValues.g, ColorPickerFrame.previousValues.b)
+	end
 end
 
 function PowaAuras:SetAuraColor(r, g, b)
@@ -3551,7 +3552,9 @@ function PowaAuras.SetGradientColor()
 end
 
 function PowaAuras.CancelGradientColor()
-	PowaAuras:SetGradientAuraColor(ColorPickerFrame.previousGradientValues.r, ColorPickerFrame.previousGradientValues.g, ColorPickerFrame.previousGradientValues.b)
+	if ColorPickerFrame.previousGradientValues and ColorPickerFrame.previousGradientValues.r and ColorPickerFrame.previousGradientValues.g and ColorPickerFrame.previousGradientValues.b then
+		PowaAuras:SetGradientAuraColor(ColorPickerFrame.previousGradientValues.r, ColorPickerFrame.previousGradientValues.g, ColorPickerFrame.previousGradientValues.b)
+	end
 end
 
 function PowaAuras:SetGradientAuraColor(r, g, b)
@@ -4374,7 +4377,6 @@ function PowaAuras:OptionTest()
 		aura:CreateFrames()
 		self.SecondaryAuras[aura.id] = nil
 		self:DisplayAura(aura.id)
-		self:RedisplayAura(aura.id)
 		aura.Active = true
 		if aura.customsound ~= "" then
 			local pathToSound
@@ -4797,6 +4799,7 @@ function PowaAuras.SliderEditBoxChanged(self)
 		else
 			self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
 		end
+		PowaBarThresholdSliderEditBox:SetText(format("%.0f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
 	elseif slider == PowaBarAuraAlphaSlider or slider == PowaTimerSizeSlider or slider == PowaTimerAlphaSlider or slider == PowaStacksSizeSlider or slider == PowaStacksAlphaSlider then
 		local text = tonumber(self:GetText())
 		if text then
@@ -4835,6 +4838,7 @@ function PowaAuras.SliderEditBoxChanged(self)
 		else
 			self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
 		end
+		PowaBarThresholdSliderEditBox:SetText(format("%.0f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
 	elseif tonumber(postfix) == nil and slider == PowaBarAuraRotateSlider then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2))
 		if text == nil then

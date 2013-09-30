@@ -145,6 +145,7 @@ cPowaAura.ExportSettings =
 	Instance10ManHeroic = 0,
 	Instance25Man = 0,
 	Instance25ManHeroic = 0,
+	InstanceFlexible = 0,
 	InstanceBg = 0,
 	InstanceArena = 0,
 	RoleTank = 0,
@@ -376,6 +377,14 @@ function cPowaAura:GetAuraText()
 	text = self:SubstituteInText(text , "%%crt", function() return format("%.2f", GetCritChance()) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%sp", function() return self:SpellPower() end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%ap", function() return UnitAttackPower("player") end, PowaAuras.Text.Unknown)
+	local lowDmg, hiDmg, offlowDmg, offhiDmg, posBuff, negBuff, percentmod = UnitDamage("player")
+	text = self:SubstituteInText(text , "%%lowMdmg", function() return math.floor(lowDmg) end, PowaAuras.Text.Unknown)
+	text = self:SubstituteInText(text , "%%highMdmg", function() return math.ceil(hiDmg) end, PowaAuras.Text.Unknown)
+	text = self:SubstituteInText(text , "%%avgMdmg", function() return (math.ceil(hiDmg) + math.floor(lowDmg)) / 2 end, PowaAuras.Text.Unknown)
+	local speed, lowDmg, hiDmg, posBuff, negBuff, percent = UnitRangedDamage("player")
+	text = self:SubstituteInText(text , "%%lowRdmg", function() return math.floor(lowDmg) end, PowaAuras.Text.Unknown)
+	text = self:SubstituteInText(text , "%%highRdmg", function() return math.ceil(hiDmg) end, PowaAuras.Text.Unknown)
+	text = self:SubstituteInText(text , "%%avgRdmg", function() return (math.ceil(hiDmg) + math.floor(lowDmg)) / 2 end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%u", function() if self.DisplayUnit == nil then return nil end local name = UnitName(self.DisplayUnit) if name ~= nil then return name end return self.DisplayUnit end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%u2",	function() if self.DisplayUnit2 == nil then return nil end local name = UnitName(self.DisplayUnit2) if name ~= nil then return name end return self.DisplayUnit2 end, PowaAuras.Text.Unknown)
 	return text
@@ -622,7 +631,7 @@ function cPowaAura:CheckState(giveReason)
 end
 
 function cPowaAura:AnyInstanceTypeChecksRequired()
-	return self.InstanceScenario ~= 0 or self.InstanceScenarioHeroic ~= 0 or self.Instance5Man ~= 0 or self.Instance5ManHeroic ~= 0 or self.InstanceChallengeMode ~= 0 or self.Instance10Man ~= 0 or self.Instance10ManHeroic ~= 0 or self.Instance25Man ~= 0 or self.Instance25ManHeroic ~= 0 or self.InstanceBg ~= 0 or self.InstanceArena ~= 0
+	return self.InstanceScenario ~= 0 or self.InstanceScenarioHeroic ~= 0 or self.Instance5Man ~= 0 or self.Instance5ManHeroic ~= 0 or self.InstanceChallengeMode ~= 0 or self.Instance10Man ~= 0 or self.Instance10ManHeroic ~= 0 or self.Instance25Man ~= 0 or self.Instance25ManHeroic ~= 0 or self.InstanceFlexible ~= 0 or self.InstanceBg ~= 0 or self.InstanceArena ~= 0
 end
 
 function cPowaAura:CheckInstanceType(giveReason)
@@ -688,6 +697,13 @@ function cPowaAura:CheckInstanceType(giveReason)
 		showTotal = false
 	end
 	show, now, reason = self:ShouldShowForInstanceType("25ManHeroic", giveReason)
+	if now then
+		return show, reason
+	end
+	if show == false then
+		showTotal = false
+	end
+	show, now, reason = self:ShouldShowForInstanceType("Flexible", giveReason)
 	if now then
 		return show, reason
 	end
@@ -2322,7 +2338,7 @@ end
 
 -- Spell Cooldown
 cPowaSpellCooldown = PowaClass(cPowaAura, {AuraType = "SpellCooldowns", CanHaveTimer = true, CanHaveTimerOnInverse = true, CooldownAura = true, CanHaveInvertTime = true})
-cPowaSpellCooldown.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff8, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellCooldown], mineText = PowaAuras.Text.nomIgnoreUseable, mineTooltip = PowaAuras.Text.aideIgnoreUseable, targetFriendText = PowaAuras.Text.nomCheckPet, targetFriendTooltip = PowaAuras.Text.aideCheckPet}
+cPowaSpellCooldown.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff8, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellCooldown], targetFriendText = PowaAuras.Text.nomCheckPet, targetFriendTooltip = PowaAuras.Text.aideCheckPet}
 cPowaSpellCooldown.ShowOptions = {["PowaBarTooltipCheck"] = 1}
 cPowaSpellCooldown.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaSpellCooldown.TooltipOptions = {r = 1.0, g = 0.6, b = 0.2, showBuffName = true}

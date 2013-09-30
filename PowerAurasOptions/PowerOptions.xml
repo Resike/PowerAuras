@@ -969,7 +969,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAuras:OptionTest()
-								--PowaAuras:UpdateMainOption()
+								PowaAuras:UpdateMainOption()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -2888,7 +2888,6 @@
 									</OnLoad>
 									<OnValueChanged>
 										PowaAuras:BarThresholdSliderChanged(self, value)
-										PowaBarThresholdSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -3783,6 +3782,25 @@
 									<OnShow>
 										self.Parameter = "Instance25ManHeroic"
 										Powa25ManHeroicInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+									</OnShow>
+								</Scripts>
+							</CheckButton>
+							<!-- 25 Man Hc CheckButton -->
+							<CheckButton name = "PowaFlexibleInstanceButton" inherits = "PowaTernarySelectorTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "Powa25ManHeroicInstanceButton" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnShow>
+										self.Parameter = "InstanceFlexible"
+										PowaFlexibleInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>

@@ -5,7 +5,7 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.0   \//      \// \//    \\/     \\/      \//  \//       
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.1   \//      \// \//    \\/     \\/      \//  \//       
 
 	Power Auras Classic
 	Current author/maintainter: Resike
@@ -99,7 +99,6 @@ function PowaAuras:VersionGreater(v1, v2)
 	if v1.Build < v2.Build then
 		return false
 	end
-	return v1.Revision > v2.Revision
 end
 
 function PowaAuras:LoadAuras()
@@ -637,7 +636,7 @@ function PowaAuras:OnUpdate(elapsed)
 		local aura = self.AuraSequence[i]
 		if aura.Showing or (aura.Timer and aura.Timer.Showing) then
 			if self:UpdateAura(aura, elapsed) then
-				if aura.Timer.enabled then
+				if aura.Timer and aura.Timer.enabled then
 					self:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 				end
 			end
@@ -857,12 +856,13 @@ local function startFrameMoving(frame)
 			icon = _G["PowaIcone"..i]
 		end
 		PowaAuras:SetCurrent(icon, frame.aura.id)
+		PowaMisc.GroupSize = 1
 		--PowaAuras:InitPage(frame.aura) -- This seems to mess things up?
 	end
 	frame.isMoving = true
 	frame:StartMoving()
 	local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
-	if secondaryAura ~= nil then
+	if secondaryAura then
 		secondaryAura.HideRequest = true
 	end
 end
@@ -1525,7 +1525,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 	end
 	if aura.Showing then
 		local frame = aura:GetFrame()
-		if frame == nil then
+		if not frame then
 			return false
 		end
 		if not aura.HideRequest and not aura.isSecondary and not self.ModTest and aura.TimeToHide then

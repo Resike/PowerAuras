@@ -1,11 +1,23 @@
 ﻿**Issues:**
 * Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
-* Incorrect Energy values compared to the set treshold.
+* Incorrect Energy values compared to the set threshold.
 * Enable full rotation unchecked import bug on some aura types.
 * Tri State Checkbutton disabled import bugs.
 * Test All preview texture coloring bug when the current aura's random color is enabled.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
+
+**4.24.1**
+* Fixed some animation trasition glitches, like from fade out to static or flashing.
+* Fixed a lua error for "Combo Points".
+* Fixed a lua error for the color picker.
+* Updated incorrect version for PowerAurasOptions.
+* Some version check updates.
+* Added seperate Flexible Instance checkbutton.
+* Fixed a bug with the Threshold siler's editbox at the Rage/Energy/Power activation.
+* "Cooldown only" option is now disable for "Spell Cooldowns".
+* Some group updates.
+* Some localization fixes/changes.
 
 **4.24.0**
 * Updated for 5.4.
@@ -44,7 +56,7 @@
 * Fixed the layer of the glow effect itself.
 * Fixed a GUI override bug with the "Unit Name" checkbutton.
 * Fixed a bug with the "Rotation" slider's editbox.
-* Fixed a bug with the "Animation Speed" slider's editobx.
+* Fixed a bug with the "Animation Speed" slider's editbox.
 * Fixed a coloring bug with model's and custom model's icon.
 * Fixed a preview texture coloring bug with the "Test All" button.
 * Fixed a bug with aura icons. (Gradient colored "Test All" still needs a fix.)
@@ -80,7 +92,7 @@
 * Addon now going to recheck instance type when the leader changes difficulty of an instance.
 * Fixed a bug with Equipment Slots.
 * Druid Flight form fixes.
-* Fixed a bug which broke 5*Man instance check button's functionality.
+* Fixed a bug which broke 5-Man instance check button's functionality.
 * Added Challange Mode instance check button.
 * Added Scenario instance check button.
 * Added Heroic Scenario instance check button.
@@ -102,7 +114,7 @@
 
 **4.23.23**
 * Updated for 5.3.
-* Reduced CPU usage by approx 10*15%.
+* Reduced CPU usage by approx 10-15%.
 * Added an option to display 3D models from the game.
 * Added 163 predefinied models.
 * Added an option to display custom 3D models from the game.
@@ -150,9 +162,9 @@
 * Added 5 new Custom textures.
 * Added 1 new font.
 * Added Frame's strata changer dropdown, to change the aura frame's z index.
-* Added Frame level changer slider, to change the current frame's strata's z index. (0 * 20)
+* Added Frame level changer slider, to change the current frame's strata's z index. (0 - 20)
 * Added Texture strata changer dropdown, to change the aura texture's z index.
-* Added Texture sublevel changer slider, to change the current texture strata's z index. (*8 * 7)
+* Added Texture sublevel changer slider, to change the current texture strata's z index. (-8 - 7)
 * With this change you can create up to 12.000 different texture layers per aura.
 * Fixed a bugged font.
 * Fixed a major moving bug, when you move the auras with the mouse.
@@ -182,11 +194,11 @@
 * Fixed a bug with "Stacks Texture" dropdown menu.
 * X, Y, XY symmetry changes now wont be shown in effect editor.
 * Alpha sliders now can be changed to 0% too.
-* Deformation slider min*max value now can be set between 0*2.
+* Deformation slider min-max value now can be set between 0-2.
 * Fixed font button for text auras.
 * Fixed a bug when you manually set max texture count.
 * Fixed a bug with the button itself.
-* Override max textures min*max value now is 1*1000.
+* Override max textures min-max value now is 1-1000.
 * Added "Enable Full Rotation" checkbutton, which fixes some not fully rotatable textures, when disabled.
 * The texure cutter algorythm is now more precise for ingame icons, and custom textures.
 * Hide all button now properly decreases all icon's alpha immediately.

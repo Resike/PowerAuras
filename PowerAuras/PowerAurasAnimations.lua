@@ -106,7 +106,7 @@ function PowaAuras:AddJumpScaleAndReturn(animationGroup, scale, duration, order)
 end
 
 function PowaAuras:AddMainAnimation(aura, frame)
-	if not aura.anim1 or aura.anim1 == PowaAuras.AnimationTypes.Static then
+	if not aura.anim1 then
 		return nil
 	end
 	local animationGroup = frame:CreateAnimationGroup("Main")
@@ -119,8 +119,11 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		speed = aura.speed
 	end
 	local duration, duration2 = self:CalculateDurations(speed)
-	if aura.anim1 == PowaAuras.AnimationTypes.Flashing then
+	if aura.anim1 == PowaAuras.AnimationTypes.Static then
+		self:AddScale(animationGroup, 1.0, 1.0, 0.001, 1)
+	elseif aura.anim1 == PowaAuras.AnimationTypes.Flashing then
 		local deltaAlpha = math.min(aura.alpha, 0.99)
+		self:AddScale(animationGroup, 1.0, 1.0, 0.001, 1)
 		self:AddAlpha(animationGroup, - deltaAlpha, duration, 1)
 		self:AddAlpha(animationGroup, deltaAlpha, duration, 2)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Growing then
