@@ -12,6 +12,7 @@
 * Fixed a lua error for "Combo Points".
 * Fixed a lua error for the color picker.
 * Updated incorrect version for PowerAurasOptions.
+* Added 45 new predefined models.
 * Some version check updates.
 * Added seperate Flexible Instance checkbutton.
 * Fixed a bug with the Threshold siler's editbox at the Rage/Energy/Power activation.

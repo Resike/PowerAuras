@@ -3785,7 +3785,7 @@
 									</OnShow>
 								</Scripts>
 							</CheckButton>
-							<!-- 25 Man Hc CheckButton -->
+							<!-- Flexible CheckButton -->
 							<CheckButton name = "PowaFlexibleInstanceButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>

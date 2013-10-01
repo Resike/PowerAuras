@@ -163,6 +163,72 @@ cPowaAura.ExportSettings =
 	UseOldAnimations = false,
 }
 
+local playerSpells
+do
+	local iterateFlyout, iterateSlots, iterateTabs
+	iterateFlyout = function(state)
+		while state.flyoutSlotIdx <= state.numFlyoutSlots do
+			local spellId, _, spellKnown, spellName = GetFlyoutSlotInfo(state.flyoutId, state.flyoutSlotIdx)
+			state.flyoutSlotIdx = state.flyoutSlotIdx + 1
+			if spellKnown then
+				return spellId, spellName
+			end
+		end
+		state.slotIdx = state.slotIdx + 1
+		state.currentIterator = iterateSlots
+		return state:currentIterator()
+	end
+	iterateSlots = function (state)
+		while state.slotIdx <= state.numSlots do
+			local spellBookItem = state.slotOffset + state.slotIdx
+			local spellName, spellSubtext = GetSpellBookItemName(spellBookItem, BOOKTYPE_SPELL)
+			local spellType, spellId = GetSpellBookItemInfo(spellBookItem, BOOKTYPE_SPELL)
+			if spellType == "SPELL" and not IsPassiveSpell(spellId) then
+				state.slotIdx = state.slotIdx + 1
+				return spellId, spellName, spellSubtext
+			elseif spellType == "FLYOUT" then
+				local _, _, numFlyoutSlots, flyoutKnown = GetFlyoutInfo(spellId)
+				if flyoutKnown then
+					state.flyoutId = spellId
+					state.flyoutSlotIdx = 1
+					state.numFlyoutSlots = numFlyoutSlots
+					state.currentIterator = iterateFlyout
+					return state:currentIterator()
+				end
+			end
+			state.slotIdx = state.slotIdx + 1
+		end
+		state.tabIdx = state.tabIdx + 1
+		state.currentIterator = iterateTabs
+		return state:currentIterator()
+	end
+	iterateTabs = function (state)
+		while state.tabIdx <= state.numOfTabs do
+			local _, _, slotOffset, numSlots, _, offSpecID = GetSpellTabInfo(state.tabIdx)
+			if offSpecID ~= 0 then
+				state.tabIdx = state.tabIdx + 1
+			else
+				state.slotOffset = slotOffset
+				state.numSlots = numSlots
+				state.slotIdx = 1
+				state.currentIterator = iterateSlots
+				return state:currentIterator()
+			end
+		end
+		return nil
+	end
+	local function dispatch(state)
+		return state:currentIterator()
+	end
+	playerSpells = function()
+		local state = {}
+		state.tabIdx = 1
+		state.numOfTabs = GetNumSpellTabs()
+		state.currentIterator = iterateTabs
+		return dispatch, state
+	end
+end
+
 function cPowaAura:Init()
 	self:SetFixedIcon()
 end
@@ -2338,7 +2404,7 @@ end
 
 -- Spell Cooldown
 cPowaSpellCooldown = PowaClass(cPowaAura, {AuraType = "SpellCooldowns", CanHaveTimer = true, CanHaveTimerOnInverse = true, CooldownAura = true, CanHaveInvertTime = true})
-cPowaSpellCooldown.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff8, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellCooldown], targetFriendText = PowaAuras.Text.nomCheckPet, targetFriendTooltip = PowaAuras.Text.aideCheckPet}
+cPowaSpellCooldown.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff8, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellCooldown],  mineText = PowaAuras.Text.nomSpellLearned, mineTooltip = PowaAuras.Text.aideSpellLearned, targetFriendText = PowaAuras.Text.nomCheckPet, targetFriendTooltip = PowaAuras.Text.aideCheckPet}
 cPowaSpellCooldown.ShowOptions = {["PowaBarTooltipCheck"] = 1}
 cPowaSpellCooldown.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaSpellCooldown.TooltipOptions = {r = 1.0, g = 0.6, b = 0.2, showBuffName = true}
@@ -2356,6 +2422,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 	if self.Debug then
 		PowaAuras:Message("Spell = ", self.buffname)
 	end
+	local reason
 	for pword in string.gmatch(self.buffname, "[^/]+") do
 		local _
 		local spellName, spellIcon, spellId = self:GetSpellFromMatch(pword)
@@ -2381,13 +2448,44 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		if self.Debug then
 			PowaAuras:Message("cdstart = ", cdstart," duration = ", cdduration, " enabled = ", enabled)
 		end
-		if enabled ~= 1 then
+		if not enabled then
+			if not self.inverse and self.mine then
+				local show = false
+				for spellId, spellName, spellSubtext in playerSpells() do
+					if spellId == tonumber(self.buffname) or spellName == self.buffname then
+						show = true
+					end
+				end
+				if show then
+					return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotLearned, spellName)
+				else
+					return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotLearned, spellName)
+				end
+			elseif self.inverse and self.mine then
+				local show = true
+				for spellId, spellName, spellSubtext in playerSpells() do
+					if spellId == tonumber(self.buffname) or spellName == self.buffname then
+						show = false
+					end
+				end
+				if show then
+					return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotLearned, spellName)
+				else
+					return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotLearned, spellName)
+				end
+			else
+				if not giveReason then
+					return false
+				end
+				return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotUsable, spellName)
+			end
+		elseif enabled ~= 1 then
 			if not giveReason then
 				return false
 			end
 			return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotEnabled, spellName)
 		end
-		local globalCD = not self.CooldownOver and (cdduration > 0.2 and cdduration < 1.7) and PowaAuras.InGCD == true
+		local globalCD = not self.CooldownOver and cdduration and cdduration > 0.2 and cdduration < 1.7 and PowaAuras.InGCD == true
 		if self.Debug then
 			PowaAuras:Message("globalCD = ", globalCD)
 		end
@@ -2399,17 +2497,112 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			return - 1, PowaAuras:InsertText(PowaAuras.Text.nomReasonGlobalCooldown, spellName)
 		end
 		if cdstart == 0 or self.CooldownOver then
-			if self.Debug then
-				PowaAuras:Message("Show!")
+			if not self.inverse and not self.mine then
+				local show = false
+				for spellId, spellName, spellSubtext in playerSpells() do
+					if spellId == tonumber(self.buffname) or spellName == self.buffname then
+						show = true
+					end
+				end
+				if show then
+					return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable, spellName)
+				else
+					return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotUsable, spellName)
+				end
+			elseif not self.inverse and self.mine then
+				local show
+				if tonumber(self.buffname) and tonumber(self.buffname) % 1 == 0 then
+					show = false
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if spellId == tonumber(self.buffname) or spellName == self.buffname then
+							show = true
+						end
+					end
+					if show then
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable.." "..PowaAuras.Text.nomReasonSpellLearned, spellName)
+					else
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotLearned, spellName)
+					end
+				else
+					show = false
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if spellId == tonumber(self.buffname) or spellName == self.buffname then
+							show = true
+						end
+					end
+					if show then
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable.." "..PowaAuras.Text.nomReasonSpellLearned, spellName)
+					else
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable.." "..PowaAuras.Text.nomReasonSpellNotLearned, spellName)
+					end
+				end
+			elseif self.inverse and self.mine then
+				local show
+				if tonumber(self.buffname) and tonumber(self.buffname) % 1 == 0 then
+					self.mine = not self.mine
+					show = false
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if spellId == tonumber(self.buffname) then
+							show = true
+						end
+					end
+					if show then
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable, spellName)
+					else
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellOnCooldown.." "..PowaAuras.Text.nomReasonSpellLearned, spellName)
+					end
+				else
+					show = false
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if spellName == self.buffname then
+							show = true
+						end
+					end
+					if show then
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable, spellName)
+					else
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellOnCooldown.." "..PowaAuras.Text.nomReasonSpellLearned, spellName)
+					end
+				end
+			elseif self.inverse and not self.mine then
+				local show
+				if tonumber(self.buffname) and tonumber(self.buffname) % 1 == 0 then
+					show = false
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if spellId == tonumber(self.buffname) or spellName == self.buffname then
+							show = true
+						end
+					end
+					if show then
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable, spellName)
+					else
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotUsable, spellName)
+					end
+				else
+					show = false
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if spellId == tonumber(self.buffname) or spellName == self.buffname then
+							show = true
+						end
+					end
+					if show then
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable, spellName)
+					else
+						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable.." "..PowaAuras.Text.nomReasonSpellLearned, spellName)
+					end
+				end
+			else
+				if self.Debug then
+					PowaAuras:Message("Show!")
+				end
+				if not giveReason then
+					return true
+				end
+				return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable, spellName)
 			end
-			if not giveReason then
-				return true
-			end
-			return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable, spellName)
 		end
-		PowaAuras.Pending[self.id] = cdstart + cdduration
-		if giveReason then
-			local reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotFound, self.buffname)
+		if cdstart and cdduration then
+			PowaAuras.Pending[self.id] = cdstart + cdduration
 		end
 		if self.Timer then
 			self.Timer:SetDurationInfo(PowaAuras.Pending[self.id])
@@ -2425,7 +2618,17 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			end
 		end
 		if giveReason then
-			reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellOnCooldown, spellName)
+			if not self.inverse and not self.mine then
+				reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotUsable, spellName)
+			elseif not self.inverse and self.mine then
+				reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotUsable, spellName)
+			elseif self.inverse and self.mine then
+				reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellOnCooldown.." "..PowaAuras.Text.nomReasonSpellLearned, spellName)
+			elseif self.inverse and not self.mine then
+				reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotUsable, spellName)
+			else
+				reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellOnCooldown, spellName)
+			end
 		end
 	end
 	if self.Debug then
@@ -3492,6 +3695,7 @@ function cPowaSlots:CheckIfShouldShow(giveReason)
 	if self.Debug then
 		PowaAuras:Message("Buffname =", self.buffname)
 	end
+	local reason
 	for pword in string.gmatch(self.buffname, "[^/]+") do
 		pword = self:Trim(pword)
 		if string.len(pword) > 0 then
@@ -3617,6 +3821,7 @@ function cPowaItems:CheckIfShouldShow(giveReason)
 	if self.Debug then
 		PowaAuras:Message("Buffname=", self.buffname)
 	end
+	local reason
 	for pword in string.gmatch(self.buffname, "[^/]+") do
 		pword = self:Trim(pword)
 		if string.len(pword) > 0 then
