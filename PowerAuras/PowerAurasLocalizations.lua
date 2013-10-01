@@ -1,5 +1,4 @@
-﻿-- asdasdasd
-PowaAuras.Anim[0] = "[Invisible]"
+﻿PowaAuras.Anim[0] = "[Invisible]"
 PowaAuras.Anim[1] = "Static"
 PowaAuras.Anim[2] = "Flashing"
 PowaAuras.Anim[3] = "Growing"
