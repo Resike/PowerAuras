@@ -2539,17 +2539,42 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			elseif self.inverse and self.mine then
 				local show
 				if tonumber(self.buffname) and tonumber(self.buffname) % 1 == 0 then
-					self.mine = not self.mine
-					show = false
+					local spellIdFound = false
 					for spellId, spellName, spellSubtext in playerSpells() do
-						if spellId == tonumber(self.buffname) then
-							show = true
+						local spellLink = GetSpellLink(spellId)
+						if spellLink then
+							local spellID = string.match(spellLink, "spell:(%d+)")
+							if tonumber(spellID) == tonumber(self.buffname) then
+								spellIdFound = true
+							end
 						end
 					end
-					if show then
-						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable, spellName)
+					if spellIdFound then
+						show = false
+						local compare = show
+						for spellId, spellName, spellSubtext in playerSpells() do
+							if spellId == tonumber(self.buffname) then
+								show = true
+							end
+						end
+						if show then
+							return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellUsable, spellName)
+						else
+							return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellOnCooldown.." "..PowaAuras.Text.nomReasonSpellLearned, spellName)
+						end
 					else
-						return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellOnCooldown.." "..PowaAuras.Text.nomReasonSpellLearned, spellName)
+						show = true
+						local compare = show
+						for spellId, spellName, spellSubtext in playerSpells() do
+							if spellId == tonumber(self.buffname) then
+								show = false
+							end
+						end
+						if show then
+							return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotLearned, spellName)
+						else
+							return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellOnCooldown.." "..PowaAuras.Text.nomReasonSpellLearned, spellName)
+						end
 					end
 				else
 					show = false
