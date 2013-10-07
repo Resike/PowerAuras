@@ -226,6 +226,11 @@ function PowaAuras:UNIT_MAXPOWER(...)
 	self:CheckPower(unit, resourceType)
 end
 
+function PowaAuras:UNIT_POWER_FREQUENT(...)
+	local unit, resourceType = ...
+	self:CheckPower(unit, resourceType)
+end
+
 function PowaAuras:CheckPower(unit, resourceType)
 	if resourceType == "MANA" then
 		self:SetCheckResource("Mana", unit)

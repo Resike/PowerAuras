@@ -1,6 +1,4 @@
 ﻿**Issues:**
-* Rage bug when treshold slider set to 50% and inverted the icons disappear when you below 48 rage.
-* Incorrect Energy values compared to the set threshold.
 * Enable full rotation unchecked import bug on some aura types.
 * Tri State Checkbutton disabled import bugs.
 * Test All preview texture coloring bug when the current aura's random color is enabled.
@@ -9,8 +7,13 @@
 
 **4.24.1**
 * Fixed some animation trasition glitches, like from fade out to static or flashing.
+* Added a missing event for rogue's energy and warrior's rage replenishment, which caused some "Rage/Energy/Power" auras working incorrectly.
 * Fixed a lua error for "Combo Points".
 * Fixed a lua error for the color picker.
+* Fixed a lot of tooltip issues.
+* Using the "Power Type" dropdown in the "Rage/Energy/Power" activation now properly going to update the aura's icon in main options too.
+* Fixed a broken "Bounce" begin animation.
+* Selecting a begin animation is now properly going to play that animation.
 * Updated incorrect version for PowerAurasOptions.
 * Added 45 new predefined models.
 * Some version check updates.

@@ -15,6 +15,8 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 	animationGroup.aura = aura
 	animationGroup:SetScript("OnFinished", function(self, forced)
 		local aura = self.aura
+		local _, _, texture = aura:CreateFrames()
+		texture:SetBlendMode(aura.blendmode)
 		if aura and aura.MainAnimation then
 			aura.MainAnimation:Play()
 			local secondaryAura = PowaAuras.SecondaryAuras[aura.id]
@@ -55,12 +57,12 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 	elseif aura.begin == PowaAuras.AnimationBeginTypes.TranslateBottomLeft then
 		self:AddJumpTranslateAndReturn(animationGroup, - 75, - 75, duration, 1)
 	elseif aura.begin == PowaAuras.AnimationBeginTypes.Bounce then
-		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), 0, 0, 1)
+		self:AddJumpAlphaAndReturn(animationGroup, - math.min(aura.alpha, 0.99), 0, 1)
 		local u = 0
 		local height = 100
 		local efficiency = 0.6
 		local a = 800 * aura.speed
-		self:AddTranslation(animationGroup, 0, height, 0, 0, 1)
+		self:AddTranslation(animationGroup, 0, height, 0, 1)
 		local steps = 6
 		local dT = math.sqrt(2 * height / a)
 		local dt = dT / steps
@@ -91,12 +93,12 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 end
 
 function PowaAuras:AddJumpTranslateAndReturn(animationGroup, dx, dy, duration, order)
-	self:AddTranslation(animationGroup, dx, dy, 0, 0, order)
+	self:AddTranslation(animationGroup, dx, dy, 0, order)
 	self:AddTranslation(animationGroup, - dx, - dy, duration, order + 1)
 end
 
 function PowaAuras:AddJumpAlphaAndReturn(animationGroup, change, duration, order)
-	self:AddAlpha(animationGroup, change, 0, 0, order)
+	self:AddAlpha(animationGroup, change, 0, order)
 	self:AddAlpha(animationGroup, - change, duration, order + 1)
 end
 
@@ -120,10 +122,10 @@ function PowaAuras:AddMainAnimation(aura, frame)
 	end
 	local duration, duration2 = self:CalculateDurations(speed)
 	if aura.anim1 == PowaAuras.AnimationTypes.Static then
-		self:AddScale(animationGroup, 1.0, 1.0, 0.001, 1)
+		self:AddScale(animationGroup, 1.0, 1.0, 0, 1)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Flashing then
 		local deltaAlpha = math.min(aura.alpha, 0.99)
-		self:AddScale(animationGroup, 1.0, 1.0, 0.001, 1)
+		self:AddScale(animationGroup, 1.0, 1.0, 0, 1)
 		self:AddAlpha(animationGroup, - deltaAlpha, duration, 1)
 		self:AddAlpha(animationGroup, deltaAlpha, duration, 2)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Growing then

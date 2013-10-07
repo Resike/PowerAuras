@@ -704,9 +704,9 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 	local debugEffectTest = PowaAuras.DebugCycle or aura.Debug
 	if debugEffectTest then
 		self:Message("Test Aura for Hide or Show= ", auraId)
-		self:Message("Active= ", aura.Active)
-		self:Message("Showing= ", aura.Showing)
-		self:Message("HideRequest= ", aura.HideRequest)
+		self:Message("Active = ", aura.Active)
+		self:Message("Showing = ", aura.Showing)
+		self:Message("HideRequest = ", aura.HideRequest)
 	end
 	-- Prevent crash if class not set-up properly
 	if not aura.ShouldShow then
@@ -736,7 +736,7 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 		end
 	end
 	if debugEffectTest then
-		self:Message("shouldShow= ", shouldShow, " because ", reason)
+		self:Message("shouldShow = ", shouldShow, " because ", reason)
 	end
 	if shouldShow then
 		if not aura.Active then
@@ -1397,15 +1397,15 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	end
 	if not aura.textaura then
 		if secondaryAura.anim1 == PowaAuras.AnimationTypes.Growing or secondaryAura.anim1 == PowaAuras.AnimationTypes.Shrinking or secondaryAura.anim1 == PowaAuras.AnimationTypes.WaterDrop or secondaryAura.anim1 == PowaAuras.AnimationTypes.Electric then
-			secondaryTexture:SetBlendMode("BLEND")
+			secondaryTexture:SetBlendMode("Blend")
 		else
-			secondaryTexture:SetBlendMode("ADD")
+			secondaryTexture:SetBlendMode("Add")
 		end
 	end
-	secondaryFrame:SetFrameStrata("BACKGROUND")
+	secondaryFrame:SetFrameStrata("Background")
 	secondaryFrame:SetFrameLevel(aura.stratalevel)
 	if not aura.model and not aura.modelcustom then
-		secondaryTexture:SetDrawLayer("BACKGROUND", aura.texturesublevel)
+		secondaryTexture:SetDrawLayer("Background", aura.texturesublevel)
 	end
 	if not aura.textaura and not aura.model and not aura.modelcustom then
 		secondaryTexture:SetRotation(math.rad(aura.rotate))

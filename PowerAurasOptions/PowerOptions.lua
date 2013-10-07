@@ -217,7 +217,19 @@ function PowaAuras:IconeEntered(owner)
 			GameTooltip:AddLine("("..self.Text.nomExact..")", 1.0, 0.2, 0.2, 1)
 		end
 		if aura.mine then
-			GameTooltip:AddLine("("..self.Text.nomMine..")", 1.0, 0.2, 0.2, 1)
+			if aura.bufftype == self.BuffTypes.thenActionReady then
+				GameTooltip:AddLine("("..self.Text.nomIgnoreUseable..")", 1.0, 0.2, 0.2, 1)
+			elseif aura.bufftype == self.BuffTypes.Buff or aura.bufftype == self.BuffTypes.Debuff then
+				GameTooltip:AddLine("("..self.Text.nomMine..")", 1.0, 0.2, 0.2, 1)
+			elseif aura.bufftype == self.BuffTypes.TypeBuff or aura.bufftype == self.BuffTypes.TypeDebuff then
+				GameTooltip:AddLine("("..self.Text.nomDispellable..")", 1.0, 0.2, 0.2, 1)
+			elseif aura.bufftype == self.BuffTypes.Items then
+				GameTooltip:AddLine("("..self.Text.nomIgnoreItemUseable..")", 1.0, 0.2, 0.2, 1)
+			elseif aura.bufftype == self.BuffTypes.SpellCooldown then
+				GameTooltip:AddLine("("..self.Text.nomSpellLearned..")", 1.0, 0.2, 0.2, 1)
+			elseif aura.bufftype == self.BuffTypes.SpellAlert then
+				GameTooltip:AddLine("("..self.Text.nomCanInterrupt..")", 1.0, 0.2, 0.2, 1)
+			end
 		end
 		if aura.focus then
 			GameTooltip:AddLine("("..self.Text.nomCheckFocus..")", 1.0, 0.2, 0.2, 1)
@@ -1464,7 +1476,7 @@ function PowaAuras:SetupOptionsForAuraType(aura)
 end
 
 function PowaAuras:InitPage(aura)
-	if aura == nil then
+	if not aura then
 		aura = self.Auras[self.CurrentAuraId]
 	end
 	if PowaMisc.GroupSize > 1 then
@@ -2889,73 +2901,73 @@ function PowaAuras:TargetChecked()
 end
 
 function PowaAuras:TargetFriendChecked()
-	local auraId = self.CurrentAuraId
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaTargetFriendButton:GetChecked() then
-		self.Auras[auraId].targetfriend = true
+		aura.targetfriend = true
 	else
-		self.Auras[auraId].targetfriend = false
+		aura.targetfriend = false
 	end
-	self:InitPage()
+	self:InitPage(aura)
 end
 
 function PowaAuras:PartyChecked()
-	local auraId = self.CurrentAuraId
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaPartyButton:GetChecked() then
-		self.Auras[auraId].party = true
+		aura.party = true
 	else
-		self.Auras[auraId].party = false
+		aura.party = false
 	end
-	self:InitPage()
+	self:InitPage(aura)
 end
 
 function PowaAuras:GroupOrSelfChecked()
-	local auraId = self.CurrentAuraId
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaGroupOrSelfButton:GetChecked() then
-		self.Auras[auraId].groupOrSelf = true
+		aura.groupOrSelf = true
 	else
-		self.Auras[auraId].groupOrSelf = false
+		aura.groupOrSelf = false
 	end
-	self:InitPage()
+	self:InitPage(aura)
 end
 
 function PowaAuras:FocusChecked()
-	local auraId = self.CurrentAuraId
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaFocusButton:GetChecked() then
-		self.Auras[auraId].focus = true
+		aura.focus = true
 	else
-		self.Auras[auraId].focus = false
+		aura.focus = false
 	end
-	self:InitPage()
+	self:InitPage(aura)
 end
 
 function PowaAuras:RaidChecked()
-	local auraId = self.CurrentAuraId
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaRaidButton:GetChecked() then
-		self.Auras[auraId].raid = true
+		aura.raid = true
 	else
-		self.Auras[auraId].raid = false
+		aura.raid = false
 	end
-	self:InitPage()
+	self:InitPage(aura)
 end
 
 function PowaAuras:GroupAnyChecked()
-	local auraId = self.CurrentAuraId
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaGroupAnyButton:GetChecked() then
-		self.Auras[auraId].groupany = true
+		aura.groupany = true
 	else
-		self.Auras[auraId].groupany = false
+		aura.groupany = false
 	end
-	self:InitPage()
+	self:InitPage(aura)
 end
 
 function PowaAuras:OptunitnChecked()
-	local auraId = self.CurrentAuraId
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaOptunitnButton:GetChecked() then
-		self.Auras[auraId].optunitn = true
+		aura.optunitn = true
 		PowaBarUnitn:Show()
-		PowaBarUnitn:SetText(self.Auras[auraId].unitn)
+		PowaBarUnitn:SetText(aura.unitn)
 	else
-		self.Auras[auraId].optunitn = false
+		aura.optunitn = false
 		PowaBarUnitn:Hide()
 	end
 end
@@ -2965,7 +2977,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 	local info
 	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
 	local name = owner:GetName()
-	if aura == nil then
+	if not aura then
 		aura = PowaAuras:AuraFactory(PowaAuras.BuffTypes.Buff, 0)
 	end
 	if name == "PowaStrataDropDown" then
@@ -3055,6 +3067,7 @@ function PowaAuras.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info)
 		end
 		UIDropDownMenu_SetSelectedValue(PowaDropDownPowerType, aura.PowerType)
+		PowaAuras:UpdateMainOption()
 	elseif name == "PowaDropDownStance" then
 		UIDropDownMenu_SetWidth(owner, 145)
 		info = {func = PowaAuras.DropDownMenu_OnClickStance, owner = owner}
@@ -3262,7 +3275,7 @@ function PowaAuras:FillDropdownSorted(t, info)
 	local names = PowaAuras:CopyTable(t)
 	local values = PowaAuras:ReverseTable(names)
 	table.sort(names)
-	for _,name in pairs(names) do
+	for _, name in pairs(names) do
 		info.text = name
 		info.value = values[name]
 		UIDropDownMenu_AddButton(info)
@@ -3284,7 +3297,7 @@ function PowaAuras:ChangeAuraType(id, newType)
 	if oldAura.Stacks then
 		oldAura.Stacks:Dispose()
 	end
-	if oldAura.model ~= true and oldAura.modelcustom ~= true then
+	if not oldAura.model and not oldAura.modelcustom then
 		oldAura:Dispose()
 	end
 	local aura = self:AuraFactory(newType, id, oldAura)
@@ -3299,7 +3312,7 @@ function PowaAuras:ChangeAuraType(id, newType)
 	if aura.textaura == true then
 		self:RedisplayAura(aura.id)
 	end
-	local _, model, _ = aura:CreateFrames()
+	local _, model = aura:CreateFrames()
 	model:SetUnit("none")
 	PowaAuras.Models[aura.id] = nil
 	PowaAuras.SecondaryModels[aura.id] = nil
@@ -3442,12 +3455,12 @@ end
 
 function PowaAuras.DropDownMenu_OnClickStance(self)
 	UIDropDownMenu_SetSelectedValue(self.owner, self.value)
-	local auraId = PowaAuras.CurrentAuraId
-	if PowaAuras.Auras[auraId].stance ~= self.value then
-		PowaAuras.Auras[auraId].stance = self.value
-		PowaAuras.Auras[auraId].icon = ""
+	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
+	if aura.stance ~= self.value then
+		aura.stance = self.value
+		aura.icon = ""
 	end
-	PowaAuras:InitPage()
+	PowaAuras:InitPage(aura)
 end
 
 function PowaAuras.DropDownMenu_OnClickGTFO(self)
@@ -3468,21 +3481,26 @@ function PowaAuras.DropDownMenu_OnClickPowerType(self)
 		aura.icon = ""
 		aura:Init()
 	end
-	PowaAuras:InitPage()
+	PowaAuras:InitPage(aura)
 end
 
 function PowaAuras.DropDownMenu_OnClickBegin(self)
 	UIDropDownMenu_SetSelectedID(self.owner, self.value + 1)
-	PowaAuras.Auras[PowaAuras.CurrentAuraId].begin = self.value
-	PowaAuras:RedisplayAura(auraId)
+	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
+	if aura.begin ~= self.begin then
+		aura.begin = self.value
+	end
+	PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 end
 
 function PowaAuras.DropDownMenu_OnClickEnd(self)
 	local optionID = self:GetID()
-	local auraId = PowaAuras.CurrentAuraId
+	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
 	UIDropDownMenu_SetSelectedID(PowaDropDownAnimEnd, optionID)
-	PowaAuras.Auras[auraId].finish = optionID - 1
-	PowaAuras:RedisplayAura(auraId)
+	if aura.finish ~= optionID - 1 then
+		aura.finish = optionID - 1
+	end
+	PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 end
 
 -- Options Deplacement

@@ -21,8 +21,3 @@ PowerAuras.lua
 PowerAurasEvents.lua
 
 PowerOptions.xml
-
-
-
-
-

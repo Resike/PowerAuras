@@ -2701,6 +2701,7 @@ function cPowaAuraStats:AddEffectAndEvents()
 		PowaAuras.Events.UNIT_MAXHEALTH = true
 	else
 		PowaAuras.Events.UNIT_POWER = true
+		PowaAuras.Events.UNIT_POWER_FREQUENT = true
 		PowaAuras.Events.UNIT_MAXPOWER = true
 	end
 end
@@ -2880,7 +2881,7 @@ function cPowaPowerType:UnitValueMax(unit)
 		maxpower = UnitPowerMax(unit, self.PowerType)
 	end
 	if self.Debug then
-		PowaAuras:DisplayText("maxpower=", maxpower)
+		PowaAuras:DisplayText("maxpower =", maxpower)
 	end
 	return maxpower
 end
@@ -4184,6 +4185,6 @@ function PowaAuras:AuraFactory(auraType, id, base)
 		base.Debug = nil
 		return class(id, base)
 	end
-	self:Message("AuraFactory unknown type ("..tostring(auraType)..") id= "..tostring(id))
+	self:Message("AuraFactory unknown type ("..tostring(auraType)..") id = "..tostring(id))
 	return nil
 end
