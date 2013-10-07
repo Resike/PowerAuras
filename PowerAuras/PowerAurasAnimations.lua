@@ -15,8 +15,6 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 	animationGroup.aura = aura
 	animationGroup:SetScript("OnFinished", function(self, forced)
 		local aura = self.aura
-		local _, _, texture = aura:CreateFrames()
-		texture:SetBlendMode(aura.blendmode)
 		if aura and aura.MainAnimation then
 			aura.MainAnimation:Play()
 			local secondaryAura = PowaAuras.SecondaryAuras[aura.id]
