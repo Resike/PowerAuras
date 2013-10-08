@@ -12,7 +12,7 @@
 * Fixed a lua error for the color picker.
 * Fixed a lot of tooltip issues.
 * Using the "Power Type" dropdown in the "Rage/Energy/Power" activation now properly going to update the aura's icon in main options too.
-* Demonic Fury stack fixes.
+* Demonic Fury's Threshold slider is back 0-1000 values again.
 * Fixed a broken "Bounce" begin animation.
 * Selecting a begin animation is now properly going to play that animation.
 * Updated incorrect version for PowerAurasOptions.

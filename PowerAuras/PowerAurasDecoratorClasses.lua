@@ -62,6 +62,7 @@ function cPowaStacks:ShowValue(aura, newvalue)
 	if PowaAuras.ModTest then
 		newvalue = math.random(0, 99)
 	end
+	newvalue = tonumber(format("%.0f", tostring(newvalue)))
 	local texcount = #frame.textures
 	local unitcount = newvalue == 0 and 1 or (math.floor(math.log10(newvalue)) + 1)
 	local tStep = PowaAuras.Tstep
@@ -123,7 +124,7 @@ function cPowaStacks:ShowValue(aura, newvalue)
 			frame.textures[i]:SetWidth((w * self.h))
 			frame.textures[i]:SetHeight((20 * self.h))
 			frame.textures[i]:SetTexCoord(tStep + leftOffset, (tStep * 1.5) + rightOffset, tStep * (newvalue % 10), tStep * ((newvalue % 10) + 1))
-			newvalue = floor(newvalue / 10)
+			newvalue = math.floor(newvalue / 10)
 		end
 	end
 	if not frame:IsVisible() then
