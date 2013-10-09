@@ -41,6 +41,8 @@ function PowaAuras:ADDON_LOADED(addon)
 		self:LoadAuras()
 		if IsAddOnLoaded("PowerAurasOptions") then
 			self:OptionsOnLoad()
+		else
+			self:OptionsDisabled()
 		end
 		self:FindAllChildren()
 		self:CreateEffectLists()
@@ -50,6 +52,14 @@ function PowaAuras:ADDON_LOADED(addon)
 		self.VariablesLoaded = true
 		self:Setup()
 	end
+end
+
+function PowaAuras:OptionsDisabled()
+	SlashCmdList["POWA"] = function(msg)
+		self:DisplayText("Power Auras Options: "..self.Colors.Red..PowaAuras.Text.Disabled.."|r")
+	end
+	SLASH_POWA1 = "/pa"
+	SLASH_POWA2 = "/powa"
 end
 
 function PowaAuras:Setup()

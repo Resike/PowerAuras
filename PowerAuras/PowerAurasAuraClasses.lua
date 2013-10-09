@@ -2452,8 +2452,14 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			if not self.inverse and self.mine then
 				local show = false
 				for spellId, spellName, spellSubtext in playerSpells() do
-					if spellId == tonumber(self.buffname) or spellName == self.buffname then
-						show = true
+					if self.ignoremaj then
+						if spellId == tonumber(self.buffname) or string.upper(spellName) == string.upper(self.buffname) then
+							show = true
+						end
+					else
+						if spellId == tonumber(self.buffname) or spellName == self.buffname then
+							show = true
+						end
 					end
 				end
 				if show then
@@ -2464,8 +2470,14 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			elseif self.inverse and self.mine then
 				local show = true
 				for spellId, spellName, spellSubtext in playerSpells() do
-					if spellId == tonumber(self.buffname) or spellName == self.buffname then
-						show = false
+					if self.ignoremaj then
+						if spellId == tonumber(self.buffname) or string.upper(spellName) == string.upper(self.buffname) then
+							show = true
+						end
+					else
+						if spellId == tonumber(self.buffname) or spellName == self.buffname then
+							show = true
+						end
 					end
 				end
 				if show then
@@ -2500,8 +2512,14 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			if not self.inverse and not self.mine then
 				local show = false
 				for spellId, spellName, spellSubtext in playerSpells() do
-					if spellId == tonumber(self.buffname) or spellName == self.buffname then
-						show = true
+					if self.ignoremaj then
+						if spellId == tonumber(self.buffname) or string.upper(spellName) == string.upper(self.buffname) then
+							show = true
+						end
+					else
+						if spellId == tonumber(self.buffname) or spellName == self.buffname then
+							show = true
+						end
 					end
 				end
 				if show then
@@ -2514,8 +2532,14 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 				if tonumber(self.buffname) and tonumber(self.buffname) % 1 == 0 then
 					show = false
 					for spellId, spellName, spellSubtext in playerSpells() do
-						if spellId == tonumber(self.buffname) or spellName == self.buffname then
-							show = true
+						if self.ignoremaj then
+							if spellId == tonumber(self.buffname) or string.upper(spellName) == string.upper(self.buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(self.buffname) or spellName == self.buffname then
+								show = true
+							end
 						end
 					end
 					if show then
@@ -2526,8 +2550,14 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 				else
 					show = false
 					for spellId, spellName, spellSubtext in playerSpells() do
-						if spellId == tonumber(self.buffname) or spellName == self.buffname then
-							show = true
+						if self.ignoremaj then
+							if spellId == tonumber(self.buffname) or string.upper(spellName) == string.upper(self.buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(self.buffname) or spellName == self.buffname then
+								show = true
+							end
 						end
 					end
 					if show then
@@ -2579,8 +2609,14 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 				else
 					show = false
 					for spellId, spellName, spellSubtext in playerSpells() do
-						if spellName == self.buffname then
-							show = true
+						if self.ignoremaj then
+							if spellId == tonumber(self.buffname) or string.upper(spellName) == string.upper(self.buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(self.buffname) or spellName == self.buffname then
+								show = true
+							end
 						end
 					end
 					if show then
@@ -2594,8 +2630,14 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 				if tonumber(self.buffname) and tonumber(self.buffname) % 1 == 0 then
 					show = false
 					for spellId, spellName, spellSubtext in playerSpells() do
-						if spellId == tonumber(self.buffname) or spellName == self.buffname then
-							show = true
+						if self.ignoremaj then
+							if spellId == tonumber(self.buffname) or string.upper(spellName) == string.upper(self.buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(self.buffname) or spellName == self.buffname then
+								show = true
+							end
 						end
 					end
 					if show then
@@ -2606,8 +2648,14 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 				else
 					show = false
 					for spellId, spellName, spellSubtext in playerSpells() do
-						if spellId == tonumber(self.buffname) or spellName == self.buffname then
-							show = true
+						if self.ignoremaj then
+							if spellId == tonumber(self.buffname) or string.upper(spellName) == string.upper(self.buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(self.buffname) or spellName == self.buffname then
+								show = true
+							end
 						end
 					end
 					if show then
