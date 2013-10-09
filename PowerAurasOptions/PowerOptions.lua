@@ -3392,18 +3392,18 @@ end
 
 function PowaAuras.DropDownMenu_OnClickAnim1(owner)
 	local optionID = owner:GetID()
-	local aura = self.Auras[self.CurrentAuraId]
+	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
 	UIDropDownMenu_SetSelectedID(PowaDropDownAnim1, optionID)
 	--local optionName = UIDropDownMenu_GetText(PowaDropDownAnim1)
 	--UIDropDownMenu_SetSelectedValue(PowaDropDownAnim1, optionName)
 	aura.anim1 = optionID
-	PowaAuras:RedisplayAura(self.CurrentAuraId)
+	PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 end
 
 function PowaAuras.DropDownMenu_OnClickAnim2(owner)
 	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
 	local optionID = owner:GetID()
-	local aura = self.Auras[self.CurrentAuraId]
+	local aura = PowaAuras.Auras[PowaAuras.CurrentAuraId]
 	if optionID == 1 then
 		PowaAuras.SecondaryModels[aura.id] = nil
 	end
@@ -3411,7 +3411,7 @@ function PowaAuras.DropDownMenu_OnClickAnim2(owner)
 	--local optionName = UIDropDownMenu_GetText(PowaDropDownAnim2)
 	--UIDropDownMenu_SetSelectedValue(PowaDropDownAnim2, optionName)
 	aura.anim2 = optionID - 1
-	PowaAuras:RedisplayAura(self.CurrentAuraId)
+	PowaAuras:RedisplayAura(PowaAuras.CurrentAuraId)
 end
 
 function PowaAuras.DropDownMenu_OnClickSound(self)
