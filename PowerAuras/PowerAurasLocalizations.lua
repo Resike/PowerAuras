@@ -12,7 +12,6 @@ PowaAuras.Anim[10] = "Orbit"
 PowaAuras.Anim[11] = "Spin Clockwise"
 PowaAuras.Anim[12] = "Spin Anti-Clockwise"
 
-
 PowaAuras.BeginAnimDisplay[0] = "[None]"
 PowaAuras.BeginAnimDisplay[1] = "Zoom In"
 PowaAuras.BeginAnimDisplay[2] = "Zoom Out"
