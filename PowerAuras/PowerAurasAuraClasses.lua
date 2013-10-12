@@ -1,4 +1,4 @@
-local string, tostring, tonumber, format, table, math, pairs, strsplit, select, _G = string, tostring, tonumber, format, table, math, pairs, strsplit, select, _G
+local string, tostring, tonumber, format, table, math, pairs, strsplit, select, wipe, _G = string, tostring, tonumber, format, table, math, pairs, strsplit, select, wipe, _G
 
 -- cPowaAura is the base class and is not instanced directly, the other classes inherit properties and methods from it
 cPowaAura = PowaClass(function(aura, id, base)

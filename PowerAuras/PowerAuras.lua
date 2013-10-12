@@ -13,7 +13,7 @@
 	All rights reserved.
 --]]
 
-local string, tostring, tonumber, math, table, pairs, select, _G = string, tostring, tonumber, math, table, pairs, select, _G
+local string, tostring, tonumber, math, table, pairs, select, wipe, _G = string, tostring, tonumber, math, table, pairs, select, wipe, _G
 
 -- Exposed for Saving
 PowaMisc =
@@ -60,27 +60,10 @@ for i = 1, 10 do
 	PowaGlobalListe[i] = PowaAuras.Text.ListeGlobal.." "..i
 end
 
-function PowaAuras:OnLoad(frame)
-	frame:RegisterEvent("ADDON_LOADED")
-end
-
-function PowaAuras:ReregisterEvents(frame)
-	frame:UnregisterAllEvents()
-	self:RegisterEvents(frame)
-end
-
-function PowaAuras:RegisterEvents(frame)
-	if self.playerclass == "DRUID" then
-		self.Events.UPDATE_SHAPESHIFT_FORM = true
-	end
-	for event in pairs(self.Events) do
-		if self[event] then
-			frame:RegisterEvent(event)
-		end
-	end
-end
-
 function PowaAuras:VersionGreater(v1, v2)
+	if not v2 or not v2.Major or not v2.Minor or not v2.Build then
+		return true
+	end
 	if v1.Major > v2.Major then
 		return true
 	end
@@ -288,14 +271,6 @@ function PowaAuras:FindAllChildren()
 	for _, aura in pairs(self.Auras) do
 		self:FindChildren(aura)
 	end
-	--[[for _, aura in pairs(self.Auras) do
-		if aura.Children then
-			self:ShowText("Aura "..aura.id.." Children:")
-			for childId in pairs(aura.Children) do
-				self:ShowText(" "..childId)
-			end
-		end
-	end]]
 end
 
 function PowaAuras:FindChildren(aura)
@@ -318,7 +293,6 @@ function PowaAuras:FindChildren(aura)
 end
 
 function PowaAuras:CustomTexPath(customname)
-	--self:ShowText("CustomTexPath ", customname)
 	local texpath
 	if string.find(customname, ".", 1, true) then
 		texpath = PowaGlobalMisc.PathToAuras..customname
@@ -342,8 +316,8 @@ function PowaAuras:CreateTimerFrame(auraId, index, updatePing)
 	local aura = self.Auras[auraId]
 	frame:SetFrameStrata(aura.strata)
 	frame:Hide()
-	frame.texture = frame:CreateTexture(nil,"BACKGROUND")
-	frame.texture:SetBlendMode("ADD")
+	frame.texture = frame:CreateTexture(nil,"Background")
+	frame.texture:SetBlendMode("Add")
 	frame.texture:SetAllPoints(frame)
 	frame.texture:SetTexture(aura.Timer:GetTexture())
 	if updatePing then
@@ -379,8 +353,8 @@ function PowaAuras:CreateStacksFrameIfMissing(auraId, updatePing)
 		self.StacksFrames[auraId] = frame
 		frame:SetFrameStrata(aura.strata)
 		frame:Hide()
-		frame.texture = frame:CreateTexture(nil, "BACKGROUND")
-		frame.texture:SetBlendMode("ADD")
+		frame.texture = frame:CreateTexture(nil, "Background")
+		frame.texture:SetBlendMode("Add")
 		frame.texture:SetAllPoints(frame)
 		frame.texture:SetTexture(aura.Stacks:GetTexture())
 		frame.textures = {[1] = frame.texture}
@@ -406,13 +380,13 @@ function PowaAuras:UpdateOptionsTimer(auraId)
 	if timer:IsRelative() then
 		frame1:SetPoint(self.RelativeToParent[timer.Relative], self.Frames[auraId], timer.Relative, timer.x, timer.y)
 	else
-		frame1:SetPoint("CENTER", timer.x, timer.y)
+		frame1:SetPoint("Center", timer.x, timer.y)
 	end
 	local frame2 = self.TimerFrame[auraId][2]
 	frame2:SetAlpha(timer.a * 0.75)
 	frame2:SetWidth(14 * timer.h)
 	frame2:SetHeight(14 * timer.h)
-	frame2:SetPoint("LEFT", frame1, "RIGHT", 1, - 1.5)
+	frame2:SetPoint("Left", frame1, "Right", 1, - 1.5)
 end
 
 function PowaAuras:UpdateOptionsStacks(auraId)
@@ -427,7 +401,7 @@ function PowaAuras:UpdateOptionsStacks(auraId)
 	if stacks:IsRelative() then
 		frame:SetPoint(self.RelativeToParent[stacks.Relative], self.Frames[auraId], stacks.Relative, stacks.x, stacks.y)
 	else
-		frame:SetPoint("CENTER", stacks.x, stacks.y)
+		frame:SetPoint("Center", stacks.x, stacks.y)
 	end
 end
 
@@ -499,7 +473,7 @@ function PowaAuras:MemorizeActions(actionIndex)
 				name = GetMacroInfo(id)
 			end
 			if PowaAction_Tooltip then
-				PowaAction_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+				PowaAction_Tooltip:SetOwner(UIParent, "Anchor_None")
 				PowaAction_Tooltip:SetAction(i)
 				text = PowaAction_TooltipTextLeft1:GetText()
 				PowaAction_Tooltip:Hide()
@@ -665,14 +639,11 @@ function PowaAuras:NewCheckBuffs()
 	for i = 1, #self.AurasByTypeList do
 		local auraType = self.AurasByTypeList[i]
 		if (self.DoCheck[auraType] or self.DoCheck.All) and #self.AurasByType[auraType] > 0 then
-			for k, v in pairs(self.AurasByType[auraType]) do
-				if (self.Auras[v] and self.Auras[v].Debug) then
-					self:DisplayText("TestThisEffect ",v)
+			for j = 1, #self.AurasByType[auraType] do
+				local v = self.AurasByType[auraType][j]
+				if self.Auras[v] and self.Auras[v].Debug then
+					self:DisplayText("TestThisEffect ", v)
 				end
-				--[[if self.AuraTypeCount[auraType] == nil then
-					self.AuraTypeCount[auraType] = 0
-				end
-				--self.AuraTypeCount[auraType] = self.AuraTypeCount[auraType] + 1]]
 				self:TestThisEffect(v)
 			end
 		end
@@ -703,14 +674,14 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 	end
 	local debugEffectTest = PowaAuras.DebugCycle or aura.Debug
 	if debugEffectTest then
-		self:Message("Test Aura for Hide or Show= ", auraId)
+		self:Message("Test Aura for Hide or Show = ", auraId)
 		self:Message("Active = ", aura.Active)
 		self:Message("Showing = ", aura.Showing)
 		self:Message("HideRequest = ", aura.HideRequest)
 	end
 	-- Prevent crash if class not set-up properly
 	if not aura.ShouldShow then
-		self:Message("ShouldShow nil! id= ", auraId)
+		self:Message("ShouldShow nil! id = ", auraId)
 		if not giveReason then
 			return false
 		end
@@ -793,8 +764,8 @@ function PowaAuras:CheckMultiple(aura, reason, giveReason)
 		local linkedAura = self.Auras[k]
 		local state
 		if linkedAura then
-			result, reason = linkedAura:ShouldShow(giveReason, reverse)
-			if result == false or (result == - 1 and not linkedAura.Showing and not linkedAura.HideRequest) then
+			local result, reason = linkedAura:ShouldShow(giveReason, reverse)
+			if not result or (result == - 1 and not linkedAura.Showing and not linkedAura.HideRequest) then
 				if not giveReason then
 					return false
 				end
@@ -831,7 +802,7 @@ local function stopFrameMoving(frame)
 	frame.aura.x = math.floor(frame:GetLeft() + (frame:GetWidth() - UIParent:GetWidth()) / 2 + 0.5)
 	frame.aura.y = math.floor(frame:GetTop() - (frame:GetHeight() + UIParent:GetHeight()) / 2 + 0.5)
 	frame:ClearAllPoints()
-	frame:SetPoint("CENTER", frame.aura.x, frame.aura.y)
+	frame:SetPoint("Center", frame.aura.x, frame.aura.y)
 	if PowaAuras.CurrentAuraId == frame.aura.id then
 		PowaAuras:InitPage(frame.aura)
 	end
@@ -875,20 +846,20 @@ local function startMove(frame, button)
 end
 
 local function keyUp(frame, key)
-	if (key ~= "UP" and key ~= "DOWN" and key ~= "LEFT" and key ~= "RIGHT") or not frame.mouseIsOver then
+	if key ~= "Up" and key ~= "Down" and key ~= "Left" and key ~= "Right" or not frame.mouseIsOver then
 		return
 	end
-	if key == "UP" then
+	if key == "Up" then
 		frame.aura.y = frame.aura.y + 1
-	elseif key == "DOWN" then
+	elseif key == "Down" then
 		frame.aura.y = frame.aura.y - 1
-	elseif key == "LEFT" then
+	elseif key == "Left" then
 		frame.aura.x = frame.aura.x - 1
-	elseif key == "RIGHT" then
+	elseif key == "Right" then
 		frame.aura.x = frame.aura.x + 1
 	end
 	local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
-	if secondaryAura ~= nil then
+	if secondaryAura then
 		secondaryAura.HideRequest = true
 	end
 	if PowaAuras.CurrentAuraId == frame.aura.id then
@@ -954,6 +925,9 @@ function PowaAuras:ResetDragging(aura, frame)
 end
 
 function PowaAuras:UpdatePreviewColor(aura)
+	if not aura then
+		return
+	end
 	if AuraTexture then
 		if AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02" then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
@@ -982,7 +956,6 @@ function PowaAuras:UpdatePreviewColor(aura)
 end
 
 function PowaAuras:ShowAuraForFirstTime(aura)
-	local auraId = aura.id
 	if not aura.UseOldAnimations and aura.EndAnimation and aura.EndAnimation:IsPlaying() then
 		aura:Hide()
 	end
@@ -1202,9 +1175,9 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	end
 	if aura.textaura then
 		local fontsize = math.min(33, math.max(10, math.floor(frame.baseH / 12.8)))
-		local checkfont = texture:SetFont(self.Fonts[aura.aurastextfont], fontsize, "OUTLINE, MONOCHROME")
+		local checkfont = texture:SetFont(self.Fonts[aura.aurastextfont], fontsize, "Outline, Monochrome")
 		if not checkfont then
-			texture:SetFont(STANDARD_TEXT_FONT, fontsize, "OUTLINE, MONOCHROME")
+			texture:SetFont(STANDARD_TEXT_FONT, fontsize, "Outline, Monochrome")
 		end
 		frame.baseH = height * aura.size * (2 - aura.torsion)
 		frame.baseL = texture:GetStringWidth() + 5
@@ -1282,7 +1255,7 @@ end
 
 function PowaAuras:InitialiseFrame(aura, frame)
 	frame:SetAlpha(math.min(aura.alpha, 0.99))
-	frame:SetPoint("CENTER", aura.x, aura.y)
+	frame:SetPoint("Center", aura.x, aura.y)
 	frame:SetWidth(frame.baseL)
 	frame:SetHeight(frame.baseH)
 end
@@ -1396,11 +1369,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 		end
 	end
 	if not aura.textaura then
-		if secondaryAura.anim1 == PowaAuras.AnimationTypes.Growing or secondaryAura.anim1 == PowaAuras.AnimationTypes.Shrinking or secondaryAura.anim1 == PowaAuras.AnimationTypes.WaterDrop or secondaryAura.anim1 == PowaAuras.AnimationTypes.Electric then
-			secondaryTexture:SetBlendMode("Blend")
-		else
-			secondaryTexture:SetBlendMode("Add")
-		end
+		secondaryTexture:SetBlendMode("Blend")
 	end
 	secondaryFrame:SetFrameStrata("Background")
 	secondaryFrame:SetFrameLevel(aura.stratalevel)
@@ -1461,14 +1430,14 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	end
 	if aura.textaura then
 		local fontsize = math.min(33, math.max(10, math.floor(frame.baseH / 12.8)))
-		local checkfont = secondaryTexture:SetFont(self.Fonts[aura.aurastextfont], fontsize, "OUTLINE, MONOCHROME")
+		local checkfont = secondaryTexture:SetFont(self.Fonts[aura.aurastextfont], fontsize, "Outline, Monochrome")
 		if not checkfont then
-			secondaryTexture:SetFont(STANDARD_TEXT_FONT, fontsize, "OUTLINE, MONOCHROME")
+			secondaryTexture:SetFont(STANDARD_TEXT_FONT, fontsize, "Outline, Monochrome")
 		end
 	end
 	secondaryFrame.baseL = frame.baseL
 	secondaryFrame.baseH = frame.baseH
-	secondaryFrame:SetPoint("CENTER", aura.x, aura.y)
+	secondaryFrame:SetPoint("Center", aura.x, aura.y)
 	secondaryFrame:SetWidth(secondaryFrame.baseL)
 	secondaryFrame:SetHeight(secondaryFrame.baseH)
 	if aura.UseOldAnimations then

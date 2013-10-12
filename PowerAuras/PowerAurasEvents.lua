@@ -1,4 +1,64 @@
-local string, tonumber, pairs = string, tonumber, pairs
+local string, tonumber, pairs, wipe = string, tonumber, pairs, wipe
+
+local PowaAuras_Frame = CreateFrame("Frame", nil, UIParent)
+PowaAuras_Frame:RegisterEvent("ADDON_LOADED")
+
+PowaAuras_Frame:SetScript("OnEvent", function(self, event, ...)
+	PowaAuras[event](PowaAuras, ...)
+end)
+
+PowaAuras_Frame:SetScript("OnUpdate", function(self, elapsed, ...)
+	PowaAuras:OnUpdate(elapsed)
+end)
+
+function PowaAuras:ReregisterEvents()
+	PowaAuras_Frame:UnregisterAllEvents()
+	self:RegisterEvents(PowaAuras_Frame)
+end
+
+function PowaAuras:RegisterEvents(frame)
+	if self.playerclass == "DRUID" then
+		self.Events.UPDATE_SHAPESHIFT_FORM = true
+	end
+	for event in pairs(self.Events) do
+		if self[event] then
+			frame:RegisterEvent(event)
+		end
+	end
+end
+
+function PowaAuras:Toggle(enable)
+	if not (self.VariablesLoaded and self.SetupDone) then
+		return
+	end
+	if enable == nil then
+		enable = PowaMisc.Disabled
+	end
+	if enable then
+		if not PowaMisc.Disabled then
+			return
+		end
+		if PowaAuras_Frame and not PowaAuras_Frame:IsShown() then
+			PowaAuras_Frame:Show()
+			self:RegisterEvents(PowaAuras_Frame)
+		end
+		PowaMisc.Disabled = false
+		self:Setup()
+		self:DisplayText("Power Auras: "..self.Colors.Green..PowaAuras.Text.Enabled.."|r")
+	else
+		if PowaMisc.Disabled then
+			return
+		end
+		if PowaAuras_Frame and PowaAuras_Frame:IsShown() then
+			PowaAuras_Frame:UnregisterAllEvents()
+			PowaAuras_Frame:Hide()
+		end
+		self:OptionHideAll(true)
+		PowaMisc.Disabled = true
+		self:DisplayText("Power Auras: "..self.Colors.Red..PowaAuras.Text.Disabled.."|r")
+	end
+	PowaEnableButton:SetChecked(PowaMisc.Disabled ~= true)
+end
 
 function PowaAuras:ADDON_LOADED(addon)
 	if addon == "PowerAuras" then
@@ -83,8 +143,8 @@ function PowaAuras:Setup()
 	self:DetermineRole("player")
 	self.WeAreInRaid = IsInRaid()
 	self.WeAreInParty = IsInGroup()
-	self.WeAreMounted = (IsMounted() == 1 and true or self:IsDruidTravelForm())
-	self.WeAreInVehicle = (UnitInVehicle("player") ~= nil)
+	self.WeAreMounted = IsMounted() == 1 and true or self:IsDruidTravelForm()
+	self.WeAreInVehicle = UnitInVehicle("player") ~= nil
 	self.WeAreInPetBattle = C_PetBattles.IsInBattle()
 	self.ActiveTalentGroup = GetActiveSpecGroup()
 	self.Instance = self:GetInstanceType()
@@ -599,7 +659,7 @@ function PowaAuras:PLAYER_TOTEM_UPDATE(...)
 	end
 	local slot = ...
 	if self.DebugEvents then
-		self:DisplayText("PLAYER_TOTEM_UPDATE slot=", slot, " class=", self.playerclass)
+		self:DisplayText("PLAYER_TOTEM_UPDATE slot = ", slot, " class = ", self.playerclass)
 	end
 	if self.playerclass == "SHAMAN" or self.playerclass == "DRUID" then
 		self.DoCheck.All = true
@@ -662,7 +722,7 @@ function PowaAuras:FlagsChanged(unit)
 		if unit == "target" then
 			self.DoCheck.TargetPvP = true
 		end
-		for i = 1,GetNumSubgroupMembers() do
+		for i = 1, GetNumSubgroupMembers() do
 			if unit == "party"..i then
 				self.DoCheck.PartyPvP = true
 				break
