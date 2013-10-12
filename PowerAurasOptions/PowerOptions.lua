@@ -3627,7 +3627,7 @@ function PowaAuras.FontScrollBar_Update(owner)
 				fontName = string.sub(fontName, namestart + 1)
 			end
 		end
-		fontText:SetFont(PowaAuras.Fonts[fontIndex], 14, "Outline, Monocrome")
+		fontText:SetFont(PowaAuras.Fonts[fontIndex], 14, "Outline, Monochrome")
 		fontText:SetText(fontName)
 		if FontSelectorFrame.selectedFont == fontIndex then
 			fontButton:LockHighlight()
