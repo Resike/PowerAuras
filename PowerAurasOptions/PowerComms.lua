@@ -5,6 +5,9 @@
 
 local string, len, find, sub, tonumber, pairs, table, insert, remove, ceil, wipe = string, len, find, sub, tonumber, pairs, table, insert, remove, ceil, wipe
 
+local _, ns = ...
+local PowaAuras = ns.PowaAuras
+
 PowaComms = {
 	Handlers = { },
 	Registered = false,
@@ -21,7 +24,7 @@ PowaComms = {
 }
 
 -- Accessible through PowaAuras.Comms
-PowaAuras["Comms"] = PowaComms
+PowaAurasOptions["Comms"] = PowaComms
 
 function PowaComms:Register()
 	if not RegisterAddonMessagePrefix then
@@ -47,7 +50,7 @@ function PowaComms:IsRegistered()
 	return self.Registered
 end
 
-function PowaAuras:CHAT_MSG_ADDON(header, data, channel, from)
+function PowaAurasOptions:CHAT_MSG_ADDON(header, data, channel, from)
 	if header ~= "POWA" then
 		return
 	end

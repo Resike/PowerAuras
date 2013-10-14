@@ -13,8 +13,8 @@
 PowerAurasBase.lua
 PowerAurasLocalizations.lua
 PowerAurasRole.lua
-PowerAurasDecoratorClasses.lua
 PowerAurasAuraClasses.lua
+PowerAurasDecoratorClasses.lua
 PowerAurasAnimations.lua
 PowerAurasAnimationsOld.lua
 PowerAuras.lua

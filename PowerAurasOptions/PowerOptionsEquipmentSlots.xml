@@ -48,7 +48,7 @@
 				ResetCursor()
 			</OnLeave>
 			<OnClick>
-				PowaAuras:EquipmentSlot_OnClick(self)
+				PowaAurasOptions:EquipmentSlot_OnClick(self)
 			</OnClick>
 		</Scripts>
 	</Button>
@@ -78,13 +78,13 @@
 		</Anchors>
 		<Scripts>
 			<OnLoad>
-				PowaTitleText:SetText(PowaAuras.Text.SlotsToCheck)
+				PowaTitleText:SetText(PowaAurasOptions.Text.SlotsToCheck)
 				self:SetBackdropColor(0.05, 0.05, 0.05, 0.8)
 				self:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
 				tinsert(UISpecialFrames,self:GetName())
 			</OnLoad>
 			<OnShow>
-				PowaAuras:EquipmentSlotsShow()
+				PowaAurasOptions:EquipmentSlotsShow()
 			</OnShow>
 		</Scripts>
 		<Backdrop bgFile = "Interface\ChatFrame\ChatFrameBackground" edgeFile = "Interface\ChatFrame\ChatFrameBackground" tile = "false">

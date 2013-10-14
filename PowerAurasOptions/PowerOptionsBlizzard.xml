@@ -81,11 +81,11 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self.tooltipText = PowaAuras.Text.aideEnable
-						PowaEnableButtonText:SetText(PowaAuras.Text.nomEnable)
+						self.tooltipText = PowaAurasOptions.Text.aideEnable
+						PowaEnableButtonText:SetText(PowaAurasOptions.Text.nomEnable)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:EnableChecked()
+						PowaAurasOptions:EnableChecked()
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -103,11 +103,11 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self.tooltipText = PowaAuras.Text.aideTimerRounding
-						PowaTimerRoundingButtonText:SetText(PowaAuras.Text.nomTimerRounding)
+						self.tooltipText = PowaAurasOptions.Text.aideTimerRounding
+						PowaTimerRoundingButtonText:SetText(PowaAurasOptions.Text.nomTimerRounding)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:MiscChecked(self, "TimerRoundUp")
+						PowaAurasOptions:MiscChecked(self, "TimerRoundUp")
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -125,11 +125,11 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self.tooltipText = PowaAuras.Text.aideBlockIncomingAuras
-						PowaBlockIncomingAurasButtonText:SetText(PowaAuras.Text.nomBlockIncomingAuras)
+						self.tooltipText = PowaAurasOptions.Text.aideBlockIncomingAuras
+						PowaBlockIncomingAurasButtonText:SetText(PowaAurasOptions.Text.nomBlockIncomingAuras)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:GlobalMiscChecked(self, "BlockIncomingAuras")
+						PowaAurasOptions:GlobalMiscChecked(self, "BlockIncomingAuras")
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -147,11 +147,11 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self.tooltipText = PowaAuras.Text.aideDebug
-						PowaDebugButtonText:SetText(PowaAuras.Text.nomDebug)
+						self.tooltipText = PowaAurasOptions.Text.aideDebug
+						PowaDebugButtonText:SetText(PowaAurasOptions.Text.nomDebug)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:MiscChecked(self, "Debug")
+						PowaAurasOptions:MiscChecked(self, "Debug")
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -169,11 +169,11 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self.tooltipText = PowaAuras.Text.aideAllowInspections
-						PowaAllowInspectionsButtonText:SetText(PowaAuras.Text.nomAllowInspections)
+						self.tooltipText = PowaAurasOptions.Text.aideAllowInspections
+						PowaAllowInspectionsButtonText:SetText(PowaAurasOptions.Text.nomAllowInspections)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:MiscChecked(self, "AllowInspections")
+						PowaAurasOptions:MiscChecked(self, "AllowInspections")
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -191,11 +191,11 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self.tooltipText = PowaAuras.Text.aideFixExports
-						PowaFixExportsButtonText:SetText(PowaAuras.Text.nomFixExports)
+						self.tooltipText = PowaAurasOptions.Text.aideFixExports
+						PowaFixExportsButtonText:SetText(PowaAurasOptions.Text.nomFixExports)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:GlobalMiscChecked(self, "FixExports")
+						PowaAurasOptions:GlobalMiscChecked(self, "FixExports")
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -217,15 +217,15 @@
 						self:SetMinMaxValues(0, 100)
 						self:SetValue(100 - 200 * PowaMisc.OnUpdateLimit)
 						self:SetValueStep(1)
-						PowaOptionsUpdateSlider2Text:SetText(PowaAuras.Text.nomUpdateSpeed.." : "..self:GetValue().."%")
+						PowaOptionsUpdateSlider2Text:SetText(PowaAurasOptions.Text.nomUpdateSpeed.." : "..self:GetValue().."%")
 						PowaOptionsUpdateSlider2Low:SetText("0%")
 						PowaOptionsUpdateSlider2High:SetText("100%")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAuras:PowaOptionsUpdateSliderChanged2(self, value)
+						PowaAurasOptions:PowaOptionsUpdateSliderChanged2(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
-						PowaAuras.SliderSetValues(self, delta)
+						PowaAurasOptions.SliderSetValues(self, delta)
 					</OnMouseWheel>
 				</Scripts>
 			</Slider>
@@ -247,15 +247,15 @@
 						self:SetMinMaxValues(0, 100)
 						self:SetValue(100 - 1000 * PowaMisc.AnimationLimit)
 						self:SetValueStep(1)
-						PowaOptionsTimerUpdateSlider2Text:SetText(PowaAuras.Text.nomTimerUpdate.." : "..self:GetValue().."%")
+						PowaOptionsTimerUpdateSlider2Text:SetText(PowaAurasOptions.Text.nomTimerUpdate.." : "..self:GetValue().."%")
 						PowaOptionsTimerUpdateSlider2Low:SetText("0%")
 						PowaOptionsTimerUpdateSlider2High:SetText("100%")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAuras:PowaOptionsTimerUpdateSliderChanged2(self, value)
+						PowaAurasOptions:PowaOptionsTimerUpdateSliderChanged2(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
-						PowaAuras.SliderSetValues(self, delta)
+						PowaAurasOptions.SliderSetValues(self, delta)
 					</OnMouseWheel>
 				</Scripts>
 			</Slider>
@@ -273,11 +273,11 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self.tooltipText = PowaAuras.Text.aideOverrideTextureCount
-						PowaOverrideTextureCountButtonText:SetText(PowaAuras.Text.nomOverrideTextureCount)
+						self.tooltipText = PowaAurasOptions.Text.aideOverrideTextureCount
+						PowaOverrideTextureCountButtonText:SetText(PowaAurasOptions.Text.nomOverrideTextureCount)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:MiscChecked(self, "OverrideMaxTextures")
+						PowaAurasOptions:MiscChecked(self, "OverrideMaxTextures")
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -300,15 +300,15 @@
 						self:SetValue(PowaMisc.UserSetMaxTextures)
 						self:SetValueStep(1)
 						self.aide = aideTextureCount
-						PowaOptionsTextureCountText:SetText(PowaAuras.Text.nomTextureCount..": "..self:GetValue())
+						PowaOptionsTextureCountText:SetText(PowaAurasOptions.Text.nomTextureCount..": "..self:GetValue())
 						PowaOptionsTextureCountLow:SetText("1")
 						PowaOptionsTextureCountHigh:SetText("1000")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAuras:PowaOptionsMaxTexturesSliderChanged(self, value)
+						PowaAurasOptions:PowaOptionsMaxTexturesSliderChanged(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
-						PowaAuras.SliderSetValues(self, delta)
+						PowaAurasOptions.SliderSetValues(self, delta)
 					</OnMouseWheel>
 				</Scripts>
 			</Slider>
@@ -326,10 +326,10 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						PowaShowAuraBrowserButtonText:SetText(PowaAuras.Text.nomPowaShowAuraBrowser)
+						PowaShowAuraBrowserButtonText:SetText(PowaAurasOptions.Text.nomPowaShowAuraBrowser)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:MainOptionShow()
+						PowaAurasOptions:MainOptionShow()
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -347,11 +347,11 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						PowaResetPositionButtonText:SetText(PowaAuras.Text.nomReset)
+						PowaResetPositionButtonText:SetText(PowaAurasOptions.Text.nomReset)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:ResetPositions()
-						PowaAuras:MainOptionShow()
+						PowaAurasOptions:ResetPositions()
+						PowaAurasOptions:MainOptionShow()
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -382,10 +382,10 @@
 				</Layers>
 				<Scripts>
 					<OnLoad>
-						PowaDropDownDefaultTimerTextureLabel:SetText(PowaAuras.Text.nomDefaultTimerTexture)
+						PowaDropDownDefaultTimerTextureLabel:SetText(PowaAurasOptions.Text.nomDefaultTimerTexture)
 					</OnLoad>
 					<OnShow>
-						UIDropDownMenu_Initialize(self, PowaAuras.DropDownDefaultTimerMenu_Initialize)
+						UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownDefaultTimerMenu_Initialize)
 					</OnShow>
 				</Scripts>
 			</Frame>
@@ -416,10 +416,10 @@
 				</Layers>
 				<Scripts>
 					<OnLoad>
-						PowaDropDownDefaultStacksTextureLabel:SetText(PowaAuras.Text.nomDefaultStacksTexture)
+						PowaDropDownDefaultStacksTextureLabel:SetText(PowaAurasOptions.Text.nomDefaultStacksTexture)
 					</OnLoad>
 					<OnShow>
-						UIDropDownMenu_Initialize(self, PowaAuras.DropDownDefaultStacksMenu_Initialize)
+						UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownDefaultStacksMenu_Initialize)
 					</OnShow>
 				</Scripts>
 			</Frame>
@@ -454,8 +454,8 @@
 				<Scripts>
 					<OnLoad>
 						self:SetMaxLetters(256)
-						PowaCustomSoundPathText:SetText(PowaAuras.Text.nomCustomSoundPath)
-						self.aide = PowaAuras.Text.aideCustomSoundPath
+						PowaCustomSoundPathText:SetText(PowaAurasOptions.Text.nomCustomSoundPath)
+						self.aide = PowaAurasOptions.Text.aideCustomSoundPath
 					</OnLoad>
 					<OnEnterPressed>
 						self:ClearFocus()
@@ -500,8 +500,8 @@
 				<Scripts>
 					<OnLoad>
 						self:SetMaxLetters(256)
-						PowaCustomAuraPathText:SetText(PowaAuras.Text.nomCustomAuraPath)
-						self.aide = PowaAuras.Text.aideCustomAuraPath
+						PowaCustomAuraPathText:SetText(PowaAurasOptions.Text.nomCustomAuraPath)
+						self.aide = PowaAurasOptions.Text.aideCustomAuraPath
 					</OnLoad>
 					<OnEnterPressed>
 						self:ClearFocus()

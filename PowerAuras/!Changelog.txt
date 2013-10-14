@@ -6,6 +6,8 @@
 
 
 **4.24.1**
+* Reduced the addon's dinamic memory usage by aprox 95% mostly for "Buff" aura types. Yes, i did it again.
+* Dump function is back again. (Works in development versions only.)
 * Fixed some animation trasition glitches, like from fade out to static or flashing.
 * Added a missing event for rogue's energy and warrior's rage replenishment, which caused some "Rage/Energy/Power" auras working incorrectly.
 * Fixed a lua error for "Combo Points".

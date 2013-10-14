@@ -10,3 +10,4 @@ manual-changelog:
 
 ignore:
 	- PowerAuras/!CheckTranslates.pl
+	- PowerAurasOptions/PowerOptionsDump.lua

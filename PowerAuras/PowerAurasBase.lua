@@ -1,5 +1,8 @@
 local string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select = string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select
 
+local _, ns = ...
+local PowaAuras = { }
+
 PowaAuras =
 {
 Version = GetAddOnMetadata("PowerAuras", "Version"),
@@ -1386,30 +1389,27 @@ PowaAuras.DebuffTypeSpellIds =
 
 PowaAuras.Text = { }
 
-function PowaAuras:UnitTestDebug(...)
-
-end
-
-function PowaAuras:UnitTestInfo(...)
-
-end
+PowaAurasOptions = { }
+PowaAurasOptions = PowaAuras
+ns.PowaAuras = PowaAuras
+ns.PowaAurasOptions = PowaAurasOptions
 
 function PowaAuras:Debug(...)
-	if (PowaMisc.debug == true) then
+	if PowaMisc.debug then
 		self:Message(...)
 	end
 end
 
 function PowaAuras:Message(...)
-	args = {...}
-	if (args == nil or #args == 0) then
+	local args = {...}
+	if not args or #args == 0 then
 		return
 	end
 	local Message = ""
 	for i = 1, #args do
 		Message = Message..tostring(args[i])
 	end
-	DEFAULT_CHAT_FRAME:AddMessage(Message)
+	print(Message)
 end
 
 function PowaAuras:ShowText(...)
@@ -1421,17 +1421,17 @@ function PowaAuras:DisplayText(...)
 end
 
 function PowaAuras:DisplayTable(t, indent)
-	if (not t or type(t) ~= "table") then
+	if not t or type(t) ~= "table" then
 		return "No table"
 	end
-	if (indent == nil) then
+	if not indent then
 		indent = ""
 	else
 		indent = indent.."  "
 	end
 	for i, v in pairs(t) do
-		if (type(v) ~= "function") then
-			if (type(v) ~= "table") then
+		if type(v) ~= "function" then
+			if type(v) ~= "table" then
 				self:Message(indent..tostring(i).." = "..tostring(v))
 			else
 				self:Message(indent..tostring(i))
@@ -1442,7 +1442,7 @@ function PowaAuras:DisplayTable(t, indent)
 end
 
 function PowaAuras:Error(msg, holdtime)
-	if (holdtime == nil) then
+	if not holdtime then
 		holdtime = UIERRORS_HOLD_TIME
 	end
 	UIErrorsFrame:AddMessage(msg, 0.75, 0.75, 1.0, 1.0, holdtime)
@@ -1453,8 +1453,8 @@ function PowaAuras:IsNumeric(a)
 end
 
 function PowaAuras:ReverseTable(t)
-	if (type(t) ~= "table") then
-		return nil
+	if type(t) ~= "table" then
+		return
 	end
 	local newTable = { }
 	for k, v in pairs(t) do
@@ -1464,8 +1464,8 @@ function PowaAuras:ReverseTable(t)
 end
 
 function PowaAuras:TableEmpty(t)
-	if (type(t) ~= "table") then
-		return nil
+	if type(t) ~= "table" then
+		return
 	end
 	for k in pairs(t) do
 		return false
@@ -1474,8 +1474,8 @@ function PowaAuras:TableEmpty(t)
 end
 
 function PowaAuras:TableSize(t)
-	if (type(t) ~= "table") then
-		return nil
+	if type(t) ~= "table" then
+		return
 	end
 	local size = 0
 	for k in pairs(t) do
@@ -1485,18 +1485,18 @@ function PowaAuras:TableSize(t)
 end
 
 function PowaAuras:CopyTable(t, lookup_table, original)
-	if (type(t) ~= "table") then
+	if type(t) ~= "table" then
 		return t
 	end
 	local copy
-	if (original == nil) then
+	if not original then
 		copy = { }
 	else
 		copy = original
 	end
 	for i,v in pairs(t) do
-		if (type(v) ~= "function") then
-			if (type(v) ~= "table") then
+		if type(v) ~= "function" then
+			if type(v) ~= "table" then
 				copy[i] = v
 			else
 				lookup_table = lookup_table or { }
@@ -1513,19 +1513,19 @@ function PowaAuras:CopyTable(t, lookup_table, original)
 end
 
 function PowaAuras:MergeTables(desTable, sourceTable)
-	if (not sourceTable or type(sourceTable) ~= "table") then
+	if not sourceTable or type(sourceTable) ~= "table" then
 		return
 	end
-	if (not desTable or type(desTable) ~= "table") then
+	if not desTable or type(desTable) ~= "table" then
 		desTable = sourceTable
 		return
 	end
 	for i,v in pairs(sourceTable) do
-		if (type(v) ~= "function") then
-			if (type(v) ~= "table") then
+		if type(v) ~= "function" then
+			if type(v) ~= "table" then
 				desTable[i] = v
 			else
-				if (not desTable[i] or type(desTable[i]) ~= "table") then
+				if not desTable[i] or type(desTable[i]) ~= "table" then
 					desTable[i] = { }
 				end
 				self:MergeTables(desTable[i], v)
@@ -1535,8 +1535,8 @@ function PowaAuras:MergeTables(desTable, sourceTable)
 end
 
 function PowaAuras:InsertText(text, ...)
-	args = {...}
-	if (args == nil or #args == 0) then
+	local args = {...}
+	if not args or #args == 0 then
 		return text
 	end
 	for k, v in pairs(args) do
@@ -1546,10 +1546,10 @@ function PowaAuras:InsertText(text, ...)
 end
 
 function PowaAuras:MatchString(textToSearch, textToFind, ingoreCase)
-	if (textToSearch == nil) then
+	if not textToSearch then
 		return textToFind == nil
 	end
-	if (ingoreCase) then
+	if ingoreCase then
 		textToFind = string.upper(textToFind)
 		textToSearch = string.upper(textToSearch)
 	end
@@ -1559,76 +1559,28 @@ end
 function PowaAuras:Different(o1, o2)
 	local t1 = type(o1)
 	local t2 = type(o2)
-	if (t1 ~= t2 or t1 == "string" or t2 == "string") then
+	if t1 ~= t2 or t1 == "string" or t2 == "string" then
 		return tostring(o1) ~= tostring(o2)
 	end
-	if (t1 == "number") then
+	if t1 == "number" then
 		return math.abs(o1 - o2) > 1e-9
 	end
 	return o1 ~= o2
 end
 
 function PowaAuras:GetSettingForExport(prefix, k, v, default)
-	if (not self:Different(v, default) and not PowaGlobalMisc.FixExports) then
+	if not self:Different(v, default) and not PowaGlobalMisc.FixExports then
 		return ""
 	end
 	local varType = type(v)
 	local setting = prefix..k..":"
-	if (varType == "string") then
+	if varType == "string" then
 		setting = setting..v
-	elseif(varType == "number") then
+	elseif varType == "number" then
 		local round = math.floor(v * 10000 + 0.5) / 10000
 		setting = setting..tostring(round)
 	else
 		setting = setting..tostring(v)
 	end
 	return setting.."; "
-end
-
--- PowaAura Classes
-function PowaClass(base, ctor)
-	local c = { }
-	if not ctor and type(base) == 'function' then
-		ctor = base
-		base = nil
-	elseif type(base) == 'table' then
-		for i,v in pairs(base) do
-			c[i] = v
-		end
-		if (type(ctor) == "table") then
-			for i,v in pairs(ctor) do
-				c[i] = v
-			end
-			ctor = nil
-		end
-		c._base = base
-	end
-	c.__index = c
-	local mt = { }
-	mt.__call = function(class_tbl, ...)
-		local obj = { }
-		setmetatable(obj, c)
-		if ctor then
-			ctor(obj, ...)
-		end
-		return obj
-	end
-	if ctor then
-		c.init = ctor
-	else
-		if base and base.init then
-			c.init = base.init
-			ctor = base.init
-		end
-	end
-	c.is_a = function(self,klass)
-		local m = getmetatable(self)
-		while m do
-			if m == klass then return true end
-			m = m._base
-		end
-		return false
-	end
-	setmetatable(c, mt)
-	return c
 end

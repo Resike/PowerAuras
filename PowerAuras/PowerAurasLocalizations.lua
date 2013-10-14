@@ -1,4 +1,7 @@
-﻿PowaAuras.Anim[0] = "[Invisible]"
+﻿local _, ns = ...
+local PowaAuras = ns.PowaAuras
+
+PowaAuras.Anim[0] = "[Invisible]"
 PowaAuras.Anim[1] = "Static"
 PowaAuras.Anim[2] = "Flashing"
 PowaAuras.Anim[3] = "Growing"
@@ -158,7 +161,6 @@ Relative =
 
 Slots =
 {
-	Ammo = "Ammo",
 	Back = "Back",
 	Chest = "Chest",
 	Feet = "Feet",
@@ -169,7 +171,6 @@ Slots =
 	Legs = "Legs",
 	MainHand = "MainHand",
 	Neck = "Neck",
-	Ranged = "Ranged",
 	SecondaryHand = "OffHand",
 	Shirt = "Shirt",
 	Shoulder = "Shoulder",
@@ -233,7 +234,7 @@ aideEffectTooltip2 = "Ctrl-click to self check.",
 aideEffectTooltip3 = "Alt-click to set group size.",
 
 aideItems = "Enter full name of Item or [xxx] for ID.",
-aideSlots = "Enter name of slot to track: Ammo, Back, Chest, Feet, Finger0, Finger1, Hands, Head, Legs, MainHand, Neck, SecondaryHand, Shirt, Shoulder, Tabard, Trinket0, Trinket1, Waist, Wrist.",
+aideSlots = "Enter name of slot to track: Back, Chest, Feet, Finger0, Finger1, Hands, Head, Legs, MainHand, Neck, SecondaryHand, Shirt, Shoulder, Tabard, Trinket0, Trinket1, Waist, Wrist.",
 aideTracking = "Enter name of Tracking type. e.g. fish",
 aideUnitMatch = "Enter the names of the units that need to match, separated by a forward slash (/).\n\nYou can use unit ID's such as \"player\", \"pet\", \"boss1\", \"arena1\", as well as an asterisk (*) to see if the unit in question exists.\n\n|cFFEFEFEFExamples|r\nTarget is Ragnaros:\ntarget/Ragnaros\n\nPet target exists:\npettarget/*\n\nBoss targetting me:\nboss1target/player",
 aidePetStance = "Enter the ID numbers of pet stances that need to be active in order for the aura to show. You can specify multiple stances to trigger an aura by separating them with a forward slash (/).\n\n|cFFEFEFEFStance ID Numbers|r\nAssist = 1\nDefensive = 2\nPassive = 3\n\n|cFFFF0000Note: |rYou must have the three stances on your pet action bar for this to work.",
@@ -448,8 +449,11 @@ nomWowTextures = "WoW Textures",
 nomCustomTextures = "Custom Textures",
 nomTextAura = "Text Aura",
 nomBlendMode = "Blend Mode",
+nomSecondaryBlendMode = "Secondary Blend Mode",
 nomFrameStrata = "Frame's Strata",
+nomSecondaryFrameStrata = "Secondary Frame's Strata",
 nomTextureStrata = "Texture's Strata",
+nomSecondaryTextureStrata = "Secondary Texture's Strata",
 nomRealaura = "Real Aura",
 nomColorPicker = "Base Color",
 nomGradientStyle = "Gradient Style",
@@ -1686,7 +1690,6 @@ Relative =
 
 Slots =
 {
-	Ammo = "Munición",
 	Back = "Espalda",
 	Chest = "Pecho",
 	Feet = "Pies",
@@ -1697,7 +1700,6 @@ Slots =
 	Legs = "Piernas",
 	MainHand = "Mano derecha",
 	Neck = "Cuello",
-	Ranged = "A distancia",
 	SecondaryHand = "Mano izquierda",
 	Shirt = "Camisa",
 	Shoulder = "Hombros",
@@ -2457,7 +2459,6 @@ Relative =
 
 Slots =
 {
-	Ammo = "Munición",
 	Back = "Espalda",
 	Chest = "Pecho",
 	Feet = "Pies",
@@ -2468,7 +2469,6 @@ Slots =
 	Legs = "Piernas",
 	MainHand = "Mano derecha",
 	Neck = "Cuello",
-	Ranged = "A distancia",
 	SecondaryHand = "Mano izquierda",
 	Shirt = "Camisa",
 	Shoulder = "Hombros",
@@ -3228,7 +3228,6 @@ Relative =
 
 Slots =
 {
-	Ammo = "Munition",
 	Back = "Cape",
 	Chest = "Torse",
 	Feet = "Pieds",
@@ -3239,7 +3238,6 @@ Slots =
 	Legs = "Jambes",
 	MainHand = "Main droite",
 	Neck = "Cou",
-	Ranged = "À distance",
 	SecondaryHand = "Main gauche",
 	Shirt = "Chemise",
 	Shoulder = "Épaule",
@@ -3910,7 +3908,6 @@ PowerType =
 
 Slots =
 {
-	Ammo = "Ammo",
 	Back = "Спина",
 	Chest = "Грудь",
 	Feet = "Ноги",
@@ -3921,7 +3918,6 @@ Slots =
 	Legs = "Ноги",
 	MainHand = "Правая рука",
 	Neck = "Ожерелье",
-	Ranged = "Дальний бой",
 	SecondaryHand = "Левая рука",
 	Shirt = "Рубашка",
 	Shoulder = "Плечи",

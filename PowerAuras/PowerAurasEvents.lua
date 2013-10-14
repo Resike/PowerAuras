@@ -1,5 +1,8 @@
 local string, tonumber, pairs, wipe = string, tonumber, pairs, wipe
 
+local _, ns = ...
+local PowaAuras = ns.PowaAuras
+
 local PowaAuras_Frame = CreateFrame("Frame", nil, UIParent)
 PowaAuras_Frame:RegisterEvent("ADDON_LOADED")
 
@@ -208,14 +211,14 @@ function PowaAuras:ACTIVE_TALENT_GROUP_CHANGED(...)
 	if self.ModTest then
 		return
 	end
-	self.PendingRescan = GetTime() + 1
+	self.PendingRescan = GetTime()
 end
 
 function PowaAuras:PLAYER_TALENT_UPDATE(...)
 	if self.ModTest then
 		return
 	end
-	self.PendingRescan = GetTime() + 1
+	self.PendingRescan = GetTime()
 end
 
 function PowaAuras:PLAYER_UPDATE_RESTING(...)
@@ -479,13 +482,13 @@ function PowaAuras:BuffsChanged(unit)
 		self.DoCheck.TargetBuffs = true
 		self.DoCheck.StealableTargetSpells = true
 		self.DoCheck.PurgeableTargetSpells = true
-	elseif "party" == string.sub(unit, 1, 5) then
-		self.DoCheck.PartyBuffs = true
-		self.DoCheck.GroupOrSelfBuffs = true
 	elseif unit == "focus" then
 		self.DoCheck.FocusBuffs = true
 		self.DoCheck.StealableFocusSpells = true
 		self.DoCheck.PurgeableFocusSpells = true
+	elseif string.sub(unit, 1, 5) == "party" then
+		self.DoCheck.PartyBuffs = true
+		self.DoCheck.GroupOrSelfBuffs = true
 	elseif string.sub(unit, 1, 4) == "raid" then
 		self.DoCheck.RaidBuffs = true
 		self.DoCheck.GroupOrSelfBuffs = true
@@ -502,17 +505,11 @@ end
 
 function PowaAuras:UNIT_AURA(...)
 	local unit = ...
-	if self.DebugEvents then
-		self:DisplayText("UNIT_AURA ", unit)
-	end
 	self:BuffsChanged(unit)
 end
 
 function PowaAuras:UNIT_AURASTATE(...)
 	local unit = ...
-	if self.DebugEvents then
-		self:DisplayText("UNIT_AURASTATE ", unit)
-	end
 	self:BuffsChanged(unit)
 end
 

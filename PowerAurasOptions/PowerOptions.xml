@@ -10,16 +10,16 @@
 				self:RegisterForClicks("LeftButtonUp", "RightButtonDown")
 			</OnLoad>
 			<OnClick>
-				PowaAuras:IconClick(self, button)
+				PowaAurasOptions:IconClick(self, button)
 			</OnClick>
 			<OnEnter>
-				PowaAuras:IconeEntered(self)
+				PowaAurasOptions:IconeEntered(self)
 			</OnEnter>
 			<OnLeave>
 				GameTooltip:Hide()
 			</OnLeave>
 			<OnMouseWheel>
-				PowaAuras:IconOnMouseWheel(delta)
+				PowaAurasOptions:IconOnMouseWheel(delta)
 			</OnMouseWheel>
 		</Scripts>
 		<NormalFont style = "GameFontHighlight"/>
@@ -33,10 +33,10 @@
 		</Size>
 		<Scripts>
 			<OnClick>
-				PowaAuras:MainListClick(self)
+				PowaAurasOptions:MainListClick(self)
 			</OnClick>
 			<OnEnter>
-				PowaAuras:MainListEntered(self)
+				PowaAurasOptions:MainListEntered(self)
 			</OnEnter>
 			<OnLeave>
 				GameTooltip:Hide()
@@ -68,7 +68,7 @@
 	<Frame name = "PowaAuraImportAuraDialog" frameStrata = "DIALOG" hidden = "true" toplevel = "true" parent = "UIParent">
 		<Scripts>
 			<OnLoad>
-				PowaAuras:ImportAuraDialogInit()
+				PowaAurasOptions:ImportAuraDialogInit()
 			</OnLoad>
 		</Scripts>
 	</Frame>
@@ -198,7 +198,7 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				PowaAuras:ExportDialogInit(self)
+				PowaAurasOptions:ExportDialogInit(self)
 			</OnLoad>
 			<OnShow>
 				self:OnShow()
@@ -286,7 +286,7 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				PowaAuras:PlayerImportDialogInit(self)
+				PowaAurasOptions:PlayerImportDialogInit(self)
 			</OnLoad>
 			<OnShow>
 				self:OnShow()
@@ -329,13 +329,13 @@
 				PlaySound("TalentScreenOpen", PowaMisc.SoundChannel)
 			</OnShow>
 			<OnHide>
-				PowaAuras:MainOptionClose()
+				PowaAurasOptions:MainOptionClose()
 			</OnHide>
 			<OnMouseDown>
-				PowaAuras:Bar_MouseDown(self, button)
+				PowaAurasOptions:Bar_MouseDown(self, button)
 			</OnMouseDown>
 			<OnMouseUp>
-				PowaAuras:Bar_MouseUp(self, button)
+				PowaAurasOptions:Bar_MouseUp(self, button)
 			</OnMouseUp>
 		</Scripts>
 		<!-- Title Box -->
@@ -708,7 +708,7 @@
 					<OnLoad>
 						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 						self:SetBackdropColor(0.1, 0.1, 0.1)
-						PowaOptionsPlayerTitre:SetText(PowaAuras.Text.nomPlayerEffects)
+						PowaOptionsPlayerTitre:SetText(PowaAurasOptions.Text.nomPlayerEffects)
 					</OnLoad>
 				</Scripts>
 				<Frames>
@@ -806,7 +806,7 @@
 					<OnLoad>
 						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 						self:SetBackdropColor(0.1, 0.1, 0.1)
-						PowaOptionsGlobalTitre:SetText(PowaAuras.Text.nomGlobalEffects)
+						PowaOptionsGlobalTitre:SetText(PowaAurasOptions.Text.nomGlobalEffects)
 					</OnLoad>
 				</Scripts>
 				<Frames>
@@ -915,12 +915,12 @@
 						</Anchors>
 						<Scripts>
 							<OnClick>
-								PowaAuras:OptionRename()
+								PowaAurasOptions:OptionRename()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnEnter>
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-								GameTooltip:SetText(PowaAuras.Text.aideRename, nil, nil, nil, nil, 1)
+								GameTooltip:SetText(PowaAurasOptions.Text.aideRename, nil, nil, nil, nil, 1)
 							</OnEnter>
 							<OnLeave>
 								GameTooltip:Hide()
@@ -941,12 +941,12 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaAuras:SetLockButtonText()
+								PowaAurasOptions:SetLockButtonText()
 							</OnLoad>
 							<OnClick>
-								PowaAuras:ToggleLock()
-								PowaAuras:UpdateMainOption()
-								PowaAuras:InitPage()
+								PowaAurasOptions:ToggleLock()
+								PowaAurasOptions:UpdateMainOption()
+								PowaAurasOptions:InitPage()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -965,11 +965,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaMainTestButtonText:SetText(PowaAuras.Text.nomTest)
+								PowaMainTestButtonText:SetText(PowaAurasOptions.Text.nomTest)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionTest()
-								PowaAuras:UpdateMainOption()
+								PowaAurasOptions:OptionTest()
+								PowaAurasOptions:UpdateMainOption()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -988,11 +988,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaMainTestAllButtonText:SetText(PowaAuras.Text.nomTestAll)
+								PowaMainTestAllButtonText:SetText(PowaAurasOptions.Text.nomTestAll)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionTestAll()
-								PowaAuras:UpdateMainOption()
+								PowaAurasOptions:OptionTestAll()
+								PowaAurasOptions:UpdateMainOption()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1011,10 +1011,10 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaOptionsMoveText:SetText(PowaAuras.Text.nomMove)
+								PowaOptionsMoveText:SetText(PowaAurasOptions.Text.nomMove)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionMoveEffect(true)
+								PowaAurasOptions:OptionMoveEffect(true)
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1033,10 +1033,10 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaOptionsSelectorNewText:SetText(PowaAuras.Text.nomNew)
+								PowaOptionsSelectorNewText:SetText(PowaAurasOptions.Text.nomNew)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionNewEffect()
+								PowaAurasOptions:OptionNewEffect()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1055,15 +1055,15 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaOptionsSelectorDeleteText:SetText(PowaAuras.Text.nomDel)
+								PowaOptionsSelectorDeleteText:SetText(PowaAurasOptions.Text.nomDel)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionDeleteEffect(PowaAuras.CurrentAuraId)
+								PowaAurasOptions:OptionDeleteEffect(PowaAurasOptions.CurrentAuraId)
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnEnter>
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-								GameTooltip:SetText(PowaAuras.Text.aideDel, nil, nil, nil, nil, 1)
+								GameTooltip:SetText(PowaAurasOptions.Text.aideDel, nil, nil, nil, nil, 1)
 							</OnEnter>
 							<OnLeave>
 								GameTooltip:Hide()
@@ -1084,10 +1084,10 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaOptionsCopyText:SetText(PowaAuras.Text.nomCopy)
+								PowaOptionsCopyText:SetText(PowaAurasOptions.Text.nomCopy)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionMoveEffect(false)
+								PowaAurasOptions:OptionMoveEffect(false)
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1106,10 +1106,10 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaOptionsSelectorExportText:SetText(PowaAuras.Text.nomExport)
+								PowaOptionsSelectorExportText:SetText(PowaAurasOptions.Text.nomExport)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionExportEffect()
+								PowaAurasOptions:OptionExportEffect()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1128,10 +1128,10 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaOptionsSelectorExportSetText:SetText(PowaAuras.Text.nomExportSet)
+								PowaOptionsSelectorExportSetText:SetText(PowaAurasOptions.Text.nomExportSet)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionExportSet()
+								PowaAurasOptions:OptionExportSet()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1150,10 +1150,10 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaEditButtonText:SetText(PowaAuras.Text.nomEdit)
+								PowaEditButtonText:SetText(PowaAurasOptions.Text.nomEdit)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:EditorShow()
+								PowaAurasOptions:EditorShow()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1175,10 +1175,10 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaOptionsSelectorImportText:SetText(PowaAuras.Text.nomImport)
+								PowaOptionsSelectorImportText:SetText(PowaAurasOptions.Text.nomImport)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionImportEffect()
+								PowaAurasOptions:OptionImportEffect()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1197,10 +1197,10 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaOptionsSelectorImportSetText:SetText(PowaAuras.Text.nomImportSet)
+								PowaOptionsSelectorImportSetText:SetText(PowaAurasOptions.Text.nomImportSet)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionImportSet()
+								PowaAurasOptions:OptionImportSet()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1219,11 +1219,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaMainHideAllButtonText:SetText(PowaAuras.Text.nomHide)
+								PowaMainHideAllButtonText:SetText(PowaAurasOptions.Text.nomHide)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OptionHideAll()
-								PowaAuras:UpdateMainOption(true)
+								PowaAurasOptions:OptionHideAll()
+								PowaAurasOptions:UpdateMainOption(true)
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
@@ -1250,14 +1250,14 @@
 								self:SetMaxLetters(15)
 							</OnLoad>
 							<OnEnterPressed>
-								PowaAuras:OptionRenameEdited()
+								PowaAurasOptions:OptionRenameEdited()
 								self:ClearFocus()
 							</OnEnterPressed>
 							<OnEditFocusLost>
-								PowaAuras:OptionRenameEdited()
+								PowaAurasOptions:OptionRenameEdited()
 							</OnEditFocusLost>
 							<OnEscapePressed>
-								PowaAuras:OptionRenameEdited()
+								PowaAurasOptions:OptionRenameEdited()
 								self:ClearFocus()
 							</OnEscapePressed>
 						</Scripts>
@@ -1369,19 +1369,19 @@
 						self:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
 					</OnLeave>
 					<OnEnterPressed>
-						PowaAuras.SliderEditBoxChanged(self)
+						PowaAurasOptions.SliderEditBoxChanged(self)
 						self:ClearFocus()
 					</OnEnterPressed>
 					<OnEditFocusLost>
-						PowaAuras.SliderEditBoxChanged(self)
+						PowaAurasOptions.SliderEditBoxChanged(self)
 					</OnEditFocusLost>
 					<OnEscapePressed>
-						PowaAuras.SliderEditBoxChanged(self)
+						PowaAurasOptions.SliderEditBoxChanged(self)
 						self:ClearFocus()
 					</OnEscapePressed>
 					<OnMouseWheel>
 						local slider = _G[string.sub(self:GetName(), 1, - 1 * (string.len("EditBox") + 1))]
-						PowaAuras.SliderSetValues(slider, delta)
+						PowaAurasOptions.SliderSetValues(slider, delta)
 					</OnMouseWheel>
 				</Scripts>
 			</EditBox>
@@ -1404,7 +1404,7 @@
 						self:RegisterForClicks("AnyUp")
 					</OnLoad>
 					<OnClick>
-						PowaAuras.SliderSetValues(self:GetParent(), 1)
+						PowaAurasOptions.SliderSetValues(self:GetParent(), 1)
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -1427,7 +1427,7 @@
 						self:RegisterForClicks("AnyUp")
 					</OnLoad>
 					<OnClick>
-						PowaAuras.SliderSetValues(self:GetParent(), 0)
+						PowaAurasOptions.SliderSetValues(self:GetParent(), 0)
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -1453,7 +1453,7 @@
 				GameTooltip:Hide()
 			</OnLeave>
 			<OnMouseWheel>
-				PowaAuras.SliderSetValues(self, delta)
+				PowaAurasOptions.SliderSetValues(self, delta)
 			</OnMouseWheel>
 		</Scripts>
 	</Slider>
@@ -1467,10 +1467,10 @@
 		</HitRectInsets>
 		<Scripts>
 			<OnClick>
-				PowaAuras.Ternary_OnClick(self)
+				PowaAurasOptions.Ternary_OnClick(self)
 			</OnClick>
 			<OnEnter>
-				PowaAuras.Ternary_CheckTooltip(self)
+				PowaAurasOptions.Ternary_CheckTooltip(self)
 			</OnEnter>
 			<OnLeave>
 				GameTooltip:Hide()
@@ -1500,7 +1500,7 @@
 		</Layers>
 		<Scripts>
 			<OnClick>
-				PowaAuras:FontButton_OnClick(self)
+				PowaAurasOptions:FontButton_OnClick(self)
 			</OnClick>
 		</Scripts>
 		<HighlightTexture file = "Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode = "ADD">
@@ -1545,13 +1545,13 @@
 				self:SetBackdropColor(0.6, 0.6, 0.6)
 			</OnLoad>
 			<OnMouseDown>
-				PowaAuras:Bar_MouseDown(self, button, "PowaBarConfigFrame")
+				PowaAurasOptions:Bar_MouseDown(self, button, "PowaBarConfigFrame")
 			</OnMouseDown>
 			<OnMouseUp>
-				PowaAuras:Bar_MouseUp(self, button, "PowaBarConfigFrame")
+				PowaAurasOptions:Bar_MouseUp(self, button, "PowaBarConfigFrame")
 			</OnMouseUp>
 			<OnShow>
-				if (PowaAuras.Auras[PowaAuras.CurrentAuraId].bufftype == PowaAuras.BuffTypes.Slots) then
+				if (PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId].bufftype == PowaAurasOptions.BuffTypes.Slots) then
 					PowaEquipmentSlotsFrame:Show()
 				end
 			</OnShow>
@@ -1703,15 +1703,15 @@
 								PowaColor_SwatchBg.r = 1.0
 								PowaColor_SwatchBg.g = 1.0
 								PowaColor_SwatchBg.b = 1.0
-								PowaColorText:SetText(PowaAuras.Text.nomColorPicker)
+								PowaColorText:SetText(PowaAurasOptions.Text.nomColorPicker)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OpenColorPicker(self, PowaAuras.Auras[PowaAuras.CurrentAuraId])
+								PowaAurasOptions:OpenColorPicker(self, PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId])
 							</OnClick>
 							<OnEnter>
 								PowaColor_SwatchBg:SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-								GameTooltip:SetText(PowaAuras.Text.aideColor, nil, nil, nil, nil, 1)
+								GameTooltip:SetText(PowaAurasOptions.Text.aideColor, nil, nil, nil, nil, 1)
 							</OnEnter>
 							<OnLeave>
 								PowaColor_SwatchBg:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
@@ -1747,10 +1747,10 @@
 						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
-								PowaGradientStyleDropDownLabel:SetText(PowaAuras.Text.nomGradientStyle..":")
+								PowaGradientStyleDropDownLabel:SetText(PowaAurasOptions.Text.nomGradientStyle..":")
 							</OnLoad>
 							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 							</OnShow>
 						</Scripts>
 					</Frame>
@@ -1800,15 +1800,15 @@
 								PowaGradientColor_SwatchBg.r = 1.0
 								PowaGradientColor_SwatchBg.g = 1.0
 								PowaGradientColor_SwatchBg.b = 1.0
-								PowaGradientColorText:SetText(PowaAuras.Text.nomSecondaryColorPicker)
+								PowaGradientColorText:SetText(PowaAurasOptions.Text.nomSecondaryColorPicker)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:OpenGradientColorPicker(self, PowaAuras.Auras[PowaAuras.CurrentAuraId])
+								PowaAurasOptions:OpenGradientColorPicker(self, PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId])
 							</OnClick>
 							<OnEnter>
 								PowaGradientColor_SwatchBg:SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-								GameTooltip:SetText(PowaAuras.Text.aideSecondaryColor, nil, nil, nil, nil, 1)
+								GameTooltip:SetText(PowaAurasOptions.Text.aideSecondaryColor, nil, nil, nil, nil, 1)
 							</OnEnter>
 							<OnLeave>
 								PowaGradientColor_SwatchBg:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
@@ -1831,11 +1831,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideRandomColor
-								PowaRandomColorButtonText:SetText(PowaAuras.Text.nomRandomColor)
+								self.tooltipText = PowaAurasOptions.Text.aideRandomColor
+								PowaRandomColorButtonText:SetText(PowaAurasOptions.Text.nomRandomColor)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:RandomColorChecked()
+								PowaAurasOptions:RandomColorChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -1853,11 +1853,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideDesaturate
-								PowaDesaturateButtonText:SetText(PowaAuras.Text.nomDesaturate)
+								self.tooltipText = PowaAurasOptions.Text.aideDesaturate
+								PowaDesaturateButtonText:SetText(PowaAurasOptions.Text.nomDesaturate)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:DesaturationChecked()
+								PowaAurasOptions:DesaturationChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -1875,11 +1875,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideEnableFullRotation
-								PowaEnableFullRotationButtonText:SetText(PowaAuras.Text.nomEnableFullRotation)
+								self.tooltipText = PowaAurasOptions.Text.aideEnableFullRotation
+								PowaEnableFullRotationButtonText:SetText(PowaAurasOptions.Text.nomEnableFullRotation)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:EnableFullRotationChecked()
+								PowaAurasOptions:EnableFullRotationChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -1897,11 +1897,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideWowTextures
-								PowaWowTextureButtonText:SetText(PowaAuras.Text.nomWowTextures)
+								self.tooltipText = PowaAurasOptions.Text.aideWowTextures
+								PowaWowTextureButtonText:SetText(PowaAurasOptions.Text.nomWowTextures)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:WowTexturesChecked()
+								PowaAurasOptions:WowTexturesChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -1919,11 +1919,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideModels
-								PowaModelsButtonText:SetText(PowaAuras.Text.nomModels)
+								self.tooltipText = PowaAurasOptions.Text.aideModels
+								PowaModelsButtonText:SetText(PowaAurasOptions.Text.nomModels)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:ModelsChecked()
+								PowaAurasOptions:ModelsChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -1941,11 +1941,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideCustomModels
-								PowaCustomModelsButtonText:SetText(PowaAuras.Text.nomCustomModels)
+								self.tooltipText = PowaAurasOptions.Text.aideCustomModels
+								PowaCustomModelsButtonText:SetText(PowaAurasOptions.Text.nomCustomModels)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:CustomModelsChecked()
+								PowaAurasOptions:CustomModelsChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -1963,11 +1963,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideCustomTextures
-								PowaCustomTextureButtonText:SetText(PowaAuras.Text.nomCustomTextures)
+								self.tooltipText = PowaAurasOptions.Text.aideCustomTextures
+								PowaCustomTextureButtonText:SetText(PowaAurasOptions.Text.nomCustomTextures)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:CustomTexturesChecked()
+								PowaAurasOptions:CustomTexturesChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -1985,11 +1985,11 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.tooltipText = PowaAuras.Text.aideTextAura
-								PowaTextAuraButtonText:SetText(PowaAuras.Text.nomTextAura)
+								self.tooltipText = PowaAurasOptions.Text.aideTextAura
+								PowaTextAuraButtonText:SetText(PowaAurasOptions.Text.nomTextAura)
 							</OnLoad>
 							<OnClick>
-								PowaAuras:TextAuraChecked()
+								PowaAurasOptions:TextAuraChecked()
 							</OnClick>
 						</Scripts>
 					</CheckButton>
@@ -2020,10 +2020,10 @@
 						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
-								PowaStrataDropDownLabel:SetText(PowaAuras.Text.nomFrameStrata..":")
+								PowaStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomFrameStrata..":")
 							</OnLoad>
 							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 							</OnShow>
 						</Scripts>
 					</Frame>
@@ -2044,12 +2044,12 @@
 								self:SetMinMaxValues(0, 20)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaFrameStrataLevelSliderText:SetText(PowaAuras.Text.nomLevel)
+								PowaFrameStrataLevelSliderText:SetText(PowaAurasOptions.Text.nomLevel)
 								PowaFrameStrataLevelSliderLow:SetText("0")
 								PowaFrameStrataLevelSliderHigh:SetText("20")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:FrameStrataLevelSliderChanged(self, value)
+								PowaAurasOptions:FrameStrataLevelSliderChanged(self, value)
 								PowaFrameStrataLevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
@@ -2081,10 +2081,10 @@
 						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
-								PowaTextureStrataDropDownLabel:SetText(PowaAuras.Text.nomTextureStrata..":")
+								PowaTextureStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomTextureStrata..":")
 							</OnLoad>
 							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 							</OnShow>
 						</Scripts>
 					</Frame>
@@ -2105,12 +2105,12 @@
 								self:SetMinMaxValues(-8, 7)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaTextureStrataSublevelSliderText:SetText(PowaAuras.Text.nomSublevel)
+								PowaTextureStrataSublevelSliderText:SetText(PowaAurasOptions.Text.nomSublevel)
 								PowaTextureStrataSublevelSliderLow:SetText("-8")
 								PowaTextureStrataSublevelSliderHigh:SetText("7")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:TextureStrataSublevelSliderChanged(self, value)
+								PowaAurasOptions:TextureStrataSublevelSliderChanged(self, value)
 								PowaTextureStrataSublevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
@@ -2142,10 +2142,10 @@
 						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
-								PowaBlendModeDropDownLabel:SetText(PowaAuras.Text.nomBlendMode..":")
+								PowaBlendModeDropDownLabel:SetText(PowaAurasOptions.Text.nomBlendMode..":")
 							</OnLoad>
 							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 							</OnShow>
 						</Scripts>
 					</Frame>
@@ -2166,20 +2166,20 @@
 								self:SetMinMaxValues(-100, 100)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaModelPositionZSliderText:SetText(PowaAuras.Text.nomModelZ)
+								PowaModelPositionZSliderText:SetText(PowaAurasOptions.Text.nomModelZ)
 								PowaModelPositionZSliderLow:SetText("-100")
 								PowaModelPositionZSliderHigh:SetText("100")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:ModelPositionZSliderChanged(self, value)
+								PowaAurasOptions:ModelPositionZSliderChanged(self, value)
 								PowaModelPositionZSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 100, 100, 0)
+								PowaAurasOptions.SliderOnMouseUp(self, 100, 100, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderSetValues(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 100, 100, 0)
+								PowaAurasOptions.SliderSetValues(self, delta)
+								PowaAurasOptions.SliderOnMouseUp(self, 100, 100, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2200,20 +2200,20 @@
 								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaModelPositionXSliderText:SetText(PowaAuras.Text.nomModelX)
+								PowaModelPositionXSliderText:SetText(PowaAurasOptions.Text.nomModelX)
 								PowaModelPositionXSliderLow:SetText("-50")
 								PowaModelPositionXSliderHigh:SetText("50")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:ModelPositionXSliderChanged(self, value)
+								PowaAurasOptions:ModelPositionXSliderChanged(self, value)
 								PowaModelPositionXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
+								PowaAurasOptions.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderSetValues(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
+								PowaAurasOptions.SliderSetValues(self, delta)
+								PowaAurasOptions.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2234,20 +2234,20 @@
 								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaModelPositionYSliderText:SetText(PowaAuras.Text.nomModelY)
+								PowaModelPositionYSliderText:SetText(PowaAurasOptions.Text.nomModelY)
 								PowaModelPositionYSliderLow:SetText("-50")
 								PowaModelPositionYSliderHigh:SetText("50")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:ModelPositionYSliderChanged(self, value)
+								PowaAurasOptions:ModelPositionYSliderChanged(self, value)
 								PowaModelPositionYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
+								PowaAurasOptions.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderSetValues(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 50, 50, 0)
+								PowaAurasOptions.SliderSetValues(self, delta)
+								PowaAurasOptions.SliderOnMouseUp(self, 50, 50, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2265,13 +2265,13 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self.aide = PowaAuras.Text.aideTexture
+								self.aide = PowaAurasOptions.Text.aideTexture
 								self:SetValueStep(1)
-								PowaBarAuraTextureSliderText:SetText(PowaAuras.Text.nomTexture)
+								PowaBarAuraTextureSliderText:SetText(PowaAurasOptions.Text.nomTexture)
 								PowaBarAuraTextureSliderLow:SetText("1")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraTextureSliderChanged(self, value)
+								PowaAurasOptions:BarAuraTextureSliderChanged(self, value)
 								PowaBarAuraTextureSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
@@ -2293,17 +2293,17 @@
 								self:SetMaxLetters(256)
 							</OnLoad>
 							<OnEnterPressed>
-								PowaAuras:CustomTextChanged()
-								PowaAuras:InitPage()
+								PowaAurasOptions:CustomTextChanged()
+								PowaAurasOptions:InitPage()
 								self:ClearFocus()
 							</OnEnterPressed>
 							<OnEditFocusLost>
-								PowaAuras:CustomTextChanged()
-								PowaAuras:InitPage()
+								PowaAurasOptions:CustomTextChanged()
+								PowaAurasOptions:InitPage()
 							</OnEditFocusLost>
 							<OnEscapePressed>
-								PowaAuras:CustomTextChanged()
-								PowaAuras:InitPage()
+								PowaAurasOptions:CustomTextChanged()
+								PowaAurasOptions:InitPage()
 								self:ClearFocus()
 							</OnEscapePressed>
 						</Scripts>
@@ -2325,17 +2325,17 @@
 								self:SetMaxLetters(256)
 							</OnLoad>
 							<OnEnterPressed>
-								PowaAuras:CustomModelsChanged()
-								PowaAuras:InitPage()
+								PowaAurasOptions:CustomModelsChanged()
+								PowaAurasOptions:InitPage()
 								self:ClearFocus()
 							</OnEnterPressed>
 							<OnEditFocusLost>
-								PowaAuras:CustomModelsChanged()
-								PowaAuras:InitPage()
+								PowaAurasOptions:CustomModelsChanged()
+								PowaAurasOptions:InitPage()
 							</OnEditFocusLost>
 							<OnEscapePressed>
-								PowaAuras:CustomModelsChanged()
-								PowaAuras:InitPage()
+								PowaAurasOptions:CustomModelsChanged()
+								PowaAurasOptions:InitPage()
 								self:ClearFocus()
 							</OnEscapePressed>
 						</Scripts>
@@ -2355,21 +2355,21 @@
 						<Scripts>
 							<OnLoad>
 								self:SetMaxLetters(256)
-								self.tooltipText = PowaAuras.Text.aideCustomText
+								self.tooltipText = PowaAurasOptions.Text.aideCustomText
 							</OnLoad>
 							<OnEnter>
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 								GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, 1)
 							</OnEnter>
 							<OnEnterPressed>
-								PowaAuras:AurasTextChanged()
+								PowaAurasOptions:AurasTextChanged()
 								self:ClearFocus()
 							</OnEnterPressed>
 							<OnEditFocusLost>
-								PowaAuras:AurasTextChanged()
+								PowaAurasOptions:AurasTextChanged()
 							</OnEditFocusLost>
 							<OnEscapePressed>
-								PowaAuras:AurasTextChanged()
+								PowaAurasOptions:AurasTextChanged()
 								self:ClearFocus()
 							</OnEscapePressed>
 							<OnLeave>
@@ -2391,7 +2391,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								PowaFontButtonText:SetText(PowaAuras.Text.nomFont)
+								PowaFontButtonText:SetText(PowaAurasOptions.Text.nomFont)
 							</OnLoad>
 							<OnClick>
 								if FontSelectorFrame:IsVisible() then
@@ -2399,11 +2399,11 @@
 								else
 									PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 								end
-								PowaAuras:OpenFontSelector(self)
+								PowaAurasOptions:OpenFontSelector(self)
 							</OnClick>
 							<OnEnter>
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-								GameTooltip:SetText(PowaAuras.Text.aideFont, nil, nil, nil, nil, 1)
+								GameTooltip:SetText(PowaAurasOptions.Text.aideFont, nil, nil, nil, nil, 1)
 							</OnEnter>
 							<OnLeave>
 								GameTooltip:Hide()
@@ -2427,12 +2427,12 @@
 								self:SetMinMaxValues(0, 100)
 								self:SetValue(100)
 								self:SetValueStep(1)
-								PowaBarAuraAlphaSliderText:SetText(PowaAuras.Text.nomAlpha)
+								PowaBarAuraAlphaSliderText:SetText(PowaAurasOptions.Text.nomAlpha)
 								PowaBarAuraAlphaSliderLow:SetText("0%")
 								PowaBarAuraAlphaSliderHigh:SetText("100%")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraAlphaSliderChanged(self, value)
+								PowaAurasOptions:BarAuraAlphaSliderChanged(self, value)
 								PowaBarAuraAlphaSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 							</OnValueChanged>
 						</Scripts>
@@ -2454,12 +2454,12 @@
 								self:SetMinMaxValues(0, 3)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaBarAuraSymSliderText:SetText(PowaAuras.Text.nomSymetrie..": "..PowaAuras.Text.aucune)
-								PowaBarAuraSymSliderLow:SetText(PowaAuras.Text.aucune)
+								PowaBarAuraSymSliderText:SetText(PowaAurasOptions.Text.nomSymetrie..": "..PowaAurasOptions.Text.aucune)
+								PowaBarAuraSymSliderLow:SetText(PowaAurasOptions.Text.aucune)
 								PowaBarAuraSymSliderHigh:SetText("XY")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraSymSliderChanged(self, value)
+								PowaAurasOptions:BarAuraSymSliderChanged(self, value)
 								PowaBarAuraSymSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
@@ -2481,12 +2481,12 @@
 								self:SetMinMaxValues(-1, 250)
 								self:SetValue(-1)
 								self:SetValueStep(1)
-								PowaBarAnimationSliderText:SetText(PowaAuras.Text.nomAnimation..": "..PowaAuras.Text.nomDefault)
-								PowaBarAnimationSliderLow:SetText(PowaAuras.Text.nomDefault)
+								PowaBarAnimationSliderText:SetText(PowaAurasOptions.Text.nomAnimation..": "..PowaAurasOptions.Text.nomDefault)
+								PowaBarAnimationSliderLow:SetText(PowaAurasOptions.Text.nomDefault)
 								PowaBarAnimationSliderHigh:SetText("250")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAnimationSliderChanged(self, value)
+								PowaAurasOptions:BarAnimationSliderChanged(self, value)
 								PowaBarAnimationSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
@@ -2508,12 +2508,12 @@
 								self:SetMinMaxValues(-0.01, 2.01)
 								self:SetValue(1)
 								self:SetValueStep(0.01)
-								PowaBarAuraDeformSliderText:SetText(PowaAuras.Text.nomDeform)
+								PowaBarAuraDeformSliderText:SetText(PowaAurasOptions.Text.nomDeform)
 								PowaBarAuraDeformSliderLow:SetText("0.00")
 								PowaBarAuraDeformSliderHigh:SetText("2.00")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraDeformSliderChanged(self, value)
+								PowaAurasOptions:BarAuraDeformSliderChanged(self, value)
 								PowaBarAuraDeformSliderEditBox:SetText(format("%.2f", self:GetValue()))
 							</OnValueChanged>
 						</Scripts>
@@ -2535,12 +2535,12 @@
 								self:SetMinMaxValues(0, 360)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaBarAuraRotateSliderText:SetText(PowaAuras.Text.nomRotation)
+								PowaBarAuraRotateSliderText:SetText(PowaAurasOptions.Text.nomRotation)
 								PowaBarAuraRotateSliderLow:SetText("0°")
 								PowaBarAuraRotateSliderHigh:SetText("360°")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraRotateSliderChanged(self, value)
+								PowaAurasOptions:BarAuraRotateSliderChanged(self, value)
 								PowaBarAuraRotateSliderEditBox:SetText(format("%.0f", self:GetValue()).."°")
 							</OnValueChanged>
 						</Scripts>
@@ -2562,20 +2562,20 @@
 								self:SetMinMaxValues(1, 200)
 								self:SetValue(100)
 								self:SetValueStep(1)
-								PowaBarAuraSizeSliderText:SetText(PowaAuras.Text.nomTaille)
+								PowaBarAuraSizeSliderText:SetText(PowaAurasOptions.Text.nomTaille)
 								PowaBarAuraSizeSliderLow:SetText("1%")
 								PowaBarAuraSizeSliderHigh:SetText("200%")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraSizeSliderChanged(self, value)
+								PowaAurasOptions:BarAuraSizeSliderChanged(self, value)
 								PowaBarAuraSizeSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 0, 100, 0, "%")
+								PowaAurasOptions.SliderOnMouseUp(self, 0, 100, 0, "%")
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderSetValues(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 0, 100, 0, "%")
+								PowaAurasOptions.SliderSetValues(self, delta)
+								PowaAurasOptions.SliderOnMouseUp(self, 0, 100, 0, "%")
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2596,20 +2596,20 @@
 								self:SetMinMaxValues(-700, 700)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaBarAuraCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X")
+								PowaBarAuraCoordXSliderText:SetText(PowaAurasOptions.Text.nomPos.." X")
 								PowaBarAuraCoordXSliderLow:SetText("-700")
 								PowaBarAuraCoordXSliderHigh:SetText("700")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraCoordXSliderChanged(self, value)
+								PowaAurasOptions:BarAuraCoordXSliderChanged(self, value)
 								PowaBarAuraCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
+								PowaAurasOptions.SliderOnMouseUp(self, 700, 700, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderSetValues(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
+								PowaAurasOptions.SliderSetValues(self, delta)
+								PowaAurasOptions.SliderOnMouseUp(self, 700, 700, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2630,20 +2630,20 @@
 								self:SetMinMaxValues(-400, 400)
 								self:SetValue(0)
 								self:SetValueStep(1)
-								PowaBarAuraCoordYSliderText:SetText(PowaAuras.Text.nomPos.." Y")
+								PowaBarAuraCoordYSliderText:SetText(PowaAurasOptions.Text.nomPos.." Y")
 								PowaBarAuraCoordYSliderLow:SetText("-400")
 								PowaBarAuraCoordYSliderHigh:SetText("400")
 							</OnLoad>
 							<OnValueChanged>
-								PowaAuras:BarAuraCoordYSliderChanged(self, value)
+								PowaAurasOptions:BarAuraCoordYSliderChanged(self, value)
 								PowaBarAuraCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 							</OnValueChanged>
 							<OnMouseUp>
-								PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
+								PowaAurasOptions.SliderOnMouseUp(self, 400, 400, 0)
 							</OnMouseUp>
 							<OnMouseWheel>
-								PowaAuras.SliderSetValues(self, delta)
-								PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
+								PowaAurasOptions.SliderSetValues(self, delta)
+								PowaAurasOptions.SliderOnMouseUp(self, 400, 400, 0)
 							</OnMouseWheel>
 						</Scripts>
 					</Slider>
@@ -2723,7 +2723,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownBuffTypeLabel:SetText(PowaAuras.Text.nomActivationBy..":")
+										PowaDropDownBuffTypeLabel:SetText(PowaAurasOptions.Text.nomActivationBy..":")
 									</OnLoad>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -2763,14 +2763,14 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownPowerTypeLabel:SetText(PowaAuras.Text.nomPowerType..":")
+										PowaDropDownPowerTypeLabel:SetText(PowaAurasOptions.Text.nomPowerType..":")
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aidePowerType, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aidePowerType, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide()
@@ -2807,14 +2807,14 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownStanceLabel:SetText(PowaAuras.Text.nomStance..":")
+										PowaDropDownStanceLabel:SetText(PowaAurasOptions.Text.nomStance..":")
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideStance, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideStance, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide()
@@ -2851,14 +2851,14 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownGTFOLabel:SetText(PowaAuras.Text.nomGTFO..":")
+										PowaDropDownGTFOLabel:SetText(PowaAurasOptions.Text.nomGTFO..":")
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideGTFO, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideGTFO, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide()
@@ -2882,12 +2882,12 @@
 										self:SetMinMaxValues(0, 100)
 										self:SetValue(50)
 										self:SetValueStep(1)
-										PowaBarThresholdSliderText:SetText(PowaAuras.Text.nomThreshold)
+										PowaBarThresholdSliderText:SetText(PowaAurasOptions.Text.nomThreshold)
 										PowaBarThresholdSliderLow:SetText("0%")
 										PowaBarThresholdSliderHigh:SetText("100%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:BarThresholdSliderChanged(self, value)
+										PowaAurasOptions:BarThresholdSliderChanged(self, value)
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -2905,11 +2905,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideThreshInv
-										PowaThresholdInvertButtonText:SetText(PowaAuras.Text.nomThreshInv)
+										self.tooltipText = PowaAurasOptions.Text.aideThreshInv
+										PowaThresholdInvertButtonText:SetText(PowaAurasOptions.Text.nomThreshInv)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:ThresholdInvertChecked(self)
+										PowaAurasOptions:ThresholdInvertChecked(self)
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -2940,15 +2940,15 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaBarBuffStacksLabel:SetText(PowaAuras.Text.nomStacks..":")
+										PowaBarBuffStacksLabel:SetText(PowaAurasOptions.Text.nomStacks..":")
 										self:SetMaxLetters(10)
-										self.aide = PowaAuras.Text.aideStacks
+										self.aide = PowaAurasOptions.Text.aideStacks
 									</OnLoad>
 									<OnEnterPressed>
 										self:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										PowaAuras:StacksTextChanged()
+										PowaAurasOptions:StacksTextChanged()
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -2990,13 +2990,13 @@
 								<Scripts>
 									<OnLoad>
 										self:SetMaxLetters(256)
-										self.aide = PowaAuras.Text.aideBuff
+										self.aide = PowaAurasOptions.Text.aideBuff
 									</OnLoad>
 									<OnEnterPressed>
 										self:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										PowaAuras:TextChanged()
+										PowaAurasOptions:TextChanged()
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -3038,13 +3038,13 @@
 								<Scripts>
 									<OnLoad>
 										self:SetMaxLetters(50)
-										self.aide = PowaAuras.Text.aideMultiID
+										self.aide = PowaAurasOptions.Text.aideMultiID
 									</OnLoad>
 									<OnEnterPressed>
 										self:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										PowaAuras:MultiIDChanged()
+										PowaAurasOptions:MultiIDChanged()
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -3086,13 +3086,13 @@
 								<Scripts>
 									<OnLoad>
 										self:SetMaxLetters(256)
-										self.aide = PowaAuras.Text.aideTooltipCheck
+										self.aide = PowaAurasOptions.Text.aideTooltipCheck
 									</OnLoad>
 									<OnEnterPressed>
 										self:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										PowaAuras:TooltipCheckChanged()
+										PowaAurasOptions:TooltipCheckChanged()
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -3117,11 +3117,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideExact
-										PowaExactButtonText:SetText(PowaAuras.Text.nomExact)
+										self.tooltipText = PowaAurasOptions.Text.aideExact
+										PowaExactButtonText:SetText(PowaAurasOptions.Text.nomExact)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:ExactChecked()
+										PowaAurasOptions:ExactChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3139,11 +3139,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideInverse
-										PowaInverseButtonText:SetText(PowaAuras.Text.nomCheckInverse)
+										self.tooltipText = PowaAurasOptions.Text.aideInverse
+										PowaInverseButtonText:SetText(PowaAurasOptions.Text.nomCheckInverse)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:InverseChecked()
+										PowaAurasOptions:InverseChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3162,7 +3162,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "combat"
-										PowaInCombatButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaInCombatButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3181,7 +3181,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "inParty"
-										PowaIsInPartyButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaIsInPartyButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3200,7 +3200,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "ismounted"
-										PowaIsMountedButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaIsMountedButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3218,11 +3218,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideTarget
-										PowaTargetButtonText:SetText(PowaAuras.Text.nomCheckTarget)
+										self.tooltipText = PowaAurasOptions.Text.aideTarget
+										PowaTargetButtonText:SetText(PowaAurasOptions.Text.nomCheckTarget)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TargetChecked()
+										PowaAurasOptions:TargetChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3240,11 +3240,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideFocus
-										PowaFocusButtonText:SetText(PowaAuras.Text.nomCheckFocus)
+										self.tooltipText = PowaAurasOptions.Text.aideFocus
+										PowaFocusButtonText:SetText(PowaAurasOptions.Text.nomCheckFocus)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:FocusChecked()
+										PowaAurasOptions:FocusChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3262,11 +3262,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideParty
-										PowaPartyButtonText:SetText(PowaAuras.Text.nomCheckParty)
+										self.tooltipText = PowaAurasOptions.Text.aideParty
+										PowaPartyButtonText:SetText(PowaAurasOptions.Text.nomCheckParty)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:PartyChecked()
+										PowaAurasOptions:PartyChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3284,11 +3284,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideGroupAny
-										PowaGroupAnyButtonText:SetText(PowaAuras.Text.nomCheckGroupAny)
+										self.tooltipText = PowaAurasOptions.Text.aideGroupAny
+										PowaGroupAnyButtonText:SetText(PowaAurasOptions.Text.nomCheckGroupAny)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:GroupAnyChecked()
+										PowaAurasOptions:GroupAnyChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3306,11 +3306,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideOptunitn
-										PowaOptunitnButtonText:SetText(PowaAuras.Text.nomCheckOptunitn)
+										self.tooltipText = PowaAurasOptions.Text.aideOptunitn
+										PowaOptunitnButtonText:SetText(PowaAurasOptions.Text.nomCheckOptunitn)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:OptunitnChecked()
+										PowaAurasOptions:OptunitnChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3329,13 +3329,13 @@
 								<Scripts>
 									<OnLoad>
 										self:SetMaxLetters(256)
-										self.aide = PowaAuras.Text.aideUnitn
+										self.aide = PowaAurasOptions.Text.aideUnitn
 									</OnLoad>
 									<OnEnterPressed>
 										self:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										PowaAuras:UnitnTextChanged()
+										PowaAurasOptions:UnitnTextChanged()
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -3376,11 +3376,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideTalentGroup1
-										PowaTalentGroup1ButtonText:SetText(PowaAuras.Text.nomTalentGroup1)
+										self.tooltipText = PowaAurasOptions.Text.aideTalentGroup1
+										PowaTalentGroup1ButtonText:SetText(PowaAurasOptions.Text.nomTalentGroup1)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:SettingChecked(self, "spec1")
+										PowaAurasOptions:SettingChecked(self, "spec1")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3398,11 +3398,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideTalentGroup2
-										PowaTalentGroup2ButtonText:SetText(PowaAuras.Text.nomTalentGroup2)
+										self.tooltipText = PowaAurasOptions.Text.aideTalentGroup2
+										PowaTalentGroup2ButtonText:SetText(PowaAurasOptions.Text.nomTalentGroup2)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:SettingChecked(self, "spec2")
+										PowaAurasOptions:SettingChecked(self, "spec2")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3420,11 +3420,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideAuraDebug
-										PowaAuraDebugButtonText:SetText(PowaAuras.Text.nomAuraDebug)
+										self.tooltipText = PowaAurasOptions.Text.aideAuraDebug
+										PowaAuraDebugButtonText:SetText(PowaAurasOptions.Text.nomAuraDebug)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:SettingChecked(self, "Debug")
+										PowaAurasOptions:SettingChecked(self, "Debug")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3442,11 +3442,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideIgnoreMaj
-										PowaIngoreCaseButtonText:SetText(PowaAuras.Text.nomCheckIgnoreMaj)
+										self.tooltipText = PowaAurasOptions.Text.aideIgnoreMaj
+										PowaIngoreCaseButtonText:SetText(PowaAurasOptions.Text.nomCheckIgnoreMaj)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:IgnoreMajChecked()
+										PowaAurasOptions:IgnoreMajChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3464,11 +3464,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideMine
-										PowaMineButtonText:SetText(PowaAuras.Text.nomMine)
+										self.tooltipText = PowaAurasOptions.Text.aideMine
+										PowaMineButtonText:SetText(PowaAurasOptions.Text.nomMine)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:SettingChecked(self, "mine")
+										PowaAurasOptions:SettingChecked(self, "mine")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3487,7 +3487,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "isResting"
-										PowaRestingButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaRestingButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3506,7 +3506,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "inRaid"
-										PowaIsInRaidButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaIsInRaidButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3525,7 +3525,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "inVehicle"
-										PowaInVehicleButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaInVehicleButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3544,7 +3544,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "inPetBattle"
-										PowaInPetBattleButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaInPetBattleButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3562,15 +3562,15 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideTargetFriend
-										PowaTargetFriendButtonText:SetText(PowaAuras.Text.nomCheckFriend)
+										self.tooltipText = PowaAurasOptions.Text.aideTargetFriend
+										PowaTargetFriendButtonText:SetText(PowaAurasOptions.Text.nomCheckFriend)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TargetFriendChecked()
+										PowaAurasOptions:TargetFriendChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<!-- Party/Raid or Self CheckButton -->
+							<!-- Self/Party/Raid  CheckButton -->
 							<CheckButton name = "PowaGroupOrSelfButton" inherits = "PowaCheckTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
@@ -3584,11 +3584,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideGroupOrSelf
-										PowaGroupOrSelfButtonText:SetText(PowaAuras.Text.nomCheckGroupOrSelf)
+										self.tooltipText = PowaAurasOptions.Text.aideGroupOrSelf
+										PowaGroupOrSelfButtonText:SetText(PowaAurasOptions.Text.nomCheckGroupOrSelf)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:GroupOrSelfChecked()
+										PowaAurasOptions:GroupOrSelfChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3606,11 +3606,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideRaid
-										PowaRaidButtonText:SetText(PowaAuras.Text.nomCheckRaid)
+										self.tooltipText = PowaAurasOptions.Text.aideRaid
+										PowaRaidButtonText:SetText(PowaAurasOptions.Text.nomCheckRaid)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:RaidChecked()
+										PowaAurasOptions:RaidChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3629,7 +3629,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "InstanceScenario"
-										PowaScenarioInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaScenarioInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3648,7 +3648,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "InstanceScenarioHeroic"
-										PowaScenarioHeroicInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaScenarioHeroicInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3667,7 +3667,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "Instance5Man"
-										Powa5ManInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										Powa5ManInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3686,7 +3686,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "Instance5ManHeroic"
-										Powa5ManHeroicInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										Powa5ManHeroicInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3705,7 +3705,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "InstanceChallengeMode"
-										PowaChallangeModeInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaChallangeModeInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3724,7 +3724,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "Instance10Man"
-										Powa10ManInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										Powa10ManInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3743,7 +3743,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "Instance10ManHeroic"
-										Powa10ManHeroicInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										Powa10ManHeroicInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3762,7 +3762,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "Instance25Man"
-										Powa25ManInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										Powa25ManInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3781,7 +3781,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "Instance25ManHeroic"
-										Powa25ManHeroicInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										Powa25ManHeroicInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3800,7 +3800,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "InstanceFlexible"
-										PowaFlexibleInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaFlexibleInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3819,7 +3819,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "isAlive"
-										PowaIsAliveButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaIsAliveButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3838,7 +3838,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "PvP"
-										PowaPvPButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaPvPButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3856,11 +3856,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideRoundIcons
-										PowaRoundIconsButtonText:SetText(PowaAuras.Text.nomRoundIcons)
+										self.tooltipText = PowaAurasOptions.Text.aideRoundIcons
+										PowaRoundIconsButtonText:SetText(PowaAurasOptions.Text.nomRoundIcons)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:RoundIconsChecked()
+										PowaAurasOptions:RoundIconsChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3878,11 +3878,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideOwnTex
-										PowaOwntexButtonText:SetText(PowaAuras.Text.nomOwnTex)
+										self.tooltipText = PowaAurasOptions.Text.aideOwnTex
+										PowaOwntexButtonText:SetText(PowaAurasOptions.Text.nomOwnTex)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:OwntexChecked()
+										PowaAurasOptions:OwntexChecked()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3901,7 +3901,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "RoleTank"
-										PowaRoleTankButtonText:SetText(PowaAuras.Text.Role[self.Parameter])
+										PowaRoleTankButtonText:SetText(PowaAurasOptions.Text.Role[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3920,7 +3920,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "RoleHealer"
-										PowaRoleHealerButtonText:SetText(PowaAuras.Text.Role[self.Parameter])
+										PowaRoleHealerButtonText:SetText(PowaAurasOptions.Text.Role[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3939,7 +3939,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "RoleMeleDps"
-										PowaRoleMeleDpsButtonText:SetText(PowaAuras.Text.Role[self.Parameter])
+										PowaRoleMeleDpsButtonText:SetText(PowaAurasOptions.Text.Role[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3958,7 +3958,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "RoleRangeDps"
-										PowaRoleRangeDpsButtonText:SetText(PowaAuras.Text.Role[self.Parameter])
+										PowaRoleRangeDpsButtonText:SetText(PowaAurasOptions.Text.Role[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3977,7 +3977,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "InstanceBg"
-										PowaBgInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaBgInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -3996,7 +3996,7 @@
 								<Scripts>
 									<OnShow>
 										self.Parameter = "InstanceArena"
-										PowaArenaInstanceButtonText:SetText(PowaAuras.Text.Ternary[self.Parameter])
+										PowaArenaInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
 							</CheckButton>
@@ -4014,11 +4014,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideExtra
-										PowaExtraButtonText:SetText(PowaAuras.Text.nomExtra)
+										self.tooltipText = PowaAurasOptions.Text.aideExtra
+										PowaExtraButtonText:SetText(PowaAurasOptions.Text.nomExtra)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:SettingChecked(self, "Extra")
+										PowaAurasOptions:SettingChecked(self, "Extra")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4027,7 +4027,7 @@
 					<!-- Second Configuration Tab Panel (Animation) -->
 					<Frame name = "PowaBarConfigFrameEditor2" hidden = "true">
 						<Size>
-							<AbsDimension x = "450" y = "255"/>
+							<AbsDimension x = "450" y = "334"/>
 						</Size>
 						<Anchors>
 							<Anchor point = "TOP" relativeTo = "PowaBarConfigFrameEditor" relativePoint = "BOTTOM">
@@ -4084,10 +4084,10 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownAnimBeginLabel:SetText(PowaAuras.Text.nomBegin..":")
+										PowaDropDownAnimBeginLabel:SetText(PowaAurasOptions.Text.nomBegin..":")
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 								</Scripts>
 							</Frame>
@@ -4121,69 +4121,22 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownAnimEndLabel:SetText(PowaAuras.Text.nomEnd..":")
+										PowaDropDownAnimEndLabel:SetText(PowaAurasOptions.Text.nomEnd..":")
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 								</Scripts>
 							</Frame>
-							<!-- Old Animations CheckButton -->
-							<CheckButton name = "PowaOldAnimation" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnimBegin" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "15" y = "0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideAnimationsAreBrokenSorry
-										PowaOldAnimationText:SetText(PowaAuras.Text.nomOldAnimations)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:OldAnimationChecked(self)
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<!-- Show Spin CheckButton -->
-							<CheckButton name = "PowaShowSpinAtBeginning" inherits = "PowaCheckTemplate">
-								<Size>
-									<AbsDimension x = "25" y = "25"/>
-								</Size>
-								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaOldAnimation" relativePoint = "BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x = "0" y = "5"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideShowSpinAtBeginning
-										PowaShowSpinAtBeginningText:SetText(PowaAuras.Text.nomCheckShowSpinAtBeginning)
-									</OnLoad>
-									<OnClick>
-										PowaAuras:ShowSpinAtBeginningChecked(self)
-									</OnClick>
-								</Scripts>
-							</CheckButton>
 							<!-- Main Animation DropDown -->
 							<Frame name = "PowaDropDownAnim1" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200"/>
-								</Size>
 								<HitRectInsets>
 									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
 								</HitRectInsets>
 								<Anchors>
-									<Anchor point = "TOPLEFT" relativeTo = "PowaShowSpinAtBeginning" relativePoint = "BOTTOMLEFT">
+									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnimBegin" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "-15" y = "-20"/>
+											<AbsDimension x = "0" y = "-15"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -4202,14 +4155,14 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownAnim1Label:SetText(PowaAuras.Text.nomAnim1..":")
+										PowaDropDownAnim1Label:SetText(PowaAurasOptions.Text.nomAnim1..":")
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideAnim1, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideAnim1, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide()
@@ -4218,12 +4171,6 @@
 							</Frame>
 							<!-- Secondary Animation DropDown -->
 							<Frame name = "PowaDropDownAnim2" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200"/>
-								</Size>
-								<HitRectInsets>
-									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-								</HitRectInsets>
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownAnim1" relativePoint = "RIGHT">
 										<Offset>
@@ -4244,31 +4191,234 @@
 										</FontString>
 									</Layer>
 								</Layers>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownAnim2Label:SetText(PowaAuras.Text.nomAnim2..":")
+										PowaDropDownAnim2Label:SetText(PowaAurasOptions.Text.nomAnim2..":")
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideAnim2, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideAnim2, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide()
 									</OnLeave>
 								</Scripts>
 							</Frame>
-							<!-- Animation Speed Slider -->
-							<Slider name = "PowaBarAuraAnimSpeedSlider" inherits = "PowaBarSliderTemplate">
+							<!-- Old Animations CheckButton -->
+							<CheckButton name = "PowaOldAnimation" inherits = "PowaCheckTemplate">
 								<Size>
-									<AbsDimension x = "425" y = "16"/>
+									<AbsDimension x = "25" y = "25"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnim1" relativePoint = "BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x = "20" y = "-22"/>
+											<AbsDimension x = "15" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAurasOptions.Text.aideAnimationsAreBrokenSorry
+										PowaOldAnimationText:SetText(PowaAurasOptions.Text.nomOldAnimations)
+									</OnLoad>
+									<OnClick>
+										PowaAurasOptions:OldAnimationChecked(self)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Show Spin CheckButton -->
+							<CheckButton name = "PowaShowSpinAtBeginning" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaOldAnimation" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAurasOptions.Text.aideShowSpinAtBeginning
+										PowaShowSpinAtBeginningText:SetText(PowaAurasOptions.Text.nomCheckShowSpinAtBeginning)
+									</OnLoad>
+									<OnClick>
+										PowaAurasOptions:ShowSpinAtBeginningChecked(self)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Secondary Blend Mode DropDown -->
+							<Frame name = "PowaSecondaryBlendModeDropDown" inherits = "UIDropDownMenuTemplate">
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnim2" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "-15"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+											<Anchors>
+												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+													<Offset>
+														<AbsDimension x = "20" y = "2"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
+								<Scripts>
+									<OnLoad>
+										PowaSecondaryBlendModeDropDownLabel:SetText(PowaAurasOptions.Text.nomSecondaryBlendMode..":")
+									</OnLoad>
+									<OnShow>
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
+									</OnShow>
+								</Scripts>
+							</Frame>
+							<!-- Secondary Frame's Strata DropDown -->
+							<Frame name = "PowaSecondaryStrataDropDown" inherits = "UIDropDownMenuTemplate">
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnim1" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "-62"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+											<Anchors>
+												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+													<Offset>
+														<AbsDimension x = "20" y = "2"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
+								<Scripts>
+									<OnLoad>
+										PowaSecondaryStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomSecondaryFrameStrata..":")
+									</OnLoad>
+									<OnShow>
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
+									</OnShow>
+								</Scripts>
+							</Frame>
+							<!-- Secondary Frame's Strata Level Slider -->
+							<Slider name = "PowaSecondaryStrataLevelSlider" inherits = "PowaBarSliderTemplate">
+								<Size>
+									<AbsDimension x = "200" y = "16"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaSecondaryStrataDropDown" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "20" y = "-12"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self:SetMinMaxValues(0, 20)
+										self:SetValue(0)
+										self:SetValueStep(1)
+										PowaSecondaryStrataLevelSliderText:SetText(PowaAurasOptions.Text.nomLevel)
+										PowaSecondaryStrataLevelSliderLow:SetText("0")
+										PowaSecondaryStrataLevelSliderHigh:SetText("20")
+									</OnLoad>
+									<OnValueChanged>
+										PowaAurasOptions:SecondaryFrameStrataLevelSliderChanged(self, value)
+										PowaSecondaryStrataLevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<!-- Secondary Texture's Strata DropDown -->
+							<Frame name = "PowaSecondaryTextureStrataDropDown" inherits = "UIDropDownMenuTemplate">
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaSecondaryStrataDropDown" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "-20" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+											<Anchors>
+												<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+													<Offset>
+														<AbsDimension x = "20" y = "2"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
+								<Scripts>
+									<OnLoad>
+										PowaSecondaryTextureStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomSecondaryTextureStrata..":")
+									</OnLoad>
+									<OnShow>
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
+									</OnShow>
+								</Scripts>
+							</Frame>
+							<!-- Secondary Texture Sublevel Slider -->
+							<Slider name = "PowaSecondaryTextureStrataSublevelSlider" inherits = "PowaBarSliderTemplate">
+								<Size>
+									<AbsDimension x = "200" y = "16"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaSecondaryTextureStrataDropDown" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "20" y = "-12"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self:SetMinMaxValues(-8, 7)
+										self:SetValue(0)
+										self:SetValueStep(1)
+										PowaSecondaryTextureStrataSublevelSliderText:SetText(PowaAurasOptions.Text.nomSublevel)
+										PowaSecondaryTextureStrataSublevelSliderLow:SetText("-8")
+										PowaSecondaryTextureStrataSublevelSliderHigh:SetText("7")
+									</OnLoad>
+									<OnValueChanged>
+										PowaAurasOptions:SecondaryTextureStrataSublevelSliderChanged(self, value)
+										PowaSecondaryTextureStrataSublevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<!-- Animation Speed Slider -->
+							<Slider name = "PowaBarAuraAnimSpeedSlider" inherits = "PowaBarSliderTemplate">
+								<Size>
+									<AbsDimension x = "420" y = "16"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "TOPLEFT" relativeTo = "PowaSecondaryStrataLevelSlider" relativePoint = "BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x = "0" y = "-28"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -4277,12 +4427,12 @@
 										self:SetMinMaxValues(1, 200)
 										self:SetValue(100)
 										self:SetValueStep(1)
-										PowaBarAuraAnimSpeedSliderText:SetText(PowaAuras.Text.nomSpeed)
+										PowaBarAuraAnimSpeedSliderText:SetText(PowaAurasOptions.Text.nomSpeed)
 										PowaBarAuraAnimSpeedSliderLow:SetText("1%")
 										PowaBarAuraAnimSpeedSliderHigh:SetText("200%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:BarAuraAnimSpeedSliderChanged(self, value)
+										PowaAurasOptions:BarAuraAnimSpeedSliderChanged(self, value)
 										PowaBarAuraAnimSpeedSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
 									</OnValueChanged>
 								</Scripts>
@@ -4290,7 +4440,7 @@
 							<!-- Animation Duration Slider -->
 							<Slider name = "PowaBarAuraDurationSlider" inherits = "PowaBarSliderTemplate">
 								<Size>
-									<AbsDimension x = "425" y = "16"/>
+									<AbsDimension x = "420" y = "16"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarAuraAnimSpeedSlider" relativePoint = "BOTTOMLEFT">
@@ -4301,16 +4451,16 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.aide = PowaAuras.Text.aideDuration
+										self.aide = PowaAurasOptions.Text.aideDuration
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
 										self:SetValueStep(0.01)
-										PowaBarAuraDurationSliderText:SetText(PowaAuras.Text.nomDuration)
+										PowaBarAuraDurationSliderText:SetText(PowaAurasOptions.Text.nomDuration)
 										PowaBarAuraDurationSliderLow:SetText("0 sec")
 										PowaBarAuraDurationSliderHigh:SetText("60 sec")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:BarAuraAnimDurationSliderChanged(self, value)
+										PowaAurasOptions:BarAuraAnimDurationSliderChanged(self, value)
 										PowaBarAuraDurationSliderEditBox:SetText(format("%.2f", self:GetValue()))
 									</OnValueChanged>
 								</Scripts>
@@ -4349,9 +4499,6 @@
 						<Frames>
 							<!-- Starting Sound DropDown -->
 							<Frame name = "PowaDropDownSound" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200"/>
-								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor3" relativePoint = "TOPLEFT">
 										<Offset>
@@ -4359,9 +4506,6 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
-								<HitRectInsets>
-									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
-								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -4375,16 +4519,19 @@
 										</FontString>
 									</Layer>
 								</Layers>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownSoundLabel:SetText(PowaAuras.Text.nomSound)
+										PowaDropDownSoundLabel:SetText(PowaAurasOptions.Text.nomSound)
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideSound, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideSound, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide()
@@ -4393,9 +4540,6 @@
 							</Frame>
 							<!-- Custom Starting Sound DropDown -->
 							<Frame name = "PowaDropDownSound2" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200"/>
-								</Size>
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownSound" relativePoint = "BOTTOMLEFT">
 										<Offset>
@@ -4403,9 +4547,6 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
-								<HitRectInsets>
-									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
-								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -4419,16 +4560,19 @@
 										</FontString>
 									</Layer>
 								</Layers>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownSound2Label:SetText(PowaAuras.Text.nomSound2)
+										PowaDropDownSound2Label:SetText(PowaAurasOptions.Text.nomSound2)
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideSound2, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideSound2, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide()
@@ -4462,15 +4606,15 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaBarCustomSoundLabel:SetText(PowaAuras.Text.nomCustomSound)
+										PowaBarCustomSoundLabel:SetText(PowaAurasOptions.Text.nomCustomSound)
 										self:SetMaxLetters(256)
-										self.aide = PowaAuras.Text.aideCustomSound
+										self.aide = PowaAurasOptions.Text.aideCustomSound
 									</OnLoad>
 									<OnEnterPressed>
 										self:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										PowaAuras:CustomSoundTextChanged()
+										PowaAurasOptions:CustomSoundTextChanged()
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -4511,14 +4655,14 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownSoundEndLabel:SetText(PowaAuras.Text.nomSoundEnd);
+										PowaDropDownSoundEndLabel:SetText(PowaAurasOptions.Text.nomSoundEnd);
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideSoundEnd, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideSoundEnd, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide()
@@ -4555,14 +4699,14 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownSound2EndLabel:SetText(PowaAuras.Text.nomSound2End);
+										PowaDropDownSound2EndLabel:SetText(PowaAurasOptions.Text.nomSound2End);
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideSound2End, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideSound2End, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										GameTooltip:Hide()
@@ -4596,15 +4740,15 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaBarCustomSoundEndLabel:SetText(PowaAuras.Text.nomCustomSoundEnd)
+										PowaBarCustomSoundEndLabel:SetText(PowaAurasOptions.Text.nomCustomSoundEnd)
 										self:SetMaxLetters(256)
-										self.aide = PowaAuras.Text.aideCustomSoundEnd
+										self.aide = PowaAurasOptions.Text.aideCustomSoundEnd
 									</OnLoad>
 									<OnEnterPressed>
 										self:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										PowaAuras:CustomSoundEndTextChanged()
+										PowaAurasOptions:CustomSoundEndTextChanged()
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -4661,11 +4805,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideShowTimer
-										PowaShowTimerButtonText:SetText(PowaAuras.Text.nomCheckShowTimer)
+										self.tooltipText = PowaAurasOptions.Text.aideShowTimer
+										PowaShowTimerButtonText:SetText(PowaAurasOptions.Text.nomCheckShowTimer)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:ShowTimerChecked(self)
+										PowaAurasOptions:ShowTimerChecked(self)
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4686,20 +4830,20 @@
 										self:SetMinMaxValues(-700, 700)
 										self:SetValue(0)
 										self:SetValueStep(1)
-										PowaTimerCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X")
+										PowaTimerCoordXSliderText:SetText(PowaAurasOptions.Text.nomPos.." X")
 										PowaTimerCoordXSliderLow:SetText("-700")
 										PowaTimerCoordXSliderHigh:SetText("700")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerCoordXSliderChanged(self, value)
+										PowaAurasOptions:TimerCoordXSliderChanged(self, value)
 										PowaTimerCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
-										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
+										PowaAurasOptions.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderSetValues(self, delta)
-										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
+										PowaAurasOptions.SliderSetValues(self, delta)
+										PowaAurasOptions.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
@@ -4720,20 +4864,20 @@
 										self:SetMinMaxValues(-400, 400)
 										self:SetValue(0)
 										self:SetValueStep(1)
-										PowaTimerCoordYSliderText:SetText(PowaAuras.Text.nomPos.." Y")
+										PowaTimerCoordYSliderText:SetText(PowaAurasOptions.Text.nomPos.." Y")
 										PowaTimerCoordYSliderLow:SetText("-400")
 										PowaTimerCoordYSliderHigh:SetText("400")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerCoordYSliderChanged(self, value)
+										PowaAurasOptions:TimerCoordYSliderChanged(self, value)
 										PowaTimerCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
-										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
+										PowaAurasOptions.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderSetValues(self, delta)
-										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
+										PowaAurasOptions.SliderSetValues(self, delta)
+										PowaAurasOptions.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
@@ -4754,12 +4898,12 @@
 										self:SetMinMaxValues(0.01, 5)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
-										PowaTimerSizeSliderText:SetText(PowaAuras.Text.nomTaille)
+										PowaTimerSizeSliderText:SetText(PowaAurasOptions.Text.nomTaille)
 										PowaTimerSizeSliderLow:SetText("1%")
 										PowaTimerSizeSliderHigh:SetText("500%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerSizeSliderChanged(self, value)
+										PowaAurasOptions:TimerSizeSliderChanged(self, value)
 										PowaTimerSizeSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
 								</Scripts>
@@ -4781,12 +4925,12 @@
 										self:SetMinMaxValues(0, 1)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
-										PowaTimerAlphaSliderText:SetText(PowaAuras.Text.nomAlpha)
+										PowaTimerAlphaSliderText:SetText(PowaAurasOptions.Text.nomAlpha)
 										PowaTimerAlphaSliderLow:SetText("0%")
 										PowaTimerAlphaSliderHigh:SetText("100%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerAlphaSliderChanged(self, value)
+										PowaAurasOptions:TimerAlphaSliderChanged(self, value)
 										PowaTimerAlphaSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
 								</Scripts>
@@ -4805,16 +4949,16 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.aide = PowaAuras.Text.aideTimerDuration
+										self.aide = PowaAurasOptions.Text.aideTimerDuration
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
 										self:SetValueStep(0.01)
-										PowaTimerDurationSliderText:SetText(PowaAuras.Text.nomTimerDuration)
+										PowaTimerDurationSliderText:SetText(PowaAurasOptions.Text.nomTimerDuration)
 										PowaTimerDurationSliderLow:SetText("0 sec")
 										PowaTimerDurationSliderHigh:SetText("60 sec")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:TimerDurationSliderChanged(self, value)
+										PowaAurasOptions:TimerDurationSliderChanged(self, value)
 										PowaTimerDurationSliderEditBox:SetText(format("%.2f", self:GetValue()))
 									</OnValueChanged>
 								</Scripts>
@@ -4833,10 +4977,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffTimerCentsButtonText:SetText(PowaAuras.Text.nomCentiemes)
+										PowaBuffTimerCentsButtonText:SetText(PowaAurasOptions.Text.nomCentiemes)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TimerChecked(self, "cents")
+										PowaAurasOptions:TimerChecked(self, "cents")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4854,10 +4998,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffTimerLeadingZerosButtonText:SetText(PowaAuras.Text.nomHideLeadingZeros)
+										PowaBuffTimerLeadingZerosButtonText:SetText(PowaAurasOptions.Text.nomHideLeadingZeros)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TimerChecked(self, "HideLeadingZeros")
+										PowaAurasOptions:TimerChecked(self, "HideLeadingZeros")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4875,10 +5019,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffTimerTransparentButtonText:SetText(PowaAuras.Text.nomTransparent)
+										PowaBuffTimerTransparentButtonText:SetText(PowaAurasOptions.Text.nomTransparent)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TimerTransparentChecked(self)
+										PowaAurasOptions:TimerTransparentChecked(self)
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4896,10 +5040,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffTimerUseOwnColorButtonText:SetText(PowaAuras.Text.nomUseOwnColor)
+										PowaBuffTimerUseOwnColorButtonText:SetText(PowaAurasOptions.Text.nomUseOwnColor)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TimerChecked(self, "UseOwnColor")
+										PowaAurasOptions:TimerChecked(self, "UseOwnColor")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4939,12 +5083,12 @@
 										PowaTimerColor_SwatchBg.b = 1.0
 									</OnLoad>
 									<OnClick>
-										PowaAuras:OpenColorPicker(self, PowaAuras.Auras[PowaAuras.CurrentAuraId].Timer)
+										PowaAurasOptions:OpenColorPicker(self, PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId].Timer)
 									</OnClick>
 									<OnEnter>
 										PowaTimerColor_SwatchBg:SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideTimerColor, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideTimerColor, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										PowaTimerColor_SwatchBg:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
@@ -4980,10 +5124,10 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownTimerTextureLabel:SetText(PowaAuras.Text.nomTimerTexture)
+										PowaDropDownTimerTextureLabel:SetText(PowaAurasOptions.Text.nomTimerTexture)
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownTimerMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownTimerMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -5007,10 +5151,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffTimerUpdatePingButtonText:SetText(PowaAuras.Text.nomUpdatePing)
+										PowaBuffTimerUpdatePingButtonText:SetText(PowaAurasOptions.Text.nomUpdatePing)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TimerChecked(self, "UpdatePing")
+										PowaAurasOptions:TimerChecked(self, "UpdatePing")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5028,10 +5172,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffTimerActivationTimeText:SetText(PowaAuras.Text.nomActivationTime)
+										PowaBuffTimerActivationTimeText:SetText(PowaAurasOptions.Text.nomActivationTime)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TimerChecked(self, "ShowActivation")
+										PowaAurasOptions:TimerChecked(self, "ShowActivation")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5049,10 +5193,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffTimer99Text:SetText(PowaAuras.Text.nomTimer99)
+										PowaBuffTimer99Text:SetText(PowaAurasOptions.Text.nomTimer99)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:TimerChecked(self, "Seconds99")
+										PowaAurasOptions:TimerChecked(self, "Seconds99")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5083,10 +5227,10 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaBuffTimerRelativeLabel:SetText(PowaAuras.Text.nomRelative)
+										PowaBuffTimerRelativeLabel:SetText(PowaAurasOptions.Text.nomRelative)
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -5110,16 +5254,16 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.aide = PowaAuras.Text.aidePowaTimerInvertAuraSlider
+										self.aide = PowaAurasOptions.Text.aidePowaTimerInvertAuraSlider
 										self:SetMinMaxValues(0, 600)
 										self:SetValue(0)
 										self:SetValueStep(0.01)
-										PowaTimerInvertAuraSliderText:SetText(PowaAuras.Text.nomTimerInvertAura)
+										PowaTimerInvertAuraSliderText:SetText(PowaAurasOptions.Text.nomTimerInvertAura)
 										PowaTimerInvertAuraSliderLow:SetText("0 sec")
 										PowaTimerInvertAuraSliderHigh:SetText("600 sec")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:PowaTimerInvertAuraSliderChanged(self, value)
+										PowaAurasOptions:PowaTimerInvertAuraSliderChanged(self, value)
 										PowaTimerInvertAuraSliderEditBox:SetText(format("%.2f", self:GetValue()))
 									</OnValueChanged>
 								</Scripts>
@@ -5170,11 +5314,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										self.tooltipText = PowaAuras.Text.aideShowStacks
-										PowaShowStacksButtonText:SetText(PowaAuras.Text.nomCheckShowStacks)
+										self.tooltipText = PowaAurasOptions.Text.aideShowStacks
+										PowaShowStacksButtonText:SetText(PowaAurasOptions.Text.nomCheckShowStacks)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:ShowStacksChecked(self)
+										PowaAurasOptions:ShowStacksChecked(self)
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5195,20 +5339,20 @@
 										self:SetMinMaxValues(-700, 700)
 										self:SetValue(0)
 										self:SetValueStep(1)
-										PowaStacksCoordXSliderText:SetText(PowaAuras.Text.nomPos.." X")
+										PowaStacksCoordXSliderText:SetText(PowaAurasOptions.Text.nomPos.." X")
 										PowaStacksCoordXSliderLow:SetText("-700")
 										PowaStacksCoordXSliderHigh:SetText("700")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:StacksCoordXSliderChanged(self, value)
+										PowaAurasOptions:StacksCoordXSliderChanged(self, value)
 										PowaStacksCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
-										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
+										PowaAurasOptions.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderSetValues(self, delta)
-										PowaAuras.SliderOnMouseUp(self, 700, 700, 0)
+										PowaAurasOptions.SliderSetValues(self, delta)
+										PowaAurasOptions.SliderOnMouseUp(self, 700, 700, 0)
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
@@ -5229,20 +5373,20 @@
 										self:SetMinMaxValues(-400, 400)
 										self:SetValue(0)
 										self:SetValueStep(1)
-										PowaStacksCoordYSliderText:SetText(PowaAuras.Text.nomPos.." Y")
+										PowaStacksCoordYSliderText:SetText(PowaAurasOptions.Text.nomPos.." Y")
 										PowaStacksCoordYSliderLow:SetText("-400")
 										PowaStacksCoordYSliderHigh:SetText("400")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:StacksCoordYSliderChanged(self, value)
+										PowaAurasOptions:StacksCoordYSliderChanged(self, value)
 										PowaStacksCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
 									</OnValueChanged>
 									<OnMouseUp>
-										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
+										PowaAurasOptions.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseUp>
 									<OnMouseWheel>
-										PowaAuras.SliderSetValues(self, delta)
-										PowaAuras.SliderOnMouseUp(self, 400, 400, 0)
+										PowaAurasOptions.SliderSetValues(self, delta)
+										PowaAurasOptions.SliderOnMouseUp(self, 400, 400, 0)
 									</OnMouseWheel>
 								</Scripts>
 							</Slider>
@@ -5263,12 +5407,12 @@
 										self:SetMinMaxValues(0.01, 5)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
-										PowaStacksSizeSliderText:SetText(PowaAuras.Text.nomTaille)
+										PowaStacksSizeSliderText:SetText(PowaAurasOptions.Text.nomTaille)
 										PowaStacksSizeSliderLow:SetText("1%")
 										PowaStacksSizeSliderHigh:SetText("500%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:StacksSizeSliderChanged(self, value)
+										PowaAurasOptions:StacksSizeSliderChanged(self, value)
 										PowaStacksSizeSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
 								</Scripts>
@@ -5290,12 +5434,12 @@
 										self:SetMinMaxValues(0, 1)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
-										PowaStacksAlphaSliderText:SetText(PowaAuras.Text.nomAlpha)
+										PowaStacksAlphaSliderText:SetText(PowaAurasOptions.Text.nomAlpha)
 										PowaStacksAlphaSliderLow:SetText("0%")
 										PowaStacksAlphaSliderHigh:SetText("100%")
 									</OnLoad>
 									<OnValueChanged>
-										PowaAuras:StacksAlphaSliderChanged(self, value)
+										PowaAurasOptions:StacksAlphaSliderChanged(self, value)
 										PowaStacksAlphaSliderEditBox:SetText(format("%.0f", (self:GetValue() * 100)).."%")
 									</OnValueChanged>
 								</Scripts>
@@ -5314,10 +5458,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffStacksTransparentButtonText:SetText(PowaAuras.Text.nomTransparent)
+										PowaBuffStacksTransparentButtonText:SetText(PowaAurasOptions.Text.nomTransparent)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:StacksChecked(self, "Transparent")
+										PowaAurasOptions:StacksChecked(self, "Transparent")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5335,10 +5479,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffStacksUseOwnColorButtonText:SetText(PowaAuras.Text.nomUseOwnColor)
+										PowaBuffStacksUseOwnColorButtonText:SetText(PowaAurasOptions.Text.nomUseOwnColor)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:StacksChecked(self, "UseOwnColor")
+										PowaAurasOptions:StacksChecked(self, "UseOwnColor")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5378,12 +5522,12 @@
 										PowaStacksColor_SwatchBg.b = 1.0
 									</OnLoad>
 									<OnClick>
-										PowaAuras:OpenColorPicker(self, PowaAuras.Auras[PowaAuras.CurrentAuraId].Stacks)
+										PowaAurasOptions:OpenColorPicker(self, PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId].Stacks)
 									</OnClick>
 									<OnEnter>
 										PowaStacksColor_SwatchBg:SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAuras.Text.aideStacksColor, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(PowaAurasOptions.Text.aideStacksColor, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										PowaStacksColor_SwatchBg:SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
@@ -5419,10 +5563,10 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaDropDownStacksTextureLabel:SetText(PowaAuras.Text.nomStacksTexture)
+										PowaDropDownStacksTextureLabel:SetText(PowaAurasOptions.Text.nomStacksTexture)
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownStacksMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownStacksMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -5446,10 +5590,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffStacksUpdatePingButtonText:SetText(PowaAuras.Text.nomUpdatePing)
+										PowaBuffStacksUpdatePingButtonText:SetText(PowaAurasOptions.Text.nomUpdatePing)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:StacksChecked(self, "UpdatePing")
+										PowaAurasOptions:StacksChecked(self, "UpdatePing")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5467,10 +5611,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										PowaBuffStacksLegacySizingText:SetText(PowaAuras.Text.nomLegacySizing)
+										PowaBuffStacksLegacySizingText:SetText(PowaAurasOptions.Text.nomLegacySizing)
 									</OnLoad>
 									<OnClick>
-										PowaAuras:StacksChecked(self, "LegacySizing")
+										PowaAurasOptions:StacksChecked(self, "LegacySizing")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5501,10 +5645,10 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										PowaBuffStacksRelativeLabel:SetText(PowaAuras.Text.nomRelativeStacks)
+										PowaBuffStacksRelativeLabel:SetText(PowaAurasOptions.Text.nomRelativeStacks)
 									</OnLoad>
 									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAuras.DropDownMenu_Initialize)
+										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
 									</OnShow>
 									<OnEnter>
 										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -5539,7 +5683,7 @@
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
-								PowaEditorTab1Text:SetText(PowaAuras.Text.nomTabActiv)
+								PowaEditorTab1Text:SetText(PowaAurasOptions.Text.nomTabActiv)
 								PanelTemplates_SelectTab(self)
 								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab1HighlightTexture:SetWidth(self:GetTextWidth() + 31)
@@ -5569,7 +5713,7 @@
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
-								PowaEditorTab2Text:SetText(PowaAuras.Text.nomTabAnim)
+								PowaEditorTab2Text:SetText(PowaAurasOptions.Text.nomTabAnim)
 								PanelTemplates_DeselectTab(self)
 								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab2HighlightTexture:SetWidth(self:GetTextWidth() + 31)
@@ -5599,7 +5743,7 @@
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
-								PowaEditorTab3Text:SetText(PowaAuras.Text.nomTabSound)
+								PowaEditorTab3Text:SetText(PowaAurasOptions.Text.nomTabSound)
 								PanelTemplates_DeselectTab(self)
 								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab3HighlightTexture:SetWidth(self:GetTextWidth() + 31)
@@ -5626,11 +5770,11 @@
 								PowaBarConfigFrameEditor2:Hide()
 								PowaBarConfigFrameEditor3:Hide()
 								PowaBarConfigFrameEditor5:Hide()
-								PowaAuras:UpdateTimerOptions()
+								PowaAurasOptions:UpdateTimerOptions()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
-								PowaEditorTab4Text:SetText(PowaAuras.Text.nomTabTimer)
+								PowaEditorTab4Text:SetText(PowaAurasOptions.Text.nomTabTimer)
 								PanelTemplates_DeselectTab(self)
 								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab4HighlightTexture:SetWidth(self:GetTextWidth() + 31)
@@ -5657,11 +5801,11 @@
 								PowaBarConfigFrameEditor2:Hide()
 								PowaBarConfigFrameEditor4:Hide()
 								PowaBarConfigFrameEditor3:Hide()
-								PowaAuras:UpdateStacksOptions()
+								PowaAurasOptions:UpdateStacksOptions()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
-								PowaEditorTab5Text:SetText(PowaAuras.Text.nomTabStacks)
+								PowaEditorTab5Text:SetText(PowaAurasOptions.Text.nomTabStacks)
 								PanelTemplates_DeselectTab(self)
 								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab5HighlightTexture:SetWidth(self:GetTextWidth() + 31)
@@ -5738,7 +5882,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						PowaAuras:FontSelectorClose(self)
+						PowaAurasOptions:FontSelectorClose(self)
 						PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
@@ -5756,10 +5900,10 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self:SetText(PowaAuras.Text.Okay)
+						self:SetText(PowaAurasOptions.Text.Okay)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:FontSelectorOkay(self)
+						PowaAurasOptions:FontSelectorOkay(self)
 						PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
@@ -5777,10 +5921,10 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self:SetText(PowaAuras.Text.Cancel)
+						self:SetText(PowaAurasOptions.Text.Cancel)
 					</OnLoad>
 					<OnClick>
-						PowaAuras:FontSelectorCancel(self)
+						PowaAurasOptions:FontSelectorCancel(self)
 						PlaySound("igMainMenuClose", PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
@@ -5829,10 +5973,10 @@
 						</Anchors>
 						<Scripts>
 							<OnVerticalScroll>
-								FauxScrollFrame_OnVerticalScroll(self, offset, 16, PowaAuras.FontScrollBar_Update)
+								FauxScrollFrame_OnVerticalScroll(self, offset, 16, PowaAurasOptions.FontScrollBar_Update)
 							</OnVerticalScroll>
 							<OnShow>
-								PowaAuras.FontScrollBar_Update(self)
+								PowaAurasOptions.FontScrollBar_Update(self)
 							</OnShow>
 						</Scripts>
 					</ScrollFrame>
@@ -5904,10 +6048,10 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				PowaFontHeader:SetText(PowaAuras.Text.nomFontSelector)
+				PowaFontHeader:SetText(PowaAurasOptions.Text.nomFontSelector)
 			</OnLoad>
 			<OnShow>
-				PowaAuras:FontSelectorOnShow(self)
+				PowaAurasOptions:FontSelectorOnShow(self)
 			</OnShow>
 		</Scripts>
 	</Frame>

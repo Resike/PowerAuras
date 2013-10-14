@@ -1,5 +1,8 @@
 local math, pairs, type = math, pairs, type
 
+local _, ns = ...
+local PowaAuras = ns.PowaAuras
+
 cPowaAnimationBase = PowaClass(function(animation, aura, frame, base)
 	animation.State = 0
 	animation.Aura = aura

@@ -1,8 +1,11 @@
 local math, table, pairs = math, table, pairs
 
+local _, ns = ...
+local PowaAuras = ns.PowaAuras
+
 cPowaStacks = PowaClass(function(stacker, aura, base)
 	for k, v in pairs(cPowaStacks.ExportSettings) do
-		if base and base[k] ~= nil then
+		if base and base[k] then
 			stacker[k] = base[k]
 		else
 			stacker[k] = v
@@ -193,7 +196,7 @@ end
 -- Timer
 cPowaTimer = PowaClass(function(timer, aura, base)
 	for k, v in pairs (cPowaTimer.ExportSettings) do
-		if base and base[k] ~= nil then
+		if base and base[k] then
 			timer[k] = base[k]
 		else
 			timer[k] = v

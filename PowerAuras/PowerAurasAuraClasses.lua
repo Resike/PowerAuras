@@ -1,5 +1,58 @@
 local string, tostring, tonumber, format, table, math, pairs, strsplit, select, wipe, _G = string, tostring, tonumber, format, table, math, pairs, strsplit, select, wipe, _G
 
+local _, ns = ...
+local PowaAuras = ns.PowaAuras
+
+-- PowaAura Classes
+function PowaClass(base, ctor)
+	local c = { }
+	if not ctor and type(base) == "function" then
+		ctor = base
+		base = nil
+	elseif type(base) == "table" then
+		for i, v in pairs(base) do
+			c[i] = v
+		end
+		if type(ctor) == "table" then
+			for i, v in pairs(ctor) do
+				c[i] = v
+			end
+			ctor = nil
+		end
+		c._base = base
+	end
+	c.__index = c
+	local mt = { }
+	mt.__call = function(class_tbl, ...)
+		local obj = { }
+		setmetatable(obj, c)
+		if ctor then
+			ctor(obj, ...)
+		end
+		return obj
+	end
+	if ctor then
+		c.init = ctor
+	else
+		if base and base.init then
+			c.init = base.init
+			ctor = base.init
+		end
+	end
+	c.is_a = function(self, class)
+		local m = getmetatable(self)
+		while m do
+			if m == class then
+				return true
+			end
+			m = m._base
+		end
+		return false
+	end
+	setmetatable(c, mt)
+	return c
+end
+
 -- cPowaAura is the base class and is not instanced directly, the other classes inherit properties and methods from it
 cPowaAura = PowaClass(function(aura, id, base)
 	for k, v in pairs(cPowaAura.ExportSettings) do
@@ -73,6 +126,11 @@ cPowaAura.ExportSettings =
 	texturestrata = "Background",
 	texturesublevel = 0,
 	blendmode = "Disable",
+	secondaryblendmode = "Blend",
+	secondarystrata = "Background",
+	secondarystratalevel = 0,
+	secondarytexturestrata = "Background",
+	secondarytexturesublevel = 0,
 	timerduration = 0,
 	-- Sound Settings
 	sound = 0,
@@ -178,7 +236,7 @@ do
 		state.currentIterator = iterateSlots
 		return state:currentIterator()
 	end
-	iterateSlots = function (state)
+	iterateSlots = function(state)
 		while state.slotIdx <= state.numSlots do
 			local spellBookItem = state.slotOffset + state.slotIdx
 			local spellName, spellSubtext = GetSpellBookItemName(spellBookItem, BOOKTYPE_SPELL)
@@ -202,7 +260,7 @@ do
 		state.currentIterator = iterateTabs
 		return state:currentIterator()
 	end
-	iterateTabs = function (state)
+	iterateTabs = function(state)
 		while state.tabIdx <= state.numOfTabs do
 			local _, _, slotOffset, numSlots, _, offSpecID = GetSpellTabInfo(state.tabIdx)
 			if offSpecID ~= 0 then
@@ -413,18 +471,15 @@ function cPowaAura:UpdateText(texture)
 		PowaAuras:Message("CurrentText = ", self.CurrentText)
 		PowaAuras:Message("newText = ", newText)
 	end
-	--if (newText ~= self.CurrentText or texture == nil) then
-		if texture == nil then
-			texture = self:GetTexture()
-		end
-		if self.Debug then
-			PowaAuras:Message("texture = ", texture)
-		end
-		if texture ~= nil then
-			texture:SetText(newText)
-			self.CurrentText = newText
-		end
-	--end
+	if texture then
+		texture:SetText(newText)
+		self.CurrentText = newText
+	else
+		texture = self:GetTexture()
+	end
+	if self.Debug then
+		PowaAuras:Message("texture = ", texture)
+	end
 end
 
 function cPowaAura:GetAuraText()
@@ -451,8 +506,8 @@ function cPowaAura:GetAuraText()
 	text = self:SubstituteInText(text , "%%lowRdmg", function() return math.floor(lowDmg) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%highRdmg", function() return math.ceil(hiDmg) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%avgRdmg", function() return (math.ceil(hiDmg) + math.floor(lowDmg)) / 2 end, PowaAuras.Text.Unknown)
-	text = self:SubstituteInText(text , "%%u", function() if self.DisplayUnit == nil then return nil end local name = UnitName(self.DisplayUnit) if name ~= nil then return name end return self.DisplayUnit end, PowaAuras.Text.Unknown)
-	text = self:SubstituteInText(text , "%%u2",	function() if self.DisplayUnit2 == nil then return nil end local name = UnitName(self.DisplayUnit2) if name ~= nil then return name end return self.DisplayUnit2 end, PowaAuras.Text.Unknown)
+	text = self:SubstituteInText(text , "%%u", function() if self.DisplayUnit == nil then return nil end local name = UnitName(self.DisplayUnit) if name then return name end return self.DisplayUnit end, PowaAuras.Text.Unknown)
+	text = self:SubstituteInText(text , "%%u2",	function() if self.DisplayUnit2 == nil then return nil end local name = UnitName(self.DisplayUnit2) if name then return name end return self.DisplayUnit2 end, PowaAuras.Text.Unknown)
 	return text
 end
 
@@ -966,22 +1021,15 @@ function cPowaAura:Trim(s)
 end
 
 function cPowaAura:MatchSpell(spellName, spellTexture, spellId, matchString)
-	if spellName == nil or matchString == nil then
+	if not spellName or not matchString then
 		return false
 	end
 	if matchString == "*" then
 		return true
 	end
-	if self.Debug then
-		PowaAuras:Message("SpellName = ", spellName, " Id = ", spellId)
-		PowaAuras:Message("matchString = ", matchString)
-	end
 	for pword in string.gmatch(matchString, "[^/]+") do
 		pword = self:Trim(pword)
 		if string.len(pword) > 0 then
-			if self.Debug then
-				PowaAuras:Message("Looking for ", pword)
-			end
 			local _
 			local textToSearch
 			local textureMatch
@@ -994,13 +1042,10 @@ function cPowaAura:MatchSpell(spellName, spellTexture, spellId, matchString)
 				textToSearch = spellName
 				matchName, textureMatch, spellIdMatch = self:GetSpellFromMatch(pword)
 			end
-			if matchName == nil then
+			if not matchName then
 				PowaAuras:DisplayText(PowaAuras:InsertText(PowaAuras.Text.nomUnknownSpellId, pword))
 			else
 				if spellIdMatch and spellId then
-					if self.Debug then
-						PowaAuras:Message("Check Spell Ids match spell = ", spellId, " looking for Id = ", spellIdMatch, " found = ", (spellIdMatch == spellId))
-					end
 					if spellIdMatch == spellId then
 						return true
 					end
@@ -1011,21 +1056,11 @@ function cPowaAura:MatchSpell(spellName, spellTexture, spellId, matchString)
 							textToSearch = string.upper(textToSearch)
 							matchName = string.upper(matchName)
 						end
-						if self.Debug then
-							PowaAuras:Message("matchName = "..tostring(matchName).."<<")
-							PowaAuras:Message("search = "..tostring(textToSearch).."<<")
-						end
 						if self.exact then
-							if self.Debug then
-								PowaAuras:Message("exact=", (textToSearch == matchName))
-							end
 							if textToSearch == matchName then
 								return true
 							end
 						else
-							if self.Debug then
-								PowaAuras:Message("find=", string.find(textToSearch, matchName, 1, true))
-							end
 							if string.find(textToSearch, matchName, 1, true) then
 								return true
 							end
@@ -1406,9 +1441,6 @@ function cPowaBuffBase:AddEffectAndEvents()
 end
 
 function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
-	if self.Debug then
-		PowaAuras:DisplayText("IsPresent on ", unit," buffid = ", s," type = ", self.buffAuraType)
-	end
 	local _, auraName, auraTexture, count, expirationTime, caster, auraId
 	if self.exact then
 		auraName, _, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, textToCheck, nil, self.buffAuraType)
@@ -1418,25 +1450,24 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 	if auraName == nil then
 		return nil
 	end
-	PowaAuras:Debug("Aura = ", auraName," count = ", count," expirationTime = ", expirationTime," caster = ", caster)
-	if self.Debug then
-		PowaAuras:DisplayText("Aura = ", auraName," count = ", count," expirationTime = ", expirationTime," caster = ", caster)
-	end
-	if not self:CompareAura(unit, s, auraName, auraTexture, auraId, textToCheck) then
-		PowaAuras:Debug("CompareAura not found")
-		if self.Debug then
-			PowaAuras:DisplayText("CompareAura not found")
+	if self.tooltipCheck and string.len(self.tooltipCheck) ~= 0 then
+		if not self:CompareAura(unit, s, auraName, auraTexture, auraId, textToCheck) then
+			self.DisplayValue = textToCheck
+			self.DisplayUnit = unit
+			return false
 		end
-		self.DisplayValue = textToCheck
-		self.DisplayUnit = unit
-		return false
 	end
-	if self.Debug then
-		PowaAuras:DisplayText("Present!")
+	if self.ignoremaj then
+		if string.upper(auraName) ~= string.upper(textToCheck) and auraId ~= tonumber(textToCheck) then
+			return false
+		end
+	else
+		if auraName ~= textToCheck and auraId ~= tonumber(textToCheck) then
+			return false
+		end
 	end
 	local isMine = caster ~= nil and UnitExists(caster) and UnitIsUnit("player", caster)
-	local bemine = self.mine
-	if bemine and not isMine then
+	if self.mine and not isMine then
 		if not giveReason then
 			return nil
 		end
@@ -1464,6 +1495,7 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		end
 	end
 	self:UpdateText()
+	self:SetIcon(auraTexture)
 	if giveReason then
 		return true, PowaAuras.Text.nomReasonBuffFound
 	end
@@ -1471,10 +1503,9 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 end
 
 function cPowaBuffBase:CheckTooltip(text, target, index)
-	if text == nil or string.len(text) == 0 then
+	if not text or string.len(text) == 0 then
 		return true
 	end
-	PowaAuras:Debug("Search in tooltip for ", text)
 	PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	PowaAuras_Tooltip:SetUnitAura(target, index, self.buffAuraType)
 	for z = 1, PowaAuras_Tooltip:NumLines() do
@@ -1501,24 +1532,14 @@ function cPowaBuffBase:CheckTooltip(text, target, index)
 end
 
 function cPowaBuffBase:CompareAura(target, z, auraName, auraTexture, auraId, textToCheck)
-	PowaAuras:Debug("CompareAura", z," ", auraName, auraTexture)
-	if self.Debug then
-		PowaAuras:DisplayText("CompareAura", z," ", auraName, " ", auraTexture)
+	if not self:CheckTooltip(self.tooltipCheck, target, z) then
+		return false
 	end
-	if self:MatchSpell(auraName, auraTexture, auraId, textToCheck) then
-		if not self:CheckTooltip(self.tooltipCheck, target, z) then
-			return false
-		end
-		self:SetIcon(auraTexture)
-		return true
-	end
-	return false
+	self:SetIcon(auraTexture)
+	return true
 end
 
 function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
-	if self.Debug then
-		PowaAuras:DisplayText("CheckAllAuraSlots for ", target, " reason=", giveReason)
-	end
 	local present, reason
 	if self:RoleCheckRequired() then
 		if not PowaAuras.WeAreInRaid and not PowaAuras.WeAreInParty then
@@ -1531,9 +1552,6 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 	end
 	local startFrom = 1
 	if self.CurrentSlot and self.CurrentMatch then
-		if self.Debug then
-			PowaAuras:DisplayText("Buff for current slot (", self.CurrentSlot, ")")
-		end
 		present, reason = self:IsPresent(target, self.CurrentSlot, giveReason, self.CurrentMatch)
 		if present then
 			if not giveReason then
@@ -1549,18 +1567,9 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 		startFrom = 1
 	end
 	for pword in string.gmatch(self.buffname, "[^/]+") do
-		if self.Debug then
-			PowaAuras:DisplayText("Check Auras for >>", pword, "<<")
-		end
 		for i = startFrom - 1, 1, - 1 do
-			if self.Debug then
-				PowaAuras:DisplayText("Down (", i, ")")
-			end
 			present, reason = self:IsPresent(target, i, giveReason, pword)
 			if present then
-				if self.Debug then
-					PowaAuras:DisplayText("Found ", i)
-				end
 				self.CurrentSlot = i
 				self.CurrentMatch = pword
 				if not giveReason then
@@ -1570,17 +1579,11 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 			end
 		end
 		for i = startFrom, 40 do
-			if self.Debug then
-				PowaAuras:DisplayText("Up (", i, ")")
-			end
 			present, reason = self:IsPresent(target, i, giveReason, pword)
 			if present == nil then
 				break
 			end
 			if present then
-				if self.Debug then
-					PowaAuras:DisplayText("Found ", i)
-				end
 				self.CurrentSlot = i
 				self.CurrentMatch = pword
 				if not giveReason then
@@ -1724,7 +1727,8 @@ function cPowaBuffBase:CheckIfShouldShow(giveReason)
 		end
 		return self:CheckGroup("party", numpm, giveReason)
 	end
-	if self.groupOrSelf then -- Group or Self buff
+	-- Group or Self buff
+	if self.groupOrSelf then
 		if self.Debug then
 			PowaAuras:DisplayText("Group or Self ", numrm, " ", numpm)
 		end

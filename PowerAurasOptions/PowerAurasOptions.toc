@@ -8,6 +8,7 @@
 ## LoadOnDemand: 1
 
 PowerOptions.lua
+PowerOptionsDump.lua
 PowerComms.lua
 
 PowerOptions.xml
