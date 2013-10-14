@@ -1027,9 +1027,16 @@ function cPowaAura:MatchSpell(spellName, spellTexture, spellId, matchString)
 	if matchString == "*" then
 		return true
 	end
+	if self.Debug then
+		PowaAuras:Message("SpellName = ", spellName, " Id = ", spellId)
+		PowaAuras:Message("matchString = ", matchString)
+	end 
 	for pword in string.gmatch(matchString, "[^/]+") do
 		pword = self:Trim(pword)
 		if string.len(pword) > 0 then
+			if self.Debug then
+				PowaAuras:Message("Looking for ", pword)
+			end
 			local _
 			local textToSearch
 			local textureMatch
@@ -1046,6 +1053,9 @@ function cPowaAura:MatchSpell(spellName, spellTexture, spellId, matchString)
 				PowaAuras:DisplayText(PowaAuras:InsertText(PowaAuras.Text.nomUnknownSpellId, pword))
 			else
 				if spellIdMatch and spellId then
+					if self.Debug then
+						PowaAuras:Message("Check Spell Ids match spell = ", spellId, " looking for Id = ", spellIdMatch, " found = ", (spellIdMatch == spellId))
+					end
 					if spellIdMatch == spellId then
 						return true
 					end
@@ -1056,11 +1066,21 @@ function cPowaAura:MatchSpell(spellName, spellTexture, spellId, matchString)
 							textToSearch = string.upper(textToSearch)
 							matchName = string.upper(matchName)
 						end
+						if self.Debug then
+							PowaAuras:Message("matchName = "..tostring(matchName).."<<")
+							PowaAuras:Message("search = "..tostring(textToSearch).."<<")
+						end
 						if self.exact then
+							if self.Debug then
+								PowaAuras:Message("exact=", (textToSearch == matchName))
+							end
 							if textToSearch == matchName then
 								return true
 							end
 						else
+							if self.Debug then
+								PowaAuras:Message("find=", string.find(textToSearch, matchName, 1, true))
+							end
 							if string.find(textToSearch, matchName, 1, true) then
 								return true
 							end
@@ -1441,6 +1461,9 @@ function cPowaBuffBase:AddEffectAndEvents()
 end
 
 function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
+	if self.Debug then
+		PowaAuras:DisplayText("IsPresent on ", unit," buffid = ", s," type = ", self.buffAuraType)
+	end
 	local _, auraName, auraTexture, count, expirationTime, caster, auraId
 	if self.exact then
 		auraName, _, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, textToCheck, nil, self.buffAuraType)
@@ -1450,8 +1473,16 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 	if auraName == nil then
 		return nil
 	end
+	PowaAuras:Debug("Aura = ", auraName," count = ", count," expirationTime = ", expirationTime," caster = ", caster)
+	if self.Debug then
+		PowaAuras:DisplayText("Aura = ", auraName," count = ", count," expirationTime = ", expirationTime," caster = ", caster)
+	end
 	if self.tooltipCheck and string.len(self.tooltipCheck) ~= 0 then
 		if not self:CompareAura(unit, s, auraName, auraTexture, auraId, textToCheck) then
+			PowaAuras:Debug("CompareAura not found")
+			if self.Debug then
+				PowaAuras:DisplayText("CompareAura not found")
+			end
 			self.DisplayValue = textToCheck
 			self.DisplayUnit = unit
 			return false
@@ -1465,6 +1496,9 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		if auraName ~= textToCheck and auraId ~= tonumber(textToCheck) then
 			return false
 		end
+	end
+	if self.Debug then
+		PowaAuras:DisplayText("Present!")
 	end
 	local isMine = caster ~= nil and UnitExists(caster) and UnitIsUnit("player", caster)
 	if self.mine and not isMine then
@@ -1506,6 +1540,7 @@ function cPowaBuffBase:CheckTooltip(text, target, index)
 	if not text or string.len(text) == 0 then
 		return true
 	end
+	PowaAuras:Debug("Search in tooltip for ", text)
 	PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	PowaAuras_Tooltip:SetUnitAura(target, index, self.buffAuraType)
 	for z = 1, PowaAuras_Tooltip:NumLines() do
@@ -1532,6 +1567,10 @@ function cPowaBuffBase:CheckTooltip(text, target, index)
 end
 
 function cPowaBuffBase:CompareAura(target, z, auraName, auraTexture, auraId, textToCheck)
+	PowaAuras:Debug("CompareAura", z," ", auraName, auraTexture)
+	if self.Debug then
+		PowaAuras:DisplayText("CompareAura", z," ", auraName, " ", auraTexture)
+	end
 	if not self:CheckTooltip(self.tooltipCheck, target, z) then
 		return false
 	end
@@ -1540,6 +1579,9 @@ function cPowaBuffBase:CompareAura(target, z, auraName, auraTexture, auraId, tex
 end
 
 function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
+	if self.Debug then
+		PowaAuras:DisplayText("CheckAllAuraSlots for ", target, " reason=", giveReason)
+	end
 	local present, reason
 	if self:RoleCheckRequired() then
 		if not PowaAuras.WeAreInRaid and not PowaAuras.WeAreInParty then
@@ -1552,6 +1594,9 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 	end
 	local startFrom = 1
 	if self.CurrentSlot and self.CurrentMatch then
+		if self.Debug then
+			PowaAuras:DisplayText("Buff for current slot (", self.CurrentSlot, ")")
+		end
 		present, reason = self:IsPresent(target, self.CurrentSlot, giveReason, self.CurrentMatch)
 		if present then
 			if not giveReason then
@@ -1567,9 +1612,18 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 		startFrom = 1
 	end
 	for pword in string.gmatch(self.buffname, "[^/]+") do
+		if self.Debug then
+			PowaAuras:DisplayText("Check Auras for >>", pword, "<<")
+		end
 		for i = startFrom - 1, 1, - 1 do
+			if self.Debug then
+				PowaAuras:DisplayText("Down (", i, ")")
+			end
 			present, reason = self:IsPresent(target, i, giveReason, pword)
 			if present then
+				if self.Debug then
+					PowaAuras:DisplayText("Found ", i)
+				end
 				self.CurrentSlot = i
 				self.CurrentMatch = pword
 				if not giveReason then
@@ -1579,11 +1633,17 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 			end
 		end
 		for i = startFrom, 40 do
+			if self.Debug then
+				PowaAuras:DisplayText("Up (", i, ")")
+			end
 			present, reason = self:IsPresent(target, i, giveReason, pword)
 			if present == nil then
 				break
 			end
 			if present then
+				if self.Debug then
+					PowaAuras:DisplayText("Found ", i)
+				end
 				self.CurrentSlot = i
 				self.CurrentMatch = pword
 				if not giveReason then

@@ -7,6 +7,7 @@
 
 **4.24.1**
 * Reduced the addon's dinamic memory usage by aprox 95% mostly for "Buff" aura types. Yes, i did it again.
+* The core code of the addon is now working with local enviromenet namespace. (Speed things a bit up.)
 * Dump function is back again. (Works in development versions only.)
 * Fixed some animation trasition glitches, like from fade out to static or flashing.
 * Added a missing event for rogue's energy and warrior's rage replenishment, which caused some "Rage/Energy/Power" auras working incorrectly.
@@ -14,6 +15,14 @@
 * Fixed a lua error for the color picker.
 * Fixed some leaking globals.
 * Fixed a lot of tooltip issues.
+* Added "/pa update" slash command to update old auras to the current version.
+* Scanning learned/unlearned spells will be faster.
+* Some GUI changes in the "Animations" tab.
+* Added blend mode dropdown for secondary animations.
+* Added frame strata dropdown for secondary animations.
+* Added texture strata dropdown for secondary animations.
+* Added texture strata level slider for secondary animations.
+* Added texture strata sublevel slider for secondary animations.
 * Deleting an aura while the color picker frame is open now properly going to close the color picker frame.
 * The addon is now going to notify the user about the "Power Auras Options" beeing disabled, when the user is trying to acces any slash commands while "Power Auras Options" addon is disabled. 
 * Using the "Power Type" dropdown in the "Rage/Energy/Power" activation now properly going to update the aura's icon in main options too.
@@ -32,6 +41,7 @@
 * "Cooldown only" option is now disable for "Spell Cooldowns".
 * Some group updates.
 * Some localization fixes/changes.
+* A lot of other smaller fixes, some performance upgrades.
 
 **4.24.0**
 * Updated for 5.4.
