@@ -5,6 +5,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.24.3**
+* Fixed a bug which caused linked auras to not to work properly.
+* Other minor fixes.
+
 **4.24.2**
 * Fixed a bug which caused "Spell Cooldowns" not to update properly
 * Added new support for GTFO global triggers. (Should work when GTFO gets updated.)

@@ -675,30 +675,48 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 		end
 		return false, self.Text.nomReasonAuraOff
 	end
+	local debugEffectTest = PowaAuras.DebugCycle or aura.Debug
+	if debugEffectTest then
+		self:Message("Test Aura for Hide or Show = ", auraId)
+		self:Message("Active = ", aura.Active)
+		self:Message("Showing = ", aura.Showing)
+		self:Message("HideRequest = ", aura.HideRequest)
+	end
+	-- Prevent crash if class not set-up properly
 	if not aura.ShouldShow then
+		self:Message("ShouldShow nil! id = ", auraId)
 		if not giveReason then
 			return false
 		end
 		return false, self.Text.nomReasonAuraBad
 	end
 	aura.InactiveDueToMulti = nil
-	local shouldShow, reason = aura:ShouldShow(giveReason)
+	local shouldShow, reason = aura:ShouldShow(giveReason or debugEffectTest)
 	if shouldShow == - 1 then
+		if debugEffectTest then
+			self:Message("TestThisEffect unchanged")
+		end
 		return aura.Active, reason
 	end
 	if shouldShow then
-		local shouldShow, reason = self:CheckMultiple(aura, reason, giveReason)
+		shouldShow, reason = self:CheckMultiple(aura, reason, giveReason or debugEffectTest)
 		if not shouldShow then
 			aura.InactiveDueToMulti = true
 		end
 	elseif aura.Timer and aura.CanHaveTimerOnInverse then
-		local multiShouldShow = self:CheckMultiple(aura, reason, giveReason)
+		local multiShouldShow = self:CheckMultiple(aura, reason, giveReason or debugEffectTest)
 		if not multiShouldShow then
 			aura.InactiveDueToMulti = true
 		end
 	end
+	if debugEffectTest then
+		self:Message("shouldShow = ", shouldShow, " because ", reason)
+	end
 	if shouldShow then
 		if not aura.Active then
+			if debugEffectTest then
+				self:Message("ShowAura ", aura.buffname, " (", auraId, ")", reason)
+			end
 			self:DisplayAura(auraId)
 			if not ignoreCascade then
 				self:AddChildrenToCascade(aura)
@@ -708,6 +726,9 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 	else
 		local secondaryAura = self.SecondaryAuras[aura.id]
 		if aura.Showing then
+			if debugEffectTest then
+				self:Message("HideAura ", aura.buffname, " (", auraId, ")", reason)
+			end
 			self:SetAuraHideRequest(aura, secondaryAura)
 		end
 		if aura.Active then
@@ -715,7 +736,7 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 				self:AddChildrenToCascade(aura)
 			end
 			aura.Active = false
-			if secondaryAura then
+			if (secondaryAura) then
 				secondaryAura.Active = false
 			end
 		end

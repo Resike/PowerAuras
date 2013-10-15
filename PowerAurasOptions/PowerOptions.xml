@@ -359,8 +359,8 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						self:SetMaxLetters(250)
-						self:SetText("http://www.curse.com/addons/wow/power-auras-classic-v4")
+						self:SetMaxLetters(1000)
+						PowaAurasOptions:SetDonateBox()
 					</OnLoad>
 					<OnShow>
 						self:SetFocus()
@@ -1311,7 +1311,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAuraDonateDialogEmailBox:SetText("resike@gmail.com")
-								PowaAuraDonateDialogDonateBox:SetText("http://www.curse.com/addons/wow/power-auras-classic-v4")
+								PowaAurasOptions:SetDonateBox()
 								PowaAurasOptions:OptionDonateEffect()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>

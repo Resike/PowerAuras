@@ -863,6 +863,10 @@ function PowaAurasOptions:OptionDonateEffect()
 	StaticPopupSpecial_Show(PowaAuraDonateDialog)
 end
 
+function PowaAurasOptions:SetDonateBox()
+	PowaAuraDonateDialogDonateBox:SetText("https://www.paypal.com/cgi-bin/webscr?return=http%3A%2F%2Fwww.curse.com%2Faddons%2Fwow%2Fpower-auras-classic-v4&cn=Add+special+instructions+to+the+addon+author%28s%29&business=resike%40gmail.com&bn=PP-DonationsBF%3Abtn_donateCC_LG.gif%3ANonHosted&cancel_return=http%3A%2F%2Fwww.curse.com%2Faddons%2Fwow%2Fpower-auras-classic-v4&lc=US&item_name=Power+Auras+Classic+v4+-+MoP+Version+%28from+Curse.com%29&cmd=_donations&rm=1&no_shipping=1&currency_code=USD")
+end
+
 function PowaAurasOptions:SetDialogTimeout(dialog, timeout)
 	if dialog.statusTimeoutLength == timeout then
 		if timeout == 0 then
