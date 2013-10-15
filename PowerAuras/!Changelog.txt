@@ -1,14 +1,23 @@
-﻿**Issues:**
+**Issues:**
 * Enable full rotation unchecked import bug on some aura types.
 * Tri State Checkbutton disabled import bugs.
 * Test All preview texture coloring bug when the current aura's random color is enabled.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.24.2**
+* Fixed a bug which caused "Spell Cooldowns" not to update properly
+* Added new support for GTFO global triggers. (Should work when GTFO gets updated.)
+* GTFO dropdown icon update fix.
+* Added "Donate" button.
+* Artwork set update.
+* Localizations update.
+* Some other minor fixes.
+
 **4.24.1**
 * Reduced the addon's dinamic memory usage by aprox 95% mostly for "Buff" aura types. Yes, i did it again.
-* The core code of the addon is now working with local enviromenet namespace. (Speed things a bit up.)
-* Dump function is back again. (Works in development versions only.)
+* The core code of the addon is now working with local environment namespaces. (Speed things a bit up.)
+* Dump function is back again. (Advanced users/developers only.)
 * Fixed some animation trasition glitches, like from fade out to static or flashing.
 * Added a missing event for rogue's energy and warrior's rage replenishment, which caused some "Rage/Energy/Power" auras working incorrectly.
 * Fixed a lua error for "Combo Points".
@@ -30,7 +39,7 @@
 * When you delete the last aura from the current page, the addon automatially selects the last aura again.
 * Fixed a bug when updating the addon from 4.23.x versions.
 * Fixed a bug with Preview coloring.
-* Demonic Fury's Threshold slider is back 0-1000 values again.
+* Demonic Fury's Threshold slider is back to 0-1000 values again.
 * Fixed a broken "Bounce" begin animation.
 * Selecting a begin animation is now properly going to play that animation.
 * Updated incorrect version for PowerAurasOptions.

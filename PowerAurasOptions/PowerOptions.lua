@@ -858,6 +858,11 @@ function PowaAurasOptions:OptionExportSet()
 	StaticPopupSpecial_Show(PowaAuraExportDialog)
 end
 
+-- Donate Dialog
+function PowaAurasOptions:OptionDonateEffect()
+	StaticPopupSpecial_Show(PowaAuraDonateDialog)
+end
+
 function PowaAurasOptions:SetDialogTimeout(dialog, timeout)
 	if dialog.statusTimeoutLength == timeout then
 		if timeout == 0 then
@@ -3161,6 +3166,8 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info)
 		end
 		UIDropDownMenu_SetSelectedValue(PowaDropDownGTFO, aura.GTFO)
+		aura:SetFixedIcon()
+		PowaAurasOptions:UpdateMainOption()
 	elseif name == "PowaDropDownAnimBegin" then
 		UIDropDownMenu_SetWidth(owner, 190)
 		info = {func = PowaAurasOptions.DropDownMenu_OnClickBegin, owner = owner}
@@ -4062,13 +4069,13 @@ function PowaAuras_CommandLine(msg)
 		PowaAurasOptions:Message("State dumped to:")
 		PowaAurasOptions:Message("WTF\\Account\\<ACCOUNT>\\"..GetRealmName().."\\"..UnitName("player").."\\SavedVariables\\PowerAuras.lua")
 		PowaAurasOptions:Message("You must log-out to save the values to disk.")
-	elseif msg == "update" then
+	elseif msg == "update" or msg == "upgrade" then
 		PowaAurasOptions:UpdateOldAuras()
 	elseif msg == "toggle" or msg == "tog" then
 		PowaAurasOptions:Toggle()
-	elseif msg == "showbuffs" then
+	elseif msg == "showbuffs" or msg == "buffs" then
 		PowaAurasOptions:ShowAurasOnUnit("Buffs", "HELPFUL")
-	elseif msg == "showdebuffs" then
+	elseif msg == "showdebuffs" or msg == "debuffs" then
 		PowaAurasOptions:ShowAurasOnUnit("Debuffs", "HARMFUL")
 	else
 		PowaAurasOptions:MainOptionShow()

@@ -1351,7 +1351,6 @@ PowaAuras.Text = { }
 PowaAurasOptions = { }
 PowaAurasOptions = PowaAuras
 ns.PowaAuras = PowaAuras
-ns.PowaAurasOptions = PowaAurasOptions
 
 function PowaAuras:Debug(...)
 	if PowaMisc.debug then

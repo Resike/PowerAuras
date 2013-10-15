@@ -566,8 +566,7 @@ function PowaAuras:OnUpdate(elapsed)
 			self.DoCheck.All = true
 			self.PendingRescan = nil
 		end
-		for id = 1, #self.Pending do
-			local cd = self.Pending[i]
+		for id, cd in pairs(self.Pending) do
 			if cd and cd > 0 then
 				if GetTime() >= cd then
 					self.Pending[id] = nil
@@ -585,8 +584,8 @@ function PowaAuras:OnUpdate(elapsed)
 			self:NewCheckBuffs()
 			self.DoCheck.CheckIt = false
 		end
-		for i = 1, #self.Cascade do
-			self:TestThisEffect(i, false, true)
+		for k in pairs(self.Cascade) do
+			self:TestThisEffect(k, false, true)
 		end
 		wipe(self.Cascade)
 	end
@@ -1596,4 +1595,21 @@ function PowaAuras:UpdateAuraAnimation(aura, elapsed, frame)
 	if aura.animation.IsEnd then
 		aura:Hide()
 	end
+end
+
+function PowaAuras_GlobalTrigger(auraType)
+	if PowaAuras.AurasByType[auraType] then 
+		for index, auraid in ipairs(PowaAuras.AurasByType[auraType]) do
+			if PowaAuras.Auras[auraid]:ShouldShow() then
+				local shouldShow = PowaAuras:CheckMultiple(PowaAuras.Auras[auraid], "", nil)
+				if shouldShow then
+					PowaAuras:DisplayAura(auraid)
+					if PowaAuras.Auras[auraid].timerduration == 0 then
+						PowaAuras.Auras[auraid].HideRequest = true
+					end
+				end   
+			end
+		end
+	end
+	return true
 end

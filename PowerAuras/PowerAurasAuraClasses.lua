@@ -1072,14 +1072,14 @@ function cPowaAura:MatchSpell(spellName, spellTexture, spellId, matchString)
 						end
 						if self.exact then
 							if self.Debug then
-								PowaAuras:Message("exact=", (textToSearch == matchName))
+								PowaAuras:Message("exact = ", (textToSearch == matchName))
 							end
 							if textToSearch == matchName then
 								return true
 							end
 						else
 							if self.Debug then
-								PowaAuras:Message("find=", string.find(textToSearch, matchName, 1, true))
+								PowaAuras:Message("find = ", string.find(textToSearch, matchName, 1, true))
 							end
 							if string.find(textToSearch, matchName, 1, true) then
 								return true

@@ -1,4 +1,4 @@
-﻿local _, ns = ...
+local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
 PowaAuras.Anim[0] = "[Invisible]"
@@ -209,6 +209,7 @@ nomTest = "Test",
 nomTestAll = "Test All",
 nomHide = "Hide all",
 nomEdit = "Edit",
+nomDonate = "Donate",
 nomNew = "New",
 nomDel = "Delete",
 nomImport = "Import",
@@ -218,9 +219,9 @@ nomExportSet = "Export Set",
 nomUnlock = "Unlock",
 nomLock = "Lock",
 
-aideImport = "Press Ctrl-V to paste the Aura-string and press \'Accept\'.",
+aideImport = "Press Ctrl-V to paste the Aura-string and press \'Import\'.",
 aideExport = "Press Ctrl-C to copy the Aura-string for sharing.",
-aideImportSet = "Press Ctrl-V to paste the Aura-Set-string and press \'Accept\' this will erase all auras on this page.",
+aideImportSet = "Press Ctrl-V to paste the Aura-Set-string and press \'Import\' this will erase all auras on this page.",
 aideExportSet = "Press Ctrl-C to copy all the Auras on this page for sharing.",
 aideDel = "Remove the selected effect. (Hold Ctrl to allow this button to work)",
 
@@ -282,8 +283,8 @@ aideFont = "Click here to pick Font. Press Okay to apply the selection.",
 aideMultiID = "Enter here other Aura IDs to combine checks. Multiple IDs must be separated with '/'. Aura ID can be found as [#] on first line of Aura tooltip.",
 aideTooltipCheck = "Also check the tooltip contains this text.",
 
-aideBuff = "Enter here the name of the buff, or a part of the name, which must activate/deactivate the effect. You can enter several names. (ex: Super Buff/Power)",
-aideBuff2 = "Enter here the name of the debuff, or a part of the name, which must activate/deactivate the effect. You can enter several names. (ex: Dark Disease/Plague)",
+aideBuff = "Enter here the name of the buff, which must activate/deactivate the effect. You can enter several names. (ex: Super Buff/Power)",
+aideBuff2 = "Enter here the name of the debuff, which must activate/deactivate the effect. You can enter several names. (ex: Dark Disease/Plague)",
 aideBuff3 = "Enter here the type of the debuff which must activate or deactivate the effect. (Poison, Disease, Curse, Magic, CC, Silence, Stun, Snare, Root or None) You can enter several types. (ex: Disease/Poison)",
 aideBuff4 = "Enter here the name of area of effect that must trigger this effect. (like a rain of fire for example, the name of this AOE can be found in the combat log)",
 aideBuff5 = "Enter here the temporary enchant which must activate this effect: optionally prepend it with 'main/' or 'off/ to designate mainhand or offhand slot. (ex: main/crippling)",
@@ -437,6 +438,7 @@ nomLegacySizing = "Wider Digits",
 nomRelative = "Timer Position:",
 nomRelativeStacks = "Stacks Postion:",
 nomClose = "Close",
+nomCopy = "Copy",
 nomEffectEditor = "Effect Editor",
 nomAdvOptions = "Options",
 nomMaxTex = "Maximum of textures available",
