@@ -1,4 +1,4 @@
-<Ui>
+<Ui xmlns = "http://www.blizzard.com/wow/ui/" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 	<!-- Item Button Template -->
 	<Button name = "PowaItemButtonTemplate" hidden = "true" virtual = "true">
 		<Size>
@@ -54,6 +54,16 @@
 	</Button>
 	<!-- Equipment Slots Frame -->
 	<Frame name = "PowaEquipmentSlotsFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+		<Size>
+			<AbsDimension x = "225" y = "375"/>
+		</Size>
+		<Anchors>
+			<Anchor point = "CENTER">
+				<Offset>
+					<AbsDimension x = "0" y = "0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
 		<TitleRegion>
 			<Size>
 				<AbsDimension x = "200" y = "40"/>
@@ -66,16 +76,6 @@
 				</Anchor>
 			</Anchors>
 		</TitleRegion>
-		<Size>
-			<AbsDimension x = "225" y = "375"/>
-		</Size>
-		<Anchors>
-			<Anchor point = "CENTER">
-				<Offset>
-					<AbsDimension x = "0" y = "0"/>
-				</Offset>
-			</Anchor>
-		</Anchors>
 		<Scripts>
 			<OnLoad>
 				PowaTitleText:SetText(PowaAurasOptions.Text.SlotsToCheck)

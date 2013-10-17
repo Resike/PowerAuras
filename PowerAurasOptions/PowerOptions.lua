@@ -141,7 +141,6 @@ function PowaAurasOptions:IconClick(owner, button)
 	elseif self.CurrentAuraId ~= aura.id then -- Clicked a different button
 		self:SetCurrent(owner, aura.id)
 		PowaMisc.GroupSize = 1
-		self:InitPage(aura)
 		if button == "RightButton" then
 			if not aura.off then
 				if not aura.Showing then
@@ -151,6 +150,8 @@ function PowaAurasOptions:IconClick(owner, button)
 			end
 			PowaBarConfigFrame:Hide()
 			self:EditorShow()
+		else
+			self:InitPage(aura)
 		end
 	end
 end
@@ -276,7 +277,7 @@ function PowaAurasOptions:MainListClick(owner)
 		end
 		-- Set text for rename
 		local currentText = _G["PowaOptionsList"..self.CurrentAuraPage]:GetText()
-		if currentText == nil then
+		if not currentText then
 			currentText = ""
 		end
 		PowaOptionsRenameEditBox:SetText(currentText)
@@ -856,15 +857,6 @@ function PowaAurasOptions:OptionExportSet()
 	PowaAuraExportDialogCopyBox:SetText(PowaAurasOptions:CreateAuraSetString())
 	PowaAuraExportDialog.sendType = 2
 	StaticPopupSpecial_Show(PowaAuraExportDialog)
-end
-
--- Donate Dialog
-function PowaAurasOptions:OptionDonateEffect()
-	StaticPopupSpecial_Show(PowaAuraDonateDialog)
-end
-
-function PowaAurasOptions:SetDonateBox()
-	PowaAuraDonateDialogDonateBox:SetText("https://www.paypal.com/cgi-bin/webscr?return=http%3A%2F%2Fwww.curse.com%2Faddons%2Fwow%2Fpower-auras-classic-v4&cn=Add+special+instructions+to+the+addon+author%28s%29&business=resike%40gmail.com&bn=PP-DonationsBF%3Abtn_donateCC_LG.gif%3ANonHosted&cancel_return=http%3A%2F%2Fwww.curse.com%2Faddons%2Fwow%2Fpower-auras-classic-v4&lc=US&item_name=Power+Auras+Classic+v4+-+MoP+Version+%28from+Curse.com%29&cmd=_donations&rm=1&no_shipping=1&currency_code=USD")
 end
 
 function PowaAurasOptions:SetDialogTimeout(dialog, timeout)
@@ -3151,7 +3143,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 			UIDropDownMenu_AddButton(info)
 		end
 		UIDropDownMenu_SetSelectedValue(PowaDropDownPowerType, aura.PowerType)
-		PowaAurasOptions:UpdateMainOption()
+		--PowaAurasOptions:UpdateMainOption()
 	elseif name == "PowaDropDownStance" then
 		UIDropDownMenu_SetWidth(owner, 145)
 		info = {func = PowaAurasOptions.DropDownMenu_OnClickStance, owner = owner}
@@ -3171,7 +3163,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 		end
 		UIDropDownMenu_SetSelectedValue(PowaDropDownGTFO, aura.GTFO)
 		aura:SetFixedIcon()
-		PowaAurasOptions:UpdateMainOption()
+		--PowaAurasOptions:UpdateMainOption()
 	elseif name == "PowaDropDownAnimBegin" then
 		UIDropDownMenu_SetWidth(owner, 190)
 		info = {func = PowaAurasOptions.DropDownMenu_OnClickBegin, owner = owner}
@@ -4069,10 +4061,23 @@ end
 
 function PowaAuras_CommandLine(msg)
 	if msg == "dump" then
-		PowaAurasOptions:Dump()
-		PowaAurasOptions:Message("State dumped to:")
-		PowaAurasOptions:Message("WTF\\Account\\<ACCOUNT>\\"..GetRealmName().."\\"..UnitName("player").."\\SavedVariables\\PowerAuras.lua")
-		PowaAurasOptions:Message("You must log-out to save the values to disk.")
+		local dumpLoaded = PowaAurasOptions.Dump
+		if dumpLoaded then
+			PowaAurasOptions:Dump()
+			PowaAurasOptions:Message("State dumped to:")
+			PowaAurasOptions:Message("WTF\\Account\\<ACCOUNT>\\"..GetRealmName().."\\"..UnitName("player").."\\SavedVariables\\PowerAuras.lua")
+			PowaAurasOptions:Message("You must log-out to save the values to disk.")
+		else
+			PowaAurasOptions:Message("Function is not loaded.")
+		end
+	elseif msg == "cleardump" then
+		local dumpLoaded = PowaAurasOptions.Dump
+		if dumpLoaded then
+			PowaAurasOptions:ClearDump()
+			PowaAurasOptions:Message("State dump cleared.")
+		else
+			PowaAurasOptions:Message("Function is not loaded.")
+		end
 	elseif msg == "update" or msg == "upgrade" then
 		PowaAurasOptions:UpdateOldAuras()
 	elseif msg == "toggle" or msg == "tog" then
@@ -4153,12 +4158,12 @@ function PowaAurasOptions:DisableCheckBox(checkBox)
 	_G[checkBox.."Text"]:SetTextColor(GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b)
 end
 
-function PowaAurasOptions:EnableCheckBox(checkBox, colour)
+function PowaAurasOptions:EnableCheckBox(checkBox, color)
 	_G[checkBox]:Enable()
-	if not colour then
-		colour = NORMAL_FONT_COLOR
+	if not color then
+		color = NORMAL_FONT_COLOR
 	end
-	_G[checkBox.."Text"]:SetTextColor(colour.r, colour.g, colour.b)
+	_G[checkBox.."Text"]:SetTextColor(color.r, color.g, color.b)
 end
 
 function PowaAurasOptions:HideCheckBox(checkBox)
@@ -4464,6 +4469,7 @@ function PowaAurasOptions:OptionTest()
 		aura:CreateFrames()
 		self.SecondaryAuras[aura.id] = nil
 		self:DisplayAura(aura.id)
+		self:RedisplayAura(aura.id)
 		aura.Active = true
 		if aura.customsound ~= "" then
 			local pathToSound

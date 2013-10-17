@@ -1,4 +1,4 @@
-﻿<Ui>
+﻿<Ui xmlns = "http://www.blizzard.com/wow/ui/" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 	<!-- Blizzard Slider Template -->
 	<Slider name = "PowaBarBlizzSliderTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
 		<Size>
@@ -358,7 +358,7 @@
 			<!-- Default Timer Texture DropDown -->
 			<Frame name = "PowaDropDownDefaultTimerTexture" inherits = "UIDropDownMenuTemplate">
 				<Size>
-					<AbsDimension x = "200"/>
+					<AbsDimension x = "200" y = "32"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPRIGHT" relativeTo = "PowaShowAuraBrowserButton" relativePoint = "BOTTOMRIGHT">
@@ -392,7 +392,7 @@
 			<!-- Default Stacks Texture DropDown -->
 			<Frame name = "PowaDropDownDefaultStacksTexture" inherits = "UIDropDownMenuTemplate">
 				<Size>
-					<AbsDimension x = "260"/>
+					<AbsDimension x = "260" y = "32"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaResetPositionButton" relativePoint = "BOTTOMLEFT">
@@ -470,7 +470,7 @@
 				</Scripts>
 			</EditBox>
 			<!-- Custom Aura Path Editbox -->
-			<EditBox name = "PowaCustomAuraPath" autoFocus = "false" justifyH = "LEFT" inherits = "InputBoxTemplate">
+			<EditBox name = "PowaCustomAuraPath" autoFocus = "false" inherits = "InputBoxTemplate">
 				<Size>
 					<AbsDimension x = "580" y = "16"/>
 				</Size>

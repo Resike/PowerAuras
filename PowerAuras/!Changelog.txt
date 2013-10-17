@@ -5,6 +5,12 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.24.4**
+* Fixed a bug which caused part of the spell names be found in the actual spell.
+* Fixed a bug which caused auras to stuck in test mode sometimes.
+* Fixed a bug which caused high memory/cpu usage and a smaller lagspike when you right clicked on auras.
+* Some other minor fixes.
+
 **4.24.3**
 * Fixed a bug which caused linked auras to not to work properly.
 * Other minor fixes.

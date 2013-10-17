@@ -1489,12 +1489,24 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		end
 	end
 	if self.ignoremaj then
-		if string.upper(auraName) ~= string.upper(textToCheck) and auraId ~= tonumber(textToCheck) then
-			return false
+		if self.exact then
+			if string.upper(auraName) ~= string.upper(textToCheck) and auraId ~= tonumber(textToCheck) then
+				return false
+			end
+		else
+			if string.upper(auraName) ~= string.upper(textToCheck) and auraId ~= tonumber(textToCheck) and not string.find(string.upper(auraName), string.upper(textToCheck)) then
+				return false
+			end
 		end
 	else
-		if auraName ~= textToCheck and auraId ~= tonumber(textToCheck) then
-			return false
+		if self.exact then
+			if auraName ~= textToCheck and auraId ~= tonumber(textToCheck) then
+				return false
+			end
+		else
+			if auraName ~= textToCheck and auraId ~= tonumber(textToCheck) and not string.find(auraName, textToCheck) then
+				return false
+			end
 		end
 	end
 	if self.Debug then
@@ -3257,7 +3269,7 @@ function cPowaSpellAlert:CheckUnit(unit)
 	end
 	if self.Debug then
 		PowaAuras:DisplayText(unit, " is casting ", spellname)
-		PowaAuras:DisplayText(" mine= ", self.mine, " notInterruptible =", notInterruptible )
+		PowaAuras:DisplayText(" mine = ", self.mine, " notInterruptible = ", notInterruptible )
 	end
 	if (self.mine and (notInterruptible or endtime == nil)) then
 		if self.Debug then
@@ -3300,7 +3312,7 @@ function cPowaSpellAlert:CheckIfShouldShow(giveReason)
 	if self.Extra then
 		for casterName, info in pairs(PowaAuras.CastOnMe) do
 			if self.Debug then
-				PowaAuras:DisplayText(casterName, " casting ", info.SpellName, " hostile=", info.Hostile)
+				PowaAuras:DisplayText(casterName, " casting ", info.SpellName, " hostile = ", info.Hostile)
 			end
 			if (self.target and info.Hostile > 0) or (self.targetfriendly and not info.Hostile == 0) or (self.focus and info.SourceGUID == UnitGUID("focus")) or (not self.target and not self.targetfriendly and not self.focus) then
 				if self.Debug then

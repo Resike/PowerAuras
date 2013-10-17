@@ -6,6 +6,10 @@ function PowaAurasOptions:Dump()
 	end
 end
 
+function PowaAurasOptions:ClearDump()
+	PowaState = nil
+end
+
 function PowaAurasOptions:Dump_Safe()
 	PowaState = { }
 	-- Build
