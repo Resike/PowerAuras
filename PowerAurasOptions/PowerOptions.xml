@@ -2425,6 +2425,13 @@
 							<OnLoad>
 								self:SetMaxLetters(256)
 							</OnLoad>
+							<OnEnter>
+								GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", -7, 3)
+								GameTooltip:SetText(PowaAurasOptions.Text.aideCustomTextureEditbox, nil, nil, nil, nil, 0)
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide()
+							</OnLeave>
 							<OnEnterPressed>
 								PowaAurasOptions:CustomTextChanged()
 								PowaAurasOptions:InitPage()
@@ -2457,6 +2464,13 @@
 							<OnLoad>
 								self:SetMaxLetters(256)
 							</OnLoad>
+							<OnEnter>
+								GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", -7, 3)
+								GameTooltip:SetText(PowaAurasOptions.Text.aideCustomModelsEditbox, nil, nil, nil, nil, 0)
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide()
+							</OnLeave>
 							<OnEnterPressed>
 								PowaAurasOptions:CustomModelsChanged()
 								PowaAurasOptions:InitPage()

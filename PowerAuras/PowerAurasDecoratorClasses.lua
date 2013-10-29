@@ -79,7 +79,7 @@ function cPowaStacks:ShowValue(aura, newvalue)
 		if aura.texmode == 1 then
 			frame.textures[i]:SetBlendMode("Add")
 		else
-			frame.textures[i]:SetBlendMode("Disable")
+			frame.textures[i]:SetBlendMode("Blend")
 		end
 		if self.UseOwnColor then
 			frame.textures[i]:SetVertexColor(self.r, self.g, self.b)
