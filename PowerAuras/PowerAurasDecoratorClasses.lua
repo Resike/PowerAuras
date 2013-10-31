@@ -1,4 +1,4 @@
-local math, table, pairs = math, table, pairs
+local math, table, pairs, tonumber, tostring, strsplit = math, table, pairs, tonumber, tostring, strsplit
 
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
@@ -63,9 +63,17 @@ function cPowaStacks:ShowValue(aura, newvalue)
 		return
 	end
 	if PowaAuras.ModTest then
-		newvalue = math.random(0, 99)
+		if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
+			newvalue = math.random(0, 9)
+		else
+			newvalue = math.random(0, 99)
+		end
 	end
-	newvalue = tonumber(format("%.0f", tostring(newvalue)))
+	if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
+		newvalue = tonumber(format("%.0f", tostring(newvalue * 10)))
+	else
+		newvalue = tonumber(format("%.0f", tostring(newvalue)))
+	end
 	local texcount = #frame.textures
 	local unitcount = newvalue == 0 and 1 or (math.floor(math.log10(newvalue)) + 1)
 	local tStep = PowaAuras.Tstep

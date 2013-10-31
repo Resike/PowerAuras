@@ -15,10 +15,12 @@
 
 local string, tostring, tonumber, math, pi, halfpi, table, pairs, select, wipe, _G = string, tostring, tonumber, math, math.pi, math.pi / 2, table, pairs, select, wipe, _G
 
-local r1, r2, r3, r4, r5, r6
-
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
+
+local r1, r2, r3, r4, r5, r6
+
+setfenv(WorldMapFrame_OnShow, setmetatable({UpdateMicroButtons = function() end}, {__index = _G}))
 
 -- Exposed for Saving
 PowaMisc =
@@ -984,64 +986,7 @@ local function OnMouseDown(frame, button)
 		if IsAltKeyDown() then
 			local aura = PowaAuras.Auras[frame.aura.id]
 			local model = PowaAuras.Models[frame.aura.id]
-			aura.rotate = 0
-			model:SetRotation(math.rad(aura.rotate))
-			if PowaBarConfigFrame:IsVisible() then
-				PowaBarAuraRotateSlider:SetValue(aura.rotate)
-				PowaBarAuraRotateSliderEditBox:SetText(format("%.0f", PowaBarAuraRotateSlider:GetValue()).."°")
-			end
-			aura.mz = 0
-			aura.mx = 0
-			aura.my = 0
-			model:SetPosition(aura.mz, aura.mx, aura.my)
-			if PowaBarConfigFrame:IsVisible() then
-				PowaModelPositionZSlider:SetMinMaxValues(format("%.0f", (aura.mz * 100) - 10000), format("%.0f", (aura.mz * 100) + 10000))
-				PowaModelPositionZSliderLow:SetText(format("%.0f", (aura.mz * 100) - 100))
-				PowaModelPositionZSliderHigh:SetText(format("%.0f", (aura.mz * 100) + 100))
-				PowaModelPositionZSlider:SetValue(aura.mz * 100)
-				PowaModelPositionZSlider:SetMinMaxValues(format("%.0f", (aura.mz * 100) - 100), format("%.0f", (aura.mz * 100) + 100))
-				PowaAurasOptions.SliderEditBoxSetValues(PowaModelPositionZSlider, PowaModelPositionZSliderEditBox, 100, 100, 0)
-				PowaModelPositionXSlider:SetMinMaxValues(format("%.0f", (aura.mx * 100) - 10000), format("%.0f", (aura.mx * 100) + 10000))
-				PowaModelPositionXSliderLow:SetText(format("%.0f", (aura.mx * 100) - 50))
-				PowaModelPositionXSliderHigh:SetText(format("%.0f", (aura.mx * 100) + 50))
-				PowaModelPositionXSlider:SetValue(aura.mx * 100)
-				PowaModelPositionXSlider:SetMinMaxValues(format("%.0f", (aura.mx * 100) - 50), format("%.0f", (aura.mx * 100) + 50))
-				PowaAurasOptions.SliderEditBoxSetValues(PowaModelPositionXSlider, PowaModelPositionXSliderEditBox, 50, 50, 0)
-				PowaModelPositionYSlider:SetMinMaxValues(format("%.0f", (aura.my * 100) - 10000), format("%.0f", (aura.my * 100) + 10000))
-				PowaModelPositionYSliderLow:SetText(format("%.0f", (aura.my * 100) - 50))
-				PowaModelPositionYSliderHigh:SetText(format("%.0f", (aura.my * 100) + 50))
-				PowaModelPositionYSlider:SetValue(aura.my * 100)
-				PowaModelPositionYSlider:SetMinMaxValues(format("%.0f", (aura.my * 100) - 50), format("%.0f", (aura.my * 100) + 50))
-				PowaAurasOptions.SliderEditBoxSetValues(PowaModelPositionYSlider, PowaModelPositionYSliderEditBox, 50, 50, 0)
-			end
-			model:SetCamera(2)
-			model:RefreshCamera()
-			model:SetCustomCamera(1)
-			if model:HasCustomCamera() then
-				local x, y, z = model:GetCameraPosition()
-				model:SetCameraTarget(0, y, z)
-				local x = math.sqrt(x * x + y * y + z * z)
-				local y = - math.atan(y / x)
-				local z = - math.atan(z / x)
-				PowaAuras:SetOrientation(model, x, y, z)
-			end
-			local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
-			if secondaryAura then
-				local secondaryModel = PowaAuras.SecondaryModels[frame.aura.id]
-				secondaryModel:SetRotation(math.rad(aura.rotate))
-				secondaryModel:SetPosition(aura.mz, aura.mx, aura.my)
-				secondaryModel:SetCamera(2)
-				secondaryModel:RefreshCamera()
-				secondaryModel:SetCustomCamera(1)
-				if secondaryModel:HasCustomCamera() then
-					local x, y, z = secondaryModel:GetCameraPosition()
-					secondaryModel:SetCameraTarget(0, y, z)
-					local x = math.sqrt(x * x + y * y + z * z)
-					local y = - math.atan(y / x)
-					local z = - math.atan(z / x)
-					PowaAuras:SetOrientation(secondaryModel, x, y, z)
-				end
-			end
+			PowaAuras:ResetModel(aura)
 		else
 			frame.x, frame.y = GetCursorPosition()
 			frame:SetScript("OnUpdate", MiddleButtonOnUpdate)
@@ -1060,7 +1005,7 @@ local function OnMouseUp(frame, button)
 	end
 end
 
-local function OnMouseWheel(frame, delta)
+local function OnMouseWheel(frame, delta)	
 	local aura = PowaAuras.Auras[frame.aura.id]
 	if not aura.model and not aura.modelcustom then
 		return
@@ -1108,6 +1053,7 @@ local function OnLeave(frame)
 	frame:SetScript("OnDragStop", nil)
 	frame:SetScript("OnMouseDown", nil)
 	frame:SetScript("OnMouseUp", nil)
+	frame:SetScript("OnMouseWheel", nil)
 end
 
 function PowaAuras:SetForDragging(aura, frame)
@@ -1142,6 +1088,133 @@ function PowaAuras:ResetDragging(aura, frame)
 	frame:SetScript("OnEnter", nil)
 	frame:SetScript("OnLeave", nil)
 	frame.SetForDragging = nil
+end
+
+function PowaAuras:ResetModel(aura)
+	local model = self.Models[aura.id]
+	model:ClearModel()
+	if aura.model then
+		model:SetModel(PowaAurasModels[aura.texture])
+	elseif aura.modelcustom then
+		if string.find(aura.modelcustompath, "%.m2") then
+			model:SetModel(aura.modelcustompath)
+		else
+			model:SetUnit(string.lower(aura.modelcustompath))
+		end
+	end
+	aura.rotate = 0
+	model:SetRotation(math.rad(aura.rotate))
+	if PowaBarConfigFrame:IsVisible() then
+		PowaBarAuraRotateSlider:SetValue(aura.rotate)
+		PowaBarAuraRotateSliderEditBox:SetText(format("%.0f", PowaBarAuraRotateSlider:GetValue()).."°")
+	end
+	aura.mz = 0
+	aura.mx = 0
+	aura.my = 0
+	model:SetPosition(aura.mz, aura.mx, aura.my)
+	model:RefreshCamera()
+	model:SetCustomCamera(1)
+	if PowaBarConfigFrame:IsVisible() then
+		PowaModelPositionZSlider:SetMinMaxValues(format("%.0f", (aura.mz * 100) - 10000), format("%.0f", (aura.mz * 100) + 10000))
+		PowaModelPositionZSliderLow:SetText(format("%.0f", (aura.mz * 100) - 100))
+		PowaModelPositionZSliderHigh:SetText(format("%.0f", (aura.mz * 100) + 100))
+		PowaModelPositionZSlider:SetValue(aura.mz * 100)
+		PowaModelPositionZSlider:SetMinMaxValues(format("%.0f", (aura.mz * 100) - 100), format("%.0f", (aura.mz * 100) + 100))
+		PowaAurasOptions.SliderEditBoxSetValues(PowaModelPositionZSlider, PowaModelPositionZSliderEditBox, 100, 100, 0)
+		PowaModelPositionXSlider:SetMinMaxValues(format("%.0f", (aura.mx * 100) - 10000), format("%.0f", (aura.mx * 100) + 10000))
+		PowaModelPositionXSliderLow:SetText(format("%.0f", (aura.mx * 100) - 50))
+		PowaModelPositionXSliderHigh:SetText(format("%.0f", (aura.mx * 100) + 50))
+		PowaModelPositionXSlider:SetValue(aura.mx * 100)
+		PowaModelPositionXSlider:SetMinMaxValues(format("%.0f", (aura.mx * 100) - 50), format("%.0f", (aura.mx * 100) + 50))
+		PowaAurasOptions.SliderEditBoxSetValues(PowaModelPositionXSlider, PowaModelPositionXSliderEditBox, 50, 50, 0)
+		PowaModelPositionYSlider:SetMinMaxValues(format("%.0f", (aura.my * 100) - 10000), format("%.0f", (aura.my * 100) + 10000))
+		PowaModelPositionYSliderLow:SetText(format("%.0f", (aura.my * 100) - 50))
+		PowaModelPositionYSliderHigh:SetText(format("%.0f", (aura.my * 100) + 50))
+		PowaModelPositionYSlider:SetValue(aura.my * 100)
+		PowaModelPositionYSlider:SetMinMaxValues(format("%.0f", (aura.my * 100) - 50), format("%.0f", (aura.my * 100) + 50))
+		PowaAurasOptions.SliderEditBoxSetValues(PowaModelPositionYSlider, PowaModelPositionYSliderEditBox, 50, 50, 0)
+	end
+	if model:HasCustomCamera() then
+		local x, y, z = model:GetCameraPosition()
+		local tx, ty, tz = model:GetCameraTarget()
+		model:SetCameraTarget(0, ty, tz)
+		aura.mcd = math.sqrt(x * x + y * y + z * z)
+		aura.mcy = - math.atan(y / x)
+		aura.mcp = - math.atan(z / x)
+		self:SetOrientation(model, aura.mcd, aura.mcy, aura.mcp)
+	end
+	local secondaryAura = self.SecondaryAuras[aura.id]
+	if secondaryAura then
+		local secondaryModel = self.SecondaryModels[aura.id]
+		secondaryModel:ClearModel()
+		if aura.model then
+			secondaryModel:SetModel(PowaAurasModels[aura.texture])
+		elseif aura.modelcustom then
+			if string.find(aura.modelcustompath, "%.m2") then
+				secondaryModel:SetModel(aura.modelcustompath)
+			else
+				secondaryModel:SetUnit(string.lower(aura.modelcustompath))
+			end
+		end
+		secondaryModel:SetRotation(math.rad(aura.rotate))
+		secondaryModel:SetPosition(aura.mz, aura.mx, aura.my)
+		secondaryModel:RefreshCamera()
+		secondaryModel:SetCustomCamera(1)
+		if secondaryModel:HasCustomCamera() then
+			local x, y, z = model:GetCameraPosition()
+			local tx, ty, tz = secondaryModel:GetCameraTarget()
+			secondaryModel:SetCameraTarget(0, ty, tz)
+			self:SetOrientation(secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+		end
+	end
+end
+
+function PowaAuras:ResetUnit(aura)
+	local model = self.Models[aura.id]
+	model:ClearModel()
+	if aura.modelcustom then
+		if not string.find(aura.modelcustompath, "%.m2") then
+			model:SetUnit(string.lower(aura.modelcustompath))
+		end
+	end
+	model:SetCustomCamera(1)
+	if model:HasCustomCamera() then
+		local x, y, z = self:GetBaseCameraTarget(model)
+		if y and z then
+			model:SetCameraTarget(0, y, z)
+		end
+		self:SetOrientation(model, aura.mcd, aura.mcy, aura.mcp)
+	end
+	local secondaryAura = self.SecondaryAuras[aura.id]
+	if secondaryAura then
+		local secondaryModel = self.SecondaryModels[aura.id]
+		secondaryModel:ClearModel()
+		if aura.modelcustom then
+			if not string.find(aura.modelcustompath, "%.m2") then
+				secondaryModel:SetUnit(string.lower(aura.modelcustompath))
+			end
+		end
+		secondaryModel:SetCustomCamera(1)
+		if secondaryModel:HasCustomCamera() then
+			local x, y, z = self:GetBaseCameraTarget(model)
+			if y and z then
+				secondaryModel:SetCameraTarget(0, y, z)
+			end
+			self:SetOrientation(secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+		end
+	end
+end
+
+function PowaAuras:GetBaseCameraTarget(model)
+	local modelfile = model:GetModel()
+	if modelfile and modelfile ~= "" then
+		local tempmodel = CreateFrame("PlayerModel", nil, UIParent)
+		tempmodel:SetModel(modelfile)
+		tempmodel:SetCustomCamera(1)
+		local x, y, z = tempmodel:GetCameraTarget()
+		tempmodel:ClearModel()
+		return x, y, z
+	end
 end
 
 function PowaAuras:UpdatePreviewColor(aura)
@@ -1429,12 +1502,18 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		model:SetModel(PowaAurasModels[aura.texture])
 		model:SetCustomCamera(1)
 		if model:HasCustomCamera() then
-			if aura.mcd ~= 0 and aura.mcy ~= 0 and aura.mcp ~= 0 then
+			if aura.mcd and aura.mcy and aura.mcp then
 				self:SetOrientation(model, aura.mcd, aura.mcy, aura.mcp)
-				model:SetCameraTarget(0, 0, pi / 5)
+				local x, y, z = self:GetBaseCameraTarget(model)
+				if y and z then
+					model:SetCameraTarget(0, y, z)
+				end
 			else
 				local x, y, z = model:GetCameraPosition()
-				model:SetCameraTarget(0, y, z)
+				local tx, ty, tz = model:GetCameraTarget()
+				if ty and tz then
+					model:SetCameraTarget(0, ty, tz)
+				end
 				model._distance = math.sqrt(x * x + y * y + z * z)
 				model._yaw = - math.atan(y / x)
 				model._pitch = - math.atan(z / x)
@@ -1443,7 +1522,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		end
 	elseif aura.modelcustom then
 		texture:Hide()
-		if aura.modelcustom and aura.modelcustom ~= "" then
+		if aura.modelcustompath and aura.modelcustompath ~= "" then
 			if string.find(aura.modelcustompath, "%.m2") then
 				model:SetModel(aura.modelcustompath)
 			else
@@ -1451,12 +1530,18 @@ function PowaAuras:UpdateAuraVisuals(aura)
 			end
 			model:SetCustomCamera(1)
 			if model:HasCustomCamera() then
-				if aura.mcd ~= 0 and aura.mcy ~= 0 and aura.mcp ~= 0 then
+				if aura.mcd and aura.mcy and aura.mcp then
 					self:SetOrientation(model, aura.mcd, aura.mcy, aura.mcp)
-					model:SetCameraTarget(0, 0, pi / 5)
+					local x, y, z = self:GetBaseCameraTarget(model)
+					if y and z then
+						model:SetCameraTarget(0, y, z)
+					end
 				else
 					local x, y, z = model:GetCameraPosition()
-					model:SetCameraTarget(0, y, z)
+					local tx, ty, tz = model:GetCameraTarget()
+					if ty and tz then
+						model:SetCameraTarget(0, ty, tz)
+					end
 					model._distance = math.sqrt(x * x + y * y + z * z)
 					model._yaw = - math.atan(y / x)
 					model._pitch = - math.atan(z / x)
@@ -1619,6 +1704,13 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		self:Message("frame:Show()", aura.id, " ", frame)
 	end
 	frame:Show()
+	if aura.modelcustom then
+		if aura.modelcustompath and aura.modelcustompath ~= "" then
+			if not string.find(aura.modelcustompath, "%.m2") then
+				self:ResetUnit(aura)
+			end
+		end
+	end
 	aura.Showing = true
 	aura.HideRequest = false
 end
@@ -1683,12 +1775,16 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 		secondaryModel:SetModel(PowaAurasModels[aura.texture])
 		secondaryModel:SetCustomCamera(1)
 		if secondaryModel:HasCustomCamera() then
-			if aura.mcd ~= 0 and aura.mcy ~= 0 and aura.mcp ~= 0 then
+			if aura.mcd and aura.mcy and aura.mcp then
 				self:SetOrientation(secondaryModel, aura.mcd, aura.mcy, aura.mcp)
-				secondaryModel:SetCameraTarget(0, 0, pi / 5)
+				local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+				if y and z then
+					secondaryModel:SetCameraTarget(0, y, z)
+				end
 			else
-				local x, y, z = model:GetCameraPosition()
-				secondaryModel:SetCameraTarget(0, y, z)
+				local x, y, z = secondaryModel:GetCameraPosition()
+				local tx, ty, tz = secondaryModel:GetCameraTarget()
+				secondaryModel:SetCameraTarget(0, ty, tz)
 				secondaryModel._distance = math.sqrt(x * x + y * y + z * z)
 				secondaryModel._yaw = - math.atan(y / x)
 				secondaryModel._pitch = - math.atan(z / x)
@@ -1697,7 +1793,7 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 		end
 	elseif aura.modelcustom then
 		secondaryTexture:Hide()
-		if aura.modelcustom and aura.modelcustom ~= "" then
+		if aura.modelcustompath and aura.modelcustompath ~= "" then
 			if string.find(aura.modelcustompath, "%.m2") then
 				secondaryModel:SetModel(aura.modelcustompath)
 			else
@@ -1705,12 +1801,16 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 			end
 			secondaryModel:SetCustomCamera(1)
 			if secondaryModel:HasCustomCamera() then
-				if aura.mcd ~= 0 and aura.mcy ~= 0 and aura.mcp ~= 0 then
+				if aura.mcd and aura.mcy and aura.mcp then
 					self:SetOrientation(secondaryModel, aura.mcd, aura.mcy, aura.mcp)
-					secondaryModel:SetCameraTarget(0, 0, pi / 5)
+					local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+					if y and z then
+						secondaryModel:SetCameraTarget(0, y, z)
+					end
 				else
-					local x, y, z = model:GetCameraPosition()
-					secondaryModel:SetCameraTarget(0, y, z)
+					local x, y, z = secondaryModel:GetCameraPosition()
+					local tx, ty, tz = secondaryModel:GetCameraTarget()
+					secondaryModel:SetCameraTarget(0, ty, tz)
 					secondaryModel._distance = math.sqrt(x * x + y * y + z * z)
 					secondaryModel._yaw = - math.atan(y / x)
 					secondaryModel._pitch = - math.atan(z / x)
@@ -1820,6 +1920,13 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 			secondaryFrame:Show()
 			if secondaryAura.MainAnimation then
 				secondaryAura.MainAnimation:Play()
+			end
+		end
+	end
+	if aura.modelcustom then
+		if aura.modelcustompath and aura.modelcustompath ~= "" then
+			if not string.find(aura.modelcustompath, "%.m2") then
+				self:ResetUnit(aura)
 			end
 		end
 	end

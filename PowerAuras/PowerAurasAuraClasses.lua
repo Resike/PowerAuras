@@ -110,10 +110,9 @@ cPowaAura.ExportSettings =
 	mz = 0,
 	mx = 0,
 	my = 0,
-	modelcustomcamera = false,
-	mcd = 0,
-	mcy = 0,
-	mcp = 0,
+	mcd = false,
+	mcy = false,
+	mcp = false,
 	modelanimation = -1,
 	customtex = false,
 	textaura = false,
@@ -283,7 +282,7 @@ do
 		return state:currentIterator()
 	end
 	playerSpells = function()
-		local state = {}
+		local state = { }
 		state.tabIdx = 1
 		state.numOfTabs = GetNumSpellTabs()
 		state.currentIterator = iterateTabs
@@ -295,7 +294,7 @@ function cPowaAura:Init()
 	self:SetFixedIcon()
 end
 
--- Do not delete this
+-- Do not delete this!
 function cPowaAura:SetFixedIcon()
 	-- Set icon from the class
 end
@@ -2991,6 +2990,8 @@ function cPowaPowerType:UnitValue(unit)
 		power = math.max(- UnitPower(unit, SPELL_POWER_ECLIPSE), 0)
 	elseif self.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
 		power = math.max(UnitPower(unit, SPELL_POWER_ECLIPSE))
+	elseif self.PowerType == SPELL_POWER_BURNING_EMBERS then
+		power = UnitPower(unit, self.PowerType, true) / 10
 	else
 		power = UnitPower(unit, self.PowerType)
 	end

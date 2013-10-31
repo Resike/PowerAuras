@@ -1811,15 +1811,45 @@ function PowaAurasOptions:InitPage(aura)
 	end
 end
 
+-- Don't change this!
 function PowaAurasOptions:SetThresholdSlider(aura)
 	if not aura.MaxRange then
 		return
 	end
-	PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
-	PowaBarThresholdSlider:SetValue(aura.threshold)
-	PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
-	PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
-	self.SliderEditBoxChanged(PowaBarThresholdSliderEditBox)
+	local min, max = PowaBarThresholdSlider:GetMinMaxValues()
+	if max > aura.MaxRange then
+		if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
+			PowaBarThresholdSlider:SetValueStep(0.1)
+			PowaBarThresholdSlider:SetValue(aura.threshold)
+			PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
+			PowaBarThresholdSliderLow:SetText("0.0"..aura.RangeType)
+			PowaBarThresholdSliderHigh:SetText(aura.MaxRange..".0"..aura.RangeType)
+			PowaBarThresholdSliderEditBox:SetText(format("%.1f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
+		else
+			PowaBarThresholdSlider:SetValue(aura.threshold)
+			PowaBarThresholdSlider:SetValueStep(1)
+			PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
+			PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
+			PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
+			PowaBarThresholdSliderEditBox:SetText(format("%.0f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
+		end
+	else
+		if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
+			PowaBarThresholdSlider:SetValueStep(0.1)
+			PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
+			PowaBarThresholdSlider:SetValue(aura.threshold)
+			PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
+			PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
+			PowaBarThresholdSliderEditBox:SetText(format("%.1f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
+		else
+			PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
+			PowaBarThresholdSlider:SetValue(aura.threshold)
+			PowaBarThresholdSlider:SetValueStep(1)
+			PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
+			PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
+			PowaBarThresholdSliderEditBox:SetText(format("%.0f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
+		end
+	end
 end
 
 -- Sliders Changed
@@ -1876,20 +1906,15 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 			texture:Show()
 			texture:SetTexture(self.WowTextures[aura.texture])
 		elseif aura.model then
+			self:ResetModel(aura)
 			texture:Hide()
 			model:SetModel(PowaAurasModels[aura.texture])
 			model:SetCustomCamera(1)
 			if model:HasCustomCamera() then
-				if aura.mcd ~= 0 and aura.mcy ~= 0 and aura.mcp ~= 0 then
+				if aura.mcd and aura.mcy and aura.mcp then
 					self:SetOrientation(model, aura.mcd, aura.mcy, aura.mcp)
-					model:SetCameraTarget(0, 0, pi / 5)
-				else
-					local x, y, z = model:GetCameraPosition()
+					local x, y, z = model:GetCameraTarget()
 					model:SetCameraTarget(0, y, z)
-					model._distance = math.sqrt(x * x + y * y + z * z)
-					model._yaw = - math.atan(y / x)
-					model._pitch = - math.atan(z / x)
-					self:SetOrientation(model, model._distance, model._yaw, model._pitch)
 				end
 			end
 		else
@@ -1908,16 +1933,10 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 				secondaryModel:SetModel(PowaAurasModels[aura.texture])
 				secondaryModel:SetCustomCamera(1)
 				if secondaryModel:HasCustomCamera() then
-					if aura.mcd ~= 0 and aura.mcy ~= 0 and aura.mcp ~= 0 then
+					if aura.mcd and aura.mcy and aura.mcp then
 						self:SetOrientation(secondaryModel, aura.mcd, aura.mcy, aura.mcp)
-						secondaryModel:SetCameraTarget(0, 0, pi / 5)
-					else
-						local x, y, z = model:GetCameraPosition()
+						local x, y, z = secondaryModel:GetCameraTarget()
 						secondaryModel:SetCameraTarget(0, y, z)
-						secondaryModel._distance = math.sqrt(x * x + y * y + z * z)
-						secondaryModel._yaw = - math.atan(y / x)
-						secondaryModel._pitch = - math.atan(z / x)
-						self:SetOrientation(secondaryModel, secondaryModel._distance, secondaryModel._yaw, secondaryModel._pitch)
 					end
 				end
 			else
@@ -1945,7 +1964,6 @@ function PowaAurasOptions:FrameStrataLevelSliderChanged(slider, value)
 		local frame = self.Frames[self.CurrentAuraId]
 		local aura = self.Auras[self.CurrentAuraId]
 		frame:SetFrameLevel(aura.stratalevel)
-		--self:RedisplayAura(self.CurrentAuraId)
 	end
 end
 
@@ -2431,7 +2449,7 @@ function PowaAurasOptions:BarAuraRotateSliderChanged(slider, value)
 	--[[if self.Auras[self.CurrentAuraId].textaura ~= true then
 		AuraTexture:SetPoint("CENTER")
 		AuraTexture:SetRotation(math.rad(value))
-	end]]--
+	end]]
 	local aura = self.Auras[self.CurrentAuraId]
 	if PowaMisc.GroupSize == 1 then
 		if value ~= aura.rotate then
@@ -2537,8 +2555,13 @@ function PowaAurasOptions:BarThresholdSliderChanged(slider, value)
 	end
 	-- Don't use ~= checker!
 	local aura = self.Auras[self.CurrentAuraId]
-	aura.threshold = value
-	PowaBarThresholdSliderEditBox:SetText(format("%.0f", value)..aura.RangeType)
+	if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
+		aura.threshold = tonumber(format("%.1f", value))
+		PowaBarThresholdSliderEditBox:SetText(format("%.1f", value)..aura.RangeType)
+	else
+		aura.threshold = value
+		PowaBarThresholdSliderEditBox:SetText(format("%.0f", value)..aura.RangeType)
+	end
 end
 
 function PowaAurasOptions:TextChanged()
@@ -2597,8 +2620,37 @@ end
 
 function PowaAurasOptions:CustomModelsChanged()
 	local aura = self.Auras[self.CurrentAuraId]
+	local model = self.Models[self.CurrentAuraId]
+	local texture = self.Textures[self.CurrentAuraId]
 	aura.modelcustompath = PowaBarCustomModelsEditBox:GetText()
-	self:RedisplayAura(self.CurrentAuraId)
+	self:ResetModel(aura)
+	if aura.modelcustompath and aura.modelcustompath ~= "" then
+		if string.find(aura.modelcustompath, "%.m2") then
+			model:SetModel(aura.modelcustompath)
+		else
+			model:SetUnit(string.lower(aura.modelcustompath))
+		end
+	end
+	model:SetCustomCamera(1)
+	if model:HasCustomCamera() then
+		if aura.mcd and aura.mcy and aura.mcp then
+			self:SetOrientation(model, aura.mcd, aura.mcy, aura.mcp)
+			local x, y, z = model:GetCameraTarget()
+			model:SetCameraTarget(0, y, z)
+		end
+	end
+	local secondaryAura = self.SecondaryAuras[aura.id]
+	if secondaryAura then
+		local secondaryModel = self.SecondaryModels[aura.id]
+		secondaryModel:SetCustomCamera(1)
+		if secondaryModel:HasCustomCamera() then
+			if aura.mcd and aura.mcy and aura.mcp then
+				self:SetOrientation(secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+				local x, y, z = secondaryModel:GetCameraTarget()
+				secondaryModel:SetCameraTarget(0, y, z)
+			end
+		end
+	end
 end
 
 function PowaAurasOptions:AurasTextChanged()
@@ -2848,9 +2900,10 @@ function PowaAurasOptions:ModelsChecked()
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
 	end
-	self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
-	self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
+	--self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
+	--self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
 	self:RedisplayAura(self.CurrentAuraId)
+	self:ResetModel(aura)
 end
 
 function PowaAurasOptions:CustomModelsChecked()
@@ -2894,9 +2947,10 @@ function PowaAurasOptions:CustomModelsChecked()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
 	end
-	self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
-	self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
+	--self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
+	--self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
 	self:RedisplayAura(self.CurrentAuraId)
+	self:ResetModel(aura)
 end
 
 function PowaAurasOptions:CustomTexturesChecked()
@@ -4536,10 +4590,11 @@ function PowaAurasOptions:OptionTest()
 			owner:SetAlpha(0.33)
 		end
 	else
-		aura:CreateFrames()
-		self.SecondaryAuras[aura.id] = nil
+		--aura:CreateFrames()
+		--self.SecondaryAuras[aura.id] = nil
 		self:DisplayAura(aura.id)
-		self:RedisplayAura(aura.id)
+		-- Fix stuck in test mode
+		--self:RedisplayAura(aura.id)
 		aura.Active = true
 		if aura.customsound ~= "" then
 			local pathToSound
@@ -4967,19 +5022,35 @@ function PowaAurasOptions.SliderEditBoxChanged(self)
 			self:SetText(format("%.0f", slider:GetValue()).."%")
 		end
 	elseif slider == PowaBarThresholdSlider then
-		local text = tonumber(self:GetText())
-		local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
-		if text then
-			slider:SetValue(text)
-			self:SetText(format("%.0f", (slider:GetValue()))..aura.RangeType)
-			local sliderlow, sliderhigh = slider:GetMinMaxValues()
-			if text <= sliderlow or text >= sliderhigh then
+		if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
+			local text = tonumber(self:GetText())
+			local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
+			if text then
+				slider:SetValue(text)
+				self:SetText(format("%.1f", (slider:GetValue()))..aura.RangeType)
+				local sliderlow, sliderhigh = slider:GetMinMaxValues()
+				if text <= sliderlow or text >= sliderhigh then
+					self:SetText(format("%.1f", slider:GetValue())..aura.RangeType)
+				end
+			else
+				self:SetText(format("%.1f", slider:GetValue())..aura.RangeType)
+			end
+			PowaBarThresholdSliderEditBox:SetText(format("%.1f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
+		else
+			local text = tonumber(self:GetText())
+			local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
+			if text then
+				slider:SetValue(text)
+				self:SetText(format("%.0f", (slider:GetValue()))..aura.RangeType)
+				local sliderlow, sliderhigh = slider:GetMinMaxValues()
+				if text <= sliderlow or text >= sliderhigh then
+					self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
+				end
+			else
 				self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
 			end
-		else
-			self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
-		end
-		PowaBarThresholdSliderEditBox:SetText(format("%.0f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
+			PowaBarThresholdSliderEditBox:SetText(format("%.0f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
+	end
 	elseif tonumber(postfix) == nil and slider == PowaBarAuraRotateSlider then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2))
 		if text == nil then
