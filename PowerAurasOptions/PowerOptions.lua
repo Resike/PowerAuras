@@ -20,9 +20,9 @@ end
 
 function PowaAurasOptions:ResetPositions()
 	PowaBarConfigFrame:ClearAllPoints()
-	PowaBarConfigFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 50)
+	PowaBarConfigFrame:SetPoint("Center", "UIParent", "Center", 0, 50)
 	PowaOptionsFrame:ClearAllPoints()
-	PowaOptionsFrame:SetPoint("CENTER", "UIParent", "CENTER", 0, 50)
+	PowaOptionsFrame:SetPoint("Center", "UIParent", "Center", 0, 50)
 end
 
 function PowaAurasOptions:UpdateMainOption(hideAll)
@@ -165,7 +165,7 @@ function PowaAurasOptions:SetCurrent(icon, auraId)
 	PowaSelected:Show()
 end
 
-function PowaAurasOptions:IconeEntered(owner)
+function PowaAurasOptions:IconEntered(owner)
 	local iconID = owner:GetID()
 	local k = ((self.CurrentAuraPage - 1) * 24) + iconID
 	local aura = self.Auras[k]
@@ -327,7 +327,7 @@ function PowaAurasOptions:OptionRenameEdited()
 	end
 end
 
-function PowaAurasOptions:TriageIcones(nPage)
+function PowaAurasOptions:TriageIcons(nPage)
 	local min = ((nPage - 1) * 24) + 1
 	local max = min + 23
 	-- Hide any auras on this page
@@ -390,24 +390,6 @@ function PowaAurasOptions:ReindexAura(oldId, newId)
 	end
 end
 
-function PowaAurasOptions:Dispose(tableName, key, key2)
-	local t = self[tableName]
-	if not t or not t[key] then
-		return
-	end
-	if key2 then
-		if not t[key][key2] then
-			return
-		end
-		t = t[key]
-		key = key2
-	end
-	if t[key].Hide then
-		t[key]:Hide()
-	end
-	t[key] = nil
-end
-
 function PowaAurasOptions:DeleteAura(aura)
 	if not aura then
 		return
@@ -444,7 +426,7 @@ function PowaAurasOptions:OptionDeleteEffect(auraId)
 	end
 	local currentAuraId = self.CurrentAuraId
 	self:DeleteAura(self.Auras[auraId])
-	self:TriageIcones(self.CurrentAuraPage)
+	self:TriageIcons(self.CurrentAuraPage)
 	PowaMisc.GroupSize = 1
 	self:CalculateAuraSequence()
 	if currentAuraId == self:GetNextFreeSlot() then
@@ -488,8 +470,10 @@ function PowaAurasOptions:OptionNewEffect()
 	self:DisplayAura(i)
 	self:UpdateMainOption()
 	self:UpdateTimerOptions()
+	if PowaBarAuraTextureSlider:GetValue() > self.MaxTextures then
+		PowaBarAuraTextureSlider:SetValue(1)
+	end
 	self:InitPage(aura)
-	self:UpdateMainOption()
 	if PowaEquipmentSlotsFrame:IsVisible() then
 		PowaEquipmentSlotsFrame:Hide()
 	end
@@ -560,7 +544,7 @@ function PowaAurasOptions:ImportAura(aurastring, auraId, offset)
 			oldSpellAlertLogic = false
 			if key == "Version" then
 				-- Do nothing
-			elseif string.sub(key,1,6) == "timer." then
+			elseif string.sub(key, 1, 6) == "timer." then
 				key = string.sub(key,7)
 				if cPowaTimer.ExportSettings[key] ~= nil then
 					importTimerSettings[key] = self:ExtractImportValue(type(cPowaTimer.ExportSettings[key]), var)
@@ -595,7 +579,7 @@ function PowaAurasOptions:ImportAura(aurastring, auraId, offset)
 			elseif k == "isResting" then
 				if importAuraSettings.ignoreResting == true then
 					aura[k] = true
-				elseif importAuraSettings.ignoreResting == true then
+				elseif importAuraSettings.ignoreResting == false then
 					aura[k] = 0
 				else
 					aura[k] = importAuraSettings[k]
@@ -1137,7 +1121,7 @@ function PowaAurasOptions:PlayerImportDialogInit(self)
 			PowaComms:SendAddonMessage("EXPORT_REJECT", 2, from)
 			return
 		end
-		PowaAuraPlayerImportDialog:SetPoint("CENTER")
+		PowaAuraPlayerImportDialog:SetPoint("Center")
 		PowaAuraPlayerImportDialog:SetStatus(1)
 		PowaAuraPlayerImportDialog.receiveFrom = from
 		PowaAuraPlayerImportDialog.receiveDisplay = from
@@ -1209,7 +1193,7 @@ function PowaAurasOptions:BeginMoveEffect(Pfrom, ToPage)
 		return
 	end
 	self:DoCopyEffect(Pfrom, i, true)
-	self:TriageIcones(self.CurrentAuraPage)
+	self:TriageIcons(self.CurrentAuraPage)
 	self:CalculateAuraSequence()
 	self.CurrentAuraId = ((self.CurrentAuraPage - 1) * 24) + 1
 	self:DisableMoveMode()
@@ -1242,7 +1226,7 @@ function PowaAurasOptions:DoCopyEffect(idFrom, idTo, isMove)
 	end
 	if isMove then
 		self:DeleteAura(self.Auras[idFrom])
-		self:TriageIcones(self.CurrentAuraPage)
+		self:TriageIcons(self.CurrentAuraPage)
 	end
 	PowaMisc.GroupSize = 1
 	self:CalculateAuraSequence()
@@ -1279,7 +1263,7 @@ function PowaAurasOptions:MainOptionClose()
 	PowaBarConfigFrame:Hide()
 	PowaOptionsFrame:Hide()
 	PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
-	PowaAurasOptions:OptionHideAll()
+	self:OptionHideAll()
 	self:FindAllChildren()
 	self:CreateEffectLists()
 	self.DoCheck.All = true
@@ -1475,6 +1459,7 @@ function PowaAurasOptions:InitPage(aura)
 	UIDropDownMenu_SetSelectedName(PowaSecondaryStrataDropDown, aura.secondarystrata)
 	UIDropDownMenu_SetSelectedName(PowaSecondaryTextureStrataDropDown, aura.secondarytexturestrata)
 	UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, aura.gradientstyle)
+	UIDropDownMenu_SetSelectedName(PowaModelCategoryDropDown, self.ModelCategoryList[aura.modelcategory])
 	PowaFrameStrataLevelSlider:SetValue(aura.stratalevel)
 	PowaTextureStrataSublevelSlider:SetValue(aura.texturesublevel)
 	PowaStrataDropDownText:SetText(aura.strata)
@@ -1484,6 +1469,11 @@ function PowaAurasOptions:InitPage(aura)
 	PowaSecondaryStrataDropDownText:SetText(aura.secondarystrata)
 	PowaSecondaryTextureStrataDropDownText:SetText(aura.secondarytexturestrata)
 	PowaGradientStyleDropDownText:SetText(aura.gradientstyle)
+	PowaModelCategoryDropDownText:SetText(self.ModelCategoryList[aura.modelcategory])
+	if not aura.modelcategory or aura.modelcategory == 1 then
+		UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+		PowaModelTextureDropDownText:SetText(tostring(aura.modelpath))
+	end
 	PowaDropDownAnim1Text:SetText(self.Anim[aura.anim1])
 	PowaDropDownAnim2Text:SetText(self.Anim[aura.anim2])
 	PowaDropDownAnimBeginText:SetText(self.BeginAnimDisplay[aura.begin])
@@ -1658,6 +1648,9 @@ function PowaAurasOptions:InitPage(aura)
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaModelPositionZSlider:Hide()
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
@@ -1672,6 +1665,9 @@ function PowaAurasOptions:InitPage(aura)
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaModelPositionZSlider:Hide()
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
@@ -1680,12 +1676,12 @@ function PowaAurasOptions:InitPage(aura)
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAnimationSlider:Hide()
-		if (#self.WowTextures > self.MaxTextures) or (#self.WowTextures > #PowaAurasModels) then
-			PowaBarAuraTextureSlider:SetMinMaxValues(1, #self.WowTextures)
+		if PowaBarAuraTextureSlider:GetValue() > #self.WowTextures then
 			PowaBarAuraTextureSlider:SetValue(aura.texture)
+			PowaBarAuraTextureSlider:SetMinMaxValues(1, #self.WowTextures)
 		else
-			PowaBarAuraTextureSlider:SetValue(aura.texture)
 			PowaBarAuraTextureSlider:SetMinMaxValues(1, #self.WowTextures)
+			PowaBarAuraTextureSlider:SetValue(aura.texture)
 		end
 		PowaBarAuraTextureSliderHigh:SetText(#self.WowTextures)
 		checkTexture = AuraTexture:SetTexture(self.WowTextures[aura.texture])
@@ -1703,20 +1699,77 @@ function PowaAurasOptions:InitPage(aura)
 		PowaFontButton:Hide()
 		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAuraSymSlider:Hide()
-		if (#PowaAurasModels > self.MaxTextures) or (#PowaAurasModels > #self.WowTextures) then
-			PowaBarAuraTextureSlider:SetMinMaxValues(1, #PowaAurasModels)
-			PowaBarAuraTextureSlider:SetValue(aura.texture)
+		PowaGradientStyleDropDown:Hide()
+		PowaModelCategoryDropDown:Show()
+		PowaModelTextureDropDown:Show()
+		self.ModelTextureList = { }
+		if not aura.modelcategory or aura.modelcategory == 1 then
+			local model = self.Models[aura.id]
+			local displayID
+			if model then
+				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, model:GetModel())
+				if displayID then
+					for i = 1, #displayID do
+						tinsert(self.ModelTextureList, displayID[i])
+					end
+					sort(self.ModelTextureList)
+				end
+			end
+			if not displayID then
+				PowaModelTextureDropDown:Hide()
+			elseif #self.ModelTextureList < 2 then
+				PowaModelTextureDropDown:Show()
+				UIDropDownMenu_DisableDropDown(PowaModelTextureDropDown)
+			else
+				PowaModelTextureDropDown:Show()
+				UIDropDownMenu_EnableDropDown(PowaModelTextureDropDown)
+			end
 		else
-			PowaBarAuraTextureSlider:SetValue(aura.texture)
-			PowaBarAuraTextureSlider:SetMinMaxValues(1, #PowaAurasModels)
+			PowaModelTextureDropDown:Hide()
 		end
-		PowaBarAuraTextureSliderHigh:SetText(#PowaAurasModels)
+		local MaxModels
+		local ModelCategory
+		if not aura.modelcategory or aura.modelcategory == 1 then
+			ModelCategory = self.ModelsCreature
+			MaxModels = #self.ModelsCreature
+		elseif aura.modelcategory == 2 then
+			ModelCategory = self.ModelsEnvironments
+			MaxModels = #self.ModelsEnvironments
+		elseif aura.modelcategory == 3 then
+			ModelCategory = self.ModelsInterface
+			MaxModels = #self.ModelsInterface
+		elseif aura.modelcategory == 4 then
+			ModelCategory = self.ModelsSpells
+			MaxModels = #self.ModelsSpells
+		end
+		if not aura.modelpath or aura.modelpath == "" then
+			if PowaBarAuraTextureSlider:GetValue() > MaxModels then
+				PowaBarAuraTextureSlider:SetValue(aura.texture)
+				PowaBarAuraTextureSlider:SetMinMaxValues(1, MaxModels)
+			else
+				PowaBarAuraTextureSlider:SetMinMaxValues(1, MaxModels)
+				PowaBarAuraTextureSlider:SetValue(aura.texture)
+			end
+		else
+			if tonumber(aura.modelpath) then
+				aura.texture = self:GetTableNumber(ModelCategory, self.ModelsDisplayInfo[tonumber(aura.modelpath)])
+			else
+				aura.texture = self:GetTableNumber(ModelCategory, aura.modelpath)
+			end
+			if PowaBarAuraTextureSlider:GetValue() > MaxModels then
+				PowaBarAuraTextureSlider:SetValue(aura.texture)
+				PowaBarAuraTextureSlider:SetMinMaxValues(1, MaxModels)
+			else
+				PowaBarAuraTextureSlider:SetMinMaxValues(1, MaxModels)
+				PowaBarAuraTextureSlider:SetValue(aura.texture)
+			end
+		end
+		PowaBarAuraTextureSliderHigh:SetText(MaxModels)
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP")
 	elseif aura.modelcustom then
 		PowaModelPositionZSlider:Show()
 		PowaModelPositionXSlider:Show()
 		PowaModelPositionYSlider:Show()
-		PowaBarAuraTextureSlider:Show()
 		PowaBarAnimationSlider:Show()
 		PowaBarCustomModelsEditBox:SetText(aura.modelcustompath)
 		PowaBlendModeDropDown:Hide()
@@ -1728,6 +1781,9 @@ function PowaAurasOptions:InitPage(aura)
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAuraSymSlider:Hide()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\TEMP")
 	elseif aura.customtex then
 		PowaBarAuraTextureSlider:Hide()
@@ -1735,6 +1791,9 @@ function PowaAurasOptions:InitPage(aura)
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaModelPositionZSlider:Hide()
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
@@ -1751,6 +1810,9 @@ function PowaAurasOptions:InitPage(aura)
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaModelPositionZSlider:Hide()
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
@@ -1767,6 +1829,9 @@ function PowaAurasOptions:InitPage(aura)
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaModelPositionZSlider:Hide()
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
@@ -1775,12 +1840,12 @@ function PowaAurasOptions:InitPage(aura)
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAnimationSlider:Hide()
-		if (#self.WowTextures < self.MaxTextures) or (#PowaAurasModels < #self.MaxTextures) then
-			PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
+		if PowaBarAuraTextureSlider:GetValue() > self.MaxTextures then
 			PowaBarAuraTextureSlider:SetValue(aura.texture)
+			PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 		else
-			PowaBarAuraTextureSlider:SetValue(aura.texture)
 			PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
+			PowaBarAuraTextureSlider:SetValue(aura.texture)
 		end
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
 		checkTexture = AuraTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
@@ -1788,13 +1853,10 @@ function PowaAurasOptions:InitPage(aura)
 	if checkTexture ~= 1 then
 		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga")
 	end
-	if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-		AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+	if aura.randomcolor then
+		self:UpdatePreviewRandomColor(aura)
 	else
-		AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
-	end
-	if AuraTexture:GetTexture() == "Interface\\CharacterFrame\\TempPortrait" or AuraTexture:GetTexture() == "Interface\\Icons\\INV_Scroll_02" or AuraTexture:GetTexture() == "Interface\\Icons\\TEMP" then
-		AuraTexture:SetVertexColor(1, 1, 1)
+		self:UpdatePreviewColor(aura)
 	end
 	PowaColorNormalTexture:SetVertexColor(aura.r, aura.g, aura.b)
 	PowaGradientColorNormalTexture:SetVertexColor(aura.gr, aura.gg, aura.gb)
@@ -1900,25 +1962,64 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 	end
 	if value ~= aura.texture then
 		aura.texture = value
+		CloseDropDownMenus()
 		local model = self.Models[self.CurrentAuraId]
 		local texture = self.Textures[self.CurrentAuraId]
+		local displayID
 		if aura.wowtex then
-			texture:Show()
 			texture:SetTexture(self.WowTextures[aura.texture])
 		elseif aura.model then
-			self:ResetModel(aura)
-			texture:Hide()
-			model:SetModel(PowaAurasModels[aura.texture])
+			self.ModelTextureList = { }
+			if not aura.modelcategory or aura.modelcategory == 1 then
+				aura.modelpath = self.ModelsCreature[aura.texture]
+				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
+				if displayID then
+					for i = 1, #displayID do
+						tinsert(self.ModelTextureList, displayID[i])
+					end
+					sort(self.ModelTextureList)
+				end
+				if displayID then
+					aura.modelpath = tonumber(self.ModelTextureList[1])
+					self:ResetModel(aura)
+					model:SetDisplayInfo(aura.modelpath)
+				else
+					self:ResetModel(aura)
+					model:SetModel(aura.modelpath)
+				end
+				if not displayID then
+					PowaModelTextureDropDown:Hide()
+				elseif #self.ModelTextureList < 2 then
+					PowaModelTextureDropDown:Show()
+					UIDropDownMenu_DisableDropDown(PowaModelTextureDropDown)
+				else
+					PowaModelTextureDropDown:Show()
+					UIDropDownMenu_EnableDropDown(PowaModelTextureDropDown)
+				end
+				UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+				PowaModelTextureDropDownText:SetText(tostring(aura.modelpath))
+			elseif aura.modelcategory == 2 then
+				aura.modelpath = self.ModelsEnvironments[aura.texture]
+				model:SetModel(self.ModelsEnvironments[aura.texture])
+				PowaModelTextureDropDown:Hide()
+			elseif aura.modelcategory == 3 then
+				aura.modelpath = self.ModelsInterface[aura.texture]
+				model:SetModel(self.ModelsInterface[aura.texture])
+				PowaModelTextureDropDown:Hide()
+			elseif aura.modelcategory == 4 then
+				aura.modelpath = self.ModelsSpells[aura.texture]
+				model:SetModel(self.ModelsSpells[aura.texture])
+				PowaModelTextureDropDown:Hide()
+			end
 			model:SetCustomCamera(1)
 			if model:HasCustomCamera() then
 				if aura.mcd and aura.mcy and aura.mcp then
-					self:SetOrientation(model, aura.mcd, aura.mcy, aura.mcp)
+					self:SetOrientation(aura, model, aura.mcd, aura.mcy, aura.mcp)
 					local x, y, z = model:GetCameraTarget()
 					model:SetCameraTarget(0, y, z)
 				end
 			end
 		else
-			texture:Show()
 			texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
 		end
 		local secondaryAura = self.SecondaryAuras[self.CurrentAuraId]
@@ -1926,21 +2027,22 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 			local secondaryModel = self.SecondaryModels[self.CurrentAuraId]
 			local secondaryTexture = self.SecondaryTextures[self.CurrentAuraId]
 			if aura.wowtex then
-				secondaryTexture:Show()
 				secondaryTexture:SetTexture(self.WowTextures[aura.texture])
 			elseif aura.model then
-				secondaryTexture:Hide()
-				secondaryModel:SetModel(PowaAurasModels[aura.texture])
+				if displayID then
+					secondaryModel:SetDisplayInfo(aura.modelpath)
+				else
+					secondaryModel:SetModel(aura.modelpath)
+				end
 				secondaryModel:SetCustomCamera(1)
 				if secondaryModel:HasCustomCamera() then
 					if aura.mcd and aura.mcy and aura.mcp then
-						self:SetOrientation(secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+						self:SetOrientation(secondaryAura, secondaryModel, aura.mcd, aura.mcy, aura.mcp)
 						local x, y, z = secondaryModel:GetCameraTarget()
 						secondaryModel:SetCameraTarget(0, y, z)
 					end
 				end
 			else
-				secondaryTexture:Show()
 				secondaryTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
 			end
 		end
@@ -1959,10 +2061,10 @@ function PowaAurasOptions:FrameStrataLevelSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].stratalevel then
-		self.Auras[self.CurrentAuraId].stratalevel = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.stratalevel then
+		aura.stratalevel = value
 		local frame = self.Frames[self.CurrentAuraId]
-		local aura = self.Auras[self.CurrentAuraId]
 		frame:SetFrameLevel(aura.stratalevel)
 	end
 end
@@ -1979,9 +2081,9 @@ function PowaAurasOptions:TextureStrataSublevelSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].texturesublevel then
-		self.Auras[self.CurrentAuraId].texturesublevel = value
-		local aura = self.Auras[self.CurrentAuraId]
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.texturesublevel then
+		aura.texturesublevel = value
 		local texture = self.Textures[self.CurrentAuraId]
 		texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel)
 	end
@@ -2074,13 +2176,16 @@ function PowaAurasOptions:BarAuraAlphaSliderChanged(slider, value)
 	else
 		return
 	end
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaMisc.GroupSize == 1 then
-		if value / 100 ~= self.Auras[self.CurrentAuraId].alpha then
-			self.Auras[self.CurrentAuraId].alpha = value / 100
-			self:RedisplayAura(self.CurrentAuraId)
+		if value / 100 ~= aura.alpha then
+			aura.alpha = value / 100
+			local frame = self.Frames[self.CurrentAuraId]
+			frame:SetAlpha(math.min(aura.alpha, 0.99))
+			--self:UpdateSecondaryAuraVisuals(aura)
 		end
 	else
-		if value / 100 ~= self.Auras[self.CurrentAuraId].alpha then
+		if value / 100 ~= aura.alpha then
 			local min = self.CurrentAuraId
 			local max = min + (PowaMisc.GroupSize - 1)
 			local relativepos = { }
@@ -2100,7 +2205,9 @@ function PowaAurasOptions:BarAuraAlphaSliderChanged(slider, value)
 							self.Auras[i].alpha = (value / 100) + (relativepos[min] - relativepos[i])
 						end
 					end
-					self:RedisplayAura(i)
+					local frame = self.Frames[i]
+					frame:SetAlpha(math.min(aura.alpha, 0.99))
+					--self:UpdateSecondaryAuraVisuals(self.Auras[i])
 				end
 			end
 			PowaAurasOptions:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
@@ -2112,7 +2219,6 @@ function PowaAurasOptions:BarAuraSizeSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	local aura = self.Auras[self.CurrentAuraId]
 	if not slider._onsetting then
 		slider._onsetting = true
 		slider:SetValue(slider:GetValue())
@@ -2121,16 +2227,17 @@ function PowaAurasOptions:BarAuraSizeSliderChanged(slider, value)
 	else
 		return
 	end
+	local aura = self.Auras[self.CurrentAuraId]
 	if aura.textaura then
 		if PowaMisc.GroupSize == 1 then
-			if value / 100 ~= self.Auras[self.CurrentAuraId].size then
+			if value / 100 ~= aura.size then
 				if (value / 100) < 1.61 then
-					self.Auras[self.CurrentAuraId].size = value / 100
+					aura.size = value / 100
 					self:RedisplayAura(self.CurrentAuraId)
 				end
 			end
 		else
-			if value / 100 ~= self.Auras[self.CurrentAuraId].size then
+			if value / 100 ~= aura.size then
 				local min = self.CurrentAuraId
 				local max = min + (PowaMisc.GroupSize - 1)
 				local relativepos = { }
@@ -2158,12 +2265,17 @@ function PowaAurasOptions:BarAuraSizeSliderChanged(slider, value)
 		end
 	else
 		if PowaMisc.GroupSize == 1 then
-			if value / 100 ~= self.Auras[self.CurrentAuraId].size then
-				self.Auras[self.CurrentAuraId].size = value / 100
-				self:RedisplayAura(self.CurrentAuraId)
+			if value / 100 ~= aura.size then
+				aura.size = value / 100
+				self:UpdateAuraVisuals(aura)
+				local secondaryAura = self.SecondaryAuras[self.CurrentAuraId]
+				if secondaryAura then
+					self:UpdateSecondaryAuraVisuals(aura)
+				end
+				--self:RedisplayAura(self.CurrentAuraId)
 			end
 		else
-			if value / 100 ~= self.Auras[self.CurrentAuraId].size then
+			if value / 100 ~= aura.size then
 				local min = self.CurrentAuraId
 				local max = min + (PowaMisc.GroupSize - 1)
 				local relativepos = { }
@@ -2204,13 +2316,16 @@ function PowaAurasOptions:BarAuraCoordXSliderChanged(slider, value)
 	else
 		return
 	end
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaMisc.GroupSize == 1 then
-		if value ~= self.Auras[self.CurrentAuraId].x then
-			self.Auras[self.CurrentAuraId].x = value
-			self:RedisplayAura(self.CurrentAuraId)
+		if value ~= aura.x then
+			aura.x = value
+			local frame = self.Frames[self.CurrentAuraId]
+			frame:SetPoint("Center", aura.x, aura.y)
+			--self:RedisplayAura(self.CurrentAuraId)
 		end
 	else
-		if value ~= self.Auras[self.CurrentAuraId].x then
+		if value ~= aura.x then
 			local min = self.CurrentAuraId
 			local max = min + (PowaMisc.GroupSize - 1)
 			local relativepos = { }
@@ -2226,7 +2341,9 @@ function PowaAurasOptions:BarAuraCoordXSliderChanged(slider, value)
 					else
 						self.Auras[i].x = value + (relativepos[i] - relativepos[min])
 					end
-					self:RedisplayAura(i)
+					local frame = self.Frames[i]
+					frame:SetPoint("Center", self.Auras[i].x, self.Auras[i].y)
+					--self:RedisplayAura(i)
 				end
 			end
 			PowaAurasOptions:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
@@ -2246,13 +2363,15 @@ function PowaAurasOptions:BarAuraCoordYSliderChanged(slider, value)
 	else
 		return
 	end
+	local aura = self.Auras[self.CurrentAuraId]
 	if PowaMisc.GroupSize == 1 then
-		if value ~= self.Auras[self.CurrentAuraId].y then
-			self.Auras[self.CurrentAuraId].y = value
-			self:RedisplayAura(self.CurrentAuraId)
+		if value ~= aura.y then
+			aura.y = value
+			local frame = self.Frames[self.CurrentAuraId]
+			frame:SetPoint("Center", aura.x, aura.y)
 		end
 	else
-		if value ~= self.Auras[self.CurrentAuraId].y then
+		if value ~= aura.y then
 			local min = self.CurrentAuraId
 			local max = min + (PowaMisc.GroupSize - 1)
 			local relativepos = { }
@@ -2268,7 +2387,8 @@ function PowaAurasOptions:BarAuraCoordYSliderChanged(slider, value)
 					else
 						self.Auras[i].y = value + (relativepos[i] - relativepos[min])
 					end
-					self:RedisplayAura(i)
+					local frame = self.Frames[i]
+					frame:SetPoint("Center", self.Auras[i].x, self.Auras[i].y)
 				end
 			end
 			PowaAurasOptions:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
@@ -2288,11 +2408,11 @@ function PowaAurasOptions:SecondaryFrameStrataLevelSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].secondarystratalevel then
-		self.Auras[self.CurrentAuraId].secondarystratalevel = value
-		local aura = self.Auras[self.CurrentAuraId]
-		local frame = self.Frames[self.CurrentAuraId]
-		frame:SetFrameLevel(aura.stratalevel)
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.secondarystratalevel then
+		aura.secondarystratalevel = value
+		local secondaryFrame = self.SecondaryFrames[self.CurrentAuraId]
+		secondaryFrame:SetFrameLevel(aura.secondarystratalevel)
 	end
 end
 
@@ -2308,9 +2428,9 @@ function PowaAurasOptions:SecondaryTextureStrataSublevelSliderChanged(slider, va
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].secondarytexturesublevel then
-		self.Auras[self.CurrentAuraId].secondarytexturesublevel = value
-		local aura = self.Auras[self.CurrentAuraId]
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.secondarytexturesublevel then
+		aura.secondarytexturesublevel = value
 		local secondaryTexture = self.SecondaryTextures[self.CurrentAuraId]
 		secondaryTexture:SetDrawLayer(aura.secondarytexturestrata, aura.secondarytexturesublevel)
 	end
@@ -2328,9 +2448,15 @@ function PowaAurasOptions:BarAuraAnimSpeedSliderChanged(slider, value)
 	else
 		return
 	end
-	if value / 100 ~= self.Auras[self.CurrentAuraId].speed then
-		self.Auras[self.CurrentAuraId].speed = value / 100
-		self:RedisplayAura(self.CurrentAuraId)
+	local aura = self.Auras[self.CurrentAuraId]
+	if value / 100 ~= aura.speed then
+		aura.speed = value / 100
+		local secondaryAura = self.SecondaryAuras[self.CurrentAuraId]
+		if aura.speed > 0.5 then
+			secondaryAura.speed = aura.speed - 0.1
+		else
+			secondaryAura.speed = aura.speed / 2
+		end
 	end
 end
 
@@ -2346,9 +2472,10 @@ function PowaAurasOptions:BarAuraAnimDurationSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].duration then
-		self.Auras[self.CurrentAuraId].duration = value
-		self:RedisplayAura(self.CurrentAuraId)
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.duration then
+		aura.duration = value
+		--self:RedisplayAura(self.CurrentAuraId)
 	end
 end
 
@@ -2459,6 +2586,11 @@ function PowaAurasOptions:BarAuraRotateSliderChanged(slider, value)
 			elseif aura.model or aura.modelcustom then
 				local model = self.Models[self.CurrentAuraId]
 				model:SetRotation(math.rad(aura.rotate))
+				local secondaryAura = self.SecondaryAuras[self.CurrentAuraId]
+				if secondaryAura then
+					local secondaryModel = self.SecondaryModels[self.CurrentAuraId]
+					secondaryModel:SetRotation(math.rad(aura.rotate))
+				end
 			end
 		end
 	else
@@ -2487,6 +2619,11 @@ function PowaAurasOptions:BarAuraRotateSliderChanged(slider, value)
 					elseif self.Auras[i].model or self.Auras[i].modelcustom then
 						local model = self.Models[i]
 						model:SetRotation(math.rad(aura.rotate))
+						local secondaryAura = self.SecondaryAuras[i]
+						if secondaryAura then
+							local secondaryModel = self.SecondaryModels[i]
+							secondaryModel:SetRotation(math.rad(aura.rotate))
+						end
 					end
 				end
 			end
@@ -2564,6 +2701,7 @@ function PowaAurasOptions:BarThresholdSliderChanged(slider, value)
 	end
 end
 
+-- Need some revamp here
 function PowaAurasOptions:TextChanged()
 	local oldText = PowaBarBuffName:GetText()
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2634,7 +2772,7 @@ function PowaAurasOptions:CustomModelsChanged()
 	model:SetCustomCamera(1)
 	if model:HasCustomCamera() then
 		if aura.mcd and aura.mcy and aura.mcp then
-			self:SetOrientation(model, aura.mcd, aura.mcy, aura.mcp)
+			self:SetOrientation(aura, model, aura.mcd, aura.mcy, aura.mcp)
 			local x, y, z = model:GetCameraTarget()
 			model:SetCameraTarget(0, y, z)
 		end
@@ -2645,7 +2783,7 @@ function PowaAurasOptions:CustomModelsChanged()
 		secondaryModel:SetCustomCamera(1)
 		if secondaryModel:HasCustomCamera() then
 			if aura.mcd and aura.mcy and aura.mcp then
-				self:SetOrientation(secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+				self:SetOrientation(secondaryAura, secondaryModel, aura.mcd, aura.mcy, aura.mcp)
 				local x, y, z = secondaryModel:GetCameraTarget()
 				secondaryModel:SetCameraTarget(0, y, z)
 			end
@@ -2793,6 +2931,9 @@ function PowaAurasOptions:OwntexChecked()
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaModelPositionZSlider:Hide()
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
@@ -2803,7 +2944,7 @@ function PowaAurasOptions:OwntexChecked()
 	else
 		aura.owntex = false
 	end
-	self:InitPage(aura)
+	--self:InitPage(aura)
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -2831,6 +2972,9 @@ function PowaAurasOptions:WowTexturesChecked()
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaModelPositionZSlider:Hide()
 		PowaModelPositionXSlider:Hide()
 		PowaModelPositionYSlider:Hide()
@@ -2861,11 +3005,54 @@ function PowaAurasOptions:ModelsChecked()
 		aura.owntex = false
 		aura.customtex = false
 		aura.textaura = false
-		if PowaBarAuraTextureSlider:GetValue() > #PowaAurasModels then
+		self:ResetModel(aura)
+		local MaxModels
+		if not aura.modelcategory or aura.modelcategory == 1 then
+			MaxModels = #self.ModelsCreature
+		elseif aura.modelcategory == 2 then
+			MaxModels = #self.ModelsEnvironments
+		elseif aura.modelcategory == 3 then
+			MaxModels = #self.ModelsInterface
+		elseif aura.modelcategory == 4 then
+			MaxModels = #self.ModelsSpells
+		end
+		if PowaBarAuraTextureSlider:GetValue() > MaxModels then
 			PowaBarAuraTextureSlider:SetValue(1)
 		end
-		PowaBarAuraTextureSlider:SetMinMaxValues(1, #PowaAurasModels)
-		PowaBarAuraTextureSliderHigh:SetText(#PowaAurasModels)
+		PowaBarAuraTextureSlider:SetMinMaxValues(1, MaxModels)
+		PowaBarAuraTextureSliderHigh:SetText(MaxModels)
+		self.ModelTextureList = { }
+		if not aura.modelcategory or aura.modelcategory == 1 then
+			aura.modelpath = self.ModelsCreature[aura.texture]
+			local displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
+			if displayID then
+				for i = 1, #displayID do
+					tinsert(self.ModelTextureList, displayID[i])
+				end
+				sort(self.ModelTextureList)
+			end
+			if displayID then
+				aura.modelpath = self.ModelTextureList[1]
+			end
+			PowaModelTextureDropDown:Show()
+			if not displayID then
+				PowaModelTextureDropDown:Hide()
+			elseif #self.ModelTextureList < 2 then
+				PowaModelTextureDropDown:Show()
+				UIDropDownMenu_DisableDropDown(PowaModelTextureDropDown)
+			else
+				PowaModelTextureDropDown:Show()
+				UIDropDownMenu_EnableDropDown(PowaModelTextureDropDown)
+			end
+			UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+			PowaModelTextureDropDownText:SetText(tostring(aura.modelpath))
+		elseif aura.modelcategory == 2 then
+			aura.modelpath = self.ModelsEnvironments[aura.texture]
+		elseif aura.modelcategory == 3 then
+			aura.modelpath = self.ModelsInterface[aura.texture]
+		elseif aura.modelcategory == 4 then
+			aura.modelpath = self.ModelsSpells[aura.texture]
+		end
 		PowaWowTextureButton:SetChecked(false)
 		PowaOwntexButton:SetChecked(false)
 		PowaCustomTextureButton:SetChecked(false)
@@ -2876,6 +3063,7 @@ function PowaAurasOptions:ModelsChecked()
 		PowaModelPositionYSlider:Show()
 		PowaBarAuraTextureSlider:Show()
 		PowaBarAnimationSlider:Show()
+		PowaModelCategoryDropDown:Show()
 		PowaBlendModeDropDown:Hide()
 		PowaTextureStrataDropDown:Hide()
 		PowaTextureStrataSublevelSlider:Hide()
@@ -2884,6 +3072,8 @@ function PowaAurasOptions:ModelsChecked()
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAuraSymSlider:Hide()
+		PowaGradientStyleDropDown:Hide()
+		AuraTexture:SetTexture("Interface\\Icons\\TEMP")
 	else
 		aura.model = false
 		PowaModelPositionZSlider:Hide()
@@ -2894,16 +3084,19 @@ function PowaAurasOptions:ModelsChecked()
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		if PowaBarAuraTextureSlider:GetValue() > self.MaxTextures then
 			PowaBarAuraTextureSlider:SetValue(1)
 		end
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
+		AuraTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
 	end
 	--self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
 	--self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
 	self:RedisplayAura(self.CurrentAuraId)
-	self:ResetModel(aura)
 end
 
 function PowaAurasOptions:CustomModelsChecked()
@@ -2915,6 +3108,7 @@ function PowaAurasOptions:CustomModelsChecked()
 		aura.owntex = false
 		aura.wowtex = false
 		aura.textaura = false
+		self:ResetModel(aura)
 		PowaModelPositionZSlider:Show()
 		PowaModelPositionXSlider:Show()
 		PowaModelPositionYSlider:Show()
@@ -2933,7 +3127,10 @@ function PowaAurasOptions:CustomModelsChecked()
 		PowaTextureStrataDropDown:Hide()
 		PowaTextureStrataSublevelSlider:Hide()
 		PowaBarAuraSymSlider:Hide()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
 		PowaFontButton:Hide()
+		AuraTexture:SetTexture("Interface\\Icons\\TEMP")
 	else
 		aura.modelcustom = false
 		PowaModelPositionZSlider:Hide()
@@ -2946,11 +3143,11 @@ function PowaAurasOptions:CustomModelsChecked()
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		AuraTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
 	end
 	--self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
 	--self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
 	self:RedisplayAura(self.CurrentAuraId)
-	self:ResetModel(aura)
 end
 
 function PowaAurasOptions:CustomTexturesChecked()
@@ -2978,6 +3175,9 @@ function PowaAurasOptions:CustomTexturesChecked()
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaFontButton:Hide()
 		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAnimationSlider:Hide()
@@ -3008,6 +3208,9 @@ function PowaAurasOptions:TextAuraChecked()
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
+		PowaGradientStyleDropDown:Show()
+		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaBarAurasText:Show()
 		PowaFontButton:Show()
 		PowaBarAurasText:SetText(aura.aurastext)
@@ -3168,7 +3371,6 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.strata = strata
 					local frame = PowaAurasOptions.Frames[PowaAurasOptions.CurrentAuraId]
 					frame:SetFrameStrata(aura.strata)
-					PowaStrataDropDownText:SetText(strata)
 					UIDropDownMenu_SetSelectedName(PowaStrataDropDown, strata)
 				end
 			end
@@ -3186,7 +3388,6 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.texturestrata = texturestrata
 					local texture = PowaAurasOptions.Textures[PowaAurasOptions.CurrentAuraId]
 					texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel)
-					PowaTextureStrataDropDownText:SetText(texturestrata)
 					UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, texturestrata)
 				end
 			end
@@ -3203,7 +3404,6 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.blendmode = blendmode
 					local texture = PowaAurasOptions.Textures[PowaAurasOptions.CurrentAuraId]
 					texture:SetBlendMode(aura.blendmode)
-					PowaBlendModeDropDownText:SetText(blendmode)
 					UIDropDownMenu_SetSelectedName(PowaBlendModeDropDown, blendmode)
 				end
 			end
@@ -3220,7 +3420,6 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.secondarystrata = secondarystrata
 					local secondaryFrame = PowaAurasOptions.SecondaryFrames[PowaAurasOptions.CurrentAuraId]
 					secondaryFrame:SetFrameStrata(aura.secondarystrata)
-					PowaSecondaryStrataDropDownText:SetText(secondarystrata)
 					UIDropDownMenu_SetSelectedName(PowaSecondaryStrataDropDown, secondarystrata)
 				end
 			end
@@ -3237,7 +3436,6 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.secondarytexturestrata = secondarytexturestrata
 					local secondaryTexture = PowaAurasOptions.SecondaryTextures[PowaAurasOptions.CurrentAuraId]
 					secondaryTexture:SetDrawLayer(aura.secondarytexturestrata, aura.secondarytexturesublevel)
-					PowaSecondaryTextureStrataDropDownText:SetText(secondarytexturestrata)
 					UIDropDownMenu_SetSelectedName(PowaSecondaryTextureStrataDropDown, secondarytexturestrata)
 				end
 			end
@@ -3254,7 +3452,6 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.secondaryblendmode = secondaryblendmode
 					local secondaryTexture = PowaAurasOptions.SecondaryTextures[PowaAurasOptions.CurrentAuraId]
 					secondaryTexture:SetBlendMode(aura.secondaryblendmode)
-					PowaSecondaryBlendModeDropDownText:SetText(secondaryblendmode)
 					UIDropDownMenu_SetSelectedName(PowaSecondaryBlendModeDropDown, secondaryblendmode)
 				end
 			end
@@ -3270,14 +3467,112 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 				if aura.gradientstyle ~= gradientstyle then
 					aura.gradientstyle = gradientstyle
 					local texture = PowaAurasOptions.Textures[PowaAurasOptions.CurrentAuraId]
-					if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-						texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+					if not aura.textaura then
+						if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
+							if not aura.randomcolor then
+								texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+							else
+								PowaAurasOptions:UpdateRandomColor(aura)
+							end
+						else
+							if not aura.randomcolor then
+								texture:SetVertexColor(aura.r, aura.g, aura.b)
+							else
+								PowaAurasOptions:UpdateRandomColor(aura)
+							end
+						end
 					else
-						texture:SetVertexColor(aura.r, aura.g, aura.b)
+						if not aura.randomcolor then
+							texture:SetVertexColor(aura.r, aura.g, aura.b)
+						else
+							PowaAurasOptions:UpdateRandomColor(aura)
+						end
 					end
-					PowaAurasOptions:UpdatePreviewColor(aura)
-					PowaGradientStyleDropDownText:SetText(gradientstyle)
+					if not aura.randomcolor then
+						PowaAurasOptions:UpdatePreviewColor(aura)
+					end
 					UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, gradientstyle)
+				end
+			end
+			UIDropDownMenu_AddButton(info)
+		end
+	elseif name == "PowaModelCategoryDropDown" then
+		UIDropDownMenu_SetWidth(owner, 120)
+		for i = 1, #PowaAurasOptions.ModelCategoryList do
+			local info = UIDropDownMenu_CreateInfo()
+			info.text = PowaAurasOptions.ModelCategoryList[i]
+			info.func = function(self)
+				if aura.modelcategory ~= i then
+					aura.modelcategory = i
+					local MaxModels
+					if not aura.modelcategory or aura.modelcategory == 1 then
+						MaxModels = #PowaAurasOptions.ModelsCreature
+					elseif aura.modelcategory == 2 then
+						MaxModels = #PowaAurasOptions.ModelsEnvironments
+					elseif aura.modelcategory == 3 then
+						MaxModels = #PowaAurasOptions.ModelsInterface
+					elseif aura.modelcategory == 4 then
+						MaxModels = #PowaAurasOptions.ModelsSpells
+					end
+					if PowaBarAuraTextureSlider:GetValue() > MaxModels then
+						PowaBarAuraTextureSlider:SetValue(1)
+					end
+					PowaBarAuraTextureSlider:SetMinMaxValues(1, MaxModels)
+					PowaBarAuraTextureSliderHigh:SetText(MaxModels)
+					UIDropDownMenu_SetSelectedName(PowaModelCategoryDropDown, PowaAurasOptions.ModelCategoryList[i])
+					PowaAurasOptions.ModelTextureList = { }
+					if not aura.modelcategory or aura.modelcategory == 1 then
+						aura.modelpath = PowaAurasOptions.ModelsCreature[aura.texture]
+						local displayID = PowaAurasOptions:GetTableNumberAll(PowaAurasOptions.ModelsDisplayInfo, aura.modelpath)
+						if displayID then
+							for i = 1, #displayID do
+								tinsert(PowaAurasOptions.ModelTextureList, displayID[i])
+							end
+							sort(PowaAurasOptions.ModelTextureList)
+						end
+						if displayID then
+							aura.modelpath = tonumber(PowaAurasOptions.ModelTextureList[1])
+						end
+						if not displayID then
+							PowaModelTextureDropDown:Hide()
+						elseif #PowaAurasOptions.ModelTextureList < 2 then
+							PowaModelTextureDropDown:Show()
+							UIDropDownMenu_DisableDropDown(PowaModelTextureDropDown)
+						else
+							PowaModelTextureDropDown:Show()
+							UIDropDownMenu_EnableDropDown(PowaModelTextureDropDown)
+						end
+						UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+						PowaModelTextureDropDownText:SetText(tostring(aura.modelpath))
+					elseif aura.modelcategory == 2 then
+						aura.modelpath = PowaAurasOptions.ModelsEnvironments[aura.texture]
+						PowaModelTextureDropDown:Hide()
+					elseif aura.modelcategory == 3 then
+						aura.modelpath = PowaAurasOptions.ModelsInterface[aura.texture]
+						PowaModelTextureDropDown:Hide()
+					elseif aura.modelcategory == 4 then
+						aura.modelpath = PowaAurasOptions.ModelsSpells[aura.texture]
+						PowaModelTextureDropDown:Hide()
+					end
+					PowaAurasOptions:ResetModel(aura)
+				end
+			end
+			UIDropDownMenu_AddButton(info)
+		end
+	elseif name == "PowaModelTextureDropDown" then
+		UIDropDownMenu_SetWidth(owner, 120)
+		for i = 1, #PowaAurasOptions.ModelTextureList do
+			local info = UIDropDownMenu_CreateInfo()
+			info.text = PowaAurasOptions.ModelTextureList[i]
+			info.func = function(self)
+				if aura.modelpath ~= tonumber(PowaAurasOptions.ModelTextureList[i]) then
+					aura.modelpath = tonumber(PowaAurasOptions.ModelTextureList[i])
+					PowaAurasOptions:Reset(aura)
+					local secondaryAura = PowaAurasOptions.SecondaryAuras[PowaAurasOptions.CurrentAuraId]
+					if secondaryAura then
+						PowaAurasOptions:ResetSecondary(aura)
+					end
+					UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
 				end
 			end
 			UIDropDownMenu_AddButton(info)
@@ -3508,10 +3803,10 @@ function PowaAurasOptions:ChangeAuraType(id, newType)
 	if aura.textaura == true then
 		self:RedisplayAura(aura.id)
 	end
-	local _, model = aura:CreateFrames()
+	local model = self.Models[aura.id]
 	model:SetUnit("none")
-	PowaAurasOptions.Models[aura.id] = nil
-	PowaAurasOptions.SecondaryModels[aura.id] = nil
+	--self.Models[aura.id] = nil
+	--self.SecondaryModels[aura.id] = nil
 	if aura.bufftype == self.BuffTypes.Slots then
 		if not PowaEquipmentSlotsFrame:IsVisible() then
 			PowaEquipmentSlotsFrame:Show()
@@ -3525,8 +3820,54 @@ function PowaAurasOptions:ChangeAuraType(id, newType)
 		aura.owntex = false
 	end
 	self:UpdateMainOption()
-	self:RedisplayAura(aura.id)
 	self:InitPage(aura)
+	self:RedisplayAura(aura.id)
+end
+
+function PowaAurasOptions:RebuildAura(id)
+	local oldAura = self.Auras[id]
+	local showing = oldAura.Showing
+	oldAura:Hide()
+	if oldAura.Timer then
+		oldAura.Timer:Dispose()
+	end
+	if oldAura.Stacks then
+		oldAura.Stacks:Dispose()
+	end
+	if not oldAura.model and not oldAura.modelcustom then
+		oldAura:Dispose()
+	end
+	local aura = self:AuraFactory(oldAura.bufftype, id, oldAura)
+	aura.icon = ""
+	aura.Showing = showing
+	aura:Init()
+	self.Auras[id] = aura
+	if self.CurrentAuraId > 120 then
+		PowaGlobalSet[id] = aura
+	end
+	self:CalculateAuraSequence()
+	if aura.textaura == true then
+		self:RedisplayAura(aura.id)
+	end
+	local model = self.Models[aura.id]
+	model:SetUnit("none")
+	--self.Models[aura.id] = nil
+	--self.SecondaryModels[aura.id] = nil
+	if aura.bufftype == self.BuffTypes.Slots then
+		if not PowaEquipmentSlotsFrame:IsVisible() then
+			PowaEquipmentSlotsFrame:Show()
+		end
+	else
+		if PowaEquipmentSlotsFrame:IsVisible() then
+			PowaEquipmentSlotsFrame:Hide()
+		end
+	end
+	if aura.CheckBoxes.PowaOwntexButton ~= 1 then
+		aura.owntex = false
+	end
+	--self:UpdateMainOption()
+	--self:InitPage(aura)
+	self:RedisplayAura(aura.id)
 end
 
 function PowaAurasOptions:ShowSpinAtBeginningChecked(button)
@@ -4220,6 +4561,8 @@ function PowaAurasOptions:InitalizeOnMenuOpen()
 	UIDropDownMenu_Initialize(PowaTextureStrataDropDown, PowaAurasOptions.DropDownMenu_Initialize)
 	UIDropDownMenu_Initialize(PowaBlendModeDropDown, PowaAurasOptions.DropDownMenu_Initialize)
 	UIDropDownMenu_Initialize(PowaGradientStyleDropDown, PowaAurasOptions.DropDownMenu_Initialize)
+	UIDropDownMenu_Initialize(PowaModelCategoryDropDown, PowaAurasOptions.DropDownMenu_Initialize)
+	UIDropDownMenu_Initialize(PowaModelTextureDropDown, PowaAurasOptions.DropDownMenu_Initialize)
 	UIDropDownMenu_Initialize(PowaDropDownBuffType, PowaAurasOptions.DropDownMenu_Initialize)
 	UIDropDownMenu_Initialize(PowaDropDownPowerType, PowaAurasOptions.DropDownMenu_Initialize)
 	UIDropDownMenu_Initialize(PowaDropDownStance, PowaAurasOptions.DropDownMenu_Initialize)

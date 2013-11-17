@@ -1,12 +1,14 @@
 **Issues:**
-* Enable full rotation unchecked import bug on some aura types.
-* Tri State Checkbutton disabled import bugs.
 * Test All preview texture coloring bug when the current aura's random color is enabled.
-* Stacks animate of refresh blend mode bug.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
 **4.24.5**
+* Fixed a major import/export bug.
+* Fixed a minor import/export bug with "Resting".
+* Fixed a bug which didn't detected buffs/debuffs when you entered the spell name as a spell id.
+* Fixed a bug which broke secondary animation for icons/round icons.
+* Fixed excessive cpu and memory usage when checked the "Own Texture" checkbutton.
 * Fixed a bug which caused custom model's edixbox override some GUI elements on some aura types.
 * Fixed an issue with Timer/Stack color picker.
 * Fixed a glitch with "Stacks" "Animate of Refresh" animation.

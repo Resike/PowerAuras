@@ -197,6 +197,19 @@ GradientStyleList =
 	"Vertical"
 },
 
+ModelCategoryList =
+{
+	"Creature",
+	"Environments",
+	"Interface",
+	"Spells"
+},
+
+ModelTextureList =
+{
+	
+},
+
 ChangedUnits =
 {
 	Buffs = { },
@@ -762,227 +775,6 @@ Backdrop =
 },
 }
 
-PowaAurasModels =
-{
-	-- Particles
-	"Particles\\MorphFX.m2",
-	-- Spells
-	-- A
-	"Spells\\AbolishMagic_Base.m2",
-	"Spells\\Abyssal_Ball.m2",
-	"Spells\\AllianceCTFflag_Generic_spell.m2",
-	"Spells\\AllianceCTFflag_spell.m2",
-	"Spells\\AmplifyMagic_Impact_Base.m2",
-	"Spells\\AntiMagic_State_Base.m2",
-	"Spells\\AntiMagic_State_blue.m2",
-	"Spells\\AntiMagic_State_Red.m2",
-	"Spells\\Arcane_Fire_Weapon_Effect.m2",
-	"Spells\\Arcane_Missile_Lvl1.m2",
-	"Spells\\Arcane_Missile_Lvl2.m2",
-	"Spells\\Arcane_Missile_Lvl3.m2",
-	"Spells\\Arcane_Missile_Lvl4.m2",
-	"Spells\\ArcaneBomb_Missle.m2",
-	"Spells\\ArcaneExplosion_Base.m2",
-	"Spells\\ArcaneExplosion_Boss_Base.m2",
-	"Spells\\ArcaneIntellect_Impact_Base.m2",
-	"Spells\\ArcanePower_State_Chest.m2",
-	"Spells\\ArcaneShot_Missile.m2",
-	"Spells\\ArcaneShot_Missile2.m2",
-	"Spells\\ArcaneSpirit_Impact_Base.m2",
-	"Spells\\ArcaneTorrent.m2",
-	"Spells\\AspectBeast_Impact_Head.m2",
-	"Spells\\AspectCheetah_Impact_Head.m2",
-	"Spells\\AspectHawk_Impact_Head.m2",
-	"Spells\\AspectMonkey_Impact_Head.m2",
-	"Spells\\AspectSnake_Impact_Head.m2",
-	"Spells\\AspectWild_Impact_Head.m2",
-	"Spells\\Assassinate_Impact.m2",
-	"Spells\\Assassinate_Missile.m2",
-	"Spells\\Astral_Recall_Impact_Base.m2",
-	"Spells\\AvengingWrath_State_Chest.m2",
-	-- B
-	"Spells\\Backstab_impact_chest.m2",
-	"Spells\\Ball_of_shadow.m2",
-	"Spells\\Banish_chest.m2",
-	"Spells\\Banish_chest_blue.m2",
-	"Spells\\Banish_chest_dark.m2",
-	"Spells\\Banish_chest_purple.m2",
-	"Spells\\Banish_chest_white.m2",
-	"Spells\\Banish_chest_yellow.m2",
-	"Spells\\Barkshield_state_base.m2",
-	"Spells\\Barkskin_state_base_iron.m2",
-	"Spells\\Battleshout_cast_base.m2",
-	"Spells\\Beartrap.m2",
-	"Spells\\Beartrap_state.m2",
-	"Spells\\Beastlore_impact_head.m2",
-	"Spells\\Beastsoothe_impact_head.m2",
-	"Spells\\Beastsoothe_state_head.m2",
-	"Spells\\Bind_impact_base.m2",
-	"Spells\\Blackhole_white.m2",
-	"Spells\\Blackhole_white_h.m2",
-	"Spells\\Blackmagic_precast_base.m2",
-	"Spells\\Blackshot_missile.m2",
-	"Spells\\Blazingfists_base.m2",
-	"Spells\\Blessed_mending_impact.m2",
-	"Spells\\Blessingoffreedom_impact.m2",
-	"Spells\\Blessingoffreedom_state.m2",
-	"Spells\\Blessingoflight_impact.m2",
-	"Spells\\Blessingofprotection_chest.m2",
-	"Spells\\Blessingofprotection_State_Classic.m2",
-	"Spells\\BlessingofSpellProtection_Base.m2",
-	"Spells\\BlindingShot_Impact.m2",
-	"Spells\\BlindingShot_Missile.m2",
-	"Spells\\Blizzard_Impact_Base.m2",
-	"Spells\\BloodBoil_Impact_Chest.m2",
-	"Spells\\BloodBolt_Chest.m2",
-	"Spells\\BloodBolt_Missile_Low.m2",
-	"Spells\\Bloodlust_State_Hand.m2",
-	"Spells\\BloodyExplosion.m2",
-	"Spells\\BloodyExplosionGreen.m2",
-	"Spells\\BloodyExplosionPurple.m2",
-	"Spells\\Bone_Cyclone_Impact.m2",
-	"Spells\\BoneArm_01.m2",
-	"Spells\\BoneArmor_Head.m2",
-	"Spells\\BoneArmor_State_Chest.m2",
-	"Spells\\BurningIntellect_Impact_Base.m2",
-	"Spells\\BurningSpirit_Impact_Base.m2",
-	"Spells\\BurningSpirit_Impact_Head.m2",
-	-- C
-	"Spells\\Camouflage_Hands.m2",
-	"Spells\\Camouflage_Head.m2",
-	"Spells\\Camouflage_Impact.m2",
-	"Spells\\CatMark.m2",
-	"Spells\\CatMark_Black.m2",
-	"Spells\\CatMark_Blue.m2",
-	"Spells\\CatMark_Green.m2",
-	"Spells\\CatMark_Orange.m2",
-	"Spells\\CatMark_Red.m2",
-	"Spells\\CatMark_White.m2",
-	"Spells\\CatMark_Yellow.m2",
-	"Spells\\ChallengingShout_Cast_Base.m2",
-	-- D
-	"Spells\\Dampenmagic_impact_base.m2",
-	"Spells\\Darkmoonvengeance_impact_chest.m2",
-	"Spells\\Darkmoonvengeance_impact_head.m2",
-	"Spells\\Darkritual_precast_base.m2",
-	"Spells\\Darkritual_precast_baseblue.m2",
-	"Spells\\Deadly_throw_impact_chest.m2",
-	"Spells\\Deathbolt_missile_low.m2",
-	"Spells\\Deathcoil_missile.m2",
-	"Spells\\Deathknight_bloodboil_cast.m2",
-	"Spells\\Deathknight_bloodstrike.m2",
-	"Spells\\Deathknight_deathcoil_missile.m2",
-	"Spells\\Deathknight_death_siphon_impact.m2",
-	"Spells\\Deathknight_death_siphon_missile.m2",
-	"Spells\\Deathknight_froststrike.m2",
-	"Spells\\Deathknight_frozenruneweapon_impact.m2",
-	"Spells\\Deathknight_ghoul_explode_simple.m2",
-	"Spells\\Deathknight_hysteria.m2",
-	"Spells\\Deathknight_lichborne_state.m2",
-	"Spells\\Deathknight_obliterate.m2",
-	"Spells\\Deathknight_obliterate_impact.m2",
-	"Spells\\Deathknight_outbreak.m2",
-	"Spells\\Deathknight_plaguestrikecaster.m2",
-	"Spells\\Deathknight_strangulate_chain.m2",
-	"Spells\\Deathwing_lava_burst.m2",
-	"Spells\\Deathwing_lava_burst_impact.m2",
-	"Spells\\Decimate_missile_red.m2",
-	"Spells\\Demolisher_missile.m2",
-	"Spells\\Demolisher_missile_blue.m2",
-	"Spells\\Detectinvis_impact_head.m2",
-	"Spells\\Deterrence_impact.m2",
-	"Spells\\Deterrence_state_chest.m2",
-	"Spells\\Devious_impact.m2",
-	"Spells\\Diseasecloud.m2",
-	"Spells\\Dispel_low_base.m2",
-	"Spells\\Dispel_low_base_simple.m2",
-	"Spells\\Divineshield_low_base.m2",
-	"Spells\\Divineshield_v2_chest.m2",
-	"Spells\\Druid_efflorescence_persistent.m2",
-	"Spells\\Druid_non_shapeshifted_stampede.m2",
-	"Spells\\Druid_pulverize_impact.m2",
-	"Spells\\Druid_starsurge_missile.m2",
-	"Spells\\Druid_swarm_impact.m2",
-	"Spells\\Druid_swarm_state.m2",
-	"Spells\\Druid_thrash_impact_01.m2",
-	"Spells\\Druid_wildcharge_caster_state.m2",
-	-- S
-	"Spells\\Sha_bolt_missile_fear_v2.m2",
-	"Spells\\Sha_bolt_missile_v2.m2",
-	"Spells\\Sha_fireball_missile_high.m2",
-	"Spells\\Sha_firebolt_missile_low.m2",
-	"Spells\\Sha_firebolt_missile_low_fear.m2",
-	"Spells\\Sha_ritual_precast_base.m2",
-	"Spells\\Sha_rune_state.m2",
-	"Spells\\Sha_state_base_high.m2",
-	"Spells\\Sha_state_base_low.m2",
-	"Spells\\Sha_zone.m2",
-	"Spells\\Shadopalm_missile_red.m2",
-	"Spells\\Shadopalm_precast_blue.m2",
-	"Spells\\Shadopalm_precast_red.m2",
-	"Spells\\Shadowmourne_visual_low.m2",
-	"Spells\\Sleep_state_head.m2",
-	"Spells\\Spell_warlockmorphwings.m2",
-	"Spells\\Sprint_cast_base.m2",
-	-- Buttons
-	"Interface\\Button\\TalkToMe.m2",
-	"Interface\\Button\\TalkToMeBlue.m2",
-	"Interface\\Button\\TalkToMeGreen.m2",
-	"Interface\\Button\\TalkToMeGrey.m2",
-	"Interface\\Button\\TalkToMeQuestion_Grey.m2",
-	"Interface\\Button\\TalkToMeQuestion_LTBlue.m2",
-	"Interface\\Button\\TalkToMeQuestionMark.m2",
-	-- Creatures
-	"Creature\\Akama\\Akama.m2",
-	"Creature\\Alexstrasza\\Alexstrasza.m2",
-	"Creature\\Alexstrasza\\LadyAlexstrasa.m2",
-	"Creature\\AlglonTheObserver\\AlgalonTheObserver.m2",
-	"Creature\\Eredar\\Archimonde.m2",
-	"Creature\\Arthas\\Arthas.m2",
-	"Creature\\ArthasUndead\\ArthasUndead.m2",
-	"Creature\\ArthasLichking\\ArthasLichking.m2",
-	"Creature\\AvengingAngel\\AvengingAngel.m2",
-	"Creature\\Azshara\\Azshara.m2",
-	"Creature\\BloodQueen\\BloodQueen.m2",
-	"Creature\\BoneGuard\\BoneGuard.m2",
-	"Creature\\Brutallus\\Brutallus.m2",
-	"Creature\\Chogall_corrupt\\Chogall_corrupt.m2",
-	"Creature\\Deathwing\\Deathwing.m2",
-	"Creature\\DeathwingHuman\\DeathwingHuman.m2",
-	"Creature\\FandralStaghelm\\FandralStaghelm.m2",
-	"Creature\\Hodir\\Hodir.m2",
-	"Creature\\DragonKalecgos\\DragonKalecgos.m2",
-	"Creature\\Kalecgos\\Kalecgos.m2",
-	"Creature\\Illidan\\Illidan.m2",
-	"Creature\\Illidan\\IllidanDark.m2",
-	"Creature\\Jaina\\Jaina.m2",
-	"Creature\\Kaelthas\\Kaelthas.m2",
-	"Creature\\Kaelthas_broken\\KaelThasBroken.m2",
-	"Creature\\KelThuzad\\KelThuzad.m2",
-	"Creature\\LadySylvanasWindrunner\\LadySylvanasWindrunner.m2",
-	"Creature\\Malygos\\Malygos.m2",
-	"Creature\\Medivh\\Medivh.m2",
-	"Creature\\Miev\\Miev.m2",
-	"Creature\\MinisterOfDeath\\MinisterOfDeath.m2",
-	"Creature\\MurlocCostume\\MurlocCostume.m2",
-	"Creature\\MurlocCostume\\MurlocCostume_noflag.m2",
-	"Creature\\MurlocCostume\\MurlocCostume_whiteflag.m2",
-	"Creature\\Neptulon\\Neptulon.m2",
-	"Creature\\NorthrendNightBane\\NorthrendNightBane.m2",
-	"Creature\\Phoenix\\Phoenix.m2",
-	"Creature\\Ragnaros2\\Ragnaros2.m2",
-	"Creature\\ShaBoss_anger\\ShaBoss_anger.m2",
-	"Creature\\ShaBoss_doubt\\ShaBoss_doubt.m2",
-	"Creature\\ShaBoss_fear\\ShaBoss_fear.m2",
-	"Creature\\Spirithealer\\Spirithealer.m2",
-	"Creature\\ThunderKing\\MoguThunderKing.m2",
-	"Creature\\TyraelPet\\TyraelPet.m2",
-	"Creature\\Tyrande\\Tyrande.m2",
-	"Creature\\Yoggsaron\\Yoggsaron.m2",
-	"Creature\\Ysera\\Ysera.m2",
-	"Creature\\Zuljin\\Zuljin.m2"
-}
-
 function PowaAuras:RegisterAuraType(auraType)
 	self.AurasByType[auraType] = { }
 	table.insert(self.AurasByTypeList, auraType)
@@ -1442,6 +1234,34 @@ function PowaAuras:TableSize(t)
 	return size
 end
 
+function PowaAuras:GetTableNumber(t, s)
+	if type(t) ~= "table" then
+		return
+	end
+	for k, v in pairs(t) do
+		if v == s then
+			return k
+		end
+	end
+	return false
+end
+
+function PowaAuras:GetTableNumberAll(t, s)
+	if type(t) ~= "table" then
+		return
+	end
+	local r = { }
+	for k, v in pairs(t) do
+		if v == s then
+			table.insert(r, k)
+		end
+	end
+	if r[1] == nil then
+		return nil
+	end
+	return r
+end
+
 function PowaAuras:CopyTable(t, lookup_table, original)
 	if type(t) ~= "table" then
 		return t
@@ -1452,7 +1272,7 @@ function PowaAuras:CopyTable(t, lookup_table, original)
 	else
 		copy = original
 	end
-	for i,v in pairs(t) do
+	for i, v in pairs(t) do
 		if type(v) ~= "function" then
 			if type(v) ~= "table" then
 				copy[i] = v

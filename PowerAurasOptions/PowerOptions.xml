@@ -13,7 +13,7 @@
 				PowaAurasOptions:IconClick(self, button)
 			</OnClick>
 			<OnEnter>
-				PowaAurasOptions:IconeEntered(self)
+				PowaAurasOptions:IconEntered(self)
 			</OnEnter>
 			<OnLeave>
 				GameTooltip:Hide()
@@ -1887,6 +1887,74 @@
 							</OnShow>
 						</Scripts>
 					</Frame>
+					<!-- Model Category DropDown -->
+					<Frame name = "PowaModelCategoryDropDown" inherits = "UIDropDownMenuTemplate">
+						<Anchors>
+							<Anchor point = "TOPLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x = "-19" y = "-20"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer>
+								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+									<Anchors>
+										<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+											<Offset>
+												<AbsDimension x = "20" y = "2"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
+						<Scripts>
+							<OnLoad>
+								PowaModelCategoryDropDownLabel:SetText(PowaAurasOptions.Text.nomModelCategory..":")
+							</OnLoad>
+							<OnShow>
+								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
+							</OnShow>
+						</Scripts>
+					</Frame>
+					<!-- Model Category DropDown -->
+					<Frame name = "PowaModelTextureDropDown" inherits = "UIDropDownMenuTemplate">
+						<Anchors>
+							<Anchor point = "RIGHT" relativeTo = "PowaModelCategoryDropDown" relativePoint = "LEFT">
+								<Offset>
+									<AbsDimension x = "10" y = "0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer>
+								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+									<Anchors>
+										<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+											<Offset>
+												<AbsDimension x = "20" y = "2"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
+						<Scripts>
+							<OnLoad>
+								PowaModelTextureDropDownLabel:SetText(PowaAurasOptions.Text.nomModelTexture..":")
+							</OnLoad>
+							<OnShow>
+								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
+							</OnShow>
+						</Scripts>
+					</Frame>
 					<!-- Secondary Color Button -->
 					<Button name = "PowaGradientColor">
 						<Size>
@@ -3142,6 +3210,12 @@
 									<OnEnterPressed>
 										self:ClearFocus()
 									</OnEnterPressed>
+									<OnEscapePressed>
+										self:ClearFocus()
+									</OnEscapePressed>
+									<OnEditFocusLost>
+										PowaAurasOptions:RebuildAura(PowaAurasOptions.CurrentAuraId)
+									</OnEditFocusLost>
 									<OnTextChanged>
 										PowaAurasOptions:TextChanged()
 									</OnTextChanged>

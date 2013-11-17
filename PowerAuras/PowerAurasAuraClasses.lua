@@ -105,6 +105,8 @@ cPowaAura.ExportSettings =
 	texmode = 0,
 	wowtex = false,
 	model = false,
+	modelpath = "",
+	modelcategory = 1,
 	modelcustom = false,
 	modelcustompath = "",
 	mz = 0,
@@ -1134,7 +1136,8 @@ function cPowaAura:CreateAuraString(keepLink)
 	local tempstr = "Version:"..PowaMisc.Version.."; "
 	local varpref = ""
 	for k, default in pairs(self.ExportSettings) do
-		if self[k] then
+		-- This must be ~= nil!
+		if self[k] ~= nil then
 			local v = self[k]
 			-- Multi condition checks not supported for single export.
 			if k == "multiids" and not keepLink then
@@ -1322,7 +1325,7 @@ function cPowaAura:CheckStacks(count)
 	local operator = self.stacksOperator or PowaAuras.DefaultOperator
 	local stacks = self.stacks or 0
 	local stacksLower = self.stacksLower or 0
-	PowaAuras:Debug("Stack op=", operator," stacks=", stacks,"Stack Count=", count)
+	PowaAuras:Debug("Stack op = ", operator," stacks = ", stacks,"Stack Count = ", count)
 	return (operator == "=" and stacks == 0) or (operator == ">=" and count >= stacks) or (operator == "<=" and count <= stacks) or (operator == ">" and count > stacks) or (operator == "<" and count < stacks) or (operator == "=" and count == stacks) or (operator == "-" and count >= stacksLower and count <= stacks) or (operator == "!" and count ~= stacks)
 end
 
@@ -1472,7 +1475,7 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		PowaAuras:DisplayText("IsPresent on ", unit," buffid = ", s," type = ", self.buffAuraType)
 	end
 	local _, auraName, auraTexture, count, expirationTime, caster, auraId
-	if self.exact then
+	if self.exact and not tonumber(textToCheck) then
 		auraName, _, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, textToCheck, nil, self.buffAuraType)
 	else
 		auraName, _, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, s, self.buffAuraType)
@@ -4320,4 +4323,22 @@ function PowaAuras:AuraFactory(auraType, id, base)
 	end
 	self:Message("AuraFactory unknown type ("..tostring(auraType)..") id = "..tostring(id))
 	return nil
+end
+
+function PowaAuras:Dispose(tableName, key, key2)
+	local t = self[tableName]
+	if not t or not t[key] then
+		return
+	end
+	if key2 then
+		if not t[key][key2] then
+			return
+		end
+		t = t[key]
+		key = key2
+	end
+	if t[key].Hide then
+		t[key]:Hide()
+	end
+	t[key] = nil
 end
