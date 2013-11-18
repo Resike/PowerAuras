@@ -50,7 +50,7 @@ PowaMisc =
 PowaGlobalMisc =
 {
 	PathToSounds = "Interface\\AddOns\\PowerAuras\\Sounds\\",
-	PathToAuras = "Interface\\Addons\\PowerAuras\\Custom\\",
+	PathToAuras = "Interface\\AddOns\\PowerAuras\\Custom\\",
 	BlockIncomingAuras = false,
 	FixExports = false
 }
@@ -1679,7 +1679,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		end
 	else
 		texture:Show()
-		texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
+		texture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
 	if aura.randomcolor then
 		self:UpdateRandomColor(aura)
@@ -1968,7 +1968,7 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 		end
 	else
 		secondaryTexture:Show()
-		secondaryTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
+		secondaryTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
 	if aura.randomcolor then
 		self:UpdateSecondaryRandomColor(arua)

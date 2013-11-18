@@ -1848,7 +1848,7 @@ function PowaAurasOptions:InitPage(aura)
 			PowaBarAuraTextureSlider:SetValue(aura.texture)
 		end
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
-		checkTexture = AuraTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
+		checkTexture = AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
 	end
 	if checkTexture ~= 1 then
 		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga")
@@ -1946,7 +1946,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 	elseif aura.textaura then
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\INV_Scroll_02")
 	else
-		checkTexture = AuraTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..value..".tga")
+		checkTexture = AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..value..".tga")
 	end
 	if checkTexture ~= 1 then
 		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga")
@@ -2020,7 +2020,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 				end
 			end
 		else
-			texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
+			texture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 		end
 		local secondaryAura = self.SecondaryAuras[self.CurrentAuraId]
 		if secondaryAura then
@@ -2043,7 +2043,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 					end
 				end
 			else
-				secondaryTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
+				secondaryTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 			end
 		end
 	end
@@ -2941,10 +2941,20 @@ function PowaAurasOptions:OwntexChecked()
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAnimationSlider:Hide()
+		local checkTexture = 0
+		checkTexture = AuraTexture:SetTexture(PowaIconTexture:GetTexture())
+		if checkTexture ~= 1 then
+			AuraTexture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark")
+		end
 	else
 		aura.owntex = false
+		if PowaBarAuraTextureSlider:GetValue() > self.MaxTextures then
+			PowaBarAuraTextureSlider:SetValue(1)
+		end
+		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
+		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
+		AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
-	--self:InitPage(aura)
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -2983,6 +2993,7 @@ function PowaAurasOptions:WowTexturesChecked()
 		PowaFontButton:Hide()
 		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAnimationSlider:Hide()
+		AuraTexture:SetTexture(self.WowTextures[aura.texture])
 	else
 		aura.wowtex = false
 		if PowaBarAuraTextureSlider:GetValue() > self.MaxTextures then
@@ -2990,9 +3001,8 @@ function PowaAurasOptions:WowTexturesChecked()
 		end
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
+		AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
-	self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
-	self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -3092,10 +3102,8 @@ function PowaAurasOptions:ModelsChecked()
 		end
 		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
-		AuraTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
+		AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
-	--self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
-	--self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -3143,10 +3151,13 @@ function PowaAurasOptions:CustomModelsChecked()
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
 		PowaBarAuraSymSlider:Show()
-		AuraTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
+		if PowaBarAuraTextureSlider:GetValue() > self.MaxTextures then
+			PowaBarAuraTextureSlider:SetValue(1)
+		end
+		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
+		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
+		AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
-	--self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
-	--self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -3181,13 +3192,22 @@ function PowaAurasOptions:CustomTexturesChecked()
 		PowaFontButton:Hide()
 		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAnimationSlider:Hide()
+		local checkTexture = 0
+		checkTexture = AuraTexture:SetTexture(self:CustomTexPath(aura.customname))
+		if checkTexture ~= 1 then
+			AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait")
+		end
 	else
 		aura.customtex = false
 		PowaBarAuraTextureSlider:Show()
 		PowaBarCustomTexName:Hide()
+		if PowaBarAuraTextureSlider:GetValue() > self.MaxTextures then
+			PowaBarAuraTextureSlider:SetValue(1)
+		end
+		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
+		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
+		AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
-	self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
-	self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
@@ -3222,14 +3242,20 @@ function PowaAurasOptions:TextAuraChecked()
 		PowaBarCustomTexName:Hide()
 		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAnimationSlider:Hide()
+		AuraTexture:SetTexture("Interface\\Icons\\INV_Scroll_02")
 	else
 		aura.textaura = false
 		PowaBarAuraTextureSlider:Show()
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
+		if PowaBarAuraTextureSlider:GetValue() > self.MaxTextures then
+			aura.texture = 1
+			PowaBarAuraTextureSlider:SetValue(1)
+		end
+		PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
+		PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
+		AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
-	self:BarAuraSizeSliderChanged(PowaBarAuraSizeSlider)
-	self:BarAuraTextureSliderChanged(PowaBarAuraTextureSlider)
 	self:RedisplayAura(self.CurrentAuraId)
 end
 
