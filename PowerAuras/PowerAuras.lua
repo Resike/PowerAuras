@@ -1642,10 +1642,10 @@ function PowaAuras:UpdateAuraVisuals(aura)
 				if ty and tz then
 					model:SetCameraTarget(0, ty, tz)
 				end
-				model._distance = math.sqrt(x * x + y * y + z * z)
-				model._yaw = - math.atan(y / x)
-				model._pitch = - math.atan(z / x)
-				self:SetOrientation(aura, model, model._distance, model._yaw, model._pitch)
+				local distance = math.sqrt(x * x + y * y + z * z)
+				local yaw = - math.atan(y / x)
+				local pitch = - math.atan(z / x)
+				self:SetOrientation(aura, model, distance, yaw, pitch)
 			end
 		end
 	elseif aura.modelcustom then
@@ -1670,10 +1670,10 @@ function PowaAuras:UpdateAuraVisuals(aura)
 					if ty and tz then
 						model:SetCameraTarget(0, ty, tz)
 					end
-					model._distance = math.sqrt(x * x + y * y + z * z)
-					model._yaw = - math.atan(y / x)
-					model._pitch = - math.atan(z / x)
-					self:SetOrientation(aura, model, model._distance, model._yaw, model._pitch)
+					local distance = math.sqrt(x * x + y * y + z * z)
+					local yaw = - math.atan(y / x)
+					local pitch = - math.atan(z / x)
+					self:SetOrientation(aura, model, distance, yaw, pitch)
 				end
 			end
 		end
@@ -1933,10 +1933,10 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 				local x, y, z = secondaryModel:GetCameraPosition()
 				local tx, ty, tz = secondaryModel:GetCameraTarget()
 				secondaryModel:SetCameraTarget(0, ty, tz)
-				secondaryModel._distance = math.sqrt(x * x + y * y + z * z)
-				secondaryModel._yaw = - math.atan(y / x)
-				secondaryModel._pitch = - math.atan(z / x)
-				self:SetOrientation(secondaryAura, secondaryModel, secondaryModel._distance, secondaryModel._yaw, secondaryModel._pitch)
+				local distance = math.sqrt(x * x + y * y + z * z)
+				local yaw = - math.atan(y / x)
+				local pitch = - math.atan(z / x)
+				self:SetOrientation(secondaryAura, secondaryModel, distance, yaw, pitch)
 			end
 		end
 	elseif aura.modelcustom then
@@ -1959,10 +1959,10 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 					local x, y, z = secondaryModel:GetCameraPosition()
 					local tx, ty, tz = secondaryModel:GetCameraTarget()
 					secondaryModel:SetCameraTarget(0, ty, tz)
-					secondaryModel._distance = math.sqrt(x * x + y * y + z * z)
-					secondaryModel._yaw = - math.atan(y / x)
-					secondaryModel._pitch = - math.atan(z / x)
-					self:SetOrientation(secondaryAura, secondaryModel, secondaryModel._distance, secondaryModel._yaw, secondaryModel._pitch)
+					local distance = math.sqrt(x * x + y * y + z * z)
+					local yaw = - math.atan(y / x)
+					local pitch = - math.atan(z / x)
+					self:SetOrientation(secondaryAura, secondaryModel, distance, yaw, pitch)
 				end
 			end
 		end

@@ -24,7 +24,7 @@
 		</Scripts>
 		<NormalFont style = "GameFontHighlight"/>
 		<NormalTexture file = "Interface\PaperDoll\UI-Backpack-EmptySlot"/>
-		<HighlightTexture alphaMode = "ADD" file = "Interface\Buttons\ButtonHilight-Square"/>
+		<HighlightTexture file = "Interface\Buttons\ButtonHilight-Square" alphaMode = "ADD" />
 	</Button>
 	<!-- List Template -->
 	<Button name = "PowaListTemplate" inherits = "OptionsButtonTemplate" virtual = "true">
@@ -296,119 +296,10 @@
 			</OnHide>
 		</Scripts>
 	</Frame>
-	<!-- Donate Dialog Frame -->
-	<Frame name = "PowaAuraDonateDialog" frameStrata = "DIALOG" hidden = "true" toplevel = "true" parent = "UIParent">
-		<Size>
-			<AbsDimension x = "384" y = "218"/>
-		</Size>
-		<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\DialogFrame\UI-DialogBox-Border" tile = "true">
-			<BackgroundInsets>
-				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val = "32"/>
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val = "32"/>
-			</EdgeSize>
-		</Backdrop>
-		<Layers>
-			<Layer level = "ARTWORK">
-				<FontString name = "$parentTopTitle" inherits = "GameFontNormalLarge" justifyH = "CENTER">
-					<Anchors>
-						<Anchor point = "TOP" relativePoint = "TOP" x = "0" y = "-44"/>
-					</Anchors>
-				</FontString>
-				<FontString name = "$parentMidTitle" inherits = "GameFontNormalLarge" justifyH = "CENTER">
-					<Anchors>
-						<Anchor point = "TOP" relativePoint = "TOP" x = "0" y = "-120"/>
-					</Anchors>
-				</FontString>
-			</Layer>
-		</Layers>
-		<Frames>
-			<EditBox name = "$parentEmailBox" inherits = "InputBoxTemplate" autoFocus = "false">
-				<Size>
-					<AbsDimension x = "280" y = "20"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "TOP">
-						<Offset x = "0" y = "-70"/>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						self:SetText("resike@gmail.com")
-					</OnLoad>
-					<OnEscapePressed>
-						self:ClearFocus()
-					</OnEscapePressed>
-					<OnEnterPressed>
-						self:ClearFocus()
-					</OnEnterPressed>
-				</Scripts>
-			</EditBox>
-			<EditBox name = "$parentDonateBox" inherits = "InputBoxTemplate" autoFocus = "false" letters = "12">
-				<Size>
-					<AbsDimension x = "280" y = "20"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "TOP">
-						<Offset x = "0" y = "-145"/>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						self:SetMaxLetters(1000)
-						self:SetText("https://www.paypal.com/cgi-bin/webscr?return=http%3A%2F%2Fwww.curse.com%2Faddons%2Fwow%2Fpower-auras-classic-v4&amp;cn=Add+special+instructions+to+the+addon+author%28s%29&amp;business=resike%40gmail.com&amp;bn=PP-DonationsBF%3Abtn_donateCC_LG.gif%3ANonHosted&amp;cancel_return=http%3A%2F%2Fwww.curse.com%2Faddons%2Fwow%2Fpower-auras-classic-v4&amp;lc=US&amp;item_name=Power+Auras+Classic+v4+-+MoP+Version+%28from+Curse.com%29&amp;cmd=_donations&amp;rm=1&amp;no_shipping=1&amp;currency_code=USD")
-					</OnLoad>
-					<OnShow>
-						self:SetFocus()
-					</OnShow>
-					<OnEscapePressed>
-						self:ClearFocus()
-					</OnEscapePressed>
-					<OnEnterPressed>
-						self:ClearFocus()
-					</OnEnterPressed>
-				</Scripts>
-			</EditBox>
-			<!-- Close Button -->
-			<Button name = "$parentCloseButton" inherits = "OptionsButtonTemplate">
-				<Size>
-					<AbsDimension x = "118" y = "22"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "BOTTOM">
-						<Offset x = "0" y = "20"/>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						PowaAuraDonateDialogCloseButtonText:SetText(PowaAurasOptions.Text.nomClose)
-					</OnLoad>
-					<OnClick>
-						self:GetParent():Hide()
-						PlaySound("igMainMenuClose", "Sound")
-					</OnClick>
-				</Scripts>
-			</Button>
-		</Frames>
-		<Scripts>
-			<OnLoad>
-				self.exclusive = 1
-				self.whileDead = 1
-				self.hideOnEscape = 1
-				self.timeout = 0
-				PowaAuraDonateDialogTopTitle:SetText("PayPal e-mail")
-				PowaAuraDonateDialogMidTitle:SetText("Donate")
-			</OnLoad>
-		</Scripts>
-	</Frame>
 	<!-- Options Frame -->
 	<Frame name = "PowaOptionsFrame" toplevel = "true" movable = "true" parent = "UIParent" frameStrata = "MEDIUM" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
-			<AbsDimension x = "323" y = "495"/>
+			<AbsDimension x = "323" y = "470"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "CENTER" relativeTo = "UIParent">
@@ -813,13 +704,6 @@
 						</FontString>
 					</Layer>
 				</Layers>
-				<Scripts>
-					<OnLoad>
-						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
-						self:SetBackdropColor(0.1, 0.1, 0.1)
-						PowaOptionsPlayerTitre:SetText(PowaAurasOptions.Text.nomPlayerEffects)
-					</OnLoad>
-				</Scripts>
 				<Frames>
 					<!-- Lists -->
 					<Button name = "PowaOptionsList1" inherits = "PowaListTemplate" text = "Page 1" id = "1">
@@ -830,6 +714,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "2" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList2" inherits = "PowaListTemplate" text = "Page 2" id = "2">
 						<Anchors>
@@ -839,6 +726,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList3" inherits = "PowaListTemplate" text = "Page 3" id = "3">
 						<Anchors>
@@ -848,6 +738,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList4" inherits = "PowaListTemplate" text = "Page 4" id = "4">
 						<Anchors>
@@ -857,6 +750,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList5" inherits = "PowaListTemplate" text = "Page 5" id = "5">
 						<Anchors>
@@ -866,8 +762,18 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 				</Frames>
+				<Scripts>
+					<OnLoad>
+						self:SetBackdropBorderColor(0, 0, 0)
+						self:SetBackdropColor(0.1, 0.1, 0.1)
+						PowaOptionsPlayerTitre:SetText(PowaAurasOptions.Text.nomPlayerEffects)
+					</OnLoad>
+				</Scripts>
 			</Frame>
 			<!-- Global List Window -->
 			<Frame name = "PowaOptionsGlobalListFrame">
@@ -911,13 +817,6 @@
 						</FontString>
 					</Layer>
 				</Layers>
-				<Scripts>
-					<OnLoad>
-						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
-						self:SetBackdropColor(0.1, 0.1, 0.1)
-						PowaOptionsGlobalTitre:SetText(PowaAurasOptions.Text.nomGlobalEffects)
-					</OnLoad>
-				</Scripts>
 				<Frames>
 					<!-- Lists -->
 					<Button name = "PowaOptionsList6" inherits = "PowaListTemplate" text = "Page 1" id = "6">
@@ -928,6 +827,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "2" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList7" inherits = "PowaListTemplate" text = "Page 2" id = "7">
 						<Anchors>
@@ -937,6 +839,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList8" inherits = "PowaListTemplate" text = "Page 3" id = "8">
 						<Anchors>
@@ -946,6 +851,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList9" inherits = "PowaListTemplate" text = "Page 4" id = "9">
 						<Anchors>
@@ -955,6 +863,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList10" inherits = "PowaListTemplate" text = "Page 5" id = "10">
 						<Anchors>
@@ -964,6 +875,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList11" inherits = "PowaListTemplate" text = "Page 6" id = "11">
 						<Anchors>
@@ -973,6 +887,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList12" inherits = "PowaListTemplate" text = "Page 7" id = "12">
 						<Anchors>
@@ -982,6 +899,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList13" inherits = "PowaListTemplate" text = "Page 8" id = "13">
 						<Anchors>
@@ -991,6 +911,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList14" inherits = "PowaListTemplate" text = "Page 9" id = "14">
 						<Anchors>
@@ -1000,6 +923,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<Button name = "PowaOptionsList15" inherits = "PowaListTemplate" text = "Page 10" id = "15">
 						<Anchors>
@@ -1009,6 +935,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "0" right = "0" top = "0" bottom = "4"/>
+						</HitRectInsets>
 					</Button>
 					<!-- Rename Button -->
 					<Button name = "PowaOptionsRename" inherits = "OptionsButtonTemplate">
@@ -1267,30 +1196,6 @@
 							</OnClick>
 						</Scripts>
 					</Button>
-					<!-- Donate Button -->
-					<Button name = "PowaDonateButton" inherits = "OptionsButtonTemplate">
-						<Size>
-							<AbsDimension x = "90" y = "22"/>
-						</Size>
-						<Anchors>
-							<Anchor point = "TOP" relativeTo = "PowaEditButton" relativePoint = "BOTTOM">
-								<Offset>
-									<AbsDimension x = "0" y = "-5"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnLoad>
-								PowaDonateButtonText:SetText(PowaAurasOptions.Text.nomDonate)
-							</OnLoad>
-							<OnClick>
-								PowaAuraDonateDialogEmailBox:SetText("resike@gmail.com")
-								PowaAuraDonateDialogDonateBox:SetText("https://www.paypal.com/cgi-bin/webscr?return=http%3A%2F%2Fwww.curse.com%2Faddons%2Fwow%2Fpower-auras-classic-v4&amp;cn=Add+special+instructions+to+the+addon+author%28s%29&amp;business=resike%40gmail.com&amp;bn=PP-DonationsBF%3Abtn_donateCC_LG.gif%3ANonHosted&amp;cancel_return=http%3A%2F%2Fwww.curse.com%2Faddons%2Fwow%2Fpower-auras-classic-v4&amp;lc=US&amp;item_name=Power+Auras+Classic+v4+-+MoP+Version+%28from+Curse.com%29&amp;cmd=_donations&amp;rm=1&amp;no_shipping=1&amp;currency_code=USD")
-								StaticPopupSpecial_Show(PowaAuraDonateDialog)
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
-							</OnClick>
-						</Scripts>
-					</Button>
 					<!-- Import Button -->
 					<Button name = "PowaOptionsSelectorImport" inherits = "OptionsButtonTemplate">
 						<Size>
@@ -1383,19 +1288,24 @@
 								self:SetMaxLetters(15)
 							</OnLoad>
 							<OnEnterPressed>
-								PowaAurasOptions:OptionRenameEdited()
 								self:ClearFocus()
 							</OnEnterPressed>
+							<OnEscapePressed>
+								self:ClearFocus()
+							</OnEscapePressed>
 							<OnEditFocusLost>
 								PowaAurasOptions:OptionRenameEdited()
 							</OnEditFocusLost>
-							<OnEscapePressed>
-								PowaAurasOptions:OptionRenameEdited()
-								self:ClearFocus()
-							</OnEscapePressed>
 						</Scripts>
 					</EditBox>
 				</Frames>
+				<Scripts>
+					<OnLoad>
+						self:SetBackdropBorderColor(0, 0, 0)
+						self:SetBackdropColor(0.1, 0.1, 0.1)
+						PowaOptionsGlobalTitre:SetText(PowaAurasOptions.Text.nomGlobalEffects)
+					</OnLoad>
+				</Scripts>
 			</Frame>
 		</Frames>
 	</Frame>
