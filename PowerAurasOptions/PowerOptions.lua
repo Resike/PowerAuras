@@ -4954,11 +4954,7 @@ function PowaAurasOptions:OptionTest()
 			owner:SetAlpha(0.33)
 		end
 	else
-		--aura:CreateFrames()
-		--self.SecondaryAuras[aura.id] = nil
 		self:DisplayAura(aura.id)
-		-- Fix stuck in test mode
-		--self:RedisplayAura(aura.id)
 		aura.Active = true
 		if aura.customsound ~= "" then
 			local pathToSound
@@ -4989,10 +4985,14 @@ function PowaAurasOptions:OptionTestAll()
 		if aura and not aura.off and aura.buffname ~= "" and aura.buffname ~= " " then
 			aura.Active = true
 			self:DisplayAura(aura.id)
-			self:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 		end
 	end
-	
+	local aura = self.Auras[self.CurrentAuraId]
+	if aura.randomcolor then
+		self:UpdatePreviewRandomColor(aura)
+	else
+		self:UpdatePreviewColor(aura)
+	end
 end
 
 function PowaAurasOptions:OptionHideAll(now)

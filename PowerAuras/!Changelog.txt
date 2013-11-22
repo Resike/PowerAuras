@@ -1,5 +1,4 @@
 **Issues:**
-* Test All preview texture coloring bug when the current aura's random color is enabled.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
@@ -19,7 +18,7 @@
 * Fixed a bug which broke "Invert Aura Timer" slider's functionality on the "Timer" tab.
 * Fixed a major import/export bug.
 * Fixed a minor import/export bug with "Resting".
-* Fixed a bug which caused excessive cpu usage when right clicking on aruas.
+* Fixed a bug which caused excessive CPU usage when right clicking on aruas.
 * Fixed an issues with "Character-" and "Global effects" list button's hitboxes.
 * Fixed a major bug which caused auras to stuck when you changed the buff's/debuff's name for the aura, while you still had the last buff/debuff.
 * Fixed a bug which didn't properly updated aura's random color, when you used the "Gradient Style" dropdown.
