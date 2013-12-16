@@ -7,6 +7,9 @@
 ## Dependencies: PowerAuras
 ## LoadOnDemand: 1
 
+UIDropDownMenuTemplates.xml
+UIDropDownMenu.lua
+
 PowerOptions.lua
 PowerOptionsData.lua
 PowerOptionsDump.lua

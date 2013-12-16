@@ -20,14 +20,6 @@ local PowaAuras = ns.PowaAuras
 
 local r1, r2, r3, r4, r5, r6
 
-setfenv(WorldMapFrame_OnShow, setmetatable({UpdateMicroButtons = function() end}, {__index = _G}))
-
-UIParent:HookScript("OnEvent", function(self, event, a1, a2)
-	if string.find(event, "ACTION_FORBIDDEN") and string.find(((a1 or "")..(a2 or "")), "IsDisabledByParentalControls") then
-		StaticPopup_Hide(event)
-	end
-end)
-
 -- Exposed for Saving
 PowaMisc =
 {
@@ -329,7 +321,7 @@ function PowaAuras:CreateTimerFrame(auraId, index, updatePing)
 	local aura = self.Auras[auraId]
 	frame:SetFrameStrata(aura.strata)
 	frame:Hide()
-	frame.texture = frame:CreateTexture(nil,"Background")
+	frame.texture = frame:CreateTexture(nil, "Background")
 	frame.texture:SetBlendMode("Add")
 	frame.texture:SetAllPoints(frame)
 	frame.texture:SetTexture(aura.Timer:GetTexture())

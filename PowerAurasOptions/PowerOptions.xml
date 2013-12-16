@@ -332,10 +332,10 @@
 				PowaAurasOptions:MainOptionClose()
 			</OnHide>
 			<OnMouseDown>
-				PowaAurasOptions:Bar_MouseDown(self, button)
+				PowaAurasOptions:FrameMouseDown(self, button)
 			</OnMouseDown>
 			<OnMouseUp>
-				PowaAurasOptions:Bar_MouseUp(self, button)
+				PowaAurasOptions:FrameMouseUp(self, button)
 			</OnMouseUp>
 		</Scripts>
 		<!-- Title Box -->
@@ -1334,6 +1334,147 @@
 			<AbsInset left = "4" right = "4" top = "4" bottom = "4"/>
 		</HitRectInsets>
 	</CheckButton>
+	<!-- Dropdown Template -->
+	<Frame name = "PowaDropDownMenuTemplate" virtual = "true">
+		<Size>
+			<AbsDimension x = "40" y = "32"/>
+		</Size>
+		<Layers>
+			<Layer level = "ARTWORK">
+				<Texture name = "$parentLeft" file = "Interface\Glues\CharacterCreate\CharacterCreate-LabelFrame">
+					<Size>
+						<AbsDimension x = "25" y = "64"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "TOPLEFT">
+							<Offset>
+								<AbsDimension x = "0" y = "17"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left = "0" right = "0.1953125" top = "0" bottom = "1"/>
+				</Texture>
+				<Texture name = "$parentMiddle" file = "Interface\Glues\CharacterCreate\CharacterCreate-LabelFrame">
+					<Size>
+						<AbsDimension x = "115" y = "64"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "LEFT" relativeTo = "$parentLeft" relativePoint = "RIGHT"/>
+					</Anchors>
+					<TexCoords left = "0.1953125" right = "0.8046875" top = "0" bottom = "1"/>
+				</Texture>
+				<Texture name = "$parentRight" file = "Interface\Glues\CharacterCreate\CharacterCreate-LabelFrame">
+					<Size>
+						<AbsDimension x = "25" y = "64"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "LEFT" relativeTo = "$parentMiddle" relativePoint = "RIGHT"/>
+					</Anchors>
+					<TexCoords left = "0.8046875" right = "1" top = "0" bottom = "1"/>
+				</Texture>
+				<FontString name = "$parentText" inherits = "GameFontHighlightSmall" wordwrap = "false" justifyH = "RIGHT">
+					<Size>
+						<AbsDimension x = "0" y = "10"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "RIGHT" relativeTo = "$parentRight">
+							<Offset>
+								<AbsDimension x = "-43" y = "2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level = "OVERLAY">
+				<Texture name = "$parentIcon" hidden = "true">
+					<Size>
+						<AbsDimension x = "16" y = "16"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "LEFT">
+							<Offset x = "30" y = "2"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name = "$parentButton" motionScriptsWhileDisabled = "true">
+				<Size>
+					<AbsDimension x = "24" y = "24"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "TOPRIGHT" relativeTo = "$parentRight">
+						<Offset>
+							<AbsDimension x = "-16" y = "-18"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnEnter>
+						local parent = self:GetParent()
+						local myscript = parent:GetScript("OnEnter")
+						if myscript then
+							myscript(parent)
+						end
+					</OnEnter>
+					<OnLeave>
+						local parent = self:GetParent();
+						local myscript = parent:GetScript("OnLeave")
+						if myscript then
+							myscript(parent)
+						end
+					</OnLeave>
+					<OnClick>
+						if _G["Lib_DropDownList1"]:IsVisible() and LIB_UIDROPDOWNMENU_OPEN_MENU == self:GetParent() then
+							Lib_CloseDropDownMenus()
+						else
+							Lib_UIDropDownMenu_Initialize(self:GetParent(), PowaAurasOptions.DropDownMenu_Initialize)
+							Lib_ToggleDropDownMenu(nil, nil, self:GetParent())
+							PlaySound("igMainMenuOptionCheckBoxOn")
+						end
+					</OnClick>
+				</Scripts>
+				<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\UI-ChatIcon-ScrollDown-Up">
+					<Size>
+						<AbsDimension x = "24" y = "24"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "RIGHT"/>
+					</Anchors>
+				</NormalTexture>
+				<PushedTexture name = "$parentPushedTexture" file = "Interface\ChatFrame\UI-ChatIcon-ScrollDown-Down">
+					<Size>
+						<AbsDimension x = "24" y = "24"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "RIGHT"/>
+					</Anchors>
+				</PushedTexture>
+				<DisabledTexture name = "$parentDisabledTexture" file = "Interface\ChatFrame\UI-ChatIcon-ScrollDown-Disabled">
+					<Size>
+						<AbsDimension x = "24" y = "24"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "RIGHT"/>
+					</Anchors>
+				</DisabledTexture>
+				<HighlightTexture name = "$parentHighlightTexture" file = "Interface\Buttons\UI-Common-MouseHilight" alphaMode = "ADD">
+					<Size>
+						<AbsDimension x = "24" y = "24"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "RIGHT"/>
+					</Anchors>
+				</HighlightTexture>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnHide>
+				Lib_CloseDropDownMenus()
+			</OnHide>
+		</Scripts>
+	</Frame>
 	<!-- Slider Template -->
 	<Slider name = "PowaBarSliderTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
 		<Size>
@@ -1588,10 +1729,10 @@
 				self:SetBackdropColor(0.6, 0.6, 0.6)
 			</OnLoad>
 			<OnMouseDown>
-				PowaAurasOptions:Bar_MouseDown(self, button, "PowaBarConfigFrame")
+				PowaAurasOptions:FrameMouseDown(self, button)
 			</OnMouseDown>
 			<OnMouseUp>
-				PowaAurasOptions:Bar_MouseUp(self, button, "PowaBarConfigFrame")
+				PowaAurasOptions:FrameMouseUp(self, button)
 			</OnMouseUp>
 			<OnShow>
 				if (PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId].bufftype == PowaAurasOptions.BuffTypes.Slots) then
@@ -1764,7 +1905,7 @@
 						<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\ChatFrameColorSwatch"/>
 					</Button>
 					<!-- Gradient Style DropDown -->
-					<Frame name = "PowaGradientStyleDropDown" inherits = "UIDropDownMenuTemplate">
+					<Frame name = "PowaGradientStyleDropDown" inherits = "PowaDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
 								<Offset>
@@ -1772,6 +1913,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
 						<Layers>
 							<Layer>
 								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -1785,20 +1929,15 @@
 								</FontString>
 							</Layer>
 						</Layers>
-						<HitRectInsets>
-							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
+								Lib_UIDropDownMenu_SetWidth(self, 120)
 								PowaGradientStyleDropDownLabel:SetText(PowaAurasOptions.Text.nomGradientStyle..":")
 							</OnLoad>
-							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-							</OnShow>
 						</Scripts>
 					</Frame>
 					<!-- Model Category DropDown -->
-					<Frame name = "PowaModelCategoryDropDown" inherits = "UIDropDownMenuTemplate">
+					<Frame name = "PowaModelCategoryDropDown" inherits = "PowaDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaColor" relativePoint = "BOTTOMLEFT">
 								<Offset>
@@ -1806,6 +1945,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
 						<Layers>
 							<Layer>
 								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -1819,20 +1961,15 @@
 								</FontString>
 							</Layer>
 						</Layers>
-						<HitRectInsets>
-							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
+								Lib_UIDropDownMenu_SetWidth(self, 120)
 								PowaModelCategoryDropDownLabel:SetText(PowaAurasOptions.Text.nomModelCategory..":")
 							</OnLoad>
-							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-							</OnShow>
 						</Scripts>
 					</Frame>
-					<!-- Model Category DropDown -->
-					<Frame name = "PowaModelTextureDropDown" inherits = "UIDropDownMenuTemplate">
+					<!-- Model Texture DropDown -->
+					<Frame name = "PowaModelTextureDropDown" inherits = "PowaDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point = "RIGHT" relativeTo = "PowaModelCategoryDropDown" relativePoint = "LEFT">
 								<Offset>
@@ -1840,6 +1977,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
 						<Layers>
 							<Layer>
 								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -1853,16 +1993,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
-						<HitRectInsets>
-							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
+								Lib_UIDropDownMenu_SetWidth(self, 120)
 								PowaModelTextureDropDownLabel:SetText(PowaAurasOptions.Text.nomModelTexture..":")
 							</OnLoad>
-							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-							</OnShow>
 						</Scripts>
 					</Frame>
 					<!-- Secondary Color Button -->
@@ -2105,7 +2240,7 @@
 						</Scripts>
 					</CheckButton>
 					<!-- Frame's Strata DropDown -->
-					<Frame name = "PowaStrataDropDown" inherits = "UIDropDownMenuTemplate">
+					<Frame name = "PowaStrataDropDown" inherits = "PowaDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point = "TOPLEFT" relativeTo = "PowaTextAuraButton" relativePoint = "BOTTOMLEFT">
 								<Offset>
@@ -2113,6 +2248,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
 						<Layers>
 							<Layer>
 								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -2126,16 +2264,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
-						<HitRectInsets>
-							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
+								Lib_UIDropDownMenu_SetWidth(self, 125)
 								PowaStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomFrameStrata..":")
 							</OnLoad>
-							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-							</OnShow>
 						</Scripts>
 					</Frame>
 					<!-- Frame's Strata Level Slider -->
@@ -2166,7 +2299,7 @@
 						</Scripts>
 					</Slider>
 					<!-- Texture's Strata DropDown -->
-					<Frame name = "PowaTextureStrataDropDown" inherits = "UIDropDownMenuTemplate">
+					<Frame name = "PowaTextureStrataDropDown" inherits = "PowaDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point = "LEFT" relativeTo = "PowaStrataDropDown" relativePoint = "RIGHT">
 								<Offset>
@@ -2174,6 +2307,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
 						<Layers>
 							<Layer>
 								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -2187,16 +2323,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
-						<HitRectInsets>
-							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
+								Lib_UIDropDownMenu_SetWidth(self, 125)
 								PowaTextureStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomTextureStrata..":")
 							</OnLoad>
-							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-							</OnShow>
 						</Scripts>
 					</Frame>
 					<!-- Texture Sublevel Slider -->
@@ -2227,7 +2358,7 @@
 						</Scripts>
 					</Slider>
 					<!-- Blend Mode DropDown -->
-					<Frame name = "PowaBlendModeDropDown" inherits = "UIDropDownMenuTemplate">
+					<Frame name = "PowaBlendModeDropDown" inherits = "PowaDropDownMenuTemplate">
 						<Anchors>
 							<Anchor point = "BOTTOMLEFT" relativeTo = "PowaTextureStrataDropDown" relativePoint = "TOPLEFT">
 								<Offset>
@@ -2235,6 +2366,9 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
 						<Layers>
 							<Layer>
 								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -2248,16 +2382,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
-						<HitRectInsets>
-							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-						</HitRectInsets>
 						<Scripts>
 							<OnLoad>
+								Lib_UIDropDownMenu_SetWidth(self, 125)
 								PowaBlendModeDropDownLabel:SetText(PowaAurasOptions.Text.nomBlendMode..":")
 							</OnLoad>
-							<OnShow>
-								UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-							</OnShow>
 						</Scripts>
 					</Frame>
 					<!-- Model Position Z Slider -->
@@ -2819,10 +2948,7 @@
 						</Scripts>
 						<Frames>
 							<!-- Buff Type DropDown -->
-							<Frame name = "PowaDropDownBuffType" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200" y = "32"/>
-								</Size>
+							<Frame name = "PowaDropDownBuffType" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor1" relativePoint = "TOPLEFT">
 										<Offset>
@@ -2848,21 +2974,13 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 175)
 										PowaDropDownBuffTypeLabel:SetText(PowaAurasOptions.Text.nomActivationBy..":")
 									</OnLoad>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Power Type Dropdown -->
-							<Frame name = "PowaDropDownPowerType" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200" y = "32"/>
-								</Size>
+							<Frame name = "PowaDropDownPowerType" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "RIGHT">
 										<Offset>
@@ -2888,24 +3006,15 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 145)
 										PowaDropDownPowerTypeLabel:SetText(PowaAurasOptions.Text.nomPowerType..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAurasOptions.Text.aidePowerType, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Stance Dropdown -->
-							<Frame name = "PowaDropDownStance" inherits = "UIDropDownMenuTemplate">
+							<Frame name = "PowaDropDownStance" inherits = "PowaDropDownMenuTemplate">
 								<Size>
-									<AbsDimension x = "200" y = "32"/>
+									<AbsDimension x = "145" y = "32"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "RIGHT">
@@ -2932,24 +3041,15 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 145)
 										PowaDropDownStanceLabel:SetText(PowaAurasOptions.Text.nomStance..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAurasOptions.Text.aideStance, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- GTFO Dropdown -->
-							<Frame name = "PowaDropDownGTFO" inherits = "UIDropDownMenuTemplate">
+							<Frame name = "PowaDropDownGTFO" inherits = "PowaDropDownMenuTemplate">
 								<Size>
-									<AbsDimension x = "200" y = "32"/>
+									<AbsDimension x = "145" y = "32"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownBuffType" relativePoint = "RIGHT">
@@ -2976,18 +3076,9 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 145)
 										PowaDropDownGTFOLabel:SetText(PowaAurasOptions.Text.nomGTFO..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAurasOptions.Text.aideGTFO, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Treshold Slider -->
@@ -4186,10 +4277,7 @@
 						</Scripts>
 						<Frames>
 							<!-- Begin Animation DropDown -->
-							<Frame name = "PowaDropDownAnimBegin" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200" y = "32"/>
-								</Size>
+							<Frame name = "PowaDropDownAnimBegin" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor2" relativePoint = "TOPLEFT">
 										<Offset>
@@ -4215,17 +4303,15 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaDropDownAnimBeginLabel:SetText(PowaAurasOptions.Text.nomBegin..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
 								</Scripts>
 							</Frame>
 							<!-- End Animation DropDown -->
-							<Frame name = "PowaDropDownAnimEnd" inherits = "UIDropDownMenuTemplate">
+							<Frame name = "PowaDropDownAnimEnd" inherits = "PowaDropDownMenuTemplate">
 								<Size>
-									<AbsDimension x = "200" y = "32"/>
+									<AbsDimension x = "190" y = "32"/>
 								</Size>
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownAnimBegin" relativePoint = "RIGHT">
@@ -4252,18 +4338,13 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaDropDownAnimEndLabel:SetText(PowaAurasOptions.Text.nomEnd..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
 								</Scripts>
 							</Frame>
 							<!-- Main Animation DropDown -->
-							<Frame name = "PowaDropDownAnim1" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200" y = "32"/>
-								</Size>
+							<Frame name = "PowaDropDownAnim1" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnimBegin" relativePoint = "BOTTOMLEFT">
 										<Offset>
@@ -4289,25 +4370,13 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaDropDownAnim1Label:SetText(PowaAurasOptions.Text.nomAnim1..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAurasOptions.Text.aideAnim1, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Secondary Animation DropDown -->
-							<Frame name = "PowaDropDownAnim2" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200" y = "32"/>
-								</Size>
+							<Frame name = "PowaDropDownAnim2" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownAnim1" relativePoint = "RIGHT">
 										<Offset>
@@ -4333,18 +4402,9 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaDropDownAnim2Label:SetText(PowaAurasOptions.Text.nomAnim2..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAurasOptions.Text.aideAnim2, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Old Animations CheckButton -->
@@ -4392,7 +4452,7 @@
 								</Scripts>
 							</CheckButton>
 							<!-- Secondary Blend Mode DropDown -->
-							<Frame name = "PowaSecondaryBlendModeDropDown" inherits = "UIDropDownMenuTemplate">
+							<Frame name = "PowaSecondaryBlendModeDropDown" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnim2" relativePoint = "BOTTOMLEFT">
 										<Offset>
@@ -4400,6 +4460,9 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer>
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -4413,20 +4476,15 @@
 										</FontString>
 									</Layer>
 								</Layers>
-								<HitRectInsets>
-									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-								</HitRectInsets>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaSecondaryBlendModeDropDownLabel:SetText(PowaAurasOptions.Text.nomSecondaryBlendMode..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
 								</Scripts>
 							</Frame>
 							<!-- Secondary Frame's Strata DropDown -->
-							<Frame name = "PowaSecondaryStrataDropDown" inherits = "UIDropDownMenuTemplate">
+							<Frame name = "PowaSecondaryStrataDropDown" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownAnim1" relativePoint = "BOTTOMLEFT">
 										<Offset>
@@ -4434,6 +4492,9 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer>
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -4447,16 +4508,11 @@
 										</FontString>
 									</Layer>
 								</Layers>
-								<HitRectInsets>
-									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-								</HitRectInsets>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaSecondaryStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomSecondaryFrameStrata..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
 								</Scripts>
 							</Frame>
 							<!-- Secondary Frame's Strata Level Slider -->
@@ -4487,7 +4543,7 @@
 								</Scripts>
 							</Slider>
 							<!-- Secondary Texture's Strata DropDown -->
-							<Frame name = "PowaSecondaryTextureStrataDropDown" inherits = "UIDropDownMenuTemplate">
+							<Frame name = "PowaSecondaryTextureStrataDropDown" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaSecondaryStrataDropDown" relativePoint = "RIGHT">
 										<Offset>
@@ -4495,6 +4551,9 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer>
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -4508,16 +4567,11 @@
 										</FontString>
 									</Layer>
 								</Layers>
-								<HitRectInsets>
-									<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-								</HitRectInsets>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaSecondaryTextureStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomSecondaryTextureStrata..":")
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
 								</Scripts>
 							</Frame>
 							<!-- Secondary Texture Sublevel Slider -->
@@ -4635,7 +4689,7 @@
 						</Scripts>
 						<Frames>
 							<!-- Starting Sound DropDown -->
-							<Frame name = "PowaDropDownSound" inherits = "UIDropDownMenuTemplate">
+							<Frame name = "PowaDropDownSound" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor3" relativePoint = "TOPLEFT">
 										<Offset>
@@ -4643,6 +4697,9 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -4656,27 +4713,15 @@
 										</FontString>
 									</Layer>
 								</Layers>
-								<HitRectInsets>
-									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
-								</HitRectInsets>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 210)
 										PowaDropDownSoundLabel:SetText(PowaAurasOptions.Text.nomSound)
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAurasOptions.Text.aideSound, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Custom Starting Sound DropDown -->
-							<Frame name = "PowaDropDownSound2" inherits = "UIDropDownMenuTemplate">
+							<Frame name = "PowaDropDownSound2" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownSound" relativePoint = "BOTTOMLEFT">
 										<Offset>
@@ -4684,6 +4729,9 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -4697,23 +4745,11 @@
 										</FontString>
 									</Layer>
 								</Layers>
-								<HitRectInsets>
-									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
-								</HitRectInsets>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 210)
 										PowaDropDownSound2Label:SetText(PowaAurasOptions.Text.nomSound2)
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAurasOptions.Text.aideSound2, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Custom Ending Soundfile EditBox -->
@@ -4763,10 +4799,7 @@
 								</Scripts>
 							</EditBox>
 							<!-- Ending Sound Dropdown -->
-							<Frame name = "PowaDropDownSoundEnd" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200" y = "32"/>
-								</Size>
+							<Frame name = "PowaDropDownSoundEnd" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBarCustomSound" relativePoint = "TOPLEFT">
 										<Offset>
@@ -4792,25 +4825,13 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 210)
 										PowaDropDownSoundEndLabel:SetText(PowaAurasOptions.Text.nomSoundEnd);
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAurasOptions.Text.aideSoundEnd, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Custom Ending Sound Dropdown -->
-							<Frame name = "PowaDropDownSound2End" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "220" y = "32"/>
-								</Size>
+							<Frame name = "PowaDropDownSound2End" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaDropDownSoundEnd" relativePoint = "BOTTOMLEFT">
 										<Offset>
@@ -4836,18 +4857,9 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 210)
 										PowaDropDownSound2EndLabel:SetText(PowaAurasOptions.Text.nomSound2End);
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaAurasOptions.Text.aideSound2End, nil, nil, nil, nil, 1)
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Custom Ending Soundfile EditBox -->
@@ -5235,10 +5247,7 @@
 								<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\ChatFrameColorSwatch"/>
 							</Button>
 							<!-- Timer Texture DropDown -->
-							<Frame name = "PowaDropDownTimerTexture" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200" y = "32"/>
-								</Size>
+							<Frame name = "PowaDropDownTimerTexture" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBuffTimerUseOwnColorButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
@@ -5246,6 +5255,9 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -5261,17 +5273,9 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaDropDownTimerTextureLabel:SetText(PowaAurasOptions.Text.nomTimerTexture)
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownTimerMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Animate on Refresh CheckButton -->
@@ -5338,10 +5342,7 @@
 								</Scripts>
 							</CheckButton>
 							<!-- Timer Position DropDown -->
-							<Frame name = "PowaBuffTimerRelative" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "160" y = "32"/>
-								</Size>
+							<Frame name = "PowaBuffTimerRelative" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownTimerTexture" relativePoint = "RIGHT">
 										<Offset>
@@ -5349,6 +5350,9 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -5364,17 +5368,9 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaBuffTimerRelativeLabel:SetText(PowaAurasOptions.Text.nomRelative)
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Invert Aura Timer Slider -->
@@ -5674,10 +5670,7 @@
 								<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\ChatFrameColorSwatch"/>
 							</Button>
 							<!-- Stacks Texture DropDown -->
-							<Frame name = "PowaDropDownStacksTexture" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200" y = "32"/>
-								</Size>
+							<Frame name = "PowaDropDownStacksTexture" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "TOPLEFT" relativeTo = "PowaBuffStacksUseOwnColorButton" relativePoint = "BOTTOMLEFT">
 										<Offset>
@@ -5685,6 +5678,9 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -5700,17 +5696,9 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaDropDownStacksTextureLabel:SetText(PowaAurasOptions.Text.nomStacksTexture)
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownStacksMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 							<!-- Animate on Refresh CheckButton -->
@@ -5756,10 +5744,7 @@
 								</Scripts>
 							</CheckButton>
 							<!-- Stacks Position DropDown -->
-							<Frame name = "PowaBuffStacksRelative" inherits = "UIDropDownMenuTemplate">
-								<Size>
-									<AbsDimension x = "200" y = "32"/>
-								</Size>
+							<Frame name = "PowaBuffStacksRelative" inherits = "PowaDropDownMenuTemplate">
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaDropDownStacksTexture" relativePoint = "RIGHT">
 										<Offset>
@@ -5767,6 +5752,9 @@
 										</Offset>
 									</Anchor>
 								</Anchors>
+								<HitRectInsets>
+									<AbsInset left = "18" right = "16" top = "2" bottom = "6"/>
+								</HitRectInsets>
 								<Layers>
 									<Layer level = "BACKGROUND">
 										<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
@@ -5782,17 +5770,9 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										Lib_UIDropDownMenu_SetWidth(self, 190)
 										PowaBuffStacksRelativeLabel:SetText(PowaAurasOptions.Text.nomRelativeStacks)
 									</OnLoad>
-									<OnShow>
-										UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownMenu_Initialize)
-									</OnShow>
-									<OnEnter>
-										GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-									</OnEnter>
-									<OnLeave>
-										GameTooltip:Hide()
-									</OnLeave>
 								</Scripts>
 							</Frame>
 						</Frames>

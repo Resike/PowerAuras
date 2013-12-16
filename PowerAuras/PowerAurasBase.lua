@@ -697,6 +697,7 @@ Sound =
 
 TimerTextures =
 {
+	"Default",
 	"Original",
 	"AccidentalPresidency",
 	"Crystal",
@@ -955,138 +956,149 @@ PowaAuras.TalentChangeSpells =
 PowaAuras.DebuffTypeSpellIds =
 {
 	-- Death Knight
-	[51209]		= PowaAuras.DebuffCatType.CC,		-- Hungering Cold
+	[108194]	= PowaAuras.DebuffCatType.Stun,		-- Asphyxiate
+	[115001]	= PowaAuras.DebuffCatType.Stun,		-- Remorseless Winter
 	[47476]		= PowaAuras.DebuffCatType.Silence,	-- Strangulate
 	[45524]		= PowaAuras.DebuffCatType.Snare,	-- Chains of Ice
-	[55666]		= PowaAuras.DebuffCatType.Snare,	-- Desecration
-	[50434]		= PowaAuras.DebuffCatType.Snare,	-- Chillblains I
-	[50435]		= PowaAuras.DebuffCatType.Snare,	-- Chillblains II
-	[96294]		= PowaAuras.DebuffCatType.Root,		-- Chains of Ice
+	[50435]		= PowaAuras.DebuffCatType.Snare,	-- Chillblains
 	-- Death Knight Pets
-	[47481]		= PowaAuras.DebuffCatType.Stun,		-- Gnaw
+	[91800]		= PowaAuras.DebuffCatType.Stun,		-- Gnaw
 	[91797]		= PowaAuras.DebuffCatType.Stun,		-- Monstrous Blow
-	[91802]		= PowaAuras.DebuffCatType.Root,		-- Shambling Rush
+	[91807]		= PowaAuras.DebuffCatType.Root,		-- Shambling Rush
 	-- Druid
-	[5211]		= PowaAuras.DebuffCatType.Stun,		-- Bash
+	[99]		= PowaAuras.DebuffCatType.CC,		-- Disorienting Roar
 	[33786]		= PowaAuras.DebuffCatType.CC,		-- Cyclone
 	[2637]		= PowaAuras.DebuffCatType.CC,		-- Hibernate
+	[5211]		= PowaAuras.DebuffCatType.Stun,		-- Mighty Bash
 	[22570]		= PowaAuras.DebuffCatType.Stun,		-- Maim
 	[9005]		= PowaAuras.DebuffCatType.Stun,		-- Pounce
-	[19679]		= PowaAuras.DebuffCatType.Root,		-- Feral Charge Effect (Bear)
-	[49376]		= PowaAuras.DebuffCatType.Snare,	-- Feral Charge Effect (Cat)
-	[78675]		= PowaAuras.DebuffCatType.Silence,	-- Solar Beam
+	[81261]		= PowaAuras.DebuffCatType.Silence,	-- Solar Beam
+	[114238]	= PowaAuras.DebuffCatType.Silence,	-- Fae Silence
 	[339]		= PowaAuras.DebuffCatType.Root,		-- Entangling Roots
-	[58179]		= PowaAuras.DebuffCatType.Snare,	-- Infected Wounds I
-	[58180]		= PowaAuras.DebuffCatType.Snare,	-- Infected Wounds II
+	[19975]		= PowaAuras.DebuffCatType.Root,		-- Entangling Roots (Nature's Grasp)
+	[113770]	= PowaAuras.DebuffCatType.Root,		-- Entangling Roots (Force of Nature)
+	[102359]	= PowaAuras.DebuffCatType.Root,		-- Mass Entanglement
+	[45334]		= PowaAuras.DebuffCatType.Root,		-- Wild Charge (Bear)
+	[50259]		= PowaAuras.DebuffCatType.Snare,	-- Wild Charge (Cat)
+	[127797]	= PowaAuras.DebuffCatType.Snare,	-- Ursol's Vortex
+	[58180]		= PowaAuras.DebuffCatType.Snare,	-- Infected Wounds
 	[61391]		= PowaAuras.DebuffCatType.Snare,	-- Typhoon
+	[81281]		= PowaAuras.DebuffCatType.Snare,	-- Fungal Growth
+	--[16914]	= PowaAuras.DebuffCatType.Snare,	-- Hurricane
+	--[106996]	= PowaAuras.DebuffCatType.Snare,	-- Astral Storm
+	--[102355]	= PowaAuras.DebuffCatType.Snare,	-- Faerie Swarm
 	-- Hunter
-	[3355]		= PowaAuras.DebuffCatType.CC,		-- Freezing Trap Effect
-	[19577]		= PowaAuras.DebuffCatType.Stun,		-- Intimidation
+	[3355]		= PowaAuras.DebuffCatType.CC,		-- Freezing Trap
 	[1513]		= PowaAuras.DebuffCatType.CC,		-- Scare Beast
 	[19503]		= PowaAuras.DebuffCatType.CC,		-- Scatter Shot
 	[19386]		= PowaAuras.DebuffCatType.CC,		-- Wyvern Sting
+	[24394]		= PowaAuras.DebuffCatType.Stun,		-- Intimidation
 	[34490]		= PowaAuras.DebuffCatType.Silence,	-- Silencing Shot
-	[19306]		= PowaAuras.DebuffCatType.Root,		-- Counterattack
-	[19185]		= PowaAuras.DebuffCatType.Root,		-- Entrapment I
-	[64803]		= PowaAuras.DebuffCatType.Root,		-- Entrapment II
+	[117526]	= PowaAuras.DebuffCatType.Root,		-- Binding Shot
+	[136634]	= PowaAuras.DebuffCatType.Root,		-- Narrow Escape
+	[64803]		= PowaAuras.DebuffCatType.Root,		-- Entrapment
+	[121414]	= PowaAuras.DebuffCatType.Snare,	-- Graive Toss
+	[135299]	= PowaAuras.DebuffCatType.Snare,	-- Ice Trap
 	[35101]		= PowaAuras.DebuffCatType.Snare,	-- Concussive Barrage
 	[5116]		= PowaAuras.DebuffCatType.Snare,	-- Concussive Shot
-	[13810]		= PowaAuras.DebuffCatType.Snare,	-- Frost Trap Aura
-	[61394]		= PowaAuras.DebuffCatType.Snare,	-- Glyph of Freezing Trap
-	[2974]		= PowaAuras.DebuffCatType.Snare,	-- Wing Clip
+	[61394]		= PowaAuras.DebuffCatType.Snare,	-- Frozen Wake (Glyph of Freezing Trap)
 	-- Hunter Pets
 	[90337]		= PowaAuras.DebuffCatType.CC,		-- Bad Manner (Monkey)
+	[126246]	= PowaAuras.DebuffCatType.CC,		-- Lullaby (Crane)
+	[126355]	= PowaAuras.DebuffCatType.CC,		-- Paralyzing Quill (Porcupine)
+	[126423]	= PowaAuras.DebuffCatType.CC,		-- Petrifying Gaze (Basilisk)
 	[35346]		= PowaAuras.DebuffCatType.Stun,		-- Sting (Wasp)
 	[50519]		= PowaAuras.DebuffCatType.Stun,		-- Sonic Blast (Bat)
 	[96201]		= PowaAuras.DebuffCatType.Stun,		-- Web Wrap (Shale Spider)
 	[91644]		= PowaAuras.DebuffCatType.Disarm,	-- Snatch (Bird of Prey)
 	[50541]		= PowaAuras.DebuffCatType.Disarm,	-- Clench (Scorpid)
-	[54644]		= PowaAuras.DebuffCatType.Snare,	-- Froststorm Breath (Chimera)
-	[50433]		= PowaAuras.DebuffCatType.Snare,	-- Ankle Crack (Crocolisk)
-	[35346]		= PowaAuras.DebuffCatType.Snare,	-- Time Warp (Warp Stalker)
 	[50245]		= PowaAuras.DebuffCatType.Root,		-- Pin (Crab)
 	[54706]		= PowaAuras.DebuffCatType.Root,		-- Venom Web Spray (Silithid)
 	[4167]		= PowaAuras.DebuffCatType.Root,		-- Web (Spider)
 	[90327]		= PowaAuras.DebuffCatType.Root,		-- Lock Jaw (Dog)
-	[61685]		= PowaAuras.DebuffCatType.Root,		-- Charge (Various animals)
+	[61685]		= PowaAuras.DebuffCatType.Root,		-- Charge (Various)
 	[52825]		= PowaAuras.DebuffCatType.Root,		-- Swoop (Various)
+	[54644]		= PowaAuras.DebuffCatType.Snare,	-- Froststorm Breath (Chimera)
+	[50433]		= PowaAuras.DebuffCatType.Snare,	-- Ankle Crack (Crocolisk)
+	[35346]		= PowaAuras.DebuffCatType.Snare,	-- Time Warp (Warp Stalker)
 	-- Mage
-	[44572]		= PowaAuras.DebuffCatType.Stun,		-- Deep Freeze
+	[118]		= PowaAuras.DebuffCatType.CC,		-- Polymorph
 	[31661]		= PowaAuras.DebuffCatType.CC,		-- Dragon's Breath
-	[12355]		= PowaAuras.DebuffCatType.Stun,		-- Impact
-	[64343]		= PowaAuras.DebuffCatType.Stun,		-- Impact (two ID's, one ought to work right?)
-	[82691]		= PowaAuras.DebuffCatType.Stun,		-- Ring of Frost
-	[118]		= PowaAuras.DebuffCatType.CC,		-- Polymorph (Sheep)
-	[61305]		= PowaAuras.DebuffCatType.CC,		-- Polymorph (Cat)
-	[28272]		= PowaAuras.DebuffCatType.CC,		-- Polymorph (Pig)
-	[61721]		= PowaAuras.DebuffCatType.CC,		-- Polymorph (Rabbit)
-	[61780]		= PowaAuras.DebuffCatType.CC,		-- Polymorph (Turkey)
-	[28271]		= PowaAuras.DebuffCatType.CC,		-- Polymorph (Turtle)
-	[18469]		= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Counterspell I
-	[55021]		= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Counterspell II
+	[82691]		= PowaAuras.DebuffCatType.CC,		-- Ring of Frost
+	[44572]		= PowaAuras.DebuffCatType.Stun,		-- Deep Freeze
+	[102051]	= PowaAuras.DebuffCatType.Silence,	-- Frostjaw
+	[55021]		= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Counterspell
 	[122]		= PowaAuras.DebuffCatType.Root,		-- Frost Nova
-	[55080]		= PowaAuras.DebuffCatType.Root,		-- Shattered Barrier I
-	[83073]		= PowaAuras.DebuffCatType.Root,		-- Shattered Barrier II
-	[11113]		= PowaAuras.DebuffCatType.Snare,	-- Blast Wave
+	[113092]	= PowaAuras.DebuffCatType.Snare,	-- Frost Bomb
+	[111340]	= PowaAuras.DebuffCatType.Snare,	-- Ice Ward
+	[12486]		= PowaAuras.DebuffCatType.Snare,	-- Chilled (Blizzard)
 	[7321]		= PowaAuras.DebuffCatType.Snare,	-- Chilled (Frost Armor)
-	[12484]		= PowaAuras.DebuffCatType.Snare,	-- Ice Shards I, 25% snare
-	[12485]		= PowaAuras.DebuffCatType.Snare,	-- Ice Shards II, 40% snare
-	[12486]		= PowaAuras.DebuffCatType.Snare,	-- Ice Shards III, 50% snare
 	[120]		= PowaAuras.DebuffCatType.Snare,	-- Cone of Cold
 	[116]		= PowaAuras.DebuffCatType.Snare,	-- Frostbolt
-	[47614]		= PowaAuras.DebuffCatType.Snare,	-- Frostfire Bolt
+	[44614]		= PowaAuras.DebuffCatType.Snare,	-- Frostfire Bolt
+	[84721]		= PowaAuras.DebuffCatType.Snare,	-- Frozen Orb
 	[31589]		= PowaAuras.DebuffCatType.Snare,	-- Slow
-	[84721]		= PowaAuras.DebuffCatType.Snare,	-- Frostfire Orb
-	[83046]		= PowaAuras.DebuffCatType.Stun,		-- Improved Polymorph I
-	[83047]		= PowaAuras.DebuffCatType.Stun,		-- Improved Polymorph II
-	[83046]		= PowaAuras.DebuffCatType.Root,		-- Improved Cone of Cold I
-	[83047]		= PowaAuras.DebuffCatType.Root,		-- Improved Cone of Cold II
 	-- Mage Pets
 	[33395]		= PowaAuras.DebuffCatType.Root,		-- Freeze
 	-- Monk
-	[105593]	= PowaAuras.DebuffCatType.Stun,		-- Fist of Justice
+	[115078]	= PowaAuras.DebuffCatType.CC,		-- Paralysis
+	[123393]	= PowaAuras.DebuffCatType.CC,		-- Breath of Fire
+	[120086]	= PowaAuras.DebuffCatType.Stun,		-- Fist of Fury
+	[119381]	= PowaAuras.DebuffCatType.Stun,		-- Leg Sweep
+	[119392]	= PowaAuras.DebuffCatType.Stun,		-- Charging Ox Wave
+	[137460]	= PowaAuras.DebuffCatType.Silence,	-- Ring of Peace (Silence)
+	[137461]	= PowaAuras.DebuffCatType.Disarm,	-- Ring of Peace (Disarm)
+	[117368]	= PowaAuras.DebuffCatType.Disarm,	-- Grapple Weapon
+	[116706]	= PowaAuras.DebuffCatType.Root,		-- Disable
+	[116095]	= PowaAuras.DebuffCatType.Snare,	-- Disable
+	[116330]	= PowaAuras.DebuffCatType.Snare,	-- Dizzying Haze
+	[118585]	= PowaAuras.DebuffCatType.Snare,	-- Leer of the Ox
+	[123586]	= PowaAuras.DebuffCatType.Snare,	-- Flying Serpent Kick
 	-- Paladin
-	[853]		= PowaAuras.DebuffCatType.Stun,		-- Hammer of Justice
-	[2812]		= PowaAuras.DebuffCatType.Stun,		-- Holy Wrath
 	[20066]		= PowaAuras.DebuffCatType.CC,		-- Repentance
-	[20170]		= PowaAuras.DebuffCatType.Snare,	-- Snare (Seal of Justice proc)
 	[10326]		= PowaAuras.DebuffCatType.CC,		-- Turn Evil
-	[63529]		= PowaAuras.DebuffCatType.Snare,	-- Avenger's Shield (Daze glyph)
+	[145067]	= PowaAuras.DebuffCatType.CC,		-- Turn Evil (Evil is a Point of View)
+	[105421]	= PowaAuras.DebuffCatType.CC,		-- Blinding Light
+	[115752]	= PowaAuras.DebuffCatType.Stun,		-- Blinding Light (Glyph of Blinding Light)
+	[853]		= PowaAuras.DebuffCatType.Stun,		-- Hammer of Justice
+	[105593]	= PowaAuras.DebuffCatType.Stun,		-- Fist of Justice
+	[119072]	= PowaAuras.DebuffCatType.Stun,		-- Holy Wrath
 	[31935]		= PowaAuras.DebuffCatType.Silence,	-- Avenger's Shield
+	[63529]		= PowaAuras.DebuffCatType.Snare,	-- Dazed - Avenger's Shield
+	[20170]		= PowaAuras.DebuffCatType.Snare,	-- Seal of Justice
+	[110300]	= PowaAuras.DebuffCatType.Snare,	-- Burden of Guilt
+	[114919]	= PowaAuras.DebuffCatType.Snare,	-- Arcing Light
 	-- Priest
-	[605]		= PowaAuras.DebuffCatType.CC,		-- Mind Control
+	[605]		= PowaAuras.DebuffCatType.CC,		-- Dominate Mind
 	[64044]		= PowaAuras.DebuffCatType.CC,		-- Psychic Horror
 	[8122]		= PowaAuras.DebuffCatType.CC,		-- Psychic Scream
-	[87204]		= PowaAuras.DebuffCatType.CC,		-- Sin and Punishment fear/horror
+	[88625]		= PowaAuras.DebuffCatType.CC,		-- Holy Word: Chastise
 	[9484]		= PowaAuras.DebuffCatType.CC,		-- Shackle Undead
 	[15487]		= PowaAuras.DebuffCatType.Silence,	-- Silence
 	[64058]		= PowaAuras.DebuffCatType.Disarm,	-- Psychic Horror
 	[15407]		= PowaAuras.DebuffCatType.Snare,	-- Mind Flay
-	[88625]		= PowaAuras.DebuffCatType.CC,		-- Holy Word: Chastise
+	-- Priest Pets
+	[113792]	= PowaAuras.DebuffCatType.CC,		-- Psychic Terror
 	-- Rogue
 	[2094]		= PowaAuras.DebuffCatType.CC,		-- Blind
-	[1833]		= PowaAuras.DebuffCatType.Stun,		-- Cheap Shot
 	[1776]		= PowaAuras.DebuffCatType.CC,		-- Gouge
-	[408]		= PowaAuras.DebuffCatType.Stun,		-- Kidney Shot
 	[6770]		= PowaAuras.DebuffCatType.CC,		-- Sap
-	[1330]		= PowaAuras.DebuffCatType.Silence,	-- Garrote - Silence
-	[18425]		= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Kick I
-	[86759]		= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Kick II
+	[1833]		= PowaAuras.DebuffCatType.Stun,		-- Cheap Shot
+	[408]		= PowaAuras.DebuffCatType.Stun,		-- Kidney Shot
+	[113953]	= PowaAuras.DebuffCatType.Stun,		-- Paralytic Poison
+	[1330]		= PowaAuras.DebuffCatType.Silence,	-- Garrote
 	[51722]		= PowaAuras.DebuffCatType.Disarm,	-- Dismantle
-	[31125]		= PowaAuras.DebuffCatType.Snare,	-- Blade Twisting I
-	[51585]		= PowaAuras.DebuffCatType.Snare,	-- Blade Twisting II
+	[115197]	= PowaAuras.DebuffCatType.Root,		-- Paralytic Poison
 	[3409]		= PowaAuras.DebuffCatType.Snare,	-- Crippling Poison
 	[26679]		= PowaAuras.DebuffCatType.Snare,	-- Deadly Throw
-	[51696]		= PowaAuras.DebuffCatType.Snare,	-- Waylay
 	-- Shaman
 	[51514]		= PowaAuras.DebuffCatType.CC,		-- Hex
-	[39796]		= PowaAuras.DebuffCatType.Stun,		-- Stoneclaw Stun
-	[64695]		= PowaAuras.DebuffCatType.Root,		-- Earthgrab (Storm, Earth and Fire)
-	[63685]		= PowaAuras.DebuffCatType.Root,		-- Freeze (Frozen Power)
+	[118905]	= PowaAuras.DebuffCatType.Stun,		-- Static Charge
+	[64695]		= PowaAuras.DebuffCatType.Root,		-- Earthgrab
+	[63685]		= PowaAuras.DebuffCatType.Root,		-- Freeze
 	[3600]		= PowaAuras.DebuffCatType.Snare,	-- Earthbind
 	[8056]		= PowaAuras.DebuffCatType.Snare,	-- Frost Shock
 	[8034]		= PowaAuras.DebuffCatType.Snare,	-- Frostbrand Attack
-	[73682]		= PowaAuras.DebuffCatType.Snare,	-- Unleash Frost
 	-- Warlock
 	[710]		= PowaAuras.DebuffCatType.CC,		-- Banish
 	[118699]	= PowaAuras.DebuffCatType.CC,		-- Fear
@@ -1166,27 +1178,6 @@ function PowaAuras:DisplayText(...)
 	self:Message(...)
 end
 
-function PowaAuras:DisplayTable(t, indent)
-	if not t or type(t) ~= "table" then
-		return "No table"
-	end
-	if not indent then
-		indent = ""
-	else
-		indent = indent.." "
-	end
-	for i, v in pairs(t) do
-		if type(v) ~= "function" then
-			if type(v) ~= "table" then
-				self:Message(indent..tostring(i).." = "..tostring(v))
-			else
-				self:Message(indent..tostring(i))
-				self:DisplayTable(v, indent)
-			end
-		end
-	end
-end
-
 function PowaAuras:Error(msg, holdtime)
 	if not holdtime then
 		holdtime = UIERRORS_HOLD_TIME
@@ -1196,17 +1187,6 @@ end
 
 function PowaAuras:IsNumeric(a)
 	return type(tonumber(a)) == "number"
-end
-
-function PowaAuras:ReverseTable(t)
-	if type(t) ~= "table" then
-		return
-	end
-	local newTable = { }
-	for k, v in pairs(t) do
-		newTable[v] = k
-	end
-	return newTable
 end
 
 function PowaAuras:TableEmpty(t)
@@ -1230,32 +1210,25 @@ function PowaAuras:TableSize(t)
 	return size
 end
 
-function PowaAuras:GetTableNumber(t, s)
+function PowaAuras:DisplayTable(t, i)
 	if type(t) ~= "table" then
 		return
 	end
+	if not i then
+		i = ""
+	else
+		i = i.." "
+	end
 	for k, v in pairs(t) do
-		if v == s then
-			return k
+		if type(v) ~= "function" then
+			if type(v) ~= "table" then
+				print(tostring(k).." = "..tostring(v)..i)
+			else
+				print(tostring(k)..i)
+				DisplayTable(v, i)
+			end
 		end
 	end
-	return false
-end
-
-function PowaAuras:GetTableNumberAll(t, s)
-	if type(t) ~= "table" then
-		return
-	end
-	local r = { }
-	for k, v in pairs(t) do
-		if v == s then
-			table.insert(r, k)
-		end
-	end
-	if r[1] == nil then
-		return nil
-	end
-	return r
 end
 
 function PowaAuras:CopyTable(t, lookup_table, original)

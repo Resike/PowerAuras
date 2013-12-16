@@ -218,7 +218,7 @@ cPowaAura.ExportSettings =
 	spec1 = true,
 	spec2 = true,
 	gcd = false,
-	stance = 10,
+	stance = 0,
 	GTFO = 0,
 	PowerType = -1,
 	multiids = "",
@@ -287,6 +287,72 @@ do
 		local state = { }
 		state.tabIdx = 1
 		state.numOfTabs = GetNumSpellTabs()
+		state.currentIterator = iterateTabs
+		return dispatch, state
+	end
+end
+
+local petSpells
+do
+	local iterateFlyout, iterateSlots, iterateTabs
+	iterateFlyout = function(state)
+		while state.flyoutSlotIdx <= state.numFlyoutSlots do
+			local spellId, _, spellKnown, spellName = GetFlyoutSlotInfo(state.flyoutId, state.flyoutSlotIdx)
+			state.flyoutSlotIdx = state.flyoutSlotIdx + 1
+			if spellKnown then
+				return spellId, spellName
+			end
+		end
+		state.slotIdx = state.slotIdx + 1
+		state.currentIterator = iterateSlots
+		return state:currentIterator()
+	end
+	iterateSlots = function(state)
+		while state.slotIdx <= state.numSlots do
+			local spellBookItem = state.slotOffset + state.slotIdx
+			local spellName, spellSubtext = GetSpellBookItemName(spellBookItem, BOOKTYPE_PET)
+			local spellType, spellId = GetSpellBookItemInfo(spellBookItem, BOOKTYPE_PET)
+			if spellType == "SPELL" and not IsPassiveSpell(spellId) then
+				state.slotIdx = state.slotIdx + 1
+				return spellId, spellName, spellSubtext
+			elseif spellType == "FLYOUT" then
+				local _, _, numFlyoutSlots, flyoutKnown = GetFlyoutInfo(spellId)
+				if flyoutKnown then
+					state.flyoutId = spellId
+					state.flyoutSlotIdx = 1
+					state.numFlyoutSlots = numFlyoutSlots
+					state.currentIterator = iterateFlyout
+					return state:currentIterator()
+				end
+			end
+			state.slotIdx = state.slotIdx + 1
+		end
+		state.tabIdx = state.tabIdx + 1
+		state.currentIterator = iterateTabs
+		return state:currentIterator()
+	end
+	iterateTabs = function(state)
+		while state.tabIdx <= state.numOfTabs do
+			local _, _, slotOffset, numSlots, _, offSpecID = GetSpellTabInfo(state.tabIdx)
+			if offSpecID ~= 0 then
+				state.tabIdx = state.tabIdx + 1
+			else
+				state.slotOffset = slotOffset
+				state.numSlots = numSlots
+				state.slotIdx = 1
+				state.currentIterator = iterateSlots
+				return state:currentIterator()
+			end
+		end
+		return nil
+	end
+	local function dispatch(state)
+		return state:currentIterator()
+	end
+	petSpells = function()
+		local state = { }
+		state.tabIdx = 1
+		state.numOfTabs = 1
 		state.currentIterator = iterateTabs
 		return dispatch, state
 	end
@@ -1859,72 +1925,6 @@ cPowaBuff = PowaClass(cPowaBuffBase, {buffAuraType = "HELPFUL", AuraType = "Buff
 cPowaBuff.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Buff], mineText = PowaAuras.Text.nomMine, mineTooltip = PowaAuras.Text.aideMine, targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend}
 cPowaBuff.TooltipOptions = {r = 0.0, g = 1.0, b = 1.0, showBuffName = true, stacksColour = {r = 0.7, g = 1.0, b = 0.7}}
 
--- Debuff
-cPowaDebuff = PowaClass(cPowaBuffBase, {buffAuraType = "HARMFUL", AuraType = "Debuff"})
-cPowaDebuff.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff2, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Debuff], mineText = PowaAuras.Text.nomMine, mineTooltip = PowaAuras.Text.aideMine, targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend}
-cPowaDebuff.TooltipOptions = {r = 1.0, g = 0.8, b = 0.8, showBuffName = true, stacksColour = {r = 1.0, g = 0.7, b = 0.7}}
-cPowaTypeDebuff = PowaClass(cPowaBuffBase, {buffAuraType = "HARMFUL", AuraType = "Debuff Type"})
-cPowaTypeDebuff.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff3, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.TypeDebuff], mineText = PowaAuras.Text.nomDispellable, mineTooltip = PowaAuras.Text.aideDispellable, targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend}
-cPowaTypeDebuff.ShowOptions = {["PowaGroupAnyButton"] = 1, ["PowaBarTooltipCheck"] = 1}
-cPowaTypeDebuff.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1}
-cPowaTypeDebuff.TooltipOptions = {r = 0.8, g = 1.0, b = 0.8, showBuffName = true}
-
-function cPowaTypeDebuff:IsPresent(target, z)
-	local removeable
-	if self.mine then
-		removeable = 1
-	end
-	local name, _, texture, count, typeDebuff, _, expirationTime = UnitDebuff(target, z, removeable)
-	if not name then
-		return nil
-	end
-	if self.Debug then
-		PowaAuras:Message("TypeDebuff ", name, " IsPresent on ", target," buffid ", z," removeable ", removeable)
-	end
-	self.DisplayUnit = target
-	if self.mine and typeDebuff == nil then
-		self.DisplayValue = name
-		return false
-	end
-	if typeDebuff == nil or typeDebuff == "" then
-		PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-		PowaAuras_Tooltip:SetUnitAura(target, z, self.buffAuraType)
-		if PowaAuras_Tooltip:NumLines() >= 1 then
-			typeDebuff = (PowaAuras_TooltipTextRight1 and PowaAuras_TooltipTextRight1:GetText() or "")
-		end
-		PowaAuras_Tooltip:Hide()
-	end
-	local typeDebuffName
-	if typeDebuff ~= nil then
-		typeDebuffName = PowaAuras.Text.DebuffType[typeDebuff]
-	end
-	local typeDebuffCatName = PowaAuras.Text.DebuffCatType[PowaAuras.DebuffCatSpells[name]]
-	if typeDebuffName == nil and typeDebuffCatName == nil then
-		typeDebuffName = PowaAuras.Text.aucun
-	end
-	if self.Debug then
-		PowaAuras:Message("typeDebuffName ", typeDebuffName, " typeDebuffCatName ", typeDebuffCatName," self.buffname ", self.buffname)
-	end
-	if self:MatchText(typeDebuffName, self.buffname)
-	or self:MatchText(typeDebuffCatName, self.buffname) then
-		self.DisplayValue = name
-		if self.Stacks then
-			self.Stacks:SetStackCount(count)
-		end
-		self:SetIcon(texture)
-		if self.Timer then
-			self.Timer:SetDurationInfo(expirationTime)
-			self:CheckTimerInvert()
-			if self.ForceTimeInvert then
-				return false
-			end
-		end
-		return true
-	end
-	self.DisplayValue = self.buffname
-	return false
-end
-
 -- Type buff
 cPowaTypeBuff = PowaClass(cPowaBuffBase, {buffAuraType = "HELPFUL", AuraType = "Buff Type"})
 cPowaTypeBuff.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff3, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.TypeBuff], mineText = PowaAuras.Text.nomDispellable, mineTooltip = PowaAuras.Text.aideDispellable, targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend}
@@ -1937,12 +1937,12 @@ function cPowaTypeBuff:IsPresent(target, z)
 	if self.mine then
 		removeable = 1
 	end
-	local name, _, texture, count, typeBuff, _, expirationTime = UnitBuff(target, z, removeable)
-	if not name then
+	local name, _, texture, count, typeBuff, _, expirationTime, _, _, _, spellId = UnitBuff(target, z, removeable)
+	if not name or not spellId then
 		return nil
 	end
 	if self.Debug then
-		PowaAuras:Message("TypeBuff = ", name, " IsPresent on ", target," buffid = ", z," removeable = ", removeable)
+		PowaAuras:Message("TypeBuff = ", name, "Spellid = ", spellId, " IsPresent on ", target," buffid = ", z," removeable = ", removeable)
 	end
 	self.DisplayUnit = target
 	if self.mine and typeBuff == nil then
@@ -1961,15 +1961,81 @@ function cPowaTypeBuff:IsPresent(target, z)
 	if typeBuff ~= nil then
 		typeBuffName = PowaAuras.Text.DebuffType[typeBuff]
 	end
-	local typeBuffCatName = PowaAuras.Text.DebuffCatType[PowaAuras.DebuffCatSpells[name]]
+	local typeBuffCatName = PowaAuras.Text.DebuffCatType[PowaAuras.DebuffTypeSpellIds[tonumber(spellId)]]
 	if typeBuffName == nil and typeBuffCatName == nil then
 		typeBuffName = PowaAuras.Text.aucun
 	end
 	if self.Debug then
 		PowaAuras:Message("typeBuffName = ", typeBuffName, " typeBuffCatName = ", typeBuffCatName," self.buffname = ", self.buffname)
 	end
-	if self:MatchText(typeBuffName, self.buffname)
-	or self:MatchText(typeBuffCatName, self.buffname) then
+	if self:MatchText(typeBuffName, self.buffname) or self:MatchText(typeBuffCatName, self.buffname) then
+		self.DisplayValue = name
+		if self.Stacks then
+			self.Stacks:SetStackCount(count)
+		end
+		self:SetIcon(texture)
+		if self.Timer then
+			self.Timer:SetDurationInfo(expirationTime)
+			self:CheckTimerInvert()
+			if self.ForceTimeInvert then
+				return false
+			end
+		end
+		return true
+	end
+	self.DisplayValue = self.buffname
+	return false
+end
+
+-- Debuff
+cPowaDebuff = PowaClass(cPowaBuffBase, {buffAuraType = "HARMFUL", AuraType = "Debuff"})
+cPowaDebuff.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff2, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Debuff], mineText = PowaAuras.Text.nomMine, mineTooltip = PowaAuras.Text.aideMine, targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend}
+cPowaDebuff.TooltipOptions = {r = 1.0, g = 0.8, b = 0.8, showBuffName = true, stacksColour = {r = 1.0, g = 0.7, b = 0.7}}
+
+-- Type debuff
+cPowaTypeDebuff = PowaClass(cPowaBuffBase, {buffAuraType = "HARMFUL", AuraType = "Debuff Type"})
+cPowaTypeDebuff.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff3, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.TypeDebuff], mineText = PowaAuras.Text.nomDispellable, mineTooltip = PowaAuras.Text.aideDispellable, targetFriendText = PowaAuras.Text.nomCheckFriend, targetFriendTooltip = PowaAuras.Text.aideTargetFriend}
+cPowaTypeDebuff.ShowOptions = {["PowaGroupAnyButton"] = 1, ["PowaBarTooltipCheck"] = 1}
+cPowaTypeDebuff.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1, ["PowaInverseButton"] = 1, ["PowaIngoreCaseButton"] = 1, ["PowaOwntexButton"] = 1}
+cPowaTypeDebuff.TooltipOptions = {r = 0.8, g = 1.0, b = 0.8, showBuffName = true}
+
+function cPowaTypeDebuff:IsPresent(target, z)
+	local removeable
+	if self.mine then
+		removeable = 1
+	end
+	local name, _, texture, count, typeDebuff, _, expirationTime, _, _, _, spellId = UnitDebuff(target, z, removeable)
+	if not name or not spellId then
+		return nil
+	end
+	if self.Debug then
+		PowaAuras:Message("TypeDebuff ", name, "Spellid = ", spellId, " IsPresent on ", target," buffid ", z," removeable ", removeable)
+	end
+	self.DisplayUnit = target
+	if self.mine and typeDebuff == nil then
+		self.DisplayValue = name
+		return false
+	end
+	if typeDebuff == nil or typeDebuff == "" then
+		PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+		PowaAuras_Tooltip:SetUnitAura(target, z, self.buffAuraType)
+		if PowaAuras_Tooltip:NumLines() >= 1 then
+			typeDebuff = (PowaAuras_TooltipTextRight1 and PowaAuras_TooltipTextRight1:GetText() or "")
+		end
+		PowaAuras_Tooltip:Hide()
+	end
+	local typeDebuffName
+	if typeDebuff ~= nil then
+		typeDebuffName = PowaAuras.Text.DebuffType[typeDebuff]
+	end
+	local typeDebuffCatName = PowaAuras.Text.DebuffCatType[PowaAuras.DebuffTypeSpellIds[tonumber(spellId)]]
+	if typeDebuffName == nil and typeDebuffCatName == nil then
+		typeDebuffName = PowaAuras.Text.aucun
+	end
+	if self.Debug then
+		PowaAuras:Message("typeDebuffName ", typeDebuffName, " typeDebuffCatName ", typeDebuffCatName," self.buffname ", self.buffname)
+	end
+	if self:MatchText(typeDebuffName, self.buffname) or self:MatchText(typeDebuffCatName, self.buffname) then
 		self.DisplayValue = name
 		if self.Stacks then
 			self.Stacks:SetStackCount(count)
@@ -2552,14 +2618,28 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 	if not enabled then
 		if not self.inverse and self.mine then
 			local show = false
-			for spellId, spellName, spellSubtext in playerSpells() do
-				if self.ignoremaj then
-					if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
-						show = true
+			if self.targetfriend then
+				for spellId, spellName, spellSubtext in petSpells() do
+					if self.ignoremaj then
+						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+							show = true
+						end
+					else
+						if spellId == tonumber(buffname) or spellName == buffname then
+							show = true
+						end
 					end
-				else
-					if spellId == tonumber(buffname) or spellName == buffname then
-						show = true
+				end
+			else
+				for spellId, spellName, spellSubtext in playerSpells() do
+					if self.ignoremaj then
+						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+							show = true
+						end
+					else
+						if spellId == tonumber(buffname) or spellName == buffname then
+							show = true
+						end
 					end
 				end
 			end
@@ -2570,14 +2650,28 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			end
 		elseif self.inverse and self.mine then
 			local show = true
-			for spellId, spellName, spellSubtext in playerSpells() do
-				if self.ignoremaj then
-					if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
-						show = true
+			if self.targetfriend then
+				for spellId, spellName, spellSubtext in petSpells() do
+					if self.ignoremaj then
+						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+							show = true
+						end
+					else
+						if spellId == tonumber(buffname) or spellName == buffname then
+							show = true
+						end
 					end
-				else
-					if spellId == tonumber(buffname) or spellName == buffname then
-						show = true
+				end
+			else
+				for spellId, spellName, spellSubtext in playerSpells() do
+					if self.ignoremaj then
+						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+							show = true
+						end
+					else
+						if spellId == tonumber(buffname) or spellName == buffname then
+							show = true
+						end
 					end
 				end
 			end
@@ -2612,14 +2706,28 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 	if cdstart == 0 or self.CooldownOver then
 		if not self.inverse and not self.mine then
 			local show = false
-			for spellId, spellName, spellSubtext in playerSpells() do
-				if self.ignoremaj then
-					if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
-						show = true
+			if self.targetfriend then
+				for spellId, spellName, spellSubtext in petSpells() do
+					if self.ignoremaj then
+						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+							show = true
+						end
+					else
+						if spellId == tonumber(buffname) or spellName == buffname then
+							show = true
+						end
 					end
-				else
-					if spellId == tonumber(buffname) or spellName == buffname then
-						show = true
+				end
+			else
+				for spellId, spellName, spellSubtext in playerSpells() do
+					if self.ignoremaj then
+						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+							show = true
+						end
+					else
+						if spellId == tonumber(buffname) or spellName == buffname then
+							show = true
+						end
 					end
 				end
 			end
@@ -2632,14 +2740,28 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			local show
 			if tonumber(buffname) and tonumber(buffname) % 1 == 0 then
 				show = false
-				for spellId, spellName, spellSubtext in playerSpells() do
-					if self.ignoremaj then
-						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
-							show = true
+				if self.targetfriend then
+					for spellId, spellName, spellSubtext in petSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
-					else
-						if spellId == tonumber(buffname) or spellName == buffname then
-							show = true
+					end
+				else
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
 					end
 				end
@@ -2650,14 +2772,28 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 				end
 			else
 				show = false
-				for spellId, spellName, spellSubtext in playerSpells() do
-					if self.ignoremaj then
-						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
-							show = true
+				if self.targetfriend then
+					for spellId, spellName, spellSubtext in petSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
-					else
-						if spellId == tonumber(buffname) or spellName == buffname then
-							show = true
+					end
+				else
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
 					end
 				end
@@ -2671,21 +2807,40 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			local show
 			if tonumber(buffname) and tonumber(buffname) % 1 == 0 then
 				local spellIdFound = false
-				for spellId, spellName, spellSubtext in playerSpells() do
-					local spellLink = GetSpellLink(spellId)
-					if spellLink then
-						local spellID = string.match(spellLink, "spell:(%d+)")
-						if tonumber(spellID) == tonumber(buffname) then
-							spellIdFound = true
+				if self.targetfriend then
+					for spellId, spellName, spellSubtext in petSpells() do
+						local spellLink = GetSpellLink(spellId)
+						if spellLink then
+							local spellID = string.match(spellLink, "spell:(%d+)")
+							if tonumber(spellID) == tonumber(buffname) then
+								spellIdFound = true
+							end
+						end
+					end
+				else
+					for spellId, spellName, spellSubtext in playerSpells() do
+						local spellLink = GetSpellLink(spellId)
+						if spellLink then
+							local spellID = string.match(spellLink, "spell:(%d+)")
+							if tonumber(spellID) == tonumber(buffname) then
+								spellIdFound = true
+							end
 						end
 					end
 				end
 				if spellIdFound then
 					show = false
-					local compare = show
-					for spellId, spellName, spellSubtext in playerSpells() do
-						if spellId == tonumber(buffname) then
-							show = true
+					if self.targetfriend then
+						for spellId, spellName, spellSubtext in petSpells() do
+							if spellId == tonumber(buffname) then
+								show = true
+							end
+						end
+					else
+						for spellId, spellName, spellSubtext in playerSpells() do
+							if spellId == tonumber(buffname) then
+								show = true
+							end
 						end
 					end
 					if show then
@@ -2695,10 +2850,17 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 					end
 				else
 					show = true
-					local compare = show
-					for spellId, spellName, spellSubtext in playerSpells() do
-						if spellId == tonumber(buffname) then
-							show = false
+					if self.targetfriend then
+						for spellId, spellName, spellSubtext in petSpells() do
+							if spellId == tonumber(buffname) then
+								show = false
+							end
+						end
+					else
+						for spellId, spellName, spellSubtext in playerSpells() do
+							if spellId == tonumber(buffname) then
+								show = false
+							end
 						end
 					end
 					if show then
@@ -2709,14 +2871,28 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 				end
 			else
 				show = false
-				for spellId, spellName, spellSubtext in playerSpells() do
-					if self.ignoremaj then
-						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
-							show = true
+				if self.targetfriend then
+					for spellId, spellName, spellSubtext in petSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
-					else
-						if spellId == tonumber(buffname) or spellName == buffname then
-							show = true
+					end
+				else
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
 					end
 				end
@@ -2730,14 +2906,28 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 			local show
 			if tonumber(buffname) and tonumber(buffname) % 1 == 0 then
 				show = false
-				for spellId, spellName, spellSubtext in playerSpells() do
-					if self.ignoremaj then
-						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
-							show = true
+				if self.targetfriend then
+					for spellId, spellName, spellSubtext in petSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
-					else
-						if spellId == tonumber(buffname) or spellName == buffname then
-							show = true
+					end
+				else
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
 					end
 				end
@@ -2748,14 +2938,28 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 				end
 			else
 				show = false
-				for spellId, spellName, spellSubtext in playerSpells() do
-					if self.ignoremaj then
-						if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
-							show = true
+				if self.targetfriend then
+					for spellId, spellName, spellSubtext in petSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
-					else
-						if spellId == tonumber(buffname) or spellName == buffname then
-							show = true
+					end
+				else
+					for spellId, spellName, spellSubtext in playerSpells() do
+						if self.ignoremaj then
+							if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+								show = true
+							end
+						else
+							if spellId == tonumber(buffname) or spellName == buffname then
+								show = true
+							end
 						end
 					end
 				end
@@ -3410,6 +3614,17 @@ function cPowaStance:CheckIfShouldShow(giveReason)
 		return false
 	end
 	return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonNoStance, nStance, self.stance)
+end
+
+function cPowaStance:SetFixedIcon()
+	self.icon = nil
+	if self.stance > 0 then
+		self:SetIcon(GetShapeshiftFormInfo(self.stance))
+	elseif self.stance == 0 then
+		self:SetIcon("Interface\\Icons\\warrior_talent_icon_deadlycalm")
+	else
+		self.icon = ""
+	end
 end
 
 -- GTFO

@@ -265,6 +265,7 @@ nomCustomSoundEnd = "Custom Ending Soundfile:",
 aideCustomSoundEnd = "Enter a soundfile that is in the Sounds folder.\nSupported file formats: .mp3, .wav and .ogg, you must copy the file before you start the game.\nExamples: 'cookie.mp3', 'Sound\\Events\\\nGuldanCheers.wav'.",
 nomTexture = "Texture",
 aideTexture = "The texture to be shown. You can easily replace textures by changing the files Aura#.tga in the Addon's directory.",
+nomModel = "Model",
 
 nomAnim1 = "Main Animation",
 nomAnim2 = "Secondary Animation",
@@ -298,7 +299,7 @@ aideStacks = "Enter here the operator and the amount of stacks, required activat
 aideStealableSpells = "Enter here the Stealable Spell Name that will trigger the Aura. (use * for any stealable spell)",
 aidePurgeableSpells = "Enter here the Purgeable Spell Name that will trigger the Aura. (use * for any purgeable spell)",
 
-aideTotems = "Enter here the Totem Name that will trigger the Aura or a number. 1=Fire, 2=Earth, 3=Water, 4=Air. (use * for any totem)",
+aideTotems = "Enter here the Totem Name or part of it's name, that will trigger the Aura or a number. 1 = Fire, 2 = Earth, 3 = Water, 4 = Air. (Enter 'totem' for any totems.)",
 
 aideRunes = "Enter here the Runes that will trigger the Aura. B/b=Blood, F/f=frost, U/u=Unholy, D/d=Death. (Death runes will count as the other types if you use uppercase or the ignorecase flag is set) ex: 'BF' 'BfU' 'DDD'",
 
@@ -385,6 +386,7 @@ nomCheckRaid = "Raid Member",
 nomCheckGroupOrSelf = "Self/Party/Raid",
 nomCheckGroupAny = "Any Member",
 nomCheckOptunitn = "Unit Name",
+nomPetCooldown = "Pet Cooldown",
 
 aideTarget = "Check this to test an enemy target only.",
 aideTargetFriend = "Check this to test a friendly target only.",
@@ -983,21 +985,21 @@ AuraType =
 
 PowerType =
 {
-        [-1] = "Standard",
-        [SPELL_POWER_ALTERNATE_POWER] = "Boss-Fähigkeit",
-        [SPELL_POWER_BURNING_EMBERS] = "Brennende Funken",
-        [SPELL_POWER_CHI] = "Chi",
-        [SPELL_POWER_DARK_FORCE] = "Dunkle Macht",
-        [SPELL_POWER_DEMONIC_FURY] = "Dämonischer Furor",
-        [SPELL_POWER_ENERGY] = "Energie",
-        [SPELL_POWER_FOCUS] = "Fokus",
-        [SPELL_POWER_HOLY_POWER] = "Heilige Kraft",
-        [SPELL_POWER_LUNAR_ECLIPSE] = "Mondfinsternis",
-        [SPELL_POWER_RAGE] = "Wut",
-        [SPELL_POWER_RUNIC_POWER] = "Runenmacht",
-        [SPELL_POWER_SHADOW_ORBS] = "Schattenkugeln",
-        [SPELL_POWER_SOLAR_ECLIPSE] = "Sonnenfinsternis",
-        [SPELL_POWER_SOUL_SHARDS] = "Seelensplitter",
+		[-1] = "Standard",
+		[SPELL_POWER_ALTERNATE_POWER] = "Boss-Fähigkeit",
+		[SPELL_POWER_BURNING_EMBERS] = "Brennende Funken",
+		[SPELL_POWER_CHI] = "Chi",
+		[SPELL_POWER_DARK_FORCE] = "Dunkle Macht",
+		[SPELL_POWER_DEMONIC_FURY] = "Dämonischer Furor",
+		[SPELL_POWER_ENERGY] = "Energie",
+		[SPELL_POWER_FOCUS] = "Fokus",
+		[SPELL_POWER_HOLY_POWER] = "Heilige Kraft",
+		[SPELL_POWER_LUNAR_ECLIPSE] = "Mondfinsternis",
+		[SPELL_POWER_RAGE] = "Wut",
+		[SPELL_POWER_RUNIC_POWER] = "Runenmacht",
+		[SPELL_POWER_SHADOW_ORBS] = "Schattenkugeln",
+		[SPELL_POWER_SOLAR_ECLIPSE] = "Sonnenfinsternis",
+		[SPELL_POWER_SOUL_SHARDS] = "Seelensplitter",
 },
 
 Relative =

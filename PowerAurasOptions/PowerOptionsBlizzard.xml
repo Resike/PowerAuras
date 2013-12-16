@@ -222,7 +222,7 @@
 						PowaOptionsUpdateSlider2High:SetText("100%")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAurasOptions:PowaOptionsUpdateSliderChanged2(self, value)
+						PowaAurasOptions:PowaOptionsUpdateSliderChanged(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
 						PowaAurasOptions.SliderSetValues(self, delta)
@@ -252,7 +252,7 @@
 						PowaOptionsTimerUpdateSlider2High:SetText("100%")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAurasOptions:PowaOptionsTimerUpdateSliderChanged2(self, value)
+						PowaAurasOptions:PowaOptionsTimerUpdateSliderChanged(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
 						PowaAurasOptions.SliderSetValues(self, delta)
@@ -356,7 +356,7 @@
 				</Scripts>
 			</Button>
 			<!-- Default Timer Texture DropDown -->
-			<Frame name = "PowaDropDownDefaultTimerTexture" inherits = "UIDropDownMenuTemplate">
+			<Frame name = "PowaDropDownDefaultTimerTexture" inherits = "PowaDropDownMenuTemplate">
 				<Size>
 					<AbsDimension x = "200" y = "32"/>
 				</Size>
@@ -382,17 +382,15 @@
 				</Layers>
 				<Scripts>
 					<OnLoad>
+						UIDropDownMenu_SetWidth(self, 200)
 						PowaDropDownDefaultTimerTextureLabel:SetText(PowaAurasOptions.Text.nomDefaultTimerTexture)
 					</OnLoad>
-					<OnShow>
-						UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownDefaultTimerMenu_Initialize)
-					</OnShow>
 				</Scripts>
 			</Frame>
 			<!-- Default Stacks Texture DropDown -->
-			<Frame name = "PowaDropDownDefaultStacksTexture" inherits = "UIDropDownMenuTemplate">
+			<Frame name = "PowaDropDownDefaultStacksTexture" inherits = "PowaDropDownMenuTemplate">
 				<Size>
-					<AbsDimension x = "260" y = "32"/>
+					<AbsDimension x = "200" y = "32"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaResetPositionButton" relativePoint = "BOTTOMLEFT">
@@ -416,11 +414,9 @@
 				</Layers>
 				<Scripts>
 					<OnLoad>
+						UIDropDownMenu_SetWidth(self, 200)
 						PowaDropDownDefaultStacksTextureLabel:SetText(PowaAurasOptions.Text.nomDefaultStacksTexture)
 					</OnLoad>
-					<OnShow>
-						UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownDefaultStacksMenu_Initialize)
-					</OnShow>
 				</Scripts>
 			</Frame>
 			<!-- Custom Sound Path Editbox -->
@@ -518,7 +514,7 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				PowaOptionsCpuFrame2_OnLoad(self)
+				PowaAurasOptions:Blizzard_OnLoad(self)
 			</OnLoad>
 		</Scripts>
 	</Frame>

@@ -1,4 +1,8 @@
 **Issues:**
+* Support for stackable spells.
+* Make "Spell Cooldowns" to ignore global cooldown.
+* Duel with party members, enemy target bug.
+* Change Old-Animation's update type to AnimationGroup.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
@@ -15,6 +19,7 @@
 * Added an option to show emberbits for warlocks when you enable stacks for "Rage/Energy/Power"/"Burning Embers" power type auras.
 * "Buff"/"Debuff"/"Spell Cooldown" auras now properly going to recognize spell ids like: "[1234]", "Buff/1234/[12345]".
 * Spell updates for every class.
+* Buff Type and Debuff Type triggers now handled by spell ids, means it can detect multiple spells with the same name.
 * Fixed a bug which broke "Invert Aura Timer" slider's functionality on the "Timer" tab.
 * Fixed a major import/export bug.
 * Fixed a minor import/export bug with "Resting".
@@ -27,6 +32,7 @@
 * Fixed excessive cpu and memory usage when checked the "Own Texture" checkbutton.
 * Fixed a major bug which caused multiple "Health"/"Mana"/"Rage/Energy/Power" type auras threshold slider's value to override themselfs.
 * Fixed a bug which caused custom model's edixbox override some GUI elements on some aura types.
+* Fixed a random color issues with "Test All" button.
 * Fixed an issue with Timer/Stack color picker.
 * Fixed a glitch with "Stacks" "Animate of Refresh" animation.
 * Other smaller perfomance upgradements.
