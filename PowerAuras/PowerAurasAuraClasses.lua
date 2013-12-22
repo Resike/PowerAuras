@@ -997,7 +997,7 @@ function cPowaAura:ShouldShow(giveReason, reverse)
 end
 
 function cPowaAura:Display()
-	PowaAuras:Message("Aura Display id=", self.id)
+	PowaAuras:Message("Aura Display id = ", self.id)
 	for k, v in pairs(self) do
 		PowaAuras:Message(" "..tostring(k).." = "..tostring(v))
 	end

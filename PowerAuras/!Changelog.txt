@@ -1,5 +1,8 @@
 **Issues:**
+* Leftover slider/dropdown/model optimisations.
 * Support for stackable spells.
+* Change animation slider for models to extended type, to able to choose new monk type animations.
+* Combat issues with non-inverted "Spell Cooldown" and "Action Usable" type auras.
 * Make "Spell Cooldowns" to ignore global cooldown.
 * Duel with party members, enemy target bug.
 * Change Old-Animation's update type to AnimationGroup.
@@ -9,21 +12,29 @@
 **4.24.5**
 * Recuded memory usage of handling some of the GUI elements by 95-99%.
 * Added ~5000 new models.
+* Fixed excessive cpu usage while opening the "Effect Editor".
 * Completely rewamped the model auras.
 * Added Model Category and Model Texture dropdown.
 * From now the addon is going to remember which model have you choosen, and properly going to load that model even when new models have been added or deleted from the model category's table.
 * Every creature type model camera position can be fully customized, when you unlock the aura and right click on the model itself.
+* Models can be recolored.
 * Support to properly display multi texture creature type models.
-* Moving models will update the position x, position y, model x, model y, model z sliders in real time.
-* Moving textures will update the position x, position y, sliders in real time.
+* Moving models with the mouse will update the position x, position y, model x, model y, model z sliders in real time.
+* Moving textures with the mouse will update the position x, position y, sliders in real time.
 * Added an option to show emberbits for warlocks when you enable stacks for "Rage/Energy/Power"/"Burning Embers" power type auras.
 * "Buff"/"Debuff"/"Spell Cooldown" auras now properly going to recognize spell ids like: "[1234]", "Buff/1234/[12345]".
-* Spell updates for every class.
-* Buff Type and Debuff Type triggers now handled by spell ids, means it can detect multiple spells with the same name.
+* Lots of slider and dropdown optimisations.
+* The default "Stance/Seal/Form" is now Humanoid.
+* "Buff Type" and "Debuff Type" triggers now handled by spell ids, means it can detect multiple spells with the same name.
+* Updated every classes CC/Disarm/Root/Snare/Stun/Silence spells for 5.4.2.
+* "Spell Cooldown" are properly going to work with pet spells again.
+* "Pet Cooldown" type tooltip fix.
+* Added conversion tool for uppercase strata, texture strata and blend modes.
+* Fixed a dropdown taint which prevented to join battleground queues.
+* Fixed a bug which randomly redisplayed timed auras on zone/subzone changes.
 * Fixed a bug which broke "Invert Aura Timer" slider's functionality on the "Timer" tab.
-* Fixed a major import/export bug.
+* Fixed a major import/export bug. (Alternate Export options is unnecessary from now.)
 * Fixed a minor import/export bug with "Resting".
-* Fixed a bug which caused excessive CPU usage when right clicking on aruas.
 * Fixed an issues with "Character-" and "Global effects" list button's hitboxes.
 * Fixed a major bug which caused auras to stuck when you changed the buff's/debuff's name for the aura, while you still had the last buff/debuff.
 * Fixed a bug which didn't properly updated aura's random color, when you used the "Gradient Style" dropdown.
@@ -38,7 +49,7 @@
 * Other smaller perfomance upgradements.
 * Removed "Donate" button.
 * Upvalue changes.
-* Lot of other minor fixes.
+* Loads of other minor fixes.
 
 **4.24.4**
 * Fixed a bug which caused part of the spell names not to be found in the actual spell.

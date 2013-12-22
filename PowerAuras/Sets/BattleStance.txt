@@ -1,1 +1,0 @@
-Version:4.24.5; mcd:4.6473; mcy:-6.1413; buffname:Battle Stance; modelpath:spells\racial_orc_impact_base.m2; bufftype:13; texture:2115; modelcategory:4; duration:2.65; mcp:-0.3196; size:2; model:true; icon:Ability_Warrior_OffensiveStance; y:353; UseOldAnimations:true; anim2:6; finish:0

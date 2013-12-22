@@ -205,6 +205,22 @@ function PowaAuras:UpdateOldAuras()
 				aura.isAlive = 0
 			end
 			aura.isDead = nil
+			if string.upper(aura.blendmode) == aura.blendmode then
+				aura.blendmode = string.lower(aura.blendmode)
+				aura.blendmode = string.gsub(aura.blendmode, "^%l", string.upper)
+			end
+			if string.upper(aura.strata) == aura.strata then
+				if aura.strata == "FULLSCREEN_DIALOG" then
+					aura.strata = "Fullscreen_Dialog"
+				else
+					aura.strata = string.lower(aura.strata)
+					aura.strata = string.gsub(aura.strata, "^%l", string.upper)
+				end
+			end
+			if string.upper(aura.texturestrata) == aura.texturestrata then
+				aura.texturestrata = string.lower(aura.texturestrata)
+				aura.texturestrata = string.gsub(aura.texturestrata, "^%l", string.upper)
+			end
 			if aura.buffname == "" then
 				self.Auras[i] = nil
 			elseif aura.bufftype == nil then

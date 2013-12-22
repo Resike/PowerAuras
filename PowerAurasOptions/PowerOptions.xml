@@ -1968,38 +1968,6 @@
 							</OnLoad>
 						</Scripts>
 					</Frame>
-					<!-- Model Texture DropDown -->
-					<Frame name = "PowaModelTextureDropDown" inherits = "PowaDropDownMenuTemplate">
-						<Anchors>
-							<Anchor point = "RIGHT" relativeTo = "PowaModelCategoryDropDown" relativePoint = "LEFT">
-								<Offset>
-									<AbsDimension x = "10" y = "0"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<HitRectInsets>
-							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
-						</HitRectInsets>
-						<Layers>
-							<Layer>
-								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
-									<Anchors>
-										<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
-											<Offset>
-												<AbsDimension x = "20" y = "2"/>
-											</Offset>
-										</Anchor>
-									</Anchors>
-								</FontString>
-							</Layer>
-						</Layers>
-						<Scripts>
-							<OnLoad>
-								Lib_UIDropDownMenu_SetWidth(self, 120)
-								PowaModelTextureDropDownLabel:SetText(PowaAurasOptions.Text.nomModelTexture..":")
-							</OnLoad>
-						</Scripts>
-					</Frame>
 					<!-- Secondary Color Button -->
 					<Button name = "PowaGradientColor">
 						<Size>
@@ -2063,6 +2031,38 @@
 						</Scripts>
 						<NormalTexture name = "$parentNormalTexture" file = "Interface\ChatFrame\ChatFrameColorSwatch"/>
 					</Button>
+					<!-- Model Texture DropDown -->
+					<Frame name = "PowaModelTextureDropDown" inherits = "PowaDropDownMenuTemplate">
+						<Anchors>
+							<Anchor point = "TOPLEFT" relativeTo = "PowaGradientColor" relativePoint = "BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x = "-18" y = "-18"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<HitRectInsets>
+							<AbsInset left = "18" right = "16" top = "2" bottom = "8"/>
+						</HitRectInsets>
+						<Layers>
+							<Layer>
+								<FontString name = "$parentLabel" inherits = "GameFontNormalSmall">
+									<Anchors>
+										<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT">
+											<Offset>
+												<AbsDimension x = "20" y = "2"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								Lib_UIDropDownMenu_SetWidth(self, 120)
+								PowaModelTextureDropDownLabel:SetText(PowaAurasOptions.Text.nomModelTexture..":")
+							</OnLoad>
+						</Scripts>
+					</Frame>
 					<!-- Random Color CheckButton -->
 					<CheckButton name = "PowaRandomColorButton" inherits = "PowaCheckTemplate">
 						<Size>
