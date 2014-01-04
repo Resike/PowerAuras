@@ -1,7 +1,7 @@
-local math = math
-
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
+
+local math = math
 
 function PowaAuras:CalculateDurations(speed)
 	-- Speed ranges from 0.05 to 2

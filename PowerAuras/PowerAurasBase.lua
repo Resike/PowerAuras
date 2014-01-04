@@ -1,9 +1,8 @@
+local _, ns = ...
+
 local string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select = string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select
 
-local _, ns = ...
-local PowaAuras = { }
-
-PowaAuras =
+local PowaAuras =
 {
 Version = GetAddOnMetadata("PowerAuras", "Version"),
 
@@ -1148,9 +1147,8 @@ PowaAuras.DebuffTypeSpellIds =
 
 PowaAuras.Text = { }
 
-PowaAurasOptions = { }
-PowaAurasOptions = PowaAuras
 ns.PowaAuras = PowaAuras
+PowaAurasOptions = PowaAuras
 
 function PowaAuras:Debug(...)
 	if PowaMisc.debug then

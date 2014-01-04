@@ -9,6 +9,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.24.6**
+* Fixed an issues with "Action Usable" trigger.
+* Removed some models with missing textures.
+
 **4.24.5**
 * Recuded memory usage of handling some of the GUI elements by 95-99%.
 * Added ~5000 new models.

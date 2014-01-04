@@ -1,7 +1,7 @@
-local math, table, pairs, tonumber, tostring, strsplit = math, table, pairs, tonumber, tostring, strsplit
-
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
+
+local math, table, pairs, tonumber, tostring, strsplit = math, table, pairs, tonumber, tostring, strsplit
 
 cPowaStacks = PowaClass(function(stacker, aura, base)
 	for k, v in pairs(cPowaStacks.ExportSettings) do

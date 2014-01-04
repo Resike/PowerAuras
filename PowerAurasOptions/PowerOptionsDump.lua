@@ -1,3 +1,5 @@
+local PowaAurasOptions = PowaAurasOptions
+
 function PowaAurasOptions:Dump()
 	local Status, Err = pcall(PowaAurasOptions.Dump_Safe, self)
 	if not Status then

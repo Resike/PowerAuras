@@ -5,7 +5,7 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.5   \//      \// \//    \\/     \\/      \//  \//       
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.6   \//      \// \//    \\/     \\/      \//  \//       
 
 	Power Auras Classic
 	Author: Resike
@@ -13,10 +13,10 @@
 	All rights reserved.
 --]]
 
-local string, format, tostring, tonumber, math, pi, halfpi, table, pairs, select, wipe, _G = string, format, tostring, tonumber, math, math.pi, math.pi / 2, table, pairs, select, wipe, _G
-
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
+
+local string, format, tostring, tonumber, math, pi, halfpi, table, pairs, select, wipe, _G = string, format, tostring, tonumber, math, math.pi, math.pi / 2, table, pairs, select, wipe, _G
 
 local r1, r2, r3, r4, r5, r6
 

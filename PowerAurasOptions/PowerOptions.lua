@@ -1,3 +1,5 @@
+local PowaAurasOptions = PowaAurasOptions
+
 local string, tostring, tonumber, format, table, math, pi, pairs, ipairs, strsplit, _G = string, tostring, tonumber, format, table, math, math.pi, pairs, ipairs, strsplit, _G
 
 -- Main Options

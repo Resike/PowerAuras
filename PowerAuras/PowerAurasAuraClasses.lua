@@ -1,7 +1,7 @@
-local string, tostring, tonumber, format, table, math, pairs, strtrim, strsplit, select, wipe, _G = string, tostring, tonumber, format, table, math, pairs, strtrim, strsplit, select, wipe, _G
-
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
+
+local string, tostring, tonumber, format, table, math, pairs, strtrim, strsplit, select, wipe, _G = string, tostring, tonumber, format, table, math, pairs, strtrim, strsplit, select, wipe, _G
 
 -- PowaAura Classes
 function PowaClass(base, ctor)
@@ -2472,6 +2472,7 @@ cPowaActionReady.TooltipOptions = {r = 0.8, g = 0.8, b = 1.0, showBuffName = tru
 
 function cPowaActionReady:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)
+	PowaAuras.Events.PLAYER_TALENT_UPDATE = true
 	PowaAuras.Events.ACTIONBAR_SLOT_CHANGED = true
 	PowaAuras.Events.ACTIONBAR_SHOWGRID = true
 	PowaAuras.Events.ACTIONBAR_HIDEGRID = true

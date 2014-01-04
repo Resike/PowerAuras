@@ -1,7 +1,7 @@
-local pairs = pairs
-
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
+
+local pairs = pairs
 
 -- Reset if spec changed or slash command
 function PowaAuras:ResetTalentScan(unit)
