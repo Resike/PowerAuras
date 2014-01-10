@@ -1,13 +1,20 @@
 **Issues:**
 * Leftover slider/dropdown/model optimisations.
+* Timed auras redisplay fix at phasing events.
 * Support for stackable spells.
-* Change animation slider for models to extended type, to able to choose new monk type animations.
-* Combat issues with non-inverted "Spell Cooldown" and "Action Usable" type auras.
 * Make "Spell Cooldowns" to ignore global cooldown.
 * Duel with party members, enemy target bug.
 * Change Old-Animation's update type to AnimationGroup.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
+
+**4.24.7**
+* Fixed a bug which caused timers not to show up when the aura itself was hidden at the start.
+* Fixed an issue which caused timers to broke, when you changed the auras invert checkbutton.
+* Removed a leftover text file from the model database.
+* Model's animation slider max value is 802 now.
+* Reverted timed auras redisplay fix from 4.24.5. (Need a better method to fix.)
+* Other minor fixes.
 
 **4.24.6**
 * Fixed an issues with "Action Usable" trigger.
