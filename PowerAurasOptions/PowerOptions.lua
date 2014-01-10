@@ -2969,6 +2969,7 @@ function PowaAurasOptions:InverseChecked()
 	if self.Auras[self.CurrentAuraId].Stacks and self.Auras[self.CurrentAuraId].Stacks.enabled == true then
 		self.Auras[self.CurrentAuraId].Stacks:Dispose()
 	end
+	self:RebuildAura(self.CurrentAuraId)
 	aura:HideShowTabs()
 end
 
@@ -4119,7 +4120,7 @@ function PowaAurasOptions:RebuildAura(id)
 	aura.Showing = showing
 	aura:Init()
 	self.Auras[id] = aura
-	if self.CurrentAuraId > 120 then
+	if id > 120 then
 		PowaGlobalSet[id] = aura
 	end
 	self:CalculateAuraSequence()
@@ -5030,7 +5031,7 @@ function PowaAurasOptions.Ternary_OnClick(self)
 		aura[self.Parameter] = false
 	else
 		aura[self.Parameter] = 0
-	end	
+	end
 	PowaAurasOptions:TernarySetState(self, aura[self.Parameter])
 	PowaAurasOptions.Ternary_CheckTooltip(self)
 end

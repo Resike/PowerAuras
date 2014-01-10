@@ -2538,7 +2538,6 @@ PowaAurasOptions.ModelsSpells =
 "spells\\fel_rainoffire_impact_base.m2",
 "spells\\fel_rainoffire_missile.m2",
 "spells\\fel_warlock_demonologycharge_ribbon.m2",
-"spells\\file.txt",
 "spells\\fill_arcane_cast_01.m2",
 "spells\\fill_arcane_precast_01.m2",
 "spells\\fill_bubble_state.m2",

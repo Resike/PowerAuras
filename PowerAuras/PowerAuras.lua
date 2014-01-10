@@ -5,7 +5,7 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.6   \//      \// \//    \\/     \\/      \//  \//       
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.7   \//      \// \//    \\/     \\/      \//  \//       
 
 	Power Auras Classic
 	Author: Resike
@@ -629,11 +629,9 @@ function PowaAuras:OnUpdate(elapsed)
 	end
 	for i = 1, #self.AuraSequence do
 		local aura = self.AuraSequence[i]
-		if aura.Showing or (aura.Timer and aura.Timer.Showing) or (aura.InvertAuraBelow > 0) then
+		if aura.Showing or (aura.Timer and aura.Timer.enabled) or aura.InvertAuraBelow > 0 then
 			if self:UpdateAura(aura, elapsed) then
-				if (aura.Timer and aura.Timer.enabled) or (aura.InvertAuraBelow > 0) then
-					self:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
-				end
+				self:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 			end
 		end
 	end
@@ -754,7 +752,7 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 				self:AddChildrenToCascade(aura)
 			end
 			aura.Active = false
-			if (secondaryAura) then
+			if secondaryAura then
 				secondaryAura.Active = false
 			end
 		end

@@ -2732,12 +2732,12 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								self:SetMinMaxValues(-1, 250)
+								self:SetMinMaxValues(-1, 802)
 								self:SetValue(-1)
 								self:SetValueStep(1)
 								PowaBarAnimationSliderText:SetText(PowaAurasOptions.Text.nomAnimation..": "..PowaAurasOptions.Text.nomDefault)
 								PowaBarAnimationSliderLow:SetText(PowaAurasOptions.Text.nomDefault)
-								PowaBarAnimationSliderHigh:SetText("250")
+								PowaBarAnimationSliderHigh:SetText("802")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:BarAnimationSliderChanged(self, value)
