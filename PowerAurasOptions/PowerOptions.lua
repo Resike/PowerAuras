@@ -2564,10 +2564,12 @@ function PowaAurasOptions:BarAuraAnimSpeedSliderChanged(slider, value)
 	if value / 100 ~= aura.speed then
 		aura.speed = value / 100
 		local secondaryAura = self.SecondaryAuras[self.CurrentAuraId]
-		if aura.speed > 0.5 then
-			secondaryAura.speed = aura.speed - 0.1
-		else
-			secondaryAura.speed = aura.speed / 2
+		if secondaryAura then
+			if aura.speed > 0.5 then
+				secondaryAura.speed = aura.speed - 0.1
+			else
+				secondaryAura.speed = aura.speed / 2
+			end
 		end
 	end
 end
