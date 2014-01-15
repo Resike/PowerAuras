@@ -1345,11 +1345,7 @@ function PowaAuras:UpdatePreviewColor(aura)
 				if shaderSupported then
 					AuraTexture:SetDesaturated(1)
 				else
-					if desaturation then
-						AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
-					else
-						AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
-					end
+					AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
 				end
 			else
 				AuraTexture:SetDesaturated(nil)
@@ -1376,11 +1372,7 @@ function PowaAuras:UpdatePreviewRandomColor(aura)
 				if shaderSupported then
 					AuraTexture:SetDesaturated(1)
 				else
-					if desaturation then
-						AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
-					else
-						AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
-					end
+					AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
 				end
 			else
 				AuraTexture:SetDesaturated(nil)
@@ -1408,11 +1400,7 @@ function PowaAuras:UpdateColor(aura)
 				if shaderSupported then
 					texture:SetDesaturated(1)
 				else
-					if desaturation then
-						texture:SetVertexColor(0.5, 0.5, 0.5)
-					else
-						texture:SetVertexColor(1.0, 1.0, 1.0)
-					end
+					texture:SetVertexColor(0.5, 0.5, 0.5)
 				end
 			else
 				texture:SetDesaturated(nil)
@@ -1450,11 +1438,7 @@ function PowaAuras:UpdateRandomColor(aura)
 				if shaderSupported then
 					texture:SetDesaturated(1)
 				else
-					if desaturation then
-						texture:SetVertexColor(0.5, 0.5, 0.5)
-					else
-						texture:SetVertexColor(1.0, 1.0, 1.0)
-					end
+					texture:SetVertexColor(0.5, 0.5, 0.5)
 				end
 			else
 				texture:SetDesaturated(nil)
@@ -1490,11 +1474,7 @@ function PowaAuras:UpdateSecondaryColor(aura)
 				if shaderSupported then
 					secondaryTexture:SetDesaturated(1)
 				else
-					if desaturation then
-						secondaryTexture:SetVertexColor(0.5, 0.5, 0.5)
-					else
-						secondaryTexture:SetVertexColor(1.0, 1.0, 1.0)
-					end
+					secondaryTexture:SetVertexColor(0.5, 0.5, 0.5)
 				end
 			else
 				secondaryTexture:SetDesaturated(nil)
@@ -1525,11 +1505,7 @@ function PowaAuras:UpdateSecondaryRandomColor(aura)
 				if shaderSupported then
 					secondaryTexture:SetDesaturated(1)
 				else
-					if desaturation then
-						secondaryTexture:SetVertexColor(0.5, 0.5, 0.5)
-					else
-						secondaryTexture:SetVertexColor(1.0, 1.0, 1.0)
-					end
+					secondaryTexture:SetVertexColor(0.5, 0.5, 0.5)
 				end
 			else
 				secondaryTexture:SetDesaturated(nil)
@@ -1977,7 +1953,7 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 		secondaryTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
 	if aura.randomcolor then
-		self:UpdateSecondaryRandomColor(arua)
+		self:UpdateSecondaryRandomColor(aura)
 	else
 		self:UpdateSecondaryColor(aura)
 	end
