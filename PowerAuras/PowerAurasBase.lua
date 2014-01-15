@@ -1223,7 +1223,7 @@ function PowaAuras:DisplayTable(t, i)
 				print(tostring(k).." = "..tostring(v)..i)
 			else
 				print(tostring(k)..i)
-				DisplayTable(v, i)
+				self:DisplayTable(v, i)
 			end
 		end
 	end
