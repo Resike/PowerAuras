@@ -1,7 +1,7 @@
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-local string, tonumber, pairs, wipe = string, tonumber, pairs, wipe
+local bit, string, tonumber, pairs, wipe = bit, string, tonumber, pairs, wipe
 
 local PowaAuras_Frame = CreateFrame("Frame", nil, UIParent)
 PowaAuras_Frame:RegisterEvent("ADDON_LOADED")

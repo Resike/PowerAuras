@@ -1,6 +1,6 @@
 local PowaAurasOptions = PowaAurasOptions
 
-local string, tostring, tonumber, format, table, math, pi, pairs, ipairs, strsplit, _G = string, tostring, tonumber, format, table, math, math.pi, pairs, ipairs, strsplit, _G
+local _G, string, tostring, tonumber, type, format, table, tinsert, math, pi, pairs, pcall, ipairs, strsplit, sort = _G, string, tostring, tonumber, type, format, table, tinsert, math, math.pi, pairs, pcall, ipairs, strsplit, sort
 
 -- Main Options
 function PowaAurasOptions:OptionsOnLoad()
@@ -1284,6 +1284,7 @@ function PowaAurasOptions:MainOptionShow()
 	if PowaOptionsFrame:IsVisible() then
 		self:MainOptionClose()
 	else
+		local aura = self.Auras[self.CurrentAuraId]
 		if not aura then
 			PowaSelected:Hide()
 		end
@@ -4403,16 +4404,14 @@ end
 
 function PowaAurasOptions.FontScrollBar_Update(owner)
 	local fontOffset = FauxScrollFrame_GetOffset(FontSelectorEditorScrollFrame)
-	local fontIndex
-	local fontName, namestart, nameend
 	for i = 1, 10, 1 do
-		fontIndex = fontOffset + i
-		fontName = PowaAurasOptions.Fonts[fontIndex]
-		fontText = _G["FontSelectorEditorScrollButton"..i.."Text"]
-		fontButton = _G["FontSelectorEditorScrollButton"..i]
+		local fontIndex = fontOffset + i
+		local fontName = PowaAurasOptions.Fonts[fontIndex]
+		local fontText = _G["FontSelectorEditorScrollButton"..i.."Text"]
+		local fontButton = _G["FontSelectorEditorScrollButton"..i]
 		fontButton.font = fontIndex
-		namestart = string.find(fontName, "\\", 1, true)
-		nameend = string.find(fontName, ".", 1, true)
+		local namestart = string.find(fontName, "\\", 1, true)
+		local nameend = string.find(fontName, ".", 1, true)
 		if namestart and nameend and nameend > namestart then
 			fontName = string.sub(fontName, namestart + 1, nameend - 1)
 			while string.find(fontName, "\\", 1, true) do
@@ -4928,7 +4927,7 @@ local function OptionsDefault()
 	for k, v in pairs(PowaAurasOptions.PowaGlobalMiscDefault) do
 		PowaGlobalMisc[k] = v
 	end
-	self:DisplayText("Power Aura Options Reset to Defaults.")
+	PowaAurasOptions:DisplayText("Power Aura Options Reset to Defaults.")
 end
 
 local function OptionsRefresh()

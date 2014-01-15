@@ -11,7 +11,7 @@ LIB_UIDROPDOWNMENU_SHOW_TIME = 2
 LIB_UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT = nil
 LIB_OPEN_DROPDOWNMENUS = { }
 
-local wipe = table.wipe
+local _G, wipe = _G, table.wipe
 
 local Lib_UIDropDownMenuDelegate = CreateFrame("Frame")
 for i = 1, LIB_UIDROPDOWNMENU_MAXLEVELS do

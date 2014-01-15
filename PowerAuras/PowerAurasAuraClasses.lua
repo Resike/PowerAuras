@@ -1560,7 +1560,7 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		PowaAuras:DisplayText("Aura = ", auraName," count = ", count," expirationTime = ", expirationTime," caster = ", caster)
 	end
 	if self.tooltipCheck and string.len(self.tooltipCheck) ~= 0 then
-		if not self:CompareAura(unit, s, auraName, auraTexture, auraId, textToCheck) then
+		if not self:CompareAura(unit, s, auraName, auraTexture) then
 			PowaAuras:Debug("CompareAura not found")
 			if self.Debug then
 				PowaAuras:DisplayText("CompareAura not found")
@@ -1660,12 +1660,12 @@ function cPowaBuffBase:CheckTooltip(text, target, index)
 	return false
 end
 
-function cPowaBuffBase:CompareAura(target, z, auraName, auraTexture, auraId, textToCheck)
+function cPowaBuffBase:CompareAura(target, z, auraName, auraTexture)
 	PowaAuras:Debug("CompareAura", z," ", auraName, auraTexture)
 	if self.Debug then
 		PowaAuras:DisplayText("CompareAura", z," ", auraName, " ", auraTexture)
 	end
-	if not self:CheckTooltip(self.tooltipCheck, target, z) then
+	if not cPowaBuffBase:CheckTooltip(self.tooltipCheck, target, z) then
 		return false
 	end
 	self:SetIcon(auraTexture)
@@ -2181,7 +2181,7 @@ function cPowaStealableSpell:CheckUnit(unit, targetOf)
 			if auraName == nil then
 				return nil
 			end
-			if isStealable and self:CompareAura(unit, i, auraName, auraTexture, auraId, pword) then
+			if isStealable and self:CompareAura(unit, i, auraName, auraTexture) and self:MatchSpell(auraName, auraTexture, auraId, pword) then
 				if self.Stacks then
 					self.Stacks:SetStackCount(count)
 				end
@@ -2235,7 +2235,7 @@ function cPowaPurgeableSpell:CheckUnit(unit, targetOf)
 				return nil
 			end
 			if typeDebuff == "Magic" then
-				if auraName and self:CompareAura(unit, i, auraName, auraTexture, auraId, pword) then
+				if auraName and self:CompareAura(unit, i, auraName, auraTexture) and self:MatchSpell(auraName, auraTexture, auraId, pword) then
 					if self.Stacks then
 						self.Stacks:SetStackCount(count)
 					end
@@ -3428,7 +3428,7 @@ function cPowaSpellAlert:SkipTargetChecks()
 end
 
 function cPowaSpellAlert:CheckSpellName(unit, spellname, spellicon, endtime, spellId)
-	if self:MatchSpell(spellname, spellicon, spellId, self.buffname, true) then
+	if self:MatchSpell(spellname, spellicon, spellId, self.buffname) then
 		if self.Timer and endtime ~= nil then
 			self.Timer:SetDurationInfo(GetTime() + endtime / 1000)
 			self:CheckTimerInvert()
@@ -4066,7 +4066,7 @@ function cPowaRunes:RunesPresent(giveReason)
 end
 
 -- Equipment Slots Aura
-cPowaSlots = PowaClass(cPowaAura, {AuraType = "Slots", ValueName = "Slots", CooldownAura = true, CanHaveTimerOnInverse = true})
+cPowaSlots = PowaClass(cPowaAura, {AuraType = "Slots", ValueName = "Slots", CanHaveTimer = true, CanHaveTimerOnInverse = true, CooldownAura = true, CanHaveInvertTime = true})
 cPowaSlots.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Slots]}
 cPowaSlots.ShowOptions = {["PowaBarTooltipCheck"] = 1}
 cPowaSlots.CheckBoxes = {["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
@@ -4175,8 +4175,6 @@ function cPowaItems:ItemLinkIsNamedItem(itemLink, itemName)
 	end
 	local itemLinkName = GetItemInfo(itemLink)
 	if itemLinkName == itemName then
-		--self.lastSlot = slot
-		--self.lastBag = bag
 		return true
 	end
 	return false
@@ -4188,7 +4186,7 @@ function cPowaItems:IsItemInBag(itemName)
 	end
 	if self.lastBag and self.lastSlot then
 		local itemLink = GetContainerItemLink(self.lastBag, self.lastSlot)
-		if (self:ItemLinkIsNamedItem(itemLink, itemName)) then
+		if self:ItemLinkIsNamedItem(itemLink, itemName) then
 			return true
 		end
 	end
