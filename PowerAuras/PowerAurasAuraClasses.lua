@@ -739,6 +739,7 @@ function cPowaAura:CheckState(giveReason)
 		return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonNoCustomUnit, self.unitn)
 	end
 	-- Raid
+	local numrm = GetNumGroupMembers()
 	if self.raid and numrm == 0 then -- Raid check yes, but not in raid
 		if not giveReason then
 			return false
@@ -2180,7 +2181,7 @@ function cPowaStealableSpell:CheckUnit(unit, targetOf)
 			if auraName == nil then
 				return nil
 			end
-			if isStealable and self:CompareAura(unit, s, auraName, auraTexture, auraId, pword) then
+			if isStealable and self:CompareAura(unit, i, auraName, auraTexture, auraId, pword) then
 				if self.Stacks then
 					self.Stacks:SetStackCount(count)
 				end
@@ -2234,7 +2235,7 @@ function cPowaPurgeableSpell:CheckUnit(unit, targetOf)
 				return nil
 			end
 			if typeDebuff == "Magic" then
-				if auraName and self:CompareAura(unit, s, auraName, auraTexture, auraId, pword) then
+				if auraName and self:CompareAura(unit, i, auraName, auraTexture, auraId, pword) then
 					if self.Stacks then
 						self.Stacks:SetStackCount(count)
 					end
@@ -2342,7 +2343,7 @@ function cPowaEnchant:SetForEnchant(loc, slot, charges, index)
 			self:SetIcon(GetInventoryItemTexture("player", slot))
 		end
 		if self.Stacks then
-			self.Stacks:SetStackCount(count)
+			self.Stacks:SetStackCount(charges)
 		end
 		return true
 	end
@@ -2496,7 +2497,7 @@ function cPowaActionReady:CheckIfShouldShow(giveReason)
 		if not giveReason then
 			return false
 		end
-		return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonActionlNotEnabled, spellName)
+		return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonActionlNotEnabled, self.buffname)
 	end
 	if not self.mine then
 		local usable, noMana = IsUsableAction(self.slot)
@@ -2523,7 +2524,7 @@ function cPowaActionReady:CheckIfShouldShow(giveReason)
 		if not giveReason then
 			return - 1
 		end
-		return - 1, PowaAuras:InsertText(PowaAuras.Text.nomReasonGlobalCooldown, spellName)
+		return - 1, PowaAuras:InsertText(PowaAuras.Text.nomReasonGlobalCooldown, self.buffname)
 	end
 	if cdstart == 0 or self.CooldownOver or charges > 0 then
 		if not giveReason then
@@ -3098,6 +3099,7 @@ function cPowaAuraStats:CheckUnit(unit)
 	if self.Debug then
 		PowaAuras:DisplayText(curValue..self.RangeType, " threshold = ", self.threshold)
 	end
+	local thresholdvalidate
 	if self.thresholdinvert then
 		thresholdvalidate = (curValue >= self.threshold)
 	else
@@ -3226,7 +3228,7 @@ function cPowaPowerType:UnitValueMax(unit)
 	if self.Debug then
 		PowaAuras:DisplayText("UnitValueMax for ", unit, " type = ", self.PowerType)
 	end
-	local power
+	local maxpower
 	if not self.PowerType or self.PowerType == - 1 then
 		maxpower = UnitPowerMax(unit)
 	elseif self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
@@ -3519,7 +3521,7 @@ function cPowaSpellAlert:CheckIfShouldShow(giveReason)
 		if not giveReason then
 			return true
 		end
-		return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonAnimationDuration, casterName, info.SpellName)
+		return true, PowaAuras.Text.nomReasonAnimationDuration
 	end
 	if self:IsPlayerAura() then
 		for spellName, info in pairs(PowaAuras.CastByMe) do
@@ -4024,7 +4026,7 @@ function cPowaRunes:RunesPresent(giveReason)
 			wipe(self.timeList)
 			local missing = deathRunesRequired - deathRunesAvailable
 			if missing > 0 then
-				gaps = 0
+				local gaps = 0
 				for runeType = 1, 3 do
 					gaps = gaps + self:AddRuneTimeLeft(runeType * 2 - 1, self.runesMissingPlusDeath[runeType])
 				end
@@ -4172,12 +4174,9 @@ function cPowaItems:ItemLinkIsNamedItem(itemLink, itemName)
 		return false
 	end
 	local itemLinkName = GetItemInfo(itemLink)
-	if self.Debug then
-		PowaAuras:Message(bag, " - ", slot, " : ", itemLink, " >> ", itemLinkName)
-	end
 	if itemLinkName == itemName then
-		self.lastSlot = slot
-		self.lastBag = bag
+		--self.lastSlot = slot
+		--self.lastBag = bag
 		return true
 	end
 	return false
@@ -4228,6 +4227,7 @@ function cPowaItems:CheckIfShouldShow(giveReason)
 			end
 			local itemName, itemLink, _, _, _, _, _, _, _, itemTexture = GetItemInfo(item)
 			if self.Debug then
+				local itemStackCount = GetItemCount(itemName)
 				PowaAuras:Message("itemName = ", itemName," itemStackCount = ", itemStackCount," itemTexture = ", itemTexture)
 			end
 			if itemName then
