@@ -1,6 +1,6 @@
 local _, ns = ...
 
-local string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select = string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select
+local string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select, print = string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select, print
 
 local PowaAuras =
 {

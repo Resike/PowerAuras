@@ -432,11 +432,11 @@ end
 
 function PowaAurasOptions:ResetTooltip()
 	for z = 1, 9 do
-		local line = getglobal("PowaAuras_TooltipTextLeft"..z)
+		local line = _G["PowaAuras_TooltipTextLeft"..z]
 		if line ~= nil then
 			line:SetText(nil)
 		end
-		line = getglobal("PowaAuras_TooltipTextRight"..z)
+		line = _G["PowaAuras_TooltipTextRight"..z]
 		if line ~= nil then
 			line:SetText(nil)
 		end
@@ -449,9 +449,9 @@ function PowaAurasOptions:CaptureTooltip(store)
 	store["Tooltip"] = { }
 	store.Tooltip.NumLines = PowaAuras_Tooltip:NumLines()
 	for z = 1, PowaAuras_Tooltip:NumLines() do
-		local line = getglobal("PowaAuras_TooltipTextLeft"..z)
+		local line = _G["PowaAuras_TooltipTextLeft"..z]
 		store.Tooltip["Left"..z] = self:Escape(line:GetText())
-		line = getglobal("PowaAuras_TooltipTextRight"..z)
+		line = _G["PowaAuras_TooltipTextRight"..z]
 		store.Tooltip["Right"..z] = self:Escape(line:GetText())
 	end
 end

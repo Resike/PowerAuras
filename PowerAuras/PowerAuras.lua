@@ -16,7 +16,7 @@
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-local string, format, tostring, tonumber, math, pi, halfpi, table, pairs, select, wipe, _G = string, format, tostring, tonumber, math, math.pi, math.pi / 2, table, pairs, select, wipe, _G
+local _G, string, format, tostring, tonumber, math, pi, halfpi, table, pairs, select, ipairs, type, wipe = _G, string, format, tostring, tonumber, math, math.pi, math.pi / 2, table, pairs, select, ipairs, type, wipe
 
 local r1, r2, r3, r4, r5, r6
 

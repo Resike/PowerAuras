@@ -1,7 +1,7 @@
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-local math = math
+local math, sin, cos = math, sin, cos
 
 function PowaAuras:CalculateDurations(speed)
 	-- Speed ranges from 0.05 to 2
@@ -151,7 +151,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		local stepDuration = duration * 4 / steps
 		animationGroup.speed = aura.speed
 		animationGroup:SetScript("OnPlay", function(self)
-			self.Trigger = (random( 210 - self.speed * 100 ) < 4)
+			self.Trigger = (math.random( 210 - self.speed * 100 ) < 4)
 		end)
 		for i = 1, steps do
 			self:AddMoveRandomLocation(animationGroup, 0, 10, - 5, 0, 10, - 5, stepDuration, true, aura.speed, i)
@@ -223,7 +223,7 @@ function PowaAuras:AddMoveRandomLocation(animationGroup, xrangel, xrangeu, xoffs
 	trans:SetDuration(duration)
 	trans:SetScript("OnPlay", function(self)
 		if not self.useTrigger or self:GetParent().Trigger then
-			self:SetOffset((random(self.xrangel,self.xrangeu) + self.xoffset) * self.speed, (random(self.yrangel,self.yrangeu) + self.yoffset) * self.speed)
+			self:SetOffset((math.random(self.xrangel,self.xrangeu) + self.xoffset) * self.speed, (math.random(self.yrangel,self.yrangeu) + self.yoffset) * self.speed)
 		else
 			self:SetOffset(0, 0)
 		end

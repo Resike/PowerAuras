@@ -1,7 +1,7 @@
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-local string, tostring, tonumber, format, table, math, pairs, strtrim, strsplit, select, wipe, _G = string, tostring, tonumber, format, table, math, pairs, strtrim, strsplit, select, wipe, _G
+local _G, string, tostring, tonumber, format, table, math, pairs, strtrim, strsplit, select, type, wipe, setmetatable, getmetatable = _G, string, tostring, tonumber, format, table, math, pairs, strtrim, strsplit, select, type, wipe, setmetatable, getmetatable
 
 -- PowaAura Classes
 function PowaClass(base, ctor)

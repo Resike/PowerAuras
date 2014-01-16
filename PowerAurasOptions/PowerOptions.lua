@@ -2026,7 +2026,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 		return
 	end
 	if value == 0 or not value then
-		SliderValue = 1
+		value = 1
 		self:SetValue(value)
 	end
 	local checkTexture = 0
@@ -2433,9 +2433,7 @@ function PowaAurasOptions:BarAuraCoordXSliderChanged(slider, value)
 	if PowaMisc.GroupSize == 1 then
 		if value ~= aura.x then
 			aura.x = value
-			local frame = self.Frames[self.CurrentAuraId]
-			frame:SetPoint("Center", aura.x, aura.y)
-			--self:RedisplayAura(self.CurrentAuraId)
+			self:RedisplayAura(self.CurrentAuraId)
 		end
 	else
 		if value ~= aura.x then
@@ -2454,9 +2452,7 @@ function PowaAurasOptions:BarAuraCoordXSliderChanged(slider, value)
 					else
 						self.Auras[i].x = value + (relativepos[i] - relativepos[min])
 					end
-					local frame = self.Frames[i]
-					frame:SetPoint("Center", self.Auras[i].x, self.Auras[i].y)
-					--self:RedisplayAura(i)
+					self:RedisplayAura(i)
 				end
 			end
 			PowaAurasOptions:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
@@ -2480,8 +2476,7 @@ function PowaAurasOptions:BarAuraCoordYSliderChanged(slider, value)
 	if PowaMisc.GroupSize == 1 then
 		if value ~= aura.y then
 			aura.y = value
-			local frame = self.Frames[self.CurrentAuraId]
-			frame:SetPoint("Center", aura.x, aura.y)
+			self:RedisplayAura(self.CurrentAuraId)
 		end
 	else
 		if value ~= aura.y then
@@ -2500,8 +2495,7 @@ function PowaAurasOptions:BarAuraCoordYSliderChanged(slider, value)
 					else
 						self.Auras[i].y = value + (relativepos[i] - relativepos[min])
 					end
-					local frame = self.Frames[i]
-					frame:SetPoint("Center", self.Auras[i].x, self.Auras[i].y)
+					self:RedisplayAura(i)
 				end
 			end
 			PowaAurasOptions:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
@@ -2525,7 +2519,9 @@ function PowaAurasOptions:SecondaryFrameStrataLevelSliderChanged(slider, value)
 	if value ~= aura.secondarystratalevel then
 		aura.secondarystratalevel = value
 		local secondaryFrame = self.SecondaryFrames[self.CurrentAuraId]
-		secondaryFrame:SetFrameLevel(aura.secondarystratalevel)
+		if secondaryFrame then
+			secondaryFrame:SetFrameLevel(aura.secondarystratalevel)
+		end
 	end
 end
 
@@ -2545,7 +2541,9 @@ function PowaAurasOptions:SecondaryTextureStrataSublevelSliderChanged(slider, va
 	if value ~= aura.secondarytexturesublevel then
 		aura.secondarytexturesublevel = value
 		local secondaryTexture = self.SecondaryTextures[self.CurrentAuraId]
-		secondaryTexture:SetDrawLayer(aura.secondarytexturestrata, aura.secondarytexturesublevel)
+		if secondaryTexture then
+			secondaryTexture:SetDrawLayer(aura.secondarytexturestrata, aura.secondarytexturesublevel)
+		end
 	end
 end
 
@@ -3599,7 +3597,9 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 				if aura.secondarytexturestrata ~= secondarytexturestrata then
 					aura.secondarytexturestrata = secondarytexturestrata
 					local secondaryTexture = PowaAurasOptions.SecondaryTextures[PowaAurasOptions.CurrentAuraId]
-					secondaryTexture:SetDrawLayer(aura.secondarytexturestrata, aura.secondarytexturesublevel)
+					if secondaryTexture then
+						secondaryTexture:SetDrawLayer(aura.secondarytexturestrata, aura.secondarytexturesublevel)
+					end
 					Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryTextureStrataDropDown, secondarytexturestrata)
 				end
 			end
@@ -3615,7 +3615,9 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 				if aura.secondaryblendmode ~= secondaryblendmode then
 					aura.secondaryblendmode = secondaryblendmode
 					local secondaryTexture = PowaAurasOptions.SecondaryTextures[PowaAurasOptions.CurrentAuraId]
-					secondaryTexture:SetBlendMode(aura.secondaryblendmode)
+					if secondaryTexture then
+						secondaryTexture:SetBlendMode(aura.secondaryblendmode)
+					end
 					Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryBlendModeDropDown, secondaryblendmode)
 				end
 			end
