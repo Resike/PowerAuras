@@ -8,7 +8,7 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
-**4.24.7**
+**4.24.8**
 * Fixed a bug which caused timers not to show up when the aura itself was hidden at the start.
 * Fixed an issue which caused timers to broke, when you changed the auras invert checkbutton.
 * Fixed the broken "Animation Speed" slider.
