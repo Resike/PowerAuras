@@ -1,5 +1,7 @@
 local PowaAurasOptions = PowaAurasOptions
 
+local _G, string, pairs, pcall, tonumber = _G, string, pairs, pcall, tonumber
+
 function PowaAurasOptions:Dump()
 	local Status, Err = pcall(PowaAurasOptions.Dump_Safe, self)
 	if not Status then
@@ -354,7 +356,7 @@ function PowaAurasOptions:GetUnitInfo(unit)
 	UnitInfo["CreatureFamily"] = UnitCreatureFamily(unit)
 	UnitInfo["CreatureType"] = UnitCreatureType(unit)
 	UnitInfo["Damage"] = UnitDamage(unit)
-	UnitInfo["DefenseModifier"] = defenseModifier
+	--UnitInfo["DefenseModifier"] = defenseModifier
 	UnitInfo["FactionGroup"] = UnitFactionGroup(unit)
 	UnitInfo["Health"] = UnitHealth(unit)
 	UnitInfo["HealthMax"] = UnitHealthMax(unit)

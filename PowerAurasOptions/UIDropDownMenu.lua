@@ -1,3 +1,5 @@
+local max, gsub, tonumber, type, strmatch, issecure, securecall = max, gsub, tonumber, type, strmatch, issecure, securecall
+
 LIB_UIDROPDOWNMENU_MINBUTTONS = 8
 LIB_UIDROPDOWNMENU_MAXBUTTONS = 8
 LIB_UIDROPDOWNMENU_MAXLEVELS = 2

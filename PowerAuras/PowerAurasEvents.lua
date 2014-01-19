@@ -450,8 +450,9 @@ function PowaAuras:RUNE_TYPE_UPDATE(...)
 	if self.ModTest then
 		return
 	end
+	local slot = ...
 	if self.DebugEvents then
-		self:DisplayText("PLAYER_TOTEM_UPDATE slot=", slot)
+		self:DisplayText("RUNE_TYPE_UPDATE slot = ", slot, " class = ", self.playerclass)
 	end
 	self.DoCheck.Runes = true
 	self.DoCheck.CheckIt = true
