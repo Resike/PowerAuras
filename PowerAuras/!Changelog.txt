@@ -11,10 +11,18 @@
 **4.24.7**
 * Fixed a bug which caused timers not to show up when the aura itself was hidden at the start.
 * Fixed an issue which caused timers to broke, when you changed the auras invert checkbutton.
+* Fixed the broken "Animation Speed" slider.
+* Fixed the broken "Level" slider on the animation tab.
+* Fixed the broken "Sublevel" slider on the animation tab.
+* Fixed the broken "Secondary Blend Mode" dropdown.
+* Fixed the broken "Secondary Texture's Strata" dropdown.
+* Fixed an issue with secondary aura's random color.
+* Fixed an issue with "Position X" and "Postion Y" slider's for auras with secondary aura.
 * Removed a leftover text file from the model database.
 * Model's animation slider max value is 802 now.
 * Reverted timed auras redisplay fix from 4.24.5. (Need a better method to fix.)
-* Other minor fixes.
+* Some global cleanup.
+* A lot of other minor fixes.
 
 **4.24.6**
 * Fixed an issues with "Action Usable" trigger.
