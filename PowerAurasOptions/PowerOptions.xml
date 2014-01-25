@@ -1060,8 +1060,8 @@
 								PowaMainTestButtonText:SetText(PowaAurasOptions.Text.nomTest)
 							</OnLoad>
 							<OnClick>
-								PowaAurasOptions:OptionTest()
 								PowaAurasOptions:UpdateMainOption()
+								PowaAurasOptions:OptionTest()
 								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>

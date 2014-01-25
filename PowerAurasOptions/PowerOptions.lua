@@ -222,7 +222,7 @@ function PowaAurasOptions:IconClick(owner, button)
 				PowaAurasOptions:OptionTest()
 			end
 		end
-	elseif self.CurrentAuraId ~= aura.id then -- Clicked a different button
+	elseif self.CurrentAuraId ~= aura.id then
 		self:SetCurrent(owner, aura.id)
 		PowaMisc.GroupSize = 1
 		if button == "RightButton" then
@@ -236,7 +236,21 @@ function PowaAurasOptions:IconClick(owner, button)
 		else
 			if PowaBarConfigFrame:IsVisible() then
 				self:InitPage(aura)
+				local aura = self.Auras[self.CurrentAuraId]
+				if aura.bufftype == self.BuffTypes.Slots then
+					if not PowaEquipmentSlotsFrame:IsVisible() then
+						PowaEquipmentSlotsFrame:Show()
+					end
+				else
+					if PowaEquipmentSlotsFrame:IsVisible() then
+						PowaEquipmentSlotsFrame:Hide()
+					end
+				end
 			end
+			PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+		end
+		if PowaFontSelectorFrame:IsVisible() then
+			PowaFontSelectorFrame:Hide()
 		end
 	end
 end
@@ -349,6 +363,7 @@ function PowaAurasOptions:MainListClick(owner)
 			self.SecondaryAuras[i] = nil
 		end
 		self.DoCheck.All = true
+		PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 		return
 	end
 	if self.CurrentAuraPage ~= listID then
@@ -376,6 +391,7 @@ function PowaAurasOptions:MainListClick(owner)
 		PowaOptionsRenameEditBox:SetText(currentText)
 		self:UpdateMainOption()
 	end
+	PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 end
 
 function PowaAurasOptions:MainListEntered(owner)
@@ -418,6 +434,7 @@ function PowaAurasOptions:OptionRenameEdited()
 	else
 		PowaPlayerListe[self.CurrentAuraPage] = PowaOptionsRenameEditBox:GetText()
 	end
+	PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 end
 
 function PowaAurasOptions:TriageIcons(nPage)
@@ -564,6 +581,12 @@ function PowaAurasOptions:OptionNewEffect()
 		PowaBarAuraTextureSlider:SetValue(1)
 	end
 	self:InitPage(aura)
+	if ColorPickerFrame:IsVisible() then
+		ColorPickerFrame:Hide()
+	end
+	if PowaFontSelectorFrame:IsVisible() then
+		PowaFontSelectorFrame:Hide()
+	end
 	if PowaEquipmentSlotsFrame:IsVisible() then
 		PowaEquipmentSlotsFrame:Hide()
 	end
@@ -1288,6 +1311,7 @@ function PowaAurasOptions:BeginMoveEffect(Pfrom, ToPage)
 	self.CurrentAuraId = ((self.CurrentAuraPage - 1) * 24) + 1
 	self:DisableMoveMode()
 	self:UpdateMainOption()
+	PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 end
 
 function PowaAurasOptions:BeginCopyEffect(Pfrom, ToPage)
@@ -1300,6 +1324,7 @@ function PowaAurasOptions:BeginCopyEffect(Pfrom, ToPage)
 	self.CurrentAuraId = i
 	self:DisableMoveMode()
 	self:UpdateMainOption()
+	PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 end
 
 function PowaAurasOptions:DoCopyEffect(idFrom, idTo, isMove)
@@ -4302,8 +4327,6 @@ function PowaAurasOptions:FrameMouseDown(frame, button)
 end
 
 function PowaAurasOptions:FrameMouseUp(frame, button)
-	frame.x = frame:GetLeft() 
-	frame.y = frame:GetBottom()
 	frame:StopMovingOrSizing()
 end
 
@@ -5287,8 +5310,8 @@ function PowaAurasOptions:ResizeFrame(frame)
 	n:SetPoint("Topleft", 0, 0)
 	n:SetWidth(32)
 	n:SetHeight(32)
-	n:SetTexture("Interface\\AddOns\\Resize\\Textures\\resize")
-	--n:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+	--n:SetTexture("Interface\\AddOns\\Resize\\Textures\\resize")
+	n:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
 	frame:SetMaxResize(Width * 1.5, Height * 1.5)
 	frame:SetMinResize(Width / 1.5, Height / 1.5)
 	frame:SetResizable(true)
