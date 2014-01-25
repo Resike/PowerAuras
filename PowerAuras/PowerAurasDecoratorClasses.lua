@@ -59,7 +59,7 @@ end
 
 function cPowaStacks:ShowValue(aura, newvalue)
 	local frame = PowaAuras.StacksFrames[self.id]
-	if not frame or not newvalue then
+	if not frame or not newvalue or newvalue < 0 then
 		return
 	end
 	if PowaAuras.ModTest then

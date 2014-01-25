@@ -4091,57 +4091,59 @@ function cPowaSlots:CheckIfShouldShow(giveReason)
 	local reason
 	for pword in string.gmatch(self.buffname, "[^/]+") do
 		pword = self:Trim(pword)
-		if string.len(pword) > 0 then
-			local slotId, emptyTexture = GetInventorySlotInfo(pword.."Slot")
-			if (slotId) then
-				local texture = GetInventoryItemTexture("player", slotId)
-				if texture ~= nil then
-					local cdstart, cdduration, enabled = GetInventoryItemCooldown("player", slotId)
-					if self.Debug then
-						PowaAuras:Message("cdstart = ", cdstart," duration = ", cdduration," enabled = ", enabled)
-					end
-					if enabled == 1 then
-						self:SetIcon(texture)
-						if cdstart == 0 then
-							if self.Debug then
-								PowaAuras:Message("Show!")
-							end
-							if not giveReason then
-								return true
-							end
-							return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotUsable, pword)
+		if string.len(pword) > 0 and pword ~= "???" then
+			if pword == "Head" or pword == "Neck" or pword == "Shoulder" or pword == "Back" or pword == "Chest" or pword == "Shirt" or pword == "Tabard" or pword == "Wrist" or pword == "Hands" or pword == "Waist" or pword == "Legs" or pword == "Feet" or pword == "Finger0" or pword == "Finger1" or pword == "Trinket0" or pword == "Trinket1" or pword == "MainHand" or pword == "SecondaryHand" then
+				local slotId, emptyTexture = GetInventorySlotInfo(pword.."Slot")
+				if (slotId) then
+					local texture = GetInventoryItemTexture("player", slotId)
+					if texture ~= nil then
+						local cdstart, cdduration, enabled = GetInventoryItemCooldown("player", slotId)
+						if self.Debug then
+							PowaAuras:Message("cdstart = ", cdstart," duration = ", cdduration," enabled = ", enabled)
 						end
-						if self.Timer then
-							self.Timer:SetDurationInfo(cdstart + cdduration)
-							self:CheckTimerInvert()
-							if self.ForceTimeInvert then
+						if enabled == 1 then
+							self:SetIcon(texture)
+							if cdstart == 0 then
 								if self.Debug then
 									PowaAuras:Message("Show!")
 								end
 								if not giveReason then
 									return true
 								end
-								return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotNotReady, pword)
+								return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotUsable, pword)
 							end
-							if self.Debug then
-								PowaAuras:Message("Set DurationInfo =", self.Timer.DurationInfo)
+							if self.Timer then
+								self.Timer:SetDurationInfo(cdstart + cdduration)
+								self:CheckTimerInvert()
+								if self.ForceTimeInvert then
+									if self.Debug then
+										PowaAuras:Message("Show!")
+									end
+									if not giveReason then
+										return true
+									end
+									return true, PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotNotReady, pword)
+								end
+								if self.Debug then
+									PowaAuras:Message("Set DurationInfo =", self.Timer.DurationInfo)
+								end
 							end
-						end
-						if giveReason then
-							reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotOnCooldown, pword)
+							if giveReason then
+								reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotOnCooldown, pword)
+							end
+						else
+							if giveReason then
+								reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotNotEnabled, pword)
+							end
 						end
 					else
-						if giveReason then
-							reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotNotEnabled, pword)
-						end
+						self:SetIcon(emptyTexture)
+						reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotNone, pword)
 					end
 				else
-					self:SetIcon(emptyTexture)
-					reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotNone, pword)
-				end
-			else
-				if giveReason then
-					reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotNotFound, pword)
+					if giveReason then
+						reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonSlotNotFound, pword)
+					end
 				end
 			end
 		end

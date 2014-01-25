@@ -1,4 +1,57 @@
 <Ui xmlns = "http://www.blizzard.com/wow/ui/" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<!-- Item Button Template -->
+	<Button name = "PowaItemButtonTemplate" hidden = "true" virtual = "true">
+		<Size>
+			<AbsDimension x = "37" y = "37"/>
+		</Size>
+		<Anchors>
+			<Anchor point = "BOTTOMRIGHT">
+				<Offset>
+					<AbsDimension x = "0" y = "0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level = "BORDER">
+				<Texture name = "$parentIconTexture"/>
+				<FontString name = "$parentCount" inherits = "NumberFontNormal" justifyH = "RIGHT" hidden = "true">
+					<Anchors>
+						<Anchor point = "BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x = "-5" y = "2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<NormalTexture name = "$parentNormalTexture" file = "Interface\Buttons\UI-Quickslot2">
+			<Size>
+				<AbsDimension x = "64" y = "64"/>
+			</Size>
+			<Anchors>
+				<Anchor point = "CENTER">
+					<Offset>
+						<AbsDimension x = "0" y = "-1"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</NormalTexture>
+		<HighlightTexture file = "Interface\Buttons\ButtonHilight-Square" alphaMode = "ADD"/>
+	</Button>
+	<!-- Item Slot Template -->
+	<Button name = "PowaItemSlotTemplate" inherits = "ItemButtonTemplate" virtual = "true">
+		<Scripts>
+			<OnLeave>
+				self.updateTooltip = nil
+				GameTooltip:Hide()
+				ResetCursor()
+			</OnLeave>
+			<OnClick>
+				PowaAurasOptions:EquipmentSlot_OnClick(self)
+			</OnClick>
+		</Scripts>
+	</Button>
 	<!-- Icon Template -->
 	<Button name = "PowaIconeTemplate" virtual = "true">
 		<Size>
@@ -302,7 +355,7 @@
 			<AbsDimension x = "323" y = "470"/>
 		</Size>
 		<Anchors>
-			<Anchor point = "CENTER" relativeTo = "UIParent">
+			<Anchor point = "CENTER" relativeTo = "UIParent" relativePoint = "CENTER">
 				<Offset>
 					<AbsDimension x = "0" y = "50"/>
 				</Offset>
@@ -323,9 +376,8 @@
 			<OnLoad>
 				self:SetBackdropColor(0.1, 0.1, 0.1)
 				self:SetBackdropBorderColor(0.9, 1.0, 0.9)
-				self.x = self:GetLeft()
-				self.y = self:GetBottom()
 				tinsert(UISpecialFrames, self:GetName())
+				PowaAurasOptions:ResizeFrame(self)
 			</OnLoad>
 			<OnShow>
 				PlaySound("TalentScreenOpen", PowaMisc.SoundChannel)
@@ -343,7 +395,7 @@
 		<!-- Title Box -->
 		<Layers>
 			<Layer>
-				<Texture file = "Interface\DialogFrame\UI-DialogBox-Header">
+				<Texture name = "PowaOptionsHeaderTexture" file = "Interface\DialogFrame\UI-DialogBox-Header">
 					<Size>
 						<AbsDimension x = "200" y = "32"/>
 					</Size>
@@ -385,28 +437,6 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-			</Button>
-			<!-- Resize Button -->
-			<Button name = "PowaResizeButton">
-				<Size>
-					<AbsDimension x = "16" y = "16"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "BOTTOMRIGHT" relativeTo = "PowaOptionsFrame" relativePoint = "BOTTOMRIGHT">
-						<Offset>
-							<AbsDimension x = "-8" y = "8"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						self:SetScript("OnMouseDown", SizeOnMouseDown)
-						self:SetScript("OnMouseUp", SizeOnMouseUp)
-					</OnLoad>
-				</Scripts>
-				<NormalTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up"/>
-				<PushedTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
-				<HighlightTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
 			</Button>
 			<!-- Icon Effects Window -->
 			<Frame name = "PowaOptionsSelectorFrame">
@@ -1730,7 +1760,7 @@
 			<AbsDimension x = "487" y = "920"/>
 		</Size>
 		<Anchors>
-			<Anchor point = "CENTER" relativeTo = "UIParent">
+			<Anchor point = "CENTER" relativeTo = "UIParent" relativePoint = "CENTER">
 				<Offset>
 					<AbsDimension x = "0" y = "50"/>
 				</Offset>
@@ -1751,6 +1781,7 @@
 			<OnLoad>
 				self:SetBackdropBorderColor(0.9, 1.0, 0.95)
 				self:SetBackdropColor(0.6, 0.6, 0.6)
+				PowaAurasOptions:ResizeFrame(self)
 			</OnLoad>
 			<OnMouseDown>
 				PowaAurasOptions:FrameMouseDown(self, button)
@@ -1771,7 +1802,7 @@
 		</Scripts>
 		<Layers>
 			<Layer>
-				<Texture file = "Interface\DialogFrame\UI-DialogBox-Header">
+				<Texture name = "PowaHeaderTexture" file = "Interface\DialogFrame\UI-DialogBox-Header">
 					<Size>
 						<AbsDimension x = "180" y = "32"/>
 					</Size>
@@ -1817,27 +1848,6 @@
 						PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
-			</Button>
-			<!-- Resize Button -->
-			<Button name = "PowaConfigResizeButton">
-				<Size>
-					<AbsDimension x = "16" y = "16"/>
-				</Size>
-				<Anchors>
-					<Anchor point = "BOTTOMRIGHT" relativeTo = "PowaBarConfigFrame" relativePoint = "BOTTOMRIGHT">
-						<Offset>
-							<AbsDimension x = "-8" y = "8"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						--
-					</OnClick>
-				</Scripts>
-				<NormalTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up"/>
-				<PushedTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
-				<HighlightTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
 			</Button>
 			<!-- Top Panel -->
 			<Frame name = "PowaBarConfigFrameEditor">
@@ -2693,7 +2703,7 @@
 								PowaFontButtonText:SetText(PowaAurasOptions.Text.nomFont)
 							</OnLoad>
 							<OnClick>
-								if FontSelectorFrame:IsVisible() then
+								if PowaFontSelectorFrame:IsVisible() then
 									PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
 								else
 									PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
@@ -5979,7 +5989,7 @@
 		</Frames>
 	</Frame>
 	<!-- Font Selector Frame -->
-	<Frame name = "FontSelectorFrame" movable = "false" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+	<Frame name = "PowaFontSelectorFrame" movable = "false" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
 		<Size>
 			<AbsDimension x = "248" y = "236"/>
 		</Size>
@@ -6003,7 +6013,7 @@
 		</Backdrop>
 		<Layers>
 			<Layer>
-				<Texture file = "Interface\DialogFrame\UI-DialogBox-Header">
+				<Texture name = "PowaFontHeaderTexture" file = "Interface\DialogFrame\UI-DialogBox-Header">
 					<Size>
 						<AbsDimension x = "180" y = "32"/>
 					</Size>
@@ -6036,7 +6046,7 @@
 		<Frames>
 			<Button name = "PowaFontsCloseButton" inherits = "UIPanelCloseButton">
 				<Anchors>
-					<Anchor point = "TOPRIGHT" relativeTo = "FontSelectorFrame" relativePoint = "TOPRIGHT">
+					<Anchor point = "TOPRIGHT" relativeTo = "PowaFontSelectorFrame" relativePoint = "TOPRIGHT">
 						<Offset>
 							<AbsDimension x = "-5" y = "-5"/>
 						</Offset>
@@ -6054,7 +6064,7 @@
 					<AbsDimension x = "90" y = "22"/>
 				</Size>
 				<Anchors>
-					<Anchor point = "BOTTOMLEFT" relativeTo = "FontSelectorFrame" relativePoint = "BOTTOMLEFT">
+					<Anchor point = "BOTTOMLEFT" relativeTo = "PowaFontSelectorFrame" relativePoint = "BOTTOMLEFT">
 						<Offset>
 							<AbsDimension x = "18" y = "17"/>
 						</Offset>
@@ -6075,7 +6085,7 @@
 					<AbsDimension x = "90" y = "22"/>
 				</Size>
 				<Anchors>
-					<Anchor point = "BOTTOMRIGHT" relativeTo = "FontSelectorFrame" relativePoint = "BOTTOMRIGHT">
+					<Anchor point = "BOTTOMRIGHT" relativeTo = "PowaFontSelectorFrame" relativePoint = "BOTTOMRIGHT">
 						<Offset>
 							<AbsDimension x = "-18" y = "17"/>
 						</Offset>
@@ -6216,5 +6226,243 @@
 				PowaAurasOptions:FontSelectorOnShow(self)
 			</OnShow>
 		</Scripts>
+	</Frame>
+	<!-- Equipment Slots Frame -->
+	<Frame name = "PowaEquipmentSlotsFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+		<Size>
+			<AbsDimension x = "225" y = "377"/>
+		</Size>
+		<Anchors>
+			<Anchor point = "CENTER">
+				<Offset>
+					<AbsDimension x = "0" y = "0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>		<TitleRegion>
+			<Size>
+				<AbsDimension x = "225" y = "377"/>
+			</Size>
+			<Anchors>
+				<Anchor point = "TOP">
+					<Offset>
+						<AbsDimension x = "0" y = "0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</TitleRegion>
+		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
+			<BackgroundInsets>
+				<AbsInset left = "4" right = "4" top = "4" bottom = "4"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val = "200"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val = "16"/>
+			</EdgeSize>
+		</Backdrop>
+		<Scripts>
+			<OnLoad>
+				PowaTitleText:SetText(PowaAurasOptions.Text.SlotsToCheck)
+				self:SetBackdropColor(0.1, 0.1, 0.1)
+				self:SetBackdropBorderColor(0.9, 1.0, 0.9)
+				tinsert(UISpecialFrames,self:GetName())
+			</OnLoad>
+			<OnShow>
+				PowaAurasOptions:EquipmentSlotsShow()
+			</OnShow>
+		</Scripts>
+		<Layers>
+			<Layer level = "BACKGROUND">
+				<FontString name = "PowaTitleText" inherits = "GameFontNormal">
+					<Anchors>
+						<Anchor point = "TOP">
+							<Offset>
+								<AbsDimension x = "0" y = "-8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<!-- Close Button -->
+			<Button name = "PowaFrameCloseButton" inherits = "UIPanelCloseButton">
+				<Anchors>
+					<Anchor point = "CENTER" relativeTo = "PowaEquipmentSlotsFrame" relativePoint = "TOPRIGHT">
+						<Offset>
+							<AbsDimension x = "-15" y = "-15"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self:SetFrameLevel(self:GetFrameLevel() + 4)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name = "PowaHeadSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaEquipmentSlotsFrame" relativePoint = "TOPLEFT">
+						<Offset>
+							<AbsDimension x = "11" y = "-27"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaNeckSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaHeadSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaShoulderSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaNeckSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaBackSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaShoulderSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaChestSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaBackSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaShirtSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaChestSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaTabardSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaShirtSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaWristSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaTabardSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaHandsSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPRIGHT" relativeTo = "PowaEquipmentSlotsFrame" relativePoint = "TOPRIGHT">
+						<Offset>
+							<AbsDimension x = "-11" y = "-27"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaWaistSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaHandsSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaLegsSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaWaistSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaFeetSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaLegsSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaFinger0Slot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaFeetSlot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaFinger1Slot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaFinger0Slot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaTrinket0Slot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaFinger1Slot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaTrinket1Slot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaTrinket0Slot" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaMainHandSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaWristSlot" relativePoint = "TOPRIGHT">
+						<Offset>
+							<AbsDimension x = "25" y = "-16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaSecondaryHandSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaMainHandSlot" relativePoint = "TOPRIGHT">
+						<Offset>
+							<AbsDimension x = "5" y = "0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
 	</Frame>
 </Ui>

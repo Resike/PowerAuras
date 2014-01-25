@@ -18,6 +18,49 @@ function PowaAurasOptions:OptionsOnLoad()
 	PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 	PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
 	PowaAurasOptions:SetLockButtonText()
+	local day = tonumber(date("%d"))
+	local month = tonumber(date("%m"))
+	if (day == 1 and month == 1) or (day == 25 and month == 12) or (day == 31 and month == 12) then
+		PowaOptionsFrame:SetBackdrop({
+			bgFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Background",
+			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
+			tile = true,
+			tileSize = 200,
+			edgeSize = 32, 
+			insets = {left = 10, right = 10, top = 10, bottom = 10}
+		})
+		PowaOptionsHeaderTexture:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Gold-Header")
+		local dragon = PowaOptionsFrame:CreateTexture(nil, "Overlay")
+		dragon:SetSize(48, 48)
+		dragon:SetPoint("LEFT", PowaOptionsHeaderTexture, "LEFT", 0, - 2)
+		dragon:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Gold-Dragon")
+		PowaBarConfigFrame:SetBackdrop({
+			bgFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Background",
+			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
+			tile = true,
+			tileSize = 200,
+			edgeSize = 32, 
+			insets = {left = 10, right = 10, top = 10, bottom = 10}
+		})
+		PowaHeaderTexture:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Gold-Header")
+		PowaFontSelectorFrame:SetBackdrop({
+			bgFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Background",
+			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
+			tile = true,
+			tileSize = 200,
+			edgeSize = 32, 
+			insets = {left = 10, right = 10, top = 10, bottom = 10}
+		})
+		PowaFontHeaderTexture:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Gold-Header")
+		PowaEquipmentSlotsFrame:SetBackdrop({
+			bgFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Background",
+			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
+			tile = true,
+			tileSize = 200,
+			edgeSize = 16, 
+			insets = {left = 4, right = 4, top = 4, bottom = 4}
+		})
+	end
 end
 
 function PowaAurasOptions:ResetPositions()
@@ -459,8 +502,8 @@ function PowaAurasOptions:DeleteAura(aura)
 	if ColorPickerFrame:IsVisible() then
 		ColorPickerFrame:Hide()
 	end
-	if FontSelectorFrame:IsVisible() then
-		FontSelectorFrame:Hide()
+	if PowaFontSelectorFrame:IsVisible() then
+		PowaFontSelectorFrame:Hide()
 	end
 	self.Auras[aura.id] = nil
 	if aura.id > 120 then
@@ -1307,7 +1350,7 @@ function PowaAurasOptions:MainOptionClose()
 		self.CancelColor()
 		ColorPickerFrame:Hide()
 	end
-	FontSelectorFrame:Hide()
+	PowaFontSelectorFrame:Hide()
 	PowaBarConfigFrame:Hide()
 	PowaOptionsFrame:Hide()
 	PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
@@ -4374,18 +4417,18 @@ end
 
 function PowaAurasOptions:OpenFontSelector(owner)
 	Lib_CloseDropDownMenus()
-	if FontSelectorFrame:IsVisible() then
-		FontSelectorFrame:Hide()
+	if PowaFontSelectorFrame:IsVisible() then
+		PowaFontSelectorFrame:Hide()
 	else
-		FontSelectorFrame.selectedFont = self.Auras[self.CurrentAuraId].aurastextfont
-		FontSelectorFrame:Show()
+		PowaFontSelectorFrame.selectedFont = self.Auras[self.CurrentAuraId].aurastextfont
+		PowaFontSelectorFrame:Show()
 	end
 end
 
 function PowaAurasOptions:FontSelectorOkay(owner)
 	local aura = self.Auras[self.CurrentAuraId]
-	if FontSelectorFrame.selectedFont then
-		aura.aurastextfont = FontSelectorFrame.selectedFont
+	if PowaFontSelectorFrame.selectedFont then
+		aura.aurastextfont = PowaFontSelectorFrame.selectedFont
 	else
 		aura.aurastextfont = 1
 	end
@@ -4398,11 +4441,11 @@ function PowaAurasOptions:FontSelectorCancel(owner)
 end
 
 function PowaAurasOptions:FontSelectorClose(owner)
-	FontSelectorFrame:Hide()
+	PowaFontSelectorFrame:Hide()
 end
 
 function PowaAurasOptions:FontButton_OnClick(owner)
-	FontSelectorFrame.selectedFont = _G["FontSelectorEditorScrollButton"..owner:GetID()].font
+	PowaFontSelectorFrame.selectedFont = _G["FontSelectorEditorScrollButton"..owner:GetID()].font
 	self:FontScrollBar_Update(owner)
 end
 
@@ -4425,7 +4468,7 @@ function PowaAurasOptions.FontScrollBar_Update(owner)
 		end
 		fontText:SetFont(PowaAurasOptions.Fonts[fontIndex], 14, "Outline, Monochrome")
 		fontText:SetText(fontName)
-		if FontSelectorFrame.selectedFont == fontIndex then
+		if PowaFontSelectorFrame.selectedFont == fontIndex then
 			fontButton:LockHighlight()
 		else
 			fontButton:UnlockHighlight()
@@ -4461,8 +4504,8 @@ end
 
 function PowaAurasOptions:EditorClose()
 	if PowaBarConfigFrame:IsVisible() then
-		if FontSelectorFrame:IsVisible() then
-			FontSelectorFrame:Hide()
+		if PowaFontSelectorFrame:IsVisible() then
+			PowaFontSelectorFrame:Hide()
 		end
 		if ColorPickerFrame:IsVisible() then
 			self.CancelColor()
@@ -5231,38 +5274,53 @@ function PowaAurasOptions:EquipmentSlot_OnClick(slotButton)
 	end
 end
 
-function SizeLeftButtonOnUpdate(frame, elapsed)
-	if frame.isScaling == true then
-		local cx, cy = GetCursorPosition()
-		cx = cx + 12
-		cy = cy - 12
-		cx = cx / frame:GetEffectiveScale() - frame:GetParent():GetLeft()
-		cy = frame:GetParent():GetHeight() - (cy / frame:GetEffectiveScale() - frame:GetParent():GetBottom())
-		local tNewScale = cx / frame:GetParent():GetWidth()
-		--local tNewScaleY = cy / frame:GetParent():GetWidth()
-		if (frame:GetParent():GetScale() * tNewScale) > 0.5 and (frame:GetParent():GetScale() * tNewScale) < 1.5 then
-			local tx, ty = frame:GetParent().x / tNewScale, frame:GetParent().y / tNewScale
-			print(tNewScale)
-			frame:GetParent():ClearAllPoints()
-			frame:GetParent():SetScale(frame:GetParent():GetScale() * tNewScale)
-			frame:GetParent():SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", tx, ty)
-			frame:GetParent().x, frame:GetParent().y = tx, ty
+function PowaAurasOptions:ResizeFrame(frame)
+	local Width = frame:GetWidth()
+	local Height = frame:GetHeight()
+	local o = CreateFrame("Frame", nil, frame)
+	o:SetPoint("Bottomright", 0, 0)
+	o:SetWidth(32)
+	o:SetHeight(32)
+	o:SetFrameLevel(frame:GetFrameLevel() + 7)
+	o:EnableMouse(true)
+	local n = o:CreateTexture(nil, "Artwork")
+	n:SetPoint("Topleft", 0, 0)
+	n:SetWidth(32)
+	n:SetHeight(32)
+	n:SetTexture("Interface\\AddOns\\Resize\\Textures\\resize")
+	--n:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+	frame:SetMaxResize(Width * 1.5, Height * 1.5)
+	frame:SetMinResize(Width / 1.5, Height / 1.5)
+	frame:SetResizable(true)
+	o:SetScript("OnMouseDown", function(self, button)
+		if button == "RightButton" then
+			frame:SetWidth(Width)
+			frame:SetHeight(Height)
+		else
+			frame:StartSizing("Right")
 		end
-	end
-end
-
-function SizeOnMouseDown(frame, button)
-	if button == "LeftButton" then
-		frame.isScaling = true
-		frame:SetScript("OnUpdate", SizeLeftButtonOnUpdate)
-	end
-end
-
-function SizeOnMouseUp(frame, button)
-	if button == "LeftButton" then
-		frame.isScaling = false
-		frame:SetScript("OnUpdate", nil)
-	end
+	end)
+	o:SetScript("OnMouseUp", function()
+		frame:StopMovingOrSizing()
+	end)
+	frame:SetScript("OnSizeChanged", function(self)
+		local s = self:GetWidth() / Width
+		frame.container:SetScale(s)
+		local childrens = {frame:GetChildren()}
+		for _, child in ipairs(childrens) do
+			child:SetScale(s)
+		end
+		self:SetHeight(Height * s)
+	end)
+	local n = CreateFrame("ScrollFrame", nil, frame)
+	n:SetWidth(Width)
+	n:SetHeight(Height)
+	n:SetPoint("Topleft", 0, 0)
+	local r = CreateFrame("Frame", nil, frame)
+	r:SetWidth(Width)
+	r:SetHeight(Height)
+	n:SetScrollChild(r)
+	frame.container = n
 end
 
 function PowaAurasOptions:IconOnMouseWheel(delta)

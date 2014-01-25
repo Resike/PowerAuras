@@ -2282,7 +2282,7 @@ function PowaAuras_GlobalTrigger(auraType)
 					if PowaAuras.Auras[auraid].timerduration == 0 then
 						PowaAuras.Auras[auraid].HideRequest = true
 					end
-				end   
+				end
 			end
 		end
 	end

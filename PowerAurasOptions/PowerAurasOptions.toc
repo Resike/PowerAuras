@@ -17,4 +17,3 @@ PowerComms.lua
 
 PowerOptions.xml
 PowerOptionsBlizzard.xml
-PowerOptionsEquipmentSlots.xml
