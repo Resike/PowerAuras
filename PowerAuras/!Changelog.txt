@@ -18,6 +18,9 @@
 * Fixed the broken "Secondary Texture's Strata" dropdown.
 * Fixed an issue with secondary aura's random color.
 * Fixed an issue with "Position X" and "Postion Y" slider's for auras with secondary aura.
+* "Equipement Slots" now accept all type of the timers. (Inverted, Cooldown.)
+* "Purgealbe Spell" tooltip check options is gonna work properly.
+* "Stealable" tooltip check options is gonna work properly.
 * Removed a leftover text file from the model database.
 * Model's animation slider max value is 802 now.
 * Reverted timed auras redisplay fix from 4.24.5. (Need a better method to fix.)

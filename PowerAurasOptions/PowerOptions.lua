@@ -4259,6 +4259,8 @@ function PowaAurasOptions:FrameMouseDown(frame, button)
 end
 
 function PowaAurasOptions:FrameMouseUp(frame, button)
+	frame.x = frame:GetLeft() 
+	frame.y = frame:GetBottom()
 	frame:StopMovingOrSizing()
 end
 
@@ -5226,6 +5228,40 @@ function PowaAurasOptions:EquipmentSlot_OnClick(slotButton)
 				end
 			end
 		end
+	end
+end
+
+function SizeLeftButtonOnUpdate(frame, elapsed)
+	if frame.isScaling == true then
+		local cx, cy = GetCursorPosition()
+		cx = cx + 12
+		cy = cy - 12
+		cx = cx / frame:GetEffectiveScale() - frame:GetParent():GetLeft()
+		cy = frame:GetParent():GetHeight() - (cy / frame:GetEffectiveScale() - frame:GetParent():GetBottom())
+		local tNewScale = cx / frame:GetParent():GetWidth()
+		--local tNewScaleY = cy / frame:GetParent():GetWidth()
+		if (frame:GetParent():GetScale() * tNewScale) > 0.5 and (frame:GetParent():GetScale() * tNewScale) < 1.5 then
+			local tx, ty = frame:GetParent().x / tNewScale, frame:GetParent().y / tNewScale
+			print(tNewScale)
+			frame:GetParent():ClearAllPoints()
+			frame:GetParent():SetScale(frame:GetParent():GetScale() * tNewScale)
+			frame:GetParent():SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", tx, ty)
+			frame:GetParent().x, frame:GetParent().y = tx, ty
+		end
+	end
+end
+
+function SizeOnMouseDown(frame, button)
+	if button == "LeftButton" then
+		frame.isScaling = true
+		frame:SetScript("OnUpdate", SizeLeftButtonOnUpdate)
+	end
+end
+
+function SizeOnMouseUp(frame, button)
+	if button == "LeftButton" then
+		frame.isScaling = false
+		frame:SetScript("OnUpdate", nil)
 	end
 end
 

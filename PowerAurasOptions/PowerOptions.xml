@@ -323,6 +323,8 @@
 			<OnLoad>
 				self:SetBackdropColor(0.1, 0.1, 0.1)
 				self:SetBackdropBorderColor(0.9, 1.0, 0.9)
+				self.x = self:GetLeft()
+				self.y = self:GetBottom()
 				tinsert(UISpecialFrames, self:GetName())
 			</OnLoad>
 			<OnShow>
@@ -383,6 +385,28 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
+			</Button>
+			<!-- Resize Button -->
+			<Button name = "PowaResizeButton">
+				<Size>
+					<AbsDimension x = "16" y = "16"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "BOTTOMRIGHT" relativeTo = "PowaOptionsFrame" relativePoint = "BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x = "-8" y = "8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self:SetScript("OnMouseDown", SizeOnMouseDown)
+						self:SetScript("OnMouseUp", SizeOnMouseUp)
+					</OnLoad>
+				</Scripts>
+				<NormalTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up"/>
+				<PushedTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
+				<HighlightTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
 			</Button>
 			<!-- Icon Effects Window -->
 			<Frame name = "PowaOptionsSelectorFrame">
@@ -1793,6 +1817,27 @@
 						PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
+			</Button>
+			<!-- Resize Button -->
+			<Button name = "PowaConfigResizeButton">
+				<Size>
+					<AbsDimension x = "16" y = "16"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "BOTTOMRIGHT" relativeTo = "PowaBarConfigFrame" relativePoint = "BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x = "-8" y = "8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						--
+					</OnClick>
+				</Scripts>
+				<NormalTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up"/>
+				<PushedTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
+				<HighlightTexture file = "Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
 			</Button>
 			<!-- Top Panel -->
 			<Frame name = "PowaBarConfigFrameEditor">
