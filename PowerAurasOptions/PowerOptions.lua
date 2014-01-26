@@ -4894,25 +4894,25 @@ function PowaAurasOptions:EnableTextfield(textfield)
 	_G[textfield.."Text"]:SetTextColor(GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b)
 end
 
-function PowaAurasOptions:DisableCheckBox(checkBox)
-	_G[checkBox]:Disable()
-	_G[checkBox.."Text"]:SetTextColor(GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b)
+function PowaAurasOptions:DisableCheckBox(checkbox)
+	_G[checkbox]:Disable()
+	_G[checkbox.."Text"]:SetTextColor(GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b)
 end
 
-function PowaAurasOptions:EnableCheckBox(checkBox, color)
-	_G[checkBox]:Enable()
+function PowaAurasOptions:EnableCheckBox(checkbox, color)
+	_G[checkbox]:Enable()
 	if not color then
 		color = NORMAL_FONT_COLOR
 	end
-	_G[checkBox.."Text"]:SetTextColor(color.r, color.g, color.b)
+	_G[checkbox.."Text"]:SetTextColor(color.r, color.g, color.b)
 end
 
-function PowaAurasOptions:HideCheckBox(checkBox)
-	_G[checkBox]:Hide()
+function PowaAurasOptions:HideCheckBox(checkbox)
+	_G[checkbox]:Hide()
 end
 
-function PowaAurasOptions:ShowCheckBox(checkBox)
-	_G[checkBox]:Show()
+function PowaAurasOptions:ShowCheckBox(checkbox)
+	_G[checkbox]:Show()
 end
 
 -- Blizzard Addon
@@ -4930,6 +4930,19 @@ function PowaAurasOptions:MiscChecked(button, setting)
 		PowaMisc[setting] = true
 	else
 		PowaMisc[setting] = false
+	end
+	if setting == "ScaleLocked" then
+		if PowaMisc.ScaleLocked == true then
+			PowaOptionsFrame.resizeframeleft:Hide()
+			PowaOptionsFrame.resizeframeright:Hide()
+			PowaBarConfigFrame.resizeframeleft:Hide()
+			PowaBarConfigFrame.resizeframeright:Hide()
+		else
+			PowaOptionsFrame.resizeframeleft:Show()
+			PowaOptionsFrame.resizeframeright:Show()
+			PowaBarConfigFrame.resizeframeleft:Show()
+			PowaBarConfigFrame.resizeframeright:Show()
+		end
 	end
 end
 
@@ -4953,6 +4966,7 @@ local function OptionsOK()
 	PowaAurasOptions:EnableChecked()
 	PowaAurasOptions:MiscChecked(PowaDebugButton, "Debug")
 	PowaAurasOptions:MiscChecked(PowaTimerRoundingButton, "TimerRoundUp")
+	PowaAurasOptions:MiscChecked(PowaDisableFrameScalingButton, "ScaleLocked")
 	PowaAurasOptions:GlobalMiscChecked(PowaBlockIncomingAurasButton, "BlockIncomingAuras")
 	PowaAurasOptions:GlobalMiscChecked(PowaFixExportsButton, "FixExports")
 	local newDefaultTimerTexture = Lib_UIDropDownMenu_GetSelectedName(PowaDropDownDefaultTimerTexture)
@@ -5009,6 +5023,7 @@ local function OptionsRefresh()
 	PowaDebugButton:SetChecked(PowaMisc.Debug)
 	PowaTimerRoundingButton:SetChecked(PowaMisc.TimerRoundUp)
 	PowaAllowInspectionsButton:SetChecked(PowaMisc.AllowInspections)
+	PowaDisableFrameScalingButton:SetChecked(PowaMisc.ScaleLocked)
 	PowaBlockIncomingAurasButton:SetChecked(PowaGlobalMisc.BlockIncomingAuras)
 	PowaFixExportsButton:SetChecked(PowaGlobalMisc.FixExports)
 	Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownDefaultTimerTexture, PowaMisc.DefaultTimerTexture)
@@ -5300,50 +5315,110 @@ end
 function PowaAurasOptions:ResizeFrame(frame)
 	local Width = frame:GetWidth()
 	local Height = frame:GetHeight()
-	local o = CreateFrame("Frame", nil, frame)
-	o:SetPoint("Bottomright", 0, 0)
-	o:SetWidth(32)
-	o:SetHeight(32)
-	o:SetFrameLevel(frame:GetFrameLevel() + 7)
-	o:EnableMouse(true)
-	local n = o:CreateTexture(nil, "Artwork")
-	n:SetPoint("Topleft", 0, 0)
-	n:SetWidth(32)
-	n:SetHeight(32)
-	--n:SetTexture("Interface\\AddOns\\Resize\\Textures\\resize")
-	n:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+	frame.resizeframeleft = CreateFrame("Frame", nil, frame)
+	frame.resizeframeleft:SetPoint("BottomRight", frame, "BottomRight", - 8, 7)
+	frame.resizeframeleft:SetWidth(16)
+	frame.resizeframeleft:SetHeight(16)
+	frame.resizeframeleft:SetFrameLevel(frame:GetFrameLevel() + 7)
+	frame.resizeframeleft:EnableMouse(true)
+	if PowaMisc.ScaleLocked then
+		frame.resizeframeleft:Hide()
+	else
+		frame.resizeframeleft:Show()
+	end
+	frame.resizetextureleft = frame.resizeframeleft:CreateTexture(nil, "Artwork")
+	frame.resizetextureleft:SetPoint("TopLeft", frame.resizeframeleft, "TopLeft", 0, 0)
+	frame.resizetextureleft:SetWidth(16)
+	frame.resizetextureleft:SetHeight(16)
+	frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
 	frame:SetMaxResize(Width * 1.5, Height * 1.5)
 	frame:SetMinResize(Width / 1.5, Height / 1.5)
 	frame:SetResizable(true)
-	o:SetScript("OnMouseDown", function(self, button)
+	frame.resizeframeleft:SetScript("OnEnter", function(self)
+		frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
+	end)
+	frame.resizeframeleft:SetScript("OnLeave", function(self)
+		frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+	end)
+	frame.resizeframeleft:SetScript("OnMouseDown", function(self, button)
 		if button == "RightButton" then
 			frame:SetWidth(Width)
 			frame:SetHeight(Height)
 		else
 			frame:StartSizing("Right")
 		end
+		frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
 	end)
-	o:SetScript("OnMouseUp", function()
+	frame.resizeframeleft:SetScript("OnMouseUp", function(self, button)
+		local x, y = GetCursorPosition()
+		local fx = self:GetLeft() * self:GetEffectiveScale()
+		local fy = self:GetBottom() * self:GetEffectiveScale()
+		if x >= fx and x <= (fx + self:GetWidth()) and y >= fy and y <= (fy + self:GetHeight()) then
+			frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
+		else
+			frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+		end
 		frame:StopMovingOrSizing()
 	end)
+	frame.resizeframeright = CreateFrame("Frame", nil, frame)
+	frame.resizeframeright:SetPoint("BottomLeft", frame, "BottomLeft", 8, 7)
+	frame.resizeframeright:SetWidth(16)
+	frame.resizeframeright:SetHeight(16)
+	frame.resizeframeright:SetFrameLevel(frame:GetFrameLevel() + 7)
+	frame.resizeframeright:EnableMouse(true)
+	if PowaMisc.ScaleLocked then
+		frame.resizeframeright:Hide()
+	else
+		frame.resizeframeright:Show()
+	end
+	frame.resizetextureright = frame.resizeframeright:CreateTexture(nil, "Artwork")
+	frame.resizetextureright:SetPoint("TopLeft", frame.resizeframeright, "TopLeft", 0, 0)
+	frame.resizetextureright:SetWidth(16)
+	frame.resizetextureright:SetHeight(16)
+	frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+	local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = frame.resizetextureright:GetTexCoord()
+	frame.resizetextureright:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
+	frame.resizeframeright:SetScript("OnEnter", function(self)
+		frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
+	end)
+	frame.resizeframeright:SetScript("OnLeave", function(self)
+		frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+	end)
+	frame.resizeframeright:SetScript("OnMouseDown", function(self, button)
+		if button == "RightButton" then
+			frame:SetWidth(Width)
+			frame:SetHeight(Height)
+		else
+			frame:StartSizing("Left")
+		end
+		frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
+	end)
+	frame.resizeframeright:SetScript("OnMouseUp", function(self, button)
+		local x, y = GetCursorPosition()
+		local fx = self:GetLeft() * self:GetEffectiveScale()
+		local fy = self:GetBottom() * self:GetEffectiveScale()
+		if x >= fx and x <= (fx + self:GetWidth()) and y >= fy and y <= (fy + self:GetHeight()) then
+			frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
+		else
+			frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+		end
+		frame:StopMovingOrSizing()
+	end)
+	frame.scrollframe = CreateFrame("ScrollFrame", nil, frame)
+	frame.scrollframe:SetWidth(Width)
+	frame.scrollframe:SetHeight(Height)
+	frame.scrollframe:SetPoint("Topleft", frame, "Topleft", 0, 0)
 	frame:SetScript("OnSizeChanged", function(self)
 		local s = self:GetWidth() / Width
-		frame.container:SetScale(s)
-		local childrens = {frame:GetChildren()}
+		frame.scrollframe:SetScale(s)
+		local childrens = {self:GetChildren()}
 		for _, child in ipairs(childrens) do
-			child:SetScale(s)
+			if child ~= frame.resizeframeleft and child ~= frame.resizeframeright then
+				child:SetScale(s)
+			end
 		end
 		self:SetHeight(Height * s)
 	end)
-	local n = CreateFrame("ScrollFrame", nil, frame)
-	n:SetWidth(Width)
-	n:SetHeight(Height)
-	n:SetPoint("Topleft", 0, 0)
-	local r = CreateFrame("Frame", nil, frame)
-	r:SetWidth(Width)
-	r:SetHeight(Height)
-	n:SetScrollChild(r)
-	frame.container = n
 end
 
 function PowaAurasOptions:IconOnMouseWheel(delta)

@@ -133,6 +133,28 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
+			<!-- Disable Frame Scaling -->
+			<CheckButton name = "PowaDisableFrameScalingButton" inherits = "PowaCheckTemplate">
+				<Size>
+					<AbsDimension x = "25" y = "25"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaBlockIncomingAurasButton" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self.tooltipText = PowaAurasOptions.Text.aideDisableFrameScaling
+						PowaDisableFrameScalingButtonText:SetText(PowaAurasOptions.Text.nomDisableScaling)
+					</OnLoad>
+					<OnClick>
+						PowaAurasOptions:MiscChecked(self, "ScaleLocked")
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 			<!-- Activate Debug Messages CheckButton -->
 			<CheckButton name = "PowaDebugButton" inherits = "PowaCheckTemplate">
 				<Size>
@@ -205,7 +227,7 @@
 					<AbsDimension x = "580" y = "16"/>
 				</Size>
 				<Anchors>
-					<Anchor point = "TOPLEFT" relativeTo = "PowaBlockIncomingAurasButton" relativePoint = "BOTTOMLEFT">
+					<Anchor point = "TOPLEFT" relativeTo = "PowaDisableFrameScalingButton" relativePoint = "BOTTOMLEFT">
 						<Offset>
 							<AbsDimension x = "3" y = "-22"/>
 						</Offset>

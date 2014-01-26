@@ -5,7 +5,7 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.8   \//      \// \//    \\/     \\/      \//  \//       
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.9   \//      \// \//    \\/     \\/      \//  \//       
 
 	Power Auras Classic
 	Author: Resike
@@ -24,7 +24,7 @@ local r1, r2, r3, r4, r5, r6
 PowaMisc =
 {
 	Disabled = false,
-	debug = false,
+	Debug = false,
 	OnUpdateLimit = 0,
 	AnimationLimit = 0,
 	Version = GetAddOnMetadata("PowerAuras", "Version"),
@@ -35,6 +35,7 @@ PowaMisc =
 	UserSetMaxTextures = PowaAuras.TextureCount,
 	OverrideMaxTextures = false,
 	Locked = false,
+	ScaleLocked = false,
 	GroupSize = 1,
 	SoundChannel = "Master"
 }

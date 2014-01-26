@@ -57,6 +57,15 @@ function cPowaStacks:GetTexture()
 	return "Interface\\Addons\\PowerAuras\\TimerTextures\\"..texture.."\\Timers"..postfix
 end
 
+--[[local eclipseframe = CreateFrame("Frame", nil, UIParent)
+eclipseframe:SetSize(50, 50)
+eclipseframe:Hide()
+
+local texture = eclipseframe:CreateTexture(nil, "Overlay")
+texture:SetTexture("Interface\\PlayerFrame\\UI-DruidEclipse")
+texture:SetBlendMode("Add")
+texture:SetAllPoints(eclipseframe)]]
+
 function cPowaStacks:ShowValue(aura, newvalue)
 	local frame = PowaAuras.StacksFrames[self.id]
 	if not frame or not newvalue or newvalue < 0 then
@@ -71,6 +80,14 @@ function cPowaStacks:ShowValue(aura, newvalue)
 	end
 	if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
 		newvalue = tonumber(format("%.0f", tostring(newvalue * 10)))
+	--[[elseif aura.PowerType == SPELL_POWER_LUNAR_ECLIPSE or aura.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
+		eclipseframe:Show()
+		texture:SetParent(frame)
+		eclipseframe:SetPoint("LEFT", frame, "RIGHT", 0, 0)
+		local direction = GetEclipseDirection()
+		if direction then
+			texture:SetTexCoord(unpack(ECLIPSE_MARKER_COORDS[direction]))
+		end]]
 	else
 		newvalue = tonumber(format("%.0f", tostring(newvalue)))
 	end
