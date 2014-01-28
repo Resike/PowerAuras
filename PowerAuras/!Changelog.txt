@@ -8,6 +8,22 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.24.9**
+* Added easter eggs!
+* Stacks frame now wont crash, with minus values.
+* The main option and a effect editor are now rescaleable. (Left click to scale, right click to reset, middle click to lock the scale.)
+* Switching to toerh auras now properly going to close the equipments slots frame.
+* Creating a new auras now properly going to close the equipments slots and font selector frame.
+* Reseting frame positions now properly going to close the font selector.
+* Fixed an issue with the "Test" buttons opacity change.
+* Added sounds for multiple elements in the main options, clicking global and charater tabs, clicking on aura icons.
+* Equipment slot fixes.
+* Some localization updates.
+* Merged PowerOptionsEquipmentSlots.xml, into the main options.
+* Removed PowerOptionsEquipmentSlots.xml.
+* Some XML fixes.
+* Some other smaller fixes.
+
 **4.24.8**
 * Fixed a bug which caused timers not to show up when the aura itself was hidden at the start.
 * Fixed an issue which caused timers to broke, when you changed the auras invert checkbutton.
@@ -24,6 +40,7 @@
 * Removed a leftover text file from the model database.
 * Model's animation slider max value is 802 now.
 * Reverted timed auras redisplay fix from 4.24.5. (Need a better method to fix.)
+* Waterdrop animation fix.
 * Some global cleanup.
 * A lot of other minor fixes.
 
