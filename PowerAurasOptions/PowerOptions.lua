@@ -5341,24 +5341,35 @@ function PowaAurasOptions:ResizeFrame(frame)
 		frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
 	end)
 	frame.resizeframeleft:SetScript("OnMouseDown", function(self, button)
-		if button == "RightButton" then
-			frame:SetWidth(Width)
-			frame:SetHeight(Height)
-		else
+		if button == "LeftButton" then
 			frame:StartSizing("Right")
 		end
 		frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
 	end)
 	frame.resizeframeleft:SetScript("OnMouseUp", function(self, button)
-		local x, y = GetCursorPosition()
-		local fx = self:GetLeft() * self:GetEffectiveScale()
-		local fy = self:GetBottom() * self:GetEffectiveScale()
-		if x >= fx and x <= (fx + self:GetWidth()) and y >= fy and y <= (fy + self:GetHeight()) then
-			frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
-		else
-			frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+		if button == "RightButton" then
+			frame:SetWidth(Width)
+			frame:SetHeight(Height)
 		end
-		frame:StopMovingOrSizing()
+		if button == "MiddleButton" then
+			PowaOptionsFrame.resizeframeleft:Hide()
+			PowaOptionsFrame.resizeframeright:Hide()
+			PowaBarConfigFrame.resizeframeleft:Hide()
+			PowaBarConfigFrame.resizeframeright:Hide()
+			PowaMisc["ScaleLocked"] = true
+			PowaDisableFrameScalingButton:SetChecked(true)
+			frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+		else
+			local x, y = GetCursorPosition()
+			local fx = self:GetLeft() * self:GetEffectiveScale()
+			local fy = self:GetBottom() * self:GetEffectiveScale()
+			if x >= fx and x <= (fx + self:GetWidth()) and y >= fy and y <= (fy + self:GetHeight()) then
+				frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
+			else
+				frame.resizetextureleft:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+			end
+			frame:StopMovingOrSizing()
+		end
 	end)
 	frame.resizeframeright = CreateFrame("Frame", nil, frame)
 	frame.resizeframeright:SetPoint("BottomLeft", frame, "BottomLeft", 8, 7)
@@ -5385,24 +5396,35 @@ function PowaAurasOptions:ResizeFrame(frame)
 		frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
 	end)
 	frame.resizeframeright:SetScript("OnMouseDown", function(self, button)
-		if button == "RightButton" then
-			frame:SetWidth(Width)
-			frame:SetHeight(Height)
-		else
+		if button == "LeftButton" then
 			frame:StartSizing("Left")
 		end
 		frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
 	end)
 	frame.resizeframeright:SetScript("OnMouseUp", function(self, button)
-		local x, y = GetCursorPosition()
-		local fx = self:GetLeft() * self:GetEffectiveScale()
-		local fy = self:GetBottom() * self:GetEffectiveScale()
-		if x >= fx and x <= (fx + self:GetWidth()) and y >= fy and y <= (fy + self:GetHeight()) then
-			frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
-		else
-			frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+		if button == "RightButton" then
+			frame:SetWidth(Width)
+			frame:SetHeight(Height)
 		end
-		frame:StopMovingOrSizing()
+		if button == "MiddleButton" then
+			PowaOptionsFrame.resizeframeleft:Hide()
+			PowaOptionsFrame.resizeframeright:Hide()
+			PowaBarConfigFrame.resizeframeleft:Hide()
+			PowaBarConfigFrame.resizeframeright:Hide()
+			PowaMisc["ScaleLocked"] = true
+			PowaDisableFrameScalingButton:SetChecked(true)
+			frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+		else
+			local x, y = GetCursorPosition()
+			local fx = self:GetLeft() * self:GetEffectiveScale()
+			local fy = self:GetBottom() * self:GetEffectiveScale()
+			if x >= fx and x <= (fx + self:GetWidth()) and y >= fy and y <= (fy + self:GetHeight()) then
+				frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
+			else
+				frame.resizetextureright:SetTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+			end
+			frame:StopMovingOrSizing()
+		end
 	end)
 	frame.scrollframe = CreateFrame("ScrollFrame", nil, frame)
 	frame.scrollframe:SetWidth(Width)
