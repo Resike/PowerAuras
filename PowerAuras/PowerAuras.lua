@@ -5,7 +5,7 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.9   \//      \// \//    \\/     \\/      \//  \//       
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.25.0   \//      \// \//    \\/     \\/      \//  \//       
 
 	Power Auras Classic
 	Author: Resike
@@ -1132,7 +1132,7 @@ function PowaAuras:ResetModel(aura)
 				model:SetModel(self.ModelsSpells[aura.texture])
 			end
 		else
-			if type(aura.modelpath) == "number" then
+			if tonumber(aura.modelpath) then
 				model:SetDisplayInfo(aura.modelpath)
 			else
 				model:SetModel(aura.modelpath)
@@ -1202,7 +1202,7 @@ function PowaAuras:ResetModel(aura)
 					secondaryModel:SetModel(self.ModelsSpells[aura.texture])
 				end
 			else
-				if type(aura.modelpath) == "number" then
+				if tonumber(aura.modelpath) then
 					secondaryModel:SetDisplayInfo(aura.modelpath)
 				else
 					secondaryModel:SetModel(aura.modelpath)
@@ -1232,7 +1232,7 @@ function PowaAuras:Reset(aura)
 	local model = self.Models[aura.id]
 	model:ClearModel()
 	if aura.model then
-		if type(aura.modelpath) == "number" then
+		if tonumber(aura.modelpath) then
 			model:SetDisplayInfo(aura.modelpath)
 		else
 			if not aura.modelcategory or aura.modelcategory == 1 then
@@ -1259,7 +1259,7 @@ end
 function PowaAuras:ResetSecondary(aura)
 	local secondaryModel = self.SecondaryModels[aura.id]
 	secondaryModel:ClearModel()
-	if type(aura.modelpath) == "number" then
+	if tonumber(aura.modelpath) then
 		secondaryModel:SetDisplayInfo(aura.modelpath)
 	else
 		if not aura.modelcategory or aura.modelcategory == 1 then
@@ -1605,7 +1605,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 				model:SetModel(self.ModelsSpells[aura.texture])
 			end
 		else
-			if type(aura.modelpath) == "number" then
+			if tonumber(aura.modelpath) then
 				model:SetDisplayInfo(aura.modelpath)
 			else
 				model:SetModel(aura.modelpath)
@@ -1898,7 +1898,7 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 				secondaryModel:SetModel(self.ModelsSpells[aura.texture])
 			end
 		else
-			if type(aura.modelpath) == "number" then
+			if tonumber(aura.modelpath) then
 				secondaryModel:SetDisplayInfo(aura.modelpath)
 			else
 				secondaryModel:SetModel(aura.modelpath)

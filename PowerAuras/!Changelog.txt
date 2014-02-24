@@ -1,4 +1,4 @@
-**Issues:**
+*Issues:**
 * Leftover slider/dropdown/model optimisations.
 * Timed auras redisplay fix at phasing events.
 * Support for stackable spells.
@@ -7,12 +7,14 @@
 * Change Old-Animation's update type to AnimationGroup.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
+**4.25.0**
+* Fixed a major issue which broke display id type model's proper functionalities.
 
 **4.24.9**
 * Added easter eggs!
 * Stacks frame now wont crash, with minus values.
 * The main option and a effect editor are now rescaleable. (Left click to scale, right click to reset, middle click to lock the scale.)
-* Switching to toerh auras now properly going to close the equipments slots frame.
+* Switching to other auras now properly going to close the equipments slots frame.
 * Creating a new auras now properly going to close the equipments slots and font selector frame.
 * Reseting frame positions now properly going to close the font selector.
 * Fixed an issue with the "Test" buttons opacity change.
@@ -414,7 +416,7 @@
 * Fixed raid frame taint issues. (thanks to Resike)
 
 **4.3.8**
-* Non*Fire Mage GCDs are properly ignored in auras.
+* Non-Fire Mage GCDs are properly ignored in auras.
 
 **4.3.7**
 * Fixed Chi (Light Power) max power from 4 to 5.
