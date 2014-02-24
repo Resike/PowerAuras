@@ -1394,7 +1394,7 @@ function cPowaAura:CheckStacks(count)
 	local operator = self.stacksOperator or PowaAuras.DefaultOperator
 	local stacks = self.stacks or 0
 	local stacksLower = self.stacksLower or 0
-	PowaAuras:Debug("Stack op = ", operator," stacks = ", stacks,"Stack Count = ", count)
+	PowaAuras:Debug("Stack op = ", operator," stacks = ", stacks, "Stack Count = ", count)
 	return (operator == "=" and stacks == 0) or (operator == ">=" and count >= stacks) or (operator == "<=" and count <= stacks) or (operator == ">" and count > stacks) or (operator == "<" and count < stacks) or (operator == "=" and count == stacks) or (operator == "-" and count >= stacksLower and count <= stacks) or (operator == "!" and count ~= stacks)
 end
 
@@ -1943,7 +1943,7 @@ function cPowaTypeBuff:IsPresent(target, z)
 		return nil
 	end
 	if self.Debug then
-		PowaAuras:Message("TypeBuff = ", name, "Spellid = ", spellId, " IsPresent on ", target," buffid = ", z," removeable = ", removeable)
+		PowaAuras:Message("TypeBuff = ", name, "Spellid = ", spellId, " IsPresent on ", target," buffid = ", z, " removeable = ", removeable)
 	end
 	self.DisplayUnit = target
 	if self.mine and typeBuff == nil then
@@ -2337,7 +2337,7 @@ function cPowaEnchant:CheckforEnchant(slot, enchantText, textToFind)
 end
 
 function cPowaEnchant:SetForEnchant(loc, slot, charges, index)
-	PowaAuras:Debug(loc,": found ", self.buffname," in the tooltip!")
+	PowaAuras:Debug(loc, ": found ", self.buffname, " in the tooltip!")
 	if self:CheckStacks(charges) then
 		if self:IconIsRequired() then
 			self:SetIcon(GetInventoryItemTexture("player", slot))
@@ -2466,8 +2466,9 @@ function cPowaCombo:CheckIfShouldShow(giveReason)
 end
 
 -- Action Usable
-cPowaActionReady = PowaClass(cPowaAura, {AuraType = "Actions", CanHaveTimer = true, CanHaveTimerOnInverse = true, CooldownAura = true, CanHaveInvertTime = true})
+cPowaActionReady = PowaClass(cPowaAura, {AuraType = "Actions", CanHaveTimer = true, CanHaveStacks = true, CanHaveTimerOnInverse = true, CooldownAura = true, CanHaveInvertTime = true})
 cPowaActionReady.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff7, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.ActionReady], mineText = PowaAuras.Text.nomIgnoreUseable, mineTooltip = PowaAuras.Text.aideIgnoreUseable}
+cPowaActionReady.ShowOptions = {["PowaBarBuffStacks"] = 1}
 cPowaActionReady.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaActionReady.TooltipOptions = {r = 0.8, g = 0.8, b = 1.0, showBuffName = true}
 
@@ -2479,6 +2480,7 @@ function cPowaActionReady:AddEffectAndEvents()
 	PowaAuras.Events.ACTIONBAR_UPDATE_COOLDOWN = true
 	PowaAuras.Events.ACTIONBAR_UPDATE_USABLE = true
 	PowaAuras.Events.UPDATE_SHAPESHIFT_FORM = true
+	PowaAuras.Events.SPELL_UPDATE_CHARGES = true
 end
 
 function cPowaActionReady:CheckIfShouldShow(giveReason)
@@ -2490,6 +2492,14 @@ function cPowaActionReady:CheckIfShouldShow(giveReason)
 		return false, PowaAuras.Text.nomReasonActionNotFound
 	end
 	local cdstart, cdduration, enabled, charges, maxCharges = GetActionCooldown(self.slot)
+	if self.Stacks then
+		self.Stacks:SetStackCount(charges)
+	end
+	if self.stacksOperator ~= PowaAuras.DefaultOperator then
+		if not self:CheckStacks(charges) then
+			return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonStacksMismatch, charges, self:StacksText())
+		end
+	end
 	if not enabled then
 		if self.Timer then
 			self.Timer:SetDurationInfo(0)
@@ -2561,15 +2571,16 @@ function cPowaActionReady:ShowTimerDurationSlider()
 end
 
 -- Spell Cooldown
-cPowaSpellCooldown = PowaClass(cPowaAura, {AuraType = "SpellCooldowns", CanHaveTimer = true, CanHaveTimerOnInverse = true, CooldownAura = true, CanHaveInvertTime = true})
+cPowaSpellCooldown = PowaClass(cPowaAura, {AuraType = "SpellCooldowns", CanHaveTimer = true, CanHaveStacks = true, CanHaveTimerOnInverse = true, CooldownAura = true, CanHaveInvertTime = true})
 cPowaSpellCooldown.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff8, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellCooldown],  mineText = PowaAuras.Text.nomSpellLearned, mineTooltip = PowaAuras.Text.aideSpellLearned, targetFriendText = PowaAuras.Text.nomCheckPet, targetFriendTooltip = PowaAuras.Text.aideCheckPet}
-cPowaSpellCooldown.ShowOptions = {["PowaBarTooltipCheck"] = 1}
+cPowaSpellCooldown.ShowOptions = {["PowaBarBuffStacks"] = 1, ["PowaBarTooltipCheck"] = 1}
 cPowaSpellCooldown.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaSpellCooldown.TooltipOptions = {r = 1.0, g = 0.6, b = 0.2, showBuffName = true}
 
 function cPowaSpellCooldown:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)
 	PowaAuras.Events.SPELL_UPDATE_COOLDOWN = true
+	PowaAuras.Events.SPELL_UPDATE_CHARGES = true
 end
 
 function cPowaSpellCooldown:SkipTargetChecks()
@@ -2615,6 +2626,15 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 	end
 	if self.Debug then
 		PowaAuras:Message("cdstart = ", cdstart," duration = ", cdduration, " enabled = ", enabled)
+	end
+	local charges, maxCharges, start, duration = GetSpellCharges(spellId)
+	if self.Stacks then
+		self.Stacks:SetStackCount(charges)
+	end
+	if self.stacksOperator ~= PowaAuras.DefaultOperator then
+		if not self:CheckStacks(charges) then
+			return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonStacksMismatch, charges, self:StacksText())
+		end
 	end
 	if not enabled then
 		if not self.inverse and self.mine then
@@ -2704,7 +2724,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		end
 		return - 1, PowaAuras:InsertText(PowaAuras.Text.nomReasonGlobalCooldown, spellName)
 	end
-	if cdstart == 0 or self.CooldownOver then
+	if cdstart == 0 or self.CooldownOver or charges > 0 then
 		if not self.inverse and not self.mine then
 			local show = false
 			if self.targetfriend then

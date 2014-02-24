@@ -1,12 +1,14 @@
 local PowaAurasOptions = PowaAurasOptions
 
-local _G, string, tostring, tonumber, type, format, table, tinsert, math, pi, pairs, pcall, ipairs, strsplit, sort = _G, string, tostring, tonumber, type, format, table, tinsert, math, math.pi, pairs, pcall, ipairs, strsplit, sort
+local _G, string, strtrim, tostring, tonumber, date, type, format, table, tinsert, time, math, pi, pairs, pcall, ipairs, strsplit, sort = _G, string, strtrim, tostring, tonumber, date, type, format, table, tinsert, time, math, math.pi, pairs, pcall, ipairs, strsplit, sort
 
 -- Main Options
 function PowaAurasOptions:OptionsOnLoad()
-	SlashCmdList["POWA"] = PowaAuras_CommandLine
-	SLASH_POWA1 = "/pa"
-	SLASH_POWA2 = "/powa"
+	SlashCmdList["PowerAuras"] = function(msg)
+		PowaAurasOptions:SlashCommands(msg)
+	end
+	SLASH_PowerAuras1 = "/pa"
+	SLASH_PowerAuras2 = "/powa"
 	PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	for i = 1, 5 do
 		_G["PowaOptionsList"..i]:SetText(PowaPlayerListe[i])
@@ -20,7 +22,7 @@ function PowaAurasOptions:OptionsOnLoad()
 	PowaAurasOptions:SetLockButtonText()
 	local day = tonumber(date("%d"))
 	local month = tonumber(date("%m"))
-	if (day == 1 and month == 1) or (day == 25 and month == 12) or (day == 31 and month == 12) then
+	if (day == 1 and month == 1) or (day == 1 and month == 4) or (day == 25 and month == 12) or (day == 31 and month == 12) then
 		PowaOptionsFrame:SetBackdrop({
 			bgFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Background",
 			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
@@ -345,7 +347,7 @@ function PowaAurasOptions:MainListClick(owner)
 		local offText = "OFF"
 		for i = min, max do
 			local aura = self.Auras[i]
-			if (aura and aura.off) then
+			if aura and aura.off then
 				allEnabled = false
 				offText = ""
 				break
@@ -358,6 +360,7 @@ function PowaAurasOptions:MainListClick(owner)
 				aura.off = allEnabled
 				if self.CurrentAuraPage == listID then
 					auraIcon:SetText(offText)
+					auraIcon:SetAlpha(0.33)
 				end
 			end
 			self.SecondaryAuras[i] = nil
@@ -1305,11 +1308,15 @@ function PowaAurasOptions:BeginMoveEffect(Pfrom, ToPage)
 		self:Message("All aura slots filled.")
 		return
 	end
+	local currentAuraId = self.CurrentAuraId
 	self:DoCopyEffect(Pfrom, i, true)
 	self:TriageIcons(self.CurrentAuraPage)
 	self:CalculateAuraSequence()
-	self.CurrentAuraId = ((self.CurrentAuraPage - 1) * 24) + 1
+	--self.CurrentAuraId = ((self.CurrentAuraPage - 1) * 24) + 1
 	self:DisableMoveMode()
+	if currentAuraId == self:GetNextFreeSlot() then
+		self.CurrentAuraId = self:GetNextFreeSlot() - 1
+	end
 	self:UpdateMainOption()
 	PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
 end
@@ -1360,7 +1367,7 @@ function PowaAurasOptions:MainOptionShow()
 		self.ModTest = true
 		self:UpdateMainOption()
 		PowaOptionsFrame:Show()
-		PowaAurasOptions:UpdateMainOption(true)
+		self:UpdateMainOption(true)
 		PlaySound("TalentScreenOpen", PowaMisc.SoundChannel)
 		if PowaMisc.Disabled then
 			self:DisplayText("Power Auras: "..self.Colors.Red..PowaAurasOptions.Text.Disabled.."|r")
@@ -2918,7 +2925,17 @@ end
 
 function PowaAurasOptions:CustomTextChanged()
 	local aura = self.Auras[self.CurrentAuraId]
-	aura.customname = PowaBarCustomTexName:GetText()
+	local editboxtext = PowaBarCustomTexName:GetText()
+	if string.find(editboxtext, "%\"") then
+		editboxtext = strtrim(editboxtext, "%\"")
+	end
+	if string.find(editboxtext, "%\\") then
+		editboxtext = string.gsub(editboxtext, "%\\", "/")
+	end
+	if string.find(editboxtext, "%//") then
+		editboxtext = string.gsub(editboxtext, "//", "/")
+	end
+	aura.customname = editboxtext
 	if string.find(aura.customname, "%.") or not aura.customname or aura.customname == "" then
 		aura.enablefullrotation = true
 	else
@@ -2934,7 +2951,17 @@ function PowaAurasOptions:CustomModelsChanged()
 	local aura = self.Auras[self.CurrentAuraId]
 	local model = self.Models[self.CurrentAuraId]
 	local texture = self.Textures[self.CurrentAuraId]
-	aura.modelcustompath = PowaBarCustomModelsEditBox:GetText()
+	local editboxtext = PowaBarCustomModelsEditBox:GetText()
+	if string.find(editboxtext, "%\"") then
+		editboxtext = strtrim(editboxtext, "%\"")
+	end
+	if string.find(editboxtext, "%\\") then
+		editboxtext = string.gsub(editboxtext, "%\\", "/")
+	end
+	if string.find(editboxtext, "%//") then
+		editboxtext = string.gsub(editboxtext, "//", "/")
+	end
+	aura.modelcustompath = editboxtext
 	self:ResetModel(aura)
 	if aura.modelcustompath and aura.modelcustompath ~= "" then
 		if string.find(aura.modelcustompath, "%.m2") then
@@ -4822,7 +4849,7 @@ function PowaAurasOptions:StacksChecked(button, setting)
 	self.Auras[self.CurrentAuraId].Stacks:Dispose()
 end
 
-function PowaAuras_CommandLine(msg)
+function PowaAurasOptions:SlashCommands(msg)
 	if msg == "dump" then
 		local dumpLoaded = PowaAurasOptions.Dump
 		if dumpLoaded then
@@ -5124,10 +5151,10 @@ end
 
 function PowaAurasOptions:OptionTest()
 	local aura = self.Auras[self.CurrentAuraId]
-	local owner = _G["PowaIcone"..self.CurrentAuraId]
 	if not aura or aura.buffname == "" or aura.buffname == " " then
 		return
 	end
+	local owner = _G["PowaIcone"..self.CurrentAuraId - ((self.CurrentAuraPage - 1) * 24)]
 	if aura.Showing then
 		self:SetAuraHideRequest(aura)
 		aura.Active = false
@@ -5154,7 +5181,7 @@ function PowaAurasOptions:OptionTest()
 				end
 			end
 		end
-		if owner ~= nil then
+		if owner then
 			owner:SetAlpha(0.33)
 		end
 	else
@@ -5177,7 +5204,7 @@ function PowaAurasOptions:OptionTest()
 				end
 			end
 		end
-		if owner ~= nil then
+		if owner then
 			owner:SetAlpha(1)
 		end
 	end

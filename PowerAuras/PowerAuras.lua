@@ -5,7 +5,7 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.25.0   \//      \// \//    \\/     \\/      \//  \//       
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.25.1   \//      \// \//    \\/     \\/      \//  \//       
 
 	Power Auras Classic
 	Author: Resike
@@ -945,6 +945,9 @@ local function RightButtonOnUpdate(frame, elapsed)
 			end
 		end
 	else
+		if not model.distance or not model.yaw or not model.pitch then
+			return
+		end
 		local pitch = model.pitch + (y - frame.y) * pi / 256
 		local limit = false
 		if pitch > halfpi - 0.05 or pitch < - halfpi + 0.05 then
@@ -1012,7 +1015,6 @@ local function OnMouseDown(frame, button)
 	elseif button == "MiddleButton" then
 		if IsAltKeyDown() then
 			local aura = PowaAuras.Auras[frame.aura.id]
-			local model = PowaAuras.Models[frame.aura.id]
 			PowaAuras:ResetModel(aura)
 		else
 			frame.x, frame.y = GetCursorPosition()
@@ -1038,6 +1040,9 @@ local function OnMouseWheel(frame, delta)
 		return
 	end
 	local model = PowaAuras.Models[frame.aura.id]
+	if not model.distance or not model.yaw or not model.pitch then
+		return
+	end
 	local zoom = 0.15
 	if IsControlKeyDown() then
 		zoom = 0.01

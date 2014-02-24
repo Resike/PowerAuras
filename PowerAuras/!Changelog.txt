@@ -1,11 +1,19 @@
 *Issues:**
 * Leftover slider/dropdown/model optimisations.
 * Timed auras redisplay fix at phasing events.
-* Support for stackable spells.
-* Make "Spell Cooldowns" to ignore global cooldown.
 * Duel with party members, enemy target bug.
 * Change Old-Animation's update type to AnimationGroup.
 * "Stance/Seal/Form" multiple selection dropdown update.
+
+**4.25.1**
+* Added support for stackable spells for "Action Usable" and "Spell Cooldown" triggers.
+* "Spell Cooldown" triggers now going to ignore global cooldown for stackable spells.
+* The "Custom Texture" and "Custom Model" editbox, is now going to accept and convert more type of file paths.
+* Fixed an issue with the "Test" button's proper functionality on other then the first character tab.
+* Succesfully moving an aura now will select the next aura in line if possible.
+* Fixed some issues with models.
+* Smaller change in slash command handling.
+* Some other smaller fixes.
 
 **4.25.0**
 * Fixed a major issue which broke display id type model's proper functionalities.

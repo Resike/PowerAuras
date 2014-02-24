@@ -869,6 +869,15 @@ function PowaAuras:SPELL_UPDATE_COOLDOWN(...)
 	self.DoCheck.CheckIt = true
 end
 
+function PowaAuras:SPELL_UPDATE_CHARGES(...)
+	if self.ModTest then
+		return
+	end
+	self.DoCheck.Actions = true
+	self.DoCheck.SpellCooldowns = true
+	self.DoCheck.CheckIt = true
+end
+
 function PowaAuras:UPDATE_SHAPESHIFT_FORM(...)
 	if self.ModTest then
 		return
