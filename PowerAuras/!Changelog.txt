@@ -5,6 +5,10 @@
 * Change Old-Animation's update type to AnimationGroup.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
+
+**4.25.2**
+* Fixed an issue which broke "Spell Cooldowns".
+
 **4.25.1**
 * Added support for stackable spells for "Action Usable" and "Spell Cooldown" triggers.
 * "Spell Cooldown" triggers now going to ignore global cooldown for stackable spells.

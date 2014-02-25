@@ -2536,7 +2536,7 @@ function cPowaActionReady:CheckIfShouldShow(giveReason)
 		end
 		return - 1, PowaAuras:InsertText(PowaAuras.Text.nomReasonGlobalCooldown, self.buffname)
 	end
-	if cdstart == 0 or self.CooldownOver or charges > 0 then
+	if cdstart == 0 or self.CooldownOver or (charges and charges > 0) then
 		if not giveReason then
 			return true
 		end
@@ -2724,7 +2724,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		end
 		return - 1, PowaAuras:InsertText(PowaAuras.Text.nomReasonGlobalCooldown, spellName)
 	end
-	if cdstart == 0 or self.CooldownOver or charges > 0 then
+	if cdstart == 0 or self.CooldownOver or (charges and charges > 0) then
 		if not self.inverse and not self.mine then
 			local show = false
 			if self.targetfriend then
