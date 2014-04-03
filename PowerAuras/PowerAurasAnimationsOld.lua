@@ -3,6 +3,15 @@ local math, pairs, type = math, pairs, type
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
+<<<<<<< HEAD
+=======
+local cos = cos
+local math = math
+local pairs = pairs
+local sin = sin
+local type = type
+
+>>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 cPowaAnimationBase = PowaClass(function(animation, aura, frame, base)
 	animation.State = 0
 	animation.Aura = aura

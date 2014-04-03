@@ -5,7 +5,11 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
+<<<<<<< HEAD
 	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.1   \//      \// \//    \\/     \\/      \//  \//       
+=======
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.25.3   \//      \// \//    \\/     \\/      \//  \//       
+>>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 
 	Power Auras Classic
 	Current author/maintainter: Resike
@@ -18,6 +22,49 @@ local string, tostring, tonumber, math, table, pairs, select, wipe, _G = string,
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
+<<<<<<< HEAD
+=======
+local _G = _G
+local format = format
+local ipairs = ipairs
+local math = math
+local pairs = pairs
+local pi = math.pi
+local pihalf = pi / 2
+local select = select
+local string = string
+local table = table
+local tonumber = tonumber
+local tostring = tostring
+local type = type
+local wipe = wipe
+
+local C_PetBattles = C_PetBattles
+local CreateFrame = CreateFrame
+local GetActionInfo = GetActionInfo
+local GetActionTexture = GetActionTexture
+local GetCursorPosition = GetCursorPosition
+local GetMacroInfo = GetMacroInfo
+local GetShapeshiftFormID = GetShapeshiftFormID
+local GetSpellCooldown = GetSpellCooldown
+local GetSpellInfo = GetSpellInfo
+local GetTime = GetTime
+local HasAction = HasAction
+local IsAltKeyDown = IsAltKeyDown
+local IsControlKeyDown = IsControlKeyDown
+local IsMounted = IsMounted
+local IsMouseButtonDown = IsMouseButtonDown
+local PlaySound = PlaySound
+local PlaySoundFile = PlaySoundFile
+local SetPortraitToTexture = SetPortraitToTexture
+local UnitInVehicle = UnitInVehicle
+local UnitOnTaxi = UnitOnTaxi
+
+local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
+
+local r1, r2, r3, r4, r5, r6
+
+>>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 -- Exposed for Saving
 PowaMisc =
 {
@@ -418,7 +465,7 @@ function PowaAuras:CreateEffectLists()
 			aura:AddEffectAndEvents()
 		end
 	end
-	if PowaMisc.debug then
+	if PowaMisc.Debug then
 		for k in pairs(self.AurasByType) do
 			self:DisplayText(k..": "..#self.AurasByType[k])
 		end
@@ -821,8 +868,101 @@ local function startFrameMoving(frame)
 	end
 end
 
+<<<<<<< HEAD
 local function startMove(frame, button)
 	if button ~= "LeftButton" then
+=======
+local function LeftButtonOnUpdate(frame, elapsed)
+	frame.aura.x = math.floor(frame:GetLeft() + (frame:GetWidth() - UIParent:GetWidth()) / 2 + 0.5)
+	frame.aura.y = math.floor(frame:GetTop() - (frame:GetHeight() + UIParent:GetHeight()) / 2 + 0.5)
+	if PowaAuras.CurrentAuraId == frame.aura.id and PowaBarConfigFrame:IsVisible() then
+		PowaBarAuraCoordXSlider:SetValue(format("%.0f", frame.aura.x))
+		PowaAurasOptions.SliderEditBoxSetValues(PowaBarAuraCoordXSlider, PowaBarAuraCoordXSliderEditBox, 700, 700, 0)
+		PowaBarAuraCoordYSlider:SetValue(format("%.0f", frame.aura.y))
+		PowaAurasOptions.SliderEditBoxSetValues(PowaBarAuraCoordYSlider, PowaBarAuraCoordYSliderEditBox, 400, 400, 0)
+	end
+end
+
+local function RightButtonOnUpdate(frame, elapsed)
+	if not IsMouseButtonDown("RightButton") then
+		return
+	end
+	local aura = PowaAuras.Auras[frame.aura.id]
+	if not aura.model and not aura.modelcustom then
+		return
+	end
+	local model = PowaAuras.Models[frame.aura.id]
+	local x, y = GetCursorPosition()
+	if IsControlKeyDown() then
+		local px, py, pz = model:GetPosition()
+		aura.mz = format("%.2f", (px + (y - frame.y) / 64))
+		if format("%.2f", px) ~= aura.mz then
+			model:SetPosition(aura.mz, py, pz)
+			local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
+			if secondaryAura then
+				local secondaryModel = PowaAuras.SecondaryModels[frame.aura.id]
+				secondaryModel:SetPosition(aura.mz, aura.mx, aura.my)
+			end
+			if PowaBarConfigFrame:IsVisible() then
+				PowaModelPositionZSlider:SetValue(aura.mz * 100)
+				PowaAurasOptions.SliderEditBoxSetValues(PowaModelPositionZSlider, PowaModelPositionZSliderEditBox, 100, 100, 0)
+			end
+		end
+	elseif IsAltKeyDown() then
+		local px, py, pz = model:GetPosition()
+		aura.mx = format("%.2f", (py + (x - frame.x) / 64))
+		aura.my = format("%.2f", (pz + (y - frame.y) / 64))
+		if format("%.2f", py) ~= aura.mx or format("%.2f", pz) ~= aura.my then
+			model:SetPosition(px, aura.mx, aura.my)
+			local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
+			if secondaryAura then
+				local secondaryModel = PowaAuras.SecondaryModels[frame.aura.id]
+				secondaryModel:SetPosition(aura.mz, aura.mx, aura.my)
+			end
+			if PowaBarConfigFrame:IsVisible() then
+				PowaModelPositionXSlider:SetValue(aura.mx * 100)
+				PowaAurasOptions.SliderEditBoxSetValues(PowaModelPositionXSlider, PowaModelPositionXSliderEditBox, 50, 50, 0)
+				PowaModelPositionYSlider:SetValue(aura.my * 100)
+				PowaAurasOptions.SliderEditBoxSetValues(PowaModelPositionYSlider, PowaModelPositionYSliderEditBox, 50, 50, 0)
+			end
+		end
+	else
+		if not model.distance or not model.yaw or not model.pitch then
+			return
+		end
+		local pitch = model.pitch + (y - frame.y) * pi / 256
+		local limit = false
+		if pitch > pihalf - 0.05 or pitch < - pihalf + 0.05 then
+			limit = true
+		end
+		if limit then
+			aura.rotate = format("%.0f", math.abs(math.deg(((x - frame.x) / 64 + model:GetFacing())) % 360))
+			if aura.rotate ~= format("%.0f", math.abs(math.deg(model:GetFacing()) % 360)) then
+				model:SetRotation(math.rad(aura.rotate))
+				local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
+				if secondaryAura then
+					local secondaryModel = PowaAuras.SecondaryModels[frame.aura.id]
+					secondaryModel:SetRotation(math.rad(aura.rotate))
+				end
+				PowaBarAuraRotateSlider:SetValue(aura.rotate)
+				PowaBarAuraRotateSliderEditBox:SetText(format("%.0f", PowaBarAuraRotateSlider:GetValue()).."°")
+			end
+		else
+			local yaw = model.yaw + (x - frame.x) * pi / 256
+			PowaAuras:SetOrientation(aura, model, model.distance, yaw, pitch)
+			local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
+			if secondaryAura then
+				local secondaryModel = PowaAuras.SecondaryModels[frame.aura.id]
+				PowaAuras:SetOrientation(secondaryAura, secondaryModel, model.distance, yaw, pitch)
+			end
+		end
+	end
+	frame.x, frame.y = x, y
+end
+
+local function MiddleButtonOnUpdate(frame, elapsed)
+	if not IsMouseButtonDown("MiddleButton") then
+>>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 		return
 	end
 	startFrameMoving(frame)

@@ -1,7 +1,23 @@
 local string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select = string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select
 
+<<<<<<< HEAD
 local _, ns = ...
 local PowaAuras = { }
+=======
+local getmetatable = getmetatable
+local math = math
+local pairs = pairs
+local print = print
+local select = select
+local setmetatable = setmetatable
+local string = string
+local table = table
+local tonumber = tonumber
+local tostring = tostring
+local type = type
+
+local UIERRORS_HOLD_TIME = UIERRORS_HOLD_TIME
+>>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 
 PowaAuras =
 {
@@ -1354,7 +1370,7 @@ ns.PowaAuras = PowaAuras
 ns.PowaAurasOptions = PowaAurasOptions
 
 function PowaAuras:Debug(...)
-	if PowaMisc.debug then
+	if PowaMisc.Debug then
 		self:Message(...)
 	end
 end

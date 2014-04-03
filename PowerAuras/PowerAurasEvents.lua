@@ -3,6 +3,42 @@ local string, tonumber, pairs, wipe = string, tonumber, pairs, wipe
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
+<<<<<<< HEAD
+=======
+local bit = bit
+local pairs = pairs
+local string = string
+local tonumber = tonumber
+local wipe = wipe
+
+local C_PetBattles = C_PetBattles
+local GetActiveSpecGroup = GetActiveSpecGroup
+local GetInstanceInfo = GetInstanceInfo
+local GetNumGroupMembers = GetNumGroupMembers
+local GetNumShapeshiftForms = GetNumShapeshiftForms
+local GetNumSubgroupMembers = GetNumSubgroupMembers
+local GetShapeshiftFormInfo = GetShapeshiftFormInfo
+local GetSpellInfo = GetSpellInfo
+local GetTime = GetTime
+local IsAddOnLoaded = IsAddOnLoaded
+local IsInGroup = IsInGroup
+local IsInInstance = IsInInstance
+local IsInRaid = IsInRaid
+local IsMounted = IsMounted
+local LoadAddOn = LoadAddOn
+local UnitCanAttack = UnitCanAttack
+local UnitClass = UnitClass
+local UnitGUID = UnitGUID
+local UnitInParty = UnitInParty
+local UnitInRaid = UnitInRaid
+local UnitInVehicle = UnitInVehicle
+local UnitIsDead = UnitIsDead
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitIsPVP = UnitIsPVP
+local UnitIsUnit = UnitIsUnit
+local UnitName = UnitName
+
+>>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 local PowaAuras_Frame = CreateFrame("Frame", nil, UIParent)
 PowaAuras_Frame:RegisterEvent("ADDON_LOADED")
 

@@ -3,6 +3,19 @@ local math, table, pairs = math, table, pairs
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
+<<<<<<< HEAD
+=======
+local format = format
+local math = math
+local pairs = pairs
+local strsplit = strsplit
+local table = table
+local tonumber = tonumber
+local tostring = tostring
+
+local GetTime = GetTime
+
+>>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 cPowaStacks = PowaClass(function(stacker, aura, base)
 	for k, v in pairs(cPowaStacks.ExportSettings) do
 		if base and base[k] ~= nil then

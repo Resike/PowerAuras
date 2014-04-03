@@ -3,6 +3,101 @@ local string, tostring, tonumber, format, table, math, pairs, strsplit, select, 
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
+<<<<<<< HEAD
+=======
+local _G = _G
+local format = format
+local getmetatable = getmetatable
+local math = math
+local pairs = pairs
+local select = select
+local setmetatable = setmetatable
+local string = string
+local strsplit = strsplit
+local strtrim = strtrim
+local table = table
+local tonumber = tonumber
+local tostring = tostring
+local type = type
+local wipe = wipe
+
+local CreateFrame = CreateFrame
+local GetActionCooldown = GetActionCooldown
+local GetComboPoints = GetComboPoints
+local GetContainerItemLink = GetContainerItemLink
+local GetContainerNumSlots = GetContainerNumSlots
+local GetCritChance = GetCritChance
+local GetFlyoutInfo = GetFlyoutInfo
+local GetFlyoutSlotInfo = GetFlyoutSlotInfo
+local GetInventoryItemCooldown = GetInventoryItemCooldown
+local GetInventoryItemTexture = GetInventoryItemTexture
+local GetInventorySlotInfo = GetInventorySlotInfo
+local GetItemCooldown = GetItemCooldown
+local GetItemCount = GetItemCount
+local GetItemInfo = GetItemInfo
+local GetNumGroupMembers = GetNumGroupMembers
+local GetNumSpellTabs = GetNumSpellTabs
+local GetNumSubgroupMembers = GetNumSubgroupMembers
+local GetNumTrackingTypes = GetNumTrackingTypes
+local GetPetActionInfo = GetPetActionInfo
+local GetPVPTimer = GetPVPTimer
+local GetRuneCooldown = GetRuneCooldown
+local GetRuneType = GetRuneType
+local GetShapeshiftForm = GetShapeshiftForm
+local GetShapeshiftFormInfo = GetShapeshiftFormInfo
+local GetSpecialization = GetSpecialization
+local GetSpellBonusDamage = GetSpellBonusDamage
+local GetSpellBookItemInfo = GetSpellBookItemInfo
+local GetSpellBookItemName = GetSpellBookItemName
+local GetSpellCharges = GetSpellCharges
+local GetSpellCooldown = GetSpellCooldown
+local GetSpellInfo = GetSpellInfo
+local GetSpellLink = GetSpellLink
+local GetSpellTabInfo = GetSpellTabInfo
+local GetTime = GetTime
+local GetTotemInfo = GetTotemInfo
+local GetTrackingInfo = GetTrackingInfo
+local GetWeaponEnchantInfo = GetWeaponEnchantInfo
+local HasPetSpells = HasPetSpells
+local IsEquippedItem = IsEquippedItem
+local IsInRaid = IsInRaid
+local IsPassiveSpell = IsPassiveSpell
+local IsResting = IsResting
+local IsUsableAction = IsUsableAction
+local UnitAttackPower = UnitAttackPower
+local UnitAura = UnitAura
+local UnitBuff = UnitBuff
+local UnitCanAttack = UnitCanAttack
+local UnitCastingInfo = UnitCastingInfo
+local UnitChannelInfo = UnitChannelInfo
+local UnitDamage = UnitDamage
+local UnitDebuff = UnitDebuff
+local UnitExists = UnitExists
+local UnitExists = UnitExists
+local UnitGUID = UnitGUID
+local UnitHealth = UnitHealth
+local UnitHealthMax = UnitHealthMax
+local UnitInParty = UnitInParty
+local UnitInRaid = UnitInRaid
+local UnitIsDead = UnitIsDead
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitIsFriend = UnitIsFriend
+local UnitIsPVP = UnitIsPVP
+local UnitIsUnit = UnitIsUnit
+local UnitName = UnitName
+local UnitPower = UnitPower
+local UnitPowerMax = UnitPowerMax
+local UnitPowerType = UnitPowerType
+local UnitRangedDamage = UnitRangedDamage
+local UnitStat = UnitStat
+local UnitThreatSituation = UnitThreatSituation
+
+local BOOKTYPE_PET = BOOKTYPE_PET
+local BOOKTYPE_SPELL = BOOKTYPE_SPELL
+local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
+local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
+
+>>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 -- PowaAura Classes
 function PowaClass(base, ctor)
 	local c = { }

@@ -136,7 +136,7 @@
 					</OnEnterPressed>
 				</Scripts>
 			</EditBox>
-			<EditBox name = "$parentSendBox" inherits = "InputBoxTemplate" autoFocus = "false" letters = "12">
+			<EditBox name = "$parentSendBox" inherits = "InputBoxTemplate" autoFocus = "false" letters = "32">
 				<Size>
 					<AbsDimension x = "280" y = "20"/>
 				</Size>
@@ -153,7 +153,7 @@
 						self:ClearFocus()
 					</OnEnterPressed>
 					<OnTextChanged>
-						if(strlen(self:GetText()) > 0) then
+						if strlen(self:GetText()) > 0 then
 							PowaAuraExportDialogSendButton:Enable()
 						else
 							PowaAuraExportDialogSendButton:Disable()
