@@ -1,7 +1,7 @@
+local math, pairs, type = math, pairs, type
+
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
-
-local math, sin, cos, pairs, type = math, sin, cos, pairs, type
 
 cPowaAnimationBase = PowaClass(function(animation, aura, frame, base)
 	animation.State = 0
@@ -350,8 +350,8 @@ function cPowaAnimationWaterDrop:Update(elapsed)
 		self.Alpha = self.TargetAlpha
 		self.Width = self.TargetWidth * 0.85
 		self.Height = self.TargetHeight * 0.85
-		self.X = self.TargetX -- + (math.random(0, 20) - 10) * self.Aura.speed
-		self.Y = self.TargetY -- + (math.random(0, 20) - 10) * self.Aura.speed
+		self.X = self.TargetX + (math.random(0, 20) - 10) * self.Aura.speed
+		self.Y = self.TargetY + (math.random(0, 20) - 10) * self.Aura.speed
 	else
 		local width = self.Width + elapsed * 100 * self.Aura.speed * self.Aura.size
 		if (width * 1.5) > self.Width then

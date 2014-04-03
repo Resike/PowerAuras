@@ -1,7 +1,7 @@
+local string, tonumber, pairs, wipe = string, tonumber, pairs, wipe
+
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
-
-local bit, string, tonumber, pairs, wipe = bit, string, tonumber, pairs, wipe
 
 local PowaAuras_Frame = CreateFrame("Frame", nil, UIParent)
 PowaAuras_Frame:RegisterEvent("ADDON_LOADED")
@@ -450,9 +450,8 @@ function PowaAuras:RUNE_TYPE_UPDATE(...)
 	if self.ModTest then
 		return
 	end
-	local slot = ...
 	if self.DebugEvents then
-		self:DisplayText("RUNE_TYPE_UPDATE slot = ", slot, " class = ", self.playerclass)
+		self:DisplayText("PLAYER_TOTEM_UPDATE slot=", slot)
 	end
 	self.DoCheck.Runes = true
 	self.DoCheck.CheckIt = true
@@ -865,15 +864,6 @@ function PowaAuras:SPELL_UPDATE_COOLDOWN(...)
 	if self.ModTest then
 		return
 	end
-	self.DoCheck.SpellCooldowns = true
-	self.DoCheck.CheckIt = true
-end
-
-function PowaAuras:SPELL_UPDATE_CHARGES(...)
-	if self.ModTest then
-		return
-	end
-	self.DoCheck.Actions = true
 	self.DoCheck.SpellCooldowns = true
 	self.DoCheck.CheckIt = true
 end

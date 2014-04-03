@@ -1,8 +1,9 @@
+local string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select = string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select
+
 local _, ns = ...
+local PowaAuras = { }
 
-local string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select, print = string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select, print
-
-local PowaAuras =
+PowaAuras =
 {
 Version = GetAddOnMetadata("PowerAuras", "Version"),
 
@@ -196,19 +197,6 @@ GradientStyleList =
 	"Vertical"
 },
 
-ModelCategoryList =
-{
-	"Creature",
-	"Environments",
-	"Interface",
-	"Spells"
-},
-
-ModelTextureList =
-{
-	
-},
-
 ChangedUnits =
 {
 	Buffs = { },
@@ -222,9 +210,9 @@ Spells =
 {
 	ACTIVATE_FIRST_TALENT = GetSpellInfo(63645),
 	ACTIVATE_SECOND_TALENT = GetSpellInfo(63644),
-	--BUFF_BLOOD_PRESENCE = GetSpellInfo(48266),
-	--BUFF_FROST_PRESENCE = GetSpellInfo(48263),
-	--BUFF_UNHOLY_PRESENCE = GetSpellInfo(48265),
+	BUFF_BLOOD_PRESENCE = GetSpellInfo(48266),
+	BUFF_FROST_PRESENCE = GetSpellInfo(48263),
+	BUFF_UNHOLY_PRESENCE = GetSpellInfo(48265),
 	MOONKIN_FORM = GetSpellInfo(24858),
 	TREE_OF_LIFE = GetSpellInfo(65139),
 	SHADOWFORM = GetSpellInfo(15473),
@@ -696,7 +684,6 @@ Sound =
 
 TimerTextures =
 {
-	"Default",
 	"Original",
 	"AccidentalPresidency",
 	"Crystal",
@@ -773,6 +760,227 @@ Backdrop =
 	insets = {left = 0, top = 0, right = 0, bottom = 0},
 	tile = true
 },
+}
+
+PowaAurasModels =
+{
+	-- Particles
+	"Particles\\MorphFX.m2",
+	-- Spells
+	-- A
+	"Spells\\AbolishMagic_Base.m2",
+	"Spells\\Abyssal_Ball.m2",
+	"Spells\\AllianceCTFflag_Generic_spell.m2",
+	"Spells\\AllianceCTFflag_spell.m2",
+	"Spells\\AmplifyMagic_Impact_Base.m2",
+	"Spells\\AntiMagic_State_Base.m2",
+	"Spells\\AntiMagic_State_blue.m2",
+	"Spells\\AntiMagic_State_Red.m2",
+	"Spells\\Arcane_Fire_Weapon_Effect.m2",
+	"Spells\\Arcane_Missile_Lvl1.m2",
+	"Spells\\Arcane_Missile_Lvl2.m2",
+	"Spells\\Arcane_Missile_Lvl3.m2",
+	"Spells\\Arcane_Missile_Lvl4.m2",
+	"Spells\\ArcaneBomb_Missle.m2",
+	"Spells\\ArcaneExplosion_Base.m2",
+	"Spells\\ArcaneExplosion_Boss_Base.m2",
+	"Spells\\ArcaneIntellect_Impact_Base.m2",
+	"Spells\\ArcanePower_State_Chest.m2",
+	"Spells\\ArcaneShot_Missile.m2",
+	"Spells\\ArcaneShot_Missile2.m2",
+	"Spells\\ArcaneSpirit_Impact_Base.m2",
+	"Spells\\ArcaneTorrent.m2",
+	"Spells\\AspectBeast_Impact_Head.m2",
+	"Spells\\AspectCheetah_Impact_Head.m2",
+	"Spells\\AspectHawk_Impact_Head.m2",
+	"Spells\\AspectMonkey_Impact_Head.m2",
+	"Spells\\AspectSnake_Impact_Head.m2",
+	"Spells\\AspectWild_Impact_Head.m2",
+	"Spells\\Assassinate_Impact.m2",
+	"Spells\\Assassinate_Missile.m2",
+	"Spells\\Astral_Recall_Impact_Base.m2",
+	"Spells\\AvengingWrath_State_Chest.m2",
+	-- B
+	"Spells\\Backstab_impact_chest.m2",
+	"Spells\\Ball_of_shadow.m2",
+	"Spells\\Banish_chest.m2",
+	"Spells\\Banish_chest_blue.m2",
+	"Spells\\Banish_chest_dark.m2",
+	"Spells\\Banish_chest_purple.m2",
+	"Spells\\Banish_chest_white.m2",
+	"Spells\\Banish_chest_yellow.m2",
+	"Spells\\Barkshield_state_base.m2",
+	"Spells\\Barkskin_state_base_iron.m2",
+	"Spells\\Battleshout_cast_base.m2",
+	"Spells\\Beartrap.m2",
+	"Spells\\Beartrap_state.m2",
+	"Spells\\Beastlore_impact_head.m2",
+	"Spells\\Beastsoothe_impact_head.m2",
+	"Spells\\Beastsoothe_state_head.m2",
+	"Spells\\Bind_impact_base.m2",
+	"Spells\\Blackhole_white.m2",
+	"Spells\\Blackhole_white_h.m2",
+	"Spells\\Blackmagic_precast_base.m2",
+	"Spells\\Blackshot_missile.m2",
+	"Spells\\Blazingfists_base.m2",
+	"Spells\\Blessed_mending_impact.m2",
+	"Spells\\Blessingoffreedom_impact.m2",
+	"Spells\\Blessingoffreedom_state.m2",
+	"Spells\\Blessingoflight_impact.m2",
+	"Spells\\Blessingofprotection_chest.m2",
+	"Spells\\Blessingofprotection_State_Classic.m2",
+	"Spells\\BlessingofSpellProtection_Base.m2",
+	"Spells\\BlindingShot_Impact.m2",
+	"Spells\\BlindingShot_Missile.m2",
+	"Spells\\Blizzard_Impact_Base.m2",
+	"Spells\\BloodBoil_Impact_Chest.m2",
+	"Spells\\BloodBolt_Chest.m2",
+	"Spells\\BloodBolt_Missile_Low.m2",
+	"Spells\\Bloodlust_State_Hand.m2",
+	"Spells\\BloodyExplosion.m2",
+	"Spells\\BloodyExplosionGreen.m2",
+	"Spells\\BloodyExplosionPurple.m2",
+	"Spells\\Bone_Cyclone_Impact.m2",
+	"Spells\\BoneArm_01.m2",
+	"Spells\\BoneArmor_Head.m2",
+	"Spells\\BoneArmor_State_Chest.m2",
+	"Spells\\BurningIntellect_Impact_Base.m2",
+	"Spells\\BurningSpirit_Impact_Base.m2",
+	"Spells\\BurningSpirit_Impact_Head.m2",
+	-- C
+	"Spells\\Camouflage_Hands.m2",
+	"Spells\\Camouflage_Head.m2",
+	"Spells\\Camouflage_Impact.m2",
+	"Spells\\CatMark.m2",
+	"Spells\\CatMark_Black.m2",
+	"Spells\\CatMark_Blue.m2",
+	"Spells\\CatMark_Green.m2",
+	"Spells\\CatMark_Orange.m2",
+	"Spells\\CatMark_Red.m2",
+	"Spells\\CatMark_White.m2",
+	"Spells\\CatMark_Yellow.m2",
+	"Spells\\ChallengingShout_Cast_Base.m2",
+	-- D
+	"Spells\\Dampenmagic_impact_base.m2",
+	"Spells\\Darkmoonvengeance_impact_chest.m2",
+	"Spells\\Darkmoonvengeance_impact_head.m2",
+	"Spells\\Darkritual_precast_base.m2",
+	"Spells\\Darkritual_precast_baseblue.m2",
+	"Spells\\Deadly_throw_impact_chest.m2",
+	"Spells\\Deathbolt_missile_low.m2",
+	"Spells\\Deathcoil_missile.m2",
+	"Spells\\Deathknight_bloodboil_cast.m2",
+	"Spells\\Deathknight_bloodstrike.m2",
+	"Spells\\Deathknight_deathcoil_missile.m2",
+	"Spells\\Deathknight_death_siphon_impact.m2",
+	"Spells\\Deathknight_death_siphon_missile.m2",
+	"Spells\\Deathknight_froststrike.m2",
+	"Spells\\Deathknight_frozenruneweapon_impact.m2",
+	"Spells\\Deathknight_ghoul_explode_simple.m2",
+	"Spells\\Deathknight_hysteria.m2",
+	"Spells\\Deathknight_lichborne_state.m2",
+	"Spells\\Deathknight_obliterate.m2",
+	"Spells\\Deathknight_obliterate_impact.m2",
+	"Spells\\Deathknight_outbreak.m2",
+	"Spells\\Deathknight_plaguestrikecaster.m2",
+	"Spells\\Deathknight_strangulate_chain.m2",
+	"Spells\\Deathwing_lava_burst.m2",
+	"Spells\\Deathwing_lava_burst_impact.m2",
+	"Spells\\Decimate_missile_red.m2",
+	"Spells\\Demolisher_missile.m2",
+	"Spells\\Demolisher_missile_blue.m2",
+	"Spells\\Detectinvis_impact_head.m2",
+	"Spells\\Deterrence_impact.m2",
+	"Spells\\Deterrence_state_chest.m2",
+	"Spells\\Devious_impact.m2",
+	"Spells\\Diseasecloud.m2",
+	"Spells\\Dispel_low_base.m2",
+	"Spells\\Dispel_low_base_simple.m2",
+	"Spells\\Divineshield_low_base.m2",
+	"Spells\\Divineshield_v2_chest.m2",
+	"Spells\\Druid_efflorescence_persistent.m2",
+	"Spells\\Druid_non_shapeshifted_stampede.m2",
+	"Spells\\Druid_pulverize_impact.m2",
+	"Spells\\Druid_starsurge_missile.m2",
+	"Spells\\Druid_swarm_impact.m2",
+	"Spells\\Druid_swarm_state.m2",
+	"Spells\\Druid_thrash_impact_01.m2",
+	"Spells\\Druid_wildcharge_caster_state.m2",
+	-- S
+	"Spells\\Sha_bolt_missile_fear_v2.m2",
+	"Spells\\Sha_bolt_missile_v2.m2",
+	"Spells\\Sha_fireball_missile_high.m2",
+	"Spells\\Sha_firebolt_missile_low.m2",
+	"Spells\\Sha_firebolt_missile_low_fear.m2",
+	"Spells\\Sha_ritual_precast_base.m2",
+	"Spells\\Sha_rune_state.m2",
+	"Spells\\Sha_state_base_high.m2",
+	"Spells\\Sha_state_base_low.m2",
+	"Spells\\Sha_zone.m2",
+	"Spells\\Shadopalm_missile_red.m2",
+	"Spells\\Shadopalm_precast_blue.m2",
+	"Spells\\Shadopalm_precast_red.m2",
+	"Spells\\Shadowmourne_visual_low.m2",
+	"Spells\\Sleep_state_head.m2",
+	"Spells\\Spell_warlockmorphwings.m2",
+	"Spells\\Sprint_cast_base.m2",
+	-- Buttons
+	"Interface\\Button\\TalkToMe.m2",
+	"Interface\\Button\\TalkToMeBlue.m2",
+	"Interface\\Button\\TalkToMeGreen.m2",
+	"Interface\\Button\\TalkToMeGrey.m2",
+	"Interface\\Button\\TalkToMeQuestion_Grey.m2",
+	"Interface\\Button\\TalkToMeQuestion_LTBlue.m2",
+	"Interface\\Button\\TalkToMeQuestionMark.m2",
+	-- Creatures
+	"Creature\\Akama\\Akama.m2",
+	"Creature\\Alexstrasza\\Alexstrasza.m2",
+	"Creature\\Alexstrasza\\LadyAlexstrasa.m2",
+	"Creature\\AlglonTheObserver\\AlgalonTheObserver.m2",
+	"Creature\\Eredar\\Archimonde.m2",
+	"Creature\\Arthas\\Arthas.m2",
+	"Creature\\ArthasUndead\\ArthasUndead.m2",
+	"Creature\\ArthasLichking\\ArthasLichking.m2",
+	"Creature\\AvengingAngel\\AvengingAngel.m2",
+	"Creature\\Azshara\\Azshara.m2",
+	"Creature\\BloodQueen\\BloodQueen.m2",
+	"Creature\\BoneGuard\\BoneGuard.m2",
+	"Creature\\Brutallus\\Brutallus.m2",
+	"Creature\\Chogall_corrupt\\Chogall_corrupt.m2",
+	"Creature\\Deathwing\\Deathwing.m2",
+	"Creature\\DeathwingHuman\\DeathwingHuman.m2",
+	"Creature\\FandralStaghelm\\FandralStaghelm.m2",
+	"Creature\\Hodir\\Hodir.m2",
+	"Creature\\DragonKalecgos\\DragonKalecgos.m2",
+	"Creature\\Kalecgos\\Kalecgos.m2",
+	"Creature\\Illidan\\Illidan.m2",
+	"Creature\\Illidan\\IllidanDark.m2",
+	"Creature\\Jaina\\Jaina.m2",
+	"Creature\\Kaelthas\\Kaelthas.m2",
+	"Creature\\Kaelthas_broken\\KaelThasBroken.m2",
+	"Creature\\KelThuzad\\KelThuzad.m2",
+	"Creature\\LadySylvanasWindrunner\\LadySylvanasWindrunner.m2",
+	"Creature\\Malygos\\Malygos.m2",
+	"Creature\\Medivh\\Medivh.m2",
+	"Creature\\Miev\\Miev.m2",
+	"Creature\\MinisterOfDeath\\MinisterOfDeath.m2",
+	"Creature\\MurlocCostume\\MurlocCostume.m2",
+	"Creature\\MurlocCostume\\MurlocCostume_noflag.m2",
+	"Creature\\MurlocCostume\\MurlocCostume_whiteflag.m2",
+	"Creature\\Neptulon\\Neptulon.m2",
+	"Creature\\NorthrendNightBane\\NorthrendNightBane.m2",
+	"Creature\\Phoenix\\Phoenix.m2",
+	"Creature\\Ragnaros2\\Ragnaros2.m2",
+	"Creature\\ShaBoss_anger\\ShaBoss_anger.m2",
+	"Creature\\ShaBoss_doubt\\ShaBoss_doubt.m2",
+	"Creature\\ShaBoss_fear\\ShaBoss_fear.m2",
+	"Creature\\Spirithealer\\Spirithealer.m2",
+	"Creature\\ThunderKing\\MoguThunderKing.m2",
+	"Creature\\TyraelPet\\TyraelPet.m2",
+	"Creature\\Tyrande\\Tyrande.m2",
+	"Creature\\Yoggsaron\\Yoggsaron.m2",
+	"Creature\\Ysera\\Ysera.m2",
+	"Creature\\Zuljin\\Zuljin.m2"
 }
 
 function PowaAuras:RegisterAuraType(auraType)
@@ -955,200 +1163,195 @@ PowaAuras.TalentChangeSpells =
 PowaAuras.DebuffTypeSpellIds =
 {
 	-- Death Knight
-	[108194]	= PowaAuras.DebuffCatType.Stun,		-- Asphyxiate
-	[115001]	= PowaAuras.DebuffCatType.Stun,		-- Remorseless Winter
-	[47476]		= PowaAuras.DebuffCatType.Silence,	-- Strangulate
-	[45524]		= PowaAuras.DebuffCatType.Snare,	-- Chains of Ice
-	[50435]		= PowaAuras.DebuffCatType.Snare,	-- Chillblains
-	-- Death Knight Pets
-	[91800]		= PowaAuras.DebuffCatType.Stun,		-- Gnaw
-	[91797]		= PowaAuras.DebuffCatType.Stun,		-- Monstrous Blow
-	[91807]		= PowaAuras.DebuffCatType.Root,		-- Shambling Rush
+	[47481]	= PowaAuras.DebuffCatType.Stun,		-- Gnaw (Ghoul)
+	[51209]	= PowaAuras.DebuffCatType.CC,		-- Hungering Cold
+	[47476]	= PowaAuras.DebuffCatType.Silence,	-- Strangulate
+	[45524]	= PowaAuras.DebuffCatType.Snare,	-- Chains of Ice
+	[55666]	= PowaAuras.DebuffCatType.Snare,	-- Desecration (no duration, lasts as long as you stand in it)
+	[50434]	= PowaAuras.DebuffCatType.Snare,	-- Chillblains - I
+	[50435]	= PowaAuras.DebuffCatType.Snare,	-- Chillblains - II
+	[96294]	= PowaAuras.DebuffCatType.Root,		-- Chains of Ice (Root effect caused by Chillblains talent, guessed spell ID!)
+	[91797]	= PowaAuras.DebuffCatType.Stun,		-- Monstrous Blow (for unholy DK ghouls under Dark Transformation)
+	[91802]	= PowaAuras.DebuffCatType.Root,		-- Shambling Rush (for unholy DK ghouls under Dark Transformation)
 	-- Druid
-	[99]		= PowaAuras.DebuffCatType.CC,		-- Disorienting Roar
-	[33786]		= PowaAuras.DebuffCatType.CC,		-- Cyclone
-	[2637]		= PowaAuras.DebuffCatType.CC,		-- Hibernate
-	[5211]		= PowaAuras.DebuffCatType.Stun,		-- Mighty Bash
-	[22570]		= PowaAuras.DebuffCatType.Stun,		-- Maim
-	[9005]		= PowaAuras.DebuffCatType.Stun,		-- Pounce
-	[81261]		= PowaAuras.DebuffCatType.Silence,	-- Solar Beam
-	[114238]	= PowaAuras.DebuffCatType.Silence,	-- Fae Silence
-	[339]		= PowaAuras.DebuffCatType.Root,		-- Entangling Roots
-	[19975]		= PowaAuras.DebuffCatType.Root,		-- Entangling Roots (Nature's Grasp)
-	[113770]	= PowaAuras.DebuffCatType.Root,		-- Entangling Roots (Force of Nature)
-	[102359]	= PowaAuras.DebuffCatType.Root,		-- Mass Entanglement
-	[45334]		= PowaAuras.DebuffCatType.Root,		-- Wild Charge (Bear)
-	[50259]		= PowaAuras.DebuffCatType.Snare,	-- Wild Charge (Cat)
-	[127797]	= PowaAuras.DebuffCatType.Snare,	-- Ursol's Vortex
-	[58180]		= PowaAuras.DebuffCatType.Snare,	-- Infected Wounds
-	[61391]		= PowaAuras.DebuffCatType.Snare,	-- Typhoon
-	[81281]		= PowaAuras.DebuffCatType.Snare,	-- Fungal Growth
-	--[16914]	= PowaAuras.DebuffCatType.Snare,	-- Hurricane
-	--[106996]	= PowaAuras.DebuffCatType.Snare,	-- Astral Storm
-	--[102355]	= PowaAuras.DebuffCatType.Snare,	-- Faerie Swarm
+	[5211]	= PowaAuras.DebuffCatType.Stun,		-- Bash (also Shaman Spirit Wolf ability)
+	[33786]	= PowaAuras.DebuffCatType.CC,		-- Cyclone
+	[2637]	= PowaAuras.DebuffCatType.CC,		-- Hibernate (works against Druids in most forms and Shamans using Ghost Wolf)
+	[22570]	= PowaAuras.DebuffCatType.Stun,		-- Maim
+	[9005]	= PowaAuras.DebuffCatType.Stun,		-- Pounce
+	[19679]	= PowaAuras.DebuffCatType.Root,		-- Feral Charge Effect Bear. Immobilize.
+	[49376]	= PowaAuras.DebuffCatType.Snare,	-- Feral Charge Effect Cat. Daze.
+	[78675]	= PowaAuras.DebuffCatType.Silence,	-- Solar Beam (no duration unless glyphed, but the glyph mods the original spell)
+	[339]	= PowaAuras.DebuffCatType.Root,		-- Entangling Roots
+	[58179]	= PowaAuras.DebuffCatType.Snare,	-- Infected Wounds - I
+	[58180]	= PowaAuras.DebuffCatType.Snare,	-- Infected Wounds - II
+	[61391]	= PowaAuras.DebuffCatType.Snare,	-- Typhoon
 	-- Hunter
-	[3355]		= PowaAuras.DebuffCatType.CC,		-- Freezing Trap
-	[1513]		= PowaAuras.DebuffCatType.CC,		-- Scare Beast
-	[19503]		= PowaAuras.DebuffCatType.CC,		-- Scatter Shot
-	[19386]		= PowaAuras.DebuffCatType.CC,		-- Wyvern Sting
-	[24394]		= PowaAuras.DebuffCatType.Stun,		-- Intimidation
-	[34490]		= PowaAuras.DebuffCatType.Silence,	-- Silencing Shot
-	[117526]	= PowaAuras.DebuffCatType.Root,		-- Binding Shot
-	[136634]	= PowaAuras.DebuffCatType.Root,		-- Narrow Escape
-	[64803]		= PowaAuras.DebuffCatType.Root,		-- Entrapment
-	[121414]	= PowaAuras.DebuffCatType.Snare,	-- Graive Toss
-	[135299]	= PowaAuras.DebuffCatType.Snare,	-- Ice Trap
-	[35101]		= PowaAuras.DebuffCatType.Snare,	-- Concussive Barrage
-	[5116]		= PowaAuras.DebuffCatType.Snare,	-- Concussive Shot
-	[61394]		= PowaAuras.DebuffCatType.Snare,	-- Frozen Wake (Glyph of Freezing Trap)
+	[3355]	= PowaAuras.DebuffCatType.CC,		-- Freezing Trap Effect
+	[19577]	= PowaAuras.DebuffCatType.Stun,		-- Intimidation
+	[1513]	= PowaAuras.DebuffCatType.CC,		-- Scare Beast (works against Druids in most forms and Shamans using Ghost Wolf)
+	[19503]	= PowaAuras.DebuffCatType.CC,		-- Scatter Shot
+	[19386]	= PowaAuras.DebuffCatType.CC,		-- Wyvern Sting
+	[34490]	= PowaAuras.DebuffCatType.Silence,	-- Silencing Shot
+	[19306]	= PowaAuras.DebuffCatType.Root,		-- Counterattack
+	[19185]	= PowaAuras.DebuffCatType.Root,		-- Entrapment - I
+	[64803]	= PowaAuras.DebuffCatType.Root,		-- Entrapment - II
+	[35101]	= PowaAuras.DebuffCatType.Snare,	-- Concussive Barrage
+	[5116]	= PowaAuras.DebuffCatType.Snare,	-- Concussive Shot
+	[13810]	= PowaAuras.DebuffCatType.Snare,	-- Frost Trap Aura (no duration, lasts as long as you stand in it)
+	[61394]	= PowaAuras.DebuffCatType.Snare,	-- Glyph of Freezing Trap
+	[2974]	= PowaAuras.DebuffCatType.Snare,	-- Wing Clip
 	-- Hunter Pets
-	[90337]		= PowaAuras.DebuffCatType.CC,		-- Bad Manner (Monkey)
-	[126246]	= PowaAuras.DebuffCatType.CC,		-- Lullaby (Crane)
-	[126355]	= PowaAuras.DebuffCatType.CC,		-- Paralyzing Quill (Porcupine)
-	[126423]	= PowaAuras.DebuffCatType.CC,		-- Petrifying Gaze (Basilisk)
-	[35346]		= PowaAuras.DebuffCatType.Stun,		-- Sting (Wasp)
-	[50519]		= PowaAuras.DebuffCatType.Stun,		-- Sonic Blast (Bat)
-	[96201]		= PowaAuras.DebuffCatType.Stun,		-- Web Wrap (Shale Spider)
-	[91644]		= PowaAuras.DebuffCatType.Disarm,	-- Snatch (Bird of Prey)
-	[50541]		= PowaAuras.DebuffCatType.Disarm,	-- Clench (Scorpid)
-	[50245]		= PowaAuras.DebuffCatType.Root,		-- Pin (Crab)
-	[54706]		= PowaAuras.DebuffCatType.Root,		-- Venom Web Spray (Silithid)
-	[4167]		= PowaAuras.DebuffCatType.Root,		-- Web (Spider)
-	[90327]		= PowaAuras.DebuffCatType.Root,		-- Lock Jaw (Dog)
-	[61685]		= PowaAuras.DebuffCatType.Root,		-- Charge (Various)
-	[52825]		= PowaAuras.DebuffCatType.Root,		-- Swoop (Various)
-	[54644]		= PowaAuras.DebuffCatType.Snare,	-- Froststorm Breath (Chimera)
-	[50433]		= PowaAuras.DebuffCatType.Snare,	-- Ankle Crack (Crocolisk)
-	[35346]		= PowaAuras.DebuffCatType.Snare,	-- Time Warp (Warp Stalker)
+	[50519]	= PowaAuras.DebuffCatType.Stun,		-- Sonic Blast (Bat)
+	[91644]	= PowaAuras.DebuffCatType.Disarm,	-- Snatch (Bird of Prey)
+	[50541]	= PowaAuras.DebuffCatType.Disarm,	-- Clench (Scorpid)
+	[54644]	= PowaAuras.DebuffCatType.Snare,	-- Froststorm Breath (Chimera)
+	[50245]	= PowaAuras.DebuffCatType.Root,		-- Pin (Crab)
+	[54706]	= PowaAuras.DebuffCatType.Root,		-- Venom Web Spray (Silithid)
+	[4167]	= PowaAuras.DebuffCatType.Root,		-- Web (Spider)
+	[50433]	= PowaAuras.DebuffCatType.Snare,	-- Ankle Crack (Crocolisk)
+	[90327]	= PowaAuras.DebuffCatType.Root,		-- Lock Jaw (Dog)
+	[61685]	= PowaAuras.DebuffCatType.Root,		-- Charge (Various animals)
+	[96201]	= PowaAuras.DebuffCatType.Stun,		-- Web Wrap (Shale Spider)
+	[35346]	= PowaAuras.DebuffCatType.Snare,	-- Time Warp (Warp Stalker)
+	[35346]	= PowaAuras.DebuffCatType.Stun,		-- Sting (Wasp)
+	[52825]	= PowaAuras.DebuffCatType.Root,		-- Swoop (Various)
+	[90337]	= PowaAuras.DebuffCatType.CC,		-- Bad Manner (Monkey)
 	-- Mage
-	[118]		= PowaAuras.DebuffCatType.CC,		-- Polymorph
-	[31661]		= PowaAuras.DebuffCatType.CC,		-- Dragon's Breath
-	[82691]		= PowaAuras.DebuffCatType.CC,		-- Ring of Frost
-	[44572]		= PowaAuras.DebuffCatType.Stun,		-- Deep Freeze
-	[102051]	= PowaAuras.DebuffCatType.Silence,	-- Frostjaw
-	[55021]		= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Counterspell
-	[122]		= PowaAuras.DebuffCatType.Root,		-- Frost Nova
-	[113092]	= PowaAuras.DebuffCatType.Snare,	-- Frost Bomb
-	[111340]	= PowaAuras.DebuffCatType.Snare,	-- Ice Ward
-	[12486]		= PowaAuras.DebuffCatType.Snare,	-- Chilled (Blizzard)
-	[7321]		= PowaAuras.DebuffCatType.Snare,	-- Chilled (Frost Armor)
-	[120]		= PowaAuras.DebuffCatType.Snare,	-- Cone of Cold
-	[116]		= PowaAuras.DebuffCatType.Snare,	-- Frostbolt
-	[44614]		= PowaAuras.DebuffCatType.Snare,	-- Frostfire Bolt
-	[84721]		= PowaAuras.DebuffCatType.Snare,	-- Frozen Orb
-	[31589]		= PowaAuras.DebuffCatType.Snare,	-- Slow
-	-- Mage Pets
-	[33395]		= PowaAuras.DebuffCatType.Root,		-- Freeze
+	[44572]	= PowaAuras.DebuffCatType.Stun,		-- Deep Freeze
+	[31661]	= PowaAuras.DebuffCatType.CC,		-- Dragon's Breath
+	[12355]	= PowaAuras.DebuffCatType.Stun,		-- Impact
+	[64343]	= PowaAuras.DebuffCatType.Stun,		-- Impact (two ID's, one ought to work right?)
+	[82691]	= PowaAuras.DebuffCatType.Stun,		-- Ring of Frost (counted as stun because the game thinks it's one).
+	[118]	= PowaAuras.DebuffCatType.CC,		-- Polymorph (Sheep, keep well away from Welsh people)
+	[61305]	= PowaAuras.DebuffCatType.CC,		-- Polymorph (Cat)
+	[28272]	= PowaAuras.DebuffCatType.CC,		-- Polymorph (Pig)
+	[61721]	= PowaAuras.DebuffCatType.CC,		-- Polymorph (Rabbit)
+	[61780]	= PowaAuras.DebuffCatType.CC,		-- Polymorph (Turkey) Note: Turkey is not yet implemented, although it is in the data files.
+	[28271]	= PowaAuras.DebuffCatType.CC,		-- Polymorph (Turtle)
+	[18469]	= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Counterspell I
+	[55021]	= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Counterspell II
+	[33395]	= PowaAuras.DebuffCatType.Root,		-- Freeze (Water Elemental)
+	[122]	= PowaAuras.DebuffCatType.Root,		-- Frost Nova
+	[55080]	= PowaAuras.DebuffCatType.Root,		-- Shattered Barrier I
+	[83073]	= PowaAuras.DebuffCatType.Root,		-- Shattered Barrier II
+	[11113]	= PowaAuras.DebuffCatType.Snare,	-- Blast Wave
+	[7321]	= PowaAuras.DebuffCatType.Snare,	-- Chilled (Frost Armor)
+	[12484]	= PowaAuras.DebuffCatType.Snare,	-- Ice Shards I, 25% snare.
+	[12485]	= PowaAuras.DebuffCatType.Snare,	-- Ice Shards II, 40% snare.
+	[12486]	= PowaAuras.DebuffCatType.Snare,	-- Likely unused, but would presumably be Ice Shards III, 50% snare.
+	[120]	= PowaAuras.DebuffCatType.Snare,	-- Cone of Cold
+	[116]	= PowaAuras.DebuffCatType.Snare,	-- Frostbolt
+	[47614]	= PowaAuras.DebuffCatType.Snare,	-- Frostfire Bolt
+	[31589]	= PowaAuras.DebuffCatType.Snare,	-- Slow
+	[84721]	= PowaAuras.DebuffCatType.Snare,	-- Frostfire Orb
+	[83046]	= PowaAuras.DebuffCatType.Stun,		-- Improved Polymorph I
+	[83047]	= PowaAuras.DebuffCatType.Stun,		-- Improved Polymorph II
+	[83046]	= PowaAuras.DebuffCatType.Root,		-- Improved Cone of Cold I
+	[83047]	= PowaAuras.DebuffCatType.Root,		-- Improved Cone of Cold II
 	-- Monk
-	[115078]	= PowaAuras.DebuffCatType.CC,		-- Paralysis
-	[123393]	= PowaAuras.DebuffCatType.CC,		-- Breath of Fire
-	[120086]	= PowaAuras.DebuffCatType.Stun,		-- Fist of Fury
-	[119381]	= PowaAuras.DebuffCatType.Stun,		-- Leg Sweep
-	[119392]	= PowaAuras.DebuffCatType.Stun,		-- Charging Ox Wave
-	[137460]	= PowaAuras.DebuffCatType.Silence,	-- Ring of Peace (Silence)
-	[137461]	= PowaAuras.DebuffCatType.Disarm,	-- Ring of Peace (Disarm)
-	[117368]	= PowaAuras.DebuffCatType.Disarm,	-- Grapple Weapon
-	[116706]	= PowaAuras.DebuffCatType.Root,		-- Disable
-	[116095]	= PowaAuras.DebuffCatType.Snare,	-- Disable
-	[116330]	= PowaAuras.DebuffCatType.Snare,	-- Dizzying Haze
-	[118585]	= PowaAuras.DebuffCatType.Snare,	-- Leer of the Ox
-	[123586]	= PowaAuras.DebuffCatType.Snare,	-- Flying Serpent Kick
+	[105593]= PowaAuras.DebuffCatType.Stun,		-- Fist of Justice
 	-- Paladin
-	[20066]		= PowaAuras.DebuffCatType.CC,		-- Repentance
-	[10326]		= PowaAuras.DebuffCatType.CC,		-- Turn Evil
-	[145067]	= PowaAuras.DebuffCatType.CC,		-- Turn Evil (Evil is a Point of View)
-	[105421]	= PowaAuras.DebuffCatType.CC,		-- Blinding Light
-	[115752]	= PowaAuras.DebuffCatType.Stun,		-- Blinding Light (Glyph of Blinding Light)
-	[853]		= PowaAuras.DebuffCatType.Stun,		-- Hammer of Justice
-	[105593]	= PowaAuras.DebuffCatType.Stun,		-- Fist of Justice
-	[119072]	= PowaAuras.DebuffCatType.Stun,		-- Holy Wrath
-	[31935]		= PowaAuras.DebuffCatType.Silence,	-- Avenger's Shield
-	[63529]		= PowaAuras.DebuffCatType.Snare,	-- Dazed - Avenger's Shield
-	[20170]		= PowaAuras.DebuffCatType.Snare,	-- Seal of Justice
-	[110300]	= PowaAuras.DebuffCatType.Snare,	-- Burden of Guilt
-	[114919]	= PowaAuras.DebuffCatType.Snare,	-- Arcing Light
+	[853]	= PowaAuras.DebuffCatType.Stun,		-- Hammer of Justice
+	[2812]	= PowaAuras.DebuffCatType.Stun,		-- Holy Wrath (works against Warlocks using Metamorphasis and Death Knights using Lichborne)
+	[20066]	= PowaAuras.DebuffCatType.CC,		-- Repentance
+	[20170]	= PowaAuras.DebuffCatType.Snare,	-- Snare (Seal of Justice proc)
+	[10326]	= PowaAuras.DebuffCatType.CC,		-- Turn Evil (works against Warlocks using Metamorphasis and Death Knights using Lichborne)
+	[63529]	= PowaAuras.DebuffCatType.Snare,	-- Avenger's Shield (Daze glyph)
+	[31935]	= PowaAuras.DebuffCatType.Silence,	-- Avenger's Shield.
 	-- Priest
-	[605]		= PowaAuras.DebuffCatType.CC,		-- Dominate Mind
-	[64044]		= PowaAuras.DebuffCatType.CC,		-- Psychic Horror
-	[8122]		= PowaAuras.DebuffCatType.CC,		-- Psychic Scream
-	[88625]		= PowaAuras.DebuffCatType.CC,		-- Holy Word: Chastise
-	[9484]		= PowaAuras.DebuffCatType.CC,		-- Shackle Undead
-	[15487]		= PowaAuras.DebuffCatType.Silence,	-- Silence
-	[64058]		= PowaAuras.DebuffCatType.Disarm,	-- Psychic Horror
-	[15407]		= PowaAuras.DebuffCatType.Snare,	-- Mind Flay
-	-- Priest Pets
-	[113792]	= PowaAuras.DebuffCatType.CC,		-- Psychic Terror
+	[605]	= PowaAuras.DebuffCatType.CC,		-- Mind Control
+	[64044]	= PowaAuras.DebuffCatType.CC,		-- Psychic Horror
+	[8122]	= PowaAuras.DebuffCatType.CC,		-- Psychic Scream
+	[87204]	= PowaAuras.DebuffCatType.CC,		-- Sin and Punishment fear/horror.
+	[9484]	= PowaAuras.DebuffCatType.CC,		-- Shackle Undead (works against Death Knights using Lichborne)
+	[15487]	= PowaAuras.DebuffCatType.Silence,	-- Silence
+	[64058] = PowaAuras.DebuffCatType.Disarm,	-- Psychic Horror
+	[15407]	= PowaAuras.DebuffCatType.Snare,	-- Mind Flay
+	[88625]	= PowaAuras.DebuffCatType.CC,		-- Holy Word: Chastise
 	-- Rogue
-	[2094]		= PowaAuras.DebuffCatType.CC,		-- Blind
-	[1776]		= PowaAuras.DebuffCatType.CC,		-- Gouge
-	[6770]		= PowaAuras.DebuffCatType.CC,		-- Sap
-	[1833]		= PowaAuras.DebuffCatType.Stun,		-- Cheap Shot
-	[408]		= PowaAuras.DebuffCatType.Stun,		-- Kidney Shot
-	[113953]	= PowaAuras.DebuffCatType.Stun,		-- Paralytic Poison
-	[1330]		= PowaAuras.DebuffCatType.Silence,	-- Garrote
-	[51722]		= PowaAuras.DebuffCatType.Disarm,	-- Dismantle
-	[115197]	= PowaAuras.DebuffCatType.Root,		-- Paralytic Poison
-	[3409]		= PowaAuras.DebuffCatType.Snare,	-- Crippling Poison
-	[26679]		= PowaAuras.DebuffCatType.Snare,	-- Deadly Throw
+	[2094]	= PowaAuras.DebuffCatType.CC,		-- Blind
+	[1833]	= PowaAuras.DebuffCatType.Stun,		-- Cheap Shot
+	[1776]	= PowaAuras.DebuffCatType.CC,		-- Gouge
+	[408]	= PowaAuras.DebuffCatType.Stun,		-- Kidney Shot
+	[6770]	= PowaAuras.DebuffCatType.CC,		-- Sap
+	[1330]	= PowaAuras.DebuffCatType.Silence,	-- Garrote - Silence
+	[18425]	= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Kick I
+	[86759]	= PowaAuras.DebuffCatType.Silence,	-- Silenced - Improved Kick II
+	[51722]	= PowaAuras.DebuffCatType.Disarm,	-- Dismantle
+	[31125]	= PowaAuras.DebuffCatType.Snare,	-- Blade Twisting I
+	[51585]	= PowaAuras.DebuffCatType.Snare,	-- Blade Twisting II
+	[3409]	= PowaAuras.DebuffCatType.Snare,	-- Crippling Poison
+	[26679]	= PowaAuras.DebuffCatType.Snare,	-- Deadly Throw
+	[51696]	= PowaAuras.DebuffCatType.Snare,	-- Waylay
 	-- Shaman
-	[51514]		= PowaAuras.DebuffCatType.CC,		-- Hex
-	[118905]	= PowaAuras.DebuffCatType.Stun,		-- Static Charge
-	[64695]		= PowaAuras.DebuffCatType.Root,		-- Earthgrab
-	[63685]		= PowaAuras.DebuffCatType.Root,		-- Freeze
-	[3600]		= PowaAuras.DebuffCatType.Snare,	-- Earthbind
-	[8056]		= PowaAuras.DebuffCatType.Snare,	-- Frost Shock
-	[8034]		= PowaAuras.DebuffCatType.Snare,	-- Frostbrand Attack
+	[39796]	= PowaAuras.DebuffCatType.Stun,		-- Stoneclaw Stun
+	[51514]	= PowaAuras.DebuffCatType.CC,		-- Hex (although effectively a silence+disarm effect, it is conventionally thought of as a CC, plus you can trinket out of it)
+	[64695]	= PowaAuras.DebuffCatType.Root,		-- Earthgrab (Storm, Earth and Fire)
+	[63685]	= PowaAuras.DebuffCatType.Root,		-- Freeze (Frozen Power)
+	[3600]	= PowaAuras.DebuffCatType.Snare,	-- Earthbind (5 second duration per pulse, but will keep re-applying the debuff as long as you stand within the pulse radius)
+	[8056]	= PowaAuras.DebuffCatType.Snare,	-- Frost Shock
+	[8034]	= PowaAuras.DebuffCatType.Snare,	-- Frostbrand Attack
+	[73682]	= PowaAuras.DebuffCatType.Snare,	-- Unleash Frost (via Unleash Elements + Frostbrand Weapon)
 	-- Warlock
-	[710]		= PowaAuras.DebuffCatType.CC,		-- Banish
-	[118699]	= PowaAuras.DebuffCatType.CC,		-- Fear
-	[5484]		= PowaAuras.DebuffCatType.CC,		-- Howl of Terror
-	[137143]	= PowaAuras.DebuffCatType.CC,		-- Blood Horror
-	[6789]		= PowaAuras.DebuffCatType.CC,		-- Mortal Coil
-	[30283]		= PowaAuras.DebuffCatType.Stun,		-- Shadowfury
-	[47897]		= PowaAuras.DebuffCatType.Snare,	-- Demonic Breath
-	[18223]		= PowaAuras.DebuffCatType.Snare,	-- Curse of Exhaustion
-	[60947]		= PowaAuras.DebuffCatType.Snare,	-- Improved Fear
-	-- Warlock Pets
-	[6358]		= PowaAuras.DebuffCatType.CC,		-- Seduction
-	[89766]		= PowaAuras.DebuffCatType.Stun,		-- Axe Toss
-	[24259]		= PowaAuras.DebuffCatType.Silence,	-- Spell Lock
+	[710]	= PowaAuras.DebuffCatType.CC,		-- Banish (works against Warlocks using Metamorphasis and Druids using Tree Form)
+	[6789]	= PowaAuras.DebuffCatType.CC,		-- Death Coil
+	[5782]	= PowaAuras.DebuffCatType.CC,		-- Fear
+	[5484]	= PowaAuras.DebuffCatType.CC,		-- Howl of Terror
+	[6358]	= PowaAuras.DebuffCatType.CC,		-- Seduction (Succubus)
+	[30283]	= PowaAuras.DebuffCatType.Stun,		-- Shadowfury
+	[24259]	= PowaAuras.DebuffCatType.Silence,	-- Spell Lock (Felhunter)
+	[18118]	= PowaAuras.DebuffCatType.Snare,	-- Aftermath
+	[18223]	= PowaAuras.DebuffCatType.Snare,	-- Curse of Exhaustion
+	[54785]	= PowaAuras.DebuffCatType.Stun,		-- Demon Leap (via metamorphosis)
+	[60946]	= PowaAuras.DebuffCatType.Snare,	-- Nightmare (Improved Fear I)
+	[60947]	= PowaAuras.DebuffCatType.Snare,	-- Nightmare (Improved Fear II)
+	[85387]	= PowaAuras.DebuffCatType.Stun,		-- Aftermath (stun effect from rain of fire)
+	[89766]	= PowaAuras.DebuffCatType.Stun,		-- Axe Toss (from a felguard)
+	[93975]	= PowaAuras.DebuffCatType.Stun,		-- Aura of Foreboding I (stun effect)
+	[93974]	= PowaAuras.DebuffCatType.Snare,	-- Aura of Foreboding I (root effect)
+	[93986]	= PowaAuras.DebuffCatType.Stun,		-- Aura of Foreboding II (stun effect)
+	[93987]	= PowaAuras.DebuffCatType.Snare,	-- Aura of Foreboding II (root effect)
+	[63311]	= PowaAuras.DebuffCatType.Snare,	-- Shadowsnare
 	-- Warrior
-	[5246]		= PowaAuras.DebuffCatType.CC,		-- Intimidating Shout
-	[7922]		= PowaAuras.DebuffCatType.Stun,		-- Charge Stun
-	[46968]		= PowaAuras.DebuffCatType.Stun,		-- Shockwave
-	[118895]	= PowaAuras.DebuffCatType.Stun,		-- Dragon Roar
-	[132169]	= PowaAuras.DebuffCatType.Stun,		-- Storm Bolt
-	[18498]		= PowaAuras.DebuffCatType.Silence,	-- Silenced - Gag Order
-	[676]		= PowaAuras.DebuffCatType.Disarm,	-- Disarm
-	[107566]	= PowaAuras.DebuffCatType.Root,		-- Staggering Shout
-	[105771]	= PowaAuras.DebuffCatType.Root,		-- Warbringer
-	[147531]	= PowaAuras.DebuffCatType.Snare,	-- Bloodbath
-	[1715]		= PowaAuras.DebuffCatType.Snare,	-- Hamstring
-	[129923]	= PowaAuras.DebuffCatType.Snare,	-- Sluggish
-	[12323]		= PowaAuras.DebuffCatType.Snare,	-- Piercing Howl
+	[7922]	= PowaAuras.DebuffCatType.Stun,		-- Charge Stun
+	[12809]	= PowaAuras.DebuffCatType.Stun,		-- Concussion Blow
+	[20253]	= PowaAuras.DebuffCatType.Stun,		-- Intercept
+	[5246]	= PowaAuras.DebuffCatType.CC,		-- Intimidating Shout
+	[46968]	= PowaAuras.DebuffCatType.Stun,		-- Shockwave
+	[18498]	= PowaAuras.DebuffCatType.Silence,	-- Silenced - Gag Order
+	[676]	= PowaAuras.DebuffCatType.Disarm,	-- Disarm
+	[23694]	= PowaAuras.DebuffCatType.Root,		-- Improved Hamstring
+	[1715]	= PowaAuras.DebuffCatType.Snare,	-- Hamstring
+	[12323]	= PowaAuras.DebuffCatType.Snare,	-- Piercing Howl
+	[85388]	= PowaAuras.DebuffCatType.Stun,		-- Throwdown
 	-- Engineering/Tailoring
-	[89637]		= PowaAuras.DebuffCatType.CC,		-- Big Daddy
-	[30217]		= PowaAuras.DebuffCatType.Stun,		-- Adamantite Grenade
-	[30216]		= PowaAuras.DebuffCatType.Stun,		-- Fel Iron Bomb
-	[39965]		= PowaAuras.DebuffCatType.Root,		-- Frost Grenade
-	[55536]		= PowaAuras.DebuffCatType.Root,		-- Frostweave Net
-	[13099]		= PowaAuras.DebuffCatType.Root,		-- Net-o-Matic
-	[75148]		= PowaAuras.DebuffCatType.Root,		-- Embersilk net
+	[75148]	= PowaAuras.DebuffCatType.Root,		-- Embersilk net
+	[89637]	= PowaAuras.DebuffCatType.CC,		-- Big Daddy
+	[30217]	= PowaAuras.DebuffCatType.Stun,		-- Adamantite Grenade
+	[30216]	= PowaAuras.DebuffCatType.Stun,		-- Fel Iron Bomb
+	[20549]	= PowaAuras.DebuffCatType.Stun,		-- War Stomp
+	[25046]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent
+	[39965]	= PowaAuras.DebuffCatType.Root,		-- Frost Grenade
+	[55536]	= PowaAuras.DebuffCatType.Root,		-- Frostweave Net
+	[13099]	= PowaAuras.DebuffCatType.Root,		-- Net-o-Matic
 	-- Racials
-	[20549]		= PowaAuras.DebuffCatType.Stun,		-- War Stomp
-	[28730]		= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (Caster)
-	[80483]		= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (Hunter)
-	[25046]		= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (Rogue)
-	[50613]		= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (Death Knight)
-	[69179]		= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (Warrior)
+	[20549]	= PowaAuras.DebuffCatType.Stun,		-- War stomp
+	[28730]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (caster)
+	[80483]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (hunter)
+	[25046]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (rogue)
+	[50613]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (death knight)
+	[69179]	= PowaAuras.DebuffCatType.Silence,	-- Arcane Torrent (warrior)
 	-- Other
-	[29703]		= PowaAuras.DebuffCatType.Snare		-- Dazed
+	[29703]	= PowaAuras.DebuffCatType.Snare	-- Dazed
 }
 
 PowaAuras.Text = { }
 
-ns.PowaAuras = PowaAuras
+PowaAurasOptions = { }
 PowaAurasOptions = PowaAuras
+ns.PowaAuras = PowaAuras
+ns.PowaAurasOptions = PowaAurasOptions
 
 function PowaAuras:Debug(...)
 	if PowaMisc.debug then
@@ -1176,6 +1379,27 @@ function PowaAuras:DisplayText(...)
 	self:Message(...)
 end
 
+function PowaAuras:DisplayTable(t, indent)
+	if not t or type(t) ~= "table" then
+		return "No table"
+	end
+	if not indent then
+		indent = ""
+	else
+		indent = indent.."  "
+	end
+	for i, v in pairs(t) do
+		if type(v) ~= "function" then
+			if type(v) ~= "table" then
+				self:Message(indent..tostring(i).." = "..tostring(v))
+			else
+				self:Message(indent..tostring(i))
+				self:DisplayTable(v, indent)
+			end
+		end
+	end
+end
+
 function PowaAuras:Error(msg, holdtime)
 	if not holdtime then
 		holdtime = UIERRORS_HOLD_TIME
@@ -1185,6 +1409,17 @@ end
 
 function PowaAuras:IsNumeric(a)
 	return type(tonumber(a)) == "number"
+end
+
+function PowaAuras:ReverseTable(t)
+	if type(t) ~= "table" then
+		return
+	end
+	local newTable = { }
+	for k, v in pairs(t) do
+		newTable[v] = k
+	end
+	return newTable
 end
 
 function PowaAuras:TableEmpty(t)
@@ -1208,27 +1443,6 @@ function PowaAuras:TableSize(t)
 	return size
 end
 
-function PowaAuras:DisplayTable(t, i)
-	if type(t) ~= "table" then
-		return
-	end
-	if not i then
-		i = ""
-	else
-		i = i.." "
-	end
-	for k, v in pairs(t) do
-		if type(v) ~= "function" then
-			if type(v) ~= "table" then
-				print(tostring(k).." = "..tostring(v)..i)
-			else
-				print(tostring(k)..i)
-				self:DisplayTable(v, i)
-			end
-		end
-	end
-end
-
 function PowaAuras:CopyTable(t, lookup_table, original)
 	if type(t) ~= "table" then
 		return t
@@ -1239,7 +1453,7 @@ function PowaAuras:CopyTable(t, lookup_table, original)
 	else
 		copy = original
 	end
-	for i, v in pairs(t) do
+	for i,v in pairs(t) do
 		if type(v) ~= "function" then
 			if type(v) ~= "table" then
 				copy[i] = v
