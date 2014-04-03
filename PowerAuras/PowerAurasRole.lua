@@ -1,10 +1,6 @@
-local pairs = pairs
-
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-<<<<<<< HEAD
-=======
 local pairs = pairs
 local table = table
 
@@ -22,7 +18,6 @@ local UnitName = UnitName
 local UnitPowerType = UnitPowerType
 local UnitStat = UnitStat
 
->>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 -- Reset if spec changed or slash command
 function PowaAuras:ResetTalentScan(unit)
 	if not unit then
@@ -167,7 +162,7 @@ function PowaAuras:DetermineRole(unit)
 		return self.FixRoles[unitName], "Fixed"
 	end
 	if class == "DEATHKNIGHT" then
-		return RoleMeleDps, "Guess"
+		return "RoleMeleDps", "Guess"
 	elseif class == "PRIEST" then
 		local _, _, buffExist = UnitBuff(unit, self.Spells.SHADOWFORM)
 		if buffExist then

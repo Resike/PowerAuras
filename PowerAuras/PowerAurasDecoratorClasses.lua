@@ -1,10 +1,6 @@
-local math, table, pairs = math, table, pairs
-
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-<<<<<<< HEAD
-=======
 local format = format
 local math = math
 local pairs = pairs
@@ -15,7 +11,6 @@ local tostring = tostring
 
 local GetTime = GetTime
 
->>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 cPowaStacks = PowaClass(function(stacker, aura, base)
 	for k, v in pairs(cPowaStacks.ExportSettings) do
 		if base and base[k] ~= nil then
@@ -70,15 +65,40 @@ function cPowaStacks:GetTexture()
 	return "Interface\\Addons\\PowerAuras\\TimerTextures\\"..texture.."\\Timers"..postfix
 end
 
+--[[local eclipseframe = CreateFrame("Frame", nil, UIParent)
+eclipseframe:SetSize(50, 50)
+eclipseframe:Hide()
+
+local texture = eclipseframe:CreateTexture(nil, "Overlay")
+texture:SetTexture("Interface\\PlayerFrame\\UI-DruidEclipse")
+texture:SetBlendMode("Add")
+texture:SetAllPoints(eclipseframe)]]
+
 function cPowaStacks:ShowValue(aura, newvalue)
 	local frame = PowaAuras.StacksFrames[self.id]
-	if not frame or not newvalue then
+	if not frame or not newvalue or newvalue < 0 then
 		return
 	end
 	if PowaAuras.ModTest then
-		newvalue = math.random(0, 99)
+		if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
+			newvalue = math.random(0, 9)
+		else
+			newvalue = math.random(0, 99)
+		end
 	end
-	newvalue = tonumber(format("%.0f", tostring(newvalue)))
+	if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
+		newvalue = tonumber(format("%.0f", tostring(newvalue * 10)))
+	--[[elseif aura.PowerType == SPELL_POWER_LUNAR_ECLIPSE or aura.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
+		eclipseframe:Show()
+		texture:SetParent(frame)
+		eclipseframe:SetPoint("LEFT", frame, "RIGHT", 0, 0)
+		local direction = GetEclipseDirection()
+		if direction then
+			texture:SetTexCoord(unpack(ECLIPSE_MARKER_COORDS[direction]))
+		end]]
+	else
+		newvalue = tonumber(format("%.0f", tostring(newvalue)))
+	end
 	local texcount = #frame.textures
 	local unitcount = newvalue == 0 and 1 or (math.floor(math.log10(newvalue)) + 1)
 	local tStep = PowaAuras.Tstep
@@ -92,7 +112,7 @@ function cPowaStacks:ShowValue(aura, newvalue)
 		if aura.texmode == 1 then
 			frame.textures[i]:SetBlendMode("Add")
 		else
-			frame.textures[i]:SetBlendMode("Disable")
+			frame.textures[i]:SetBlendMode("Blend")
 		end
 		if self.UseOwnColor then
 			frame.textures[i]:SetVertexColor(self.r, self.g, self.b)

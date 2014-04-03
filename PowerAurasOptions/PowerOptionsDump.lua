@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 local PowaAurasOptions = PowaAurasOptions
 
 local _G = _G
@@ -128,13 +126,16 @@ local UnitIsVisible = UnitIsVisible]]
 local MAX_SKILLLINE_TABS = MAX_SKILLLINE_TABS
 local NUM_BAG_FRAMES = NUM_BAG_FRAMES
 
->>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 function PowaAurasOptions:Dump()
 	local Status, Err = pcall(PowaAurasOptions.Dump_Safe, self)
 	if not Status then
 		self:Message(Err)
 		self:DisplayText(self.Colors.Red, "Error in dump protected call: ", Err)
 	end
+end
+
+function PowaAurasOptions:ClearDump()
+	PowaState = nil
 end
 
 function PowaAurasOptions:Dump_Safe()
@@ -479,7 +480,7 @@ function PowaAurasOptions:GetUnitInfo(unit)
 	UnitInfo["CreatureFamily"] = UnitCreatureFamily(unit)
 	UnitInfo["CreatureType"] = UnitCreatureType(unit)
 	UnitInfo["Damage"] = UnitDamage(unit)
-	UnitInfo["DefenseModifier"] = defenseModifier
+	--UnitInfo["DefenseModifier"] = defenseModifier
 	UnitInfo["FactionGroup"] = UnitFactionGroup(unit)
 	UnitInfo["Health"] = UnitHealth(unit)
 	UnitInfo["HealthMax"] = UnitHealthMax(unit)
@@ -557,11 +558,11 @@ end
 
 function PowaAurasOptions:ResetTooltip()
 	for z = 1, 9 do
-		local line = getglobal("PowaAuras_TooltipTextLeft"..z)
+		local line = _G["PowaAuras_TooltipTextLeft"..z]
 		if line ~= nil then
 			line:SetText(nil)
 		end
-		line = getglobal("PowaAuras_TooltipTextRight"..z)
+		line = _G["PowaAuras_TooltipTextRight"..z]
 		if line ~= nil then
 			line:SetText(nil)
 		end
@@ -574,9 +575,9 @@ function PowaAurasOptions:CaptureTooltip(store)
 	store["Tooltip"] = { }
 	store.Tooltip.NumLines = PowaAuras_Tooltip:NumLines()
 	for z = 1, PowaAuras_Tooltip:NumLines() do
-		local line = getglobal("PowaAuras_TooltipTextLeft"..z)
+		local line = _G["PowaAuras_TooltipTextLeft"..z]
 		store.Tooltip["Left"..z] = self:Escape(line:GetText())
-		line = getglobal("PowaAuras_TooltipTextRight"..z)
+		line = _G["PowaAuras_TooltipTextRight"..z]
 		store.Tooltip["Right"..z] = self:Escape(line:GetText())
 	end
 end

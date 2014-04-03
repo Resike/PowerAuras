@@ -1,20 +1,19 @@
 ## Interface: 50400
 ## Title: Power Auras Classic Options
-<<<<<<< HEAD
-## Version: 4.24.1
-=======
 ## Version: 4.25.3
->>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 ## Author: Smacker 'lolcat', Dridzt 'classic', Garstiger 'continued', Sinsthar 'base', Meorawr, modified by Zensunim and Resike
 ## Notes: Options and configuration GUI for Power Auras Classic.
 ## DefaultState: Enabled
 ## Dependencies: PowerAuras
 ## LoadOnDemand: 1
 
+UIDropDownMenuTemplates.xml
+UIDropDownMenu.lua
+
 PowerOptions.lua
+PowerOptionsData.lua
 PowerOptionsDump.lua
 PowerComms.lua
 
 PowerOptions.xml
 PowerOptionsBlizzard.xml
-PowerOptionsEquipmentSlots.xml

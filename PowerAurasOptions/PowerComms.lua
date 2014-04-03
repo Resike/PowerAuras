@@ -3,12 +3,6 @@
 	Adds addon communication functionality into Power Auras. Utilizes the SendAddonMessage API and its own locking system to minimize load and prevent clashes when dealing with split messages.
 --]]
 
-<<<<<<< HEAD
-local string, len, find, sub, tonumber, pairs, table, insert, remove, ceil, wipe = string, len, find, sub, tonumber, pairs, table, insert, remove, ceil, wipe
-
-local _, ns = ...
-local PowaAuras = ns.PowaAuras
-=======
 local PowaAurasOptions = PowaAurasOptions
 
 local string = string
@@ -22,24 +16,21 @@ local GetTime = GetTime
 local IsAddonMessagePrefixRegistered = IsAddonMessagePrefixRegistered
 local RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
 local SendAddonMessage = SendAddonMessage
->>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 
 PowaComms = {
 	Handlers = { },
 	Registered = false,
-
 	ReceiverLock = nil,
 	RecieverTimeout = 0,
 	ReceiverInstruction = nil,
 	ReceiverStore = { },
-
 	SenderLock = nil,
 	SenderTimeout = 0,
 	SenderInstruction = nil,
 	SenderStore = nil
 }
 
--- Accessible through PowaAuras.Comms
+-- Accessible through PowaAurasOptions.Comms
 PowaAurasOptions["Comms"] = PowaComms
 
 function PowaComms:Register()

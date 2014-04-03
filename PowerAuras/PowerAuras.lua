@@ -5,25 +5,17 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-<<<<<<< HEAD
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.24.1   \//      \// \//    \\/     \\/      \//  \//       
-=======
 	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.25.3   \//      \// \//    \\/     \\/      \//  \//       
->>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 
 	Power Auras Classic
-	Current author/maintainter: Resike
+	Author: Resike
 	E-Mail: resike@gmail.com
 	All rights reserved.
 --]]
 
-local string, tostring, tonumber, math, table, pairs, select, wipe, _G = string, tostring, tonumber, math, table, pairs, select, wipe, _G
-
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-<<<<<<< HEAD
-=======
 local _G = _G
 local format = format
 local ipairs = ipairs
@@ -64,12 +56,11 @@ local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
 
 local r1, r2, r3, r4, r5, r6
 
->>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 -- Exposed for Saving
 PowaMisc =
 {
 	Disabled = false,
-	debug = false,
+	Debug = false,
 	OnUpdateLimit = 0,
 	AnimationLimit = 0,
 	Version = GetAddOnMetadata("PowerAuras", "Version"),
@@ -80,6 +71,7 @@ PowaMisc =
 	UserSetMaxTextures = PowaAuras.TextureCount,
 	OverrideMaxTextures = false,
 	Locked = false,
+	ScaleLocked = false,
 	GroupSize = 1,
 	SoundChannel = "Master"
 }
@@ -87,7 +79,7 @@ PowaMisc =
 PowaGlobalMisc =
 {
 	PathToSounds = "Interface\\AddOns\\PowerAuras\\Sounds\\",
-	PathToAuras = "Interface\\Addons\\PowerAuras\\Custom\\",
+	PathToAuras = "Interface\\AddOns\\PowerAuras\\Custom\\",
 	BlockIncomingAuras = false,
 	FixExports = false
 }
@@ -232,7 +224,7 @@ function PowaAuras:UpdateOldAuras()
 			end
 			if oldaura.ignoreResting == true then
 				aura.isResting = true
-			elseif oldaura.ignoreResting == true then
+			elseif oldaura.ignoreResting == false then
 				aura.isResting = false
 			end
 			aura.ignoreResting = nil
@@ -250,6 +242,22 @@ function PowaAuras:UpdateOldAuras()
 				aura.isAlive = 0
 			end
 			aura.isDead = nil
+			if string.upper(aura.blendmode) == aura.blendmode then
+				aura.blendmode = string.lower(aura.blendmode)
+				aura.blendmode = string.gsub(aura.blendmode, "^%l", string.upper)
+			end
+			if string.upper(aura.strata) == aura.strata then
+				if aura.strata == "FULLSCREEN_DIALOG" then
+					aura.strata = "Fullscreen_Dialog"
+				else
+					aura.strata = string.lower(aura.strata)
+					aura.strata = string.gsub(aura.strata, "^%l", string.upper)
+				end
+			end
+			if string.upper(aura.texturestrata) == aura.texturestrata then
+				aura.texturestrata = string.lower(aura.texturestrata)
+				aura.texturestrata = string.gsub(aura.texturestrata, "^%l", string.upper)
+			end
 			if aura.buffname == "" then
 				self.Auras[i] = nil
 			elseif aura.bufftype == nil then
@@ -366,7 +374,7 @@ function PowaAuras:CreateTimerFrame(auraId, index, updatePing)
 	local aura = self.Auras[auraId]
 	frame:SetFrameStrata(aura.strata)
 	frame:Hide()
-	frame.texture = frame:CreateTexture(nil,"Background")
+	frame.texture = frame:CreateTexture(nil, "Background")
 	frame.texture:SetBlendMode("Add")
 	frame.texture:SetAllPoints(frame)
 	frame.texture:SetTexture(aura.Timer:GetTexture())
@@ -613,8 +621,7 @@ function PowaAuras:OnUpdate(elapsed)
 			self.DoCheck.All = true
 			self.PendingRescan = nil
 		end
-		for id = 1, #self.Pending do
-			local cd = self.Pending[i]
+		for id, cd in pairs(self.Pending) do
 			if cd and cd > 0 then
 				if GetTime() >= cd then
 					self.Pending[id] = nil
@@ -632,8 +639,8 @@ function PowaAuras:OnUpdate(elapsed)
 			self:NewCheckBuffs()
 			self.DoCheck.CheckIt = false
 		end
-		for i = 1, #self.Cascade do
-			self:TestThisEffect(i, false, true)
+		for k in pairs(self.Cascade) do
+			self:TestThisEffect(k, false, true)
 		end
 		wipe(self.Cascade)
 	end
@@ -659,11 +666,9 @@ function PowaAuras:OnUpdate(elapsed)
 	end
 	for i = 1, #self.AuraSequence do
 		local aura = self.AuraSequence[i]
-		if aura.Showing or (aura.Timer and aura.Timer.Showing) then
+		if aura.Showing or (aura.Timer and aura.Timer.enabled) or aura.InvertAuraBelow > 0 then
 			if self:UpdateAura(aura, elapsed) then
-				if aura.Timer and aura.Timer.enabled then
-					self:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
-				end
+				self:UpdateTimer(aura, timerElapsed, skipTimerUpdate)
 			end
 		end
 	end
@@ -723,30 +728,48 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 		end
 		return false, self.Text.nomReasonAuraOff
 	end
+	local debugEffectTest = self.DebugCycle or aura.Debug
+	if debugEffectTest then
+		self:Message("Test Aura for Hide or Show = ", auraId)
+		self:Message("Active = ", aura.Active)
+		self:Message("Showing = ", aura.Showing)
+		self:Message("HideRequest = ", aura.HideRequest)
+	end
+	-- Prevent crash if class not set-up properly
 	if not aura.ShouldShow then
+		self:Message("ShouldShow nil! id = ", auraId)
 		if not giveReason then
 			return false
 		end
 		return false, self.Text.nomReasonAuraBad
 	end
 	aura.InactiveDueToMulti = nil
-	local shouldShow, reason = aura:ShouldShow(giveReason)
+	local shouldShow, reason = aura:ShouldShow(giveReason or debugEffectTest)
 	if shouldShow == - 1 then
+		if debugEffectTest then
+			self:Message("TestThisEffect unchanged")
+		end
 		return aura.Active, reason
 	end
 	if shouldShow then
-		local shouldShow, reason = self:CheckMultiple(aura, reason, giveReason)
+		shouldShow, reason = self:CheckMultiple(aura, reason, giveReason or debugEffectTest)
 		if not shouldShow then
 			aura.InactiveDueToMulti = true
 		end
 	elseif aura.Timer and aura.CanHaveTimerOnInverse then
-		local multiShouldShow = self:CheckMultiple(aura, reason, giveReason)
+		local multiShouldShow = self:CheckMultiple(aura, reason, giveReason or debugEffectTest)
 		if not multiShouldShow then
 			aura.InactiveDueToMulti = true
 		end
 	end
+	if debugEffectTest then
+		self:Message("shouldShow = ", shouldShow, " because ", reason)
+	end
 	if shouldShow then
 		if not aura.Active then
+			if debugEffectTest then
+				self:Message("ShowAura ", aura.buffname, " (", auraId, ")", reason)
+			end
 			self:DisplayAura(auraId)
 			if not ignoreCascade then
 				self:AddChildrenToCascade(aura)
@@ -756,6 +779,9 @@ function PowaAuras:TestThisEffect(auraId, giveReason, ignoreCascade)
 	else
 		local secondaryAura = self.SecondaryAuras[aura.id]
 		if aura.Showing then
+			if debugEffectTest then
+				self:Message("HideAura ", aura.buffname, " (", auraId, ")", reason)
+			end
 			self:SetAuraHideRequest(aura, secondaryAura)
 		end
 		if aura.Active then
@@ -823,7 +849,39 @@ function PowaAuras:SetAuraHideRequest(aura, secondaryAura)
 end
 
 -- Drag and Drop functions
-local function stopFrameMoving(frame)
+local function OnKeyUp(frame, key)
+	-- Case Sensitive!
+	if key ~= "UP" and key ~= "DOWN" and key ~= "LEFT" and key ~= "RIGHT" or not frame.mouseIsOver then
+		return
+	end
+	if key == "UP" then
+		frame.aura.y = frame.aura.y + 1
+	elseif key == "DOWN" then
+		frame.aura.y = frame.aura.y - 1
+	elseif key == "LEFT" then
+		frame.aura.x = frame.aura.x - 1
+	elseif key == "RIGHT" then
+		frame.aura.x = frame.aura.x + 1
+	end
+	local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
+	if secondaryAura then
+		secondaryAura.HideRequest = true
+	end
+	frame:ClearAllPoints()
+	frame:SetPoint("Center", frame.aura.x, frame.aura.y)
+	if PowaAuras.CurrentAuraId == frame.aura.id and PowaBarConfigFrame:IsVisible() then
+		PowaBarAuraCoordXSlider:SetValue(format("%.0f", frame.aura.x))
+		PowaAurasOptions.SliderEditBoxSetValues(PowaBarAuraCoordXSlider, PowaBarAuraCoordXSliderEditBox, 700, 700, 0)
+		PowaBarAuraCoordYSlider:SetValue(format("%.0f", frame.aura.y))
+		PowaAurasOptions.SliderEditBoxSetValues(PowaBarAuraCoordYSlider, PowaBarAuraCoordYSliderEditBox, 400, 400, 0)
+	end
+	local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
+	if secondaryAura then
+		PowaAuras:RedisplaySecondaryAura(frame.aura.id)
+	end
+end
+
+local function OnDragStop(frame)
 	if not frame or not frame.isMoving then
 		return
 	end
@@ -833,24 +891,24 @@ local function stopFrameMoving(frame)
 	frame.aura.y = math.floor(frame:GetTop() - (frame:GetHeight() + UIParent:GetHeight()) / 2 + 0.5)
 	frame:ClearAllPoints()
 	frame:SetPoint("Center", frame.aura.x, frame.aura.y)
-	if PowaAuras.CurrentAuraId == frame.aura.id then
-		PowaAuras:InitPage(frame.aura)
+	if PowaAuras.CurrentAuraId == frame.aura.id and PowaBarConfigFrame:IsVisible() then
+		PowaBarAuraCoordXSlider:SetValue(format("%.0f", frame.aura.x))
+		PowaAurasOptions.SliderEditBoxSetValues(PowaBarAuraCoordXSlider, PowaBarAuraCoordXSliderEditBox, 700, 700, 0)
+		PowaBarAuraCoordYSlider:SetValue(format("%.0f", frame.aura.y))
+		PowaAurasOptions.SliderEditBoxSetValues(PowaBarAuraCoordYSlider, PowaBarAuraCoordYSliderEditBox, 400, 400, 0)
+	end
+	local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
+	if secondaryAura then
+		PowaAuras:RedisplaySecondaryAura(frame.aura.id)
 	end
 end
 
-local function stopMove(frame, button)
-	if button ~= "LeftButton" then
-		return
-	end
-	stopFrameMoving(frame)
-end
-
-local function startFrameMoving(frame)
+local function OnDragStart(frame)
 	if frame.isMoving then
 		return
 	end
 	if PowaAuras.CurrentAuraId ~= frame.aura.id then
-		stopFrameMoving(PowaAuras.Frames[PowaAuras.CurrentAuraId])
+		OnDragStop(PowaAuras.Frames[frame.aura.id])
 		local i = frame.aura.id - (PowaAuras.CurrentAuraPage - 1) * 24
 		local icon
 		if i > 0 and i < 25 then
@@ -858,7 +916,7 @@ local function startFrameMoving(frame)
 		end
 		PowaAuras:SetCurrent(icon, frame.aura.id)
 		PowaMisc.GroupSize = 1
-		--PowaAuras:InitPage(frame.aura) -- This seems to mess things up?
+		PowaAuras:InitPage(frame.aura)
 	end
 	frame.isMoving = true
 	frame:StartMoving()
@@ -868,10 +926,6 @@ local function startFrameMoving(frame)
 	end
 end
 
-<<<<<<< HEAD
-local function startMove(frame, button)
-	if button ~= "LeftButton" then
-=======
 local function LeftButtonOnUpdate(frame, elapsed)
 	frame.aura.x = math.floor(frame:GetLeft() + (frame:GetWidth() - UIParent:GetWidth()) / 2 + 0.5)
 	frame.aura.y = math.floor(frame:GetTop() - (frame:GetHeight() + UIParent:GetHeight()) / 2 + 0.5)
@@ -962,54 +1016,112 @@ end
 
 local function MiddleButtonOnUpdate(frame, elapsed)
 	if not IsMouseButtonDown("MiddleButton") then
->>>>>>> 8f86c9ec938266d3fe7444870b966107e422cd0d
 		return
 	end
-	startFrameMoving(frame)
+	local aura = PowaAuras.Auras[frame.aura.id]
+	if not aura.model and not aura.modelcustom then
+		return
+	end
+	local model = PowaAuras.Models[frame.aura.id]
+	local x, y = GetCursorPosition()
+	aura.rotate = format("%.0f", math.abs(math.deg(((x - frame.x) / 84 + model:GetFacing())) % 360))
+	if aura.rotate ~= format("%.0f", math.abs(math.deg(model:GetFacing()) % 360)) then
+		model:SetRotation(math.rad(aura.rotate))
+		local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
+		if secondaryAura then
+			local secondaryModel = PowaAuras.SecondaryModels[frame.aura.id]
+			secondaryModel:SetRotation(math.rad(aura.rotate))
+		end
+		if PowaBarConfigFrame:IsVisible() then
+			PowaBarAuraRotateSlider:SetValue(aura.rotate)
+			PowaBarAuraRotateSliderEditBox:SetText(format("%.0f", PowaBarAuraRotateSlider:GetValue()).."°")
+		end
+	end
+	frame.x, frame.y = x, y
 end
 
-local function keyUp(frame, key)
-	if key ~= "Up" and key ~= "Down" and key ~= "Left" and key ~= "Right" or not frame.mouseIsOver then
+local function OnMouseDown(frame, button)
+	if button == "LeftButton" then
+		OnDragStart(frame)
+		frame.x, frame.y = GetCursorPosition()
+		frame:SetScript("OnUpdate", LeftButtonOnUpdate)
+	elseif button == "RightButton" then
+		frame.x, frame.y = GetCursorPosition()
+		frame:SetScript("OnUpdate", RightButtonOnUpdate)
+	elseif button == "MiddleButton" then
+		if IsAltKeyDown() then
+			local aura = PowaAuras.Auras[frame.aura.id]
+			PowaAuras:ResetModel(aura)
+		else
+			frame.x, frame.y = GetCursorPosition()
+			frame:SetScript("OnUpdate", MiddleButtonOnUpdate)
+		end
+	end
+end
+
+local function OnMouseUp(frame, button)
+	if button == "LeftButton" then
+		OnDragStop(frame)
+		frame:SetScript("OnUpdate", nil)
+	elseif button == "RightButton" then
+		frame:SetScript("OnUpdate", nil)
+	elseif button == "MiddleButton" then
+		frame:SetScript("OnUpdate", nil)
+	end
+end
+
+local function OnMouseWheel(frame, delta)
+	local aura = PowaAuras.Auras[frame.aura.id]
+	if not aura.model and not aura.modelcustom then
 		return
 	end
-	if key == "Up" then
-		frame.aura.y = frame.aura.y + 1
-	elseif key == "Down" then
-		frame.aura.y = frame.aura.y - 1
-	elseif key == "Left" then
-		frame.aura.x = frame.aura.x - 1
-	elseif key == "Right" then
-		frame.aura.x = frame.aura.x + 1
+	local model = PowaAuras.Models[frame.aura.id]
+	if not model.distance or not model.yaw or not model.pitch then
+		return
 	end
+	local zoom = 0.15
+	if IsControlKeyDown() then
+		zoom = 0.01
+	elseif IsAltKeyDown() then
+		zoom = 0.5
+	end
+	local distance = model.distance - delta * zoom
+	if distance > 40 then
+		distance = 40
+	elseif distance < zoom then
+		distance = zoom
+	end
+	PowaAuras:SetOrientation(aura, model, distance, model.yaw, model.pitch)
 	local secondaryAura = PowaAuras.SecondaryAuras[frame.aura.id]
 	if secondaryAura then
-		secondaryAura.HideRequest = true
+		local secondaryModel = PowaAuras.SecondaryModels[frame.aura.id]
+		PowaAuras:SetOrientation(secondaryAura, secondaryModel, distance, model.yaw, model.pitch)
 	end
-	if PowaAuras.CurrentAuraId == frame.aura.id then
-		PowaAuras:InitPage(frame.aura)
-	end
-	PowaAuras:RedisplayAura(frame.aura.id)
 end
 
-local function enterAura(frame)
+local function OnEnter(frame)
 	frame.mouseIsOver = true
 	frame:EnableKeyboard(true)
-	frame:SetScript("OnKeyUp", keyUp)
-	frame:SetScript("OnDragStart", frame.StartMoving)
-	frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
-	frame:SetScript("OnMouseDown", startMove)
-	frame:SetScript("OnMouseUp", stopMove)
+	frame:EnableMouseWheel(true)
+	frame:SetScript("OnKeyUp", OnKeyUp)
+	frame:SetScript("OnDragStart", OnDragStart)
+	frame:SetScript("OnDragStop", OnDragStop)
+	frame:SetScript("OnMouseDown", OnMouseDown)
+	frame:SetScript("OnMouseUp", OnMouseUp)
+	frame:SetScript("OnMouseWheel", OnMouseWheel)
 end
 
-local function leaveAura(frame)
+local function OnLeave(frame)
 	frame.mouseIsOver = nil
-	stopFrameMoving(frame)
+	OnDragStop(frame)
 	frame:EnableKeyboard(false)
+	frame:EnableMouseWheel(false)
 	frame:SetScript("OnKeyUp", nil)
 	frame:SetScript("OnDragStart", nil)
 	frame:SetScript("OnDragStop", nil)
 	frame:SetScript("OnMouseDown", nil)
 	frame:SetScript("OnMouseUp", nil)
+	frame:SetScript("OnMouseWheel", nil)
 end
 
 function PowaAuras:SetForDragging(aura, frame)
@@ -1022,8 +1134,8 @@ function PowaAuras:SetForDragging(aura, frame)
 	frame:RegisterForDrag("LeftButton")
 	frame:SetBackdrop(self.Backdrop)
 	frame:SetBackdropColor(0, 0.6, 0, 1)
-	frame:SetScript("OnEnter", enterAura)
-	frame:SetScript("OnLeave", leaveAura)
+	frame:SetScript("OnEnter", OnEnter)
+	frame:SetScript("OnLeave", OnLeave)
 	frame.SetForDragging = true
 end
 
@@ -1034,7 +1146,6 @@ function PowaAuras:ResetDragging(aura, frame)
 	frame:SetMovable(false)
 	frame:EnableMouse(false)
 	frame:EnableKeyboard(false)
-	frame:RegisterForDrag()
 	frame:SetBackdrop(nil)
 	frame:SetScript("OnDragStart", nil)
 	frame:SetScript("OnDragStop", nil)
@@ -1047,12 +1158,225 @@ function PowaAuras:ResetDragging(aura, frame)
 	frame.SetForDragging = nil
 end
 
+function PowaAuras:ResetModel(aura)
+	local model = self.Models[aura.id]
+	model:ClearModel()
+	if aura.model then
+		if not aura.modelpath or aura.modelpath == "" then
+			if not aura.modelcategory or aura.modelcategory == 1 then
+				model:SetModel(self.ModelsCreature[aura.texture])
+			elseif aura.modelcategory == 2 then
+				model:SetModel(self.ModelsEnvironments[aura.texture])
+			elseif aura.modelcategory == 3 then
+				model:SetModel(self.ModelsInterface[aura.texture])
+			elseif aura.modelcategory == 4 then
+				model:SetModel(self.ModelsSpells[aura.texture])
+			end
+		else
+			if tonumber(aura.modelpath) then
+				model:SetDisplayInfo(aura.modelpath)
+			else
+				model:SetModel(aura.modelpath)
+			end
+		end
+	elseif aura.modelcustom then
+		if string.find(aura.modelcustompath, "%.m2") then
+			model:SetModel(aura.modelcustompath)
+		else
+			model:SetUnit(string.lower(aura.modelcustompath))
+		end
+	end
+	aura.rotate = 0
+	model:SetRotation(math.rad(aura.rotate))
+	if PowaBarConfigFrame:IsVisible() then
+		PowaBarAuraRotateSlider:SetValue(aura.rotate)
+		PowaBarAuraRotateSliderEditBox:SetText(format("%.0f", PowaBarAuraRotateSlider:GetValue()).."°")
+	end
+	aura.mz = 0
+	aura.mx = 0
+	aura.my = 0
+	model:SetPosition(aura.mz, aura.mx, aura.my)
+	model:RefreshCamera()
+	model:SetCustomCamera(1)
+	if PowaBarConfigFrame:IsVisible() then
+		PowaModelPositionZSlider:SetMinMaxValues(format("%.0f", (aura.mz * 100) - 10000), format("%.0f", (aura.mz * 100) + 10000))
+		PowaModelPositionZSliderLow:SetText(format("%.0f", (aura.mz * 100) - 100))
+		PowaModelPositionZSliderHigh:SetText(format("%.0f", (aura.mz * 100) + 100))
+		PowaModelPositionZSlider:SetValue(aura.mz * 100)
+		PowaModelPositionZSlider:SetMinMaxValues(format("%.0f", (aura.mz * 100) - 100), format("%.0f", (aura.mz * 100) + 100))
+		self.SliderEditBoxSetValues(PowaModelPositionZSlider, PowaModelPositionZSliderEditBox, 100, 100, 0)
+		PowaModelPositionXSlider:SetMinMaxValues(format("%.0f", (aura.mx * 100) - 10000), format("%.0f", (aura.mx * 100) + 10000))
+		PowaModelPositionXSliderLow:SetText(format("%.0f", (aura.mx * 100) - 50))
+		PowaModelPositionXSliderHigh:SetText(format("%.0f", (aura.mx * 100) + 50))
+		PowaModelPositionXSlider:SetValue(aura.mx * 100)
+		PowaModelPositionXSlider:SetMinMaxValues(format("%.0f", (aura.mx * 100) - 50), format("%.0f", (aura.mx * 100) + 50))
+		self.SliderEditBoxSetValues(PowaModelPositionXSlider, PowaModelPositionXSliderEditBox, 50, 50, 0)
+		PowaModelPositionYSlider:SetMinMaxValues(format("%.0f", (aura.my * 100) - 10000), format("%.0f", (aura.my * 100) + 10000))
+		PowaModelPositionYSliderLow:SetText(format("%.0f", (aura.my * 100) - 50))
+		PowaModelPositionYSliderHigh:SetText(format("%.0f", (aura.my * 100) + 50))
+		PowaModelPositionYSlider:SetValue(aura.my * 100)
+		PowaModelPositionYSlider:SetMinMaxValues(format("%.0f", (aura.my * 100) - 50), format("%.0f", (aura.my * 100) + 50))
+		self.SliderEditBoxSetValues(PowaModelPositionYSlider, PowaModelPositionYSliderEditBox, 50, 50, 0)
+	end
+	if model:HasCustomCamera() then
+		local x, y, z = model:GetCameraPosition()
+		local tx, ty, tz = model:GetCameraTarget()
+		model:SetCameraTarget(0, ty, tz)
+		aura.mcd = math.sqrt(x * x + y * y + z * z)
+		aura.mcy = - math.atan(y / x)
+		aura.mcp = - math.atan(z / x)
+		self:SetOrientation(aura, model, aura.mcd, aura.mcy, aura.mcp)
+	end
+	local secondaryAura = self.SecondaryAuras[aura.id]
+	if secondaryAura then
+		local secondaryModel = self.SecondaryModels[aura.id]
+		secondaryModel:ClearModel()
+		if aura.model then
+			if not aura.modelpath or aura.modelpath == "" then
+				if not aura.modelcategory or aura.modelcategory == 1 then
+					secondaryModel:SetModel(self.ModelsCreature[aura.texture])
+				elseif aura.modelcategory == 2 then
+					secondaryModel:SetModel(self.ModelsEnvironments[aura.texture])
+				elseif aura.modelcategory == 3 then
+					secondaryModel:SetModel(self.ModelsInterface[aura.texture])
+				elseif aura.modelcategory == 4 then
+					secondaryModel:SetModel(self.ModelsSpells[aura.texture])
+				end
+			else
+				if tonumber(aura.modelpath) then
+					secondaryModel:SetDisplayInfo(aura.modelpath)
+				else
+					secondaryModel:SetModel(aura.modelpath)
+				end
+			end
+		elseif aura.modelcustom then
+			if string.find(aura.modelcustompath, "%.m2") then
+				secondaryModel:SetModel(aura.modelcustompath)
+			else
+				secondaryModel:SetUnit(string.lower(aura.modelcustompath))
+			end
+		end
+		secondaryModel:SetRotation(math.rad(aura.rotate))
+		secondaryModel:SetPosition(aura.mz, aura.mx, aura.my)
+		secondaryModel:RefreshCamera()
+		secondaryModel:SetCustomCamera(1)
+		if secondaryModel:HasCustomCamera() then
+			local x, y, z = model:GetCameraPosition()
+			local tx, ty, tz = secondaryModel:GetCameraTarget()
+			secondaryModel:SetCameraTarget(0, ty, tz)
+			self:SetOrientation(secondaryAura, secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+		end
+	end
+end
+
+function PowaAuras:Reset(aura)
+	local model = self.Models[aura.id]
+	model:ClearModel()
+	if aura.model then
+		if tonumber(aura.modelpath) then
+			model:SetDisplayInfo(aura.modelpath)
+		else
+			if not aura.modelcategory or aura.modelcategory == 1 then
+				model:SetModel(self.ModelsCreature[aura.texture])
+			elseif aura.modelcategory == 2 then
+				model:SetModel(self.ModelsEnvironments[aura.texture])
+			elseif aura.modelcategory == 3 then
+				model:SetModel(self.ModelsInterface[aura.texture])
+			elseif aura.modelcategory == 4 then
+				model:SetModel(self.ModelsSpells[aura.texture])
+			end
+		end
+	end
+	model:SetCustomCamera(1)
+	if model:HasCustomCamera() then
+		local x, y, z = self:GetBaseCameraTarget(model)
+		if y and z then
+			model:SetCameraTarget(0, y, z)
+		end
+		self:SetOrientation(aura, model, aura.mcd, aura.mcy, aura.mcp)
+	end
+end
+
+function PowaAuras:ResetSecondary(aura)
+	local secondaryModel = self.SecondaryModels[aura.id]
+	secondaryModel:ClearModel()
+	if tonumber(aura.modelpath) then
+		secondaryModel:SetDisplayInfo(aura.modelpath)
+	else
+		if not aura.modelcategory or aura.modelcategory == 1 then
+			secondaryModel:SetModel(self.ModelsCreature[aura.texture])
+		elseif aura.modelcategory == 2 then
+			secondaryModel:SetModel(self.ModelsEnvironments[aura.texture])
+		elseif aura.modelcategory == 3 then
+			secondaryModel:SetModel(self.ModelsInterface[aura.texture])
+		elseif aura.modelcategory == 4 then
+			secondaryModel:SetModel(self.ModelsSpells[aura.texture])
+		end
+	end
+	secondaryModel:SetCustomCamera(1)
+	if secondaryModel:HasCustomCamera() then
+		local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+		if y and z then
+			secondaryModel:SetCameraTarget(0, y, z)
+		end
+		self:SetOrientation(aura, secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+	end
+end
+
+function PowaAuras:ResetUnit(aura)
+	local model = self.Models[aura.id]
+	model:ClearModel()
+	if aura.modelcustom then
+		if not string.find(aura.modelcustompath, "%.m2") then
+			model:SetUnit(string.lower(aura.modelcustompath))
+		end
+	end
+	model:SetCustomCamera(1)
+	if model:HasCustomCamera() then
+		local x, y, z = self:GetBaseCameraTarget(model)
+		if y and z then
+			model:SetCameraTarget(0, y, z)
+		end
+		self:SetOrientation(aura, model, aura.mcd, aura.mcy, aura.mcp)
+	end
+end
+
+function PowaAuras:ResetSecondaryUnit(aura)
+	local secondaryModel = self.SecondaryModels[aura.id]
+	secondaryModel:ClearModel()
+	if aura.modelcustom then
+		if not string.find(aura.modelcustompath, "%.m2") then
+			secondaryModel:SetUnit(string.lower(aura.modelcustompath))
+		end
+	end
+	secondaryModel:SetCustomCamera(1)
+	if secondaryModel:HasCustomCamera() then
+		local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+		if y and z then
+			secondaryModel:SetCameraTarget(0, y, z)
+		end
+		self:SetOrientation(aura, secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+	end
+end
+
+function PowaAuras:GetBaseCameraTarget(model)
+	local modelfile = model:GetModel()
+	if modelfile and modelfile ~= "" then
+		local tempmodel = CreateFrame("PlayerModel", nil, UIParent)
+		tempmodel:SetModel(modelfile)
+		tempmodel:SetCustomCamera(1)
+		local x, y, z = tempmodel:GetCameraTarget()
+		tempmodel:ClearModel()
+		return x, y, z
+	end
+end
+
 function PowaAuras:UpdatePreviewColor(aura)
 	if not aura then
 		return
 	end
 	if AuraTexture then
-		if AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02" then
+		if AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02" and AuraTexture:GetTexture() ~= "Interface\\Icons\\TEMP" then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
 				AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
 			else
@@ -1063,11 +1387,7 @@ function PowaAuras:UpdatePreviewColor(aura)
 				if shaderSupported then
 					AuraTexture:SetDesaturated(1)
 				else
-					if desaturation then
-						AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
-					else
-						AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
-					end
+					AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
 				end
 			else
 				AuraTexture:SetDesaturated(nil)
@@ -1075,6 +1395,184 @@ function PowaAuras:UpdatePreviewColor(aura)
 		else
 			AuraTexture:SetVertexColor(1, 1, 1)
 		end
+	end
+end
+
+function PowaAuras:UpdatePreviewRandomColor(aura)
+	if not aura then
+		return
+	end
+	if AuraTexture then
+		if AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02" and AuraTexture:GetTexture() ~= "Interface\\Icons\\TEMP" then
+			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
+				AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
+			else
+				AuraTexture:SetVertexColor(r1, r2, r3)
+			end
+			if aura.desaturation then
+				local shaderSupported = AuraTexture:SetDesaturated(1)
+				if shaderSupported then
+					AuraTexture:SetDesaturated(1)
+				else
+					AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
+				end
+			else
+				AuraTexture:SetDesaturated(nil)
+			end
+		else
+			AuraTexture:SetVertexColor(1, 1, 1)
+		end
+	end
+end
+
+function PowaAuras:UpdateColor(aura)
+	if not aura then
+		return
+	end
+	if not aura.model and not aura.modelcustom then
+		local texture = self.Textures[aura.id]
+		if not aura.textaura then
+			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
+				texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			else
+				texture:SetVertexColor(aura.r, aura.g, aura.b)
+			end
+			if aura.desaturation then
+				local shaderSupported = texture:SetDesaturated(1)
+				if shaderSupported then
+					texture:SetDesaturated(1)
+				else
+					texture:SetVertexColor(0.5, 0.5, 0.5)
+				end
+			else
+				texture:SetDesaturated(nil)
+			end
+		else
+			texture:SetVertexColor(aura.r, aura.g, aura.b)
+		end
+	else
+		local model = self.Models[aura.id]
+		model:SetLight(1, 0, 0, 1, 0, 1, aura.r, aura.g, aura.b, 1, aura.gr, aura.gg, aura.gb)
+	end
+	self:UpdatePreviewColor(aura)
+end
+
+function PowaAuras:UpdateRandomColor(aura)
+	if not aura then
+		return
+	end
+	r1 = math.random(20, 100) / 100
+	r2 = math.random(20, 100) / 100
+	r3 = math.random(20, 100) / 100
+	r4 = math.random(20, 100) / 100
+	r5 = math.random(20, 100) / 100
+	r6 = math.random(20, 100) / 100
+	if not aura.model and not aura.modelcustom then
+		local texture = self.Textures[aura.id]
+		if not aura.textaura then
+			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
+				texture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
+			else
+				texture:SetVertexColor(r1, r2, r3)
+			end
+			if aura.desaturation then
+				local shaderSupported = texture:SetDesaturated(1)
+				if shaderSupported then
+					texture:SetDesaturated(1)
+				else
+					texture:SetVertexColor(0.5, 0.5, 0.5)
+				end
+			else
+				texture:SetDesaturated(nil)
+			end
+		else
+			texture:SetVertexColor(r1, r2, r3)
+		end
+		self:UpdatePreviewRandomColor(aura)
+	else
+		local model = self.Models[aura.id]
+		if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
+			model:SetLight(1, 0, 0, 1, 0, 1, r1, r2, r3, 1, r4, r5, r6)
+		else
+			model:SetLight(1, 0, 0, 1, 0, 1, r1, r2, r3, 1, 1, 1, 1)
+		end
+	end
+end
+
+function PowaAuras:UpdateSecondaryColor(aura)
+	if not aura then
+		return
+	end
+	if not aura.model and not aura.modelcustom then
+		local secondaryTexture = self.SecondaryTextures[aura.id]
+		if not aura.textaura then
+			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
+				secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			else
+				secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b)
+			end
+			if aura.desaturation then
+				local shaderSupported = secondaryTexture:SetDesaturated(1)
+				if shaderSupported then
+					secondaryTexture:SetDesaturated(1)
+				else
+					secondaryTexture:SetVertexColor(0.5, 0.5, 0.5)
+				end
+			else
+				secondaryTexture:SetDesaturated(nil)
+			end
+		else
+			secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b)
+		end
+	else
+		local secondaryModel = self.SecondaryModels[aura.id]
+		secondaryModel:SetLight(1, 0, 0, 1, 0, 1, aura.r, aura.g, aura.b, 1, aura.gr, aura.gg, aura.gb)
+	end
+end
+
+function PowaAuras:UpdateSecondaryRandomColor(aura)
+	if not aura then
+		return
+	end
+	if not aura.model and not aura.modelcustom then
+		local secondaryTexture = self.SecondaryTextures[aura.id]
+		if not aura.textaura then
+			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
+				secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
+			else
+				secondaryTexture:SetVertexColor(r1, r2, r3)
+			end
+			if aura.desaturation then
+				local shaderSupported = secondaryTexture:SetDesaturated(1)
+				if shaderSupported then
+					secondaryTexture:SetDesaturated(1)
+				else
+					secondaryTexture:SetVertexColor(0.5, 0.5, 0.5)
+				end
+			else
+				secondaryTexture:SetDesaturated(nil)
+			end
+		else
+			secondaryTexture:SetVertexColor(r1, r2, r3)
+		end
+	else
+		local secondaryModel = self.SecondaryModels[aura.id]
+		if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
+			secondaryModel:SetLight(1, 0, 0, 1, 0, 1, r1, r2, r3, 1, r4, r5, r6)
+		else
+			secondaryModel:SetLight(1, 0, 0, 1, 0, 1, r1, r2, r3, 1, 1, 1, 1)
+		end
+	end
+end
+
+function PowaAuras:SetOrientation(aura, model, distance, yaw, pitch)
+	if model:HasCustomCamera() then
+		model.distance, model.yaw, model.pitch = distance, yaw, pitch
+		aura.mcd, aura.mcy, aura.mcp = distance, yaw, pitch
+		local x = distance * math.cos(yaw) * math.cos(pitch)
+		local y = distance * math.sin(- yaw) * math.cos(pitch)
+		local z = (distance * math.sin(- pitch))
+		model:SetCameraPosition(x, y, z)
 	end
 end
 
@@ -1093,17 +1591,25 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			end
 			PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
 		elseif aura.sound > 0 then
-			if PowaAuras.Sound[aura.sound] and string.len(PowaAuras.Sound[aura.sound]) > 0 then
-				if string.find(PowaAuras.Sound[aura.sound], "%.") then
-					PlaySoundFile(PowaGlobalMisc.PathToSounds .. PowaAuras.Sound[aura.sound], PowaMisc.SoundChannel)
+			if self.Sound[aura.sound] and string.len(self.Sound[aura.sound]) > 0 then
+				if string.find(self.Sound[aura.sound], "%.") then
+					PlaySoundFile(PowaGlobalMisc.PathToSounds .. self.Sound[aura.sound], PowaMisc.SoundChannel)
 				else
-					PlaySound(PowaAuras.Sound[aura.sound], PowaMisc.SoundChannel)
+					PlaySound(self.Sound[aura.sound], PowaMisc.SoundChannel)
 				end
 			end
 		end
 	end
 	local frame, model, texture = aura:CreateFrames()
 	frame.aura = aura
+	self:UpdateAuraVisuals(aura)
+	self:ShowSecondaryAuraForFirstTime(aura)
+end
+
+function PowaAuras:UpdateAuraVisuals(aura)
+	local frame = self.Frames[aura.id]
+	local model = self.Models[aura.id]
+	local texture = self.Textures[aura.id]
 	if self.ModTest and not PowaMisc.Locked then
 		self:SetForDragging(aura, frame)
 	else
@@ -1129,105 +1635,80 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		aura:UpdateText(texture)
 	elseif aura.model then
 		texture:Hide()
-		model:SetModel(PowaAurasModels[aura.texture])
+		if not aura.modelpath or aura.modelpath == "" then
+			if not aura.modelcategory or aura.modelcategory == 1 then
+				model:SetModel(self.ModelsCreature[aura.texture])
+			elseif aura.modelcategory == 2 then
+				model:SetModel(self.ModelsEnvironments[aura.texture])
+			elseif aura.modelcategory == 3 then
+				model:SetModel(self.ModelsInterface[aura.texture])
+			elseif aura.modelcategory == 4 then
+				model:SetModel(self.ModelsSpells[aura.texture])
+			end
+		else
+			if tonumber(aura.modelpath) then
+				model:SetDisplayInfo(aura.modelpath)
+			else
+				model:SetModel(aura.modelpath)
+			end
+		end
+		model:SetCustomCamera(1)
+		if model:HasCustomCamera() then
+			if aura.mcd and aura.mcy and aura.mcp then
+				self:SetOrientation(aura, model, aura.mcd, aura.mcy, aura.mcp)
+				local x, y, z = self:GetBaseCameraTarget(model)
+				if y and z then
+					model:SetCameraTarget(0, y, z)
+				end
+			else
+				local x, y, z = model:GetCameraPosition()
+				local tx, ty, tz = model:GetCameraTarget()
+				if ty and tz then
+					model:SetCameraTarget(0, ty, tz)
+				end
+				local distance = math.sqrt(x * x + y * y + z * z)
+				local yaw = - math.atan(y / x)
+				local pitch = - math.atan(z / x)
+				self:SetOrientation(aura, model, distance, yaw, pitch)
+			end
+		end
 	elseif aura.modelcustom then
 		texture:Hide()
-		if aura.modelcustom and aura.modelcustom ~= "" then
+		if aura.modelcustompath and aura.modelcustompath ~= "" then
 			if string.find(aura.modelcustompath, "%.m2") then
 				model:SetModel(aura.modelcustompath)
 			else
 				model:SetUnit(string.lower(aura.modelcustompath))
 			end
+			model:SetCustomCamera(1)
+			if model:HasCustomCamera() then
+				if aura.mcd and aura.mcy and aura.mcp then
+					self:SetOrientation(aura, model, aura.mcd, aura.mcy, aura.mcp)
+					local x, y, z = self:GetBaseCameraTarget(model)
+					if y and z then
+						model:SetCameraTarget(0, y, z)
+					end
+				else
+					local x, y, z = model:GetCameraPosition()
+					local tx, ty, tz = model:GetCameraTarget()
+					if ty and tz then
+						model:SetCameraTarget(0, ty, tz)
+					end
+					local distance = math.sqrt(x * x + y * y + z * z)
+					local yaw = - math.atan(y / x)
+					local pitch = - math.atan(z / x)
+					self:SetOrientation(aura, model, distance, yaw, pitch)
+				end
+			end
 		end
 	else
 		texture:Show()
-		texture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
+		texture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
-	local r1, r2, r3, r4, r5, r6
 	if aura.randomcolor then
-		if not aura.model and not aura.modelcustom then
-			r1 = math.random(20, 100) / 100
-			r2 = math.random(20, 100) / 100
-			r3 = math.random(20, 100) / 100
-			r4 = math.random(20, 100) / 100
-			r5 = math.random(20, 100) / 100
-			r6 = math.random(20, 100) / 100
-			if not aura.textaura then
-				if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-					texture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
-				else
-					texture:SetVertexColor(r1, r2, r3)
-				end
-				if aura.desaturation then
-					local shaderSupported = texture:SetDesaturated(1)
-					if shaderSupported then
-						texture:SetDesaturated(1)
-					else
-						if desaturation then
-							texture:SetVertexColor(0.5, 0.5, 0.5)
-						else
-							texture:SetVertexColor(1.0, 1.0, 1.0)
-						end
-					end
-				else
-					texture:SetDesaturated(nil)
-				end
-			else
-				texture:SetVertexColor(r1, r2, r3)
-			end
-			if AuraTexture then
-				if AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02" then
-					if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-						AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
-					else
-						AuraTexture:SetVertexColor(r1, r2, r3)
-					end
-					if aura.desaturation then
-						local shaderSupported = AuraTexture:SetDesaturated(1)
-						if shaderSupported then
-							AuraTexture:SetDesaturated(1)
-						else
-							if desaturation then
-								AuraTexture:SetVertexColor(0.5, 0.5, 0.5)
-							else
-								AuraTexture:SetVertexColor(1.0, 1.0, 1.0)
-							end
-						end
-					else
-						AuraTexture:SetDesaturated(nil)
-					end
-				else
-					AuraTexture:SetVertexColor(1, 1, 1)
-				end
-			end
-		end
+		self:UpdateRandomColor(aura)
 	else
-		if not aura.model and not aura.modelcustom then
-			if not aura.textaura then
-				if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-					texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
-				else
-					texture:SetVertexColor(aura.r, aura.g, aura.b)
-				end
-				if aura.desaturation then
-					local shaderSupported = texture:SetDesaturated(1)
-					if shaderSupported then
-						texture:SetDesaturated(1)
-					else
-						if desaturation then
-							texture:SetVertexColor(0.5, 0.5, 0.5)
-						else
-							texture:SetVertexColor(1.0, 1.0, 1.0)
-						end
-					end
-				else
-					texture:SetDesaturated(nil)
-				end
-			else
-				texture:SetVertexColor(aura.r, aura.g, aura.b)
-			end
-			self:UpdatePreviewColor(aura)
-		end
+		self:UpdateColor(aura)
 	end
 	if not aura.model and not aura.modelcustom then
 		if not aura.textaura then
@@ -1270,9 +1751,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			texture:SetTexCoord(ULx + x, ULy - x, LLx - x, LLy - x, URx + x, URy + x, LRx - x, LRy + x)
 		end
 		if aura.customtex then
-			if string.find(aura.customname, "%.") then
-				-- Do nothing
-			else
+			if not string.find(aura.customname, "%.") then
 				if aura.roundicons then
 					SetPortraitToTexture(texture, texture:GetTexture())
 				end
@@ -1303,7 +1782,11 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			texture:SetFont(STANDARD_TEXT_FONT, fontsize, "Outline, Monochrome")
 		end
 		frame.baseH = height * aura.size * (2 - aura.torsion)
-		frame.baseL = texture:GetStringWidth() + 5
+		if aura.aurastext ~= "" then
+			frame.baseL = texture:GetStringWidth() + 5
+		else
+			frame.baseL = width * aura.size * aura.torsion
+		end
 	elseif aura.customtex or aura.wowtex or aura.model or aura.modelcustom or aura.owntex or (not aura.customtex and not aura.wowtex and not aura.model and not aura.modelcustom and not aura.textaura and not aura.owntex) then
 		if (aura.rotate == 0 or aura.rotate == 90 or aura.rotate == 180 or aura.rotate == 270 or aura.rotate == 360) and not aura.model and not aura.modelcustom then
 			frame.baseH = height * aura.size * (2 - aura.torsion)
@@ -1313,7 +1796,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			frame.baseL = math.sqrt(2) * width * aura.size * aura.torsion
 		end
 	end
-	PowaAuras:InitialiseFrame(aura, frame)
+	self:InitialiseFrame(aura, frame)
 	if aura.duration > 0 then
 		aura.TimeToHide = GetTime() + aura.duration
 	else
@@ -1326,14 +1809,14 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		if aura.Debug then
 			self:Message("Show Timer")
 		end
-		PowaAuras:CreateTimerFrameIfMissing(aura.id, aura.Timer.UpdatePing)
+		self:CreateTimerFrameIfMissing(aura.id, aura.Timer.UpdatePing)
 		if aura.timerduration then
 			aura.Timer.CustomDuration = aura.timerduration
 		end
 		aura.Timer.Start = GetTime()
 	end
 	if aura.Stacks and aura.Stacks.enabled then
-		PowaAuras:CreateStacksFrameIfMissing(aura.id, aura.Stacks.UpdatePing)
+		self:CreateStacksFrameIfMissing(aura.id, aura.Stacks.UpdatePing)
 		aura.Stacks:ShowValue(aura, aura.Stacks.lastShownValue)
 	end
 	if aura.UseOldAnimations then
@@ -1371,11 +1854,20 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		self:Message("frame:Show()", aura.id, " ", frame)
 	end
 	frame:Show()
+	if aura.model then
+		self:Reset(aura)
+	elseif aura.modelcustom then
+		if aura.modelcustompath and aura.modelcustompath ~= "" then
+			if not string.find(aura.modelcustompath, "%.m2") then
+				self:ResetUnit(aura)
+			end
+		end
+	end
 	aura.Showing = true
 	aura.HideRequest = false
-	self:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 end
 
+-- This needs to be a standalone function! 
 function PowaAuras:InitialiseFrame(aura, frame)
 	frame:SetAlpha(math.min(aura.alpha, 0.99))
 	frame:SetPoint("Center", aura.x, aura.y)
@@ -1383,7 +1875,7 @@ function PowaAuras:InitialiseFrame(aura, frame)
 	frame:SetHeight(frame.baseH)
 end
 
-function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
+function PowaAuras:ShowSecondaryAuraForFirstTime(aura)
 	if aura.anim2 == 0 then
 		local secondaryAura = self.SecondaryAuras[aura.id]
 		if secondaryAura then
@@ -1397,6 +1889,15 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	local secondaryAura = self:AuraFactory(aura.bufftype, aura.id, aura)
 	self.SecondaryAuras[aura.id] = secondaryAura
 	secondaryAura.isSecondary = true
+	local secondaryFrame, secondaryModel, secondaryTexture = secondaryAura:CreateFrames()
+	self:UpdateSecondaryAuraVisuals(aura)
+end
+
+function PowaAuras:UpdateSecondaryAuraVisuals(aura)
+	local secondaryFrame = self.SecondaryFrames[aura.id]
+	local secondaryModel = self.SecondaryModels[aura.id]
+	local secondaryTexture = self.SecondaryTextures[aura.id]
+	local secondaryAura = self.SecondaryAuras[aura.id]
 	secondaryAura.alpha = aura.alpha * 0.5
 	secondaryAura.anim1 = aura.anim2
 	if aura.speed > 0.5 then
@@ -1407,11 +1908,14 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 	local auraId = aura.id
 	local frame = self.Frames[auraId]
 	local texture = self.Textures[auraId]
-	local secondaryFrame, secondaryModel, secondaryTexture = secondaryAura:CreateFrames()
 	secondaryModel:SetUnit("none")
 	if aura.owntex then
 		secondaryTexture:Show()
-		secondaryTexture:SetTexture(aura.icon)
+		if aura.icon == "" then
+			secondaryTexture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark")
+		else
+			secondaryTexture:SetTexture(aura.icon)
+		end
 	elseif aura.wowtex then
 		secondaryTexture:Show()
 		secondaryTexture:SetTexture(self.WowTextures[aura.texture])
@@ -1424,72 +1928,76 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 		aura:UpdateText(secondaryTexture)
 	elseif aura.model then
 		secondaryTexture:Hide()
-		secondaryModel:SetModel(PowaAurasModels[aura.texture])
+		if not aura.modelpath or aura.modelpath == "" then
+			if not aura.modelcategory or aura.modelcategory == 1 then
+				secondaryModel:SetModel(self.ModelsCreature[aura.texture])
+			elseif aura.modelcategory == 2 then
+				secondaryModel:SetModel(self.ModelsEnvironments[aura.texture])
+			elseif aura.modelcategory == 3 then
+				secondaryModel:SetModel(self.ModelsInterface[aura.texture])
+			elseif aura.modelcategory == 4 then
+				secondaryModel:SetModel(self.ModelsSpells[aura.texture])
+			end
+		else
+			if tonumber(aura.modelpath) then
+				secondaryModel:SetDisplayInfo(aura.modelpath)
+			else
+				secondaryModel:SetModel(aura.modelpath)
+			end
+		end
+		secondaryModel:SetCustomCamera(1)
+		if secondaryModel:HasCustomCamera() then
+			if aura.mcd and aura.mcy and aura.mcp then
+				self:SetOrientation(secondaryAura, secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+				local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+				if y and z then
+					secondaryModel:SetCameraTarget(0, y, z)
+				end
+			else
+				local x, y, z = secondaryModel:GetCameraPosition()
+				local tx, ty, tz = secondaryModel:GetCameraTarget()
+				secondaryModel:SetCameraTarget(0, ty, tz)
+				local distance = math.sqrt(x * x + y * y + z * z)
+				local yaw = - math.atan(y / x)
+				local pitch = - math.atan(z / x)
+				self:SetOrientation(secondaryAura, secondaryModel, distance, yaw, pitch)
+			end
+		end
 	elseif aura.modelcustom then
 		secondaryTexture:Hide()
-		if aura.modelcustom and aura.modelcustom ~= "" then
+		if aura.modelcustompath and aura.modelcustompath ~= "" then
 			if string.find(aura.modelcustompath, "%.m2") then
 				secondaryModel:SetModel(aura.modelcustompath)
 			else
 				secondaryModel:SetUnit(string.lower(aura.modelcustompath))
 			end
+			secondaryModel:SetCustomCamera(1)
+			if secondaryModel:HasCustomCamera() then
+				if aura.mcd and aura.mcy and aura.mcp then
+					self:SetOrientation(secondaryAura, secondaryModel, aura.mcd, aura.mcy, aura.mcp)
+					local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+					if y and z then
+						secondaryModel:SetCameraTarget(0, y, z)
+					end
+				else
+					local x, y, z = secondaryModel:GetCameraPosition()
+					local tx, ty, tz = secondaryModel:GetCameraTarget()
+					secondaryModel:SetCameraTarget(0, ty, tz)
+					local distance = math.sqrt(x * x + y * y + z * z)
+					local yaw = - math.atan(y / x)
+					local pitch = - math.atan(z / x)
+					self:SetOrientation(secondaryAura, secondaryModel, distance, yaw, pitch)
+				end
+			end
 		end
 	else
 		secondaryTexture:Show()
-		secondaryTexture:SetTexture("Interface\\Addons\\PowerAuras\\Auras\\Aura"..aura.texture.."")
+		secondaryTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
 	if aura.randomcolor then
-		if not aura.model and not aura.modelcustom then
-			if not aura.textaura then
-				if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-					secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
-				else
-					secondaryTexture:SetVertexColor(r1, r2, r3)
-				end
-				if aura.desaturation then
-					local shaderSupported = secondaryTexture:SetDesaturated(1)
-					if shaderSupported then
-						secondaryTexture:SetDesaturated(1)
-					else
-						if desaturation then
-							secondaryTexture:SetVertexColor(0.5, 0.5, 0.5)
-						else
-							secondaryTexture:SetVertexColor(1.0, 1.0, 1.0)
-						end
-					end
-				else
-					secondaryTexture:SetDesaturated(nil)
-				end
-			else
-				secondaryTexture:SetVertexColor(r1, r2, r3)
-			end
-		end
+		self:UpdateSecondaryRandomColor(aura)
 	else
-		if not aura.model and not aura.modelcustom then
-			if not aura.textaura then
-				if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-					secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
-				else
-					secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b)
-				end
-				if aura.desaturation then
-					local shaderSupported = secondaryTexture:SetDesaturated(1)
-					if shaderSupported then
-						secondaryTexture:SetDesaturated(1)
-					else
-						if desaturation then
-							secondaryTexture:SetVertexColor(0.5, 0.5, 0.5)
-						else
-							secondaryTexture:SetVertexColor(1.0, 1.0, 1.0)
-						end
-					end
-				else
-					secondaryTexture:SetDesaturated(nil)
-				end
-			else
-				secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b)
-			end
-		end
+		self:UpdateSecondaryColor(aura)
 	end
 	if not aura.textaura then
 		secondaryTexture:SetBlendMode(aura.secondaryblendmode)
@@ -1525,17 +2033,15 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 			secondaryTexture:SetTexCoord(ULx + x, ULy - x, LLx - x, LLy - x, URx + x, URy + x, LRx - x, LRy + x)
 		end
 		if aura.customtex then
-			if string.find(aura.customname, "%.") then
-				-- Do nothing
-			else
+			if not string.find(aura.customname, "%.") then
 				if aura.roundicons then
-					SetPortraitToTexture(texture, texture:GetTexture())
+					SetPortraitToTexture(secondaryTexture, secondaryTexture:GetTexture())
 				end
 			end
 		end
 		if aura.owntex then
 			if aura.roundicons then
-				SetPortraitToTexture(texture, texture:GetTexture())
+				SetPortraitToTexture(secondaryTexture, secondaryTexture:GetTexture())
 			end
 		end
 	end
@@ -1573,7 +2079,7 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 		if not aura.begin or aura.begin == 0 then
 			secondaryAura.animation = self:AnimationMainFactory(aura.anim2, secondaryAura, secondaryFrame)
 		else
-			secondaryFrame:SetAlpha(0.0)
+			secondaryFrame:SetAlpha(0)
 		end
 		secondaryFrame:Show()
 	elseif not aura.textaura then
@@ -1584,6 +2090,15 @@ function PowaAuras:ShowSecondaryAuraForFirstTime(aura, r1, r2, r3, r4, r5, r6)
 			secondaryFrame:Show()
 			if secondaryAura.MainAnimation then
 				secondaryAura.MainAnimation:Play()
+			end
+		end
+	end
+	if aura.model then
+		self:ResetSecondary(aura)
+	elseif aura.modelcustom then
+		if aura.modelcustompath and aura.modelcustompath ~= "" then
+			if not string.find(aura.modelcustompath, "%.m2") then
+				self:ResetSecondaryUnit(aura)
 			end
 		end
 	end
@@ -1600,6 +2115,67 @@ function PowaAuras:DisplayAura(auraId)
 		return
 	end
 	self:ShowAuraForFirstTime(aura)
+end
+
+function PowaAuras:RedisplayAura(auraId)
+	if not (self.VariablesLoaded and self.SetupDone) then
+		return
+	end
+	local aura = self.Auras[auraId]
+	if not aura then
+		return
+	end
+	local showing = aura.Showing
+	aura:Hide()
+	aura.BeginAnimation = nil
+	aura.MainAnimation = nil
+	aura.EndAnimation = nil
+	aura:CreateFrames()
+	self.SecondaryAuras[aura.id] = nil
+	if showing then
+		self:DisplayAura(aura.id)
+	end
+end
+
+function PowaAuras:RedisplayAuraVisuals(auraId)
+	if not (self.VariablesLoaded and self.SetupDone) then
+		return
+	end
+	local aura = self.Auras[auraId]
+	if not aura or aura.off then
+		return
+	end
+	self:UpdateAuraVisuals(aura)
+	local secondaryAura = self.SecondaryAuras[auraId]
+	if secondaryAura then
+		self:UpdateSecondaryAuraVisuals(aura)
+	end
+end
+
+function PowaAuras:DisplaySecondaryAura(auraId)
+	if not (self.VariablesLoaded and self.SetupDone) then
+		return
+	end
+	local aura = self.Auras[auraId]
+	if not aura or aura.off then
+		return
+	end
+	self:ShowSecondaryAuraForFirstTime(aura)
+end
+
+function PowaAuras:RedisplaySecondaryAura(auraId)
+	if not (self.VariablesLoaded and self.SetupDone) then
+		return
+	end
+	local aura = self.Auras[auraId]
+	if not aura then
+		return
+	end
+	local showing = aura.Showing
+	self.SecondaryAuras[aura.id] = nil
+	if showing then
+		self:DisplaySecondaryAura(aura.id)
+	end
 end
 
 function PowaAuras:UpdateAura(aura, elapsed)
@@ -1637,11 +2213,11 @@ function PowaAuras:UpdateAura(aura, elapsed)
 					end
 					PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
 				elseif aura.soundend > 0 then
-					if PowaAuras.Sound[aura.soundend] and string.len(PowaAuras.Sound[aura.soundend]) > 0 then
-						if string.find(PowaAuras.Sound[aura.soundend], "%.") then
-							PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAuras.Sound[aura.soundend], PowaMisc.SoundChannel)
+					if self.Sound[aura.soundend] and string.len(self.Sound[aura.soundend]) > 0 then
+						if string.find(self.Sound[aura.soundend], "%.") then
+							PlaySoundFile(PowaGlobalMisc.PathToSounds..self.Sound[aura.soundend], PowaMisc.SoundChannel)
 						else
-							PlaySound(PowaAuras.Sound[aura.soundend], PowaMisc.SoundChannel)
+							PlaySound(self.Sound[aura.soundend], PowaMisc.SoundChannel)
 						end
 					end
 				end
@@ -1713,7 +2289,7 @@ function PowaAuras:UpdateAuraAnimation(aura, elapsed, frame)
 		return
 	end
 	if aura.isSecondary then
-		primaryAnimation = PowaAuras.Auras[aura.id].animation
+		local primaryAnimation = self.Auras[aura.id].animation
 		if primaryAnimation.IsBegin or primaryAnimation.IsEnd then
 			return
 		end
@@ -1736,4 +2312,21 @@ function PowaAuras:UpdateAuraAnimation(aura, elapsed, frame)
 	if aura.animation.IsEnd then
 		aura:Hide()
 	end
+end
+
+function PowaAuras_GlobalTrigger(auraType)
+	if PowaAuras.AurasByType[auraType] then 
+		for index, auraid in ipairs(PowaAuras.AurasByType[auraType]) do
+			if PowaAuras.Auras[auraid]:ShouldShow() then
+				local shouldShow = PowaAuras:CheckMultiple(PowaAuras.Auras[auraid], "", nil)
+				if shouldShow then
+					PowaAuras:DisplayAura(auraid)
+					if PowaAuras.Auras[auraid].timerduration == 0 then
+						PowaAuras.Auras[auraid].HideRequest = true
+					end
+				end
+			end
+		end
+	end
+	return true
 end

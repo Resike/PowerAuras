@@ -1,4 +1,4 @@
-﻿<Ui>
+<Ui xmlns = "http://www.blizzard.com/wow/ui/" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 	<!-- Blizzard Slider Template -->
 	<Slider name = "PowaBarBlizzSliderTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
 		<Size>
@@ -133,6 +133,28 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
+			<!-- Disable Frame Scaling -->
+			<CheckButton name = "PowaDisableFrameScalingButton" inherits = "PowaCheckTemplate">
+				<Size>
+					<AbsDimension x = "25" y = "25"/>
+				</Size>
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaBlockIncomingAurasButton" relativePoint = "BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x = "0" y = "5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						self.tooltipText = PowaAurasOptions.Text.aideDisableFrameScaling
+						PowaDisableFrameScalingButtonText:SetText(PowaAurasOptions.Text.nomDisableScaling)
+					</OnLoad>
+					<OnClick>
+						PowaAurasOptions:MiscChecked(self, "ScaleLocked")
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 			<!-- Activate Debug Messages CheckButton -->
 			<CheckButton name = "PowaDebugButton" inherits = "PowaCheckTemplate">
 				<Size>
@@ -205,7 +227,7 @@
 					<AbsDimension x = "580" y = "16"/>
 				</Size>
 				<Anchors>
-					<Anchor point = "TOPLEFT" relativeTo = "PowaBlockIncomingAurasButton" relativePoint = "BOTTOMLEFT">
+					<Anchor point = "TOPLEFT" relativeTo = "PowaDisableFrameScalingButton" relativePoint = "BOTTOMLEFT">
 						<Offset>
 							<AbsDimension x = "3" y = "-22"/>
 						</Offset>
@@ -222,7 +244,7 @@
 						PowaOptionsUpdateSlider2High:SetText("100%")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAurasOptions:PowaOptionsUpdateSliderChanged2(self, value)
+						PowaAurasOptions:PowaOptionsUpdateSliderChanged(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
 						PowaAurasOptions.SliderSetValues(self, delta)
@@ -252,7 +274,7 @@
 						PowaOptionsTimerUpdateSlider2High:SetText("100%")
 					</OnLoad>
 					<OnValueChanged>
-						PowaAurasOptions:PowaOptionsTimerUpdateSliderChanged2(self, value)
+						PowaAurasOptions:PowaOptionsTimerUpdateSliderChanged(self, value)
 					</OnValueChanged>
 					<OnMouseWheel>
 						PowaAurasOptions.SliderSetValues(self, delta)
@@ -356,9 +378,9 @@
 				</Scripts>
 			</Button>
 			<!-- Default Timer Texture DropDown -->
-			<Frame name = "PowaDropDownDefaultTimerTexture" inherits = "UIDropDownMenuTemplate">
+			<Frame name = "PowaDropDownDefaultTimerTexture" inherits = "PowaDropDownMenuTemplate">
 				<Size>
-					<AbsDimension x = "200"/>
+					<AbsDimension x = "200" y = "32"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPRIGHT" relativeTo = "PowaShowAuraBrowserButton" relativePoint = "BOTTOMRIGHT">
@@ -382,17 +404,15 @@
 				</Layers>
 				<Scripts>
 					<OnLoad>
+						UIDropDownMenu_SetWidth(self, 200)
 						PowaDropDownDefaultTimerTextureLabel:SetText(PowaAurasOptions.Text.nomDefaultTimerTexture)
 					</OnLoad>
-					<OnShow>
-						UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownDefaultTimerMenu_Initialize)
-					</OnShow>
 				</Scripts>
 			</Frame>
 			<!-- Default Stacks Texture DropDown -->
-			<Frame name = "PowaDropDownDefaultStacksTexture" inherits = "UIDropDownMenuTemplate">
+			<Frame name = "PowaDropDownDefaultStacksTexture" inherits = "PowaDropDownMenuTemplate">
 				<Size>
-					<AbsDimension x = "260"/>
+					<AbsDimension x = "200" y = "32"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaResetPositionButton" relativePoint = "BOTTOMLEFT">
@@ -416,11 +436,9 @@
 				</Layers>
 				<Scripts>
 					<OnLoad>
+						UIDropDownMenu_SetWidth(self, 200)
 						PowaDropDownDefaultStacksTextureLabel:SetText(PowaAurasOptions.Text.nomDefaultStacksTexture)
 					</OnLoad>
-					<OnShow>
-						UIDropDownMenu_Initialize(self, PowaAurasOptions.DropDownDefaultStacksMenu_Initialize)
-					</OnShow>
 				</Scripts>
 			</Frame>
 			<!-- Custom Sound Path Editbox -->
@@ -470,7 +488,7 @@
 				</Scripts>
 			</EditBox>
 			<!-- Custom Aura Path Editbox -->
-			<EditBox name = "PowaCustomAuraPath" autoFocus = "false" justifyH = "LEFT" inherits = "InputBoxTemplate">
+			<EditBox name = "PowaCustomAuraPath" autoFocus = "false" inherits = "InputBoxTemplate">
 				<Size>
 					<AbsDimension x = "580" y = "16"/>
 				</Size>
@@ -518,7 +536,7 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				PowaOptionsCpuFrame2_OnLoad(self)
+				PowaAurasOptions:Blizzard_OnLoad(self)
 			</OnLoad>
 		</Scripts>
 	</Frame>
