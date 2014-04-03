@@ -1,6 +1,6 @@
 local PowaAurasOptions = PowaAurasOptions
 
--- 5.4.2 (17688)
+-- 5.4.7 (18019)
 
 PowaAurasOptions.ModelsCreature =
 {
@@ -1143,6 +1143,8 @@ PowaAurasOptions.ModelsCreature =
 "creature\\raven\\raven.m2",
 "creature\\raven\\raven_low01.m2",
 "creature\\ravengod\\ravengod.m2",
+"creature\\ravenlord\\ravenlordmount.m2",
+"creature\\ravenlordpet\\ravenlordpet.m2",
 "creature\\reddrakemount\\reddrakemount.m2",
 "creature\\redpanda\\redpanda.m2",
 "creature\\reindeer\\reindeer.m2",

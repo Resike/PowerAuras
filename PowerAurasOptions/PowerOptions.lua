@@ -1,6 +1,44 @@
 local PowaAurasOptions = PowaAurasOptions
 
-local _G, string, strtrim, tostring, tonumber, date, type, format, table, tinsert, time, math, pi, pairs, pcall, ipairs, strsplit, sort = _G, string, strtrim, tostring, tonumber, date, type, format, table, tinsert, time, math, math.pi, pairs, pcall, ipairs, strsplit, sort
+local _G = _G
+local date = date
+local format = format
+local ipairs = ipairs
+local math = math
+local pairs = pairs
+local pcall = pcall
+local pi = math.pi
+local sort = sort
+local string = string
+local strsplit = strsplit
+local strtrim = strtrim
+local table = table
+local tinsert = tinsert
+local tonumber = tonumber
+local tostring = tostring
+local type = type
+
+local CloseDropDownMenus = CloseDropDownMenus
+local CreateFrame = CreateFrame
+local GetAddOnMetadata = GetAddOnMetadata
+local GetCursorPosition = GetCursorPosition
+local GetInventoryItemTexture = GetInventoryItemTexture
+local GetInventorySlotInfo = GetInventorySlotInfo
+local GetRealmName = GetRealmName
+local GetTime = GetTime
+local InCombatLockdown = InCombatLockdown
+local IsAltKeyDown = IsAltKeyDown
+local IsControlKeyDown = IsControlKeyDown
+local IsShiftKeyDown = IsShiftKeyDown
+local PlaySound = PlaySound
+local PlaySoundFile = PlaySoundFile
+local UnitAura = UnitAura
+local UnitExists = UnitExists
+local UnitName = UnitName
+
+local GRAY_FONT_COLOR = GRAY_FONT_COLOR
+local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
+local NORMAL_FONT_COLOR = NORMAL_FONT_COLOR
 
 -- Main Options
 function PowaAurasOptions:OptionsOnLoad()
@@ -967,10 +1005,10 @@ function PowaAurasOptions:SetDialogTimeout(dialog, timeout)
 		return
 	end
 	dialog.statusTimeoutLength = timeout
-	dialog.statusTimeout = time() + timeout
+	dialog.statusTimeout = GetTime() + timeout
 	if dialog.statusTimeoutLength > 0 then
 		dialog:SetScript("OnUpdate", function(dialog)
-			if dialog.statusTimeout <= time() then
+			if dialog.statusTimeout <= GetTime() then
 				dialog.errorReason = 3
 				dialog:SetStatus(3)
 			elseif dialog.UpdateTimerDisplay then
@@ -1023,7 +1061,7 @@ function PowaAurasOptions:ExportDialogInit(self)
 			self.CancelButton:Disable()
 			if self.sendStatus == 2 then
 				PowaAurasOptions:SetDialogTimeout(self, 30)
-				self.Title:SetText(format(PowaAurasOptions.Text.ExportDialogSendTitle2, self.sendDisplay, (self.statusTimeout - time())))
+				self.Title:SetText(format(PowaAurasOptions.Text.ExportDialogSendTitle2, self.sendDisplay, (self.statusTimeout - GetTime())))
 			elseif self.sendStatus == 3 then
 				local errstring = PowaAurasOptions.Text.ExportDialogSendTitle3c -- Defaults to timeout message
 				if self.errorReason == 1 then
@@ -1056,7 +1094,7 @@ function PowaAurasOptions:ExportDialogInit(self)
 	end
 	self.UpdateTimerDisplay = function(self)
 		if self.sendStatus == 2 then
-			self.Title:SetText(format(PowaAurasOptions.Text.ExportDialogSendTitle2, self.sendDisplay, (self.statusTimeout - time())))
+			self.Title:SetText(format(PowaAurasOptions.Text.ExportDialogSendTitle2, self.sendDisplay, (self.statusTimeout - GetTime())))
 		end
 	end
 	self.OnShow = function(self)
@@ -1067,6 +1105,10 @@ function PowaAurasOptions:ExportDialogInit(self)
 	end
 	self.OnAccept = function(self)
 		self.sendTo = self.EditBox:GetText()
+		if not string.find(self.sendTo, "-") then
+			local realm = string.gsub(GetRealmName(), "%s+", "")
+			self.sendTo = self.sendTo.."-"..realm
+		end
 		self.sendDisplay = self.sendTo
 		if self.sendStatus == 1 then
 			self:SetStatus(2)

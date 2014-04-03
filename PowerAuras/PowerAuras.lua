@@ -5,7 +5,7 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.25.2   \//      \// \//    \\/     \\/      \//  \//       
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.25.3   \//      \// \//    \\/     \\/      \//  \//       
 
 	Power Auras Classic
 	Author: Resike
@@ -16,7 +16,43 @@
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-local _G, string, format, tostring, tonumber, math, pi, halfpi, table, pairs, select, ipairs, type, wipe = _G, string, format, tostring, tonumber, math, math.pi, math.pi / 2, table, pairs, select, ipairs, type, wipe
+local _G = _G
+local format = format
+local ipairs = ipairs
+local math = math
+local pairs = pairs
+local pi = math.pi
+local pihalf = pi / 2
+local select = select
+local string = string
+local table = table
+local tonumber = tonumber
+local tostring = tostring
+local type = type
+local wipe = wipe
+
+local C_PetBattles = C_PetBattles
+local CreateFrame = CreateFrame
+local GetActionInfo = GetActionInfo
+local GetActionTexture = GetActionTexture
+local GetCursorPosition = GetCursorPosition
+local GetMacroInfo = GetMacroInfo
+local GetShapeshiftFormID = GetShapeshiftFormID
+local GetSpellCooldown = GetSpellCooldown
+local GetSpellInfo = GetSpellInfo
+local GetTime = GetTime
+local HasAction = HasAction
+local IsAltKeyDown = IsAltKeyDown
+local IsControlKeyDown = IsControlKeyDown
+local IsMounted = IsMounted
+local IsMouseButtonDown = IsMouseButtonDown
+local PlaySound = PlaySound
+local PlaySoundFile = PlaySoundFile
+local SetPortraitToTexture = SetPortraitToTexture
+local UnitInVehicle = UnitInVehicle
+local UnitOnTaxi = UnitOnTaxi
+
+local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
 
 local r1, r2, r3, r4, r5, r6
 
@@ -437,7 +473,7 @@ function PowaAuras:CreateEffectLists()
 			aura:AddEffectAndEvents()
 		end
 	end
-	if PowaMisc.debug then
+	if PowaMisc.Debug then
 		for k in pairs(self.AurasByType) do
 			self:DisplayText(k..": "..#self.AurasByType[k])
 		end
@@ -950,7 +986,7 @@ local function RightButtonOnUpdate(frame, elapsed)
 		end
 		local pitch = model.pitch + (y - frame.y) * pi / 256
 		local limit = false
-		if pitch > halfpi - 0.05 or pitch < - halfpi + 0.05 then
+		if pitch > pihalf - 0.05 or pitch < - pihalf + 0.05 then
 			limit = true
 		end
 		if limit then

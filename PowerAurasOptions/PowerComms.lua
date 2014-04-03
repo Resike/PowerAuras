@@ -3,11 +3,19 @@
 	Adds addon communication functionality into Power Auras. Utilizes the SendAddonMessage API and its own locking system to minimize load and prevent clashes when dealing with split messages.
 --]]
 
-local _, ns = ...
-local PowaAuras = ns.PowaAuras
 local PowaAurasOptions = PowaAurasOptions
 
-local string, len, find, sub, tonumber, math, pairs, table, insert, remove, ceil, wipe = string, len, find, sub, tonumber, math, pairs, table, insert, remove, ceil, wipe
+local string = string
+local tonumber = tonumber
+local math = math
+local pairs = pairs
+local table = table
+local wipe = wipe
+
+local GetTime = GetTime
+local IsAddonMessagePrefixRegistered = IsAddonMessagePrefixRegistered
+local RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
+local SendAddonMessage = SendAddonMessage
 
 PowaComms = {
 	Handlers = { },
@@ -31,14 +39,14 @@ function PowaComms:Register()
 	end
 	RegisterAddonMessagePrefix("POWA")
 	if not IsAddonMessagePrefixRegistered("POWA") then
-		if PowaMisc.debug then
-			PowaAuras:ShowText("PowaComms:Register() |cFFFF0000failed!|r")
+		if PowaMisc.Debug then
+			PowaAurasOptions:ShowText("PowaComms:Register() |cFFFF0000failed!|r")
 		end
 		self.Registered = false
 		return false
 	else
-		if PowaMisc.debug then
-			PowaAuras:ShowText("PowaComms:Register() |cFF00FF00succeeded!|r")
+		if PowaMisc.Debug then
+			PowaAurasOptions:ShowText("PowaComms:Register() |cFF00FF00succeeded!|r")
 		end
 		self.Registered = true
 		return true
@@ -72,17 +80,17 @@ function PowaComms:SendAddonMessage(instruction, data, to, segment, total)
 		return false
 	end
 	local length = string.len(data)
-	if PowaMisc.debug then
-		PowaAuras:ShowText("Comms: Sending instruction "..instruction.." (data length "..length..")")
+	if PowaMisc.Debug then
+		PowaAurasOptions:ShowText("Comms: Sending instruction "..instruction.." (data length "..length..")")
 	end
 	if length <= 200 then
 		data = "<"..instruction..";"..(segment or 1)..";"..(total or 1).."/>"..data
 		SendAddonMessage("POWA", data, "WHISPER", to)
-	elseif not self.SenderLock or time() > self.SenderTimeout then
+	elseif not self.SenderLock or GetTime() > self.SenderTimeout then
 		self.SenderInstruction = instruction
 		self.SenderStore = data
 		self.SenderLock = to
-		self.SenderTimeout = time() + 10
+		self.SenderTimeout = GetTime() + 10
 		self:SendAddonMessage("REQUEST_LOCK", instruction, to)
 	end
 	return true
@@ -96,8 +104,8 @@ function PowaComms:AddHandler(instruction, func)
 end
 
 function PowaComms:FireHandler(instruction, data, from, segpos, segtotal)
-	if PowaMisc.debug then
-		PowaAuras:ShowText("Comms: Firing handler for instruction: "..instruction)
+	if PowaMisc.Debug then
+		PowaAurasOptions:ShowText("Comms: Firing handler for instruction: "..instruction)
 	end
 	if self.Handlers[instruction] then
 		for index, func in pairs(self.Handlers[instruction]) do
@@ -133,13 +141,13 @@ PowaComms:AddHandler("MULTIPART", function(self, data, from, segpos, segtotal)
 end)
 
 PowaComms:AddHandler("REQUEST_LOCK", function(self, data, from)
-	if not self.ReceiverLock or time() > self.ReceiverTimeout then
+	if not self.ReceiverLock or GetTime() > self.ReceiverTimeout then
 		if self.ReceiverLock and self.ReceiverLock ~= from then
 			self:SendAddonMessage("TIMEOUT_LOCK", "", self.ReceiverLock)
 		end
 		self:ResetReceiverLock()
 		self.ReceiverLock = from
-		self.ReceiverTimeout = time() + 10
+		self.ReceiverTimeout = GetTime() + 10
 		self.ReceiverInstruction = data
 		self:SendAddonMessage("ACCEPT_LOCK", "", from)
 	else
@@ -188,9 +196,9 @@ PowaComms:AddHandler("TIMEOUT_LOCK", function(self, _, from)
 end)
 
 PowaComms:AddHandler("VERSION_REQUEST", function(self, _, from)
-	self:SendAddonMessage("VERSION_RESPONSE", PowaAuras.Version, from)
+	self:SendAddonMessage("VERSION_RESPONSE", PowaAurasOptions.Version, from)
 end)
 
 PowaComms:AddHandler("VERSION_RESPONSE", function(self, data, from)
-	PowaAuras:ShowText(from, " is using version ", data, ".")
+	PowaAurasOptions:ShowText(from, " is using version ", data, ".")
 end)

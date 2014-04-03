@@ -1,7 +1,22 @@
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-local pairs, table = pairs, table
+local pairs = pairs
+local table = table
+
+local CheckInteractDistance = CheckInteractDistance
+local ClearInspectPlayer = ClearInspectPlayer
+local GetInspectSpecialization = GetInspectSpecialization
+local GetSpecializationInfoByID = GetSpecializationInfoByID
+local GetTime = GetTime
+local NotifyInspect = NotifyInspect
+local UnitBuff = UnitBuff
+local UnitClass = UnitClass
+local UnitIsConnected = UnitIsConnected
+local UnitIsUnit = UnitIsUnit
+local UnitName = UnitName
+local UnitPowerType = UnitPowerType
+local UnitStat = UnitStat
 
 -- Reset if spec changed or slash command
 function PowaAuras:ResetTalentScan(unit)

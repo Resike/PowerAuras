@@ -1,4 +1,4 @@
-*Issues:**
+**Issues:**
 * Leftover slider/dropdown/model optimisations.
 * Timed auras redisplay fix at phasing events.
 * Duel with party members, enemy target bug.
@@ -6,8 +6,15 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.25.3**
+* Fixed an issue which constantly caused timeouts for exporting auras with other players.
+* Some other fixes with exporting/importing auras.
+* Smaller performance upgradements.
+* Fixed some lua errors with debug mode enabled.
+* Some other minor fixes.
+
 **4.25.2**
-* Fixed an issue which broke "Spell Cooldowns".
+* Fixed an issue which broke "Spell Cooldown" type auras.
 
 **4.25.1**
 * Added support for stackable spells for "Action Usable" and "Spell Cooldown" triggers.
@@ -124,7 +131,7 @@
 * Some other minor fixes.
 
 **4.24.1**
-* Reduced the addon's dinamic memory usage by aprox 95% mostly for "Buff" aura types. Yes, i did it again.
+* Reduced the addon's dynamic memory usage by aprox 95% mostly for "Buff" aura types. Yes, i did it again.
 * The core code of the addon is now working with local environment namespaces. (Speed things a bit up.)
 * Dump function is back again. (Advanced users/developers only.)
 * Fixed some animation trasition glitches, like from fade out to static or flashing.

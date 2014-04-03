@@ -1,7 +1,9 @@
 local _, ns = ...
 local PowaAuras = ns.PowaAuras
 
-local math, sin, cos = math, sin, cos
+local cos = cos
+local math = math
+local sin = sin
 
 function PowaAuras:CalculateDurations(speed)
 	-- Speed ranges from 0.05 to 2

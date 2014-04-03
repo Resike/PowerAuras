@@ -1,6 +1,18 @@
 local _, ns = ...
 
-local string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select, print = string, tostring, tonumber, table, math, pairs, type, getmetatable, setmetatable, select, print
+local getmetatable = getmetatable
+local math = math
+local pairs = pairs
+local print = print
+local select = select
+local setmetatable = setmetatable
+local string = string
+local table = table
+local tonumber = tonumber
+local tostring = tostring
+local type = type
+
+local UIERRORS_HOLD_TIME = UIERRORS_HOLD_TIME
 
 local PowaAuras =
 {
@@ -1151,7 +1163,7 @@ ns.PowaAuras = PowaAuras
 PowaAurasOptions = PowaAuras
 
 function PowaAuras:Debug(...)
-	if PowaMisc.debug then
+	if PowaMisc.Debug then
 		self:Message(...)
 	end
 end
