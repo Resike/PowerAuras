@@ -6,6 +6,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.25.4**
+* Auto disabling stacks for non-stacable spells for Action Usable and Spell Cooldown type auras.
+* Some other minor fixes.
+
 **4.25.3**
 * Fixed an issue which constantly caused timeouts for exporting auras with other players.
 * Some other fixes with exporting/importing auras.

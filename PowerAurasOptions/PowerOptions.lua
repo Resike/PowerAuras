@@ -4230,6 +4230,19 @@ function PowaAurasOptions:ChangeAuraType(id, newType)
 			PowaEquipmentSlotsFrame:Hide()
 		end
 	end
+	if aura.bufftype == self.BuffTypes.ActionReady or aura.bufftype == self.BuffTypes.SpellCooldown then
+		local spellLink = GetSpellLink(aura.buffname)
+		local spellId
+		if spellLink then
+			spellId = string.match(spellLink, "spell:(%d+)")
+		end
+		local _, maxCharges = GetSpellCharges(spellId)
+		if aura.Stacks.enabled and not maxCharges then
+			aura.Stacks.enabled = false
+			aura.Stacks:Dispose()
+			PowaShowStacksButton:SetChecked(false)
+		end
+	end
 	if aura.CheckBoxes.PowaOwntexButton ~= 1 then
 		aura.owntex = false
 	end
@@ -4273,6 +4286,19 @@ function PowaAurasOptions:RebuildAura(id)
 	else
 		if PowaEquipmentSlotsFrame:IsVisible() then
 			PowaEquipmentSlotsFrame:Hide()
+		end
+	end
+	if aura.bufftype == self.BuffTypes.ActionReady or aura.bufftype == self.BuffTypes.SpellCooldown then
+		local spellLink = GetSpellLink(aura.buffname)
+		local spellId
+		if spellLink then
+			spellId = string.match(spellLink, "spell:(%d+)")
+		end
+		local _, maxCharges = GetSpellCharges(spellId)
+		if aura.Stacks.enabled and not maxCharges then
+			aura.Stacks.enabled = false
+			aura.Stacks:Dispose()
+			PowaShowStacksButton:SetChecked(false)
 		end
 	end
 	if aura.CheckBoxes.PowaOwntexButton ~= 1 then
@@ -4613,12 +4639,13 @@ function PowaAurasOptions:ShowTimerChecked(button)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
+	local aura = self.Auras[self.CurrentAuraId]
 	if button:GetChecked() then
-		self.Auras[self.CurrentAuraId].Timer.enabled = true
+		aura.Timer.enabled = true
 		self:CreateTimerFrameIfMissing(self.CurrentAuraId)
 	else
-		self.Auras[self.CurrentAuraId].Timer.enabled = false
-		self.Auras[self.CurrentAuraId].Timer:Dispose()
+		aura.Timer.enabled = false
+		aura.Timer:Dispose()
 	end
 	self:RedisplayAura(self.CurrentAuraId)
 end
@@ -4635,8 +4662,9 @@ function PowaAurasOptions:TimerSizeSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].Timer.h then
-		self.Auras[self.CurrentAuraId].Timer.h = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.Timer.h then
+		aura.Timer.h = value
 	end
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId)
 end
@@ -4653,8 +4681,9 @@ function PowaAurasOptions:TimerAlphaSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].Timer.a then
-		self.Auras[self.CurrentAuraId].Timer.a = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.Timer.a then
+		aura.Timer.a = value
 	end
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId)
 end
@@ -4671,8 +4700,9 @@ function PowaAurasOptions:TimerCoordXSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].Timer.x then
-		self.Auras[self.CurrentAuraId].Timer.x = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.Timer.x then
+		aura.Timer.x = value
 	end
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId)
 end
@@ -4689,8 +4719,9 @@ function PowaAurasOptions:TimerCoordYSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].Timer.y then
-		self.Auras[self.CurrentAuraId].Timer.y = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.Timer.y then
+		aura.Timer.y = value
 	end
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId)
 end
@@ -4708,15 +4739,16 @@ function PowaAurasOptions:PowaTimerInvertAuraSliderChanged(slider, value)
 		return
 	end
 	local text
-	if self.Auras[self.CurrentAuraId].InvertTimeHides then
+	local aura = self.Auras[self.CurrentAuraId]
+	if aura.InvertTimeHides then
 		text = self.Text.nomTimerHideAura
 		slider.aide = PowaAurasOptions.Text.aidePowaTimerHideAuraSlider
 	else
 		text = self.Text.nomTimerInvertAura
 		slider.aide = PowaAurasOptions.Text.aidePowaTimerInvertAuraSlider
 	end
-	if value ~= self.Auras[self.CurrentAuraId].InvertAuraBelow then
-		self.Auras[self.CurrentAuraId].InvertAuraBelow = value
+	if value ~= aura.InvertAuraBelow then
+		aura.InvertAuraBelow = value
 	end
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId)
 end
@@ -4733,8 +4765,9 @@ function PowaAurasOptions:TimerDurationSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].timerduration then
-		self.Auras[self.CurrentAuraId].timerduration = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.timerduration then
+		aura.timerduration = value
 	end
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId)
 end
@@ -4767,10 +4800,11 @@ function PowaAurasOptions:SettingChecked(button, setting)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
+	local aura = self.Auras[self.CurrentAuraId]
 	if button:GetChecked() then
-		self.Auras[self.CurrentAuraId][setting] = true
+		aura[setting] = true
 	else
-		self.Auras[self.CurrentAuraId][setting] = false
+		aura[setting] = false
 	end
 end
 
@@ -4778,12 +4812,13 @@ function PowaAurasOptions:TimerTransparentChecked(button)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
+	local aura = self.Auras[self.CurrentAuraId]
 	if button:GetChecked() then
-		self.Auras[self.CurrentAuraId].Timer.Transparent = true
+		aura.Timer.Transparent = true
 	else
-		self.Auras[self.CurrentAuraId].Timer.Transparent = false
+		aura.Timer.Transparent = false
 	end
-	self.Auras[self.CurrentAuraId].Timer:Dispose()
+	aura.Timer:Dispose()
 	--self:CreateTimerFrameIfMissing(self.CurrentAuraId)
 end
 
@@ -4792,11 +4827,12 @@ function PowaAurasOptions:ShowStacksChecked(button)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
+	local aura = self.Auras[self.CurrentAuraId]
 	if button:GetChecked() then
-		self.Auras[self.CurrentAuraId].Stacks.enabled = true
+		aura.Stacks.enabled = true
 	else
-		self.Auras[self.CurrentAuraId].Stacks.enabled = false
-		self.Auras[self.CurrentAuraId].Stacks:Dispose()
+		aura.Stacks.enabled = false
+		aura.Stacks:Dispose()
 	end
 	self:RedisplayAura(self.CurrentAuraId)
 end
@@ -4813,8 +4849,9 @@ function PowaAurasOptions:StacksAlphaSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].Stacks.a then
-		self.Auras[self.CurrentAuraId].Stacks.a = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.Stacks.a then
+		aura.Stacks.a = value
 	end
 end
 
@@ -4830,8 +4867,9 @@ function PowaAurasOptions:StacksSizeSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].Stacks.h then
-		self.Auras[self.CurrentAuraId].Stacks.h = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.Stacks.h then
+		aura.Stacks.h = value
 	end
 end
 
@@ -4847,8 +4885,9 @@ function PowaAurasOptions:StacksCoordXSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].Stacks.x then
-		self.Auras[self.CurrentAuraId].Stacks.x = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.Stacks.x then
+		aura.Stacks.x = value
 	end
 end
 
@@ -4865,8 +4904,9 @@ function PowaAurasOptions:StacksCoordYSliderChanged(slider, value)
 	else
 		return
 	end
-	if value ~= self.Auras[self.CurrentAuraId].Stacks.y then
-		self.Auras[self.CurrentAuraId].Stacks.y = value
+	local aura = self.Auras[self.CurrentAuraId]
+	if value ~= aura.Stacks.y then
+		aura.Stacks.y = value
 	end
 end
 
@@ -4883,12 +4923,13 @@ function PowaAurasOptions:StacksChecked(button, setting)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
+	local aura = self.Auras[self.CurrentAuraId]
 	if button:GetChecked() then
-		self.Auras[self.CurrentAuraId].Stacks[setting] = true
+		aura.Stacks[setting] = true
 	else
-		self.Auras[self.CurrentAuraId].Stacks[setting] = false
+		aura.Stacks[setting] = false
 	end
-	self.Auras[self.CurrentAuraId].Stacks:Dispose()
+	aura.Stacks:Dispose()
 end
 
 function PowaAurasOptions:SlashCommands(msg)
@@ -5107,10 +5148,18 @@ end
 
 function PowaAurasOptions:Blizzard_OnLoad(panel)
 	panel.name = GetAddOnMetadata("PowerAuras", "Title")
-	panel.okay = function (self) OptionsOK() end
-	panel.cancel = function (self) OptionsCancel() end
-	panel.default = function (self) OptionsDefault() end
-	panel.refresh = function (self) OptionsRefresh() end
+	panel.okay = function(self)
+		OptionsOK()
+	end
+	panel.cancel = function(self)
+		OptionsCancel()
+	end
+	panel.default = function(self)
+		OptionsDefault()
+	end
+	panel.refresh = function(self)
+		OptionsRefresh()
+	end
 	InterfaceOptions_AddCategory(panel)
 end
 
