@@ -3260,7 +3260,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										self:SetMaxLetters(256)
+										self:SetMaxLetters(1024)
 										self.aide = PowaAurasOptions.Text.aideBuff
 									</OnLoad>
 									<OnEnterPressed>

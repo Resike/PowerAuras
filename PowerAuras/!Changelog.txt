@@ -6,6 +6,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.25.5**
+* "Buff Name" editbox now accepts up to 1024 charater long strings.
+* Added text wrap function to long tooltips.
+
 **4.25.4**
 * Auto disabling stacks for non-stacable spells for Action Usable and Spell Cooldown type auras.
 * Some other minor fixes.

@@ -510,10 +510,27 @@ end
 
 cPowaAura.TooltipOptions = {r = 1.0, g = 1.0, b = 1.0}
 
+local function WrapString(str, limit, indent, indent1)
+	limit = limit or 72
+	indent = indent or ""
+	indent1 = indent1 or indent
+	local here = 1 - #indent1
+	return indent1..str:gsub("(%s+)()(%S+)()", function(sp, st, word, fi)
+		if fi - here > limit then
+			here = st - #indent
+			return "\n"..indent..word
+		end
+	end)
+end
+
 function cPowaAura:AddExtraTooltipInfo(tooltip)
 	tooltip:SetText("|cffFFFFFF["..(self.id or "?").."] |r"..(self:DisplayType() or "?"), self.TooltipOptions.r, self.TooltipOptions.g, self.TooltipOptions.b, 1)
 	if self.TooltipOptions.showBuffName and self.buffname ~= "???" then
-		tooltip:AddLine(self.buffname, nil, nil, nil, nil, 1)
+		if string.len(self.buffname) > 72 then
+			tooltip:AddLine(WrapString(self.buffname), nil, nil, nil, nil, 1)
+		else
+			tooltip:AddLine(self.buffname, nil, nil, nil, nil, 1)
+		end
 	end
 	if self.TooltipOptions.stacksColour then
 		tooltip:AddLine(PowaAuras.Text.nomStacks..self.stacksOperator..self.stacks, self.TooltipOptions.stacksColour.r, self.TooltipOptions.stacksColour.g, self.TooltipOptions.stacksColour.b, 1)
