@@ -2688,6 +2688,7 @@ function cPowaSpellCooldown:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)
 	PowaAuras.Events.SPELL_UPDATE_COOLDOWN = true
 	PowaAuras.Events.SPELL_UPDATE_CHARGES = true
+	PowaAuras.Events.CHARACTER_POINTS_CHANGED = true
 end
 
 function cPowaSpellCooldown:SkipTargetChecks()
@@ -2720,9 +2721,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		PowaAuras:Message("spellIcon = ", spellIcon)
 	end
 	if self:IconIsRequired() then
-		if not spellIcon then
-			_, _, spellIcon = GetSpellInfo(spellName)
-		end
+		local _, _, spellIcon = GetSpellInfo(spellName)
 		self:SetIcon(spellIcon)
 	end
 	local cdstart, cdduration, enabled
@@ -4665,6 +4664,18 @@ PowaAuras.AuraClasses =
 	[PowaAuras.BuffTypes.UnitMatch] = cPowaUnitMatch,
 	[PowaAuras.BuffTypes.PetStance] = cPowaPetStance
 }
+
+function PowaAuras:ListPlayerTalents()
+	for spellId, spellName, spellSubtext in playerSpells() do
+		print(spellName, spellId)
+	end
+end
+
+function PowaAuras:ListPetTalents()
+	for spellId, spellName, spellSubtext in petSpells() do
+		print(spellName, spellId)
+	end
+end
 
 -- Instance concrete class based on type
 function PowaAuras:AuraFactory(auraType, id, base)

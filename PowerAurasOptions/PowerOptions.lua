@@ -4237,7 +4237,7 @@ function PowaAurasOptions:ChangeAuraType(id, newType)
 			spellId = string.match(spellLink, "spell:(%d+)")
 		end
 		local _, maxCharges = GetSpellCharges(spellId)
-		if aura.Stacks.enabled and not maxCharges then
+		if aura.Stacks and aura.Stacks.enabled and not maxCharges then
 			aura.Stacks.enabled = false
 			aura.Stacks:Dispose()
 			PowaShowStacksButton:SetChecked(false)
@@ -4959,6 +4959,10 @@ function PowaAurasOptions:SlashCommands(msg)
 		PowaAurasOptions:ShowAurasOnUnit("Buffs", "HELPFUL")
 	elseif msg == "showdebuffs" or msg == "debuffs" then
 		PowaAurasOptions:ShowAurasOnUnit("Debuffs", "HARMFUL")
+	elseif msg == "playertalents" then
+		PowaAurasOptions:ListPlayerTalents()
+	elseif msg == "pettalents" then
+		PowaAurasOptions:ListPetTalents()
 	else
 		PowaAurasOptions:MainOptionShow()
 	end

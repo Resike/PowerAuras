@@ -909,6 +909,14 @@ function PowaAuras:SPELL_UPDATE_CHARGES(...)
 	self.DoCheck.CheckIt = true
 end
 
+function PowaAuras:CHARACTER_POINTS_CHANGED(...)
+	if self.ModTest then
+		return
+	end
+	self.DoCheck.SpellCooldowns = true
+	self.DoCheck.CheckIt = true
+end
+
 function PowaAuras:UPDATE_SHAPESHIFT_FORM(...)
 	if self.ModTest then
 		return
