@@ -1,6 +1,6 @@
 local PowaAurasOptions = PowaAurasOptions
 
--- 5.4.7 (18019)
+-- 5.4.8 (18273)
 
 PowaAurasOptions.ModelsCreature =
 {
@@ -169,6 +169,7 @@ PowaAurasOptions.ModelsCreature =
 "creature\\clockworkgnome\\clockworkgnome_b.m2",
 "creature\\clockworkgnome\\clockworkgnome_c.m2",
 "creature\\clockworkgnome\\clockworkgnome_d.m2",
+"creature\\clockworkhorse\\clockworkhorse.m2",
 "creature\\cloud\\cloudswampgas.m2",
 "creature\\cloud\\cloudswampgas_shadowmoon_white.m2",
 "creature\\cloud\\cloudswampgas_white_clickable.m2",
@@ -1140,6 +1141,7 @@ PowaAurasOptions.ModelsCreature =
 "creature\\raptor\\raptorpet.m2",
 "creature\\raptoroutland\\raptor_outland.m2",
 "creature\\rat\\rat.m2",
+--"creature\\ravager2\\ravager2mount.m2",
 "creature\\raven\\raven.m2",
 "creature\\raven\\raven_low01.m2",
 "creature\\ravengod\\ravengod.m2",

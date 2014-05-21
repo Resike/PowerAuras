@@ -6,7 +6,14 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.25.6**
+* Added a missing even for spell cooldowns, which will update it's icon on talent swaps immediately.
+* Fixed a lua error when switching between some specific aura triggers.
+* Added "/pa playertalents" to list the player's talents and it's spell ids.
+* Added "/pa pettalents" to list the player's pet's talents and it's spell ids.
+
 **4.25.5**
+* Spell updates.
 * "Buff Name" editbox now accepts up to 1024 charater long strings.
 * Added text wrap function to long tooltips.
 
