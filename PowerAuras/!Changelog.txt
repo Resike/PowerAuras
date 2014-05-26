@@ -7,7 +7,11 @@
 
 
 **4.25.7**
-* 
+* Fixed an issue with "Own Texure" aura type icons.
+* Fixed an issue with "Own Texure" aura type texture slider.
+* Model updates.
+* Some localization updates.
+* Some other minor fixes.
 
 **4.25.6**
 * Added a missing even for spell cooldowns, which will update it's icon on talent swaps immediately.
