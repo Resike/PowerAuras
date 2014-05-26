@@ -241,7 +241,7 @@ aideUnitMatch = "Enter the names of the units that need to match, separated by a
 aidePetStance = "Enter the ID numbers of pet stances that need to be active in order for the aura to show. You can specify multiple stances to trigger an aura by separating them with a forward slash (/).\n\n|cFFEFEFEFStance ID Numbers|r\nAssist = 1\nDefensive = 2\nPassive = 3\n\n|cFFFF0000Note: |rYou must have the three stances on your pet action bar for this to work.",
 
 -- Editor
-aideCustomText = "Enter text to display. (%t=target name, %f=focus name, %v=display value, %u=unit name, %str=str, %agl=agl, %sta=sta, %int=int, %spi=spi, %sp=spell power, %ap=attack power, %crt=critical strike)",
+aideCustomText = "Enter text to display. (%n=buff/debuff name, %t=target name, %f=focus name, %u=unit name, %str=str, %agl=agl, %sta=sta, %int=int, %spi=spi, %sp=spell power, %ap=attack power, %crt=critical strike)",
 
 nomSound = "Starting Sound:",
 

@@ -1820,6 +1820,7 @@ function PowaAurasOptions:InitPage(aura)
 	local checkTexture = 0
 	if aura.owntex then
 		checkTexture = AuraTexture:SetTexture(PowaIconTexture:GetTexture())
+		PowaBarAuraTextureSlider:Show()
 		PowaBlendModeDropDown:Show()
 		PowaTextureStrataDropDown:Show()
 		PowaTextureStrataSublevelSlider:Show()
@@ -1837,6 +1838,7 @@ function PowaAurasOptions:InitPage(aura)
 		PowaBarAurasText:Hide()
 		PowaFontButton:Hide()
 		PowaBarAnimationSlider:Hide()
+		PowaBarAuraTextureSlider:SetValue(aura.texture)
 		PowaBarAuraTextureSliderText:SetText(PowaAurasOptions.Text.nomTexture)
 	elseif aura.wowtex then
 		PowaBarAuraTextureSlider:Show()
@@ -2033,7 +2035,7 @@ function PowaAurasOptions:InitPage(aura)
 		PowaFontButton:Show()
 		PowaBarAurasText:SetText(aura.aurastext)
 		PowaBarAnimationSlider:Hide()
-		PowaBarAuraTextureSliderText:SetText(PowaAurasOptions.Text.nomTexture)
+		--PowaBarAuraTextureSliderText:SetText(PowaAurasOptions.Text.nomTexture)
 		checkTexture = AuraTexture:SetTexture("Interface\\Icons\\INV_Scroll_02")
 	else
 		PowaBarAuraTextureSlider:Show()
@@ -2164,7 +2166,11 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 		checkTexture = AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..value..".tga")
 	end
 	if checkTexture ~= 1 then
-		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga")
+		if aura.owntex then
+			AuraTexture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark")
+		else
+			AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga")
+		end
 	end
 	if aura.textaura or AuraTexture:GetTexture() == "Interface\\CharacterFrame\\TempPortrait" or AuraTexture:GetTexture() == "Interface\\Icons\\TEMP" then
 		AuraTexture:SetVertexColor(1, 1, 1)
@@ -2183,6 +2189,14 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 		local displayID
 		if aura.wowtex then
 			texture:SetTexture(self.WowTextures[aura.texture])
+		elseif aura.owntex then
+			local checkTexture = 0
+			checkTexture = texture:SetTexture(aura.icon)
+			if checkTexture ~= 1 then
+				texture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark")
+			else
+				texture:SetTexture(aura.icon)
+			end
 		elseif aura.model then
 			self.ModelTextureList = { }
 			if not aura.modelcategory or aura.modelcategory == 1 then
