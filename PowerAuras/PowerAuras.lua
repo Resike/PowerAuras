@@ -851,7 +851,19 @@ end
 -- Drag and Drop functions
 local function OnKeyUp(frame, key)
 	-- Case Sensitive!
-	if key ~= "UP" and key ~= "DOWN" and key ~= "LEFT" and key ~= "RIGHT" or not frame.mouseIsOver then
+	if key ~= "UP" and key ~= "DOWN" and key ~= "LEFT" and key ~= "RIGHT" and key ~= "ENTER" and key ~= "ESCAPE" or not frame.mouseIsOver then
+		return
+	end
+	if key == "ENTER" or key == "ESCAPE" then
+		frame.mouseIsOver = nil
+		frame:EnableKeyboard(false)
+		frame:EnableMouseWheel(false)
+		frame:SetScript("OnKeyUp", nil)
+		frame:SetScript("OnDragStart", nil)
+		frame:SetScript("OnDragStop", nil)
+		frame:SetScript("OnMouseDown", nil)
+		frame:SetScript("OnMouseUp", nil)
+		frame:SetScript("OnMouseWheel", nil)
 		return
 	end
 	if key == "UP" then
@@ -1581,7 +1593,8 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		aura:Hide()
 	end
 	aura.EndSoundPlayed = nil
-	if not self.ModTest then
+	if not self.ModTest and not aura.showing then
+		aura.showing = true
 		if aura.customsound ~= "" then
 			local pathToSound
 			if string.find(aura.customsound, "\\") then
@@ -2203,7 +2216,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 			end
 		end
 		if aura.HideRequest then
-			if self.ModTest == false and not aura.EndSoundPlayed then
+			if not self.ModTest and not aura.EndSoundPlayed then
 				if aura.customsoundend ~= "" then
 					local pathToSound
 					if string.find(aura.customsoundend, "\\") then

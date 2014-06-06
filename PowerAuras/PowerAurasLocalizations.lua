@@ -604,7 +604,7 @@ TernaryAide =
 
 nomTimerInvertAura = "Invert Aura Timer",
 aidePowaTimerInvertAuraSlider = "Invert the aura when the duration is less than this limit. (0 to deactivate)",
-nomTimerHideAura = "Hide Aura & Timer Until Time Above",
+nomTimerHideAura = "Hide Aura and Timer Until Time Above",
 aidePowaTimerHideAuraSlider = "Hide the aura and timer when the duration is greater than this limit. (0 to deactivate)",
 
 aideTimerRounding = "When checked will round the timers up.",

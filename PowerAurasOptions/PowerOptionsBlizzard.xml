@@ -47,8 +47,8 @@
 		</Layers>
 		<Scripts>
 			<OnEnter>
-				if (self:IsEnabled()) then
-					if (self.aide) then
+				if self:IsEnabled() then
+					if self.aide then
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 						GameTooltip:SetText(self.aide, nil, nil, nil, nil, 1)
 					end
@@ -239,6 +239,7 @@
 						self:SetMinMaxValues(0, 100)
 						self:SetValue(100 - 200 * PowaMisc.OnUpdateLimit)
 						self:SetValueStep(1)
+						self:SetObeyStepOnDrag(true)
 						PowaOptionsUpdateSlider2Text:SetText(PowaAurasOptions.Text.nomUpdateSpeed.." : "..self:GetValue().."%")
 						PowaOptionsUpdateSlider2Low:SetText("0%")
 						PowaOptionsUpdateSlider2High:SetText("100%")
@@ -269,6 +270,7 @@
 						self:SetMinMaxValues(0, 100)
 						self:SetValue(100 - 1000 * PowaMisc.AnimationLimit)
 						self:SetValueStep(1)
+						self:SetObeyStepOnDrag(true)
 						PowaOptionsTimerUpdateSlider2Text:SetText(PowaAurasOptions.Text.nomTimerUpdate.." : "..self:GetValue().."%")
 						PowaOptionsTimerUpdateSlider2Low:SetText("0%")
 						PowaOptionsTimerUpdateSlider2High:SetText("100%")
@@ -321,6 +323,7 @@
 						self:SetMinMaxValues(1, 1000)
 						self:SetValue(PowaMisc.UserSetMaxTextures)
 						self:SetValueStep(1)
+						self:SetObeyStepOnDrag(true)
 						self.aide = aideTextureCount
 						PowaOptionsTextureCountText:SetText(PowaAurasOptions.Text.nomTextureCount..": "..self:GetValue())
 						PowaOptionsTextureCountLow:SetText("1")
@@ -351,7 +354,7 @@
 						PowaShowAuraBrowserButtonText:SetText(PowaAurasOptions.Text.nomPowaShowAuraBrowser)
 					</OnLoad>
 					<OnClick>
-						PowaAurasOptions:MainOptionShow()
+						PowaAurasOptions:MainOptionShow(true)
 					</OnClick>
 				</Scripts>
 			</Button>

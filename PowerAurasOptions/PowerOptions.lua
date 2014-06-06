@@ -14,6 +14,7 @@ local strsplit = strsplit
 local strtrim = strtrim
 local table = table
 local tinsert = tinsert
+local tremove = tremove
 local tonumber = tonumber
 local tostring = tostring
 local type = type
@@ -1397,7 +1398,19 @@ function PowaAurasOptions:DoCopyEffect(idFrom, idTo, isMove)
 	self:UpdateMainOption()
 end
 
-function PowaAurasOptions:MainOptionShow()
+function PowaAurasOptions:MainOptionShow(special)
+	if special then
+		for i, v in pairs(UISpecialFrames) do
+			if v == "PowaOptionsFrame" then
+				tremove(UISpecialFrames, i)
+			end
+		end
+		InterfaceOptionsFrame:HookScript("OnHide", function(self)
+			tinsert(UISpecialFrames, "PowaOptionsFrame")
+		end)
+	else
+		tinsert(UISpecialFrames, "PowaOptionsFrame")
+	end
 	if PowaOptionsFrame:IsVisible() then
 		self:MainOptionClose()
 	else
@@ -1487,6 +1500,13 @@ function PowaAurasOptions:UpdateTimerOptions()
 		PowaDropDownTimerTextureText:SetText(timer.Texture)
 		PowaBuffTimerRelativeText:SetText(PowaAurasOptions.Text.Relative[timer.Relative])
 		PowaTimerInvertAuraSlider:SetValue(aura.InvertAuraBelow)
+		if aura.InvertTimeHides then
+			PowaTimerInvertAuraSliderText:SetText(self.Text.nomTimerHideAura)
+			PowaTimerInvertAuraSlider.aide = PowaAurasOptions.Text.aidePowaTimerHideAuraSlider
+		else
+			PowaTimerInvertAuraSliderText:SetText(self.Text.nomTimerInvertAura)
+			PowaTimerInvertAuraSlider.aide = PowaAurasOptions.Text.aidePowaTimerInvertAuraSlider
+		end
 	end
 end
 
@@ -2136,14 +2156,6 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	if value == 0 or not value then
 		value = 1
 		self:SetValue(value)
@@ -2282,14 +2294,6 @@ function PowaAurasOptions:FrameStrataLevelSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if value ~= aura.stratalevel then
 		aura.stratalevel = value
@@ -2302,14 +2306,6 @@ function PowaAurasOptions:TextureStrataSublevelSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if value ~= aura.texturesublevel then
 		aura.texturesublevel = value
@@ -2320,14 +2316,6 @@ end
 
 function PowaAurasOptions:ModelPositionZSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	if value / 100 ~= self.Auras[self.CurrentAuraId].mz then
@@ -2347,14 +2335,6 @@ function PowaAurasOptions:ModelPositionXSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	if value / 100 ~= self.Auras[self.CurrentAuraId].mx then
 		self.Auras[self.CurrentAuraId].mx = value / 100
 		local aura = self.Auras[self.CurrentAuraId]
@@ -2372,14 +2352,6 @@ function PowaAurasOptions:ModelPositionYSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	if value / 100 ~= self.Auras[self.CurrentAuraId].my then
 		self.Auras[self.CurrentAuraId].my = value / 100
 		local aura = self.Auras[self.CurrentAuraId]
@@ -2395,14 +2367,6 @@ end
 
 function PowaAurasOptions:BarAuraAlphaSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2446,14 +2410,6 @@ end
 
 function PowaAurasOptions:BarAuraSizeSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2552,14 +2508,6 @@ function PowaAurasOptions:BarAuraCoordXSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if PowaMisc.GroupSize == 1 then
 		if value ~= aura.x then
@@ -2593,14 +2541,6 @@ end
 
 function PowaAurasOptions:BarAuraCoordYSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2638,14 +2578,6 @@ function PowaAurasOptions:SecondaryFrameStrataLevelSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if value ~= aura.secondarystratalevel then
 		aura.secondarystratalevel = value
@@ -2658,14 +2590,6 @@ end
 
 function PowaAurasOptions:SecondaryTextureStrataSublevelSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2682,14 +2606,6 @@ function PowaAurasOptions:BarAuraAnimSpeedSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if value / 100 ~= aura.speed then
 		aura.speed = value / 100
@@ -2701,14 +2617,6 @@ function PowaAurasOptions:BarAuraAnimDurationSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if value ~= aura.duration then
 		aura.duration = value
@@ -2718,14 +2626,6 @@ end
 
 function PowaAurasOptions:BarAuraSymSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	if value == 0 then
@@ -2779,14 +2679,6 @@ function PowaAurasOptions:BarAnimationSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	if value == - 1 then
 		PowaBarAnimationSliderText:SetText("Animation: Default")
 	else
@@ -2800,14 +2692,6 @@ end
 
 function PowaAurasOptions:BarAuraRotateSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	--[[if self.Auras[self.CurrentAuraId].textaura ~= true then
@@ -2873,14 +2757,6 @@ function PowaAurasOptions:BarAuraDeformSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	if PowaMisc.GroupSize == 1 then
 		if value ~= self.Auras[self.CurrentAuraId].torsion then
 			self.Auras[self.CurrentAuraId].torsion = value
@@ -2917,14 +2793,6 @@ end
 
 function PowaAurasOptions:BarThresholdSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	-- Don't use ~= checker!
@@ -4668,14 +4536,6 @@ function PowaAurasOptions:TimerSizeSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if value ~= aura.Timer.h then
 		aura.Timer.h = value
@@ -4685,14 +4545,6 @@ end
 
 function PowaAurasOptions:TimerAlphaSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4706,14 +4558,6 @@ function PowaAurasOptions:TimerCoordXSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if value ~= aura.Timer.x then
 		aura.Timer.x = value
@@ -4723,14 +4567,6 @@ end
 
 function PowaAurasOptions:TimerCoordYSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4744,23 +4580,7 @@ function PowaAurasOptions:PowaTimerInvertAuraSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
-	local text
 	local aura = self.Auras[self.CurrentAuraId]
-	if aura.InvertTimeHides then
-		text = self.Text.nomTimerHideAura
-		slider.aide = PowaAurasOptions.Text.aidePowaTimerHideAuraSlider
-	else
-		text = self.Text.nomTimerInvertAura
-		slider.aide = PowaAurasOptions.Text.aidePowaTimerInvertAuraSlider
-	end
 	if value ~= aura.InvertAuraBelow then
 		aura.InvertAuraBelow = value
 	end
@@ -4769,14 +4589,6 @@ end
 
 function PowaAurasOptions:TimerDurationSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4855,14 +4667,6 @@ function PowaAurasOptions:StacksAlphaSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if value ~= aura.Stacks.a then
 		aura.Stacks.a = value
@@ -4871,14 +4675,6 @@ end
 
 function PowaAurasOptions:StacksSizeSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4891,14 +4687,6 @@ function PowaAurasOptions:StacksCoordXSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
 		return
 	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	local aura = self.Auras[self.CurrentAuraId]
 	if value ~= aura.Stacks.x then
 		aura.Stacks.x = value
@@ -4908,14 +4696,6 @@ end
 
 function PowaAurasOptions:StacksCoordYSliderChanged(slider, value)
 	if not (self.VariablesLoaded and self.SetupDone) then
-		return
-	end
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -5182,38 +4962,14 @@ function PowaAurasOptions:Blizzard_OnLoad(panel)
 end
 
 function PowaAurasOptions:PowaOptionsUpdateSliderChanged(slider, value)
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	PowaOptionsUpdateSlider2Text:SetText(self.Text.nomUpdateSpeed..": "..value.."%")
 end
 
 function PowaAurasOptions:PowaOptionsTimerUpdateSliderChanged(slider, value)
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	PowaOptionsTimerUpdateSlider2Text:SetText(self.Text.nomTimerUpdate..": "..value.."%")
 end
 
 function PowaAurasOptions:PowaOptionsMaxTexturesSliderChanged(slider, value)
-	if not slider._onsetting then
-		slider._onsetting = true
-		slider:SetValue(slider:GetValue())
-		value = slider:GetValue()
-		slider._onsetting = false
-	else
-		return
-	end
 	PowaOptionsTextureCountText:SetText(self.Text.nomTextureCount..": "..value)
 end
 

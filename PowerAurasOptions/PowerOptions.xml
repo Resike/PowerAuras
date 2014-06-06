@@ -2343,13 +2343,14 @@
 								self:SetMinMaxValues(0, 20)
 								self:SetValue(0)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaFrameStrataLevelSliderText:SetText(PowaAurasOptions.Text.nomLevel)
 								PowaFrameStrataLevelSliderLow:SetText("0")
 								PowaFrameStrataLevelSliderHigh:SetText("20")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:FrameStrataLevelSliderChanged(self, value)
-								PowaFrameStrataLevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaFrameStrataLevelSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2402,13 +2403,14 @@
 								self:SetMinMaxValues(-8, 7)
 								self:SetValue(0)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaTextureStrataSublevelSliderText:SetText(PowaAurasOptions.Text.nomSublevel)
 								PowaTextureStrataSublevelSliderLow:SetText("-8")
 								PowaTextureStrataSublevelSliderHigh:SetText("7")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:TextureStrataSublevelSliderChanged(self, value)
-								PowaTextureStrataSublevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaTextureStrataSublevelSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2461,13 +2463,14 @@
 								self:SetMinMaxValues(-100, 100)
 								self:SetValue(0)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaModelPositionZSliderText:SetText(PowaAurasOptions.Text.nomModelZ)
 								PowaModelPositionZSliderLow:SetText("-100")
 								PowaModelPositionZSliderHigh:SetText("100")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:ModelPositionZSliderChanged(self, value)
-								PowaModelPositionZSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaModelPositionZSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAurasOptions.SliderOnMouseUp(self, 100, 100, 0)
@@ -2495,13 +2498,14 @@
 								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaModelPositionXSliderText:SetText(PowaAurasOptions.Text.nomModelX)
 								PowaModelPositionXSliderLow:SetText("-50")
 								PowaModelPositionXSliderHigh:SetText("50")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:ModelPositionXSliderChanged(self, value)
-								PowaModelPositionXSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaModelPositionXSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAurasOptions.SliderOnMouseUp(self, 50, 50, 0)
@@ -2529,13 +2533,14 @@
 								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaModelPositionYSliderText:SetText(PowaAurasOptions.Text.nomModelY)
 								PowaModelPositionYSliderLow:SetText("-50")
 								PowaModelPositionYSliderHigh:SetText("50")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:ModelPositionYSliderChanged(self, value)
-								PowaModelPositionYSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaModelPositionYSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAurasOptions.SliderOnMouseUp(self, 50, 50, 0)
@@ -2562,12 +2567,13 @@
 							<OnLoad>
 								self.aide = PowaAurasOptions.Text.aideTexture
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaBarAuraTextureSliderText:SetText(PowaAurasOptions.Text.nomTexture)
 								PowaBarAuraTextureSliderLow:SetText("1")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:BarAuraTextureSliderChanged(self, value)
-								PowaBarAuraTextureSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaBarAuraTextureSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2736,13 +2742,14 @@
 								self:SetMinMaxValues(0, 100)
 								self:SetValue(100)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaBarAuraAlphaSliderText:SetText(PowaAurasOptions.Text.nomAlpha)
 								PowaBarAuraAlphaSliderLow:SetText("0%")
 								PowaBarAuraAlphaSliderHigh:SetText("100%")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:BarAuraAlphaSliderChanged(self, value)
-								PowaBarAuraAlphaSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
+								PowaBarAuraAlphaSliderEditBox:SetText(self:GetValue().."%")
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2763,13 +2770,14 @@
 								self:SetMinMaxValues(0, 3)
 								self:SetValue(0)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaBarAuraSymSliderText:SetText(PowaAurasOptions.Text.nomSymetrie..": "..PowaAurasOptions.Text.aucune)
 								PowaBarAuraSymSliderLow:SetText(PowaAurasOptions.Text.aucune)
 								PowaBarAuraSymSliderHigh:SetText("XY")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:BarAuraSymSliderChanged(self, value)
-								PowaBarAuraSymSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaBarAuraSymSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2790,13 +2798,14 @@
 								self:SetMinMaxValues(-1, 802)
 								self:SetValue(-1)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaBarAnimationSliderText:SetText(PowaAurasOptions.Text.nomAnimation..": "..PowaAurasOptions.Text.nomDefault)
 								PowaBarAnimationSliderLow:SetText(PowaAurasOptions.Text.nomDefault)
 								PowaBarAnimationSliderHigh:SetText("802")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:BarAnimationSliderChanged(self, value)
-								PowaBarAnimationSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaBarAnimationSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2817,6 +2826,7 @@
 								self:SetMinMaxValues(-0.01, 2.01)
 								self:SetValue(1)
 								self:SetValueStep(0.01)
+								self:SetObeyStepOnDrag(true)
 								PowaBarAuraDeformSliderText:SetText(PowaAurasOptions.Text.nomDeform)
 								PowaBarAuraDeformSliderLow:SetText("0.00")
 								PowaBarAuraDeformSliderHigh:SetText("2.00")
@@ -2844,13 +2854,14 @@
 								self:SetMinMaxValues(0, 360)
 								self:SetValue(0)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaBarAuraRotateSliderText:SetText(PowaAurasOptions.Text.nomRotation)
 								PowaBarAuraRotateSliderLow:SetText("0°")
 								PowaBarAuraRotateSliderHigh:SetText("360°")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:BarAuraRotateSliderChanged(self, value)
-								PowaBarAuraRotateSliderEditBox:SetText(format("%.0f", self:GetValue()).."°")
+								PowaBarAuraRotateSliderEditBox:SetText(self:GetValue().."°")
 							</OnValueChanged>
 						</Scripts>
 					</Slider>
@@ -2871,13 +2882,14 @@
 								self:SetMinMaxValues(1, 200)
 								self:SetValue(100)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaBarAuraSizeSliderText:SetText(PowaAurasOptions.Text.nomTaille)
 								PowaBarAuraSizeSliderLow:SetText("1%")
 								PowaBarAuraSizeSliderHigh:SetText("200%")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:BarAuraSizeSliderChanged(self, value)
-								PowaBarAuraSizeSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
+								PowaBarAuraSizeSliderEditBox:SetText(self:GetValue().."%")
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAurasOptions.SliderOnMouseUp(self, 0, 100, 0, "%")
@@ -2905,13 +2917,14 @@
 								self:SetMinMaxValues(-700, 700)
 								self:SetValue(0)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaBarAuraCoordXSliderText:SetText(PowaAurasOptions.Text.nomPos.." X")
 								PowaBarAuraCoordXSliderLow:SetText("-700")
 								PowaBarAuraCoordXSliderHigh:SetText("700")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:BarAuraCoordXSliderChanged(self, value)
-								PowaBarAuraCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaBarAuraCoordXSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAurasOptions.SliderOnMouseUp(self, 700, 700, 0)
@@ -2939,13 +2952,14 @@
 								self:SetMinMaxValues(-400, 400)
 								self:SetValue(0)
 								self:SetValueStep(1)
+								self:SetObeyStepOnDrag(true)
 								PowaBarAuraCoordYSliderText:SetText(PowaAurasOptions.Text.nomPos.." Y")
 								PowaBarAuraCoordYSliderLow:SetText("-400")
 								PowaBarAuraCoordYSliderHigh:SetText("400")
 							</OnLoad>
 							<OnValueChanged>
 								PowaAurasOptions:BarAuraCoordYSliderChanged(self, value)
-								PowaBarAuraCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
+								PowaBarAuraCoordYSliderEditBox:SetText(self:GetValue())
 							</OnValueChanged>
 							<OnMouseUp>
 								PowaAurasOptions.SliderOnMouseUp(self, 400, 400, 0)
@@ -3153,6 +3167,7 @@
 										self:SetMinMaxValues(0, 100)
 										self:SetValue(50)
 										self:SetValueStep(1)
+										self:SetObeyStepOnDrag(true)
 										PowaBarThresholdSliderText:SetText(PowaAurasOptions.Text.nomThreshold)
 										PowaBarThresholdSliderLow:SetText("0%")
 										PowaBarThresholdSliderHigh:SetText("100%")
@@ -4587,13 +4602,14 @@
 										self:SetMinMaxValues(0, 20)
 										self:SetValue(0)
 										self:SetValueStep(1)
+										self:SetObeyStepOnDrag(true)
 										PowaSecondaryStrataLevelSliderText:SetText(PowaAurasOptions.Text.nomLevel)
 										PowaSecondaryStrataLevelSliderLow:SetText("0")
 										PowaSecondaryStrataLevelSliderHigh:SetText("20")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAurasOptions:SecondaryFrameStrataLevelSliderChanged(self, value)
-										PowaSecondaryStrataLevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
+										PowaSecondaryStrataLevelSliderEditBox:SetText(self:GetValue())
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4646,13 +4662,14 @@
 										self:SetMinMaxValues(-8, 7)
 										self:SetValue(0)
 										self:SetValueStep(1)
+										self:SetObeyStepOnDrag(true)
 										PowaSecondaryTextureStrataSublevelSliderText:SetText(PowaAurasOptions.Text.nomSublevel)
 										PowaSecondaryTextureStrataSublevelSliderLow:SetText("-8")
 										PowaSecondaryTextureStrataSublevelSliderHigh:SetText("7")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAurasOptions:SecondaryTextureStrataSublevelSliderChanged(self, value)
-										PowaSecondaryTextureStrataSublevelSliderEditBox:SetText(format("%.0f", self:GetValue()))
+										PowaSecondaryTextureStrataSublevelSliderEditBox:SetText(self:GetValue())
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4673,13 +4690,14 @@
 										self:SetMinMaxValues(1, 200)
 										self:SetValue(100)
 										self:SetValueStep(1)
+										self:SetObeyStepOnDrag(true)
 										PowaBarAuraAnimSpeedSliderText:SetText(PowaAurasOptions.Text.nomSpeed)
 										PowaBarAuraAnimSpeedSliderLow:SetText("1%")
 										PowaBarAuraAnimSpeedSliderHigh:SetText("200%")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAurasOptions:BarAuraAnimSpeedSliderChanged(self, value)
-										PowaBarAuraAnimSpeedSliderEditBox:SetText(format("%.0f", self:GetValue()).."%")
+										PowaBarAuraAnimSpeedSliderEditBox:SetText(self:GetValue().."%")
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4701,6 +4719,7 @@
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
 										self:SetValueStep(0.01)
+										self:SetObeyStepOnDrag(true)
 										PowaBarAuraDurationSliderText:SetText(PowaAurasOptions.Text.nomDuration)
 										PowaBarAuraDurationSliderLow:SetText("0 sec")
 										PowaBarAuraDurationSliderHigh:SetText("60 sec")
@@ -5034,13 +5053,14 @@
 										self:SetMinMaxValues(-700, 700)
 										self:SetValue(0)
 										self:SetValueStep(1)
+										self:SetObeyStepOnDrag(true)
 										PowaTimerCoordXSliderText:SetText(PowaAurasOptions.Text.nomPos.." X")
 										PowaTimerCoordXSliderLow:SetText("-700")
 										PowaTimerCoordXSliderHigh:SetText("700")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAurasOptions:TimerCoordXSliderChanged(self, value)
-										PowaTimerCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
+										PowaTimerCoordXSliderEditBox:SetText(self:GetValue())
 									</OnValueChanged>
 									<OnMouseUp>
 										PowaAurasOptions.SliderOnMouseUp(self, 700, 700, 0)
@@ -5068,13 +5088,14 @@
 										self:SetMinMaxValues(-400, 400)
 										self:SetValue(0)
 										self:SetValueStep(1)
+										self:SetObeyStepOnDrag(true)
 										PowaTimerCoordYSliderText:SetText(PowaAurasOptions.Text.nomPos.." Y")
 										PowaTimerCoordYSliderLow:SetText("-400")
 										PowaTimerCoordYSliderHigh:SetText("400")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAurasOptions:TimerCoordYSliderChanged(self, value)
-										PowaTimerCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
+										PowaTimerCoordYSliderEditBox:SetText(self:GetValue())
 									</OnValueChanged>
 									<OnMouseUp>
 										PowaAurasOptions.SliderOnMouseUp(self, 400, 400, 0)
@@ -5102,6 +5123,7 @@
 										self:SetMinMaxValues(0.01, 5)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
+										self:SetObeyStepOnDrag(true)
 										PowaTimerSizeSliderText:SetText(PowaAurasOptions.Text.nomTaille)
 										PowaTimerSizeSliderLow:SetText("1%")
 										PowaTimerSizeSliderHigh:SetText("500%")
@@ -5129,6 +5151,7 @@
 										self:SetMinMaxValues(0, 1)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
+										self:SetObeyStepOnDrag(true)
 										PowaTimerAlphaSliderText:SetText(PowaAurasOptions.Text.nomAlpha)
 										PowaTimerAlphaSliderLow:SetText("0%")
 										PowaTimerAlphaSliderHigh:SetText("100%")
@@ -5157,6 +5180,7 @@
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
 										self:SetValueStep(0.01)
+										self:SetObeyStepOnDrag(true)
 										PowaTimerDurationSliderText:SetText(PowaAurasOptions.Text.nomTimerDuration)
 										PowaTimerDurationSliderLow:SetText("0 sec")
 										PowaTimerDurationSliderHigh:SetText("60 sec")
@@ -5446,6 +5470,7 @@
 										self:SetMinMaxValues(0, 600)
 										self:SetValue(0)
 										self:SetValueStep(0.01)
+										self:SetObeyStepOnDrag(true)
 										PowaTimerInvertAuraSliderText:SetText(PowaAurasOptions.Text.nomTimerInvertAura)
 										PowaTimerInvertAuraSliderLow:SetText("0 sec")
 										PowaTimerInvertAuraSliderHigh:SetText("600 sec")
@@ -5527,13 +5552,14 @@
 										self:SetMinMaxValues(-700, 700)
 										self:SetValue(0)
 										self:SetValueStep(1)
+										self:SetObeyStepOnDrag(true)
 										PowaStacksCoordXSliderText:SetText(PowaAurasOptions.Text.nomPos.." X")
 										PowaStacksCoordXSliderLow:SetText("-700")
 										PowaStacksCoordXSliderHigh:SetText("700")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAurasOptions:StacksCoordXSliderChanged(self, value)
-										PowaStacksCoordXSliderEditBox:SetText(format("%.0f", self:GetValue()))
+										PowaStacksCoordXSliderEditBox:SetText(self:GetValue())
 									</OnValueChanged>
 									<OnMouseUp>
 										PowaAurasOptions.SliderOnMouseUp(self, 700, 700, 0)
@@ -5561,13 +5587,14 @@
 										self:SetMinMaxValues(-400, 400)
 										self:SetValue(0)
 										self:SetValueStep(1)
+										self:SetObeyStepOnDrag(true)
 										PowaStacksCoordYSliderText:SetText(PowaAurasOptions.Text.nomPos.." Y")
 										PowaStacksCoordYSliderLow:SetText("-400")
 										PowaStacksCoordYSliderHigh:SetText("400")
 									</OnLoad>
 									<OnValueChanged>
 										PowaAurasOptions:StacksCoordYSliderChanged(self, value)
-										PowaStacksCoordYSliderEditBox:SetText(format("%.0f", self:GetValue()))
+										PowaStacksCoordYSliderEditBox:SetText(self:GetValue())
 									</OnValueChanged>
 									<OnMouseUp>
 										PowaAurasOptions.SliderOnMouseUp(self, 400, 400, 0)
@@ -5595,6 +5622,7 @@
 										self:SetMinMaxValues(0.01, 5)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
+										self:SetObeyStepOnDrag(true)
 										PowaStacksSizeSliderText:SetText(PowaAurasOptions.Text.nomTaille)
 										PowaStacksSizeSliderLow:SetText("1%")
 										PowaStacksSizeSliderHigh:SetText("500%")
@@ -5622,6 +5650,7 @@
 										self:SetMinMaxValues(0, 1)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
+										self:SetObeyStepOnDrag(true)
 										PowaStacksAlphaSliderText:SetText(PowaAurasOptions.Text.nomAlpha)
 										PowaStacksAlphaSliderLow:SetText("0%")
 										PowaStacksAlphaSliderHigh:SetText("100%")
