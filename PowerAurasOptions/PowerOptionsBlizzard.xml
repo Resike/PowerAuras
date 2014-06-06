@@ -376,7 +376,7 @@
 					</OnLoad>
 					<OnClick>
 						PowaAurasOptions:ResetPositions()
-						PowaAurasOptions:MainOptionShow()
+						PowaAurasOptions:MainOptionShow(true)
 					</OnClick>
 				</Scripts>
 			</Button>

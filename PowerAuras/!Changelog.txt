@@ -6,6 +6,14 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.25.8**
+* Major global slider optimasiations.
+* Opening the "Aura Browser" from the Interface/Addons panel won't cause the "Aura Browser" to be closed immediately, when you leave the Interface/Addons panel by any way. (Should have done that ages ago...)
+* Double tapping "esc" or "enter" leaves the unlocked aura's frame. (Opens game menu/chat editbox.)
+* Fixed an issue which caused start sounds played multiple times on cross-realm phasing zone changes.
+* Fixed a naming and tooltip issue with the timer invert auras slider, when changing aura types.
+* A lot of other minor fixes.
+
 **4.25.7**
 * Fixed an issue with "Own Texure" aura type icons.
 * Fixed an issue with "Own Texure" aura type texture slider.

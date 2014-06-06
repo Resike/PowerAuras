@@ -1431,6 +1431,11 @@ function PowaAurasOptions:MainOptionShow(special)
 end
 
 function PowaAurasOptions:MainOptionClose()
+	for i, v in pairs(UISpecialFrames) do
+		if v == "PowaOptionsFrame" then
+			tremove(UISpecialFrames, i)
+		end
+	end
 	self:DisableMoveMode()
 	self.ModTest = false
 	if ColorPickerFrame:IsVisible() then
