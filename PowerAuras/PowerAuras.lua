@@ -1591,8 +1591,8 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		aura:Hide()
 	end
 	aura.EndSoundPlayed = nil
-	if not self.ModTest and not aura.showing then
-		aura.showing = true
+	if not self.ModTest and not aura.StartSoundPlayed then
+		aura.StartSoundPlayed = true
 		if aura.customsound ~= "" then
 			local pathToSound
 			if string.find(aura.customsound, "\\") then
@@ -2232,6 +2232,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 						end
 					end
 				end
+				aura.StartSoundPlayed = nil
 				aura.EndSoundPlayed = true
 			end
 			if aura.Stacks then
