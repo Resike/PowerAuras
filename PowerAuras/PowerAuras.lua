@@ -54,8 +54,6 @@ local UnitOnTaxi = UnitOnTaxi
 
 local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
 
-local r1, r2, r3, r4, r5, r6
-
 -- Exposed for Saving
 PowaMisc =
 {
@@ -1417,9 +1415,9 @@ function PowaAuras:UpdatePreviewRandomColor(aura)
 	if AuraTexture then
 		if AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02" and AuraTexture:GetTexture() ~= "Interface\\Icons\\TEMP" then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-				AuraTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
+				AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r1, aura.r2, aura.r3, 1.0, aura.r4, aura.r5, aura.r6, 1.0)
 			else
-				AuraTexture:SetVertexColor(r1, r2, r3)
+				AuraTexture:SetVertexColor(aura.r1, aura.r2, aura.r3)
 			end
 			if aura.desaturation then
 				local shaderSupported = AuraTexture:SetDesaturated(1)
@@ -1473,19 +1471,19 @@ function PowaAuras:UpdateRandomColor(aura)
 	if not aura then
 		return
 	end
-	r1 = math.random(20, 100) / 100
-	r2 = math.random(20, 100) / 100
-	r3 = math.random(20, 100) / 100
-	r4 = math.random(20, 100) / 100
-	r5 = math.random(20, 100) / 100
-	r6 = math.random(20, 100) / 100
+	aura.r1 = math.random(20, 100) / 100
+	aura.r2 = math.random(20, 100) / 100
+	aura.r3 = math.random(20, 100) / 100
+	aura.r4 = math.random(20, 100) / 100
+	aura.r5 = math.random(20, 100) / 100
+	aura.r6 = math.random(20, 100) / 100
 	if not aura.model and not aura.modelcustom then
 		local texture = self.Textures[aura.id]
 		if not aura.textaura then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-				texture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
+				texture:SetGradientAlpha(aura.gradientstyle, aura.r1, aura.r2, aura.r3, 1.0, aura.r4, aura.r5, aura.r6, 1.0)
 			else
-				texture:SetVertexColor(r1, r2, r3)
+				texture:SetVertexColor(aura.r1, aura.r2, aura.r3)
 			end
 			if aura.desaturation then
 				local shaderSupported = texture:SetDesaturated(1)
@@ -1498,15 +1496,15 @@ function PowaAuras:UpdateRandomColor(aura)
 				texture:SetDesaturated(nil)
 			end
 		else
-			texture:SetVertexColor(r1, r2, r3)
+			texture:SetVertexColor(aura.r1, aura.r2, aura.r3)
 		end
 		self:UpdatePreviewRandomColor(aura)
 	else
 		local model = self.Models[aura.id]
 		if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-			model:SetLight(1, 0, 0, 1, 0, 1, r1, r2, r3, 1, r4, r5, r6)
+			model:SetLight(1, 0, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, aura.r4, aura.r5, aura.r6)
 		else
-			model:SetLight(1, 0, 0, 1, 0, 1, r1, r2, r3, 1, 1, 1, 1)
+			model:SetLight(1, 0, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, 1, 1, 1)
 		end
 	end
 end
@@ -1550,9 +1548,9 @@ function PowaAuras:UpdateSecondaryRandomColor(aura)
 		local secondaryTexture = self.SecondaryTextures[aura.id]
 		if not aura.textaura then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-				secondaryTexture:SetGradientAlpha(aura.gradientstyle, r1, r2, r3, 1.0, r4, r5, r6, 1.0)
+				secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r1, aura.r2, aura.r3, 1.0, aura.r4, aura.r5, aura.r6, 1.0)
 			else
-				secondaryTexture:SetVertexColor(r1, r2, r3)
+				secondaryTexture:SetVertexColor(aura.r1, aura.r2, aura.r3)
 			end
 			if aura.desaturation then
 				local shaderSupported = secondaryTexture:SetDesaturated(1)
@@ -1565,14 +1563,14 @@ function PowaAuras:UpdateSecondaryRandomColor(aura)
 				secondaryTexture:SetDesaturated(nil)
 			end
 		else
-			secondaryTexture:SetVertexColor(r1, r2, r3)
+			secondaryTexture:SetVertexColor(aura.r1, aura.r2, aura.r3)
 		end
 	else
 		local secondaryModel = self.SecondaryModels[aura.id]
 		if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-			secondaryModel:SetLight(1, 0, 0, 1, 0, 1, r1, r2, r3, 1, r4, r5, r6)
+			secondaryModel:SetLight(1, 0, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, aura.r4, aura.r5, aura.r6)
 		else
-			secondaryModel:SetLight(1, 0, 0, 1, 0, 1, r1, r2, r3, 1, 1, 1, 1)
+			secondaryModel:SetLight(1, 0, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, 1, 1, 1)
 		end
 	end
 end

@@ -7,11 +7,13 @@
 
 
 **4.25.8**
-* Major global slider optimasiations.
+* Major global slider optimisations.
 * Opening the "Aura Browser" from the Interface/Addons panel won't cause the "Aura Browser" to be closed immediately, when you leave the Interface/Addons panel by any way. (Should have done that ages ago...)
-* Double tapping "esc" or "enter" leaves the unlocked aura's frame. (Opens game menu/chat editbox.)
+* Double tapping "esc" or "enter" leaves the unlocked aura's frame, while the mouse is over it. (Opens game menu/chat editbox.)
 * Fixed an issue which caused start sounds played multiple times on cross-realm phasing zone changes.
 * Fixed a naming and tooltip issue with the timer invert auras slider, when changing aura types.
+* Closing the "Effect Editor" with the (X) button, will properly going to close the opened "Color Picker" and "Font Selector" frame too.
+* Some changes with the random color handling.
 * A lot of other minor fixes.
 
 **4.25.7**

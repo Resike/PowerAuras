@@ -1844,8 +1844,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						PowaBarConfigFrame:Hide()
-						PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
+						PowaAurasOptions:EditorClose()
 					</OnClick>
 				</Scripts>
 			</Button>
