@@ -2625,6 +2625,13 @@ function cPowaActionReady:CheckIfShouldShow(giveReason)
 			return false, PowaAuras.Text.nomReasonActionNotUsable
 		end
 	end
+	--[[local inRange = IsSpellInRange(self.buffname, "target")
+	if not inRange or inRange == 0 then
+		if not giveReason then
+			return false
+		end
+		return false, PowaAuras.Text.nomReasonActionNotUsable
+	end]]
 	-- Ignore if this is just Global Cooldown
 	if self.Debug then
 		PowaAuras:Message("CooldownOver = ", self.CooldownOver," cdduration = ", cdduration," InGCD = ", PowaAuras.InGCD)

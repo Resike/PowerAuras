@@ -1,6 +1,6 @@
 local PowaAurasOptions = PowaAurasOptions
 
--- 5.4.8 (18291)
+-- 5.4.8 (18414)
 
 PowaAurasOptions.ModelsCreature =
 {

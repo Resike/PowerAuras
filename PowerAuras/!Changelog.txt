@@ -6,6 +6,9 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.25.9**
+* Fixed an issue which caused inverted aura types starting sound not to be played more then once.
+
 **4.25.8**
 * Major global slider optimisations.
 * Opening the "Aura Browser" from the Interface/Addons panel won't cause the "Aura Browser" to be closed immediately, when you leave the Interface/Addons panel by any way. (Should have done that ages ago...)

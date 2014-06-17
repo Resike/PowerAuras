@@ -370,7 +370,7 @@ aideSpellLearned = "Check to show only for learned spells",
 nomIgnoreItemUseable = "Equipped Only",
 aideIgnoreItemUseable = "Ignores if item is usable.",
 nomCheckPet = "Pet",
-aideCheckPet = "Check to Monitor only Pet Spells.",
+aideCheckPet = "Check to monitor only Pet Spells.",
 
 nomOnMe = "Cast on Me",
 aideOnMe = "Only show if being cast on me.",
