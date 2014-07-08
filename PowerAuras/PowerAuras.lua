@@ -1881,7 +1881,31 @@ end
 -- This needs to be a standalone function! 
 function PowaAuras:InitialiseFrame(aura, frame)
 	frame:SetAlpha(math.min(aura.alpha, 0.99))
-	frame:SetPoint("Center", aura.x, aura.y)
+	--[[local Nameplates = { }
+	for _, plate in pairs({WorldFrame:GetChildren()}) do
+		if plate:IsVisible() then
+			local name = plate:GetName()
+			if name and strmatch(name, "^NamePlate%d+$") then
+				Nameplates[name] = { }
+				Nameplates[name].alpha = plate:GetAlpha()
+			end
+		end
+	end
+	local x = 0
+	local target
+	local platename
+	for k, v in pairs(Nameplates) do
+		--print(k, v.alpha)
+		if v.alpha == 1 then
+			target = k
+			x = x + 1
+		end
+	end
+	if x == 1 then
+		platename = target
+	end]]
+	--frame:SetParent(platename)
+	frame:SetPoint(--[["Center", platename,]] "Center", aura.x, aura.y)
 	frame:SetWidth(frame.baseL)
 	frame:SetHeight(frame.baseH)
 end

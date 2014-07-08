@@ -91,7 +91,7 @@
 						<Offset>
 							<AbsDimension x = "0" y = "0"/>
 						</Offset>
-					</Anchor>                   
+					</Anchor>
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -100,7 +100,7 @@
 					<OnEnter>
 						local level = self:GetParent():GetParent():GetID() + 1
 						local listFrame = _G["Lib_DropDownList"..level]
-						if ( not listFrame or not listFrame:IsShown() or select(2, listFrame:GetPoint()) ~= self ) then
+						if not listFrame or not listFrame:IsShown() or select(2, listFrame:GetPoint()) ~= self then
 							Lib_ToggleDropDownMenu(level, self:GetParent().value, nil, nil, nil, nil, self:GetParent().menuList, self)
 						end
 						Lib_UIDropDownMenu_StopCounting(self:GetParent():GetParent())
@@ -145,7 +145,7 @@
 			</Button>
 		</Frames>
 		<Scripts>
-			<OnLoad>				
+			<OnLoad>
 				self:SetFrameLevel(self:GetParent():GetFrameLevel()+2)
 			</OnLoad>
 			<OnClick>

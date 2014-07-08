@@ -1,4 +1,18 @@
-local max, gsub, tonumber, type, strmatch, issecure, securecall = max, gsub, tonumber, type, strmatch, issecure, securecall
+local gsub = gsub
+local issecure = issecure
+local max = max
+local securecall = securecall
+local strmatch = strmatch
+local tonumber = tonumber
+local type = type
+
+local CreateFrame = CreateFrame
+local GetCursorPosition = GetCursorPosition
+local GetCVar = GetCVar
+local GetScreenHeight = GetScreenHeight
+local GetScreenWidth = GetScreenWidth
+local OpenColorPicker = OpenColorPicker
+local PlaySound = PlaySound
 
 LIB_UIDROPDOWNMENU_MINBUTTONS = 8
 LIB_UIDROPDOWNMENU_MAXBUTTONS = 8
@@ -84,7 +98,7 @@ function Lib_UIDropDownMenu_Initialize(frame, initFunction, displayMode, level, 
 		_G[name.."ButtonPushedTexture"]:SetTexture("")
 		_G[name.."ButtonHighlightTexture"]:SetTexture("")
 		_G[name.."Button"]:ClearAllPoints()
-		_G[name.."Button"]:SetPoint("LEFT", name.."Text", "LEFT", - 9, 0)
+		_G[name.."Button"]:SetPoint("LEFT", name.."Text", "LEFT", -9, 0)
 		_G[name.."Button"]:SetPoint("RIGHT", name.."Text", "RIGHT", 6, 0)
 		frame.displayMode = "MENU"
 	end
@@ -305,7 +319,7 @@ function Lib_UIDropDownMenu_AddButton(info, level)
 	displayInfo:ClearAllPoints()
 	if info.notCheckable then
 		if info.justifyH and info.justifyH == "CENTER" then
-			displayInfo:SetPoint("CENTER", button, "CENTER", - 7, 0)
+			displayInfo:SetPoint("CENTER", button, "CENTER", -7, 0)
 		else
 			displayInfo:SetPoint("LEFT", button, "LEFT", 0, 0)
 		end
@@ -469,7 +483,7 @@ function Lib_UIDropDownMenu_Refresh(frame, useValue, dropdownLevel)
 end
 
 function Lib_UIDropDownMenu_RefreshAll(frame, useValue)
-	for dropdownLevel = LIB_UIDROPDOWNMENU_MENU_LEVEL, 2, - 1 do
+	for dropdownLevel = LIB_UIDROPDOWNMENU_MENU_LEVEL, 2, -1 do
 		local listFrame = _G["Lib_DropDownList"..dropdownLevel]
 		if listFrame:IsShown() then
 			Lib_UIDropDownMenu_Refresh(frame, nil, dropdownLevel)
@@ -624,7 +638,7 @@ function Lib_ToggleDropDownMenu(level, value, dropDownFrame, anchorName, xOffset
 		listFrame:SetScale(uiScale)
 		listFrame:Hide()
 		local anchorFrame
-		if level == 1 then	
+		if level == 1 then
 			Lib_UIDropDownMenuDelegate:SetAttribute("openmenu", dropDownFrame)
 			listFrame:ClearAllPoints()
 			if not anchorName then
@@ -649,7 +663,7 @@ function Lib_ToggleDropDownMenu(level, value, dropDownFrame, anchorName, xOffset
 				relativeTo = nil
 				local cursorX, cursorY = GetCursorPosition()
 				cursorX = cursorX / uiScale
-				cursorY =  cursorY / uiScale
+				cursorY = cursorY / uiScale
 				if not xOffset then
 					xOffset = 0
 				end
@@ -750,24 +764,24 @@ function Lib_ToggleDropDownMenu(level, value, dropDownFrame, anchorName, xOffset
 				offscreenY = 1
 			end
 			if listFrame:GetRight() > GetScreenWidth() then
-				offscreenX = 1	
+				offscreenX = 1
 			end
 			if offscreenY and offscreenX then
 				point = gsub(point, "TOP(.*)", "BOTTOM%1")
 				point = gsub(point, "(.*)LEFT", "%1RIGHT")
 				relativePoint = gsub(relativePoint, "TOP(.*)", "BOTTOM%1")
 				relativePoint = gsub(relativePoint, "(.*)RIGHT", "%1LEFT")
-				xOffset = - 11
-				yOffset = - 14
+				xOffset = -11
+				yOffset = -14
 			elseif offscreenY then
 				point = gsub(point, "TOP(.*)", "BOTTOM%1")
 				relativePoint = gsub(relativePoint, "TOP(.*)", "BOTTOM%1")
 				xOffset = 0
-				yOffset = - 14
+				yOffset = -14
 			elseif offscreenX then
 				point = gsub(point, "(.*)LEFT", "%1RIGHT")
 				relativePoint = gsub(relativePoint, "(.*)RIGHT", "%1LEFT")
-				xOffset = - 11
+				xOffset = -11
 				yOffset = 14
 			else
 				xOffset = 0
@@ -861,10 +875,10 @@ function Lib_UIDropDownMenu_JustifyText(frame, justification)
 		text:SetPoint("LEFT", frame:GetName().."Left", "LEFT", 27, 2)
 		text:SetJustifyH("LEFT")
 	elseif justification == "RIGHT" then
-		text:SetPoint("RIGHT", frame:GetName().."Right", "RIGHT", - 43, 2)
+		text:SetPoint("RIGHT", frame:GetName().."Right", "RIGHT", -43, 2)
 		text:SetJustifyH("RIGHT")
 	elseif justification == "CENTER" then
-		text:SetPoint("CENTER", frame:GetName().."Middle", "CENTER", - 5, 2)
+		text:SetPoint("CENTER", frame:GetName().."Middle", "CENTER", -5, 2)
 		text:SetJustifyH("CENTER")
 	end
 end

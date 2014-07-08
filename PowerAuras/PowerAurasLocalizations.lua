@@ -854,7 +854,7 @@ PlayerImportDialogCancelButton1 = "Reject",
 
 aideCommsRegisterFailure = "There was an error when setting up addon communications.",
 aideBlockIncomingAuras = "Prevent anybody sending you auras.",
-aideDisableFrameScaling = "Disabled the rescale button on the frames.",
+aideDisableFrameScaling = "Disables the rescale button on the frames.",
 nomBlockIncomingAuras = "Block Incoming Auras",
 nomDisableScaling = "Disable Frame Scaling",
 aideFixExports = "Check this when aura exports are not functioning correctly and leave you with a blank textbox.",
