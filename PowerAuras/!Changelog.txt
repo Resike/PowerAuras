@@ -6,6 +6,13 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.26.0**
+* Fixed an issue which didn't let the addon properly load custom textures from subfolders.
+* Fixed an issue with stack handling with "Spell Cooldown" and "Action Usable" aura types.
+* Added 4 way scaling for options frames.
+* Some localization fixes.
+* Some other smaller fixes.
+
 **4.25.9**
 * Fixed an issue which caused inverted aura types starting sound not to be played more then once.
 

@@ -130,7 +130,7 @@
 		<Size>
 			<AbsDimension x = "384" y = "218"/>
 		</Size>
-		<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\DialogFrame\UI-DialogBox-Border" tile = "true">
+		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
 			<BackgroundInsets>
 				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
 			</BackgroundInsets>
@@ -263,7 +263,7 @@
 		<Size>
 			<AbsDimension x = "384" y = "135"/>
 		</Size>
-		<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\DialogFrame\UI-DialogBox-Border" tile = "true">
+		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
 			<BackgroundInsets>
 				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
 			</BackgroundInsets>
@@ -361,7 +361,7 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface\DialogFrame\UI-DialogBox-Border" tile = "true">
+		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
 			<BackgroundInsets>
 				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
 			</BackgroundInsets>
@@ -395,7 +395,7 @@
 		<!-- Title Box -->
 		<Layers>
 			<Layer>
-				<Texture name = "PowaOptionsHeaderTexture" file = "Interface\DialogFrame\UI-DialogBox-Header">
+				<Texture name = "PowaOptionsHeaderTexture" file = "Interface/DialogFrame/UI-DialogBox-Header">
 					<Size>
 						<AbsDimension x = "200" y = "32"/>
 					</Size>
@@ -450,7 +450,7 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 					<EdgeSize>
 						<AbsValue val = "12"/>
 					</EdgeSize>
@@ -728,7 +728,7 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 					<EdgeSize>
 						<AbsValue val = "16"/>
 					</EdgeSize>
@@ -841,7 +841,7 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 					<EdgeSize>
 						<AbsValue val = "16"/>
 					</EdgeSize>
@@ -1537,7 +1537,7 @@
 		<HitRectInsets>
 			<AbsInset left = "0" right = "0" top = "-2" bottom = "1"/>
 		</HitRectInsets>
-		<Backdrop bgFile = "Interface\Buttons\UI-SliderBar-Background" edgeFile = "Interface\Buttons\UI-SliderBar-Border" tile = "true">
+		<Backdrop bgFile = "Interface/Buttons/UI-SliderBar-Background" edgeFile = "Interface/Buttons/UI-SliderBar-Border" tile = "true">
 			<EdgeSize>
 				<AbsValue val = "8"/>
 			</EdgeSize>
@@ -1583,7 +1583,7 @@
 				<Anchors>
 					<Anchor point = "TOP" relativePoint = "BOTTOM"/>
 				</Anchors>
-				<Backdrop bgFile = "Interface\ChatFrame\ChatFrameBackground" edgeFile = "Interface\ChatFrame\ChatFrameBackground" tile = "true">
+				<Backdrop bgFile = "Interface/ChatFrame/ChatFrameBackground" edgeFile = "Interface/ChatFrame/ChatFrameBackground" tile = "true">
 					<EdgeSize>
 						<AbsValue val = "1"/>
 					</EdgeSize>
@@ -1766,7 +1766,7 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\DialogFrame\UI-DialogBox-Border" tile = "true">
+		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
 			<BackgroundInsets>
 				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
 			</BackgroundInsets>
@@ -1860,7 +1860,7 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 					<EdgeSize>
 						<AbsValue val = "12"/>
 					</EdgeSize>
@@ -2981,7 +2981,7 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 							<EdgeSize>
 								<AbsValue val = "12"/>
 							</EdgeSize>
@@ -4327,7 +4327,7 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 							<EdgeSize>
 								<AbsValue val = "12"/>
 							</EdgeSize>
@@ -4743,7 +4743,7 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 							<EdgeSize>
 								<AbsValue val = "12"/>
 							</EdgeSize>
@@ -4995,7 +4995,7 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 							<EdgeSize>
 								<AbsValue val = "12"/>
 							</EdgeSize>
@@ -5494,7 +5494,7 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 							<EdgeSize>
 								<AbsValue val = "12"/>
 							</EdgeSize>
@@ -6028,7 +6028,7 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\DialogFrame\UI-DialogBox-Border" tile = "true">
+		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
 			<BackgroundInsets>
 				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
 			</BackgroundInsets>
@@ -6140,7 +6140,7 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface\DialogFrame\UI-DialogBox-Background" edgeFile = "Interface\Tooltips\UI-Tooltip-Border" tile = "true">
+				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
 					<EdgeSize>
 						<AbsValue val = "12"/>
 					</EdgeSize>

@@ -1498,6 +1498,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 end
 
 function cPowaAura:CheckStacks(count)
+	if not count then
+		count = 0
+	end
 	local operator = self.stacksOperator or PowaAuras.DefaultOperator
 	local stacks = self.stacks or 0
 	local stacksLower = self.stacksLower or 0
@@ -2602,10 +2605,8 @@ function cPowaActionReady:CheckIfShouldShow(giveReason)
 	if self.Stacks then
 		self.Stacks:SetStackCount(charges)
 	end
-	if self.stacksOperator ~= PowaAuras.DefaultOperator then
-		if not self:CheckStacks(charges) then
-			return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonStacksMismatch, charges, self:StacksText())
-		end
+	if not self:CheckStacks(charges) then
+		return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonStacksMismatch, charges, self:StacksText())
 	end
 	if not enabled then
 		if self.Timer then
@@ -2744,10 +2745,8 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 	if self.Stacks then
 		self.Stacks:SetStackCount(charges)
 	end
-	if self.stacksOperator ~= PowaAuras.DefaultOperator then
-		if not self:CheckStacks(charges) then
-			return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonStacksMismatch, charges, self:StacksText())
-		end
+	if not self:CheckStacks(charges) then
+		return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonStacksMismatch, charges, self:StacksText())
 	end
 	if not enabled then
 		if not self.inverse and self.mine then
