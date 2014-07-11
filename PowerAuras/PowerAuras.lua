@@ -5,7 +5,7 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.26.0   \//      \// \//    \\/     \\/      \//  \//       
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.26.1   \//      \// \//    \\/     \\/      \//  \//       
 
 	Power Auras Classic
 	Author: Resike
@@ -350,8 +350,10 @@ end
 
 function PowaAuras:CustomTexPath(customname)
 	local texpath
-	if string.find(customname, ".", 1, true) then
+	if string.find(customname, ".", 1, true) and not string.find(customname, "\\") then
 		texpath = PowaGlobalMisc.PathToAuras..customname
+	elseif string.find(customname, "\\") then
+		texpath = customname
 	else
 		local spellId = select(3, string.find(customname, "%[?(%d+)%]?"))
 		if spellId then

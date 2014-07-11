@@ -2865,7 +2865,7 @@ function PowaAurasOptions:CustomTextChanged()
 		editboxtext = string.gsub(editboxtext, "%\\\\", "%\\")
 	end
 	while string.find(editboxtext, "%//") do
-		editboxtext = string.gsub(editboxtext, "//", "/")
+		editboxtext = string.gsub(editboxtext, "%//", "%\\")
 	end
 	aura.customname = editboxtext
 	if string.find(aura.customname, "%.") or not aura.customname or aura.customname == "" then
@@ -2890,11 +2890,11 @@ function PowaAurasOptions:CustomModelsChanged()
 	if string.find(editboxtext, "%/") then
 		editboxtext = strtrim(editboxtext, "%/")
 	end
-	while string.find(editboxtext, "%\\\\") do
-		editboxtext = string.gsub(editboxtext, "%\\\\", "%\\")
+	while string.find(editboxtext, "%\\") do
+		editboxtext = string.gsub(editboxtext, "%\\", "%/")
 	end
 	while string.find(editboxtext, "%//") do
-		editboxtext = string.gsub(editboxtext, "//", "/")
+		editboxtext = string.gsub(editboxtext, "%//", "%/")
 	end
 	aura.modelcustompath = editboxtext
 	self:ResetModel(aura)
