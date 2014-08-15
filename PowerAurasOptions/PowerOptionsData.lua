@@ -1141,7 +1141,7 @@ PowaAurasOptions.ModelsCreature =
 "creature\\raptor\\raptorpet.m2",
 "creature\\raptoroutland\\raptor_outland.m2",
 "creature\\rat\\rat.m2",
---"creature\\ravager2\\ravager2mount.m2",
+"creature\\ravager2\\ravager2mount.m2",
 "creature\\raven\\raven.m2",
 "creature\\raven\\raven_low01.m2",
 "creature\\ravengod\\ravengod.m2",
@@ -1459,7 +1459,7 @@ PowaAurasOptions.ModelsCreature =
 "creature\\travelersyak\\travelersyakseat2.m2",
 "creature\\travelersyak\\travelersyakvendor1.m2",
 "creature\\travelersyak\\travelersyakvendor2.m2",
----"creature\\treasuregoblinpet\\treasuregoblinpet.m2",
+"creature\\treasuregoblinpet\\treasuregoblinpet.m2",
 "creature\\tree\\ashenvaletreefalling01.m2",
 "creature\\tree\\ashenvaletreefalling01_invisible.m2",
 "creature\\trex\\hordearmoredtrex.m2",
@@ -21246,5 +21246,8 @@ PowaAurasOptions.ModelsDisplayInfo =
 [51988]="creature\\stbernarddogpet\\stbernarddogpet.m2",
 [51990]="creature\\murloc\\murloccrusader.m2",
 [51993]="creature\\elitehippogryph\\elitehippogryph.m2",
-[52002]="creature\\invisiblestalker\\invisiblestalker.m2"
+[51994]="creature\\treasuregoblinpet\\treasuregoblinpet.m2",
+[52002]="creature\\invisiblestalker\\invisiblestalker.m2",
+[55896]="creature\\clockworkhorse\\clockworkhorse.m2",
+[55907]="creature\\ravager2\\ravager2mount.m2"
 }

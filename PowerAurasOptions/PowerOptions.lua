@@ -41,6 +41,19 @@ local GRAY_FONT_COLOR = GRAY_FONT_COLOR
 local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local NORMAL_FONT_COLOR = NORMAL_FONT_COLOR
 
+if InterfaceOptionsFrame then
+	InterfaceOptionsFrame:HookScript("OnShow", function(self)
+		for i, v in pairs(UISpecialFrames) do
+			if v == "PowaOptionsFrame" then
+				tremove(UISpecialFrames, i)
+			end
+		end
+	end)
+	InterfaceOptionsFrame:HookScript("OnHide", function(self)
+		tinsert(UISpecialFrames, "PowaOptionsFrame")
+	end)
+end
+
 -- Main Options
 function PowaAurasOptions:OptionsOnLoad()
 	SlashCmdList["PowerAuras"] = function(msg)
@@ -1398,17 +1411,8 @@ function PowaAurasOptions:DoCopyEffect(idFrom, idTo, isMove)
 	self:UpdateMainOption()
 end
 
-function PowaAurasOptions:MainOptionShow(special)
-	if special then
-		for i, v in pairs(UISpecialFrames) do
-			if v == "PowaOptionsFrame" then
-				tremove(UISpecialFrames, i)
-			end
-		end
-		InterfaceOptionsFrame:HookScript("OnHide", function(self)
-			tinsert(UISpecialFrames, "PowaOptionsFrame")
-		end)
-	else
+function PowaAurasOptions:MainOptionShow()
+	if not InterfaceOptionsFrame:IsShown() then
 		tinsert(UISpecialFrames, "PowaOptionsFrame")
 	end
 	if PowaOptionsFrame:IsVisible() then

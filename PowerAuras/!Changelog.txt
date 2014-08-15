@@ -1,10 +1,16 @@
 **Issues:**
 * Leftover slider/dropdown/model optimisations.
-* Timed auras redisplay fix at phasing events.
+* Timed auras redisplay fix at phasing events/rechecks.
 * Duel with party members, enemy target bug.
 * Change Old-Animation's update type to AnimationGroup.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
+
+**4.26.2**
+* Fixed an issue which sometimes allowed the esc key close the configuration frame, when it should not.
+* Added two new sound: "Health Low", "Mana Low".
+* Model updates.
+* Some other minor fixes.
 
 **4.26.1**
 * Fixed a leftover issue with custom textures.

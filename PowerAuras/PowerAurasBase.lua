@@ -703,7 +703,9 @@ Sound =
 	"Wicked Laugh Male.mp3",
 	"Wilhelm.mp3",
 	"Wolf.mp3",
-	"Yeehaw.mp3"
+	"Yeehaw.mp3",
+	"Health Low.mp3",
+	"Mana Low.mp3"
 },
 
 TimerTextures =

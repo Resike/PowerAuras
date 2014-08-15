@@ -354,7 +354,7 @@
 						PowaShowAuraBrowserButtonText:SetText(PowaAurasOptions.Text.nomPowaShowAuraBrowser)
 					</OnLoad>
 					<OnClick>
-						PowaAurasOptions:MainOptionShow(true)
+						PowaAurasOptions:MainOptionShow()
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -376,7 +376,7 @@
 					</OnLoad>
 					<OnClick>
 						PowaAurasOptions:ResetPositions()
-						PowaAurasOptions:MainOptionShow(true)
+						PowaAurasOptions:MainOptionShow()
 					</OnClick>
 				</Scripts>
 			</Button>

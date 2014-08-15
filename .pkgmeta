@@ -1,13 +1,13 @@
 package-as: PowerAuras
 
 move-folders:
-	PowerAuras/PowerAuras: PowerAuras
-	PowerAuras/PowerAurasOptions: PowerAurasOptions
+    PowerAuras/PowerAuras: PowerAuras
+    PowerAuras/PowerAurasOptions: PowerAurasOptions
 
 manual-changelog:
-	filename: PowerAuras/!Changelog.txt
-	markup-type: creole
+    filename: PowerAuras/!Changelog.txt
+    markup-type: creole
 
 ignore:
-	- PowerAuras/!CheckTranslates.pl
-	- PowerAurasOptions/PowerOptionsDump.lua
+    - PowerAuras/!CheckTranslates.pl
+    - PowerAurasOptions/PowerOptionsDump.lua
