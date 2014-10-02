@@ -397,7 +397,7 @@ function PowaAurasOptions:GetUnitInfo(unit)
 	UnitInfo["Name"] = Name
 	UnitInfo["Realm"] = Realm
 	UnitInfo["Level"] = UnitLevel(unit)
-	local LocClass, Class= UnitClass(unit)
+	local LocClass, Class = UnitClass(unit)
 	UnitInfo["LocClass"] = LocClass
 	UnitInfo["Class"] = Class
 	UnitInfo["Sex"] = UnitSex(unit)

@@ -12,6 +12,8 @@ local tonumber = tonumber
 local tostring = tostring
 local type = type
 
+local UIErrorsFrame = UIErrorsFrame
+
 local UIERRORS_HOLD_TIME = UIERRORS_HOLD_TIME
 
 local PowaAuras =

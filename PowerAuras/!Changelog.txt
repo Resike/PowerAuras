@@ -6,6 +6,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.26.3**
+* Fixed an issue with melee offhand damage calculations.
+* Some other smaller changes.
+
 **4.26.2**
 * Fixed an issue which sometimes allowed the esc key close the configuration frame, when it should not.
 * Added two new sound: "Health Low", "Mana Low".

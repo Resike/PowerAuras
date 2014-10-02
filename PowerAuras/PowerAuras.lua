@@ -52,6 +52,8 @@ local SetPortraitToTexture = SetPortraitToTexture
 local UnitInVehicle = UnitInVehicle
 local UnitOnTaxi = UnitOnTaxi
 
+local UIParent = UIParent
+
 local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
 
 -- Exposed for Saving

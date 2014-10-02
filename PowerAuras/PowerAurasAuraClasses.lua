@@ -6,6 +6,7 @@ local format = format
 local getmetatable = getmetatable
 local math = math
 local pairs = pairs
+local print = print
 local select = select
 local setmetatable = setmetatable
 local string = string
@@ -87,6 +88,8 @@ local UnitPowerType = UnitPowerType
 local UnitRangedDamage = UnitRangedDamage
 local UnitStat = UnitStat
 local UnitThreatSituation = UnitThreatSituation
+
+local UIParent = UIParent
 
 local BOOKTYPE_PET = BOOKTYPE_PET
 local BOOKTYPE_SPELL = BOOKTYPE_SPELL
@@ -682,10 +685,9 @@ function cPowaAura:GetAuraText()
 	text = self:SubstituteInText(text , "%%lowMdmg", function() return math.floor(lowDmg) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%highMdmg", function() return math.ceil(hiDmg) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%avgMdmg", function() return (math.ceil(hiDmg) + math.floor(lowDmg)) / 2 end, PowaAuras.Text.Unknown)
-	local lowDmg, hiDmg, offlowDmg, offhiDmg, posBuff, negBuff, percentmod = UnitDamage("player")
 	text = self:SubstituteInText(text , "%%offlowMdmg", function() return math.floor(offlowDmg) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%offhighMdmg", function() return math.ceil(offhiDmg) end, PowaAuras.Text.Unknown)
-	text = self:SubstituteInText(text , "%%avgMdmg", function() return (math.ceil(offhiDmg) + math.floor(offlowDmg)) / 2 end, PowaAuras.Text.Unknown)
+	text = self:SubstituteInText(text , "%%avgOdmg", function() return (math.ceil(offhiDmg) + math.floor(offlowDmg)) / 2 end, PowaAuras.Text.Unknown)
 	local speed, lowDmg, hiDmg, posBuff, negBuff, percent = UnitRangedDamage("player")
 	text = self:SubstituteInText(text , "%%lowRdmg", function() return math.floor(lowDmg) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%highRdmg", function() return math.ceil(hiDmg) end, PowaAuras.Text.Unknown)

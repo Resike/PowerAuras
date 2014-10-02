@@ -37,6 +37,8 @@ local UnitAura = UnitAura
 local UnitExists = UnitExists
 local UnitName = UnitName
 
+local UIParent = UIParent
+
 local GRAY_FONT_COLOR = GRAY_FONT_COLOR
 local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local NORMAL_FONT_COLOR = NORMAL_FONT_COLOR
