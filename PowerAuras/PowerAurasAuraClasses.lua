@@ -769,7 +769,7 @@ function cPowaAura:CheckState(giveReason)
 		end
 	end
 	-- It's not dead it's resting
-	if (self.isResting == false and IsResting() == 1 and not PowaAuras.WeAreInCombat) or (self.isResting == true and (IsResting() ~= 1)) then
+	if (self.isResting == false and IsResting() == true and not PowaAuras.WeAreInCombat) or (self.isResting == true and (IsResting() ~= true)) then
 		if not giveReason then
 			return false
 		end
@@ -872,7 +872,7 @@ function cPowaAura:CheckState(giveReason)
 		end
 		return false, PowaAuras.Text.nomReasonInCombat
 	end
-	if (PowaAuras.PvPFlagSet == 1 and self.PvP == false) or (PowaAuras.PvPFlagSet ~= 1 and self.PvP == true) then
+	if (PowaAuras.PvPFlagSet == true and self.PvP == false) or (PowaAuras.PvPFlagSet ~= true and self.PvP == true) then
 		if not giveReason then
 			return false
 		end

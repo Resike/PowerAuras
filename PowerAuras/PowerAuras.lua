@@ -601,7 +601,7 @@ function PowaAuras:OnUpdate(elapsed)
 	if not self.ModTest and checkAura then
 		if self.ChecksTimer > (self.NextCheck + PowaMisc.OnUpdateLimit) then
 			self.ChecksTimer = 0
-			local isMounted = IsMounted() == 1 and true or self:IsDruidTravelForm()
+			local isMounted = IsMounted() == true and true or self:IsDruidTravelForm()
 			if isMounted ~= self.WeAreMounted then
 				self.DoCheck.All = true
 				self.WeAreMounted = isMounted

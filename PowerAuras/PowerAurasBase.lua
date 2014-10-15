@@ -880,15 +880,15 @@ PowaAuras:RegisterAuraType('GTFOFriendlyFire')
 PowaAuras.GCDSpells =
 {
 	PALADIN = 35395, -- Crusader Strike
-	PRIEST = 585, -- Smite
+	PRIEST = 589, -- Shadow Word: Pain
 	SHAMAN = 403, -- Lightning Bolt
 	WARRIOR = 34428, -- Victory Rush
 	DRUID = 5176, -- Wrath
-	MAGE = 44614, -- Frostfire Bolt
-	WARLOCK = 686, -- Shadow Bolt
-	ROGUE = 1752, -- Sinister Strike
+	MAGE = 122, -- Frost Nova
+	WARLOCK = 866, -- Summon Imp
+	ROGUE = 8676, -- Ambush
 	HUNTER = 982, -- Revive Pet
-	DEATHKNIGHT = 45902, -- Blood Strike
+	DEATHKNIGHT = 50842, -- Blood Boil
 	MONK = 100780 -- Jab
 }
 

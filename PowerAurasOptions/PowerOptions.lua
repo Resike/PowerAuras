@@ -5009,13 +5009,13 @@ function PowaAurasOptions:TernarySetState(button, value)
 	_G[button:GetName().."Text"]:SetTextColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 	if value == 0 then
 		button:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check")
-		button:SetChecked(0)
+		button:SetChecked(false)
 	elseif value == false then
 		button:SetCheckedTexture("Interface\\RAIDFRAME\\ReadyCheck-NotReady")
-		button:SetChecked(1)
+		button:SetChecked(true)
 	elseif value == true then
 		button:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check")
-		button:SetChecked(1)
+		button:SetChecked(true)
 	end
 end
 

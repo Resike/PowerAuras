@@ -6,6 +6,12 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.27.0**
+* Updated for 6.0.2.
+* Tri-state checkbutton fixes.
+* GDC updates.
+* Some other fixes.
+
 **4.26.3**
 * Fixed an issue with melee offhand damage calculations.
 * Some other smaller changes.
