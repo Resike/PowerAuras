@@ -2951,7 +2951,7 @@ function PowaAurasOptions:CustomSoundTextChanged(force)
 			PowaDropDownSoundButton:Disable()
 			PowaDropDownSound2Button:Disable()
 			local pathToSound
-			if string.find(aura.customsound, "\\") then
+			if string.find(aura.customsound, "\\") or string.find(aura.customsound, "/") then
 				pathToSound = aura.customsound
 			else
 				pathToSound = PowaGlobalMisc.PathToSounds..aura.customsound
@@ -2976,7 +2976,7 @@ function PowaAurasOptions:CustomSoundEndTextChanged(force)
 			PowaDropDownSoundEndButton:Disable()
 			PowaDropDownSound2EndButton:Disable()
 			local pathToSound
-			if string.find(aura.customsoundend, "\\") then
+			if string.find(aura.customsoundend, "\\") or string.find(aura.customsoundend, "/") then
 				pathToSound = aura.customsoundend
 			else
 				pathToSound = PowaGlobalMisc.PathToSounds..aura.customsoundend
@@ -5053,7 +5053,7 @@ function PowaAurasOptions:OptionTest()
 				self:Message("Playing Custom end sound ", aura.customsoundend)
 			end
 			local pathToSound
-			if string.find(aura.customsoundend, "\\") then
+			if string.find(aura.customsoundend, "\\") or string.find(aura.customsoundend, "/") then
 				pathToSound = aura.customsoundend
 			else
 				pathToSound = PowaGlobalMisc.PathToSounds..aura.customsoundend
@@ -5079,7 +5079,7 @@ function PowaAurasOptions:OptionTest()
 		aura.Active = true
 		if aura.customsound ~= "" then
 			local pathToSound
-			if string.find(aura.customsound, "\\") then
+			if string.find(aura.customsound, "\\") or string.find(aura.customsound, "/") then
 				pathToSound = aura.customsound
 			else
 				pathToSound = PowaGlobalMisc.PathToSounds .. aura.customsound

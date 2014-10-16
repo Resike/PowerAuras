@@ -606,7 +606,7 @@ function PowaAuras:OnUpdate(elapsed)
 				self.DoCheck.All = true
 				self.WeAreMounted = isMounted
 			end
-			local isInVehicle = UnitInVehicle("player") ~= nil
+			local isInVehicle = UnitInVehicle("player")
 			if isInVehicle ~= self.WeAreInVehicle then
 				self.DoCheck.All = true
 				self.WeAreInVehicle = isInVehicle
@@ -1599,7 +1599,7 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 		aura.StartSoundPlayed = true
 		if aura.customsound ~= "" then
 			local pathToSound
-			if string.find(aura.customsound, "\\") then
+			if string.find(aura.customsound, "\\") or string.find(aura.customsound, "/") then
 				pathToSound = aura.customsound
 			else
 				pathToSound = PowaGlobalMisc.PathToSounds .. aura.customsound
@@ -2245,7 +2245,7 @@ function PowaAuras:UpdateAura(aura, elapsed)
 			if not self.ModTest and not aura.EndSoundPlayed then
 				if aura.customsoundend ~= "" then
 					local pathToSound
-					if string.find(aura.customsoundend, "\\") then
+					if string.find(aura.customsoundend, "\\") or string.find(aura.customsoundend, "/") then
 						pathToSound = aura.customsoundend
 					else
 						pathToSound = PowaGlobalMisc.PathToSounds..aura.customsoundend

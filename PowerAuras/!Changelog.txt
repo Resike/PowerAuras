@@ -6,6 +6,12 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.27.1**
+* Converted sounds back to ogg vorbis. (Vorbis 2.0, 320kbps, 48kHz, CBR)
+* Vehicle tri-state checkbutton fix.
+* Fixed some issues with custom sounds.
+* Some other smaller fixes.
+
 **4.27.0**
 * Updated for 6.0.2.
 * Tri-state checkbutton fixes.
