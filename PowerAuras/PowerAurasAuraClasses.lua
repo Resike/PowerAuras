@@ -2538,7 +2538,7 @@ cPowaCombo.TooltipOptions = {r = 1.0, g = 1.0, b = 0.0, showBuffName = true}
 function cPowaCombo:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)
 	PowaAuras.Events.UNIT_COMBO_POINTS = true
-	PowaAuras.Events.PLAYER_TARGET_CHANGED = true
+	--PowaAuras.Events.PLAYER_TARGET_CHANGED = true
 	if PowaAuras.playerclass == "DRUID" then
 		PowaAuras.Events.UPDATE_SHAPESHIFT_FORM = true
 	end
