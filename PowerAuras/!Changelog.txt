@@ -8,7 +8,7 @@
 
 **4.27.2**
 * Warlock GCD fix.
-* Combom points should work without target.
+* Combo points should work without target.
 
 **4.27.1**
 * Converted sounds back to ogg vorbis. (Vorbis 2.0, 320kbps, 48kHz, CBR)
