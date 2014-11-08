@@ -1848,7 +1848,7 @@ function PowaAurasOptions:InitPage(aura)
 	else
 		PowaIconTexture:SetTexture(aura.icon)
 	end
-	local checkTexture = 0
+	local checkTexture
 	if aura.owntex then
 		checkTexture = AuraTexture:SetTexture(PowaIconTexture:GetTexture())
 		PowaBarAuraTextureSlider:Show()
@@ -2098,7 +2098,7 @@ function PowaAurasOptions:InitPage(aura)
 		PowaBarAuraTextureSliderText:SetText(PowaAurasOptions.Text.nomTexture)
 		checkTexture = AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture..".tga")
 	end
-	if checkTexture ~= 1 then
+	if not checkTexture then
 		AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait.tga")
 	end
 	if aura.randomcolor then
@@ -2171,7 +2171,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 		value = 1
 		self:SetValue(value)
 	end
-	local checkTexture = 0
+	local checkTexture
 	local aura = self.Auras[self.CurrentAuraId]
 	if aura.owntex then
 		checkTexture = AuraTexture:SetTexture(aura.icon)
@@ -2188,7 +2188,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 	else
 		checkTexture = AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..value..".tga")
 	end
-	if checkTexture ~= 1 then
+	if not checkTexture then
 		if aura.owntex then
 			AuraTexture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark")
 		else
@@ -2213,9 +2213,8 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 		if aura.wowtex then
 			texture:SetTexture(self.WowTextures[aura.texture])
 		elseif aura.owntex then
-			local checkTexture = 0
-			checkTexture = texture:SetTexture(aura.icon)
-			if checkTexture ~= 1 then
+			local checkTexture = texture:SetTexture(aura.icon)
+			if not checkTexture then
 				texture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark")
 			else
 				texture:SetTexture(aura.icon)
@@ -3087,9 +3086,8 @@ function PowaAurasOptions:OwntexChecked()
 		PowaFontButton:Hide()
 		PowaBarAnimationSlider:Hide()
 		PowaBarAuraTextureSliderText:SetText(PowaAurasOptions.Text.nomTexture)
-		local checkTexture = 0
-		checkTexture = AuraTexture:SetTexture(PowaIconTexture:GetTexture())
-		if checkTexture ~= 1 then
+		local checkTexture = AuraTexture:SetTexture(PowaIconTexture:GetTexture())
+		if not checkTexture then
 			AuraTexture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark")
 		end
 	else
@@ -3356,9 +3354,8 @@ function PowaAurasOptions:CustomTexturesChecked()
 		PowaBarCustomModelsEditBox:Hide()
 		PowaBarAnimationSlider:Hide()
 		PowaBarAuraTextureSliderText:SetText(PowaAurasOptions.Text.nomTexture)
-		local checkTexture = 0
-		checkTexture = AuraTexture:SetTexture(self:CustomTexPath(aura.customname))
-		if checkTexture ~= 1 then
+		local checkTexture = AuraTexture:SetTexture(self:CustomTexPath(aura.customname))
+		if not checkTexture then
 			AuraTexture:SetTexture("Interface\\CharacterFrame\\TempPortrait")
 		end
 	else

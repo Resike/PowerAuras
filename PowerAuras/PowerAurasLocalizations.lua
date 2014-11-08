@@ -4872,6 +4872,8 @@ PowaAuras.Anim[7] = "漏電效果"
 PowaAuras.Anim[8] = "收縮效果"
 PowaAuras.Anim[9] = "火焰效果"
 PowaAuras.Anim[10] = "盤旋效果"
+PowaAuras.Anim[11] = "順時旋轉"
+PowaAuras.Anim[12] = "逆時旋轉"
 
 PowaAuras.BeginAnimDisplay[0] = "[無]"
 PowaAuras.BeginAnimDisplay[1] = "由小放大"
@@ -4895,6 +4897,7 @@ PowaAuras.EndAnimDisplay[4] = "旋轉漸隱"
 PowaAuras.EndAnimDisplay[5] = "旋轉縮小"
 
 PowaAuras.Sound[0] = "[無]"
+PowaAuras.Sound[30] = "[無]"
 
 PowaAuras:MergeTables(PowaAuras.Text,
 {
@@ -4905,6 +4908,7 @@ aucun = "無",
 mainHand = "主手",
 offHand = "副手",
 bothHands = "雙手",
+Unknown = "未知",
 
 DebuffType =
 {
@@ -4912,32 +4916,56 @@ DebuffType =
 	Disease = "疾病",
 	Curse = "詛咒",
 	Poison = "中毒",
-	Enrage = "Enrage"
+	Enrage = "狂怒"
 },
 
 DebuffCatType =
 {
-	[PowaAuras.DebuffCatType.CC] = "CC",
+	[PowaAuras.DebuffCatType.CC] = "控制",
 	[PowaAuras.DebuffCatType.Silence] = "沈默",
-	[PowaAuras.DebuffCatType.Snare] = "誘捕",
+	[PowaAuras.DebuffCatType.Snare] = "陷阱",
 	[PowaAuras.DebuffCatType.Stun] = "昏迷",
-	[PowaAuras.DebuffCatType.Root] = "無法行動",
+	[PowaAuras.DebuffCatType.Root] = "定身",
 	[PowaAuras.DebuffCatType.Disarm] = "繳械",
 	[PowaAuras.DebuffCatType.PvE] = "PvE"
 },
 
+Role =
+{
+	RoleTank = "坦克",
+	RoleHealer = "治療",
+	RoleMeleDps = "近戰DD",
+	RoleRangeDps = "遠程DD"
+},
+
+nomReasonRole =
+{
+	RoleTank = "是坦克",
+	RoleHealer = "是治療",
+	RoleMeleDps = "是近戰DD",
+	RoleRangeDps = "是遠程DD"
+},
+
+nomReasonNotRole =
+{
+	RoleTank = "不是坦克",
+	RoleHealer = "不是治療",
+	RoleMeleDps = "不是近戰DD",
+	RoleRangeDps = "不是遠程DD"
+},
+
 AuraType =
 {
-	[PowaAuras.BuffTypes.Buff] = "Buff",
-	[PowaAuras.BuffTypes.Debuff] = "Debuff",
-	[PowaAuras.BuffTypes.AoE] = "AOE法術",
-	[PowaAuras.BuffTypes.TypeDebuff] = "Debuff類型",
+	[PowaAuras.BuffTypes.Buff] = "增益",
+	[PowaAuras.BuffTypes.Debuff] = "減益",
+	[PowaAuras.BuffTypes.AoE] = "範圍法術",
+	[PowaAuras.BuffTypes.TypeDebuff] = "減益類型",
 	[PowaAuras.BuffTypes.Enchant] = "武器強化",
 	[PowaAuras.BuffTypes.Combo] = "連擊點數",
 	[PowaAuras.BuffTypes.ActionReady] = "技能冷卻",
 	[PowaAuras.BuffTypes.Health] = "生命值",
-	[PowaAuras.BuffTypes.Mana] = "魔法值",
-	[PowaAuras.BuffTypes.EnergyRagePower] = "怒氣/能量/符文能量",
+	[PowaAuras.BuffTypes.Mana] = "法力值",
+	[PowaAuras.BuffTypes.EnergyRagePower] = "怒氣/能量/符能",
 	[PowaAuras.BuffTypes.Aggro] = "獲得仇恨",
 	[PowaAuras.BuffTypes.PvP] = "PvP標誌",
 	[PowaAuras.BuffTypes.Stance] = "姿態",
@@ -4945,246 +4973,503 @@ AuraType =
 	[PowaAuras.BuffTypes.SpellCooldown] = "自身技能",
 	[PowaAuras.BuffTypes.StealableSpell] = "可偷取法術",
 	[PowaAuras.BuffTypes.PurgeableSpell] = "可凈化法術",
-	[PowaAuras.BuffTypes.TypeBuff] = "Buff type",
-	[PowaAuras.BuffTypes.UnitMatch] = "Unit Match"
+	[PowaAuras.BuffTypes.Static] = "光環",
+	[PowaAuras.BuffTypes.Totems] = "圖騰",
+	[PowaAuras.BuffTypes.Pet] = "寵物",
+	[PowaAuras.BuffTypes.Runes] = "符文",
+	[PowaAuras.BuffTypes.Slots] = "裝備欄位",
+	[PowaAuras.BuffTypes.Items] = "物品",
+	[PowaAuras.BuffTypes.Tracking] = "追蹤技能",
+	[PowaAuras.BuffTypes.TypeBuff] = "增益類型",
+	[PowaAuras.BuffTypes.UnitMatch] = "單位符合",
+	[PowaAuras.BuffTypes.PetStance] = "寵物姿態",
+	[PowaAuras.BuffTypes.GTFO] = "GTFO 警示"
 },
 
--- Main
-nomEnable = "啟用",
-aideEnable = "啟用/禁用所有PowerAuras特效",
+PowerType =
+{
+	[-1] = "Default",
+	[SPELL_POWER_RAGE] = "怒氣",
+	[SPELL_POWER_FOCUS] = "集中",
+	[SPELL_POWER_ENERGY] = "能量",
+	[SPELL_POWER_RUNIC_POWER] = "符能",
+	[SPELL_POWER_SOUL_SHARDS] = "靈魂碎片",
+	[SPELL_POWER_LUNAR_ECLIPSE] = "月蝕",
+	[SPELL_POWER_SOLAR_ECLIPSE] = "日蝕",
+	[SPELL_POWER_HOLY_POWER] = "聖能",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	[SPELL_POWER_CHI] = "真氣",
+	[SPELL_POWER_SHADOW_ORBS] = "暗影寶珠",
+	[SPELL_POWER_BURNING_EMBERS] = "燃火餘燼",
+	[SPELL_POWER_DEMONIC_FURY] = "惡魔之怒"
+},
 
-nomDebug = "調試模式",
-aideDebug = "打開調試模式後,將在聊天窗口顯示特效的觸發條件等信息",
-nomTextureCount = "Max Textures",
-ListePlayer = "分類",
-ListeGlobal = "全局",
+Relative =
+{
+	NONE = "自由",
+	TOPLEFT = "左上",
+	TOP = "上",
+	TOPRIGHT = "右上",
+	RIGHT = "右",
+	BOTTOMRIGHT = "右下",
+	BOTTOM = "下",
+	BOTTOMLEFT = "左下",
+	LEFT = "左",
+	CENTER = "中"
+},
+
+Slots =
+{
+	Back = "背部",
+	Chest = "胸甲",
+	Feet = "腳",
+	Finger0 = "戒指1",
+	Finger1 = "戒指2",
+	Hands = "手",
+	Head = "頭部",
+	Legs = "腿部",
+	MainHand = "主手",
+	Neck = "頸部",
+	SecondaryHand = "副手",
+	Shirt = "襯衣",
+	Shoulder = "肩部",
+	Tabard = "外袍",
+	Trinket0 = "飾品1",
+	Trinket1 = "飾品2",
+	Waist = "腰部",
+	Wrist = "手腕"
+},
+
+SlotsToCheck = "選擇要檢查的裝備欄位",
+
+
+Okay = "確定",
+Cancel = "取消",
+
+
+-- Main
+nomEnable = "啟用 Power Auras",
+aideEnable = "啟用/禁用所有 Power Auras 特效",
+
+nomDebug = "除錯模式",
+aideDebug = "打開除錯模式後，將在聊天視窗顯示特效的觸發條件等訊息。",
+nomTextureCount = "材質數量上限",
+aideTextureCount = "若你增加了自訂材質，更改此項目",
+
+aideOverrideTextureCount = "若你增加了自訂材質，更改此項目",
+nomOverrideTextureCount = "覆寫材質數量",
+
+ListePlayer = "角色",
+ListeGlobal = "通用",
 aideMove = "移動特效",
-aideCopy = "復制特效",
-nomRename = "重命名",
-aideRename = "重命名我的特效分類名",
+aideCopy = "複製特效",
+nomRename = "重新命名",
+aideRename = "重新命名特效分類",
+
 nomTest = "測試",
-nomHide = "全部隱藏",
+nomTestAll = "測試全部",
+nomHide = "隱藏全部",
 nomEdit = "編輯",
+nomDonate = "捐款",
 nomNew = "新建",
 nomDel = "刪除",
-nomImport = "導入",
-nomExport = "導出",
-nomImportSet = "批量導入",
-nomExportSet = "批量導出",
-aideImport = "把特效字串粘貼(Ctrl+v)在此編輯框內,然後點擊\'接受\'按鈕",
-aideExport = "復制(Ctrl+c)此編輯框內的特效字串,與其它人分享你的特效",
-aideImportSet = "把批量特效字串粘貼(Ctrl+v)在此編輯框內,然後點擊\'接受\'按鈕,註意:批量導入時將會刪除本頁所有現有特效",
-aideExportSet = "復制(Ctrl+c)此編輯框內的特效字串,將此頁內所有特效與其它人分享",
-aideDel = "刪除所選特效(必須按住Ctrl鍵才能使用此功能)",
+nomImport = "匯入",
+nomExport = "匯出",
+nomImportSet = "整頁匯入",
+nomExportSet = "整頁匯出",
+nomUnlock = "解除鎖定",
+nomLock = "鎖定",
+
+aideImport = "把特效字串粘貼(Ctrl+V)在此編輯框內,然後點擊 匯入 按鈕",
+aideExport = "複製(Ctrl+C)此編輯框內的特效字串,與其它人分享你的特效",
+aideImportSet = "把整頁匯出的特效字串粘貼(Ctrl+V)在此編輯框內,然後點擊\'接受\'按鈕,注意:整頁匯入時將會刪除本頁所有的現有特效",
+aideExportSet = "複製(Ctrl+C)此編輯框內的特效字串,將此頁內所有特效與其它人分享",
+aideDel = "刪除所選特效\n(必須按住Ctrl鍵才能刪除)",
+
 nomMove = "移動",
-nomCopy = "復制",
-nomPlayerEffects = "我的特效",
+nomCopy = "複製",
+nomPlayerEffects = "角色特效",
 nomGlobalEffects = "通用特效",
-aideEffectTooltip = "按住Shift鍵點擊圖標以啟用/禁用該特效",
+aideEffectTooltip = "Shift-點擊: 啟用/禁用特效",
+aideEffectTooltip2 = "Ctrl-點擊: 執行檢測",
+aideEffectTooltip3 = "Alt-點擊: 設定 group size.", --todo
+
+aideItems = "輸入物品名稱，或者如[xxx]的物品ID",
+aideSlots = "輸入欄位名稱: 背部, 胸甲, 腳, 戒指1, 戒指2, 手, 頭部, 腿部, 主手, 頸部, 副手, 襯衣, 肩部, 外袍, 飾品1, 飾品2, 腰部, 手腕",
+aideTracking = "輸入追蹤技能名稱，如: 釣魚",
+aideUnitMatch = "輸入單位名稱, 可用斜線(/)分隔.\n\n可輸入單位ID如 \"player\", \"pet\", \"boss1\", \"arena1\", 或星號(*), 以檢查該單位.\n\n|cFFEFEFEF例:|r\n目標為拉格納羅斯:\ntarget/拉格納羅斯\n\n寵物有攻擊目標:\npettarget/*\n\nBoss在看我:\nboss1target/player",
+aidePetStance = "輸入寵物狀態ID, 可用斜線(/)分隔.\n\n|cFFEFEFEF寵物狀態ID:|r\n協助: 1\n防禦: 2\n被動: 3\n\n|cFFFF0000注意: |r你的寵物必須有這三個狀態的技能在其快捷列上才能有效檢查.",
 
 -- Editor
-nomSound = "播放聲音",
-aideSound = "特效觸發時播放聲音",
-nomCustomSound = "自定義聲音文件:",
-aideCustomSound = "輸入聲音文件名稱,如cookie.mp3 註意:你需要在遊戲啟動前把聲音文件放入Sounds文件夾下,目前僅支持mp3和wav格式.",
+aideCustomText = "輸入要顯示的文字. (%n=增益/減益名稱, %t=目標名稱, %f=焦點目標名稱, %u=單位名稱, %str=力量, %agl=敏捷, %sta=耐力, %int=智力, %spi=精神, %sp=法能, %ap=攻擊強度, %crt=致命一擊)",
 
+nomSound = "起始音效:",
+nomSound2 = "自訂起始音效:",
+
+aideSound = "特效觸發時播放音效",
+aideSound2 = "特效觸發時播放音效",
+nomCustomSound = "自訂音效檔名:",
+aideCustomSound = "輸入音效檔案名稱,如cookie.mp3\n注意:你需要在遊戲啟動前把音效檔案放入Sounds資料夾下\n目前僅支援mp3和wav格式.",
+
+nomCustomSoundPath = "自訂音效路徑:",
+aideCustomSoundPath = "指定你自己的路徑(在Wow的安裝目錄下), 以防止 Power Auras 更新時覆寫了你的檔案.",
+
+nomCustomAuraPath = "自訂材質路徑:",
+aideCustomAuraPath = "指定你自己的路徑(在Wow的安裝目錄下), 以防止 Power Auras 更新時覆寫了你的檔案.",
+
+nomSoundEnd = "結束音效:",
+nomSound2End = "自訂結束音效:",
+aideSoundEnd = "特效結束時播放音效",
+aideSound2End = "特效結束時播放音效",
+nomCustomSoundEnd = "自訂音效檔名:",
+aideCustomSoundEnd = "輸入音效檔案名稱,如cookie.mp3\n注意:你需要在遊戲啟動前把音效檔案放入Sounds資料夾下\n目前僅支援mp3和wav格式.",
 nomTexture = "當前材質",
-aideTexture = "顯示特效使用的材質.你可以修改相應文件夾內的.tga 文件來增加特效",
+aideTexture = "顯示特效使用的材質.你可以修改對應資料夾內的.tga檔案來增加特效",
+nomModel = "模型",
 
-nomAnim1 = "動畫效果",
-nomAnim2 = "輔助效果",
-aideAnim1 = "是否為所選材質使用動畫效果",
-aideAnim2 = "此動畫效果以較低不透明度顯示,為了不過多占用屏幕同一時間只顯示一個輔助效果",
+nomAnim1 = "主要動畫",
+nomAnim2 = "次要動畫",
+aideAnim1 = "選擇材質的動畫效果",
+aideAnim2 = "此動畫效果會比主要動畫效果要透明一些",
 
-nomDeform = "拉伸",
+nomDeform = "延伸",
 
-aideColor = "點擊此處修改材質顏色",
-aideFont = "點擊此處來選擇字體,點擊OK按鈕使你的選擇生效",
-aideMultiID = "此處輸入其它特效的ID,以執行聯合檢查.多個ID號須用'/'分隔. 特效ID可以在某個特效的鼠標提示中第一行找到,如:[2],2就是此特效ID",
-aideTooltipCheck = "此處輸入用於激活特效的某個狀態的鼠標提示文字",
+aideColor = "點擊此處變更材質顏色",
+aideTimerColor = "點擊此處變更計時器顏色",
+aideStacksColor = "點擊此處變更堆疊數顏色",
+aideSecondaryColor = "點擊此處變更副材質顏色",
+nomFont = "字型",
+nomFontSelector = "字型選擇",
+aideFont = "點擊此處來選擇字體,點擊確定按鈕使你的選擇生效",
+aideMultiID = "此處輸入其它特效的ID以執行聯合檢查.多個ID須用'/'分隔.\n\n特效ID可以在某個特效的游標提示第一行找到\n如:[2]\n2就是此特效的ID",
+aideTooltipCheck = "此處輸入用於觸發特效的某個狀態的游標提示文字",
 
-aideBuff = "此處輸入用於激活特效的buff的名字,或名字中的幾個連續文字.如果使用分隔符,也可以輸入多個buff的名字.例如輸入: 能量灌註/奧術能量",
-aideBuff2 = "此處輸入用於激活特效的debuff的名字,或名字中的幾個連續文字.如果使用分隔符,也可以輸入多個debuff的名字.例如輸入: 墮落治療/燃燒刺激",
-aideBuff3 = "此處輸入用於激活特效的debuff的類型名稱,或名稱中的幾個連續文字.如果使用分隔符,也可以輸入多個debuff類型的名稱.例如輸入: 魔法/詛咒/中毒/疾病",
-aideBuff4 = "此處輸入用於激活特效的AOE法術的名字,AOE法術名字可以在戰鬥記錄中找到.例如輸入:邪惡光環/火焰之雨/暴風雪",
-aideBuff5 = "此處輸入用於激活特效的武器臨時附魔效果.另外你可以通過前置'main/'或者'off/'來指明主副手位置(例如: main/致殘毒藥,表示檢測主手上的這種毒藥)",
-aideBuff6 = "此處輸入用於激活特效的連擊點數.例如輸入: 1或者1/2/3或者0/4/5等等自由組合",
-aideBuff7 = "此處輸入用於激活特效的動作條上的動作名,或名字中的幾個連續文字,當此動作完全冷卻時此效果觸發.例如輸入:贊達拉英雄護符/法力之潮圖騰/心靈專註",
-aideBuff8 = "此處輸入用於激活特效的法術名稱,或名稱中的一部分,或者是你技能書中的技能,也可以輸入一個技能ID",
+aideBuff  = "輸入要觸發特效的增益名稱、ID、或部份名稱. 可用斜線(/)分隔多個項目.\n例: 奧術能量/灌注/12345",
+aideBuff2 = "輸入要觸發特效的增益名稱、ID、或部份名稱. 可用斜線(/)分隔多個項目.\n例: 黑暗疾病/瘟疫/12345",
+aideBuff3 = "輸入要觸發特效的減益類型 (中毒, 疾病, 詛咒, 魔法, 控制, 沉默, 陷阱, 昏迷, 定身, 繳械), 或不輸入. 可用斜線(/)分隔多個項目.\n例: 疾病/中毒",
+aideBuff4 = "輸入要觸發特效的範圍法術名稱, 範圍法術名稱可以在戰鬥記錄中找到.\n例: 邪惡光環/火焰之雨/暴風雪",
+aideBuff5 = "輸入要觸發特效的武器臨時附魔效果. 可在前面加入\"main/\"或者\"off/\"來指定主副手.\n例: main/致殘毒藥, 表示檢測主手上的致殘毒藥",
+aideBuff6 = "輸入要觸發特效的連擊點數.\n例: 1 或 1/2/3 或 0/4/5 等等",
+aideBuff7 = "輸入要觸發特效的快捷列技能名稱或部份名稱, 在技能可用時會觸發效果.\n例: 贊達拉英雄護符/法力之潮圖騰/心靈專注",
+aideBuff8 = "輸入要觸發特效的法術書技能名稱或ID, 只能輸入一個項目",
 
-aideSpells = "此處輸入用於激活法術預警特效的法術名稱",
-aideStacks = "輸入用於激活特效的操作符及疊加數量，只能輸入一個操作符，例如：'<5' '>3' '=11' '!5' '>=0' '<=6' '2-8'",
+aideSpells = "輸入要觸發特效的法術名稱",
+aideStacks = "輸入要觸發特效的運算符號與堆疊數量, 只能輸入一種運算符號.\n例: \"<5\" \">3\" \"=11\" \"!5\" \">=0\" \"<=6\" \"2-8\"",
 
-aideStealableSpells = "此處輸入可偷取的法術名稱(用 * 將檢測所有可被偷取的法術).",
-aidePurgeableSpells = "此處輸入可凈化的法術名稱(用 * 將檢測所有可被凈化的法術).",
+aideStealableSpells = "輸入要觸發特效的可竊取法術名稱(用 * 將檢測所有可被竊取的法術).",
+aidePurgeableSpells = "輸入要觸發特效的可凈化法術名稱(用 * 將檢測所有可被凈化的法術).",
 
-aideUnitn = "此處輸入用於激活特效的特定成員名稱,必須處於同一團隊",
-aideUnitn2 = "僅用於團隊/隊伍模式",
+aideTotems = "輸入要觸發特效的圖騰名稱或部份名稱, 也可輸入數字代號: 1=火, 2=地, 3=水, 4=風. (輸入 'totem' 代表所有圖騰)",
 
-aideMaxTex = "定義特效編輯器使用的材質數量,如果你增加了自定義材質請修改此值.",
-aideWowTextures = "使用遊戲內置材質",
-aideTextAura = "使用文字做為特效材質(圖形材質將被禁用)",
+aideRunes = "輸入要觸發特效的符文代號. \nB/b=血, F/f=冰\nU/u=邪, D/d=死\n\n若使用大寫字母, 則死亡符文也會被算入該符文\n例:\n \"BF\" \"BfU\" \"DDD\"",
+
+aideUnitn = "輸入要觸發特效的特定成員名稱, 必須處於同一隊伍或團隊",
+aideUnitn2 = "僅用於隊伍或團隊",
+
+aideMaxTex = "定義特效編輯器使用的材質數量, 如果你增加了自定義材質請修改此值.",
+aideWowTextures = "使用WoW的內建材質而非 Power Auras 資料夾內的材質",
+aideTextAura = "使用文字而非圖像材質",
+nomModels = "模型",
+nomCustomModels = "自訂",
+aideModels = "使用遊戲內建的3D模型",
+aideCustomModels = "使用外部3D模型",
+aideCustomModelsEditbox = "輸入外部模型的檔案路徑\n例: \"Creature\\MurlocCostume\\MurlocCostume.m2\"",
 aideRealaura = "清晰光環",
-aideCustomTextures = "使用自定義材質,例如: Flamme.tga(自定義材質需保存在custom文件夾下)",
-aideRandomColor = "每次激活時使用隨機顏色",
+aideCustomTextures = "使用自訂資料夾內的材質",
+aideCustomTextureEditbox = "輸入材質名稱 (例: myTexture.tga)\n也可使用法術名稱(例:假死), 或者法術ID(例:5384)",
+aideRandomColor = "特效觸發時使用隨機顏色",
+aideDesaturate = "不使用色彩",
+aideEnableFullRotation = "容許角度設定中使用0-360的值",
+nomLevel = "層次",
+nomSublevel = "副層次",
+nomModelZ = "模型 Z",
+nomModelX = "模型 X",
+nomModelY = "模型 Y",
+nomAnimation = "動畫",
+nomDefault = "預設",
 
 aideTexMode = "材質透明度反向顯示",
 
-nomActivationBy = "激活條件",
+nomActivationBy = "觸發條件",
 
-nomOwnTex = "使用技能圖標",
-aideOwnTex = "使用buff/debuff或技能的默認圖標做為材質",
-nomStacks = "疊加",
+nomOwnTex = "使用技能圖示",
+aideOwnTex = "使用增益/減益或技能的預設圖示做為材質",
+nomRoundIcons = "圓型圖示",
+aideRoundIcons = "使用圓形圖示",
+nomStacks = "堆疊數",
 
 nomUpdateSpeed = "更新速度",
-nomSpeed = "運動速度",
+nomSpeed = "動畫速度",
 nomTimerUpdate = "計時器更新速度",
-nomBegin = "進場效果",
+nomBegin = "起始效果",
 nomEnd = "結束效果",
-nomSymetrie = "對稱性",
+nomSymetrie = "鏡射",
 nomAlpha = "不透明度",
 nomPos = "位置",
+nomRotation = "角度",
 nomTaille = "大小",
 
-nomExact = "精確匹配名稱",
-nomThreshold = "觸發極限",
-aideThreshInv = "選中此項可反轉觸發邏輯. 生命值/法力值: 默認=低於指定值時觸發特效 / 選中此項後=高於指定值時觸發特效. 能量/怒氣/符文能量: 默認=高於指定值時觸發特效 / 選中此項後=低於指定值時觸發特效",
-nomThreshInv = "</>",
+nomExact = "精確名稱",
+nomThreshold = "觸發門檻",
+aideThreshInv = "反向觸發邏輯\n\n生命/法力:\n 預設:低於門檻時觸發\n 反向:高於門檻時觸發\n\n怒氣/能量/符能:\n 預設:高於門檻時觸發\n 反向:低於門檻時觸發",
+nomThreshInv = "反向",
 nomStance = "姿態",
+nomGTFO = "GTFO警示",
+nomPowerType = "能量類型",
 
-nomMine = "自己施放的",
-aideMine = "選中此項則僅檢測由玩家自己施放的buff/debuff",
-nomDispellable = "自己可以驅散的",
-aideDispellable = "選中此項則僅檢測可被驅散的buff",
+nomDispellable = "可被我驅散的",
+aideDispellable = "只檢測可被我驅散的增益",
 nomCanInterrupt = "可打斷",
-aideCanInterrupt = "選中此項則僅檢測可被打斷的技能",
+aideCanInterrupt = "選擇此項則僅檢測可被打斷的技能",
 
-nomPlayerSpell = "施法狀態",
-aidePlayerSpell = "檢測玩家是否正在詠唱一個法術",
+nomMine = "由我施放",
+aideMine = "只檢測由玩家自己施放的增益/減益",
+nomDispellable = "可驅散",
+aideDispellable = "只檢測可驅散的增益",
+nomCanInterrupt = "可打斷",
+aideCanInterrupt = "只檢測可打斷的法術",
+nomIgnoreUseable = "冷卻中",
+aideIgnoreUseable = "當技能可用時不觸發",
+nomSpellLearned = "已習得",
+aideSpellLearned = "只檢測已習得的技能",
+nomIgnoreItemUseable = "已裝備",
+aideIgnoreItemUseable = "當物品可用時不觸發",
+nomCheckPet = "寵物",
+aideCheckPet = "只檢測寵物技能",
 
-nomCheckTarget = "敵方目標",
-nomCheckFriend = "友方目標",
-nomCheckParty = "團隊目標",
-nomCheckFocus = "焦點目標",
-nomCheckRaid = "團隊成員",
-nomCheckGroupOrSelf = "團隊/小隊或自己",
+nomOnMe = "對我施放",
+aideOnMe = "只檢測對我施放的法術",
+
+nomPlayerSpell = "施法中",
+aidePlayerSpell = "檢測玩家是否正在施法",
+
+nomCheckTarget = "敵方",
+nomCheckFriend = "友方",
+nomCheckParty = "隊伍",
+nomCheckFocus = "焦點",
+nomCheckRaid = "團隊",
+nomCheckGroupOrSelf = "團隊/隊伍/我",
 nomCheckGroupAny = "任何人",
 nomCheckOptunitn = "特定成員",
+nomPetCooldown = "寵物冷卻",
 
-aideTarget = "此buff/debuff僅存在於敵方目標上",
-aideTargetFriend = "此buff/debuff僅存在於友方目標上",
-aideParty = "此buff/debuff僅存在於小隊中",
-aideGroupOrSelf = "選中此項後將僅對團隊或小隊成員(包括自己)進行檢測",
-aideFocus = "此buff/debuff僅存在焦點目標上",
-aideRaid = "此buff/debuff僅存在於團隊中",
-aideGroupAny = "選中此項後,當任何一個小隊/團隊成員有此buff/debuff就觸發特效. 不選中此項(默認狀態),則檢查到所有人都有此buff/debuff才觸發特效",
-aideOptunitn = "此buff/debuff僅存在於團隊/小隊中的特定成員身上",
-aideExact = "選中此項將精確匹配buff/debuff名稱",
+aideTarget = "僅檢測敵方目標",
+aideTargetFriend = "僅檢測友方目標",
+aideParty = "僅檢測隊伍成員",
+aideGroupOrSelf = "僅檢測團隊及隊伍成員\n(包括自己)",
+aideFocus = "僅檢測焦點目標",
+aideRaid = "僅檢測團隊成員",
+aideGroupAny = "打勾:\n 團隊/隊伍中有一名成員通過檢測即觸發特效\n取消:\n 團隊/隊伍中所有成員都通過檢測才觸發特效",
+aideOptunitn = "僅檢測團隊/隊伍中的特定成員",
+aideExact = "僅檢測名稱完全符合的增益/減益/技能",
 aideStance = "選擇用於觸發特效的姿態",
+aideGTFO = "選擇用於觸發特效 GTFO 警示",
+aidePowerType = "選擇要檢測的能量類型",
 
-aideShowSpinAtBeginning = "起始動畫結束後使其做360度旋轉",
 nomCheckShowSpinAtBeginning = "動畫結束後旋轉",
+aideShowSpinAtBeginning = "起始動畫結束後, 使其旋轉360度",
 
-nomCheckShowTimer = "顯示",
-nomTimerDuration = "延遲消失",
-aideTimerDuration = "目標上的buff/debuff計時器延遲到此時間結束後再消失(0為禁用)",
-aideShowTimer = "為此效果顯示計時器",
+nomCheckShowTimer = "顯示計時器",
+nomTimerDuration = "持續時間",
+aideTimerDuration = "目標上的增益/減益計時器延遲到此時間結束後再消失(0為禁用)",
+aideShowTimer = "為這個特效顯示計時器",
 aideSelectTimer = "選擇使用何種計時器來顯示持續時間",
-aideSelectTimerBuff = "選擇使用何種計時器來顯示持續時間(僅用於玩家buff)",
-aideSelectTimerDebuff = "選擇使用何種計時器來顯示持續時間(僅用於玩家debuff)",
+aideSelectTimerBuff = "選擇使用何種計時器來顯示持續時間(僅用於玩家增益)",
+aideSelectTimerDebuff = "選擇使用何種計時器來顯示持續時間(僅用於玩家減益)",
 
-nomCheckShowStacks = "疊加次數",
+nomCheckShowStacks = "顯示堆疊數",
+aideShowStacks = "顯示特效的堆疊數量",
 
 nomCheckInverse = "不存在",
-aideInverse = "選中此項後,僅當buff/debuff不存在時顯示此特效",
+aideInverse = "僅當增益/減益不存在時顯示此特效",
 
 nomCheckIgnoreMaj = "忽略大小寫",
-aideIgnoreMaj = "選中此項將忽略buff/debuff名字的大小寫字母(供英文玩家使用,中國玩家不需要修改此項)",
+aideIgnoreMaj = "增益/減益名稱字母不分大小寫\n(供英文玩家使用, 中文玩家不需要修改此項)",
+
+nomAuraDebug = "除錯",
+aideAuraDebug = "開啟此特效的除錯訊息",
 
 nomDuration = "延遲消失",
-aideDuration = "特效延遲到此時間結束後再消失(0為禁用)",
+aideDuration = "經過這些時間後, 此特效才會消失(0為禁用)",
+
+nomOldAnimations = "舊版動畫",
+aideOldAnimations = "使用舊版的動畫效果",
 
 nomCentiemes = "顯示百分位",
 nomDual = "顯示兩個計時器",
-nomHideLeadingZeros = "隱藏前置零位,如:08秒顯示為8秒",
+nomHideLeadingZeros = "不使用前置零位",
 nomTransparent = "使用透明材質",
-nomUpdatePing = "刷新提示",
+nomActivationTime = "顯示經過時間",
+nomTimer99 = "只顯示小於100的秒數",
+nomUseOwnColor = "使用顏色:",
+nomUpdatePing = "法術更新時使用動畫",
+nomLegacySizing = "寬版數字",
+nomRelative = "計時器位置:",
+nomRelativeStacks = "堆疊數位置:",
 nomClose = "關閉",
+nomCopy = "複製",
 nomEffectEditor = "特效編輯器",
 nomAdvOptions = "選項",
-nomMaxTex = "最大可用材質",
+nomMaxTex = "最大可用材質數量",
 nomTabAnim = "動畫",
 nomTabActiv = "條件",
-nomTabSound = "聲音",
+nomTabSound = "音效",
 nomTabTimer = "計時器",
-nomTabStacks = "疊加",
-nomWowTextures = "使用內置材質",
-nomCustomTextures = "使用自定義材質",
+nomTabStacks = "堆疊數",
+
+nomWowTextures = "內建材質",
+nomCustomTextures = "自訂材質",
 nomTextAura = "文字材質",
+nomBlendMode = "圖層混合模式",
+nomSecondaryBlendMode = "圖層混合模式2",
+nomFrameStrata = "框架階層",
+nomSecondaryFrameStrata = "框架階層2",
+nomTextureStrata = "材質階層",
+nomSecondaryTextureStrata = "材質階層2",
 nomRealaura = "清晰光環",
+nomColorPicker = "顏色",
+nomGradientStyle = "漸層樣式",
+nomModelCategory = "模型類別",
+nomModelTexture = "模型材質",
+nomSecondaryColorPicker = "顏色2",
 nomRandomColor = "隨機顏色",
+nomDesaturate = "刷淡",
+nomEnableFullRotation = "使用全部角度",
+
 
 nomTalentGroup1 = "主天賦",
-aideTalentGroup1 = "選中此項後,僅當你處於主天賦狀態下才觸發此特效",
+aideTalentGroup1 = "僅在使用主要天賦時才觸發此特效",
 nomTalentGroup2 = "副天賦",
-aideTalentGroup2 = "選中此項後,僅當你處於副天賦狀態下才觸發此特效",
+aideTalentGroup2 = "僅在使用第二天賦時才觸發此特效",
 
 nomReset = "重置編輯器位置",
 nomPowaShowAuraBrowser = "顯示特效瀏覽器",
 
-nomDefaultTimerTexture = "默認計時器材質",
+nomDefaultTimerTexture = "預設計時器材質",
 nomTimerTexture = "計時器材質",
-nomDefaultStacksTexture = "默認疊加次數材質",
-nomStacksTexture = "疊加次數材質",
+nomDefaultStacksTexture = "預設堆疊數材質",
+nomStacksTexture = "堆疊數材質",
 
-Enabled = "已啟用",
-Default = "默認",
+Enabled = "啟用",
+Disabled = "停用",
+Default = "預設",
 
 Ternary =
 {
-	combat = "戰鬥狀態",
-	inRaid = "團隊狀態",
-	inParty = "小隊狀態",
-	isResting = "休息狀態",
-	ismounted = "騎乘狀態",
-	inVehicle = "載具狀態",
-	isAlive = "存活狀態"
+	combat = "戰鬥中",
+	inRaid = "團隊中",
+	inParty = "隊伍中",
+	isResting = "休息中",
+	ismounted = "騎乘中",
+	inVehicle = "載具中",
+	inPetBattle = "寵物戰中",
+	isAlive = "存活",
+	PvP = "PvP狀態",
+	InstanceScenario = "劇情",
+	InstanceScenarioHeroic = "英雄劇情",
+	Instance5Man = "5人",
+	Instance5ManHeroic = "5人英雄",
+	InstanceChallengeMode = "挑戰模式",
+	Instance10Man = "10人",
+	Instance10ManHeroic = "10人英雄",
+	Instance25Man = "25/40人",
+	Instance25ManHeroic = "25人英雄",
+	InstanceFlexible = "彈性",
+	InstanceBg = "戰場",
+	InstanceArena = "競技場"
 },
 
 nomWhatever = "忽略",
-aideTernary = "設置這些狀態將影響特效顯示的方式",
+aideTernary = "設置這些狀態將如何影響特效顯示",
 
 TernaryYes =
 {
-	combat = "在戰鬥狀態時觸發",
-	inRaid = "在團隊狀態時觸發",
-	inParty = "在小隊狀態時觸發",
-	isResting = "在休息狀態時觸發",
-	ismounted = "在騎乘狀態時觸發",
-	inVehicle = "在載具狀態時觸發",
-	isAlive = "在存活狀態時觸發"
+	combat = "戰鬥中才會觸發",
+	inRaid = "在團隊中才會觸發",
+	inParty = "在隊伍中才會觸發",
+	isResting = "在休息狀態才會觸發",
+	ismounted = "在騎乘狀態才會觸發",
+	inVehicle = "在載具狀態才會觸發",
+	inPetBattle = "在寵物戰中才會觸發",
+	isAlive = "存活中才會觸發",
+	PvP = "在PvP狀態才會觸發",
+	InstanceScenario = "在劇情模式中才會觸發",
+	InstanceScenarioHeroic = "在英雄劇情模式中才會觸發",
+	Instance5Man = "在5人副本中才會觸發",
+	Instance5ManHeroic = "在5人英雄副本中才會觸發",
+	InstanceChallengeMode = "在挑戰模式中才會觸發",
+	Instance10Man = "在10人副本中才會觸發",
+	Instance10ManHeroic = "在10人英雄副本中才會觸發",
+	Instance25Man = "在25/40人副本中才會觸發",
+	Instance25ManHeroic = "在25人英雄副本中才會觸發",
+	InstanceFlexible = "在彈性副本中才會觸發",
+	InstanceBg = "在戰場中才會觸發",
+	InstanceArena = "在競技場中才會觸發",
+	RoleTank = "擔任坦克時才會觸發",
+	RoleHealer = "擔任治療時才會觸發",
+	RoleMeleDps = "擔任近戰DD時才會觸發",
+	RoleRangeDps = "擔任遠程DD時才會觸發"
+	
 },
 
 TernaryNo =
 {
-	combat = "非戰鬥狀態時觸發",
-	inRaid = "非團隊狀態時觸發",
-	inParty = "非小隊狀態時觸發",
-	isResting = "非休息狀態時觸發",
-	ismounted = "非騎乘狀態時觸發",
-	inVehicle = "非載具狀態時觸發",
-	isAlive = "在死亡狀態時觸發"
+	combat = "不在戰鬥中才會觸發",
+	inRaid = "不在團隊中才會觸發",
+	inParty = "不在隊伍中才會觸發",
+	isResting = "不在休息狀態才會觸發",
+	ismounted = "不在騎乘狀態才會觸發",
+	inVehicle = "不在載具狀態才會觸發",
+	inPetBattle = "不在寵物戰中才會觸發",
+	isAlive = "死亡時才會觸發",
+	PvP = "不在PvP狀態才會觸發",
+	InstanceScenario = "不在劇情模式中才會觸發",
+	InstanceScenarioHeroic = "不在英雄劇情模式中才會觸發",
+	Instance5Man = "不在5人副本中才會觸發",
+	Instance5ManHeroic = "不在5人英雄副本中才會觸發",
+	InstanceChallengeMode = "不在挑戰模式中才會觸發",
+	Instance10Man = "不在10人副本中才會觸發",
+	Instance10ManHeroic = "不在10人英雄副本中才會觸發",
+	Instance25Man = "不在25/40人副本中才會觸發",
+	Instance25ManHeroic = "不在25人英雄副本中才會觸發",
+	InstanceFlexible = "不在彈性副本中才會觸發",
+	InstanceBg = "不在戰場中才會觸發",
+	InstanceArena = "不在競技場中才會觸發",
+	RoleTank = "不是擔任坦克時才會觸發",
+	RoleHealer = "不是擔任治療時才會觸發",
+	RoleMeleDps = "不是擔任近戰DD時才會觸發",
+	RoleRangeDps = "不是擔任遠程DD時才會觸發"
 },
+
 
 TernaryAide =
 {
-	combat = "此效果受戰鬥狀態影響",
-	inRaid = "此效果受團隊狀態影響",
-	inParty = "此效果受小隊狀態影響",
-	isResting = "此效果受休息狀態影響",
-	ismounted = "此效果受騎乘狀態影響",
-	inVehicle = "此效果受載具狀態影響",
-	isAlive = "此效果受存活狀態影響"
+	combat = "戰鬥狀態影響觸發條件",
+	inRaid = "團隊狀態影響觸發條件",
+	inParty = "隊伍狀態影響觸發條件",
+	isResting = "休息狀態影響觸發條件",
+	ismounted = "騎乘狀態影響觸發條件",
+	inVehicle = "載具狀態影響觸發條件",
+	inPetBattle = "寵物戰影響觸發條件",
+	isAlive = "存活狀態影響觸發條件",
+	PvP = "PvP狀態影響觸發條件",
+	InstanceScenario = "劇情模式影響觸發條件",
+	InstanceScenarioHeroic = "英雄劇情模式影響觸發條件",
+	Instance5Man = "5人副本影響觸發條件",
+	Instance5ManHeroic = "5人英雄副本影響觸發條件",
+	InstanceChallengeMode = "挑戰模式影響觸發條件",
+	Instance10Man = "10人副本影響觸發條件",
+	Instance10ManHeroic = "10人英雄副本影響觸發條件",
+	Instance25Man = "25/40人副本影響觸發條件",
+	Instance25ManHeroic = "25人英雄副本影響觸發條件",
+	InstanceFlexible = "彈性副本影響觸發條件",
+	InstanceBg = "戰場影響觸發條件",
+	InstanceArena = "競技場影響觸發條件",
+	RoleTank = "坦克職務影響觸發條件",
+	RoleHealer = "治療職務影響觸發條件",
+	RoleMeleDps = "近戰DD職務影響觸發條件",
+	RoleRangeDps = "遠程DD職務影響觸發條件"
 },
 
 nomTimerInvertAura = "超時顛倒材質",
@@ -5192,23 +5477,24 @@ aidePowaTimerInvertAuraSlider = "特效持續時間超過設定值時將材質�
 nomTimerHideAura = "隱藏特效",
 aidePowaTimerHideAuraSlider = "隱藏特效和計時器,直到持續時間超過設定值(0 為禁用)",
 
-aideTimerRounding = "選中此項時將對計時器取整",
-nomTimerRounding = "取整",
+aideTimerRounding = "將計時器的數字無條件進位為整數",
+nomTimerRounding = "無條件進位",
 
-aideGTFO = "使用首領技能來匹配AOE法術預警檢測",
-nomGTFO = "首領AOE法術",
+aideAllowInspections = "允許 Power Auras 檢查腳色的隊伍職務, 關閉此選項將會降低精確度, 但提升速度",
+nomAllowInspections = "允許檢查隊伍職務",
 
-nomIgnoreUseable = "顯示冷卻中的法術",
-aideIgnoreUseable = "忽略可用的法術(僅檢測冷卻中的法術)",
+nomCarried = "在背包裡",
+aideCarried = "物品在背包裡的時候才會觸發",
+
 
 -- Diagnostic reason text, these have substitutions (using $1, $2 etc) to allow for different sententance constructions
 nomReasonShouldShow = "應該顯示特效,因為$1",
 nomReasonWontShow = "不會顯示特效,因為$1",
 
-nomReasonMulti = "所有匹配特征 $1", --$1=Multiple match ID list
+nomReasonMulti = "所有符合條件 $1", --$1=Multiple match ID list
 
-nomReasonDisabled = "Power Auras 被禁用了",
-nomReasonGlobalCooldown = "忽略了全局冷卻時間(GCD)",
+nomReasonDisabled = "Power Auras 被停用了",
+nomReasonGlobalCooldown = "忽略了共用冷卻時間(GCD)",
 
 nomReasonBuffPresent = "$1 獲得了 $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 has Debuff Misery")
 nomReasonBuffMissing = "$1 沒有獲得 $2 $3", --$1=Target $2=BuffType, $3=BuffName (e.g. "Unit4 doesn't have Debuff Misery")
@@ -5219,11 +5505,12 @@ nomReasonNotAllInGroupHaveBuff = "不是所有 $1 的成員都獲得了 $2 $3", 
 nomReasonAllInGroupHaveBuff = "所有$1 的成員都獲得了 $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "All in Raid have Buff Blessing of Kings")
 nomReasonNoOneInGroupHasBuff = "沒有$1 的成員獲得了 $2 $3", --$1=GroupType $2=BuffType, $3=BuffName (e.g. "No one in Raid has Buff Blessing of Kings")
 
-nomReasonBuffPresentTimerInvert = "Buff出現, 計時器倒置",
-nomReasonBuffFound = "Buff出現",
-nomReasonStacksMismatch = "疊加次數 = $1 但預設值是 $2", --$1=Actual Stack count, $2=Expected Stack logic match (e.g. ">=0")
+nomReasonBuffPresentTimerInvert = "增益出現, 計時器倒置",
+nomReasonBuffPresentNotMine = "不是由我施放",
+nomReasonBuffFound = "增益出現",
+nomReasonStacksMismatch = "堆疊數 = $1 但條件為 $2", --$1=Actual Stack count, $2=Expected Stack logic match (e.g. ">=0")
 
-nomReasonAuraMissing = "特效丟失",
+nomReasonAuraMissing = "特效找不到",
 nomReasonAuraOff = "特效被禁用",
 nomReasonAuraBad = "特效損壞",
 
@@ -5238,32 +5525,91 @@ nomReasonTargetAlive = "目標存活",
 nomReasonTargetFriendly = "友好的目標",
 nomReasonTargetNotFriendly = "敵對的目標",
 
-nomReasonNotInCombat = "不在戰鬥狀態",
-nomReasonInCombat = "在戰鬥狀態",
+nomReasonNoPet = "玩家沒有寵物",
 
-nomReasonInParty = "在小隊中",
+nomReasonNotInCombat = "不在戰鬥中",
+nomReasonInCombat = "在戰鬥中",
+
+nomReasonInParty = "在隊伍中",
 nomReasonInRaid = "在團隊中",
-nomReasonNotInParty = "不在小隊中",
+nomReasonNotInParty = "不在隊伍中",
 nomReasonNotInRaid = "不在團隊中",
+nomReasonNotInGroup = "不在隊伍/團隊中",
 nomReasonNoFocus = "沒有焦點目標",
-nomReasonNoCustomUnit = "找不到你定義的單位:$1,不在隊伍\團隊中,或攜帶寵物",
+nomReasonNoCustomUnit = "在團隊/隊伍/寵物中找不到此單位:$1",
+nomReasonPvPFlagNotSet = "不在PvP狀態",
+nomReasonPvPFlagSet = "在PvP狀態",
 
-nomReasonNotMounted = "不在騎乘",
-nomReasonMounted = "騎乘狀態",
+nomReasonNotMounted = "不在騎乘狀態",
+nomReasonMounted = "在騎乘狀態",
 nomReasonNotInVehicle = "不在載具中",
 nomReasonInVehicle = "在載具中",
+nomReasonNotInPetBattle = "不在寵物戰",
+nomReasonInPetBattle = "在寵物戰",
 nomReasonNotResting = "不在休息狀態",
-nomReasonResting = "休息狀態",
+nomReasonResting = "在休息狀態",
 nomReasonStateOK = "狀態正常",
 
-nomReasonInverted = "$1 (被倒置)", -- $1 is the reason, but the inverted flag is set so the logic is reversed
+nomReasonNotIn5ManInstance = "不在5人副本中",
+nomReasonIn5ManInstance = "在5人副本中",
+nomReasonNotIn5ManHeroicInstance = "不在5人英雄副本中",
+nomReasonIn5ManHeroicInstance = "在5人英雄副本中",
 
-nomReasonSpellUsable = "法術 $1 可用",
-nomReasonSpellNotUsable = "法術 $1 不可用",
-nomReasonSpellNotReady = "法術 $1 沒有準備好, 在冷卻中, 計時器倒置",
-nomReasonSpellNotEnabled = "法術 $1 沒有啟用",
-nomReasonSpellNotFound = "法術 $1 沒有找到",
-nomReasonSpellOnCooldown = "Spell $1 on Cooldown",
+nomReasonNotIn10ManInstance = "不在10人副本中",
+nomReasonIn10ManInstance = "在10人副本中",
+nomReasonNotIn10ManHeroicInstance = "不在10人英雄副本中",
+nomReasonIn10ManHeroicInstance = "在10人英雄副本中",
+
+nomReasonNotIn25ManInstance = "不在25人副本中",
+nomReasonIn25ManInstance = "在25人副本中",
+nomReasonNotIn25ManHeroicInstance = "不在25人英雄副本中",
+nomReasonIn25ManHeroicInstance = "在25人英雄副本中",
+
+nomReasonNotInBgInstance = "不在戰場中",
+nomReasonInBgInstance = "在戰場中",
+nomReasonNotInArenaInstance = "不在競技場",
+nomReasonInArenaInstance = "在競技場",
+
+nomReasonInverted = "$1 (反向)", -- $1 is the reason, but the inverted flag is set so the logic is reversed
+
+nomReasonSpellUsable = "法術 $1 已可用",
+nomReasonSpellNotUsable = "法術 $1 尚未可用",
+nomReasonSpellNotReady = "法術 $1 尚未可用, 在冷卻中, 計時器倒置",
+nomReasonSpellNotEnabled = "法術 $1 尚未啟用",
+nomReasonSpellNotFound = "法術 $1 找不到",
+nomReasonSpellOnCooldown = "法術 $1 在冷卻中",
+nomReasonSpellLearned = "而且法術已習得",
+nomReasonSpellNotLearned = "而且法術尚未習得",
+
+nomReasonCastingOnMe = "$1 正在對我施放 $2", --$1=CasterName $2=SpellName (e.g. "Rotface is casting Slime Spray on me")
+nomReasonNotCastingOnMe = "沒有符合的法術正在對我施放",
+
+nomReasonCastingByMe = "我正在對 $2 施放 $1", --$1=SpellName $2=TargetName (e.g. "I am casting Holy Light on Fred")
+nomReasonNotCastingByMe = "沒有符合的法術正在被我施放",
+
+nomReasonAnimationDuration = "仍在自訂的持續時間中",
+
+nomReasonItemUsable = "物品 $1 已可用",
+nomReasonItemNotUsable = "物品 $1 尚未可用",
+nomReasonItemNotReady = "物品 $1 尚未可用, 在冷卻中, 計時器倒置",
+nomReasonItemNotEnabled = "物品 $1 尚未啟用 ",
+nomReasonItemNotFound = "物品 $1 找不到",
+nomReasonItemOnCooldown = "物品 $1 在冷卻中",
+
+nomReasonItemEquipped = "物品 $1 裝備中",
+nomReasonItemNotEquipped = "物品 $1 未裝備",
+
+nomReasonItemInBags = "物品 $1 在背包裡",
+nomReasonItemNotInBags = "物品 $1 不在背包裡",
+nomReasonItemNotOnPlayer = "物品 $1 不在身上",
+
+nomReasonSlotUsable = "$1 欄位已可用",
+nomReasonSlotNotUsable = "$1 欄位尚未可用",
+nomReasonSlotNotReady = "$1 欄位尚未可用, 在冷卻中, 計時器倒置",
+nomReasonSlotNotEnabled = "$1 欄位沒有冷卻計時",
+nomReasonSlotNotFound = "$1 欄位找不到",
+nomReasonSlotOnCooldown = "$1 欄位冷卻中",
+nomReasonSlotNone = "$1 欄位是空的",
 
 nomReasonStealablePresent = "$1 有可偷取的法術 $2", --$1=Target $2=SpellName (e.g. "Focus has Stealable spell Blessing of Wisdom")
 nomReasonNoStealablePresent = "沒有在任何目標上找到可偷取法術 $1", --$1=SpellName (e.g. "Nobody has Stealable spell Blessing of Wisdom")
@@ -5275,8 +5621,8 @@ nomReasonNoPurgeablePresent = "沒有在任何目標上找到可凈化的法術 
 nomReasonRaidTargetPurgeablePresent = "團隊目標$1 有可凈化的法術 $2", --$1=RaidId $2=SpellName (e.g. "Raid21Target has Purgeable spell Blessing of Wisdom")
 nomReasonPartyTargetPurgeablePresent = "小隊目標$1 有可凈化的法術 $2", --$1=PartyId $2=SpellName (e.g. "Party4Target has Purgeable spell Blessing of Wisdom")
 
-nomReasonAoETrigger = "檢測到AoE法術 $1", -- $1=AoE spell name
-nomReasonAoENoTrigger = "沒有檢測到AoE法術 $1", -- $1=AoE spell match
+nomReasonAoETrigger = "檢測到範圍法術 $1", -- $1=AoE spell name
+nomReasonAoENoTrigger = "沒有檢測到範圍法術 $1", -- $1=AoE spell match
 
 nomReasonEnchantMainInvert = "找到主手武器強化效果 $1 計時器倒置", -- $1=Enchant match
 nomReasonEnchantMain = "找到主手武器強化效果 $1", -- $1=Enchant match
@@ -5284,9 +5630,9 @@ nomReasonEnchantOffInvert = "找到副手武器強化效果 $1, 計時器倒置"
 nomReasonEnchantOff = "找到副手武器強化效果 $1", -- $1=Enchant match
 nomReasonNoEnchant = "沒有在任何武器上找到強化效果 $1", -- $1=Enchant match
 
-nomReasonNoUseCombo = "你沒有使用連擊點數",
-nomReasonComboMatch = "目前連擊點數是 $1 與設置值 $2 相匹配", -- $1=Combo Points, $2=Combo Match
-nomReasonNoComboMatch = "目前連擊點數是 $1 與設置值 $2 不匹配", -- $1=Combo Points, $2=Combo Match
+nomReasonNoUseCombo = "你不是使用連擊點數",
+nomReasonComboMatch = "目前連擊點數是 $1, 符合條件 $2", -- $1=Combo Points, $2=Combo Match
+nomReasonNoComboMatch = "目前連擊點數是 $1, 不符合條件 $2", -- $1=Combo Points, $2=Combo Match
 
 nomReasonActionNotFound = "沒有在動作條上找到此技能",
 nomReasonActionReady = "技能可用了",
@@ -5303,16 +5649,88 @@ nomReasonRaidTargetCasting = "團隊目標$1 正在施放法術 $2", --$1=RaidId
 nomReasonPartyTargetCasting = "小隊目標$1 正在施放法術 $2", --$1=PartyId $2=Casting match
 nomReasonNoCasting = "沒有任何人的目標在施放法術 $1", -- $1=Casting match
 
-nomReasonStance = "當前姿態 $1, 與設置值 $2 相匹配", -- $1=Current Stance, $2=Match Stance
-nomReasonNoStance = "當前姿態 $1, 與設置值 $2 不匹配", -- $1=Current Stance, $2=Match Stance
+nomReasonStance = "當前姿態 $1, 符合條件 $2", -- $1=Current Stance, $2=Match Stance
+nomReasonNoStance = "當前姿態 $1, 不符合條件 $2", -- $1=Current Stance, $2=Match Stance
+
+nomReasonRunesNotReady = "符文尚未就緒",
+nomReasonRunesReady = "符文就緒",
+
+nomReasonPetExists= "玩家有寵物",
+nomReasonPetMissing = "找不到玩家寵物",
+
+nomReasonTrackingMissing = "追蹤技能 $1 尚未開啟",
+nomTrackingSet = "追蹤技能 $1 已開啟",
+
+nomNotInInstance = "沒有在指定的副本里",
+
+nomReasonStatic = "光環",
+
+nomReasonUnitMatch = "單位 $1 符合單位 $2",
+nomReasonNoUnitMatch = "單位 $1 不符合單位 $2",
+
+nomReasonPetStance = "寵物在 $1 姿態",
+
+nomReasonUnknownName = "單位名稱未知",
+nomReasonRoleUnknown = "職務未知",
+nomReasonRoleNoMatch = "沒有相符的職務",
+
+nomUnknownSpellId = "PowerAuras: 特效 $1 指定了一個未知的法術ID: ", -- $1=SpellID
+
+nomReasonGTFOAlerts = "GTFO 警示並非總是開啟",
 
 ReasonStat =
 {
-	Health = {MatchReason = "$1 生命值低", NoMatchReason = "$1 生命值不夠低"},
-	Mana = {MatchReason = "$1 法術值低", NoMatchReason = "$1法術值不夠低"},
-	RageEnergy = {MatchReason = "$1 能量值低", NoMatchReason = "$1 能量值不夠低"},
-	Aggro = {MatchReason = "$1 獲得仇恨", NoMatchReason = "$1 沒有獲得仇恨"},
-	PvP = {MatchReason = "$1 PVP狀態", NoMatchReason = "$1 不在PVP狀態"}
-}
+	Health = {MatchReason = "$1 生命值低過門檻", NoMatchReason = "$1 生命值未低過門檻"},
+	Mana = {MatchReason = "$1 法力值低過門檻", NoMatchReason = "$1 法力值未低過門檻"},
+	Power = {MatchReason = "$1 $3 高過門檻", NoMatchReason = "$1 $3 未高過門檻", NilReason = "$1 不是用這個能量系統"},
+	Aggro = {MatchReason = "$1 獲得仇恨", NoMatchReason = "$1 未獲得仇恨"},
+	PvP = {MatchReason = "$1 在 PvP 狀態", NoMatchReason = "$1 未在 PvP 狀態"},
+	SpellAlert = {MatchReason = "$1 正在施放 $2", NoMatchReason = "$1 未在施放 $2"}
+},
+
+-- Import dialog
+ImportDialogAccept = "匯入",
+ImportDialogCancel = "取消",
+
+-- Export dialog
+ExportDialogTopTitle = "匯出",
+ExportDialogCopyTitle = "按 Ctrl-C 複製特效字串",
+ExportDialogMidTitle = "傳送給其他玩家",
+ExportDialogSendTitle1 = "輸入一位玩家的名稱並點擊傳送按鈕",
+ExportDialogSendTitle2 = "傳送給 %s ...(剩餘 %d 秒)", -- The 1/2/3/4 suffix denotes the internal status of the frame.
+ExportDialogSendTitle3a = "%s 在戰鬥中, 無法接收資料",
+ExportDialogSendTitle3b = "%s 不接受傳送的資料",
+ExportDialogSendTitle3c = "%s 無回應, 可能離開或下線了",
+ExportDialogSendTitle3d = "%s 正在接受另一份資料",
+ExportDialogSendTitle3e = "%s 拒絕接收",
+ExportDialogSendTitle4 = "特效資料傳送中...",
+ExportDialogSendTitle5 = "特效資料傳送完成!",
+ExportDialogSendButton1 = "傳送",
+ExportDialogSendButton2 = "返回",
+ExportDialogCancelButton = "取消",
+
+-- Cross-client import dialog
+PlayerImportDialogTopTitle = "你收到一份特效字串!",
+PlayerImportDialogDescTitle1 = "%s 想傳送一份特效資料給你",
+PlayerImportDialogDescTitle2 = "接收特效資料中...",
+PlayerImportDialogDescTitle3 = "連線逾時",
+PlayerImportDialogDescTitle4 = "選擇一個頁面以存放接收到的特效",
+PlayerImportDialogWarningTitle = "|cFFFF0000注意: |r你接收到的是整頁資料, 將會清除你原本頁面的特效.",
+PlayerImportDialogDescTitle5 = "特效已儲存!",
+PlayerImportDialogDescTitle6 = "沒有空的欄位可供存放特效",
+PlayerImportDialogAcceptButton1 = "同意",
+PlayerImportDialogAcceptButton2 = "儲存",
+PlayerImportDialogCancelButton1 = "拒絕",
+
+aideCommsRegisterFailure = "插件連絡資訊出現錯誤",
+
+nomBlockIncomingAuras = "拒收特效資料",
+aideBlockIncomingAuras = "不讓其他人傳送特效資料給你",
+nomDisableScaling = "停用框架縮放",
+aideDisableFrameScaling = "停用拖放框架角落來調整大小的功能",
+nomFixExports = "替代匯出格式",
+aideFixExports = "如果你出現匯出功能無法正常運作, 文字框內完全空白的情形, 請開啟這個選項",
+aideAnimationsAreBrokenSorry = "如果你出現動畫效果不正常閃爍, 或忽大忽小的情形, 請開啟這個選項"
+
 })
 end
