@@ -2416,6 +2416,7 @@ function PowaAurasOptions:BarAuraAlphaSliderChanged(slider, value)
 			PowaAurasOptions:UpdatePreviewColor(self.Auras[self.CurrentAuraId])
 		end
 	end
+	self:RedisplayAura(self.CurrentAuraId)
 end
 
 function PowaAurasOptions:BarAuraSizeSliderChanged(slider, value)
@@ -3787,9 +3788,9 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 			info.value = i
 			Lib_UIDropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownPowerType, aura.PowerType)
 		aura:SetFixedIcon()
 		PowaAurasOptions:UpdateMainOption()
+		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownPowerType, aura.PowerType)
 	elseif name == "PowaDropDownStance" then
 		info = {func = PowaAurasOptions.DropDownMenu_OnClickStance, owner = owner}
 		for k, v in pairs(PowaAurasOptions.PowaStance) do
@@ -4289,6 +4290,7 @@ function PowaAurasOptions.DropDownMenu_OnClickPowerType(self)
 		PowaIconTexture:SetTexture(aura.icon)
 	end
 	PowaAurasOptions:UpdateMainOption()
+	PowaAurasOptions:InitPage(aura)
 end
 
 function PowaAurasOptions.DropDownMenu_OnClickBegin(self)

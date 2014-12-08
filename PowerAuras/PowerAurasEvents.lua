@@ -212,15 +212,21 @@ function PowaAuras:GetInstanceType()
 		-- 10 Man Heroic
 		elseif instanceDifficulty == 5 then
 			instanceType = "10ManHeroic"
-		-- 25 Man or 25 Man LFG or 40 Man
-		elseif instanceDifficulty == 4 or instanceDifficulty == 7 or instanceDifficulty == 9 then
+		-- 25 Man or 25 Man LFG or 40 Man or 40 Man LFR
+		elseif instanceDifficulty == 4 or instanceDifficulty == 7 or instanceDifficulty == 9 or instanceDifficulty == 17 then
 			instanceType = "25Man"
 		-- 25 Man Heroic
 		elseif instanceDifficulty == 6 then
 			instanceType = "25ManHeroic"
-		-- Flexible
+		-- Normal
 		elseif instanceDifficulty == 14 then
-			instanceType = "Flexible"
+			instanceType = "Normal"
+		-- Heroic
+		elseif instanceDifficulty == 15 then
+			instanceType = "Heroic"
+		-- Mythic
+		elseif instanceDifficulty == 16 then
+			instanceType = "Mythic"
 		end
 	elseif instanceType == "scenario" then
 		local _, _, instanceDifficulty = GetInstanceInfo()

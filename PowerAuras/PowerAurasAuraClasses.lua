@@ -301,7 +301,7 @@ cPowaAura.ExportSettings =
 	Instance10ManHeroic = 0,
 	Instance25Man = 0,
 	Instance25ManHeroic = 0,
-	InstanceFlexible = 0,
+	InstanceNormal = 0,
 	InstanceBg = 0,
 	InstanceArena = 0,
 	RoleTank = 0,
@@ -939,7 +939,7 @@ function cPowaAura:CheckState(giveReason)
 end
 
 function cPowaAura:AnyInstanceTypeChecksRequired()
-	return self.InstanceScenario ~= 0 or self.InstanceScenarioHeroic ~= 0 or self.Instance5Man ~= 0 or self.Instance5ManHeroic ~= 0 or self.InstanceChallengeMode ~= 0 or self.Instance10Man ~= 0 or self.Instance10ManHeroic ~= 0 or self.Instance25Man ~= 0 or self.Instance25ManHeroic ~= 0 or self.InstanceFlexible ~= 0 or self.InstanceBg ~= 0 or self.InstanceArena ~= 0
+	return self.InstanceScenario ~= 0 or self.InstanceScenarioHeroic ~= 0 or self.Instance5Man ~= 0 or self.Instance5ManHeroic ~= 0 or self.InstanceChallengeMode ~= 0 or self.Instance10Man ~= 0 or self.Instance10ManHeroic ~= 0 or self.Instance25Man ~= 0 or self.Instance25ManHeroic ~= 0 or self.InstanceNormal ~= 0 or self.InstanceBg ~= 0 or self.InstanceArena ~= 0
 end
 
 function cPowaAura:CheckInstanceType(giveReason)
@@ -1011,7 +1011,7 @@ function cPowaAura:CheckInstanceType(giveReason)
 	if show == false then
 		showTotal = false
 	end
-	show, now, reason = self:ShouldShowForInstanceType("Flexible", giveReason)
+	show, now, reason = self:ShouldShowForInstanceType("Normal", giveReason)
 	if now then
 		return show, reason
 	end
@@ -3252,7 +3252,9 @@ end
 
 -- Health
 cPowaHealth = PowaClass(cPowaAuraStats, {ValueName = "Health"})
-cPowaHealth.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Health]}
+cPowaHealth.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Health], targetFriendText = PowaAuras.Text.nomCheckFriend}
+cPowaHealth.ShowOptions = {["PowaBarThresholdSlider"] = 1, ["PowaThresholdInvertButton"] = 1, ["PowaGroupAnyButton"] = 1}
+cPowaHealth.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaTargetFriendButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1}
 cPowaHealth.TooltipOptions = {r = 0.2, g = 1.0, b = 0.2, showThreshold = true}
 
 function cPowaHealth:Init()
@@ -3279,7 +3281,9 @@ end
 
 -- Mana
 cPowaMana = PowaClass(cPowaAuraStats, {ValueName = "Mana"})
-cPowaMana.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Mana]}
+cPowaMana.OptionText = {typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Mana], targetFriendText = PowaAuras.Text.nomCheckFriend}
+cPowaMana.ShowOptions = {["PowaBarThresholdSlider"] = 1, ["PowaThresholdInvertButton"] = 1, ["PowaGroupAnyButton"] = 1}
+cPowaMana.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaTargetFriendButton"] = 1, ["PowaPartyButton"] = 1, ["PowaFocusButton"] = 1, ["PowaRaidButton"] = 1, ["PowaGroupOrSelfButton"] = 1, ["PowaGroupAnyButton"] = 1, ["PowaOptunitnButton"] = 1}
 cPowaMana.TooltipOptions = {r = 0.2, g = 0.2, b = 1.0, showThreshold = true}
 
 function cPowaMana:Init()

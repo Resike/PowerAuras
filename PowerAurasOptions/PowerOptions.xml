@@ -4077,7 +4077,7 @@
 								</Scripts>
 							</CheckButton>
 							<!-- Flexible CheckButton -->
-							<CheckButton name = "PowaFlexibleInstanceButton" inherits = "PowaTernarySelectorTemplate">
+							<!--<CheckButton name = "PowaFlexibleInstanceButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
 									<AbsDimension x = "25" y = "25"/>
 								</Size>
@@ -4094,7 +4094,7 @@
 										PowaFlexibleInstanceButtonText:SetText(PowaAurasOptions.Text.Ternary[self.Parameter])
 									</OnShow>
 								</Scripts>
-							</CheckButton>
+							</CheckButton>-->
 							<!-- Alive CheckButton -->
 							<CheckButton name = "PowaIsAliveButton" inherits = "PowaTernarySelectorTemplate">
 								<Size>
