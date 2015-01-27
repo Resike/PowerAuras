@@ -1,18 +1,24 @@
 **Issues:**
 * Leftover slider/dropdown/model optimisations.
-* Fix the instance type releated changes.
+* Fix the instance type related changes.
 * Timed auras redisplay fix at phasing events/rechecks.
 * Duel with party members, enemy target bug.
 * Change Old-Animation's update type to AnimationGroup.
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.27.5**
+* Increased max Chi slider to 6.
+* Model updates.
+* Some other smaller fixes.
+* Localization updates.
+
 **4.27.4**
 * Converted every sound back to "mp3".
 * Increased "Shadow Orb" max value to 5.
 * Animations with alpha changes should properly obey base opacity changes instantly.
 * Enabled new options for "Health" and "Mana" triggers.
-* Some instance type releated fixes.
+* Some instance type related fixes.
 
 **4.27.3**
 * Fixed the aura's preview icon.

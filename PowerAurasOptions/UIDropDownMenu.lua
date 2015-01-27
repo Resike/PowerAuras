@@ -725,7 +725,7 @@ function Lib_ToggleDropDownMenu(level, value, dropDownFrame, anchorName, xOffset
 			_G[listFrameName.."MenuBackdrop"]:Hide()
 		end
 		dropDownFrame.menuList = menuList
-		--Lib_UIDropDownMenu_Initialize(dropDownFrame, dropDownFrame.initialize, nil, level, menuList)
+		Lib_UIDropDownMenu_Initialize(dropDownFrame, dropDownFrame.initialize, nil, level, menuList)
 		if listFrame.numButtons == 0 then
 			return
 		end
