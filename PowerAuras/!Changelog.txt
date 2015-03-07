@@ -7,6 +7,9 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.27.7**
+* Toc bump for the options module.
+
 **4.27.6**
 * Updated for 6.1.0.
 
