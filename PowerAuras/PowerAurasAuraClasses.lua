@@ -841,12 +841,12 @@ function cPowaAura:CheckState(giveReason)
 		return false, PowaAuras.Text.nomReasonNoFocus
 	end
 	-- Unit
-	if self.optunitn and not ((GetNumSubgroupMembers() > 0 and UnitInParty(self.unitn)) or (IsInRaid() and UnitInRaid(self.unitn)) or UnitIsUnit("pet", self.unitn) or UnitIsUnit("player", self.unitn)) then -- Unitn yes, but not in party/raid or with pet
+	--[[if self.optunitn and not ((GetNumSubgroupMembers() > 0 and UnitInParty(self.unitn)) or (IsInRaid() and UnitInRaid(self.unitn)) or UnitIsUnit("pet", self.unitn) or UnitIsUnit("player", self.unitn)) then -- Unitn yes, but not in party/raid or with pet
 		if not giveReason then
 			return false
 		end
 		return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonNoCustomUnit, self.unitn)
-	end
+	end]]
 	-- Raid
 	local numrm = GetNumGroupMembers()
 	if self.raid and numrm == 0 then -- Raid check yes, but not in raid

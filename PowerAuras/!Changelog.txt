@@ -7,6 +7,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.27.8**
+* Hostile named unit tracking should proeprly work.
+* Some model fixes.
+
 **4.27.7**
 * Toc bump for the options module.
 

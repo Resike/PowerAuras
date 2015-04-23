@@ -1630,8 +1630,8 @@ function PowaAuras:UpdateAuraVisuals(aura)
 	else
 		self:ResetDragging(aura, frame)
 	end
-	model:SetUnit("none")
 	if aura.owntex then
+		model:Hide()
 		texture:Show()
 		if aura.icon == "" then
 			texture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark")
@@ -1639,9 +1639,11 @@ function PowaAuras:UpdateAuraVisuals(aura)
 			texture:SetTexture(aura.icon)
 		end
 	elseif aura.wowtex then
+		model:Hide()
 		texture:Show()
 		texture:SetTexture(self.WowTextures[aura.texture])
 	elseif aura.customtex then
+		model:Hide()
 		texture:Show()
 		texture:SetTexture(self:CustomTexPath(aura.customname))
 	elseif aura.textaura then
@@ -1650,6 +1652,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		aura:UpdateText(texture)
 	elseif aura.model then
 		texture:Hide()
+		model:Show()
 		if not aura.modelpath or aura.modelpath == "" then
 			if not aura.modelcategory or aura.modelcategory == 1 then
 				model:SetModel(self.ModelsCreature[aura.texture])
@@ -1689,6 +1692,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		end
 	elseif aura.modelcustom then
 		texture:Hide()
+		model:Show()
 		if aura.modelcustompath and aura.modelcustompath ~= "" then
 			if string.find(aura.modelcustompath, "%.m2") then
 				model:SetModel(aura.modelcustompath)
@@ -1717,6 +1721,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 			end
 		end
 	else
+		model:Hide()
 		texture:Show()
 		texture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
@@ -1947,8 +1952,8 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 	local auraId = aura.id
 	local frame = self.Frames[auraId]
 	local texture = self.Textures[auraId]
-	secondaryModel:SetUnit("none")
 	if aura.owntex then
+		secondaryModel:Hide()
 		secondaryTexture:Show()
 		if aura.icon == "" then
 			secondaryTexture:SetTexture("Interface\\Icons\\Inv_Misc_QuestionMark")
@@ -1956,17 +1961,21 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 			secondaryTexture:SetTexture(aura.icon)
 		end
 	elseif aura.wowtex then
+		secondaryModel:Hide()
 		secondaryTexture:Show()
 		secondaryTexture:SetTexture(self.WowTextures[aura.texture])
 	elseif aura.customtex then
+		secondaryModel:Hide()
 		secondaryTexture:Show()
 		secondaryTexture:SetTexture(self:CustomTexPath(aura.customname))
 	elseif aura.textaura then
+		secondaryModel:Hide()
 		secondaryTexture:Show()
 		--secondaryTexture:SetText(aura.aurastext)
 		aura:UpdateText(secondaryTexture)
 	elseif aura.model then
 		secondaryTexture:Hide()
+		secondaryModel:Show()
 		if not aura.modelpath or aura.modelpath == "" then
 			if not aura.modelcategory or aura.modelcategory == 1 then
 				secondaryModel:SetModel(self.ModelsCreature[aura.texture])
@@ -2004,6 +2013,7 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 		end
 	elseif aura.modelcustom then
 		secondaryTexture:Hide()
+		secondaryModel:Show()
 		if aura.modelcustompath and aura.modelcustompath ~= "" then
 			if string.find(aura.modelcustompath, "%.m2") then
 				secondaryModel:SetModel(aura.modelcustompath)
@@ -2030,6 +2040,7 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 			end
 		end
 	else
+		secondaryModel:Hide()
 		secondaryTexture:Show()
 		secondaryTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
