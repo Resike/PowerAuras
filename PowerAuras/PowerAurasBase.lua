@@ -1321,6 +1321,34 @@ function PowaAuras:MergeTables(desTable, sourceTable)
 	end
 end
 
+function PowaAuras:GetTableNumber(t, s)
+	if type(t) ~= "table" then
+		return
+	end
+	for k, v in pairs(t) do
+		if v == s then
+			return k
+		end
+	end
+	return false
+end
+
+function PowaAuras:GetTableNumberAll(t, s)
+	if type(t) ~= "table" then
+		return
+	end
+	local r = { }
+	for k, v in pairs(t) do
+		if v == s then
+			table.insert(r, k)
+		end
+	end
+	if not r[1] then
+		return nil
+	end
+	return r
+end
+
 function PowaAuras:InsertText(text, ...)
 	local args = {...}
 	if not args or #args == 0 then

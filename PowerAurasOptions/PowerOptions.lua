@@ -199,7 +199,7 @@ local function ReverseTable(t)
 	return r
 end
 
-local function GetTableNumber(t, s)
+--[[local function GetTableNumber(t, s)
 	if type(t) ~= "table" then
 		return
 	end
@@ -225,7 +225,7 @@ local function GetTableNumberAll(t, s)
 		return nil
 	end
 	return r
-end
+end]]
 
 function PowaAurasOptions:IconClick(owner, button)
 	if self.MoveEffect > 0 then -- Move mode
@@ -1944,7 +1944,7 @@ function PowaAurasOptions:InitPage(aura)
 				PowaBarAuraTextureSlider:SetValue(aura.texture)
 			end
 		else
-			if tonumber(aura.modelpath) then
+			--[[if tonumber(aura.modelpath) then
 				aura.texture = GetTableNumber(ModelCategory, self.ModelsDisplayInfo[tonumber(aura.modelpath)])
 			else
 				aura.texture = GetTableNumber(ModelCategory, aura.modelpath)
@@ -1966,7 +1966,7 @@ function PowaAurasOptions:InitPage(aura)
 				local model = PowaAurasOptions.Models[aura.id]
 				aura.modelpath = string.lower(model:GetModel())
 				aura.texture = GetTableNumber(ModelCategory, aura.modelpath)
-			end
+			end]]
 			if PowaBarAuraTextureSlider:GetValue() > MaxModels then
 				PowaBarAuraTextureSlider:SetValue(aura.texture)
 				PowaBarAuraTextureSlider:SetMinMaxValues(1, MaxModels)
@@ -1981,7 +1981,7 @@ function PowaAurasOptions:InitPage(aura)
 			local model = self.Models[aura.id]
 			local displayID
 			if model then
-				displayID = GetTableNumberAll(self.ModelsDisplayInfo, model:GetModel())
+				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, model:GetModel())
 				if displayID then
 					for i = 1, #displayID do
 						tinsert(self.ModelTextureList, displayID[i])
@@ -2223,7 +2223,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 			self.ModelTextureList = { }
 			if not aura.modelcategory or aura.modelcategory == 1 then
 				aura.modelpath = self.ModelsCreature[aura.texture]
-				displayID = GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
+				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
 				if displayID then
 					for i = 1, #displayID do
 						tinsert(self.ModelTextureList, displayID[i])
@@ -3184,7 +3184,7 @@ function PowaAurasOptions:ModelsChecked()
 		self.ModelTextureList = { }
 		if not aura.modelcategory or aura.modelcategory == 1 then
 			aura.modelpath = self.ModelsCreature[aura.texture]
-			local displayID = GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
+			local displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
 			if displayID then
 				for i = 1, #displayID do
 					tinsert(self.ModelTextureList, displayID[i])
@@ -3293,6 +3293,7 @@ function PowaAurasOptions:CustomModelsChecked()
 		PowaBarAuraSymSlider:Hide()
 		PowaGradientStyleDropDown:Show()
 		PowaModelCategoryDropDown:Hide()
+		PowaModelTextureDropDown:Hide()
 		PowaRandomColorButton:Show()
 		PowaDesaturateButton:Show()
 		PowaFontButton:Hide()
@@ -3723,7 +3724,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					PowaAurasOptions.ModelTextureList = { }
 					if not aura.modelcategory or aura.modelcategory == 1 then
 						aura.modelpath = PowaAurasOptions.ModelsCreature[aura.texture]
-						local displayID = GetTableNumberAll(PowaAurasOptions.ModelsDisplayInfo, aura.modelpath)
+						local displayID = PowaAurasOptions:GetTableNumberAll(PowaAurasOptions.ModelsDisplayInfo, aura.modelpath)
 						if displayID then
 							for i = 1, #displayID do
 								tinsert(PowaAurasOptions.ModelTextureList, displayID[i])

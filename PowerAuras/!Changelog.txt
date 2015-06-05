@@ -7,8 +7,16 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.27.9**
+Models should auto update on load, when you log on with a newer version in the first time. (Optional run with "/pa update" command.)
+Model updates and clean ups.
+Fixed an issue with models, when the addon options module is disabled.
+Clicking on the Custom Model should properly hide the model's texture dropdown.
+Right clicking on the aura's frame should properly select that aura, just like as with the left clicks.
+Some other smaller fixes and clean ups.
+
 **4.27.8**
-* Hostile named unit tracking should proeprly work.
+* Hostile named unit tracking should work properly.
 * Some model fixes.
 
 **4.27.7**

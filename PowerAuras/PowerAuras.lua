@@ -317,6 +317,42 @@ function PowaAuras:UpdateOldAuras()
 			if aura.Timer and self:IsNumeric(oldaura.Timer.InvertAuraBelow) then
 				aura.InvertAuraBelow = oldaura.Timer.InvertAuraBelow
 			end
+			if aura.model then
+				LoadAddOn("PowerAurasOptions")
+				if IsAddOnLoaded("PowerAurasOptions") then
+					local ModelCategory
+					if not aura.modelcategory or aura.modelcategory == 1 then
+						ModelCategory = self.ModelsCreature
+					elseif aura.modelcategory == 2 then
+						ModelCategory = self.ModelsEnvironments
+					elseif aura.modelcategory == 3 then
+						ModelCategory = self.ModelsInterface
+					elseif aura.modelcategory == 4 then
+						ModelCategory = self.ModelsSpells
+					end
+					if tonumber(aura.modelpath) then
+						aura.texture = self:GetTableNumber(ModelCategory, self.ModelsDisplayInfo[tonumber(aura.modelpath)])
+					else
+						aura.texture = self:GetTableNumber(ModelCategory, aura.modelpath)
+					end
+					if not aura.texture then
+						local model = PowaAurasOptions.Models[aura.id]
+						local displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, string.lower(model:GetModel()))
+						if displayID then
+							sort(displayID)
+							aura.modelpath = displayID[1]
+						else
+							aura.modelpath = string.lower(model:GetModel())
+						end
+						aura.texture = self:GetTableNumber(ModelCategory, self.ModelsDisplayInfo[tonumber(aura.modelpath)])
+					end
+					if not aura.texture then
+						local model = PowaAurasOptions.Models[aura.id]
+						aura.modelpath = string.lower(model:GetModel())
+						aura.texture = self:GetTableNumber(ModelCategory, aura.modelpath)
+					end
+				end
+			end
 		end
 	end
 end
@@ -961,6 +997,14 @@ local function RightButtonOnUpdate(frame, elapsed)
 	end
 	local model = PowaAuras.Models[frame.aura.id]
 	local x, y = GetCursorPosition()
+	local i = frame.aura.id - (PowaAuras.CurrentAuraPage - 1) * 24
+	local icon
+	if i > 0 and i < 25 then
+		icon = _G["PowaIcone"..i]
+	end
+	PowaAuras:SetCurrent(icon, frame.aura.id)
+	PowaMisc.GroupSize = 1
+	PowaAuras:InitPage(frame.aura)
 	if IsControlKeyDown() then
 		local px, py, pz = model:GetPosition()
 		aura.mz = format("%.2f", (px + (y - frame.y) / 64))
@@ -1290,15 +1334,7 @@ function PowaAuras:Reset(aura)
 		if tonumber(aura.modelpath) then
 			model:SetDisplayInfo(aura.modelpath)
 		else
-			if not aura.modelcategory or aura.modelcategory == 1 then
-				model:SetModel(self.ModelsCreature[aura.texture])
-			elseif aura.modelcategory == 2 then
-				model:SetModel(self.ModelsEnvironments[aura.texture])
-			elseif aura.modelcategory == 3 then
-				model:SetModel(self.ModelsInterface[aura.texture])
-			elseif aura.modelcategory == 4 then
-				model:SetModel(self.ModelsSpells[aura.texture])
-			end
+			model:SetModel(aura.modelpath)
 		end
 	end
 	model:SetCustomCamera(1)
@@ -1317,15 +1353,7 @@ function PowaAuras:ResetSecondary(aura)
 	if tonumber(aura.modelpath) then
 		secondaryModel:SetDisplayInfo(aura.modelpath)
 	else
-		if not aura.modelcategory or aura.modelcategory == 1 then
-			secondaryModel:SetModel(self.ModelsCreature[aura.texture])
-		elseif aura.modelcategory == 2 then
-			secondaryModel:SetModel(self.ModelsEnvironments[aura.texture])
-		elseif aura.modelcategory == 3 then
-			secondaryModel:SetModel(self.ModelsInterface[aura.texture])
-		elseif aura.modelcategory == 4 then
-			secondaryModel:SetModel(self.ModelsSpells[aura.texture])
-		end
+		model:SetModel(aura.modelpath)
 	end
 	secondaryModel:SetCustomCamera(1)
 	if secondaryModel:HasCustomCamera() then
