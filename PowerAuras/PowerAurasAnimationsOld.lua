@@ -263,8 +263,8 @@ cPowaAnimationGrowing = PowaClass(cPowaAnimationBase)
 function cPowaAnimationGrowing:Initialise()
 	self.MinWidth = self.TargetWidth * 0.9
 	self.MinHeight = self.TargetHeight * 0.9
-	self.MaxWidth = self.TargetWidth * 1.2
-	self.MaxHeight = self.TargetHeight * 1.2
+	self.MaxWidth = self.TargetWidth * 1.3
+	self.MaxHeight = self.TargetHeight * 1.3
 	self.Width = self.Frame:GetWidth()
 	self.Height = self.Frame:GetHeight()
 	self.Alpha = self.Frame:GetAlpha()

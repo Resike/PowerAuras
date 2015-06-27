@@ -399,7 +399,9 @@ AnimationTypes =
 	Flame = 9,
 	Orbit = 10,
 	SpinClockwise = 11,
-	SpinAntiClockwise = 12
+	SpinAntiClockwise = 12,
+	GrowingInverse = 13,
+	ShrinkingInverse = 14
 },
 
 -- Aura name -> Auras array

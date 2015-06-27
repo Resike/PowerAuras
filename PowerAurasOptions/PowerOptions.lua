@@ -3839,7 +3839,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 	elseif name == "PowaDropDownAnim1" then
 		local tableSize
 		if aura.UseOldAnimations then
-			tableSize = #PowaAurasOptions.Anim - 2
+			tableSize = #PowaAurasOptions.Anim - 4
 		else
 			tableSize = #PowaAurasOptions.Anim
 		end
@@ -3860,7 +3860,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 	elseif name == "PowaDropDownAnim2" then
 		local tableSize
 		if aura.UseOldAnimations then
-			tableSize = #PowaAurasOptions.Anim - 2
+			tableSize = #PowaAurasOptions.Anim - 4
 		else
 			tableSize = #PowaAurasOptions.Anim
 		end

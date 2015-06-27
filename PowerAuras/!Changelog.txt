@@ -7,6 +7,12 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.28.1**
+* Fixed an issue regarding with stacks with "Action Usable" triggers.
+* Added two new animation: Growing [Inverse], Shrinking [Inverse], which have reversed alpha change comparted to the normal animations.
+* Animations will not be limited at 30 FPS and will be a lot smoother when your FPS is over 30.
+* Some other smaller animation fixes.
+
 **4.28.0**
 * Updated for 6.2.0.
 

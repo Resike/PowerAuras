@@ -2603,7 +2603,8 @@ function cPowaActionReady:CheckIfShouldShow(giveReason)
 		end
 		return false, PowaAuras.Text.nomReasonActionNotFound
 	end
-	local cdstart, cdduration, enabled, charges, maxCharges = GetActionCooldown(self.slot)
+	local cdstart, cdduration, enabled = GetActionCooldown(self.slot)
+	local charges, maxCharges, chargeStart, chargeDuration = GetActionCharges(self.slot)
 	if self.Stacks then
 		self.Stacks:SetStackCount(charges)
 	end
