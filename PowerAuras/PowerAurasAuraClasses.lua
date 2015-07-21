@@ -2538,7 +2538,7 @@ cPowaCombo.TooltipOptions = {r = 1.0, g = 1.0, b = 0.0, showBuffName = true}
 function cPowaCombo:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)
 	PowaAuras.Events.UNIT_COMBO_POINTS = true
-	--PowaAuras.Events.PLAYER_TARGET_CHANGED = true
+	PowaAuras.Events.PLAYER_TARGET_CHANGED = true
 	if PowaAuras.playerclass == "DRUID" then
 		PowaAuras.Events.UPDATE_SHAPESHIFT_FORM = true
 	end
@@ -3154,6 +3154,109 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 end
 
 function cPowaSpellCooldown:ShowTimerDurationSlider()
+	return true
+end
+
+-- Spell Learned
+cPowaSpellLearned = PowaClass(cPowaAura, {AuraType = "SpellLearned", CanHaveTimer = true, CanHaveTimerOnInverse = false, CanHaveInvertTime = false})
+cPowaSpellLearned.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff8, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.SpellLearned], targetFriendText = PowaAuras.Text.nomCheckPet, targetFriendTooltip = PowaAuras.Text.aideCheckPet}
+cPowaSpellLearned.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
+cPowaSpellLearned.TooltipOptions = {r = 1.0, g = 0.6, b = 0.8, showBuffName = true}
+
+function cPowaSpellLearned:AddEffectAndEvents()
+	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)
+	PowaAuras.Events.CHARACTER_POINTS_CHANGED = true
+end
+
+function cPowaSpellLearned:SkipTargetChecks()
+	return true
+end
+
+function cPowaSpellLearned:CheckIfShouldShow(giveReason)
+	if self.Debug then
+		PowaAuras:Message("Spell = ", self.buffname)
+	end
+	local reason
+	local _
+	local buffname
+	if string.find(self.buffname, "%\[") or string.find(self.buffname, "%\]") then
+		buffname = strtrim(self.buffname, "%\[%\]")
+	else
+		buffname = self.buffname
+	end
+	local spellName, spellIcon, spellId
+	spellName, _, spellIcon = GetSpellInfo(buffname)
+	local spellLink = GetSpellLink(buffname)
+	if spellLink then
+		spellId = string.match(spellLink, "spell:(%d+)")
+	end
+	if not spellName then
+		return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotFound, buffname)
+	end
+	if self.Debug then
+		PowaAuras:Message("spellName = ", spellName," spellId = ", spellId)
+		PowaAuras:Message("spellIcon = ", spellIcon)
+	end
+	if self:IconIsRequired() then
+		local _, _, spellIcon = GetSpellInfo(spellName)
+		self:SetIcon(spellIcon)
+	end
+	local show = false
+	if self.targetfriend then
+		for spellId, spellName, spellSubtext in petSpells() do
+			if self.ignoremaj then
+				if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+					show = true
+				end
+			else
+				if spellId == tonumber(buffname) or spellName == buffname then
+					show = true
+				end
+			end
+		end
+	else
+		for spellId, spellName, spellSubtext in playerSpells() do
+			if self.ignoremaj then
+				if spellId == tonumber(buffname) or string.upper(spellName) == string.upper(buffname) then
+					show = true
+				end
+			else
+				if spellId == tonumber(buffname) or spellName == buffname then
+					show = true
+				end
+			end
+		end
+	end
+	if show then
+		if self.targetfriend then
+			return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonPetIsLearned, spellName)
+		else
+			return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonIsLearned, spellName)
+		end
+	else
+		if self.targetfriend then
+			return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonPetIsNotLearned, spellName)
+		else
+			return show, PowaAuras:InsertText(PowaAuras.Text.nomReasonIsNotLearned, spellName)
+		end
+	end
+	if giveReason then
+		if self.targetfriend then
+			reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonPetIsNotLearned, spellName)
+		else
+			reason = PowaAuras:InsertText(PowaAuras.Text.nomReasonIsNotLearned, spellName)
+		end
+	end
+	if self.Debug then
+		PowaAuras:Message("Hide!")
+	end
+	if not giveReason then
+		return false
+	end
+	return false, reason
+end
+
+function cPowaSpellLearned:ShowTimerDurationSlider()
 	return true
 end
 
@@ -4663,6 +4766,7 @@ PowaAuras.AuraClasses =
 	[PowaAuras.BuffTypes.SpellAlert] = cPowaSpellAlert,
 	[PowaAuras.BuffTypes.Stance] = cPowaStance,
 	[PowaAuras.BuffTypes.SpellCooldown] = cPowaSpellCooldown,
+	[PowaAuras.BuffTypes.SpellLearned] = cPowaSpellLearned,
 	[PowaAuras.BuffTypes.StealableSpell] = cPowaStealableSpell,
 	[PowaAuras.BuffTypes.PurgeableSpell] = cPowaPurgeableSpell,
 	[PowaAuras.BuffTypes.GTFO] = cPowaGTFO,

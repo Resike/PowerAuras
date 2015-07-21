@@ -1658,6 +1658,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 	else
 		self:ResetDragging(aura, frame)
 	end
+	model:SetUnit("none")
 	if aura.owntex then
 		model:Hide()
 		texture:Show()
@@ -1980,6 +1981,7 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 	local auraId = aura.id
 	local frame = self.Frames[auraId]
 	local texture = self.Textures[auraId]
+	secondaryModel:SetUnit("none")
 	if aura.owntex then
 		secondaryModel:Hide()
 		secondaryTexture:Show()

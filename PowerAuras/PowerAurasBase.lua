@@ -312,6 +312,8 @@ DoCheck =
 
 	SpellCooldowns = false,
 
+	SpellLearned = false,
+
 	Totems = false,
 	Runes = false,
 	Items = false,
@@ -355,6 +357,7 @@ BuffTypes =
 	TypeBuff = 25,
 	UnitMatch = 26,
 	PetStance = 27,
+	SpellLearned = 28,
 	GTFO = 50
 },
 
@@ -860,6 +863,8 @@ PowaAuras:RegisterAuraType('PurgeableTargetSpells')
 PowaAuras:RegisterAuraType('PurgeableFocusSpells')
 
 PowaAuras:RegisterAuraType('SpellCooldowns')
+
+PowaAuras:RegisterAuraType('SpellLearned')
 
 PowaAuras:RegisterAuraType('Static')
 
