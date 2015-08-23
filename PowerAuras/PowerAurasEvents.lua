@@ -21,7 +21,6 @@ local IsInGroup = IsInGroup
 local IsInInstance = IsInInstance
 local IsInRaid = IsInRaid
 local IsMounted = IsMounted
-local LoadAddOn = LoadAddOn
 local UnitCanAttack = UnitCanAttack
 local UnitClass = UnitClass
 local UnitGUID = UnitGUID
@@ -97,7 +96,7 @@ end
 function PowaAuras:ADDON_LOADED(addon)
 	if addon == "PowerAuras" then
 		PowaAuras_Frame:UnregisterEvent("ADDON_LOADED")
-		LoadAddOn("PowerAurasOptions")
+		--LoadAddOn("PowerAurasOptions")
 		-- Ensure PowaMisc gets any new values
 		for k, v in pairs(PowaAuras.PowaMiscDefault) do
 			if PowaMisc[k] == nil then
@@ -133,11 +132,7 @@ function PowaAuras:ADDON_LOADED(addon)
 		end
 		_, self.playerclass = UnitClass("player")
 		self:LoadAuras()
-		if IsAddOnLoaded("PowerAurasOptions") then
-			self:OptionsOnLoad()
-		else
-			self:OptionsDisabled()
-		end
+		self:SlashCommandsInit()
 		self:FindAllChildren()
 		self:CreateEffectLists()
 		if not PowaMisc.Disabled then
@@ -148,12 +143,55 @@ function PowaAuras:ADDON_LOADED(addon)
 	end
 end
 
-function PowaAuras:OptionsDisabled()
-	SlashCmdList["POWA"] = function(msg)
-		self:DisplayText("Power Auras Options: "..self.Colors.Red..PowaAuras.Text.Disabled.."|r")
+function PowaAuras:SlashCommands(msg)
+	if msg == "dump" then
+		local dumpLoaded = PowaAuras.Dump
+		if dumpLoaded then
+			PowaAuras:Dump()
+			PowaAuras:Message("State dumped to:")
+			PowaAuras:Message("WTF\\Account\\<ACCOUNT>\\"..GetRealmName().."\\"..UnitName("player").."\\SavedVariables\\PowerAuras.lua")
+			PowaAuras:Message("You must log-out to save the values to disk.")
+		else
+			PowaAuras:Message("Function is not loaded.")
+		end
+	elseif msg == "cleardump" then
+		local dumpLoaded = PowaAuras.Dump
+		if dumpLoaded then
+			PowaAuras:ClearDump()
+			PowaAuras:Message("State dump cleared.")
+		else
+			PowaAuras:Message("Function is not loaded.")
+		end
+	elseif msg == "update" or msg == "upgrade" then
+		PowaAuras:UpdateOldAuras()
+	elseif msg == "toggle" or msg == "tog" then
+		PowaAuras:Toggle()
+	elseif msg == "showbuffs" or msg == "buffs" then
+		PowaAuras:ShowAurasOnUnit("Buffs", "HELPFUL")
+	elseif msg == "showdebuffs" or msg == "debuffs" then
+		PowaAuras:ShowAurasOnUnit("Debuffs", "HARMFUL")
+	elseif msg == "playertalents" then
+		PowaAuras:ListPlayerTalents()
+	elseif msg == "pettalents" then
+		PowaAuras:ListPetTalents()
+	else
+		PowaAuras:MainOptionShow()
 	end
-	SLASH_POWA1 = "/pa"
-	SLASH_POWA2 = "/powa"
+end
+
+function PowaAuras:SlashCommandsInit()
+	SlashCmdList["PowerAuras"] = function(msg)
+		LoadAddOn("PowerAurasOptions")
+		if not IsAddOnLoaded("PowerAurasOptions") then
+			self:DisplayText("Power Auras Options: "..self.Colors.Red..PowaAuras.Text.Disabled.."|r")
+			return
+		else
+			self:OptionsOnLoad()
+		end
+		PowaAuras:SlashCommands(msg)
+	end
+	SLASH_PowerAuras1 = "/pa"
+	SLASH_PowerAuras2 = "/powa"
 end
 
 function PowaAuras:Setup()

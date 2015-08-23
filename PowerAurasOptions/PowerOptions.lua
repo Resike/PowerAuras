@@ -58,11 +58,11 @@ end
 
 -- Main Options
 function PowaAurasOptions:OptionsOnLoad()
-	SlashCmdList["PowerAuras"] = function(msg)
+	--[[SlashCmdList["PowerAuras"] = function(msg)
 		PowaAurasOptions:SlashCommands(msg)
 	end
 	SLASH_PowerAuras1 = "/pa"
-	SLASH_PowerAuras2 = "/powa"
+	SLASH_PowerAuras2 = "/powa"]]
 	PowaAuras_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	for i = 1, 5 do
 		_G["PowaOptionsList"..i]:SetText(PowaPlayerListe[i])
@@ -74,6 +74,7 @@ function PowaAurasOptions:OptionsOnLoad()
 	PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
 	PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
 	PowaAurasOptions:SetLockButtonText()
+	self.OptionsSetupDone = true
 	local day = tonumber(date("%d"))
 	local month = tonumber(date("%m"))
 	if (day == 1 and month == 1) or (day == 1 and month == 4) or (day == 25 and month == 12) or (day == 31 and month == 12) then
@@ -2164,7 +2165,7 @@ end
 
 -- Sliders Changed
 function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	if value == 0 or not value then
@@ -2301,7 +2302,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:FrameStrataLevelSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2313,7 +2314,7 @@ function PowaAurasOptions:FrameStrataLevelSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:TextureStrataSublevelSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2325,7 +2326,7 @@ function PowaAurasOptions:TextureStrataSublevelSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:ModelPositionZSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	if value / 100 ~= self.Auras[self.CurrentAuraId].mz then
@@ -2342,7 +2343,7 @@ function PowaAurasOptions:ModelPositionZSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:ModelPositionXSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	if value / 100 ~= self.Auras[self.CurrentAuraId].mx then
@@ -2359,7 +2360,7 @@ function PowaAurasOptions:ModelPositionXSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:ModelPositionYSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	if value / 100 ~= self.Auras[self.CurrentAuraId].my then
@@ -2376,7 +2377,7 @@ function PowaAurasOptions:ModelPositionYSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarAuraAlphaSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2420,7 +2421,7 @@ function PowaAurasOptions:BarAuraAlphaSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarAuraSizeSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2516,7 +2517,7 @@ function PowaAurasOptions:BarAuraSizeSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarAuraCoordXSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2551,7 +2552,7 @@ function PowaAurasOptions:BarAuraCoordXSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarAuraCoordYSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2586,7 +2587,7 @@ function PowaAurasOptions:BarAuraCoordYSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:SecondaryFrameStrataLevelSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2600,7 +2601,7 @@ function PowaAurasOptions:SecondaryFrameStrataLevelSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:SecondaryTextureStrataSublevelSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2614,7 +2615,7 @@ function PowaAurasOptions:SecondaryTextureStrataSublevelSliderChanged(slider, va
 end
 
 function PowaAurasOptions:BarAuraAnimSpeedSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2625,7 +2626,7 @@ function PowaAurasOptions:BarAuraAnimSpeedSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarAuraAnimDurationSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -2636,7 +2637,7 @@ function PowaAurasOptions:BarAuraAnimDurationSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarAuraSymSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	if value == 0 then
@@ -2687,7 +2688,7 @@ function PowaAurasOptions:BarAuraSymSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarAnimationSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	if value == - 1 then
@@ -2702,7 +2703,7 @@ function PowaAurasOptions:BarAnimationSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarAuraRotateSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	--[[if self.Auras[self.CurrentAuraId].textaura ~= true then
@@ -2765,7 +2766,7 @@ function PowaAurasOptions:BarAuraRotateSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarAuraDeformSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	if PowaMisc.GroupSize == 1 then
@@ -2803,7 +2804,7 @@ function PowaAurasOptions:BarAuraDeformSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:BarThresholdSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	-- Don't use ~= checker!
@@ -4535,7 +4536,7 @@ end
 
 -- Advanced Options
 function PowaAurasOptions:ShowTimerChecked(button)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4550,7 +4551,7 @@ function PowaAurasOptions:ShowTimerChecked(button)
 end
 
 function PowaAurasOptions:TimerSizeSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4561,7 +4562,7 @@ function PowaAurasOptions:TimerSizeSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:TimerAlphaSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4572,7 +4573,7 @@ function PowaAurasOptions:TimerAlphaSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:TimerCoordXSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4583,7 +4584,7 @@ function PowaAurasOptions:TimerCoordXSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:TimerCoordYSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4594,7 +4595,7 @@ function PowaAurasOptions:TimerCoordYSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:PowaTimerInvertAuraSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4605,7 +4606,7 @@ function PowaAurasOptions:PowaTimerInvertAuraSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:TimerDurationSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4625,7 +4626,7 @@ function PowaAurasOptions.DropDownMenu_OnClickTimerRelative(self)
 end
 
 function PowaAurasOptions:TimerChecked(button, setting)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4640,7 +4641,7 @@ function PowaAurasOptions:TimerChecked(button, setting)
 end
 
 function PowaAurasOptions:SettingChecked(button, setting)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4652,7 +4653,7 @@ function PowaAurasOptions:SettingChecked(button, setting)
 end
 
 function PowaAurasOptions:TimerTransparentChecked(button)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4667,7 +4668,7 @@ end
 
 -- Stacks
 function PowaAurasOptions:ShowStacksChecked(button)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4681,7 +4682,7 @@ function PowaAurasOptions:ShowStacksChecked(button)
 end
 
 function PowaAurasOptions:StacksAlphaSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4691,7 +4692,7 @@ function PowaAurasOptions:StacksAlphaSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:StacksSizeSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4701,7 +4702,7 @@ function PowaAurasOptions:StacksSizeSliderChanged(slider, value)
 end
 
 function PowaAurasOptions:StacksCoordXSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4712,7 +4713,7 @@ end
 
 
 function PowaAurasOptions:StacksCoordYSliderChanged(slider, value)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4731,7 +4732,7 @@ function PowaAurasOptions.DropDownMenu_OnClickStacksRelative(self)
 end
 
 function PowaAurasOptions:StacksChecked(button, setting)
-	if not (self.VariablesLoaded and self.SetupDone) then
+	if not (self.VariablesLoaded and self.SetupDone and self.OptionsSetupDone) then
 		return
 	end
 	local aura = self.Auras[self.CurrentAuraId]
@@ -4743,7 +4744,7 @@ function PowaAurasOptions:StacksChecked(button, setting)
 	aura.Stacks:Dispose()
 end
 
-function PowaAurasOptions:SlashCommands(msg)
+--[[function PowaAurasOptions:SlashCommands(msg)
 	if msg == "dump" then
 		local dumpLoaded = PowaAurasOptions.Dump
 		if dumpLoaded then
@@ -4777,7 +4778,7 @@ function PowaAurasOptions:SlashCommands(msg)
 	else
 		PowaAurasOptions:MainOptionShow()
 	end
-end
+end]]
 
 function PowaAurasOptions:ShowAurasOnUnit(display, auraType)
 	local index = 1
@@ -5583,7 +5584,7 @@ function PowaAurasOptions:ResizeFrame(frame)
 			if self.resizing then
 				self:ClearAllPoints()
 				if frame.direction == "TopLeft" then
-					self:SetPoint("BottomRight", UIParent, "BottomRight", - (UIParent:GetWidth() - (left + self:GetWidth())), bottom)
+					self:SetPoint("BottomRight", UIParent, "BottomRight", - left - self:GetWidth(), bottom)
 				else
 					self:SetPoint("BottomLeft", UIParent, "BottomLeft", left, bottom)
 				end
@@ -5600,9 +5601,9 @@ function PowaAurasOptions:ResizeFrame(frame)
 			if self.resizing then
 				self:ClearAllPoints()
 				if frame.direction == "BottomLeft" then
-					self:SetPoint("TopLeft", UIParent, "TopLeft", left, (UIParent:GetWidth() - (bottom + self:GetHeight())))
+					self:SetPoint("TopLeft", UIParent, "TopLeft", left, - bottom - self:GetHeight())
 				else
-					self:SetPoint("TopLeft", UIParent, "TopLeft", left, (UIParent:GetWidth() - (bottom + self:GetHeight())))
+					self:SetPoint("TopLeft", UIParent, "TopLeft", left, - bottom - self:GetHeight())
 				end
 			end
 			local s = self:GetWidth() / frame.width
