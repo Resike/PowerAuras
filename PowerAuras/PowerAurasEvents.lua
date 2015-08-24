@@ -44,6 +44,10 @@ PowaAuras_Frame:SetScript("OnUpdate", function(self, elapsed, ...)
 	PowaAuras:OnUpdate(elapsed)
 end)
 
+local PowaAction_Tooltip = CreateFrame("GameTooltip", "PowaAction_Tooltip", UIParent, "GameTooltipTemplate")
+PowaAction_Tooltip:SetPoint("BOTTOM", UIParent, "TOP", 0, 100)
+PowaAction_Tooltip:SetFrameStrata("TOOLTIP")
+
 function PowaAuras:ReregisterEvents()
 	PowaAuras_Frame:UnregisterAllEvents()
 	self:RegisterEvents(PowaAuras_Frame)

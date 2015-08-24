@@ -7,6 +7,9 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.28.4**
+* Fix for broken "Action Usable" triggers.
+
 **4.28.3**
 * The options module should be load on demand properly.
 * Some other smaller fixes.
