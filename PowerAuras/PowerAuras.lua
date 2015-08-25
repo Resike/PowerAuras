@@ -24,6 +24,7 @@ local pairs = pairs
 local pi = math.pi
 local pihalf = pi / 2
 local select = select
+local sort = sort
 local string = string
 local table = table
 local tonumber = tonumber
@@ -42,10 +43,12 @@ local GetSpellCooldown = GetSpellCooldown
 local GetSpellInfo = GetSpellInfo
 local GetTime = GetTime
 local HasAction = HasAction
+local IsAddOnLoaded = IsAddOnLoaded
 local IsAltKeyDown = IsAltKeyDown
 local IsControlKeyDown = IsControlKeyDown
 local IsMounted = IsMounted
 local IsMouseButtonDown = IsMouseButtonDown
+local LoadAddOn = LoadAddOn
 local PlaySound = PlaySound
 local PlaySoundFile = PlaySoundFile
 local SetPortraitToTexture = SetPortraitToTexture
@@ -583,16 +586,19 @@ function PowaAuras:MemorizeActions(actionIndex)
 						if self:MatchString(name, actionAura.buffname, actionAura.ignoremaj) or self:MatchString(text, actionAura.buffname, actionAura.ignoremaj) then
 							actionAura.slot = i -- Remember the slot
 							-- Remember the texture
-							local tempicon
+							local actionTexture = GetActionTexture(i)
 							if actionAura.owntex then
-								PowaIconTexture:SetTexture(GetActionTexture(i))
-								tempicon = PowaIconTexture:GetTexture()
-								if actionAura.icon ~= tempicon then
-									actionAura.icon = tempicon
+								if PowaIconTexture then
+									PowaIconTexture:SetTexture(actionTexture)
+								end
+								if actionAura.icon ~= actionTexture then
+									actionAura.icon = actionTexture
 								end
 							elseif actionAura.icon == "" then
-								PowaIconTexture:SetTexture(GetActionTexture(i))
-								actionAura.icon = PowaIconTexture:GetTexture()
+								if PowaIconTexture then
+									PowaIconTexture:SetTexture(actionTexture)
+								end
+								actionAura.icon = actionTexture
 							end
 						end
 					end
@@ -1350,10 +1356,12 @@ end
 function PowaAuras:ResetSecondary(aura)
 	local secondaryModel = self.SecondaryModels[aura.id]
 	secondaryModel:ClearModel()
-	if tonumber(aura.modelpath) then
-		secondaryModel:SetDisplayInfo(aura.modelpath)
-	else
-		model:SetModel(aura.modelpath)
+	if aura.model then
+		if tonumber(aura.modelpath) then
+			secondaryModel:SetDisplayInfo(aura.modelpath)
+		else
+			secondaryModel:SetModel(aura.modelpath)
+		end
 	end
 	secondaryModel:SetCustomCamera(1)
 	if secondaryModel:HasCustomCamera() then

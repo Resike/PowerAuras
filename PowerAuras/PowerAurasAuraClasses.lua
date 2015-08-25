@@ -19,6 +19,7 @@ local type = type
 local wipe = wipe
 
 local CreateFrame = CreateFrame
+local GetActionCharges = GetActionCharges
 local GetActionCooldown = GetActionCooldown
 local GetComboPoints = GetComboPoints
 local GetContainerItemLink = GetContainerItemLink

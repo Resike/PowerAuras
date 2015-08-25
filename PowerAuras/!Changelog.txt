@@ -7,6 +7,12 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.28.5**
+* Fix for broken "Action Usable" triggers, with own textures.
+* Secondary model reset fix.
+* Added some upvalues.
+* Some other smaller fixes.
+
 **4.28.4**
 * Fix for broken "Action Usable" triggers.
 
