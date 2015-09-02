@@ -7,6 +7,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.28.6**
+* Fixed an issue with the tooltip scanner functions.
+* Enabled the tooltip checker function for the Weapon Enchant trigger.
+
 **4.28.5**
 * Fix for broken "Action Usable" triggers, with own textures.
 * Secondary model reset fix.

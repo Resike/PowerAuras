@@ -97,6 +97,10 @@ local BOOKTYPE_SPELL = BOOKTYPE_SPELL
 local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
 
+local PowaAuras_Tooltip = CreateFrame("GameTooltip", "PowaAuras_Tooltip", UIParent, "GameTooltipTemplate")
+PowaAuras_Tooltip:SetPoint("BOTTOM", UIParent, "TOP", 0, 100)
+PowaAuras_Tooltip:SetFrameStrata("TOOLTIP")
+
 -- PowaAura Classes
 function PowaClass(base, ctor)
 	local c = { }
@@ -2413,7 +2417,7 @@ end
 -- Enchant
 cPowaEnchant = PowaClass(cPowaAura, {AuraType = "Enchants", CanHaveTimer = true, CanHaveTimerOnInverse = true, CanHaveStacks = true, CanHaveInvertTime = true, InvertTimeHides = true})
 cPowaEnchant.OptionText = {buffNameTooltip = PowaAuras.Text.aideBuff5, exactTooltip = PowaAuras.Text.aideExact, typeText = PowaAuras.Text.AuraType[PowaAuras.BuffTypes.Enchant]}
-cPowaEnchant.ShowOptions = {["PowaBarBuffStacks"] = 1}
+cPowaEnchant.ShowOptions = {["PowaBarBuffStacks"] = 1, ["PowaBarTooltipCheck"] = 1}
 cPowaEnchant.CheckBoxes = {["PowaIngoreCaseButton"] = 1, ["PowaInverseButton"] = 1, ["PowaOwntexButton"] = 1}
 cPowaEnchant.TooltipOptions = {r = 1.0, g = 0.8, b = 1.0, showBuffName = true}
 

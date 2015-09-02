@@ -1363,25 +1363,6 @@
 			</Frame>
 		</Frames>
 	</Frame>
-	<!-- Tootips -->
-	<GameTooltip name = "PowaAuras_Tooltip" frameStrata = "TOOLTIP" hidden = "false" parent = "UIParent" inherits = "GameTooltipTemplate">
-		<Anchors>
-			<Anchor point = "BOTTOM" relativePoint = "TOP">
-				<Offset>
-					<AbsDimension x = "0" y = "100"/>
-				</Offset>
-			</Anchor>
-		</Anchors>
-	</GameTooltip>
-	<!--<GameTooltip name = "PowaAction_Tooltip" frameStrata = "TOOLTIP" hidden = "false" parent = "UIParent" inherits = "GameTooltipTemplate">
-		<Anchors>
-			<Anchor point = "BOTTOM" relativePoint = "TOP">
-				<Offset>
-					<AbsDimension x = "0" y = "100"/>
-				</Offset>
-			</Anchor>
-		</Anchors>
-	</GameTooltip>-->
 	<!-- Check Button Template -->
 	<CheckButton name = "PowaCheckTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
 		<HitRectInsets>
