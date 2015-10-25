@@ -7,6 +7,9 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.28.7**
+* Model updates. (6.2.2.20574)
+
 **4.28.6**
 * Fixed an issue with the tooltip scanner functions.
 * Enabled the tooltip checker function for the Weapon Enchant trigger.
