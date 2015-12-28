@@ -73,8 +73,8 @@ function PowaAurasOptions:OptionsOnLoad()
 		_G["PowaOptionsList"..i + 5]:SetText(PowaGlobalListe[i])
 	end
 	self.Comms:Register()
-	PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
-	PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
+	--PowaBarAuraTextureSlider:SetMinMaxValues(1, self.MaxTextures)
+	--PowaBarAuraTextureSliderHigh:SetText(self.MaxTextures)
 	PowaAurasOptions:SetLockButtonText()
 	self.OptionsSetupDone = true
 	local day = tonumber(date("%d"))
