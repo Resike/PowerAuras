@@ -141,11 +141,11 @@ PowerType =
 	[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
 	[SPELL_POWER_HOLY_POWER] = "Holy Power",
 	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
 	[SPELL_POWER_CHI] = "Chi",
-	[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =

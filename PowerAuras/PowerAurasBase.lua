@@ -915,13 +915,13 @@ PowaAuras.PowerRanges =
 	[SPELL_POWER_SOUL_SHARDS] = 4,
 	[SPELL_POWER_LUNAR_ECLIPSE] = 100,
 	[SPELL_POWER_SOLAR_ECLIPSE] = 100,
-	[SPELL_POWER_DEMONIC_FURY] = 1000,
+	--[SPELL_POWER_DEMONIC_FURY] = 1000,
 	[SPELL_POWER_HOLY_POWER] = 5,
 	[SPELL_POWER_ALTERNATE_POWER] = 100,
-	[SPELL_POWER_DARK_FORCE] = 5,
+	--[SPELL_POWER_DARK_FORCE] = 5,
 	[SPELL_POWER_CHI] = 6,
-	[SPELL_POWER_SHADOW_ORBS] = 5,
-	[SPELL_POWER_BURNING_EMBERS] = 4,
+	--[SPELL_POWER_SHADOW_ORBS] = 5,
+	--[SPELL_POWER_BURNING_EMBERS] = 4,
 }
 
 PowaAuras.RangeType =
@@ -936,13 +936,13 @@ PowaAuras.RangeType =
 	[SPELL_POWER_SOUL_SHARDS] = "",
 	[SPELL_POWER_LUNAR_ECLIPSE] = "%",
 	[SPELL_POWER_SOLAR_ECLIPSE] = "%",
-	[SPELL_POWER_DEMONIC_FURY] = "",
+	--[SPELL_POWER_DEMONIC_FURY] = "",
 	[SPELL_POWER_HOLY_POWER] = "",
 	[SPELL_POWER_ALTERNATE_POWER] = "",
-	[SPELL_POWER_DARK_FORCE] = "",
+	--[SPELL_POWER_DARK_FORCE] = "",
 	[SPELL_POWER_CHI] = "",
-	[SPELL_POWER_SHADOW_ORBS] = "",
-	[SPELL_POWER_BURNING_EMBERS] = ""
+	--[SPELL_POWER_SHADOW_ORBS] = "",
+	--[SPELL_POWER_BURNING_EMBERS] = ""
 }
 
 PowaAuras.PowerTypeIcon =
@@ -957,13 +957,13 @@ PowaAuras.PowerTypeIcon =
 	[SPELL_POWER_SOUL_SHARDS] = "inv_misc_gem_amethyst_02",
 	[SPELL_POWER_LUNAR_ECLIPSE] = "ability_druid_eclipse",
 	[SPELL_POWER_SOLAR_ECLIPSE] = "ability_druid_eclipseorange",
-	[SPELL_POWER_DEMONIC_FURY] = "ability_warlock_eradication",
+	--[SPELL_POWER_DEMONIC_FURY] = "ability_warlock_eradication",
 	[SPELL_POWER_HOLY_POWER] = "spell_holy_lightsgrace",
 	[SPELL_POWER_ALTERNATE_POWER] = "inv_battery_02",
-	[SPELL_POWER_DARK_FORCE] = "spell_arcane_arcanetorrent",
+	--[SPELL_POWER_DARK_FORCE] = "spell_arcane_arcanetorrent",
 	[SPELL_POWER_CHI] = "class_monk",
-	[SPELL_POWER_SHADOW_ORBS] = "spell_priest_shadoworbs",
-	[SPELL_POWER_BURNING_EMBERS] = "ability_warlock_burningembers",
+	--[SPELL_POWER_SHADOW_ORBS] = "spell_priest_shadoworbs",
+	--[SPELL_POWER_BURNING_EMBERS] = "ability_warlock_burningembers",
 }
 
 PowaAuras.TalentChangeSpells =

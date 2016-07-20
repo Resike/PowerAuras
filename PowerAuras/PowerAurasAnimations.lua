@@ -17,7 +17,7 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 		return nil
 	end
 	local animationGroup = frame:CreateAnimationGroup("Begin")
-	animationGroup:SetIgnoreFramerateThrottle(true)
+	--animationGroup:SetIgnoreFramerateThrottle(true)
 	animationGroup.aura = aura
 	animationGroup:SetScript("OnFinished", function(self, forced)
 		local aura = self.aura
@@ -37,7 +37,7 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 	end)
 	local duration, duration2 = self:CalculateDurations(aura.speed)
 	if aura.begin ~= PowaAuras.AnimationBeginTypes.Bounce then
-		self:AddJumpAlphaAndReturn(animationGroup, - math.min(aura.alpha, 0.99), duration, 1)
+		self:AddJumpAlphaAndReturn(animationGroup, 0, math.min(aura.alpha, 0.99), duration, 1)
 	end
 	if aura.begin == PowaAuras.AnimationBeginTypes.ZoomOut then
 		self:AddJumpScaleAndReturn(animationGroup, 0.5, duration, 1)
@@ -61,7 +61,7 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 	elseif aura.begin == PowaAuras.AnimationBeginTypes.TranslateBottomLeft then
 		self:AddJumpTranslateAndReturn(animationGroup, - 75, - 75, duration, 1)
 	elseif aura.begin == PowaAuras.AnimationBeginTypes.Bounce then
-		self:AddJumpAlphaAndReturn(animationGroup, - math.min(aura.alpha, 0.99), 0, 1)
+		self:AddJumpAlphaAndReturn(animationGroup, 0, math.min(aura.alpha, 0.99), 0, 1)
 		local u = 0
 		local height = 100
 		local efficiency = 0.6
@@ -75,7 +75,7 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 			ds[i] = (u * dt + a * dt * dt / 2) / height
 			u = u + a * dt
 		end
-		local order = animationGroup:GetMaxOrder() + 1
+		local order = 2
 		while height > 2 do
 			if height < 100 then
 				for i = 1, steps do
@@ -101,9 +101,9 @@ function PowaAuras:AddJumpTranslateAndReturn(animationGroup, dx, dy, duration, o
 	self:AddTranslation(animationGroup, - dx, - dy, duration, order + 1)
 end
 
-function PowaAuras:AddJumpAlphaAndReturn(animationGroup, change, duration, order)
-	self:AddAlpha(animationGroup, change, 0, order)
-	self:AddAlpha(animationGroup, - change, duration, order + 1)
+function PowaAuras:AddJumpAlphaAndReturn(animationGroup, alphaFrom, alphaTo, duration, order)
+	self:AddAlpha(animationGroup, alphaFrom, alphaTo, 0, order)
+	self:AddAlpha(animationGroup, alphaFrom, alphaTo, duration, order + 1)
 end
 
 function PowaAuras:AddJumpScaleAndReturn(animationGroup, scale, duration, order)
@@ -116,7 +116,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		return nil
 	end
 	local animationGroup = frame:CreateAnimationGroup("Main")
-	animationGroup:SetIgnoreFramerateThrottle(true)
+	--animationGroup:SetIgnoreFramerateThrottle(true)
 	animationGroup.aura = aura
 	animationGroup:SetLooping("REPEAT")
 	local speed = 1.0
@@ -131,32 +131,32 @@ function PowaAuras:AddMainAnimation(aura, frame)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Flashing then
 		local deltaAlpha = math.min(aura.alpha, 0.99)
 		self:AddScale(animationGroup, 1.0, 1.0, 0, 1)
-		self:AddAlpha(animationGroup, - deltaAlpha, duration, 1)
-		self:AddAlpha(animationGroup, deltaAlpha, duration, 2)
+		self:AddAlpha(animationGroup, deltaAlpha, 0, duration, 1)
+		self:AddAlpha(animationGroup, 0, deltaAlpha, duration, 2)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Growing then
 		self:AddScale(animationGroup, 1.3, 1.3, duration * 3, 1)
-		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), duration * 3, 1)
+		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), 0, duration * 3, 1)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.GrowingInverse then
-		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), 0, 1)
+		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), 0, 0, 1)
 		self:AddScale(animationGroup, 1.3, 1.3, duration * 3, 1)
-		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), duration * 3, 1)
+		self:AddAlpha(animationGroup, 0, math.min(aura.alpha, 0.99), duration * 3, 1)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Pulse then
 		self:AddScale(animationGroup, 1.08, 1.08, duration, 1)
 		self:AddScale(animationGroup, 0.9259, 0.9259, duration, 2)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Shrinking then
-		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), 0, 1)
+		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), 0, 0, 1)
 		self:AddScale(animationGroup, 1.3, 1.3, 0, 1)
 		self:AddScale(animationGroup, 1 / 1.3, 1 / 1.3, duration * 3, 2)
-		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), duration * 3, 2)
+		self:AddAlpha(animationGroup, 0, math.min(aura.alpha, 0.99), duration * 3, 2)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.ShrinkingInverse then
 		self:AddScale(animationGroup, 1.3, 1.3, 0, 1)
 		self:AddScale(animationGroup, 1 / 1.3, 1 / 1.3, duration * 3, 2)
-		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), duration * 3, 2)
+		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), 0, duration * 3, 2)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.WaterDrop then
 		self:AddMoveRandomLocation(animationGroup, 0, 20, - 10, 0, 20, - 10, 0, 0, false, aura.speed, 1)
 		self:AddScale(animationGroup, 0.85, 0.85, 0, 0, 1)
 		self:AddScale(animationGroup, 1.76, 1.76, duration * 4, 2)
-		self:AddAlpha(animationGroup, - math.min(aura.alpha, 0.99), duration * 4, 2)
+		self:AddAlpha(animationGroup, math.min(aura.alpha, 0.99), 0, duration * 4, 2)
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Electric then
 		local steps = 30
 		local deltaAlpha = math.min(aura.alpha, 0.99) / steps
@@ -167,7 +167,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		end)
 		for i = 1, steps do
 			self:AddMoveRandomLocation(animationGroup, 0, 10, - 5, 0, 10, - 5, stepDuration, true, aura.speed, i)
-			self:AddAlpha(animationGroup, - deltaAlpha, stepDuration, i)
+			self:AddAlpha(animationGroup, deltaAlpha, 0, stepDuration, i)
 		end
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Flame then
 		local steps = 40
@@ -175,7 +175,7 @@ function PowaAuras:AddMainAnimation(aura, frame)
 		local stepDuration = duration * 4 / steps
 		for i = 1, steps do
 			self:AddMoveRandomLocation(animationGroup, 1, 7, - 4, 0, 2, 0, stepDuration, false, aura.speed, i)
-			self:AddAlpha(animationGroup, - deltaAlpha, stepDuration, i)
+			self:AddAlpha(animationGroup, deltaAlpha, 0, stepDuration, i)
 			self:AddScale(animationGroup, 0.98, 0.98, stepDuration, i)
 		end
 	elseif aura.anim1 == PowaAuras.AnimationTypes.Bubble then
@@ -271,11 +271,13 @@ function PowaAuras:AddScale(animationGroup, xscaleTo, yscaleTo, duration, order)
 	scale:SetSmoothing("IN_OUT")
 end
 
-function PowaAuras:AddAlpha(animationGroup, alphaTo, duration, order)
+function PowaAuras:AddAlpha(animationGroup, alphaFrom, alphaTo, duration, order)
 	local alpha = animationGroup:CreateAnimation("Alpha")
 	alpha:SetOrder(order)
 	alpha:SetDuration(duration)
-	alpha:SetChange(alphaTo)
+	--alpha:SetChange(alphaTo)
+	alpha:SetFromAlpha(alphaFrom)
+	alpha:SetToAlpha(alphaTo)
 end
 
 function PowaAuras:AddFade(animationGroup, duration, order)
@@ -283,7 +285,9 @@ function PowaAuras:AddFade(animationGroup, duration, order)
 	alpha:SetOrder(order)
 	alpha:SetDuration(duration)
 	alpha:SetScript("OnPlay", function(self)
-		self:SetChange(- self:GetRegionParent():GetAlpha())
+		--self:SetChange(- self:GetRegionParent():GetAlpha())
+		self:SetFromAlpha(self:GetRegionParent():GetAlpha())
+		self:SetToAlpha(0)
 	end)
 end
 
@@ -293,7 +297,9 @@ function PowaAuras:AddRelativeAlpha(animationGroup, change, duration, order)
 	alpha:SetDuration(duration)
 	alpha:SetScript("OnPlay", function(self)
 		local alpha = self:GetRegionParent():GetAlpha()
-		self:SetChange(math.min((alpha * change), 0.99))
+		--self:SetChange(math.min((alpha * change), 0.99))
+		self:SetFromAlpha(0)
+		self:SetToAlpha(math.min((alpha * change), 0.99))
 	end)
 end
 
@@ -302,7 +308,9 @@ function PowaAuras:AddAbsoluteAlpha(animationGroup, targetAlpha, duration, order
 	alpha:SetOrder(order)
 	alpha:SetDuration(duration)
 	alpha:SetScript("OnPlay", function(self)
-		self:SetChange(math.min(targetAlpha, 0.99) - self:GetRegionParent():GetAlpha())
+		--self:SetChange(math.min(targetAlpha, 0.99) - self:GetRegionParent():GetAlpha())
+		self:SetFromAlpha(0)
+		self:SetToAlpha(math.min(targetAlpha, 0.99) - self:GetRegionParent():GetAlpha())
 	end)
 end
 
@@ -323,7 +331,7 @@ function PowaAuras:AddEndAnimation(aura, frame)
 		return nil
 	end
 	local animationGroup = frame:CreateAnimationGroup("End")
-	animationGroup:SetIgnoreFramerateThrottle(true)
+	--animationGroup:SetIgnoreFramerateThrottle(true)
 	animationGroup.aura = aura
 	animationGroup:SetScript("OnFinished", function(self, forced)
 		if self.aura then
