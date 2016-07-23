@@ -7,6 +7,12 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.29.1**
+* GCD fixes for every class and spec.
+* Timer and stacks transparent textures should work properly.
+* Removed some obsolete spells.
+* Options interface and version fix.
+
 **4.29.0**
 * Updated for 7.0.3.
 

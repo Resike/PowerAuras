@@ -2645,7 +2645,7 @@ function cPowaActionReady:CheckIfShouldShow(giveReason)
 	if self.Debug then
 		PowaAuras:Message("CooldownOver = ", self.CooldownOver," cdduration = ", cdduration," InGCD = ", PowaAuras.InGCD)
 	end
-	local globalCD = not self.CooldownOver and (cdduration > 0.2 and cdduration < 1.7) and PowaAuras.InGCD == true
+	local globalCD = not self.CooldownOver and cdduration > 0.2 and cdduration < 1.7 and PowaAuras.InGCD == true
 	if self.Debug then
 		PowaAuras:Message("globalCD = ", globalCD)
 	end

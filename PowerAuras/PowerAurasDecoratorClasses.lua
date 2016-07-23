@@ -397,7 +397,7 @@ function cPowaTimer:ShowValue(aura, frameIndex, displayValue)
 	if aura.texmode == 1 then
 		timerFrame.texture:SetBlendMode("Add")
 	else
-		timerFrame.texture:SetBlendMode("Disable")
+		timerFrame.texture:SetBlendMode("Blend")
 	end
 	if self.UseOwnColor then
 		timerFrame.texture:SetVertexColor(self.r, self.g, self.b)

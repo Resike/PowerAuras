@@ -164,18 +164,18 @@ function PowaAuras:DetermineRole(unit)
 	if class == "DEATHKNIGHT" then
 		return "RoleMeleDps", "Guess"
 	elseif class == "PRIEST" then
-		local _, _, buffExist = UnitBuff(unit, self.Spells.SHADOWFORM)
+		--[[local _, _, buffExist = UnitBuff(unit, self.Spells.SHADOWFORM)
 		if buffExist then
 			self.FixRoles[unitName] = "RoleRangeDps"
 			return "RoleRangeDps", "Guess"
-		end
+		end]]
 		return "RoleHealer", "Guess"
 	elseif class == "WARRIOR" then
 		return "RoleMeleDps", "Guess"
 	elseif class == "DRUID" then
 		local _, powerType = UnitPowerType(unit)
 		if powerType == "MANA" then
-			local _, _, buffExist = UnitBuff(unit, self.Spells.MOONKIN_FORM)
+			local _, _, buffExist = UnitBuff(unit, self.Spells.DRUID_SHIFT_MOONKIN)
 			if buffExist then
 				self.FixRoles[unitName] = "RoleRangeDps"
 				return "RoleRangeDps", "Guess"

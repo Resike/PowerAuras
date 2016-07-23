@@ -239,12 +239,11 @@ Spells =
 	--BUFF_BLOOD_PRESENCE = GetSpellInfo(48266),
 	--BUFF_FROST_PRESENCE = GetSpellInfo(48263),
 	--BUFF_UNHOLY_PRESENCE = GetSpellInfo(48265),
-	MOONKIN_FORM = GetSpellInfo(24858),
-	TREE_OF_LIFE = GetSpellInfo(65139),
-	SHADOWFORM = GetSpellInfo(15473),
+	--TREE_OF_LIFE = GetSpellInfo(65139),
+	--SHADOWFORM = GetSpellInfo(15473),
 	DRUID_SHIFT_CAT = GetSpellInfo(768),
 	DRUID_SHIFT_BEAR = GetSpellInfo(5487),
-	DRUID_SHIFT_DIREBEAR = GetSpellInfo(9634),
+	--DRUID_SHIFT_DIREBEAR = GetSpellInfo(9634),
 	DRUID_SHIFT_MOONKIN = GetSpellInfo(24858)
 },
 
@@ -886,17 +885,18 @@ PowaAuras:RegisterAuraType('GTFOFriendlyFire')
 -- Use these spells to detect GCD, ideally these should be spells classes have from the beginning
 PowaAuras.GCDSpells =
 {
-	PALADIN = 35395, -- Crusader Strike
-	PRIEST = 589, -- Shadow Word: Pain
-	SHAMAN = 403, -- Lightning Bolt
+	PALADIN = 19750, -- Flash of Light
+	PRIEST = 1706, -- Levitate
+	SHAMAN = 6196, -- Far Sight
 	WARRIOR = 34428, -- Victory Rush
-	DRUID = 5176, -- Wrath
-	MAGE = 122, -- Frost Nova
+	DRUID = 339, -- Entangling Roots
+	MAGE = 130, -- Slow Fall
 	WARLOCK = 6201, -- Create Healthstone
-	ROGUE = 8676, -- Ambush
+	ROGUE = 1833, -- Cheap Shot
 	HUNTER = 982, -- Revive Pet
-	DEATHKNIGHT = 50842, -- Blood Boil
-	MONK = 100780 -- Jab
+	DEATHKNIGHT = 3714, -- Path of Frost
+	MONK = 100780, -- Tiger Palm
+	DEMONHUNTER = 162243 -- Demon's Bite (Havoc) 203782 -- Shear (Vengeance)
 }
 
 -- Invented so we can distinquish them two types

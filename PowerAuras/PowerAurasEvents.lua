@@ -466,7 +466,7 @@ function PowaAuras:UNIT_SPELLCAST_SUCCEEDED(...)
 	end
 	-- Druid shapeshift special case
 	if unit == "player" then
-		if spell == self.Spells.DRUID_SHIFT_CAT or spell == self.Spells.DRUID_SHIFT_BEAR or spell == self.Spells.DRUID_SHIFT_DIREBEAR or spell == self.Spells.DRUID_SHIFT_MOONKIN then
+		if spell == self.Spells.DRUID_SHIFT_CAT or spell == self.Spells.DRUID_SHIFT_BEAR or spell == self.Spells.DRUID_SHIFT_MOONKIN then
 			self.DoCheck.Mana = true
 			self.DoCheck.Power = true
 			self.DoCheck.CheckIt = true
