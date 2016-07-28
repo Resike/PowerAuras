@@ -2542,8 +2542,9 @@ cPowaCombo.TooltipOptions = {r = 1.0, g = 1.0, b = 0.0, showBuffName = true}
 
 function cPowaCombo:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)
-	PowaAuras.Events.UNIT_COMBO_POINTS = true
-	PowaAuras.Events.PLAYER_TARGET_CHANGED = true
+	PowaAuras.Events.UNIT_POWER = true
+	PowaAuras.Events.UNIT_POWER_FREQUENT = true
+	--PowaAuras.Events.PLAYER_TARGET_CHANGED = true
 	if PowaAuras.playerclass == "DRUID" then
 		PowaAuras.Events.UPDATE_SHAPESHIFT_FORM = true
 	end
@@ -2565,7 +2566,7 @@ function cPowaCombo:CheckIfShouldShow(giveReason)
 		return nil, PowaAuras.Text.nomReasonNoUseCombo
 	end
 	PowaAuras:Debug("Check Combos")
-	local nCombo = GetComboPoints("player")
+	local nCombo = UnitPower("player", SPELL_POWER_COMBO_POINTS)
 	local combo = tostring(nCombo)
 	if self:MatchText(combo, self.buffname) then
 		if self.Stacks then
@@ -3456,12 +3457,12 @@ function cPowaPowerType:UnitValue(unit)
 	local power
 	if not self.PowerType or self.PowerType == - 1 then
 		power = UnitPower(unit)
-	elseif self.PowerType == SPELL_POWER_LUNAR_ECLIPSE then
+	--[[elseif self.PowerType == SPELL_POWER_LUNAR_ECLIPSE then
 		power = math.max(- UnitPower(unit, SPELL_POWER_ECLIPSE), 0)
 	elseif self.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
 		power = math.max(UnitPower(unit, SPELL_POWER_ECLIPSE))
 	elseif self.PowerType == SPELL_POWER_BURNING_EMBERS then
-		power = UnitPower(unit, self.PowerType, true) / 10
+		power = UnitPower(unit, self.PowerType, true) / 10]]
 	else
 		power = UnitPower(unit, self.PowerType)
 	end
@@ -3478,8 +3479,8 @@ function cPowaPowerType:UnitValueMax(unit)
 	local maxpower
 	if not self.PowerType or self.PowerType == - 1 then
 		maxpower = UnitPowerMax(unit)
-	elseif self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
-		maxpower = 100
+	--[[elseif self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
+		maxpower = 100]]
 	else
 		maxpower = UnitPowerMax(unit, self.PowerType)
 	end
@@ -3491,7 +3492,7 @@ end
 
 function cPowaPowerType:IsCorrectPowerType(unit)
 	-- Check for correct secondary resource
-	if (self.PowerType == SPELL_POWER_HOLY_POWER and PowaAuras.playerclass == "PALADIN") or (self.PowerType == SPELL_POWER_ALTERNATE_POWER) or (self.PowerType == SPELL_POWER_RUNIC_POWER and PowaAuras.playerclass == "DEATHKNIGHT") or (self.PowerType == SPELL_POWER_CHI and PowaAuras.playerclass == "MONK") or (self.PowerType == SPELL_POWER_SHADOW_ORBS and PowaAuras.playerclass == "PRIEST") or ((self.PowerType == SPELL_POWER_SOUL_SHARDS or self.PowerType == SPELL_POWER_BURNING_EMBERS or self.PowerType == SPELL_POWER_DEMONIC_FURY) and PowaAuras.playerclass == "WARLOCK") or ((self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE) and PowaAuras.playerclass == "DRUID") then 
+	if (self.PowerType == SPELL_POWER_HOLY_POWER and PowaAuras.playerclass == "PALADIN") or (self.PowerType == SPELL_POWER_ALTERNATE_POWER) or (self.PowerType == SPELL_POWER_RUNIC_POWER and PowaAuras.playerclass == "DEATHKNIGHT") or (self.PowerType == SPELL_POWER_CHI and PowaAuras.playerclass == "MONK") --[[or (self.PowerType == SPELL_POWER_SHADOW_ORBS and PowaAuras.playerclass == "PRIEST")]] or (self.PowerType == SPELL_POWER_SOUL_SHARDS --[[or self.PowerType == SPELL_POWER_BURNING_EMBERS or self.PowerType == SPELL_POWER_DEMONIC_FURY)]] and PowaAuras.playerclass == "WARLOCK") --[[or ((self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE) and PowaAuras.playerclass == "DRUID")]] then 
 		return true
 	end
 	local unitPowerType = UnitPowerType(unit)

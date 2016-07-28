@@ -373,6 +373,15 @@ end
 function PowaAuras:UNIT_POWER(...)
 	local unit, resourceType = ...
 	self:CheckPower(unit, resourceType)
+
+	if resourceType == "COMBO_POINTS" then
+		local unit = ...
+		if unit ~= "player" then
+			return
+		end
+		self.DoCheck.Combo = true
+		self.DoCheck.CheckIt = true
+	end
 end
 
 function PowaAuras:UNIT_MAXPOWER(...)
@@ -383,6 +392,15 @@ end
 function PowaAuras:UNIT_POWER_FREQUENT(...)
 	local unit, resourceType = ...
 	self:CheckPower(unit, resourceType)
+
+	if resourceType == "COMBO_POINTS" then
+		local unit = ...
+		if unit ~= "player" then
+			return
+		end
+		self.DoCheck.Combo = true
+		self.DoCheck.CheckIt = true
+	end
 end
 
 function PowaAuras:CheckPower(unit, resourceType)
@@ -634,7 +652,7 @@ function PowaAuras:PLAYER_TARGET_CHANGED(...)
 	self.DoCheck.Actions = true
 	self.DoCheck.StealableTargetSpells = true
 	self.DoCheck.PurgeableTargetSpells = true
-	self.DoCheck.Combo = true
+	--self.DoCheck.Combo = true
 	self.DoCheck.UnitMatch = true
 	self.DoCheck.CheckIt = true
 end
@@ -707,7 +725,7 @@ function PowaAuras:PLAYER_DIFFICULTY_CHANGED()
 	self.DoCheck.All = true
 end
 
-function PowaAuras:UNIT_COMBO_POINTS(...)
+--[[function PowaAuras:UNIT_COMBO_POINTS(...)
 	if self.ModTest then
 		return
 	end
@@ -717,7 +735,7 @@ function PowaAuras:UNIT_COMBO_POINTS(...)
 	end
 	self.DoCheck.Combo = true
 	self.DoCheck.CheckIt = true
-end
+end]]
 
 function PowaAuras:UNIT_PET(...)
 	if self.ModTest then

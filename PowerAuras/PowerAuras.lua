@@ -340,18 +340,18 @@ function PowaAuras:UpdateOldAuras()
 					end
 					if not aura.texture then
 						local model = PowaAurasOptions.Models[aura.id]
-						local displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, string.lower(model:GetModel()))
+						local displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, string.lower(aura.modelpath))
 						if displayID then
 							sort(displayID)
 							aura.modelpath = displayID[1]
 						else
-							aura.modelpath = string.lower(model:GetModel())
+							aura.modelpath = string.lower(aura.modelpath)
 						end
 						aura.texture = self:GetTableNumber(ModelCategory, self.ModelsDisplayInfo[tonumber(aura.modelpath)])
 					end
 					if not aura.texture then
 						local model = PowaAurasOptions.Models[aura.id]
-						aura.modelpath = string.lower(model:GetModel())
+						aura.modelpath = string.lower(aura.modelpath)
 						aura.texture = self:GetTableNumber(ModelCategory, aura.modelpath)
 					end
 				end
@@ -1345,7 +1345,7 @@ function PowaAuras:Reset(aura)
 	end
 	model:SetCustomCamera(1)
 	if model:HasCustomCamera() then
-		local x, y, z = self:GetBaseCameraTarget(model)
+		local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
 		if y and z then
 			model:SetCameraTarget(0, y, z)
 		end
@@ -1365,7 +1365,7 @@ function PowaAuras:ResetSecondary(aura)
 	end
 	secondaryModel:SetCustomCamera(1)
 	if secondaryModel:HasCustomCamera() then
-		local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+		local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
 		if y and z then
 			secondaryModel:SetCameraTarget(0, y, z)
 		end
@@ -1383,7 +1383,7 @@ function PowaAuras:ResetUnit(aura)
 	end
 	model:SetCustomCamera(1)
 	if model:HasCustomCamera() then
-		local x, y, z = self:GetBaseCameraTarget(model)
+		local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
 		if y and z then
 			model:SetCameraTarget(0, y, z)
 		end
@@ -1401,7 +1401,7 @@ function PowaAuras:ResetSecondaryUnit(aura)
 	end
 	secondaryModel:SetCustomCamera(1)
 	if secondaryModel:HasCustomCamera() then
-		local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+		local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
 		if y and z then
 			secondaryModel:SetCameraTarget(0, y, z)
 		end
@@ -1410,10 +1410,14 @@ function PowaAuras:ResetSecondaryUnit(aura)
 end
 
 function PowaAuras:GetBaseCameraTarget(model)
-	local modelfile = model:GetModel()
-	if modelfile and modelfile ~= "" then
+	--local modelfile = model:GetModel()
+	if model and model ~= "" then
 		local tempmodel = CreateFrame("PlayerModel", nil, UIParent)
-		tempmodel:SetModel(modelfile)
+		if type(model) == "string" then
+			tempmodel:SetModel(model)
+		else
+			tempmodel:SetDisplayInfo(model)
+		end
 		tempmodel:SetCustomCamera(1)
 		local x, y, z = tempmodel:GetCameraTarget()
 		tempmodel:ClearModel()
@@ -1502,7 +1506,7 @@ function PowaAuras:UpdateColor(aura)
 		end
 	else
 		local model = self.Models[aura.id]
-		model:SetLight(1, 0, 0, 1, 0, 1, aura.r, aura.g, aura.b, 1, aura.gr, aura.gg, aura.gb)
+		model:SetLight(true, false, 0, 1, 0, 1, aura.r, aura.g, aura.b, 1, aura.gr, aura.gg, aura.gb)
 	end
 	self:UpdatePreviewColor(aura)
 end
@@ -1542,9 +1546,9 @@ function PowaAuras:UpdateRandomColor(aura)
 	else
 		local model = self.Models[aura.id]
 		if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-			model:SetLight(1, 0, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, aura.r4, aura.r5, aura.r6)
+			model:SetLight(true, false, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, aura.r4, aura.r5, aura.r6)
 		else
-			model:SetLight(1, 0, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, 1, 1, 1)
+			model:SetLight(true, false, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, 1, 1, 1)
 		end
 	end
 end
@@ -1576,7 +1580,7 @@ function PowaAuras:UpdateSecondaryColor(aura)
 		end
 	else
 		local secondaryModel = self.SecondaryModels[aura.id]
-		secondaryModel:SetLight(1, 0, 0, 1, 0, 1, aura.r, aura.g, aura.b, 1, aura.gr, aura.gg, aura.gb)
+		secondaryModel:SetLight(true, false, 0, 1, 0, 1, aura.r, aura.g, aura.b, 1, aura.gr, aura.gg, aura.gb)
 	end
 end
 
@@ -1608,9 +1612,9 @@ function PowaAuras:UpdateSecondaryRandomColor(aura)
 	else
 		local secondaryModel = self.SecondaryModels[aura.id]
 		if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-			secondaryModel:SetLight(1, 0, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, aura.r4, aura.r5, aura.r6)
+			secondaryModel:SetLight(true, false, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, aura.r4, aura.r5, aura.r6)
 		else
-			secondaryModel:SetLight(1, 0, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, 1, 1, 1)
+			secondaryModel:SetLight(true, false, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, 1, 1, 1)
 		end
 	end
 end
@@ -1711,7 +1715,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		if model:HasCustomCamera() then
 			if aura.mcd and aura.mcy and aura.mcp then
 				self:SetOrientation(aura, model, aura.mcd, aura.mcy, aura.mcp)
-				local x, y, z = self:GetBaseCameraTarget(model)
+				local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
 				if y and z then
 					model:SetCameraTarget(0, y, z)
 				end
@@ -1740,7 +1744,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 			if model:HasCustomCamera() then
 				if aura.mcd and aura.mcy and aura.mcp then
 					self:SetOrientation(aura, model, aura.mcd, aura.mcy, aura.mcp)
-					local x, y, z = self:GetBaseCameraTarget(model)
+					local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
 					if y and z then
 						model:SetCameraTarget(0, y, z)
 					end
@@ -2035,7 +2039,7 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 		if secondaryModel:HasCustomCamera() then
 			if aura.mcd and aura.mcy and aura.mcp then
 				self:SetOrientation(secondaryAura, secondaryModel, aura.mcd, aura.mcy, aura.mcp)
-				local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+				local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
 				if y and z then
 					secondaryModel:SetCameraTarget(0, y, z)
 				end
@@ -2062,7 +2066,7 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 			if secondaryModel:HasCustomCamera() then
 				if aura.mcd and aura.mcy and aura.mcp then
 					self:SetOrientation(secondaryAura, secondaryModel, aura.mcd, aura.mcy, aura.mcp)
-					local x, y, z = self:GetBaseCameraTarget(secondaryModel)
+					local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
 					if y and z then
 						secondaryModel:SetCameraTarget(0, y, z)
 					end

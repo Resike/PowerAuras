@@ -15,7 +15,6 @@ local GetActionTexture = GetActionTexture
 local GetActiveSpecGroup = GetActiveSpecGroup
 local GetBattlefieldStatus = GetBattlefieldStatus
 local GetBuildInfo = GetBuildInfo
-local GetComboPoints = GetComboPoints
 local GetContainerItemInfo = GetContainerItemInfo
 local GetContainerItemLink = GetContainerItemLink
 local GetContainerNumSlots = GetContainerNumSlots
@@ -178,7 +177,7 @@ function PowaAurasOptions:Dump_Safe()
 	-- TargetTarget
 	PowaState["targettarget"] = self:GetUnitInfo("targettarget")
 	--ComboPoints
-	PowaState["ComboPoints"] = {player = GetComboPoints("player"), vehicle = GetComboPoints("vehicle")}
+	PowaState["ComboPoints"] = {player = UnitPower("player", SPELL_POWER_COMBO_POINTS), vehicle = UnitPower("vehicle", SPELL_POWER_COMBO_POINTS)}
 	-- Weapon Enchant
 	local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo()
 	PowaState.WeaponEnchant = {hasMainHandEnchant = hasMainHandEnchant, mainHandExpiration = mainHandExpiration, mainHandCharges = mainHandCharges, hasOffHandEnchant = hasOffHandEnchant, offHandExpiration = offHandExpiration, offHandCharges = offHandCharges}

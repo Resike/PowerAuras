@@ -1984,7 +1984,7 @@ function PowaAurasOptions:InitPage(aura)
 			local model = self.Models[aura.id]
 			local displayID
 			if model then
-				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, model:GetModel())
+				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
 				if displayID then
 					for i = 1, #displayID do
 						tinsert(self.ModelTextureList, displayID[i])
@@ -2250,8 +2250,8 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 					PowaModelTextureDropDown:Show()
 					Lib_UIDropDownMenu_EnableDropDown(PowaModelTextureDropDown)
 				end
-				Lib_UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
-				PowaModelTextureDropDownText:SetText(tostring(aura.modelpath))
+				Lib_UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, aura.modelpath)
+				PowaModelTextureDropDownText:SetText(aura.modelpath)
 			elseif aura.modelcategory == 2 then
 				aura.modelpath = self.ModelsEnvironments[aura.texture]
 				model:SetModel(self.ModelsEnvironments[aura.texture])
@@ -5884,7 +5884,7 @@ function PowaAurasOptions.SliderEditBoxChanged(self)
 		end
 	elseif slider == PowaBarThresholdSlider then
 		local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
-		if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
+		--[[if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
 			local text = tonumber(self:GetText())
 			local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
 			if text then
@@ -5898,7 +5898,7 @@ function PowaAurasOptions.SliderEditBoxChanged(self)
 				self:SetText(format("%.1f", slider:GetValue())..aura.RangeType)
 			end
 			PowaBarThresholdSliderEditBox:SetText(format("%.1f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
-		else
+		else]]
 			local text = tonumber(self:GetText())
 			local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
 			if text then
@@ -5912,7 +5912,7 @@ function PowaAurasOptions.SliderEditBoxChanged(self)
 				self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
 			end
 			PowaBarThresholdSliderEditBox:SetText(format("%.0f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
-	end
+		--end
 	elseif tonumber(postfix) == nil and slider == PowaBarAuraRotateSlider then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2))
 		if text == nil then

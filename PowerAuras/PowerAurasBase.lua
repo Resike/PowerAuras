@@ -900,8 +900,8 @@ PowaAuras.GCDSpells =
 }
 
 -- Invented so we can distinquish them two types
-SPELL_POWER_LUNAR_ECLIPSE = 108
-SPELL_POWER_SOLAR_ECLIPSE = 208
+--SPELL_POWER_LUNAR_ECLIPSE = 108
+--SPELL_POWER_SOLAR_ECLIPSE = 208
 
 PowaAuras.PowerRanges =
 {
@@ -912,15 +912,20 @@ PowaAuras.PowerRanges =
 	[SPELL_POWER_ENERGY] = 100,
 	[SPELL_POWER_RUNES] = 100,
 	[SPELL_POWER_RUNIC_POWER] = 100,
-	[SPELL_POWER_SOUL_SHARDS] = 4,
-	[SPELL_POWER_LUNAR_ECLIPSE] = 100,
-	[SPELL_POWER_SOLAR_ECLIPSE] = 100,
+	[SPELL_POWER_SOUL_SHARDS] = 5,
+	--[SPELL_POWER_LUNAR_ECLIPSE] = 100,
+	--[SPELL_POWER_SOLAR_ECLIPSE] = 100,
+	[SPELL_POWER_LUNAR_POWER] = 100,
 	--[SPELL_POWER_DEMONIC_FURY] = 1000,
 	[SPELL_POWER_HOLY_POWER] = 5,
 	[SPELL_POWER_ALTERNATE_POWER] = 100,
 	--[SPELL_POWER_DARK_FORCE] = 5,
 	[SPELL_POWER_CHI] = 6,
 	--[SPELL_POWER_SHADOW_ORBS] = 5,
+	[SPELL_POWER_INSANITY] = 100,
+	[SPELL_POWER_MAELSTROM] = 150,
+	[SPELL_POWER_FURY] = 130,
+	[SPELL_POWER_PAIN] = 100,
 	--[SPELL_POWER_BURNING_EMBERS] = 4,
 }
 
@@ -934,14 +939,19 @@ PowaAuras.RangeType =
 	[SPELL_POWER_RUNES] = "%",
 	[SPELL_POWER_RUNIC_POWER] = "%",
 	[SPELL_POWER_SOUL_SHARDS] = "",
-	[SPELL_POWER_LUNAR_ECLIPSE] = "%",
-	[SPELL_POWER_SOLAR_ECLIPSE] = "%",
+	--[SPELL_POWER_LUNAR_ECLIPSE] = "%",
+	--[SPELL_POWER_SOLAR_ECLIPSE] = "%",
+	[SPELL_POWER_LUNAR_POWER] = "",
 	--[SPELL_POWER_DEMONIC_FURY] = "",
 	[SPELL_POWER_HOLY_POWER] = "",
 	[SPELL_POWER_ALTERNATE_POWER] = "",
 	--[SPELL_POWER_DARK_FORCE] = "",
 	[SPELL_POWER_CHI] = "",
 	--[SPELL_POWER_SHADOW_ORBS] = "",
+	[SPELL_POWER_INSANITY] = "",
+	[SPELL_POWER_MAELSTROM] = "",
+	[SPELL_POWER_FURY] = "",
+	[SPELL_POWER_PAIN] = "",
 	--[SPELL_POWER_BURNING_EMBERS] = ""
 }
 
@@ -955,14 +965,19 @@ PowaAuras.PowerTypeIcon =
 	[SPELL_POWER_RUNES] = "spell_deathknight_runetap",
 	[SPELL_POWER_RUNIC_POWER] = "spell_arcane_arcane01",
 	[SPELL_POWER_SOUL_SHARDS] = "inv_misc_gem_amethyst_02",
-	[SPELL_POWER_LUNAR_ECLIPSE] = "ability_druid_eclipse",
-	[SPELL_POWER_SOLAR_ECLIPSE] = "ability_druid_eclipseorange",
+	--[SPELL_POWER_LUNAR_ECLIPSE] = "ability_druid_eclipse",
+	--[SPELL_POWER_SOLAR_ECLIPSE] = "ability_druid_eclipseorange",
+	[SPELL_POWER_LUNAR_POWER] = "ability_druid_eclipse",
 	--[SPELL_POWER_DEMONIC_FURY] = "ability_warlock_eradication",
 	[SPELL_POWER_HOLY_POWER] = "spell_holy_lightsgrace",
 	[SPELL_POWER_ALTERNATE_POWER] = "inv_battery_02",
 	--[SPELL_POWER_DARK_FORCE] = "spell_arcane_arcanetorrent",
 	[SPELL_POWER_CHI] = "class_monk",
 	--[SPELL_POWER_SHADOW_ORBS] = "spell_priest_shadoworbs",
+	[SPELL_POWER_INSANITY] = "spell_priest_shadoworbs",
+	[SPELL_POWER_MAELSTROM] = "spell_shaman_maelstromweapon",
+	[SPELL_POWER_FURY] = "spell_shadow_shadowfury",
+	[SPELL_POWER_PAIN] = "artifactability_vengeancedemonHunter_painbringer",
 	--[SPELL_POWER_BURNING_EMBERS] = "ability_warlock_burningembers",
 }
 
