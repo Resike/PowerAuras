@@ -3440,6 +3440,9 @@ end
 
 function cPowaPowerType:SetFixedIcon()
 	self.icon = nil
+	if not PowaAuras.PowerTypeIcon[self.PowerType] then
+		return
+	end
 	self:SetIcon("Interface\\Icons\\"..PowaAuras.PowerTypeIcon[self.PowerType])
 end
 
@@ -4139,7 +4142,7 @@ function cPowaRunes:GetRuneState()
 	for slot = 1, 6 do
 		local startTime, duration, runeReady = GetRuneCooldown(slot)
 		if runeReady then
-			local runeType = GetRuneType(slot)
+			local runeType = 4
 			self.runes[runeType] = self.runes[runeType] + 1
 			self.runeEnd[slot] = 0
 		elseif self.Timer then

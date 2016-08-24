@@ -1001,7 +1001,7 @@ PowerType =
 {
 		[-1] = "Standard",
 		[SPELL_POWER_ALTERNATE_POWER] = "Boss-Fähigkeit",
-		[SPELL_POWER_BURNING_EMBERS] = "Brennende Funken",
+		--[SPELL_POWER_BURNING_EMBERS] = "Brennende Funken",
 		[SPELL_POWER_CHI] = "Chi",
 		--[SPELL_POWER_DARK_FORCE] = "Dunkle Macht",
 		[SPELL_POWER_DEMONIC_FURY] = "Dämonischer Furor",
@@ -1692,7 +1692,7 @@ PowerType =
 	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
 	[SPELL_POWER_CHI] = "Chi",
 	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
 	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
@@ -2461,7 +2461,7 @@ PowerType =
 	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
 	[SPELL_POWER_CHI] = "Chi",
 	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
 	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
@@ -3230,7 +3230,7 @@ PowerType =
 	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
 	[SPELL_POWER_CHI] = "Chi",
 	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
 	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
@@ -3922,7 +3922,7 @@ PowerType =
 	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
 	[SPELL_POWER_CHI] = "Chi",
 	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
 	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
@@ -5011,7 +5011,7 @@ PowerType =
 	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
 	[SPELL_POWER_CHI] = "真氣",
 	--[SPELL_POWER_SHADOW_ORBS] = "暗影寶珠",
-	[SPELL_POWER_BURNING_EMBERS] = "燃火餘燼",
+	--[SPELL_POWER_BURNING_EMBERS] = "燃火餘燼",
 	[SPELL_POWER_DEMONIC_FURY] = "惡魔之怒"
 },
 

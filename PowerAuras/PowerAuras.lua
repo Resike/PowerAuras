@@ -276,7 +276,7 @@ function PowaAuras:UpdateOldAuras()
 			-- Update old combo style 1235 => 1/2/3/5
 			elseif aura.bufftype == self.BuffTypes.Combo then
 				if string.len(aura.buffname) > 1 and string.find(aura.buffname, "/", 1, true) == nil then
-					local newBuffName=string.sub(aura.buffname, 1, 1)
+					local newBuffName = string.sub(aura.buffname, 1, 1)
 					for i = 2, string.len(aura.buffname) do
 						newBuffName = newBuffName.."/"..string.sub(aura.buffname, i, i)
 					end

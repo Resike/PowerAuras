@@ -89,9 +89,14 @@ function PowaAuras:AddBeginAnimation(aura, frame)
 			end
 			height = height * efficiency
 		end
+		animationGroup.order = order
 	end
 	if aura.beginSpin then
-		self:AddRotation(animationGroup, 360, math.max(duration / 4, 0.25), animationGroup:GetMaxOrder() + 1)
+		if animationGroup.order then
+			self:AddRotation(animationGroup, 360, math.max(duration / 4, 0.25), animationGroup.order)
+		else
+			self:AddRotation(animationGroup, 360, math.max(duration / 4, 0.25), 3)
+		end
 	end
 	return animationGroup
 end

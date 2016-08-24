@@ -7,6 +7,17 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.29.3**
+* Fixed an issue with invalid power types.
+* Fixed rune types for Death Knigths.
+* Fixed the Spin the aura after shown animation.
+
+**4.29.2**
+* Model fixes.
+* Combo Points should work again.
+* Added power types: Astral Power, Maelstrom, Insanity, Fury, Pain.
+* Removed a lot of unused power types.
+
 **4.29.1**
 * GCD fixes for every class and spec.
 * Timer and stacks transparent textures should work properly.
