@@ -478,10 +478,14 @@ nomRandomColor = "Random Colors",
 nomDesaturate = "Desaturate",
 nomEnableFullRotation = "Enable Full Rotation",
 
-nomTalentGroup1 = "Primary Spec",
+nomTalentGroup1 = "Spec: 1",
 aideTalentGroup1 = "Show this effect only when you are in your primary talent spec.",
-nomTalentGroup2 = "Secondary Spec",
+nomTalentGroup2 = "Spec: 2",
 aideTalentGroup2 = "Show this effect only when you are in your secondary talent spec.",
+nomTalentGroup3 = "Spec: 3",
+aideTalentGroup3 = "Show this effect only when you are in your tertiary talent spec.",
+nomTalentGroup4 = "Spec: 4",
+aideTalentGroup4 = "Show this effect only when you are in your quaternary talent spec.",
 
 nomReset = "Reset Editor Positions",
 nomPowaShowAuraBrowser = "Show Aura Browser",
@@ -1004,7 +1008,7 @@ PowerType =
 		--[SPELL_POWER_BURNING_EMBERS] = "Brennende Funken",
 		[SPELL_POWER_CHI] = "Chi",
 		--[SPELL_POWER_DARK_FORCE] = "Dunkle Macht",
-		[SPELL_POWER_DEMONIC_FURY] = "Dämonischer Furor",
+		--[SPELL_POWER_DEMONIC_FURY] = "Dämonischer Furor",
 		[SPELL_POWER_ENERGY] = "Energie",
 		[SPELL_POWER_FOCUS] = "Fokus",
 		[SPELL_POWER_HOLY_POWER] = "Heilige Kraft",
@@ -1693,7 +1697,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "Chi",
 	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -2462,7 +2466,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "Chi",
 	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -3231,7 +3235,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "Chi",
 	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -3923,7 +3927,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "Chi",
 	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Slots =
@@ -5012,7 +5016,7 @@ PowerType =
 	[SPELL_POWER_CHI] = "真氣",
 	--[SPELL_POWER_SHADOW_ORBS] = "暗影寶珠",
 	--[SPELL_POWER_BURNING_EMBERS] = "燃火餘燼",
-	[SPELL_POWER_DEMONIC_FURY] = "惡魔之怒"
+	--[SPELL_POWER_DEMONIC_FURY] = "惡魔之怒"
 },
 
 Relative =

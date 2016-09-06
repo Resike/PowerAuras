@@ -3664,7 +3664,7 @@
 								<Anchors>
 									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup1Button" relativePoint = "RIGHT">
 										<Offset>
-											<AbsDimension x = "85" y = "0"/>
+											<AbsDimension x = "50" y = "0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3675,6 +3675,50 @@
 									</OnLoad>
 									<OnClick>
 										PowaAurasOptions:SettingChecked(self, "spec2")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Spec 3 CheckButton -->
+							<CheckButton name = "PowaTalentGroup3Button" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup2Button" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "50" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAurasOptions.Text.aideTalentGroup3
+										PowaTalentGroup3ButtonText:SetText(PowaAurasOptions.Text.nomTalentGroup3)
+									</OnLoad>
+									<OnClick>
+										PowaAurasOptions:SettingChecked(self, "spec3")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<!-- Spec 4 CheckButton -->
+							<CheckButton name = "PowaTalentGroup4Button" inherits = "PowaCheckTemplate">
+								<Size>
+									<AbsDimension x = "25" y = "25"/>
+								</Size>
+								<Anchors>
+									<Anchor point = "LEFT" relativeTo = "PowaTalentGroup3Button" relativePoint = "RIGHT">
+										<Offset>
+											<AbsDimension x = "50" y = "0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										self.tooltipText = PowaAurasOptions.Text.aideTalentGroup4
+										PowaTalentGroup4ButtonText:SetText(PowaAurasOptions.Text.nomTalentGroup4)
+									</OnLoad>
+									<OnClick>
+										PowaAurasOptions:SettingChecked(self, "spec4")
 									</OnClick>
 								</Scripts>
 							</CheckButton>

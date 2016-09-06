@@ -315,6 +315,8 @@ cPowaAura.ExportSettings =
 	RoleRangeDps = 0,
 	spec1 = true,
 	spec2 = true,
+	spec3 = true,
+	spec4 = true,
 	gcd = false,
 	stance = 0,
 	GTFO = 0,
@@ -682,7 +684,7 @@ function cPowaAura:GetAuraText()
 	text = self:SubstituteInText(text , "%%agl", function() return UnitStat("player", 2) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%sta", function() return UnitStat("player", 3) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%int", function() return UnitStat("player", 4) end, PowaAuras.Text.Unknown)
-	text = self:SubstituteInText(text , "%%spi", function() return UnitStat("player", 5) end, PowaAuras.Text.Unknown)
+	--text = self:SubstituteInText(text , "%%spi", function() return UnitStat("player", 5) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%crt", function() return format("%.2f", GetCritChance()) end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%sp", function() return self:SpellPower() end, PowaAuras.Text.Unknown)
 	text = self:SubstituteInText(text , "%%ap", function() return UnitAttackPower("player") end, PowaAuras.Text.Unknown)
@@ -861,7 +863,7 @@ function cPowaAura:CheckState(giveReason)
 		return false, PowaAuras.Text.nomReasonNotInRaid
 	end
 	-- Dual spec check
-	if (not self.spec2 and PowaAuras.ActiveTalentGroup == 2) or (not self.spec1 and PowaAuras.ActiveTalentGroup == 1) then
+	if (not self.spec4 and PowaAuras.ActiveTalentGroup == 4) or (not self.spec3 and PowaAuras.ActiveTalentGroup == 3) or (not self.spec2 and PowaAuras.ActiveTalentGroup == 2) or (not self.spec1 and PowaAuras.ActiveTalentGroup == 1) then
 		if not giveReason then
 			return false
 		end

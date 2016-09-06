@@ -12,7 +12,7 @@ local GetActionCooldown = GetActionCooldown
 local GetActionCount = GetActionCount
 local GetActionText = GetActionText
 local GetActionTexture = GetActionTexture
-local GetActiveSpecGroup = GetActiveSpecGroup
+local GetSpecialization = GetSpecialization
 local GetBattlefieldStatus = GetBattlefieldStatus
 local GetBuildInfo = GetBuildInfo
 local GetContainerItemInfo = GetContainerItemInfo
@@ -157,7 +157,7 @@ function PowaAurasOptions:Dump_Safe()
 	-- CurrentMapContinent
 	PowaState["CurrentMapContinent"] = GetCurrentMapContinent()
 	--ActiveTalentGroup
-	PowaState["ActiveTalentGroup"] = GetActiveSpecGroup()
+	PowaState["ActiveTalentGroup"] = GetSpecialization()
 	-- IsInInstance
 	PowaState["IsInInstance"] = IsInInstance()
 	-- IsMounted

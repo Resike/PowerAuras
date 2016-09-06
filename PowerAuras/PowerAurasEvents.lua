@@ -8,7 +8,7 @@ local tonumber = tonumber
 local wipe = wipe
 
 local C_PetBattles = C_PetBattles
-local GetActiveSpecGroup = GetActiveSpecGroup
+local GetSpecialization = GetSpecialization
 local GetInstanceInfo = GetInstanceInfo
 local GetNumGroupMembers = GetNumGroupMembers
 local GetNumShapeshiftForms = GetNumShapeshiftForms
@@ -224,7 +224,7 @@ function PowaAuras:Setup()
 	self.WeAreMounted = IsMounted() == true and true or self:IsDruidTravelForm()
 	self.WeAreInVehicle = UnitInVehicle("player")
 	self.WeAreInPetBattle = C_PetBattles.IsInBattle()
-	self.ActiveTalentGroup = GetActiveSpecGroup()
+	self.ActiveTalentGroup = GetSpecialization()
 	self.Instance = self:GetInstanceType()
 	self:GetStances()
 	self:InitialiseAllAuras()
@@ -288,7 +288,7 @@ function PowaAuras:GetInstanceType()
 end
 
 function PowaAuras:ACTIVE_TALENT_GROUP_CHANGED(...)
-	self.ActiveTalentGroup = GetActiveSpecGroup()
+	self.ActiveTalentGroup = GetSpecialization()
 	if self.ModTest then
 		return
 	end

@@ -7,6 +7,12 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.29.4**
+* Added options for all specializations.
+* Removed an unused stat.
+* Removed an unused power type.
+* Fixed some other issues.
+
 **4.29.3**
 * Fixed an issue with invalid power types.
 * Fixed rune types for Death Knigths.

@@ -68,7 +68,7 @@ ModTest = false,
 DebugCycle = false,
 ResetTargetTimers = false,
 
-ActiveTalentGroup = GetActiveSpecGroup(),
+ActiveTalentGroup = GetSpecialization(),
 
 WeAreInCombat = false,
 WeAreInRaid = false,

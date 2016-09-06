@@ -1767,6 +1767,8 @@ function PowaAurasOptions:InitPage(aura)
 	-- Dual specs
 	PowaTalentGroup1Button:SetChecked(aura.spec1)
 	PowaTalentGroup2Button:SetChecked(aura.spec2)
+	PowaTalentGroup3Button:SetChecked(aura.spec3)
+	PowaTalentGroup4Button:SetChecked(aura.spec4)
 	PowaAuraDebugButton:SetChecked(aura.Debug)
 	aura:HideShowTabs()
 	self:SetupOptionsForAuraType(aura)
