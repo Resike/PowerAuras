@@ -1,6 +1,6 @@
-## Interface: 70000
+## Interface: 70100
 ## Title: Power Auras Classic Options
-## Version: 4.29.4
+## Version: 4.29.5
 ## Author: Smacker 'lolcat', Dridzt 'classic', Garstiger 'continued', Sinsthar 'base', Meorawr, modified by Zensunim and Resike
 ## Notes: Options and configuration GUI for Power Auras Classic.
 ## DefaultState: Enabled

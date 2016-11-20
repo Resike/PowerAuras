@@ -412,6 +412,9 @@ function PowaAuras:CheckPower(unit, resourceType)
 end
 
 function PowaAuras:SetCheckResource(resourceType, unitType)
+	if not unitType then
+		return
+	end
 	if self.ModTest then
 		return
 	end

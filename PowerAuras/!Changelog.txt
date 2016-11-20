@@ -7,6 +7,9 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.29.5**
+* Fixed an issue with the health related events.
+
 **4.29.4**
 * Added options for all specializations.
 * Removed an unused stat.
