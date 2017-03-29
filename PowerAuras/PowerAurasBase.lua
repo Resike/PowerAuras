@@ -926,6 +926,7 @@ PowaAuras.PowerRanges =
 	[SPELL_POWER_MAELSTROM] = 150,
 	[SPELL_POWER_FURY] = 130,
 	[SPELL_POWER_PAIN] = 100,
+	[SPELL_POWER_ARCANE_CHARGES] = 4,
 	--[SPELL_POWER_BURNING_EMBERS] = 4,
 }
 
@@ -952,6 +953,7 @@ PowaAuras.RangeType =
 	[SPELL_POWER_MAELSTROM] = "",
 	[SPELL_POWER_FURY] = "",
 	[SPELL_POWER_PAIN] = "",
+	[SPELL_POWER_ARCANE_CHARGES] = "",
 	--[SPELL_POWER_BURNING_EMBERS] = ""
 }
 
@@ -978,6 +980,7 @@ PowaAuras.PowerTypeIcon =
 	[SPELL_POWER_MAELSTROM] = "spell_shaman_maelstromweapon",
 	[SPELL_POWER_FURY] = "spell_shadow_shadowfury",
 	[SPELL_POWER_PAIN] = "artifactability_vengeancedemonHunter_painbringer",
+	[SPELL_POWER_ARCANE_CHARGES] = "spell_arcane_arcane04",
 	--[SPELL_POWER_BURNING_EMBERS] = "ability_warlock_burningembers",
 }
 

@@ -7,8 +7,13 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.29.6**
+* Updated for 7.2.0.
+* Added Arcane Charges for power tracking.
+* Some localization updates.
+
 **4.29.5**
-* Fixed an issue with the health related events.
+* Fixed an issue with health related events.
 
 **4.29.4**
 * Added options for all specializations.

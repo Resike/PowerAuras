@@ -131,26 +131,27 @@ AuraType =
 
 PowerType =
 {
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
+	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	--[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
 	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage",
-	[SPELL_POWER_FOCUS] = "Focus",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_ARCANE_CHARGES] = "Arcane Charges",
+	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_ENERGY] = "Energy",
+	[SPELL_POWER_FOCUS] = "Focus",
+	[SPELL_POWER_FURY] = "Fury",
+	[SPELL_POWER_HOLY_POWER] = "Holy Power",
+	[SPELL_POWER_INSANITY] = "Insanity",
+	[SPELL_POWER_LUNAR_POWER] = "Astral Power",
+	[SPELL_POWER_MAELSTROM] = "Maelstrom",
+	[SPELL_POWER_PAIN] = "Pain",
+	[SPELL_POWER_RAGE] = "Rage",
 	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
 	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
-	--[SPELL_POWER_LUNAR_ECLIPSE] = "Lunar Eclipse",
-	--[SPELL_POWER_SOLAR_ECLIPSE] = "Solar Eclipse",
-	[SPELL_POWER_LUNAR_POWER] = "Astral Power",
-	[SPELL_POWER_HOLY_POWER] = "Holy Power",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "Chi",
-	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	[SPELL_POWER_INSANITY] = "Insanity",
-	[SPELL_POWER_MAELSTROM] = "Maelstrom",
-	[SPELL_POWER_FURY] = "Fury",
-	[SPELL_POWER_PAIN] = "Pain",
-	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -1003,20 +1004,26 @@ AuraType =
 
 PowerType =
 {
-		[-1] = "Standard",
-		[SPELL_POWER_ALTERNATE_POWER] = "Boss-Fähigkeit",
 		--[SPELL_POWER_BURNING_EMBERS] = "Brennende Funken",
-		[SPELL_POWER_CHI] = "Chi",
 		--[SPELL_POWER_DARK_FORCE] = "Dunkle Macht",
 		--[SPELL_POWER_DEMONIC_FURY] = "Dämonischer Furor",
-		[SPELL_POWER_ENERGY] = "Energie",
-		[SPELL_POWER_FOCUS] = "Fokus",
-		[SPELL_POWER_HOLY_POWER] = "Heilige Kraft",
 		--[SPELL_POWER_LUNAR_ECLIPSE] = "Mondfinsternis",
-		[SPELL_POWER_RAGE] = "Wut",
-		[SPELL_POWER_RUNIC_POWER] = "Runenmacht",
 		--[SPELL_POWER_SHADOW_ORBS] = "Schattenkugeln",
 		--[SPELL_POWER_SOLAR_ECLIPSE] = "Sonnenfinsternis",
+		[-1] = "Standard",
+		[SPELL_POWER_ALTERNATE_POWER] = "Boss-Fähigkeit",
+		[SPELL_POWER_ARCANE_CHARGES] = "Arcane Charges",
+		[SPELL_POWER_CHI] = "Chi",
+		[SPELL_POWER_ENERGY] = "Energie",
+		[SPELL_POWER_FOCUS] = "Fokus",
+		[SPELL_POWER_FURY] = "Fury",
+		[SPELL_POWER_HOLY_POWER] = "Heilige Kraft",
+		[SPELL_POWER_INSANITY] = "Insanity",
+		[SPELL_POWER_LUNAR_POWER] = "Astral Power",
+		[SPELL_POWER_MAELSTROM] = "Maelstrom",
+		[SPELL_POWER_PAIN] = "Pain",
+		[SPELL_POWER_RAGE] = "Wut",
+		[SPELL_POWER_RUNIC_POWER] = "Runenmacht",
 		[SPELL_POWER_SOUL_SHARDS] = "Seelensplitter",
 },
 
@@ -1683,21 +1690,27 @@ AuraType =
 
 PowerType =
 {
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_LUNAR_ECLIPSE] = "Eclipse lunar",
+	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	--[SPELL_POWER_SOLAR_ECLIPSE] = "Eclipse solar",
 	[-1] = "Por defecto",
-	[SPELL_POWER_RAGE] = "Ira",
-	[SPELL_POWER_FOCUS] = "Enfoque",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_ARCANE_CHARGES] = "Arcane Charges",
+	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_ENERGY] = "Energía",
+	[SPELL_POWER_FOCUS] = "Enfoque",
+	[SPELL_POWER_FURY] = "Fury",
+	[SPELL_POWER_HOLY_POWER] = "Poder sagrado",
+	[SPELL_POWER_INSANITY] = "Insanity",
+	[SPELL_POWER_LUNAR_POWER] = "Astral Power",
+	[SPELL_POWER_MAELSTROM] = "Maelstrom",
+	[SPELL_POWER_PAIN] = "Pain",
+	[SPELL_POWER_RAGE] = "Ira",
 	[SPELL_POWER_RUNIC_POWER] = "Poder rúnico",
 	[SPELL_POWER_SOUL_SHARDS] = "Fragmentos de alma",
-	--[SPELL_POWER_LUNAR_ECLIPSE] = "Eclipse lunar",
-	--[SPELL_POWER_SOLAR_ECLIPSE] = "Eclipse solar",
-	[SPELL_POWER_HOLY_POWER] = "Poder sagrado",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "Chi",
-	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -2452,21 +2465,27 @@ AuraType =
 
 PowerType =
 {
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_LUNAR_ECLIPSE] = "Eclipse lunar",
+	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
+	--[SPELL_POWER_SOLAR_ECLIPSE] = "Eclipse solar",
 	[-1] = "Por defecto",
-	[SPELL_POWER_RAGE] = "Ira",
-	[SPELL_POWER_FOCUS] = "Enfoque",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_ARCANE_CHARGES] = "Arcane Charges",
+	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_ENERGY] = "Energía",
+	[SPELL_POWER_FOCUS] = "Enfoque",
+	[SPELL_POWER_FURY] = "Fury",
+	[SPELL_POWER_HOLY_POWER] = "Poder sagrado",
+	[SPELL_POWER_INSANITY] = "Insanity",
+	[SPELL_POWER_LUNAR_POWER] = "Astral Power",
+	[SPELL_POWER_MAELSTROM] = "Maelstrom",
+	[SPELL_POWER_PAIN] = "Pain",
+	[SPELL_POWER_RAGE] = "Ira",
 	[SPELL_POWER_RUNIC_POWER] = "Poder rúnico",
 	[SPELL_POWER_SOUL_SHARDS] = "Fragmentos de alma",
-	--[SPELL_POWER_LUNAR_ECLIPSE] = "Eclipse lunar",
-	--[SPELL_POWER_SOLAR_ECLIPSE] = "Eclipse solar",
-	[SPELL_POWER_HOLY_POWER] = "Poder sagrado",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "Chi",
-	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -3223,19 +3242,25 @@ AuraType =
 
 PowerType =
 {
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Rage",
-	[SPELL_POWER_FOCUS] = "Focalisation",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_ARCANE_CHARGES] = "Arcane Charges",
+	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_ENERGY] = "Énergie",
+	[SPELL_POWER_FOCUS] = "Focalisation",
+	[SPELL_POWER_FURY] = "Fury",
+	[SPELL_POWER_HOLY_POWER] = "Puissance sacrée",
+	[SPELL_POWER_INSANITY] = "Insanity",
+	[SPELL_POWER_LUNAR_POWER] = "Astral Power",
+	[SPELL_POWER_MAELSTROM] = "Maelstrom",
+	[SPELL_POWER_PAIN] = "Pain",
+	[SPELL_POWER_RAGE] = "Rage",
 	[SPELL_POWER_RUNIC_POWER] = "Puissance runique",
 	[SPELL_POWER_SOUL_SHARDS] = "Fragment d'âme",
-	[SPELL_POWER_HOLY_POWER] = "Puissance sacrée",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "Chi",
-	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Relative =
@@ -3915,19 +3940,25 @@ AuraType =
 
 PowerType =
 {
+	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
+	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
+	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
 	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "Ярость",
-	[SPELL_POWER_FOCUS] = "Фокус",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_ARCANE_CHARGES] = "Arcane Charges",
+	[SPELL_POWER_CHI] = "Chi",
 	[SPELL_POWER_ENERGY] = "Энергия",
+	[SPELL_POWER_FOCUS] = "Фокус",
+	[SPELL_POWER_FURY] = "Fury",
+	[SPELL_POWER_HOLY_POWER] = "Holy Power",
+	[SPELL_POWER_INSANITY] = "Insanity",
+	[SPELL_POWER_LUNAR_POWER] = "Astral Power",
+	[SPELL_POWER_MAELSTROM] = "Maelstrom",
+	[SPELL_POWER_PAIN] = "Pain",
+	[SPELL_POWER_RAGE] = "Ярость",
 	[SPELL_POWER_RUNIC_POWER] = "Runic Power",
 	[SPELL_POWER_SOUL_SHARDS] = "Soul Shards",
-	[SPELL_POWER_HOLY_POWER] = "Holy Power",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "Chi",
-	--[SPELL_POWER_SHADOW_ORBS] = "Shadow Orbs",
-	--[SPELL_POWER_BURNING_EMBERS] = "Burning Embers",
-	--[SPELL_POWER_DEMONIC_FURY] = "Demonic Fury"
 },
 
 Slots =
@@ -5002,21 +5033,27 @@ AuraType =
 
 PowerType =
 {
+	--[SPELL_POWER_BURNING_EMBERS] = "燃火餘燼",
+	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
+	--[SPELL_POWER_DEMONIC_FURY] = "惡魔之怒"
+	--[SPELL_POWER_LUNAR_ECLIPSE] = "月蝕",
+	--[SPELL_POWER_SHADOW_ORBS] = "暗影寶珠",
+	--[SPELL_POWER_SOLAR_ECLIPSE] = "日蝕",
 	[-1] = "Default",
-	[SPELL_POWER_RAGE] = "怒氣",
-	[SPELL_POWER_FOCUS] = "集中",
+	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
+	[SPELL_POWER_ARCANE_CHARGES] = "Arcane Charges",
+	[SPELL_POWER_CHI] = "真氣",
 	[SPELL_POWER_ENERGY] = "能量",
+	[SPELL_POWER_FOCUS] = "集中",
+	[SPELL_POWER_FURY] = "Fury",
+	[SPELL_POWER_HOLY_POWER] = "聖能",
+	[SPELL_POWER_INSANITY] = "Insanity",
+	[SPELL_POWER_LUNAR_POWER] = "Astral Power",
+	[SPELL_POWER_MAELSTROM] = "Maelstrom",
+	[SPELL_POWER_PAIN] = "Pain",
+	[SPELL_POWER_RAGE] = "怒氣",
 	[SPELL_POWER_RUNIC_POWER] = "符能",
 	[SPELL_POWER_SOUL_SHARDS] = "靈魂碎片",
-	--[SPELL_POWER_LUNAR_ECLIPSE] = "月蝕",
-	--[SPELL_POWER_SOLAR_ECLIPSE] = "日蝕",
-	[SPELL_POWER_HOLY_POWER] = "聖能",
-	[SPELL_POWER_ALTERNATE_POWER] = "Boss Power",
-	--[SPELL_POWER_DARK_FORCE] = "Dark Force",
-	[SPELL_POWER_CHI] = "真氣",
-	--[SPELL_POWER_SHADOW_ORBS] = "暗影寶珠",
-	--[SPELL_POWER_BURNING_EMBERS] = "燃火餘燼",
-	--[SPELL_POWER_DEMONIC_FURY] = "惡魔之怒"
 },
 
 Relative =
