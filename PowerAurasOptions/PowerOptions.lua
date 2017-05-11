@@ -1986,7 +1986,8 @@ function PowaAurasOptions:InitPage(aura)
 			local model = self.Models[aura.id]
 			local displayID
 			if model then
-				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
+				local modelpath = self.ModelsCreature[aura.texture]
+				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo,  string.lower(modelpath))
 				if displayID then
 					for i = 1, #displayID do
 						tinsert(self.ModelTextureList, displayID[i])
@@ -2228,7 +2229,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 			self.ModelTextureList = { }
 			if not aura.modelcategory or aura.modelcategory == 1 then
 				aura.modelpath = self.ModelsCreature[aura.texture]
-				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
+				displayID = self:GetTableNumberAll(self.ModelsDisplayInfo,  string.lower(aura.modelpath))
 				if displayID then
 					for i = 1, #displayID do
 						tinsert(self.ModelTextureList, displayID[i])
@@ -3189,7 +3190,7 @@ function PowaAurasOptions:ModelsChecked()
 		self.ModelTextureList = { }
 		if not aura.modelcategory or aura.modelcategory == 1 then
 			aura.modelpath = self.ModelsCreature[aura.texture]
-			local displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, aura.modelpath)
+			local displayID = self:GetTableNumberAll(self.ModelsDisplayInfo,  string.lower(aura.modelpath))
 			if displayID then
 				for i = 1, #displayID do
 					tinsert(self.ModelTextureList, displayID[i])
@@ -3729,7 +3730,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					PowaAurasOptions.ModelTextureList = { }
 					if not aura.modelcategory or aura.modelcategory == 1 then
 						aura.modelpath = PowaAurasOptions.ModelsCreature[aura.texture]
-						local displayID = PowaAurasOptions:GetTableNumberAll(PowaAurasOptions.ModelsDisplayInfo, aura.modelpath)
+						local displayID = PowaAurasOptions:GetTableNumberAll(PowaAurasOptions.ModelsDisplayInfo,  string.lower(aura.modelpath))
 						if displayID then
 							for i = 1, #displayID do
 								tinsert(PowaAurasOptions.ModelTextureList, displayID[i])

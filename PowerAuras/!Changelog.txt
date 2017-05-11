@@ -7,6 +7,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.29.7**
+* Updated dropdown handlers.
+* Fixed an issue with models.
+
 **4.29.6**
 * Updated for 7.2.0.
 * Added Arcane Charges for power tracking.

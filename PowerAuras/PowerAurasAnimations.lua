@@ -283,6 +283,7 @@ function PowaAuras:AddAlpha(animationGroup, alphaFrom, alphaTo, duration, order)
 	--alpha:SetChange(alphaTo)
 	alpha:SetFromAlpha(alphaFrom)
 	alpha:SetToAlpha(alphaTo)
+	--alpha:SetSmoothing("IN_OUT")
 end
 
 function PowaAuras:AddFade(animationGroup, duration, order)
