@@ -7,6 +7,9 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.29.8**
+* Updated dropdown handlers.
+
 **4.29.7**
 * Updated dropdown handlers.
 * Fixed an issue with models.
