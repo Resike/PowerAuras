@@ -85,7 +85,7 @@ function PowaAurasOptions:OptionsOnLoad()
 			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
 			tile = true,
 			tileSize = 200,
-			edgeSize = 32, 
+			edgeSize = 32,
 			insets = {left = 10, right = 10, top = 10, bottom = 10}
 		})
 		PowaOptionsHeaderTexture:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Gold-Header")
@@ -98,7 +98,7 @@ function PowaAurasOptions:OptionsOnLoad()
 			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
 			tile = true,
 			tileSize = 200,
-			edgeSize = 32, 
+			edgeSize = 32,
 			insets = {left = 10, right = 10, top = 10, bottom = 10}
 		})
 		PowaHeaderTexture:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Gold-Header")
@@ -107,7 +107,7 @@ function PowaAurasOptions:OptionsOnLoad()
 			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
 			tile = true,
 			tileSize = 200,
-			edgeSize = 32, 
+			edgeSize = 32,
 			insets = {left = 10, right = 10, top = 10, bottom = 10}
 		})
 		PowaFontHeaderTexture:SetTexture("Interface\\DialogFrame\\UI-DialogBox-Gold-Header")
@@ -116,7 +116,7 @@ function PowaAurasOptions:OptionsOnLoad()
 			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
 			tile = true,
 			tileSize = 200,
-			edgeSize = 16, 
+			edgeSize = 16,
 			insets = {left = 4, right = 4, top = 4, bottom = 4}
 		})
 	end
@@ -306,7 +306,7 @@ function PowaAurasOptions:IconClick(owner, button)
 					end
 				end
 			end
-			PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+			PlaySound(841, PowaMisc.SoundChannel)
 		end
 		if PowaFontSelectorFrame:IsVisible() then
 			PowaFontSelectorFrame:Hide()
@@ -423,7 +423,7 @@ function PowaAurasOptions:MainListClick(owner)
 			self.SecondaryAuras[i] = nil
 		end
 		self.DoCheck.All = true
-		PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+		PlaySound(841, PowaMisc.SoundChannel)
 		return
 	end
 	if self.CurrentAuraPage ~= listID then
@@ -451,7 +451,7 @@ function PowaAurasOptions:MainListClick(owner)
 		PowaOptionsRenameEditBox:SetText(currentText)
 		self:UpdateMainOption()
 	end
-	PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+	PlaySound(841, PowaMisc.SoundChannel)
 end
 
 function PowaAurasOptions:MainListEntered(owner)
@@ -494,7 +494,7 @@ function PowaAurasOptions:OptionRenameEdited()
 	else
 		PowaPlayerListe[self.CurrentAuraPage] = PowaOptionsRenameEditBox:GetText()
 	end
-	PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+	PlaySound(841, PowaMisc.SoundChannel)
 end
 
 function PowaAurasOptions:TriageIcons(nPage)
@@ -652,7 +652,7 @@ function PowaAurasOptions:OptionNewEffect()
 	end
 	if not PowaBarConfigFrame:IsVisible() then
 		PowaBarConfigFrame:Show()
-		PlaySound("TalentScreenOpen", PowaMisc.SoundChannel)
+		PlaySound(73914, PowaMisc.SoundChannel)
 	end
 end
 
@@ -1379,7 +1379,7 @@ function PowaAurasOptions:BeginMoveEffect(Pfrom, ToPage)
 		self.CurrentAuraId = self:GetNextFreeSlot() - 1
 	end
 	self:UpdateMainOption()
-	PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+	PlaySound(841, PowaMisc.SoundChannel)
 end
 
 function PowaAurasOptions:BeginCopyEffect(Pfrom, ToPage)
@@ -1392,7 +1392,7 @@ function PowaAurasOptions:BeginCopyEffect(Pfrom, ToPage)
 	self.CurrentAuraId = i
 	self:DisableMoveMode()
 	self:UpdateMainOption()
-	PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+	PlaySound(841, PowaMisc.SoundChannel)
 end
 
 function PowaAurasOptions:DoCopyEffect(idFrom, idTo, isMove)
@@ -1432,7 +1432,7 @@ function PowaAurasOptions:MainOptionShow()
 		self:UpdateMainOption()
 		PowaOptionsFrame:Show()
 		self:UpdateMainOption(true)
-		PlaySound("TalentScreenOpen", PowaMisc.SoundChannel)
+		PlaySound(73914, PowaMisc.SoundChannel)
 		if PowaMisc.Disabled then
 			self:DisplayText("Power Auras: "..self.Colors.Red..PowaAurasOptions.Text.Disabled.."|r")
 		end
@@ -1454,7 +1454,7 @@ function PowaAurasOptions:MainOptionClose()
 	PowaFontSelectorFrame:Hide()
 	PowaBarConfigFrame:Hide()
 	PowaOptionsFrame:Hide()
-	PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
+	PlaySound(73915, PowaMisc.SoundChannel)
 	self:OptionHideAll()
 	self:FindAllChildren()
 	self:CreateEffectLists()
@@ -1682,24 +1682,40 @@ function PowaAurasOptions:InitPage(aura)
 	if aura.sound < 30 then
 		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, aura.sound)
 		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
-		PowaDropDownSoundText:SetText(self.Sound[aura.sound])
+		if aura.sound == 0 then
+			PowaDropDownSoundText:SetText(self.Sound[aura.sound])
+		else
+			PowaDropDownSoundText:SetText(self.Sound[aura.sound][1])
+		end
 		PowaDropDownSound2Text:SetText(self.Sound[30])
 	else
 		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
 		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, aura.sound)
 		PowaDropDownSoundText:SetText(self.Sound[0])
-		PowaDropDownSound2Text:SetText(self.Sound[aura.sound])
+		if aura.sound == 30 then
+			PowaDropDownSound2Text:SetText(self.Sound[aura.sound])
+		else
+			PowaDropDownSound2Text:SetText(self.SoundCustom[aura.sound][1])
+		end
 	end
 	if aura.soundend < 30 then
 		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, aura.soundend)
 		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
-		PowaDropDownSoundEndText:SetText(self.Sound[aura.soundend])
+		if aura.soundend == 0 then
+			PowaDropDownSoundEndText:SetText(self.Sound[aura.soundend])
+		else
+			PowaDropDownSoundEndText:SetText(self.Sound[aura.soundend][1])
+		end
 		PowaDropDownSound2EndText:SetText(self.Sound[30])
 	else
 		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
 		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, aura.soundend)
 		PowaDropDownSoundEndText:SetText(self.Sound[0])
-		PowaDropDownSound2EndText:SetText(self.Sound[aura.soundend])
+		if aura.soundend == 30 then
+			PowaDropDownSound2EndText:SetText(self.Sound[aura.soundend])
+		else
+			PowaDropDownSound2EndText:SetText(self.SoundCustom[aura.soundend][1])
+		end
 	end
 	PowaBarCustomSound.aide = self.Text.aideCustomSound
 	PowaBarCustomSoundEnd.aide = self.Text.aideCustomSoundEnd
@@ -3890,11 +3906,15 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 	elseif name == "PowaDropDownSound" then
 		for i = 0, 29 do
 			local info = Lib_UIDropDownMenu_CreateInfo()
-			info.text = PowaAurasOptions.Sound[i]
+			if i == 0 then
+				info.text = PowaAurasOptions.Sound[i]
+			else
+				info.text = PowaAurasOptions.Sound[i][1]
+			end
 			info.value = i
 			info.func = function(self)
 				if aura.sound ~= i then
-					if i == 0 or not PowaAurasOptions.Sound[i] then
+					if i == 0 or not PowaAurasOptions.Sound[i][1] then
 						aura.sound = 0
 						Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
 						return
@@ -3903,7 +3923,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, aura.sound)
 					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
 					PowaDropDownSound2Text:SetText(PowaAurasOptions.Sound[0])
-					PlaySound(PowaAurasOptions.Sound[aura.sound], PowaMisc.SoundChannel)
+					PlaySound(PowaAurasOptions.Sound[aura.sound][2], PowaMisc.SoundChannel)
 				end
 			end
 			Lib_UIDropDownMenu_AddButton(info)
@@ -3914,13 +3934,17 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, aura.sound)
 		end
 	elseif name == "PowaDropDownSound2" then
-		for i = 30, #PowaAurasOptions.Sound do
+		for i = 30, 77 do
 			local info = Lib_UIDropDownMenu_CreateInfo()
-			info.text = PowaAurasOptions.Sound[i]
+			if i == 30 then
+				info.text = PowaAurasOptions.Sound[i]
+			else
+				info.text = PowaAurasOptions.SoundCustom[i][1]
+			end
 			info.value = i
 			info.func = function(self)
 				if aura.sound ~= i then
-					if i == 30 or not PowaAurasOptions.Sound[i] then
+					if i == 30 or not PowaAurasOptions.SoundCustom[i][1] then
 						aura.sound = 0
 						Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
 						return
@@ -3929,7 +3953,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, aura.sound)
 					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
 					PowaDropDownSoundText:SetText(PowaAurasOptions.Sound[0])
-					PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAurasOptions.Sound[aura.sound], PowaMisc.SoundChannel)
+					PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAurasOptions.SoundCustom[aura.sound][1], PowaMisc.SoundChannel)
 				end
 			end
 			Lib_UIDropDownMenu_AddButton(info)
@@ -3942,11 +3966,15 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 	elseif name == "PowaDropDownSoundEnd" then
 		for i = 0, 29 do
 			local info = Lib_UIDropDownMenu_CreateInfo()
-			info.text = PowaAurasOptions.Sound[i]
+			if i == 0 then
+				info.text = PowaAurasOptions.Sound[i]
+			else
+				info.text = PowaAurasOptions.Sound[i][1]
+			end
 			info.value = i
 			info.func = function(self)
 				if aura.soundend ~= i then
-					if i == 0 or not PowaAurasOptions.Sound[i] then
+					if i == 0 or not PowaAurasOptions.Sound[i][1] then
 						aura.soundend = 0
 						Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
 						return
@@ -3955,7 +3983,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, aura.soundend)
 					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
 					PowaDropDownSound2EndText:SetText(PowaAurasOptions.Sound[0])
-					PlaySound(PowaAurasOptions.Sound[aura.soundend], PowaMisc.SoundChannel)
+					PlaySound(PowaAurasOptions.Sound[aura.soundend][2], PowaMisc.SoundChannel)
 				end
 			end
 			Lib_UIDropDownMenu_AddButton(info)
@@ -3966,13 +3994,17 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, aura.soundend)
 		end
 	elseif name == "PowaDropDownSound2End" then
-		for i = 30, #PowaAurasOptions.Sound do
+		for i = 30, 77 do
 			local info = Lib_UIDropDownMenu_CreateInfo()
-			info.text = PowaAurasOptions.Sound[i]
+			if i == 30 then
+				info.text = PowaAurasOptions.Sound[i]
+			else
+				info.text = PowaAurasOptions.SoundCustom[i][1]
+			end
 			info.value = i
 			info.func = function(self)
 				if aura.soundend ~= i then
-					if i == 30 or not PowaAurasOptions.Sound[i] then
+					if i == 30 or not PowaAurasOptions.SoundCustom[i][1] then
 						aura.soundend = 0
 						Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
 						return
@@ -3981,7 +4013,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, aura.soundend)
 					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
 					PowaDropDownSoundEndText:SetText(PowaAurasOptions.Sound[0])
-					PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAurasOptions.Sound[aura.soundend], PowaMisc.SoundChannel)
+					PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAurasOptions.SoundCustom[aura.soundend][1], PowaMisc.SoundChannel)
 				end
 			end
 			Lib_UIDropDownMenu_AddButton(info)
@@ -4521,7 +4553,7 @@ function PowaAurasOptions:EditorShow()
 		end
 		self:InitPage(aura)
 		PowaBarConfigFrame:Show()
-		PlaySound("TalentScreenOpen", PowaMisc.SoundChannel)
+		PlaySound(73914, PowaMisc.SoundChannel)
 	end
 end
 
@@ -4535,7 +4567,7 @@ function PowaAurasOptions:EditorClose()
 			ColorPickerFrame:Hide()
 		end
 		PowaBarConfigFrame:Hide()
-		PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
+		PlaySound(73915, PowaMisc.SoundChannel)
 	end
 end
 
@@ -5066,14 +5098,15 @@ function PowaAurasOptions:OptionTest()
 			end
 			PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
 		elseif aura.soundend > 0 then
-			if PowaAurasOptions.Sound[aura.soundend] and string.len(PowaAurasOptions.Sound[aura.soundend]) > 0 then
-				if aura.Debug then
-					self:Message("Playing end sound ", PowaAurasOptions.Sound[aura.soundend])
+			if aura.soundend > 30 then
+				if PowaAurasOptions.SoundCustom[aura.soundend][1] and string.len(PowaAurasOptions.SoundCustom[aura.soundend][1]) > 0 then
+					if string.find(PowaAurasOptions.SoundCustom[aura.soundend][1], "%.") then
+						PlaySoundFile(PowaGlobalMisc.PathToSounds .. PowaAurasOptions.SoundCustom[aura.soundend][1], PowaMisc.SoundChannel)
+					end
 				end
-				if string.find(PowaAurasOptions.Sound[aura.soundend], "%.") then
-					PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAurasOptions.Sound[aura.soundend], PowaMisc.SoundChannel)
-				else
-					PlaySound(PowaAurasOptions.Sound[aura.soundend], PowaMisc.SoundChannel)
+			else
+				if PowaAurasOptions.Sound[aura.soundend][2] then
+					PlaySound(PowaAurasOptions.Sound[aura.soundend][2], PowaMisc.SoundChannel)
 				end
 			end
 		end
@@ -5092,11 +5125,15 @@ function PowaAurasOptions:OptionTest()
 			end
 			PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
 		elseif aura.sound > 0 then
-			if PowaAurasOptions.Sound[aura.sound] and string.len(PowaAurasOptions.Sound[aura.sound]) > 0 then
-				if string.find(PowaAurasOptions.Sound[aura.sound], "%.") then
-					PlaySoundFile(PowaGlobalMisc.PathToSounds .. PowaAurasOptions.Sound[aura.sound], PowaMisc.SoundChannel)
-				else
-					PlaySound(PowaAurasOptions.Sound[aura.sound], PowaMisc.SoundChannel)
+			if aura.sound > 30 then
+				if PowaAurasOptions.SoundCustom[aura.sound][1] and string.len(PowaAurasOptions.SoundCustom[aura.sound][1]) > 0 then
+					if string.find(PowaAurasOptions.SoundCustom[aura.sound][1], "%.") then
+						PlaySoundFile(PowaGlobalMisc.PathToSounds .. PowaAurasOptions.SoundCustom[aura.sound][1], PowaMisc.SoundChannel)
+					end
+				end
+			else
+				if PowaAurasOptions.Sound[aura.sound][2] then
+					PlaySound(PowaAurasOptions.Sound[aura.sound][2], PowaMisc.SoundChannel)
 				end
 			end
 		end

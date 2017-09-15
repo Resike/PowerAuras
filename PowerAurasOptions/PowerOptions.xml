@@ -227,7 +227,7 @@
 				<Scripts>
 					<OnClick>
 						PowaAuraExportDialog:OnAccept()
-						PlaySound("igCharacterInfoTab", "Sound")
+						PlaySound(841, "Sound")
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -244,7 +244,7 @@
 				<Scripts>
 					<OnClick>
 						PowaAuraExportDialog:OnCancel()
-						PlaySound("igMainMenuClose", "Sound")
+						PlaySound(851, "Sound")
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -315,7 +315,7 @@
 				<Scripts>
 					<OnClick>
 						PowaAuraPlayerImportDialog:OnAccept()
-						PlaySound("igCharacterInfoTab", "Sound")
+						PlaySound(841, "Sound")
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -332,7 +332,7 @@
 				<Scripts>
 					<OnClick>
 						PowaAuraPlayerImportDialog:OnCancel()
-						PlaySound("igMainMenuClose", "Sound")
+						PlaySound(851, "Sound")
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -380,7 +380,7 @@
 				PowaAurasOptions:ResizeFrame(self)
 			</OnLoad>
 			<OnShow>
-				PlaySound("TalentScreenOpen", PowaMisc.SoundChannel)
+				PlaySound(73914, PowaMisc.SoundChannel)
 			</OnShow>
 			<OnHide>
 				PowaAurasOptions:MainOptionClose()
@@ -1008,7 +1008,7 @@
 						<Scripts>
 							<OnClick>
 								PowaAurasOptions:OptionRename()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 							<OnEnter>
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -1039,7 +1039,7 @@
 								PowaAurasOptions:ToggleLock()
 								PowaAurasOptions:UpdateMainOption()
 								PowaAurasOptions:InitPage()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1062,7 +1062,7 @@
 							<OnClick>
 								PowaAurasOptions:UpdateMainOption()
 								PowaAurasOptions:OptionTest()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1085,7 +1085,7 @@
 							<OnClick>
 								PowaAurasOptions:OptionTestAll()
 								PowaAurasOptions:UpdateMainOption()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1107,7 +1107,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAurasOptions:OptionMoveEffect(true)
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1129,7 +1129,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAurasOptions:OptionNewEffect()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1151,7 +1151,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAurasOptions:OptionDeleteEffect(PowaAurasOptions.CurrentAuraId)
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 							<OnEnter>
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -1180,7 +1180,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAurasOptions:OptionMoveEffect(false)
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1202,7 +1202,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAurasOptions:OptionExportEffect()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1224,7 +1224,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAurasOptions:OptionExportSet()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1246,7 +1246,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAurasOptions:EditorShow()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1271,7 +1271,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAurasOptions:OptionImportEffect()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1293,7 +1293,7 @@
 							</OnLoad>
 							<OnClick>
 								PowaAurasOptions:OptionImportSet()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1316,7 +1316,7 @@
 							<OnClick>
 								PowaAurasOptions:OptionHideAll()
 								PowaAurasOptions:UpdateMainOption(true)
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 						</Scripts>
 					</Button>
@@ -1466,7 +1466,7 @@
 						else
 							Lib_UIDropDownMenu_Initialize(self:GetParent(), PowaAurasOptions.DropDownMenu_Initialize)
 							Lib_ToggleDropDownMenu(nil, nil, self:GetParent())
-							PlaySound("igMainMenuOptionCheckBoxOn")
+							PlaySound(856)
 						end
 					</OnClick>
 				</Scripts>
@@ -2690,9 +2690,9 @@
 							</OnLoad>
 							<OnClick>
 								if PowaFontSelectorFrame:IsVisible() then
-									PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
+									PlaySound(73915, PowaMisc.SoundChannel)
 								else
-									PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+									PlaySound(841, PowaMisc.SoundChannel)
 								end
 								PowaAurasOptions:OpenFontSelector(self)
 							</OnClick>
@@ -5905,7 +5905,7 @@
 								PowaBarConfigFrameEditor4:Hide()
 								PowaBarConfigFrameEditor3:Hide()
 								PowaBarConfigFrameEditor5:Hide()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab1Text:SetText(PowaAurasOptions.Text.nomTabActiv)
@@ -5935,7 +5935,7 @@
 								PowaBarConfigFrameEditor4:Hide()
 								PowaBarConfigFrameEditor3:Hide()
 								PowaBarConfigFrameEditor5:Hide()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab2Text:SetText(PowaAurasOptions.Text.nomTabAnim)
@@ -5965,7 +5965,7 @@
 								PowaBarConfigFrameEditor2:Hide()
 								PowaBarConfigFrameEditor4:Hide()
 								PowaBarConfigFrameEditor5:Hide()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab3Text:SetText(PowaAurasOptions.Text.nomTabSound)
@@ -5996,7 +5996,7 @@
 								PowaBarConfigFrameEditor3:Hide()
 								PowaBarConfigFrameEditor5:Hide()
 								PowaAurasOptions:UpdateTimerOptions()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab4Text:SetText(PowaAurasOptions.Text.nomTabTimer)
@@ -6027,7 +6027,7 @@
 								PowaBarConfigFrameEditor4:Hide()
 								PowaBarConfigFrameEditor3:Hide()
 								PowaAurasOptions:UpdateStacksOptions()
-								PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+								PlaySound(841, PowaMisc.SoundChannel)
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab5Text:SetText(PowaAurasOptions.Text.nomTabStacks)
@@ -6108,7 +6108,7 @@
 				<Scripts>
 					<OnClick>
 						PowaAurasOptions:FontSelectorClose(self)
-						PlaySound("TalentScreenClose", PowaMisc.SoundChannel)
+						PlaySound(73915, PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -6129,7 +6129,7 @@
 					</OnLoad>
 					<OnClick>
 						PowaAurasOptions:FontSelectorOkay(self)
-						PlaySound("igCharacterInfoTab", PowaMisc.SoundChannel)
+						PlaySound(841, PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -6150,7 +6150,7 @@
 					</OnLoad>
 					<OnClick>
 						PowaAurasOptions:FontSelectorCancel(self)
-						PlaySound("igMainMenuClose", PowaMisc.SoundChannel)
+						PlaySound(851, PowaMisc.SoundChannel)
 					</OnClick>
 				</Scripts>
 			</Button>

@@ -258,7 +258,7 @@ nomSound2 = "Custom Starting Sound:",
 aideSound = "Plays a sound at the beginning.",
 aideSound2 = "Plays a sound at the beginning.",
 nomCustomSound = "Custom Starting Soundfile:",
-aideCustomSound = "Enter a soundfile that is in the Sounds folder.\nSupported file formats: .mp3, .wav and .ogg, you must copy the file before you start the game.\nExamples: 'cookie.mp3', 'Sound\\Events\\\nGuldanCheers.wav'.",
+aideCustomSound = "Enter a soundfile that is in the Sounds folder.\nSupported file formats: .mp3, .ogg and .ogg, you must copy the file before you start the game.\nExamples: 'cookie.mp3', 'Sound\\Events\\\nGuldanCheers.ogg'.",
 
 nomCustomSoundPath = "Path to custom sounds:",
 aideCustomSoundPath = "Set this to your own path (within the WoW install folder) to prevent your own sounds being overwritten by updating Power Auras.",
@@ -271,7 +271,7 @@ nomSound2End = "Custom Ending Sound:",
 aideSoundEnd = "Plays a sound at the end.",
 aideSound2End = "Plays a sound at the end.",
 nomCustomSoundEnd = "Custom Ending Soundfile:",
-aideCustomSoundEnd = "Enter a soundfile that is in the Sounds folder.\nSupported file formats: .mp3, .wav and .ogg, you must copy the file before you start the game.\nExamples: 'cookie.mp3', 'Sound\\Events\\\nGuldanCheers.wav'.",
+aideCustomSoundEnd = "Enter a soundfile that is in the Sounds folder.\nSupported file formats: .mp3, .ogg and .ogg, you must copy the file before you start the game.\nExamples: 'cookie.mp3', 'Sound\\Events\\\nGuldanCheers.ogg'.",
 nomTexture = "Texture",
 aideTexture = "The texture to be shown. You can easily replace textures by changing the files Aura#.tga in the Addon's directory.",
 nomModel = "Model",
@@ -1807,7 +1807,7 @@ nomSound2 = "Más sonidos para reproducir",
 aideSound = "Reproduce un sonido al inicio",
 aideSound2 = "Reproduce un sonido al inicio",
 nomCustomSound = "O archivo de sonido",
-aideCustomSound = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
+aideCustomSound = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.ogg",
 
 nomCustomSoundPath = "Ruta sonidos personalizados:",
 aideCustomSoundPath = "Publica tu propia ruta (within the WoW install) para evitar sobreescribirlos al actualizar Power Auras",
@@ -1820,7 +1820,7 @@ nomSound2End = "Más sonidos para reproducir",
 aideSoundEnd = "Reproduce un sonido al final",
 aideSound2End = "Reproduce un sonido al final",
 nomCustomSoundEnd = "O archivo de sonido",
-aideCustomSoundEnd = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
+aideCustomSoundEnd = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.ogg",
 nomTexture = "Textura",
 aideTexture = "Textura para mostrar. Puedes cambiar las texturas facilmente cambiando el archivo Aura#.tga en la carpeta Addons",
 
@@ -2582,7 +2582,7 @@ nomSound2 = "Más sonidos para reproducir",
 aideSound = "Reproduce un sonido al inicio",
 aideSound2 = "Reproduce un sonido al inicio",
 nomCustomSound = "O archivo de sonido",
-aideCustomSound = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
+aideCustomSound = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.ogg",
 
 nomCustomSoundPath = "Ruta sonidos personalizados:",
 aideCustomSoundPath = "Publica tu propia ruta (within the WoW install) para evitar sobreescribirlos al actualizar Power Auras",
@@ -2595,7 +2595,7 @@ nomSound2End = "Más sonidos para reproducir",
 aideSoundEnd = "Reproduce un sonido al final",
 aideSound2End = "Reproduce un sonido al final",
 nomCustomSoundEnd = "O archivo de sonido",
-aideCustomSoundEnd = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.wav",
+aideCustomSoundEnd = "Introduce un archivo de sonido que esté en la carpeta de sonidos, ANTES de iniciar el juego. Mp3 y wav son compatibles. Ej: 'cookie.mp3' o introduce la ruta completa para reproducir cualquier sonido del WoW ej: Sound\\Events\\GuldanCheers.ogg",
 nomTexture = "Textura",
 aideTexture = "Textura para mostrar. Puedes cambiar las texturas facilmente cambiando el archivo Aura#.tga en la carpeta Addons",
 
@@ -3768,7 +3768,7 @@ aideTalentGroup1 = "첫번째 특성을 전문화한 경우에만 이 효과를 
 nomTalentGroup2 = "특성 전문화 2",
 aideTalentGroup2 = "두번째 특성을 전문화한 경우에만 이 효과를 보여줍니다.",
 
-nomReset = "편집창 위치 초기화",	
+nomReset = "편집창 위치 초기화",
 nomPowaShowAuraBrowser = "Aura Browser 보이기",
 
 nomDefaultTimerTexture = "타이머 텍스쳐 기본값",
@@ -4127,7 +4127,7 @@ aideFocus = "Отметив это, будет происходить прове
 aideRaid = "Отметив это, будет происходить проверка только участника рейда.",
 aideGroupAny = "Отметив это, будет происходить проверка баффов у 'любого' участника группы/рейда. Без отметки: Будет подразумеваться что 'Все' участники с баффами.",
 aideOptunitn = "Отметив это, будет происходить проверка только определённого персонажа в группе/рейде.",
-aideExact = "Отметив это, будет происходить проверка точного названия баффа/дебаффа/действия.",	
+aideExact = "Отметив это, будет происходить проверка точного названия баффа/дебаффа/действия.",
 aideStance = "Выберите, какая стойка, форма или аура вызовет событие.",
 aideGTFO = "Выберите, какое предупреждение GTFO вызовет событие.",
 
@@ -4688,7 +4688,7 @@ nomCheckShowStacks = "叠加次数",
 nomCheckInverse = "不存在",
 aideInverse = "选中此项后,仅当buff/debuff不存在时显示此特效",
 
-nomCheckIgnoreMaj = "忽略大小写",	
+nomCheckIgnoreMaj = "忽略大小写",
 aideIgnoreMaj = "选中此项将忽略buff/debuff名字的大小写字母(供英文玩家使用,中国玩家不需要修改此项)",
 
 nomDuration = "延迟消失",
@@ -5461,7 +5461,7 @@ TernaryYes =
 	RoleHealer = "擔任治療時才會觸發",
 	RoleMeleDps = "擔任近戰DD時才會觸發",
 	RoleRangeDps = "擔任遠程DD時才會觸發"
-	
+
 },
 
 TernaryNo =
