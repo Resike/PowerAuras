@@ -959,21 +959,21 @@ function cPowaAura:CheckInstanceType(giveReason)
 	if now then
 		return show, reason
 	end
-	if show == false then 
+	if show == false then
 		showTotal = false
 	end
 	show, now, reason = self:ShouldShowForInstanceType("ScenarioHeroic", giveReason)
 	if now then
 		return show, reason
 	end
-	if show == false then 
+	if show == false then
 		showTotal = false
 	end
 	show, now, reason = self:ShouldShowForInstanceType("5Man", giveReason)
 	if now then
 		return show, reason
 	end
-	if show == false then 
+	if show == false then
 		showTotal = false
 	end
 	show, now, reason = self:ShouldShowForInstanceType("5ManHeroic", giveReason)
@@ -1224,7 +1224,7 @@ function cPowaAura:MatchSpell(spellName, spellTexture, spellId, matchString)
 	if self.Debug then
 		PowaAuras:Message("SpellName = ", spellName, " Id = ", spellId)
 		PowaAuras:Message("matchString = ", matchString)
-	end 
+	end
 	for pword in string.gmatch(matchString, "[^/]+") do
 		pword = self:Trim(pword)
 		if string.len(pword) > 0 then
@@ -2206,7 +2206,7 @@ function cPowaSpecialSpellBase:CheckIfShouldShow(giveReason)
 	if #PowaAuras.ChangedUnits.Targets > 0 then
 		if self.Debug then
 			PowaAuras:Message(self.AuraType, "TargetCount = ", #PowaAuras.ChangedUnits.Targets)
-		end	
+		end
 		for unit, targetOf in pairs(PowaAuras.ChangedUnits.Targets) do
 			if self:CheckUnit(unit, targetOf) then
 				if not giveReason then
@@ -3497,7 +3497,7 @@ end
 
 function cPowaPowerType:IsCorrectPowerType(unit)
 	-- Check for correct secondary resource
-	if (self.PowerType == SPELL_POWER_HOLY_POWER and PowaAuras.playerclass == "PALADIN") or (self.PowerType == SPELL_POWER_ALTERNATE_POWER) or (self.PowerType == SPELL_POWER_RUNIC_POWER and PowaAuras.playerclass == "DEATHKNIGHT") or (self.PowerType == SPELL_POWER_CHI and PowaAuras.playerclass == "MONK") --[[or (self.PowerType == SPELL_POWER_SHADOW_ORBS and PowaAuras.playerclass == "PRIEST")]] or (self.PowerType == SPELL_POWER_SOUL_SHARDS --[[or self.PowerType == SPELL_POWER_BURNING_EMBERS or self.PowerType == SPELL_POWER_DEMONIC_FURY)]] and PowaAuras.playerclass == "WARLOCK") --[[or ((self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE) and PowaAuras.playerclass == "DRUID")]] then 
+	if (self.PowerType == SPELL_POWER_HOLY_POWER and PowaAuras.playerclass == "PALADIN") or (self.PowerType == SPELL_POWER_ALTERNATE_POWER) or (self.PowerType == SPELL_POWER_RUNIC_POWER and PowaAuras.playerclass == "DEATHKNIGHT") or (self.PowerType == SPELL_POWER_CHI and PowaAuras.playerclass == "MONK") --[[or (self.PowerType == SPELL_POWER_SHADOW_ORBS and PowaAuras.playerclass == "PRIEST")]] or (self.PowerType == SPELL_POWER_SOUL_SHARDS --[[or self.PowerType == SPELL_POWER_BURNING_EMBERS or self.PowerType == SPELL_POWER_DEMONIC_FURY)]] and PowaAuras.playerclass == "WARLOCK") --[[or ((self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE) and PowaAuras.playerclass == "DRUID")]] then
 		return true
 	end
 	local unitPowerType = UnitPowerType(unit)
@@ -4304,7 +4304,7 @@ function cPowaRunes:RunesPresent(giveReason)
 				minTimeToActivate = maxTime
 			end
 		end
-		
+
 	end
 	if self.Timer and minTimeToActivate ~= nil and minTimeToActivate > 0 then
 		if self.Debug then

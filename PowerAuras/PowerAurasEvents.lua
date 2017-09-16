@@ -201,11 +201,6 @@ function PowaAuras:SlashCommandsInit()
 end
 
 function PowaAuras:Setup()
-	local spellId = self.GCDSpells[PowaAuras.playerclass]
-	if not spellId then
-		return false
-	end
-	self.GCDSpellName = GetSpellInfo(spellId)
 	-- Lookup spells by spellId for debuff types
 	self.DebuffCatSpells = { }
 	for k, v in pairs(self.DebuffTypeSpellIds) do

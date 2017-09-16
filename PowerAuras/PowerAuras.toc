@@ -1,6 +1,6 @@
 ﻿## Interface: 70300
 ## Title: Power Auras Classic
-## Version: 4.29.10
+## Version: 4.29.11
 ## Author: Smacker 'lolcat', Dridzt 'classic', Garstiger 'continued', Sinsthar 'base', Meorawr, modified by Zensunim and Resike
 ## Notes: Cool Effects around the player for ingame events.
 ## Notes-frFR: Affiche des effets visuels autour du personnage.

@@ -886,7 +886,7 @@ PowaAuras:RegisterAuraType('GTFOFail')
 PowaAuras:RegisterAuraType('GTFOFriendlyFire')
 
 -- Use these spells to detect GCD, ideally these should be spells classes have from the beginning
-PowaAuras.GCDSpells =
+--[[PowaAuras.GCDSpells =
 {
 	PALADIN = 19750, -- Flash of Light
 	PRIEST = 1706, -- Levitate
@@ -900,7 +900,7 @@ PowaAuras.GCDSpells =
 	DEATHKNIGHT = 3714, -- Path of Frost
 	MONK = 100780, -- Tiger Palm
 	DEMONHUNTER = 162243 -- Demon's Bite (Havoc) 203782 -- Shear (Vengeance)
-}
+}]]
 
 -- Invented so we can distinquish them two types
 --SPELL_POWER_LUNAR_ECLIPSE = 108

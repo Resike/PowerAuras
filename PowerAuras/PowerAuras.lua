@@ -629,11 +629,9 @@ function PowaAuras:OnUpdate(elapsed)
 	self.TimerUpdateThrottleTimer = self.TimerUpdateThrottleTimer + elapsed
 	self.ThrottleTimer = self.ThrottleTimer + elapsed
 	self.InGCD = nil
-	if self.GCDSpellName then
-		local gcdStart = GetSpellCooldown(self.GCDSpellName)
-		if gcdStart then
-			self.InGCD = gcdStart > 0
-		end
+	local gcdStart = GetSpellCooldown(61304)
+	if gcdStart then
+		self.InGCD = gcdStart > 0
 	end
 	local checkAura = false
 	if PowaMisc.OnUpdateLimit == 0 or self.ThrottleTimer >= PowaMisc.OnUpdateLimit then
