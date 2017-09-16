@@ -1,11 +1,11 @@
 --[[
-	   _          _           _    _       _        _              _          _      _          _        _            _        _           _        _       _       _       _      
-	 _/\\___   __/\\___  ___ /\\  /\\   __/\\___  _/\\___       __/\\__  ___ /\\   _/\\___   __/\\__    /\\__      __/\\___  _/\\_      __/\\__    /\\__   /\\__  _/\\_  __/\\___  
-	(_   _ _))(_     _))/   |  \\/  \\ (_  ____))(_   _  ))    (_  ____)/  //\ \\ (_   _  ))(_  ____)  /    \\    (_  ____))(_  _))    (_  ____)  /    \\ /    \\(____))(_  ____)) 
-	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||     
-	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___  
-	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____)) 
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.26.1   \//      \// \//    \\/     \\/      \//  \//       
+	   _          _           _    _       _        _              _          _      _          _        _            _        _           _        _       _       _       _
+	 _/\\___   __/\\___  ___ /\\  /\\   __/\\___  _/\\___       __/\\__  ___ /\\   _/\\___   __/\\__    /\\__      __/\\___  _/\\_      __/\\__    /\\__   /\\__  _/\\_  __/\\___
+	(_   _ _))(_     _))/   |  \\/  \\ (_  ____))(_   _  ))    (_  ____)/  //\ \\ (_   _  ))(_  ____)  /    \\    (_  ____))(_  _))    (_  ____)  /    \\ /    \\(____))(_  ____))
+	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||
+	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___
+	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____))
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.26.1   \//      \// \//    \\/     \\/      \//  \//
 
 	Power Auras Classic
 	Author: Resike
@@ -1646,11 +1646,15 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 			end
 			PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
 		elseif aura.sound > 0 then
-			if self.Sound[aura.sound] and string.len(self.Sound[aura.sound]) > 0 then
-				if string.find(self.Sound[aura.sound], "%.") then
-					PlaySoundFile(PowaGlobalMisc.PathToSounds .. self.Sound[aura.sound], PowaMisc.SoundChannel)
-				else
-					PlaySound(self.Sound[aura.sound], PowaMisc.SoundChannel)
+			if aura.sound > 30 then
+				if self.SoundCustom[aura.sound][1] and string.len(self.SoundCustom[aura.sound][1]) > 0 then
+					if string.find(self.SoundCustom[aura.sound][1], "%.") then
+						PlaySoundFile(PowaGlobalMisc.PathToSounds .. self.SoundCustom[aura.sound][1], PowaMisc.SoundChannel)
+					end
+				end
+			else
+				if self.Sound[aura.sound][2] then
+					PlaySound(self.Sound[aura.sound][2], PowaMisc.SoundChannel)
 				end
 			end
 		end
@@ -1928,7 +1932,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 	aura.HideRequest = false
 end
 
--- This needs to be a standalone function! 
+-- This needs to be a standalone function!
 function PowaAuras:InitialiseFrame(aura, frame)
 	frame:SetAlpha(math.min(aura.alpha, 0.99))
 	--[[local Nameplates = { }
@@ -2305,11 +2309,15 @@ function PowaAuras:UpdateAura(aura, elapsed)
 					end
 					PlaySoundFile(pathToSound, PowaMisc.SoundChannel)
 				elseif aura.soundend > 0 then
-					if self.Sound[aura.soundend] and string.len(self.Sound[aura.soundend]) > 0 then
-						if string.find(self.Sound[aura.soundend], "%.") then
-							PlaySoundFile(PowaGlobalMisc.PathToSounds..self.Sound[aura.soundend], PowaMisc.SoundChannel)
-						else
-							PlaySound(self.Sound[aura.soundend], PowaMisc.SoundChannel)
+					if aura.soundend > 30 then
+						if self.SoundCustom[aura.soundend][1] and string.len(self.SoundCustom[aura.soundend][1]) > 0 then
+							if string.find(self.SoundCustom[aura.soundend][1], "%.") then
+								PlaySoundFile(PowaGlobalMisc.PathToSounds .. self.SoundCustom[aura.soundend][1], PowaMisc.SoundChannel)
+							end
+						end
+					else
+						if self.Sound[aura.soundend][2] then
+							PlaySound(self.Sound[aura.soundend][2], PowaMisc.SoundChannel)
 						end
 					end
 				end
@@ -2408,7 +2416,7 @@ function PowaAuras:UpdateAuraAnimation(aura, elapsed, frame)
 end
 
 function PowaAuras_GlobalTrigger(auraType)
-	if PowaAuras.AurasByType[auraType] then 
+	if PowaAuras.AurasByType[auraType] then
 		for index, auraid in ipairs(PowaAuras.AurasByType[auraType]) do
 			if PowaAuras.Auras[auraid]:ShouldShow() then
 				local shouldShow = PowaAuras:CheckMultiple(PowaAuras.Auras[auraid], "", nil)

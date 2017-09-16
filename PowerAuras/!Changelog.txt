@@ -7,6 +7,9 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.29.10**
+* Fixed an issue with sounds.
+
 **4.29.9**
 * Updated for 7.3.0.
 
