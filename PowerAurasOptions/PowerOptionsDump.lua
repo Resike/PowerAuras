@@ -18,8 +18,8 @@ local GetBuildInfo = GetBuildInfo
 local GetContainerItemInfo = GetContainerItemInfo
 local GetContainerItemLink = GetContainerItemLink
 local GetContainerNumSlots = GetContainerNumSlots
-local GetCurrentMapContinent = GetCurrentMapContinent
-local GetCurrentMapZone = GetCurrentMapZone
+--local GetCurrentMapContinent = GetCurrentMapContinent
+--local GetCurrentMapZone = GetCurrentMapZone
 local GetInventoryItemCooldown = GetInventoryItemCooldown
 local GetInventoryItemLink = GetInventoryItemLink
 local GetInventorySlotInfo = GetInventorySlotInfo
@@ -30,12 +30,12 @@ local GetNumGroupMembers = GetNumGroupMembers
 local GetNumShapeshiftForms = GetNumShapeshiftForms
 local GetNumSubgroupMembers = GetNumSubgroupMembers
 local GetNumTrackingTypes = GetNumTrackingTypes
-local GetPlayerMapPosition = GetPlayerMapPosition
+--local GetPlayerMapPosition = GetPlayerMapPosition
 local GetRaidRosterInfo = GetRaidRosterInfo
 local GetRealmName = GetRealmName
 local GetRealZoneText = GetRealZoneText
 local GetRuneCooldown = GetRuneCooldown
-local GetRuneType = GetRuneType
+--local GetRuneType = GetRuneType
 local GetShapeshiftForm = GetShapeshiftForm
 local GetShapeshiftFormInfo = GetShapeshiftFormInfo
 local GetSpellBookItemName = GetSpellBookItemName
@@ -61,7 +61,7 @@ local IsUsableAction = IsUsableAction
 local IsUsableSpell = IsUsableSpell
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitArmor = UnitArmor
-local UnitAttackBothHands = UnitAttackBothHands
+--local UnitAttackBothHands = UnitAttackBothHands
 local UnitAttackPower = UnitAttackPower
 local UnitAttackSpeed = UnitAttackSpeed
 local UnitAura = UnitAura
@@ -92,12 +92,12 @@ local UnitIsGhost = UnitIsGhost
 local UnitIsGroupLeader = UnitIsGroupLeader
 local UnitIsPlayer = UnitIsPlayer
 local UnitIsPVP = UnitIsPVP
-local UnitIsTapped = UnitIsTapped
-local UnitIsTappedByPlayer = UnitIsTappedByPlayer
+--local UnitIsTapped = UnitIsTapped
+--local UnitIsTappedByPlayer = UnitIsTappedByPlayer
 local UnitIsTrivial = UnitIsTrivial
 local UnitLevel = UnitLevel
-local UnitMana = UnitMana
-local UnitManaMax = UnitManaMax
+--local UnitMana = UnitMana
+--local UnitManaMax = UnitManaMax
 local UnitName = UnitName
 local UnitOnTaxi = UnitOnTaxi
 local UnitPlayerOrPetInParty = UnitPlayerOrPetInParty
@@ -107,10 +107,10 @@ local UnitPowerMax = UnitPowerMax
 local UnitPowerType = UnitPowerType
 local UnitPVPName = UnitPVPName
 local UnitRace = UnitRace
-local UnitRangedAttack = UnitRangedAttack
+--local UnitRangedAttack = UnitRangedAttack
 local UnitRangedAttackPower = UnitRangedAttackPower
 local UnitRangedDamage = UnitRangedDamage
-local UnitResistance = UnitResistance
+--local UnitResistance = UnitResistance
 local UnitSex = UnitSex
 local UnitStat = UnitStat
 local UnitThreatSituation = UnitThreatSituation
@@ -153,9 +153,9 @@ function PowaAurasOptions:Dump_Safe()
 	-- Realm
 	PowaState["Realm"] = GetRealmName()
 	-- CurrentMapZone
-	PowaState["CurrentMapZone"] = GetCurrentMapZone()
+	--PowaState["CurrentMapZone"] = GetCurrentMapZone()
 	-- CurrentMapContinent
-	PowaState["CurrentMapContinent"] = GetCurrentMapContinent()
+	--PowaState["CurrentMapContinent"] = GetCurrentMapContinent()
 	--ActiveTalentGroup
 	PowaState["ActiveTalentGroup"] = GetSpecialization()
 	-- IsInInstance
@@ -177,7 +177,7 @@ function PowaAurasOptions:Dump_Safe()
 	-- TargetTarget
 	PowaState["targettarget"] = self:GetUnitInfo("targettarget")
 	--ComboPoints
-	PowaState["ComboPoints"] = {player = UnitPower("player", SPELL_POWER_COMBO_POINTS), vehicle = UnitPower("vehicle", SPELL_POWER_COMBO_POINTS)}
+	PowaState["ComboPoints"] = {player = UnitPower("player", Enum.PowerType.ComboPoints), vehicle = UnitPower("vehicle", Enum.PowerType.ComboPoints)}
 	-- Weapon Enchant
 	local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo()
 	PowaState.WeaponEnchant = {hasMainHandEnchant = hasMainHandEnchant, mainHandExpiration = mainHandExpiration, mainHandCharges = mainHandCharges, hasOffHandEnchant = hasOffHandEnchant, offHandExpiration = offHandExpiration, offHandCharges = offHandCharges}
@@ -335,7 +335,7 @@ function PowaAurasOptions:Dump_Safe()
 	-- Tracking
 	PowaState.NumTrackingTypes = GetNumTrackingTypes()
 	PowaState.Tracking = { }
-	for i = 1, PowaState.NumTrackingTypes do 
+	for i = 1, PowaState.NumTrackingTypes do
 		local name, texture, active, category = GetTrackingInfo(i)
 		PowaState.Tracking[i] = { Name = name, Texture = texture, Active = active, Category = category}
 	end
@@ -414,8 +414,8 @@ function PowaAurasOptions:GetUnitInfo(unit)
 	UnitInfo["CanAttack"] = UnitCanAttack(unit, "player")
 	UnitInfo["CanBeAttacked"] = UnitCanAttack("player", unit)
 	UnitInfo["CanCooperate"] = UnitCanCooperate("player", unit)
-	local X, Y = GetPlayerMapPosition(unit)
-	UnitInfo["Pos"] = {X = X, Y = Y}
+	--local X, Y = GetPlayerMapPosition(unit)
+	--UnitInfo["Pos"] = {X = X, Y = Y}
 	UnitInfo["InteractDistance"] = {[1] = CheckInteractDistance(unit, 1), [2] = CheckInteractDistance(unit, 2), [3] = CheckInteractDistance(unit, 3), [4] = CheckInteractDistance(unit, 4)}
 	UnitInfo["InParty"] = UnitInParty(unit)
 	UnitInfo["UnitInRaid"] = UnitInRaid(unit)
@@ -467,12 +467,12 @@ function PowaAurasOptions:GetUnitInfo(unit)
 	end
 	local ResIndex = {[0] = "Physical", [1] = "Holy", [2] = "Fire", [3] = "Nature", [4] = "Frost", [5] = "Shadow", [6] = "Arcane"}
 	UnitInfo.Resistances = { }
-	for Index = 0, 6 do
+	--[[for Index = 0, 6 do
 		local base, total, bonus, malus = UnitResistance(unit, Index)
 		UnitInfo["Resistances"][Index] = {Type = ResIndex[Index], Base = base, Total = total, Bonus = bonus, Malus = malus}
-	end
+	end--]]
 	UnitInfo["Armor"] = UnitArmor(unit)
-	UnitInfo["AttackBothHands"] = UnitAttackBothHands(unit)
+	--UnitInfo["AttackBothHands"] = UnitAttackBothHands(unit)
 	UnitInfo["AttackPower"] = UnitAttackPower(unit)
 	UnitInfo["AttackSpeed"] = UnitAttackSpeed(unit)
 	UnitInfo["Classification"] = UnitClassification(unit)
@@ -488,12 +488,12 @@ function PowaAurasOptions:GetUnitInfo(unit)
 	UnitInfo["IsRaidLeader"] = UnitIsGroupLeader(unit)
 	UnitInfo["IsPlayer"] = UnitIsPlayer(unit)
 	--UnitInfo["IsEliteMob"] = UnitIsPlusMob(unit)
-	UnitInfo["IsTapped"] = UnitIsTapped(unit)
-	UnitInfo["IsTappedByPlayer"] = UnitIsTappedByPlayer(unit)
+	--UnitInfo["IsTapped"] = UnitIsTapped(unit)
+	--UnitInfo["IsTappedByPlayer"] = UnitIsTappedByPlayer(unit)
 	UnitInfo["IsTrivial"] = UnitIsTrivial(unit)
 	UnitInfo["InVehicle"] = UnitInVehicle(unit)
-	UnitInfo["Mana"] = UnitMana(unit)
-	UnitInfo["ManaMax"] = UnitManaMax(unit)
+	--UnitInfo["Mana"] = UnitMana(unit)
+	--UnitInfo["ManaMax"] = UnitManaMax(unit)
 	UnitInfo["Power"] = { }
 	UnitInfo["PowerMax"] = {}
 	UnitInfo.Power.Default = UnitPower(unit)
@@ -510,12 +510,12 @@ function PowaAurasOptions:GetUnitInfo(unit)
 	for runeId = 1, 6 do
 		local runeStart, runeDuration, runeReady = GetRuneCooldown(runeId)
 		UnitInfo.RuneCooldown[runeId] = {Start = runeStart, Duration = runeDuration, RuneReady = runeReady}
-		UnitInfo.RuneType[runeId] = GetRuneType(runeId)
+		--UnitInfo.RuneType[runeId] = GetRuneType(runeId)
 	end
 	UnitInfo["OnTaxi"] = UnitOnTaxi(unit)
 	UnitInfo["PVPName"] = UnitPVPName(unit)
 	UnitInfo["Race"] = UnitRace(unit)
-	UnitInfo["RangedAttack"] = UnitRangedAttack(unit)
+	--UnitInfo["RangedAttack"] = UnitRangedAttack(unit)
 	UnitInfo["RangedAttackPower"] = UnitRangedAttackPower(unit)
 	UnitInfo["RangedDamage"] = UnitRangedDamage(unit)
 	Name, Realm = UnitName(unit.."Target")

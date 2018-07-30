@@ -80,25 +80,9 @@ function cPowaStacks:ShowValue(aura, newvalue)
 		return
 	end
 	if PowaAuras.ModTest then
-		if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
-			newvalue = math.random(0, 9)
-		else
-			newvalue = math.random(0, 99)
-		end
+		newvalue = math.random(0, 99)
 	end
-	if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
-		newvalue = tonumber(format("%.0f", tostring(newvalue * 10)))
-	--[[elseif aura.PowerType == SPELL_POWER_LUNAR_ECLIPSE or aura.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
-		eclipseframe:Show()
-		texture:SetParent(frame)
-		eclipseframe:SetPoint("LEFT", frame, "RIGHT", 0, 0)
-		local direction = GetEclipseDirection()
-		if direction then
-			texture:SetTexCoord(unpack(ECLIPSE_MARKER_COORDS[direction]))
-		end]]
-	else
-		newvalue = tonumber(format("%.0f", tostring(newvalue)))
-	end
+	newvalue = tonumber(format("%.0f", tostring(newvalue)))
 	local texcount = #frame.textures
 	local unitcount = newvalue == 0 and 1 or (math.floor(math.log10(newvalue)) + 1)
 	local tStep = PowaAuras.Tstep

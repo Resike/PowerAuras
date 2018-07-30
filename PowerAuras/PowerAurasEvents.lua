@@ -365,7 +365,7 @@ function PowaAuras:UNIT_MAXHEALTH(...)
 	self:SetCheckResource("Health", unit)
 end
 
-function PowaAuras:UNIT_POWER(...)
+function PowaAuras:UNIT_POWER_UPDATE(...)
 	local unit, resourceType = ...
 	self:CheckPower(unit, resourceType)
 
@@ -478,7 +478,7 @@ function PowaAuras:UNIT_SPELLCAST_SUCCEEDED(...)
 		self.DoCheck.All = true
 	end
 	if self.DebugEvents then
-		self:DisplayText("UNIT_SPELLCAST_SUCCEEDED ",unit, " ", spell)
+		self:DisplayText("UNIT_SPELLCAST_SUCCEEDED ", unit, " ", spell)
 	end
 	-- Druid shapeshift special case
 	if unit == "player" then
@@ -841,7 +841,11 @@ function PowaAuras.StringEnds(String, End)
 	return End == '' or string.sub(String, - string.len(End)) == End
 end
 
-function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED(...)
+function PowaAuras:COMBAT_LOG_EVENT_UNFILTERED()
+	PowaAuras:CombatLogEvent(CombatLogGetCurrentEventInfo())
+end
+
+function PowaAuras:CombatLogEvent(...)
 	if self.ModTest then
 		return
 	end

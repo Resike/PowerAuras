@@ -13,9 +13,7 @@ local table = table
 local wipe = wipe
 
 local GetTime = GetTime
-local IsAddonMessagePrefixRegistered = IsAddonMessagePrefixRegistered
-local RegisterAddonMessagePrefix = RegisterAddonMessagePrefix
-local SendAddonMessage = SendAddonMessage
+local C_ChatInfo = C_ChatInfo
 
 PowaComms = {
 	Handlers = { },
@@ -34,11 +32,11 @@ PowaComms = {
 PowaAurasOptions["Comms"] = PowaComms
 
 function PowaComms:Register()
-	if not RegisterAddonMessagePrefix then
+	if not C_ChatInfo.RegisterAddonMessagePrefix then
 		return
 	end
-	RegisterAddonMessagePrefix("POWA")
-	if not IsAddonMessagePrefixRegistered("POWA") then
+	C_ChatInfo.RegisterAddonMessagePrefix("POWA")
+	if not C_ChatInfo.IsAddonMessagePrefixRegistered("POWA") then
 		if PowaMisc.Debug then
 			PowaAurasOptions:ShowText("PowaComms:Register() |cFFFF0000failed!|r")
 		end
@@ -85,7 +83,7 @@ function PowaComms:SendAddonMessage(instruction, data, to, segment, total)
 	end
 	if length <= 200 then
 		data = "<"..instruction..";"..(segment or 1)..";"..(total or 1).."/>"..data
-		SendAddonMessage("POWA", data, "WHISPER", to)
+		C_ChatInfo.SendAddonMessage("POWA", data, "WHISPER", to)
 	elseif not self.SenderLock or GetTime() > self.SenderTimeout then
 		self.SenderInstruction = instruction
 		self.SenderStore = data

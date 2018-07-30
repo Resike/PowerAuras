@@ -7,6 +7,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.30.0**
+* Updated for 8.0.1.
+* Fixed issues with Arcane Charges.
+
 **4.29.11**
 * Fixed GCD issues.
 

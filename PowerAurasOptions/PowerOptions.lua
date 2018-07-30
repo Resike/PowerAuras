@@ -2150,37 +2150,19 @@ function PowaAurasOptions:SetThresholdSlider(aura)
 	end
 	local min, max = PowaBarThresholdSlider:GetMinMaxValues()
 	if max > aura.MaxRange then
-		if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
-			PowaBarThresholdSlider:SetValueStep(0.1)
-			PowaBarThresholdSlider:SetValue(aura.threshold)
-			PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
-			PowaBarThresholdSliderLow:SetText("0.0"..aura.RangeType)
-			PowaBarThresholdSliderHigh:SetText(aura.MaxRange..".0"..aura.RangeType)
-			PowaBarThresholdSliderEditBox:SetText(format("%.1f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
-		else
-			PowaBarThresholdSlider:SetValue(aura.threshold)
-			PowaBarThresholdSlider:SetValueStep(1)
-			PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
-			PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
-			PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
-			PowaBarThresholdSliderEditBox:SetText(format("%.0f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
-		end
+		PowaBarThresholdSlider:SetValue(aura.threshold)
+		PowaBarThresholdSlider:SetValueStep(1)
+		PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
+		PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
+		PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
+		PowaBarThresholdSliderEditBox:SetText(format("%.0f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
 	else
-		if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
-			PowaBarThresholdSlider:SetValueStep(0.1)
-			PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
-			PowaBarThresholdSlider:SetValue(aura.threshold)
-			PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
-			PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
-			PowaBarThresholdSliderEditBox:SetText(format("%.1f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
-		else
-			PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
-			PowaBarThresholdSlider:SetValue(aura.threshold)
-			PowaBarThresholdSlider:SetValueStep(1)
-			PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
-			PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
-			PowaBarThresholdSliderEditBox:SetText(format("%.0f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
-		end
+		PowaBarThresholdSlider:SetMinMaxValues(0, aura.MaxRange)
+		PowaBarThresholdSlider:SetValue(aura.threshold)
+		PowaBarThresholdSlider:SetValueStep(1)
+		PowaBarThresholdSliderLow:SetText("0"..aura.RangeType)
+		PowaBarThresholdSliderHigh:SetText(aura.MaxRange..aura.RangeType)
+		PowaBarThresholdSliderEditBox:SetText(format("%.0f", (PowaBarThresholdSlider:GetValue()))..aura.RangeType)
 	end
 end
 
@@ -2830,13 +2812,8 @@ function PowaAurasOptions:BarThresholdSliderChanged(slider, value)
 	end
 	-- Don't use ~= checker!
 	local aura = self.Auras[self.CurrentAuraId]
-	if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
-		aura.threshold = tonumber(format("%.1f", value))
-		PowaBarThresholdSliderEditBox:SetText(format("%.1f", value)..aura.RangeType)
-	else
-		aura.threshold = value
-		PowaBarThresholdSliderEditBox:SetText(format("%.0f", value)..aura.RangeType)
-	end
+	aura.threshold = value
+	PowaBarThresholdSliderEditBox:SetText(format("%.0f", value)..aura.RangeType)
 end
 
 -- Need some revamp here
@@ -5924,35 +5901,19 @@ function PowaAurasOptions.SliderEditBoxChanged(self)
 		end
 	elseif slider == PowaBarThresholdSlider then
 		local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
-		--[[if aura.PowerType == SPELL_POWER_BURNING_EMBERS then
-			local text = tonumber(self:GetText())
-			local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
-			if text then
-				slider:SetValue(text)
-				self:SetText(format("%.1f", (slider:GetValue()))..aura.RangeType)
-				local sliderlow, sliderhigh = slider:GetMinMaxValues()
-				if text <= sliderlow or text >= sliderhigh then
-					self:SetText(format("%.1f", slider:GetValue())..aura.RangeType)
-				end
-			else
-				self:SetText(format("%.1f", slider:GetValue())..aura.RangeType)
-			end
-			PowaBarThresholdSliderEditBox:SetText(format("%.1f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
-		else]]
-			local text = tonumber(self:GetText())
-			local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
-			if text then
-				slider:SetValue(text)
-				self:SetText(format("%.0f", (slider:GetValue()))..aura.RangeType)
-				local sliderlow, sliderhigh = slider:GetMinMaxValues()
-				if text <= sliderlow or text >= sliderhigh then
-					self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
-				end
-			else
+		local text = tonumber(self:GetText())
+		local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
+		if text then
+			slider:SetValue(text)
+			self:SetText(format("%.0f", (slider:GetValue()))..aura.RangeType)
+			local sliderlow, sliderhigh = slider:GetMinMaxValues()
+			if text <= sliderlow or text >= sliderhigh then
 				self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
 			end
-			PowaBarThresholdSliderEditBox:SetText(format("%.0f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
-		--end
+		else
+			self:SetText(format("%.0f", slider:GetValue())..aura.RangeType)
+		end
+		PowaBarThresholdSliderEditBox:SetText(format("%.0f", PowaBarThresholdSlider:GetValue())..aura.RangeType)
 	elseif tonumber(postfix) == nil and slider == PowaBarAuraRotateSlider then
 		local text = tonumber(string.sub(self:GetText(), 1, - 2))
 		if text == nil then

@@ -1802,17 +1802,6 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		end
 	end
 	if aura.customtex or aura.wowtex or aura.owntex or (not aura.customtex and not aura.wowtex and not aura.model and not aura.modelcustom and not aura.textaura and not aura.owntex) then
-		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord()
-		local x = (math.sqrt(2) - 1) / 2
-		if aura.rotate == 0 or aura.rotate == 360 then
-			texture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x)
-		elseif aura.rotate == 90 then
-			texture:SetTexCoord(ULx - x, ULy + x, LLx + x, LLy + x, URx - x, URy - x, LRx + x, LRy - x)
-		elseif aura.rotate == 180 then
-			texture:SetTexCoord(ULx - x, ULy - x, LLx - x, LLy + x, URx + x, URy - x, LRx + x, LRy + x)
-		elseif aura.rotate == 270 then
-			texture:SetTexCoord(ULx + x, ULy - x, LLx - x, LLy - x, URx + x, URy + x, LRx - x, LRy + x)
-		end
 		if aura.customtex then
 			if not string.find(aura.customname, "%.") then
 				if aura.roundicons then
@@ -1827,15 +1816,14 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		end
 	end
 	if not aura.textaura and not aura.model and not aura.modelcustom then
-		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = texture:GetTexCoord()
 		if aura.symetrie == 1 then
-			texture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy) -- Inverse X
+			texture:SetTexCoord(1, 0, 0, 1) -- Inverse X
 		elseif aura.symetrie == 2 then
-			texture:SetTexCoord(LLx, LLy, ULx, ULy, LRx, LRy, URx, URy) -- Inverse Y
+			texture:SetTexCoord(0, 1, 1, 0) -- Inverse Y
 		elseif aura.symetrie == 3 then
-			texture:SetTexCoord(LRx, LRy, URx, URy, LLx, LLy, ULx, ULy) -- Inverse XY
+			texture:SetTexCoord(1, 0, 1, 0) -- Inverse XY
 		else
-			texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy) -- Normal
+			texture:SetTexCoord(0, 1, 0, 1) -- Normal
 		end
 	end
 	if aura.textaura then
@@ -1855,8 +1843,8 @@ function PowaAuras:UpdateAuraVisuals(aura)
 			frame.baseH = height * aura.size * (2 - aura.torsion)
 			frame.baseL = width * aura.size * aura.torsion
 		else
-			frame.baseH = math.sqrt(2) * height * aura.size * (2 - aura.torsion)
-			frame.baseL = math.sqrt(2) * width * aura.size * aura.torsion
+			frame.baseH = height * aura.size * (2 - aura.torsion)
+			frame.baseL = width * aura.size * aura.torsion
 		end
 	end
 	self:InitialiseFrame(aura, frame)
@@ -2115,17 +2103,6 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 		end
 	end
 	if aura.customtex or aura.wowtex or aura.owntex or (not aura.customtex and not aura.wowtex and not aura.model and not aura.modelcustom and not aura.textaura and not aura.owntex) then
-		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord()
-		local x = (math.sqrt(2) - 1) / 2
-		if aura.rotate == 0 or aura.rotate == 360 then
-			secondaryTexture:SetTexCoord(ULx + x, ULy + x, LLx + x, LLy - x, URx - x, URy + x, LRx - x, LRy - x)
-		elseif aura.rotate == 90 then
-			secondaryTexture:SetTexCoord(ULx - x, ULy + x, LLx + x, LLy + x, URx - x, URy - x, LRx + x, LRy - x)
-		elseif aura.rotate == 180 then
-			secondaryTexture:SetTexCoord(ULx - x, ULy - x, LLx - x, LLy + x, URx + x, URy - x, LRx + x, LRy + x)
-		elseif aura.rotate == 270 then
-			secondaryTexture:SetTexCoord(ULx + x, ULy - x, LLx - x, LLy - x, URx + x, URy + x, LRx - x, LRy + x)
-		end
 		if aura.customtex then
 			if not string.find(aura.customname, "%.") then
 				if aura.roundicons then
@@ -2140,15 +2117,14 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 		end
 	end
 	if not aura.textaura and not aura.model and not aura.modelcustom then
-		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = secondaryTexture:GetTexCoord()
 		if aura.symetrie == 1 then
-			secondaryTexture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy) -- Inverse X
+			texture:SetTexCoord(1, 0, 0, 1) -- Inverse X
 		elseif aura.symetrie == 2 then
-			secondaryTexture:SetTexCoord(LLx, LLy, ULx, ULy, LRx, LRy, URx, URy) -- Inverse Y
+			texture:SetTexCoord(0, 1, 1, 0) -- Inverse Y
 		elseif aura.symetrie == 3 then
-			secondaryTexture:SetTexCoord(LRx, LRy, URx, URy, LLx, LLy, ULx, ULy) -- Inverse XY
+			texture:SetTexCoord(1, 0, 1, 0) -- Inverse XY
 		else
-			secondaryTexture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy) -- Normal
+			texture:SetTexCoord(0, 1, 0, 1) -- Normal
 		end
 	end
 	if aura.textaura then

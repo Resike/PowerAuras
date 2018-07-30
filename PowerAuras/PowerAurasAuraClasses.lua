@@ -40,7 +40,6 @@ local GetNumTrackingTypes = GetNumTrackingTypes
 local GetPetActionInfo = GetPetActionInfo
 local GetPVPTimer = GetPVPTimer
 local GetRuneCooldown = GetRuneCooldown
-local GetRuneType = GetRuneType
 local GetShapeshiftForm = GetShapeshiftForm
 local GetShapeshiftFormInfo = GetShapeshiftFormInfo
 local GetSpecialization = GetSpecialization
@@ -1169,7 +1168,7 @@ function cPowaAura:GetSpellFromMatch(spellMatch)
 	local _, _, spellId = string.find(spellMatch, "%[(%d+)%]")
 	if spellId then
 		spellId = tonumber(spellId)
-		local spellName, rank, spellIcon = GetSpellInfo(spellId)
+		local spellName, spellIcon = GetSpellInfo(spellId)
 		if rank then
 			spellName = spellName.."("..rank..")"
 		end
@@ -1632,7 +1631,7 @@ cPowaBuffBase = PowaClass(cPowaAura, {CanHaveTimer = true, CanHaveStacks = true,
 
 function cPowaBuffBase:AddEffectAndEvents()
 	PowaAuras.Events.UNIT_AURA = true
-	PowaAuras.Events.UNIT_AURASTATE = true
+	--PowaAuras.Events.UNIT_AURASTATE = true
 	if not self.target and not self.targetfriend and not self.party and not self.raid and not self.groupOrSelf and not self.focus and not self.optunitn then -- Self buffs
 		table.insert(PowaAuras.AurasByType.Buffs, self.id)
 	end
@@ -1663,13 +1662,26 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		PowaAuras:DisplayText("IsPresent on ", unit," buffid = ", s," type = ", self.buffAuraType)
 	end
 	local _, auraName, auraTexture, count, expirationTime, caster, auraId
-	if string.find(textToCheck, "%\[") or string.find(textToCheck, "%\]") then
-		textToCheck = strtrim(textToCheck, "%\[%\]")
+	if string.find(textToCheck, "%\\[") or string.find(textToCheck, "%\\]") then
+		textToCheck = strtrim(textToCheck, "%\\[%\\]")
 	end
 	if self.exact and not tonumber(textToCheck) then
-		auraName, _, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, textToCheck, nil, self.buffAuraType)
+		local i = 1
+		local index
+		while UnitAura(unit, i) do
+			local name = UnitAura(unit, i)
+			if name == textToCheck then
+				index = i
+				break
+			end
+			i = i + 1
+		end
+		if not index then
+			return nil
+		end
+		auraName, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, index, self.buffAuraType)
 	else
-		auraName, _, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, s, self.buffAuraType)
+		auraName, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, s, self.buffAuraType)
 	end
 	if auraName == nil then
 		return nil
@@ -2057,7 +2069,7 @@ function cPowaTypeBuff:IsPresent(target, z)
 	if self.mine then
 		removeable = 1
 	end
-	local name, _, texture, count, typeBuff, _, expirationTime, _, _, _, spellId = UnitBuff(target, z, removeable)
+	local name, texture, count, typeBuff, _, expirationTime, _, _, _, spellId = UnitBuff(target, z, removeable)
 	if not name or not spellId then
 		return nil
 	end
@@ -2124,7 +2136,7 @@ function cPowaTypeDebuff:IsPresent(target, z)
 	if self.mine then
 		removeable = 1
 	end
-	local name, _, texture, count, typeDebuff, _, expirationTime, _, _, _, spellId = UnitDebuff(target, z, removeable)
+	local name, texture, count, typeDebuff, _, expirationTime, _, _, _, spellId = UnitDebuff(target, z, removeable)
 	if not name or not spellId then
 		return nil
 	end
@@ -2259,7 +2271,7 @@ end
 
 function cPowaSpecialSpellBase:AddEffectAndEvents()
 	PowaAuras.Events.UNIT_AURA = true
-	PowaAuras.Events.UNIT_AURASTATE = true
+	--PowaAuras.Events.UNIT_AURASTATE = true
 	if not self.target and not self.focus then -- Any enemy casts
 		table.insert(PowaAuras.AurasByType[self.AuraType.."Spells"], self.id)
 		PowaAuras.Events.UNIT_TARGET = true
@@ -2293,7 +2305,7 @@ function cPowaStealableSpell:CheckUnit(unit, targetOf)
 			PowaAuras:Message("Match = ", pword)
 		end
 		for i = 1, 40 do
-			local auraName, _, auraTexture, count, typeDebuff, _, expirationTime, _, isStealable, _, auraId = UnitAura(unit, i)
+			local auraName, auraTexture, count, typeDebuff, _, expirationTime, _, isStealable, _, auraId = UnitAura(unit, i)
 			if self.Debug then
 				PowaAuras:Message("Slot = ", i, " auraName = ", auraName, " (", auraId, ")" )
 			end
@@ -2346,7 +2358,7 @@ function cPowaPurgeableSpell:CheckUnit(unit, targetOf)
 			PowaAuras:Message("Match = ", pword )
 		end
 		for i = 1, 40 do
-			local auraName, _, auraTexture, count, typeDebuff, _, expirationTime, _, _, _, auraId = UnitAura(unit, i, "HELPFUL")
+			local auraName, auraTexture, count, typeDebuff, _, expirationTime, _, _, _, auraId = UnitAura(unit, i, "HELPFUL")
 			if self.Debug then
 				PowaAuras:Message("Slot = ", i, " auraName = ", auraName, " typeDebuff = ", typeDebuff, " (", auraId, ")")
 			end
@@ -2544,7 +2556,7 @@ cPowaCombo.TooltipOptions = {r = 1.0, g = 1.0, b = 0.0, showBuffName = true}
 
 function cPowaCombo:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)
-	PowaAuras.Events.UNIT_POWER = true
+	PowaAuras.Events.UNIT_POWER_UPDATE = true
 	PowaAuras.Events.UNIT_POWER_FREQUENT = true
 	--PowaAuras.Events.PLAYER_TARGET_CHANGED = true
 	if PowaAuras.playerclass == "DRUID" then
@@ -2568,7 +2580,7 @@ function cPowaCombo:CheckIfShouldShow(giveReason)
 		return nil, PowaAuras.Text.nomReasonNoUseCombo
 	end
 	PowaAuras:Debug("Check Combos")
-	local nCombo = UnitPower("player", SPELL_POWER_COMBO_POINTS)
+	local nCombo = UnitPower("player", Enum.PowerType.ComboPoints)
 	local combo = tostring(nCombo)
 	if self:MatchText(combo, self.buffname) then
 		if self.Stacks then
@@ -2727,7 +2739,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		buffname = self.buffname
 	end
 	local spellName, spellIcon, spellId
-	spellName, _, spellIcon = GetSpellInfo(buffname)
+	spellName, spellIcon = GetSpellInfo(buffname)
 	local spellLink = GetSpellLink(buffname)
 	if spellLink then
 		spellId = string.match(spellLink, "spell:(%d+)")
@@ -2740,7 +2752,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		PowaAuras:Message("spellIcon = ", spellIcon)
 	end
 	if self:IconIsRequired() then
-		local _, _, spellIcon = GetSpellInfo(spellName)
+		local _, spellIcon = GetSpellInfo(spellName)
 		self:SetIcon(spellIcon)
 	end
 	local cdstart, cdduration, enabled
@@ -3193,7 +3205,7 @@ function cPowaSpellLearned:CheckIfShouldShow(giveReason)
 		buffname = self.buffname
 	end
 	local spellName, spellIcon, spellId
-	spellName, _, spellIcon = GetSpellInfo(buffname)
+	spellName, spellIcon = GetSpellInfo(buffname)
 	local spellLink = GetSpellLink(buffname)
 	if spellLink then
 		spellId = string.match(spellLink, "spell:(%d+)")
@@ -3206,7 +3218,7 @@ function cPowaSpellLearned:CheckIfShouldShow(giveReason)
 		PowaAuras:Message("spellIcon = ", spellIcon)
 	end
 	if self:IconIsRequired() then
-		local _, _, spellIcon = GetSpellInfo(spellName)
+		local _, spellIcon = GetSpellInfo(spellName)
 		self:SetIcon(spellIcon)
 	end
 	local show = false
@@ -3299,7 +3311,7 @@ function cPowaAuraStats:AddEffectAndEvents()
 		PowaAuras.Events.UNIT_HEALTH = true
 		PowaAuras.Events.UNIT_MAXHEALTH = true
 	else
-		PowaAuras.Events.UNIT_POWER = true
+		PowaAuras.Events.UNIT_POWER_UPDATE = true
 		PowaAuras.Events.UNIT_POWER_FREQUENT = true
 		PowaAuras.Events.UNIT_MAXPOWER = true
 	end
@@ -3399,8 +3411,8 @@ cPowaMana.CheckBoxes = {["PowaTargetButton"] = 1, ["PowaTargetFriendButton"] = 1
 cPowaMana.TooltipOptions = {r = 0.2, g = 0.2, b = 1.0, showThreshold = true}
 
 function cPowaMana:Init()
-	if self.PowerType ~= SPELL_POWER_MANA then
-		self.PowerType = SPELL_POWER_MANA
+	if self.PowerType ~= Enum.PowerType.Mana then
+		self.PowerType = Enum.PowerType.Mana
 	end
 	cPowaAuraStats.Init(self)
 end
@@ -3434,7 +3446,7 @@ cPowaPowerType.ShowOptions = {["PowaBarThresholdSlider"] = 1, ["PowaThresholdInv
 function cPowaPowerType:Init()
 	-- Fix for happiness auras
 	if self.PowerType == 4 or self.PowerType == - 1 then
-		self.PowerType = SPELL_POWER_RAGE
+		self.PowerType = Enum.PowerType.Rage
 	end
 	-- Set the ranges properly
 	cPowaAuraStats.Init(self)
@@ -3462,12 +3474,6 @@ function cPowaPowerType:UnitValue(unit)
 	local power
 	if not self.PowerType or self.PowerType == - 1 then
 		power = UnitPower(unit)
-	--[[elseif self.PowerType == SPELL_POWER_LUNAR_ECLIPSE then
-		power = math.max(- UnitPower(unit, SPELL_POWER_ECLIPSE), 0)
-	elseif self.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
-		power = math.max(UnitPower(unit, SPELL_POWER_ECLIPSE))
-	elseif self.PowerType == SPELL_POWER_BURNING_EMBERS then
-		power = UnitPower(unit, self.PowerType, true) / 10]]
 	else
 		power = UnitPower(unit, self.PowerType)
 	end
@@ -3484,8 +3490,6 @@ function cPowaPowerType:UnitValueMax(unit)
 	local maxpower
 	if not self.PowerType or self.PowerType == - 1 then
 		maxpower = UnitPowerMax(unit)
-	--[[elseif self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE then
-		maxpower = 100]]
 	else
 		maxpower = UnitPowerMax(unit, self.PowerType)
 	end
@@ -3497,7 +3501,7 @@ end
 
 function cPowaPowerType:IsCorrectPowerType(unit)
 	-- Check for correct secondary resource
-	if (self.PowerType == SPELL_POWER_HOLY_POWER and PowaAuras.playerclass == "PALADIN") or (self.PowerType == SPELL_POWER_ALTERNATE_POWER) or (self.PowerType == SPELL_POWER_RUNIC_POWER and PowaAuras.playerclass == "DEATHKNIGHT") or (self.PowerType == SPELL_POWER_CHI and PowaAuras.playerclass == "MONK") --[[or (self.PowerType == SPELL_POWER_SHADOW_ORBS and PowaAuras.playerclass == "PRIEST")]] or (self.PowerType == SPELL_POWER_SOUL_SHARDS --[[or self.PowerType == SPELL_POWER_BURNING_EMBERS or self.PowerType == SPELL_POWER_DEMONIC_FURY)]] and PowaAuras.playerclass == "WARLOCK") --[[or ((self.PowerType == SPELL_POWER_LUNAR_ECLIPSE or self.PowerType == SPELL_POWER_SOLAR_ECLIPSE) and PowaAuras.playerclass == "DRUID")]] then
+	if (self.PowerType == Enum.PowerType.ArcaneCharges and PowaAuras.playerclass == "MAGE") or (self.PowerType == Enum.PowerType.HolyPower and PowaAuras.playerclass == "PALADIN") or (self.PowerType == Enum.PowerType.Alternate) or (self.PowerType == Enum.PowerType.RunicPower and PowaAuras.playerclass == "DEATHKNIGHT") or (self.PowerType == Enum.PowerType.Chi and PowaAuras.playerclass == "MONK") or (self.PowerType == Enum.PowerType.SoulShards and PowaAuras.playerclass == "WARLOCK") then
 		return true
 	end
 	local unitPowerType = UnitPowerType(unit)
@@ -3695,9 +3699,9 @@ function cPowaSpellAlert:CheckSpellName(unit, spellname, spellicon, endtime, spe
 		if spellicon == nil then
 			local _
 			if spellId ~= nil then
-				_, _, spellicon = GetSpellInfo(spellId)
+				_, spellicon = GetSpellInfo(spellId)
 			else
-				_, _, spellicon = GetSpellInfo(spellname)
+				_, spellicon = GetSpellInfo(spellname)
 			end
 		end
 		self:SetIcon(spellicon)
@@ -3740,9 +3744,9 @@ function cPowaSpellAlert:CheckUnit(unit)
 		spellname = PowaAuras.ExtraUnitEvent[unit]
 	else
 		local _
-		spellname, _, _, spellicon, _, endtime, _, _, notInterruptible = UnitCastingInfo(unit)
+		spellname, _, spellicon, _, endtime, _, _, notInterruptible = UnitCastingInfo(unit)
 		if not spellname then
-			spellname, _, _, spellicon, _, endtime, _, notInterruptible = UnitChannelInfo(unit)
+			spellname, _, spellicon, _, endtime, _, notInterruptible = UnitChannelInfo(unit)
 		end
 	end
 	-- Not casting
@@ -3953,7 +3957,7 @@ function cPowaTotems:CheckIfShouldShow(giveReason)
 			end
 			if totemName ~= nil and totemName ~= "" then
 				if self:IconIsRequired() then
-					local _, _, spellIcon = GetSpellInfo(totemName)
+					local _, spellIcon = GetSpellInfo(totemName)
 					self:SetIcon(spellIcon)
 				end
 				if self.Timer then
@@ -3976,7 +3980,7 @@ function cPowaTotems:CheckIfShouldShow(giveReason)
 				local haveTotem, totemName, startTime, duration = GetTotemInfo(slot)
 				if self:MatchText(totemName, pword) then
 					if self:IconIsRequired() then
-						local _, _, spellIcon = GetSpellInfo(totemName)
+						local _, spellIcon = GetSpellInfo(totemName)
 						self:SetIcon(spellIcon)
 					end
 					if self.Timer then
