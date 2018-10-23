@@ -543,18 +543,6 @@ function PowaAuras:RUNE_POWER_UPDATE(...)
 	self.DoCheck.CheckIt = true
 end
 
-function PowaAuras:RUNE_TYPE_UPDATE(...)
-	if self.ModTest then
-		return
-	end
-	local slot = ...
-	if self.DebugEvents then
-		self:DisplayText("RUNE_TYPE_UPDATE slot = ", slot, " class = ", self.playerclass)
-	end
-	self.DoCheck.Runes = true
-	self.DoCheck.CheckIt = true
-end
-
 function PowaAuras:PLAYER_FOCUS_CHANGED(...)
 	if self.ModTest then
 		return

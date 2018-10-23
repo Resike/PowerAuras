@@ -4138,7 +4138,6 @@ cPowaRunes.runesMissingIgnoreDeath = {[1] = 0, [2] = 0, [3] = 0}
 function cPowaRunes:AddEffectAndEvents()
 	table.insert(PowaAuras.AurasByType[self.AuraType], self.id)
 	PowaAuras.Events.RUNE_POWER_UPDATE = true
-	PowaAuras.Events.RUNE_TYPE_UPDATE = true
 end
 
 function cPowaRunes:GetRuneState()

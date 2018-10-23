@@ -151,6 +151,13 @@ function PowaAuras:DetermineRole(unit)
 		return "RoleRangeDps", "Preset"
 	elseif class == "MAGE" then
 		return "RoleRangeDps", "Preset"
+	elseif class == "PRIEST" then
+		local _, powerType = UnitPowerType(unit)
+		if powerType == "INSANITY" then
+			return "RoleRangeDps", "Preset"
+		else
+			return "RoleHealer", "Preset"
+		end
 	elseif class == "WARLOCK" then
 		return "RoleRangeDps", "Preset"
 	end
@@ -163,31 +170,21 @@ function PowaAuras:DetermineRole(unit)
 	end
 	if class == "DEATHKNIGHT" then
 		return "RoleMeleDps", "Guess"
-	elseif class == "PRIEST" then
-		--[[local _, _, buffExist = UnitBuff(unit, self.Spells.SHADOWFORM)
-		if buffExist then
-			self.FixRoles[unitName] = "RoleRangeDps"
-			return "RoleRangeDps", "Guess"
-		end]]
-		return "RoleHealer", "Guess"
 	elseif class == "WARRIOR" then
 		return "RoleMeleDps", "Guess"
 	elseif class == "DRUID" then
 		local _, powerType = UnitPowerType(unit)
 		if powerType == "MANA" then
-			local _, _, buffExist = UnitBuff(unit, self.Spells.DRUID_SHIFT_MOONKIN)
-			if buffExist then
-				self.FixRoles[unitName] = "RoleRangeDps"
-				return "RoleRangeDps", "Guess"
-			else
-				return "RoleHealer", "Guess"
-			end
+			return "RoleHealer", "Guess"
 		elseif powerType == "RAGE" then
 			self.FixRoles[unitName] = "RoleTank"
 			return "RoleTank", "Guess"
 		elseif powerType == "ENERGY" then
 			self.FixRoles[unitName] = "RoleMeleDps"
 			return "RoleMeleDps", "Guess"
+		elseif powerType == "LUNAR_POWER" then
+			self.FixRoles[unitName] = "RoleRangeDps"
+			return "RoleRangeDps", "Guess"
 		end
 	elseif class == "PALADIN" then
 		if UnitStat(unit, 4) > UnitStat(unit, 1) then
