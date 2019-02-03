@@ -7,6 +7,9 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.30.2**
+* Updated for 8.1.0.
+
 **4.30.1**
 * Fixed issues with role determination.
 * Fixed issue with rune type events.
