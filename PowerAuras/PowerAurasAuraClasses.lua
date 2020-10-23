@@ -558,7 +558,7 @@ end
 function cPowaAura:CreateFrames()
 	local frame = self:GetFrame()
 	if frame == nil then
-		frame = CreateFrame("Frame", nil, UIParent)
+		frame = CreateFrame("Frame", nil, UIParent, BackdropTemplateMixin and "BackdropTemplate")
 		self:SetFrame(frame)
 		frame:SetFrameStrata(self.strata)
 		frame:Hide()

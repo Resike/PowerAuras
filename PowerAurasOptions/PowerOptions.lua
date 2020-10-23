@@ -1509,8 +1509,8 @@ function PowaAurasOptions:UpdateTimerOptions()
 		PowaBuffTimer99:SetChecked(timer.Seconds99)
 		PowaBuffTimerUseOwnColorButton:SetChecked(timer.UseOwnColor)
 		PowaTimerColorNormalTexture:SetVertexColor(timer.r, timer.g, timer.b)
-		--Lib_UIDropDownMenu_SetSelectedName(PowaDropDownTimerTexture, timer.Texture)
-		--Lib_UIDropDownMenu_SetSelectedValue(PowaBuffTimerRelative, timer.Relative)
+		--MSA_DropDownMenu_SetSelectedName(PowaDropDownTimerTexture, timer.Texture)
+		--MSA_DropDownMenu_SetSelectedValue(PowaBuffTimerRelative, timer.Relative)
 		PowaDropDownTimerTextureText:SetText(timer.Texture)
 		PowaBuffTimerRelativeText:SetText(PowaAurasOptions.Text.Relative[timer.Relative])
 		PowaTimerInvertAuraSlider:SetValue(aura.InvertAuraBelow)
@@ -1549,8 +1549,8 @@ function PowaAurasOptions:UpdateStacksOptions()
 	PowaBuffStacksLegacySizing:SetChecked(stacks.LegacySizing)
 	PowaBuffStacksUseOwnColorButton:SetChecked(stacks.UseOwnColor)
 	PowaStacksColorNormalTexture:SetVertexColor(stacks.r, stacks.g, stacks.b)
-	--Lib_UIDropDownMenu_SetSelectedName(PowaDropDownStacksTexture, stacks.Texture)
-	--Lib_UIDropDownMenu_SetSelectedValue(PowaBuffStacksRelative, stacks.Relative)
+	--MSA_DropDownMenu_SetSelectedName(PowaDropDownStacksTexture, stacks.Texture)
+	--MSA_DropDownMenu_SetSelectedValue(PowaBuffStacksRelative, stacks.Relative)
 	PowaDropDownStacksTextureText:SetText(stacks.Texture)
 	PowaBuffStacksRelativeText:SetText(PowaAurasOptions.Text.Relative[stacks.Relative])
 end
@@ -1654,14 +1654,14 @@ function PowaAurasOptions:InitPage(aura)
 		PowaAurasOptions:IconOnMouseWheel(nil)
 	end
 	-- Dropdowns
-	--[[Lib_UIDropDownMenu_SetSelectedName(PowaStrataDropDown, aura.strata)
-	Lib_UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, aura.texturestrata)
-	Lib_UIDropDownMenu_SetSelectedName(PowaBlendModeDropDown, aura.blendmode)
-	Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryBlendModeDropDown, aura.secondaryblendmode)
-	Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryStrataDropDown, aura.secondarystrata)
-	Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryTextureStrataDropDown, aura.secondarytexturestrata)
-	Lib_UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, aura.gradientstyle)
-	Lib_UIDropDownMenu_SetSelectedName(PowaModelCategoryDropDown, self.ModelCategoryList[aura.modelcategory])]]
+	--[[MSA_DropDownMenu_SetSelectedName(PowaStrataDropDown, aura.strata)
+	MSA_DropDownMenu_SetSelectedName(PowaTextureStrataDropDown, aura.texturestrata)
+	MSA_DropDownMenu_SetSelectedName(PowaBlendModeDropDown, aura.blendmode)
+	MSA_DropDownMenu_SetSelectedName(PowaSecondaryBlendModeDropDown, aura.secondaryblendmode)
+	MSA_DropDownMenu_SetSelectedName(PowaSecondaryStrataDropDown, aura.secondarystrata)
+	MSA_DropDownMenu_SetSelectedName(PowaSecondaryTextureStrataDropDown, aura.secondarytexturestrata)
+	MSA_DropDownMenu_SetSelectedName(PowaGradientStyleDropDown, aura.gradientstyle)
+	MSA_DropDownMenu_SetSelectedName(PowaModelCategoryDropDown, self.ModelCategoryList[aura.modelcategory])]]
 	PowaStrataDropDownText:SetText(aura.strata)
 	PowaTextureStrataDropDownText:SetText(aura.texturestrata)
 	PowaBlendModeDropDownText:SetText(aura.blendmode)
@@ -1676,12 +1676,12 @@ function PowaAurasOptions:InitPage(aura)
 	PowaDropDownAnimEndText:SetText(self.EndAnimDisplay[aura.finish])
 	PowaDropDownPowerTypeText:SetText(self.Text.PowerType[aura.PowerType])
 	if not aura.modelcategory or aura.modelcategory == 1 then
-		Lib_UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+		MSA_DropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
 		PowaModelTextureDropDownText:SetText(tostring(aura.modelpath))
 	end
 	if aura.sound < 30 then
-		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, aura.sound)
-		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
+		--MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound, aura.sound)
+		--MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
 		if aura.sound == 0 then
 			PowaDropDownSoundText:SetText(self.Sound[aura.sound])
 		else
@@ -1689,8 +1689,8 @@ function PowaAurasOptions:InitPage(aura)
 		end
 		PowaDropDownSound2Text:SetText(self.Sound[30])
 	else
-		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
-		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, aura.sound)
+		--MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
+		--MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2, aura.sound)
 		PowaDropDownSoundText:SetText(self.Sound[0])
 		if aura.sound == 30 then
 			PowaDropDownSound2Text:SetText(self.Sound[aura.sound])
@@ -1699,8 +1699,8 @@ function PowaAurasOptions:InitPage(aura)
 		end
 	end
 	if aura.soundend < 30 then
-		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, aura.soundend)
-		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
+		--MSA_DropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, aura.soundend)
+		--MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
 		if aura.soundend == 0 then
 			PowaDropDownSoundEndText:SetText(self.Sound[aura.soundend])
 		else
@@ -1708,8 +1708,8 @@ function PowaAurasOptions:InitPage(aura)
 		end
 		PowaDropDownSound2EndText:SetText(self.Sound[30])
 	else
-		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
-		--Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, aura.soundend)
+		--MSA_DropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
+		--MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2End, aura.soundend)
 		PowaDropDownSoundEndText:SetText(self.Sound[0])
 		if aura.soundend == 30 then
 			PowaDropDownSound2EndText:SetText(self.Sound[aura.soundend])
@@ -1980,7 +1980,7 @@ function PowaAurasOptions:InitPage(aura)
 					aura.modelpath = string.lower(model:GetModel())
 				end
 				aura.texture = GetTableNumber(ModelCategory, self.ModelsDisplayInfo[tonumber(aura.modelpath)])
-				Lib_UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+				MSA_DropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
 				PowaModelTextureDropDownText:SetText(tostring(aura.modelpath))
 			end
 			if not aura.texture then
@@ -2015,10 +2015,10 @@ function PowaAurasOptions:InitPage(aura)
 				PowaModelTextureDropDown:Hide()
 			elseif #self.ModelTextureList < 2 then
 				PowaModelTextureDropDown:Show()
-				Lib_UIDropDownMenu_DisableDropDown(PowaModelTextureDropDown)
+				MSA_DropDownMenu_DisableDropDown(PowaModelTextureDropDown)
 			else
 				PowaModelTextureDropDown:Show()
-				Lib_UIDropDownMenu_EnableDropDown(PowaModelTextureDropDown)
+				MSA_DropDownMenu_EnableDropDown(PowaModelTextureDropDown)
 			end
 		else
 			PowaModelTextureDropDown:Hide()
@@ -2246,12 +2246,12 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 					PowaModelTextureDropDown:Hide()
 				elseif #self.ModelTextureList < 2 then
 					PowaModelTextureDropDown:Show()
-					Lib_UIDropDownMenu_DisableDropDown(PowaModelTextureDropDown)
+					MSA_DropDownMenu_DisableDropDown(PowaModelTextureDropDown)
 				else
 					PowaModelTextureDropDown:Show()
-					Lib_UIDropDownMenu_EnableDropDown(PowaModelTextureDropDown)
+					MSA_DropDownMenu_EnableDropDown(PowaModelTextureDropDown)
 				end
-				Lib_UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, aura.modelpath)
+				MSA_DropDownMenu_SetSelectedName(PowaModelTextureDropDown, aura.modelpath)
 				PowaModelTextureDropDownText:SetText(aura.modelpath)
 			elseif aura.modelcategory == 2 then
 				aura.modelpath = self.ModelsEnvironments[aura.texture]
@@ -3198,12 +3198,12 @@ function PowaAurasOptions:ModelsChecked()
 				PowaModelTextureDropDown:Hide()
 			elseif #self.ModelTextureList < 2 then
 				PowaModelTextureDropDown:Show()
-				Lib_UIDropDownMenu_DisableDropDown(PowaModelTextureDropDown)
+				MSA_DropDownMenu_DisableDropDown(PowaModelTextureDropDown)
 			else
 				PowaModelTextureDropDown:Show()
-				Lib_UIDropDownMenu_EnableDropDown(PowaModelTextureDropDown)
+				MSA_DropDownMenu_EnableDropDown(PowaModelTextureDropDown)
 			end
-			Lib_UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+			MSA_DropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
 			PowaModelTextureDropDownText:SetText(tostring(aura.modelpath))
 		elseif aura.modelcategory == 2 then
 			aura.modelpath = self.ModelsEnvironments[aura.texture]
@@ -3557,7 +3557,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 	end
 	if name == "PowaStrataDropDown" then
 		for i = 1, #PowaAurasOptions.StrataList do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.StrataList[i]
 			info.func = function(self)
 				local strata = PowaAurasOptions.StrataList[i]
@@ -3565,15 +3565,15 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.strata = strata
 					local frame = PowaAurasOptions.Frames[PowaAurasOptions.CurrentAuraId]
 					frame:SetFrameStrata(aura.strata)
-					Lib_UIDropDownMenu_SetSelectedName(PowaStrataDropDown, strata)
+					MSA_DropDownMenu_SetSelectedName(PowaStrataDropDown, strata)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaStrataDropDown, aura.strata)
+		MSA_DropDownMenu_SetSelectedName(PowaStrataDropDown, aura.strata)
 	elseif name == "PowaTextureStrataDropDown" then
 		for i = 1, #PowaAurasOptions.TextureStrataList do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.TextureStrataList[i]
 			info.func = function(self)
 				local texturestrata = PowaAurasOptions.TextureStrataList[i]
@@ -3582,15 +3582,15 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.texturestrata = texturestrata
 					local texture = PowaAurasOptions.Textures[PowaAurasOptions.CurrentAuraId]
 					texture:SetDrawLayer(aura.texturestrata, aura.texturesublevel)
-					Lib_UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, texturestrata)
+					MSA_DropDownMenu_SetSelectedName(PowaTextureStrataDropDown, texturestrata)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaTextureStrataDropDown, aura.texturestrata)
+		MSA_DropDownMenu_SetSelectedName(PowaTextureStrataDropDown, aura.texturestrata)
 	elseif name == "PowaBlendModeDropDown" then
 		for i = 1, #PowaAurasOptions.BlendModeList do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.BlendModeList[i]
 			info.func = function(self)
 				local blendmode = PowaAurasOptions.BlendModeList[i]
@@ -3598,15 +3598,15 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.blendmode = blendmode
 					local texture = PowaAurasOptions.Textures[PowaAurasOptions.CurrentAuraId]
 					texture:SetBlendMode(aura.blendmode)
-					Lib_UIDropDownMenu_SetSelectedName(PowaBlendModeDropDown, blendmode)
+					MSA_DropDownMenu_SetSelectedName(PowaBlendModeDropDown, blendmode)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaBlendModeDropDown, aura.blendmode)
+		MSA_DropDownMenu_SetSelectedName(PowaBlendModeDropDown, aura.blendmode)
 	elseif name == "PowaSecondaryStrataDropDown" then
 		for i = 1, #PowaAurasOptions.StrataList do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.StrataList[i]
 			info.func = function(self)
 				local secondarystrata = PowaAurasOptions.StrataList[i]
@@ -3616,15 +3616,15 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					if secondaryFrame then
 						secondaryFrame:SetFrameStrata(aura.secondarystrata)
 					end
-					Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryStrataDropDown, secondarystrata)
+					MSA_DropDownMenu_SetSelectedName(PowaSecondaryStrataDropDown, secondarystrata)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryStrataDropDown, aura.secondarystrata)
+		MSA_DropDownMenu_SetSelectedName(PowaSecondaryStrataDropDown, aura.secondarystrata)
 	elseif name == "PowaSecondaryTextureStrataDropDown" then
 		for i = 1, #PowaAurasOptions.TextureStrataList do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.TextureStrataList[i]
 			info.func = function(self)
 				local secondarytexturestrata = PowaAurasOptions.TextureStrataList[i]
@@ -3634,15 +3634,15 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					if secondaryTexture then
 						secondaryTexture:SetDrawLayer(aura.secondarytexturestrata, aura.secondarytexturesublevel)
 					end
-					Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryTextureStrataDropDown, secondarytexturestrata)
+					MSA_DropDownMenu_SetSelectedName(PowaSecondaryTextureStrataDropDown, secondarytexturestrata)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryTextureStrataDropDown, aura.secondarytexturestrata)
+		MSA_DropDownMenu_SetSelectedName(PowaSecondaryTextureStrataDropDown, aura.secondarytexturestrata)
 	elseif name == "PowaSecondaryBlendModeDropDown" then
 		for i = 1, #PowaAurasOptions.BlendModeList do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.BlendModeList[i]
 			info.func = function(self)
 				local secondaryblendmode = PowaAurasOptions.BlendModeList[i]
@@ -3652,15 +3652,15 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					if secondaryTexture then
 						secondaryTexture:SetBlendMode(aura.secondaryblendmode)
 					end
-					Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryBlendModeDropDown, secondaryblendmode)
+					MSA_DropDownMenu_SetSelectedName(PowaSecondaryBlendModeDropDown, secondaryblendmode)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaSecondaryBlendModeDropDown, aura.secondaryblendmode)
+		MSA_DropDownMenu_SetSelectedName(PowaSecondaryBlendModeDropDown, aura.secondaryblendmode)
 	elseif name == "PowaGradientStyleDropDown" then
 		for i = 1, #PowaAurasOptions.GradientStyleList do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.GradientStyleList[i]
 			info.func = function(self)
 				local gradientstyle = PowaAurasOptions.GradientStyleList[i]
@@ -3691,15 +3691,15 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					if not aura.randomcolor then
 						PowaAurasOptions:UpdatePreviewColor(aura)
 					end
-					Lib_UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, gradientstyle)
+					MSA_DropDownMenu_SetSelectedName(PowaGradientStyleDropDown, gradientstyle)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaGradientStyleDropDown, aura.gradientstyle)
+		MSA_DropDownMenu_SetSelectedName(PowaGradientStyleDropDown, aura.gradientstyle)
 	elseif name == "PowaModelCategoryDropDown" then
 		for i = 1, #PowaAurasOptions.ModelCategoryList do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.ModelCategoryList[i]
 			info.func = function(self)
 				if aura.modelcategory ~= i then
@@ -3719,7 +3719,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					end
 					PowaBarAuraTextureSlider:SetMinMaxValues(1, MaxModels)
 					PowaBarAuraTextureSliderHigh:SetText(MaxModels)
-					Lib_UIDropDownMenu_SetSelectedName(PowaModelCategoryDropDown, PowaAurasOptions.ModelCategoryList[i])
+					MSA_DropDownMenu_SetSelectedName(PowaModelCategoryDropDown, PowaAurasOptions.ModelCategoryList[i])
 					PowaAurasOptions.ModelTextureList = { }
 					if not aura.modelcategory or aura.modelcategory == 1 then
 						aura.modelpath = PowaAurasOptions.ModelsCreature[aura.texture]
@@ -3737,12 +3737,12 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 							PowaModelTextureDropDown:Hide()
 						elseif #PowaAurasOptions.ModelTextureList < 2 then
 							PowaModelTextureDropDown:Show()
-							Lib_UIDropDownMenu_DisableDropDown(PowaModelTextureDropDown)
+							MSA_DropDownMenu_DisableDropDown(PowaModelTextureDropDown)
 						else
 							PowaModelTextureDropDown:Show()
-							Lib_UIDropDownMenu_EnableDropDown(PowaModelTextureDropDown)
+							MSA_DropDownMenu_EnableDropDown(PowaModelTextureDropDown)
 						end
-						Lib_UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+						MSA_DropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
 						PowaModelTextureDropDownText:SetText(tostring(aura.modelpath))
 					elseif aura.modelcategory == 2 then
 						aura.modelpath = PowaAurasOptions.ModelsEnvironments[aura.texture]
@@ -3757,12 +3757,12 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					PowaAurasOptions:ResetModel(aura)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaModelCategoryDropDown, PowaAurasOptions.ModelCategoryList[aura.modelcategory])
+		MSA_DropDownMenu_SetSelectedName(PowaModelCategoryDropDown, PowaAurasOptions.ModelCategoryList[aura.modelcategory])
 	elseif name == "PowaModelTextureDropDown" then
 		for i = 1, #PowaAurasOptions.ModelTextureList do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.ModelTextureList[i]
 			info.func = function(self)
 				if aura.modelpath ~= tonumber(PowaAurasOptions.ModelTextureList[i]) then
@@ -3772,69 +3772,69 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					if secondaryAura then
 						PowaAurasOptions:ResetSecondary(aura)
 					end
-					Lib_UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+					MSA_DropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
+		MSA_DropDownMenu_SetSelectedName(PowaModelTextureDropDown, tostring(aura.modelpath))
 	elseif name == "PowaDropDownBuffType" then
 		PowaAurasOptions:FillDropdownSorted(PowaAurasOptions.Text.AuraType, {func = PowaAurasOptions.DropDownMenu_OnClickBuffType, owner = owner})
-		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownBuffType, aura.bufftype)
+		MSA_DropDownMenu_SetSelectedValue(PowaDropDownBuffType, aura.bufftype)
 	elseif name == "PowaDropDownPowerType" then
 		info = {func = PowaAurasOptions.DropDownMenu_OnClickPowerType, owner = owner}
 		for i, name in pairs(PowaAurasOptions.Text.PowerType) do
 			info.text = name
 			info.value = i
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
 		aura:SetFixedIcon()
 		PowaAurasOptions:UpdateMainOption()
-		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownPowerType, aura.PowerType)
+		MSA_DropDownMenu_SetSelectedValue(PowaDropDownPowerType, aura.PowerType)
 	elseif name == "PowaDropDownStance" then
 		info = {func = PowaAurasOptions.DropDownMenu_OnClickStance, owner = owner}
 		for k, v in pairs(PowaAurasOptions.PowaStance) do
 			info.text = v
 			info.value = k
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
 		aura:SetFixedIcon()
 		PowaAurasOptions:UpdateMainOption()
-		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownStance, aura.stance)
+		MSA_DropDownMenu_SetSelectedValue(PowaDropDownStance, aura.stance)
 	elseif name == "PowaDropDownGTFO" then
 		info = {func = PowaAurasOptions.DropDownMenu_OnClickGTFO, owner = owner}
 		for i = 0, #PowaAurasOptions.PowaGTFO do
 			info.text = PowaAurasOptions.PowaGTFO[i]
 			info.value = i
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
 		aura:SetFixedIcon()
 		PowaAurasOptions:UpdateMainOption()
-		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownGTFO, aura.GTFO)
+		MSA_DropDownMenu_SetSelectedValue(PowaDropDownGTFO, aura.GTFO)
 	elseif name == "PowaDropDownAnimBegin" then
 		info = {func = PowaAurasOptions.DropDownMenu_OnClickBegin, owner = owner}
 		for i = 0, #PowaAurasOptions.BeginAnimDisplay do
 			info.text = PowaAurasOptions.BeginAnimDisplay[i]
 			info.value = i
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownAnimBegin, aura.begin)
+		MSA_DropDownMenu_SetSelectedValue(PowaDropDownAnimBegin, aura.begin)
 	elseif name == "PowaDropDownAnimEnd" then
 		info = {func = PowaAurasOptions.DropDownMenu_OnClickEnd, owner = owner}
 		if aura.UseOldAnimations then
 			for i = 0, #PowaAurasOptions.EndAnimDisplay - 2 do
 				info.text = PowaAurasOptions.EndAnimDisplay[i]
 				info.value = i
-				Lib_UIDropDownMenu_AddButton(info)
+				MSA_DropDownMenu_AddButton(info)
 			end
 		else
 			for i = 0, #PowaAurasOptions.EndAnimDisplay do
 				info.text = PowaAurasOptions.EndAnimDisplay[i]
 				info.value = i
-				Lib_UIDropDownMenu_AddButton(info)
+				MSA_DropDownMenu_AddButton(info)
 			end
 		end
-		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownAnimEnd, aura.finish)
+		MSA_DropDownMenu_SetSelectedValue(PowaDropDownAnimEnd, aura.finish)
 	elseif name == "PowaDropDownAnim1" then
 		local tableSize
 		if aura.UseOldAnimations then
@@ -3843,19 +3843,19 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 			tableSize = #PowaAurasOptions.Anim
 		end
 		for i = 1, tableSize do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.Anim[i]
 			info.value = i
 			info.func = function(self)
 				if aura.anim1 ~= i then
 					aura.anim1 = i
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownAnim1, aura.anim1)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownAnim1, aura.anim1)
 					PowaAurasOptions:RedisplayAura(PowaAurasOptions.CurrentAuraId)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownAnim1, aura.anim1)
+		MSA_DropDownMenu_SetSelectedValue(PowaDropDownAnim1, aura.anim1)
 	elseif name == "PowaDropDownAnim2" then
 		local tableSize
 		if aura.UseOldAnimations then
@@ -3864,7 +3864,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 			tableSize = #PowaAurasOptions.Anim
 		end
 		for i = 0, tableSize do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.Anim[i]
 			info.value = i
 			info.func = function(self)
@@ -3873,16 +3873,16 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 						PowaAurasOptions.SecondaryModels[aura.id] = nil
 					end
 					aura.anim2 = i
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownAnim2, aura.anim2)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownAnim2, aura.anim2)
 					PowaAurasOptions:RedisplayAura(PowaAurasOptions.CurrentAuraId)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownAnim2, aura.anim2)
+		MSA_DropDownMenu_SetSelectedValue(PowaDropDownAnim2, aura.anim2)
 	elseif name == "PowaDropDownSound" then
 		for i = 0, 29 do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			if i == 0 then
 				info.text = PowaAurasOptions.Sound[i]
 			else
@@ -3893,26 +3893,26 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 				if aura.sound ~= i then
 					if i == 0 or not PowaAurasOptions.Sound[i][1] then
 						aura.sound = 0
-						Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
+						MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
 						return
 					end
 					aura.sound = i
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, aura.sound)
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound, aura.sound)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
 					PowaDropDownSound2Text:SetText(PowaAurasOptions.Sound[0])
 					PlaySound(PowaAurasOptions.Sound[aura.sound][2], PowaMisc.SoundChannel)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
 		if aura.sound >= 30 then
-			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
+			MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
 		else
-			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, aura.sound)
+			MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound, aura.sound)
 		end
 	elseif name == "PowaDropDownSound2" then
 		for i = 30, 77 do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			if i == 30 then
 				info.text = PowaAurasOptions.Sound[i]
 			else
@@ -3923,26 +3923,26 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 				if aura.sound ~= i then
 					if i == 30 or not PowaAurasOptions.SoundCustom[i][1] then
 						aura.sound = 0
-						Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
+						MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
 						return
 					end
 					aura.sound = i
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, aura.sound)
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2, aura.sound)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound, 0)
 					PowaDropDownSoundText:SetText(PowaAurasOptions.Sound[0])
 					PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAurasOptions.SoundCustom[aura.sound][1], PowaMisc.SoundChannel)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
 		if aura.sound <= 30 then
-			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
+			MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2, 30)
 		else
-			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2, aura.sound)
+			MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2, aura.sound)
 		end
 	elseif name == "PowaDropDownSoundEnd" then
 		for i = 0, 29 do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			if i == 0 then
 				info.text = PowaAurasOptions.Sound[i]
 			else
@@ -3953,26 +3953,26 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 				if aura.soundend ~= i then
 					if i == 0 or not PowaAurasOptions.Sound[i][1] then
 						aura.soundend = 0
-						Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
+						MSA_DropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
 						return
 					end
 					aura.soundend = i
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, aura.soundend)
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, aura.soundend)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
 					PowaDropDownSound2EndText:SetText(PowaAurasOptions.Sound[0])
 					PlaySound(PowaAurasOptions.Sound[aura.soundend][2], PowaMisc.SoundChannel)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
 		if aura.soundend >= 30 then
-			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
+			MSA_DropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
 		else
-			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, aura.soundend)
+			MSA_DropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, aura.soundend)
 		end
 	elseif name == "PowaDropDownSound2End" then
 		for i = 30, 77 do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			if i == 30 then
 				info.text = PowaAurasOptions.Sound[i]
 			else
@@ -3983,52 +3983,52 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 				if aura.soundend ~= i then
 					if i == 30 or not PowaAurasOptions.SoundCustom[i][1] then
 						aura.soundend = 0
-						Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
+						MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
 						return
 					end
 					aura.soundend = i
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, aura.soundend)
-					Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2End, aura.soundend)
+					MSA_DropDownMenu_SetSelectedValue(PowaDropDownSoundEnd, 0)
 					PowaDropDownSoundEndText:SetText(PowaAurasOptions.Sound[0])
 					PlaySoundFile(PowaGlobalMisc.PathToSounds..PowaAurasOptions.SoundCustom[aura.soundend][1], PowaMisc.SoundChannel)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
 		if aura.soundend <= 30 then
-			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
+			MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2End, 30)
 		else
-			Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownSound2End, aura.soundend)
+			MSA_DropDownMenu_SetSelectedValue(PowaDropDownSound2End, aura.soundend)
 		end
 	elseif name == "PowaDropDownTimerTexture" then
 		for i = 1, #PowaAurasOptions.TimerTextures do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.TimerTextures[i]
 			info.func = function(self)
 				local texture = PowaAurasOptions.TimerTextures[i]
 				if aura.Timer.Texture ~= texture then
 					aura.Timer.Texture = texture
 					aura.Timer:Dispose()
-					Lib_UIDropDownMenu_SetSelectedName(PowaDropDownTimerTexture, texture)
+					MSA_DropDownMenu_SetSelectedName(PowaDropDownTimerTexture, texture)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaDropDownTimerTexture, aura.Timer.Texture)
+		MSA_DropDownMenu_SetSelectedName(PowaDropDownTimerTexture, aura.Timer.Texture)
 	elseif name == "PowaDropDownDefaultTimerTexture" then
 		for i = 2, #PowaAurasOptions.TimerTextures do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.TimerTextures[i]
 			info.func = function(self)
 				local texture = PowaAurasOptions.TimerTextures[i]
-				Lib_UIDropDownMenu_SetSelectedName(PowaDropDownDefaultTimerTexture, texture)
+				MSA_DropDownMenu_SetSelectedName(PowaDropDownDefaultTimerTexture, texture)
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
 	elseif name == "PowaBuffTimerRelative" then
 		local relative = {"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "CENTER"}
 		for i = 1, #relative do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.Text.Relative[relative[i]]
 			info.value = relative[i]
 			info.func = function(self)
@@ -4037,41 +4037,41 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.Timer.y = 0
 					aura.Timer.Relative = relative[i]
 					aura.Timer:Dispose()
-					Lib_UIDropDownMenu_SetSelectedName(PowaBuffTimerRelative, PowaAurasOptions.Text.Relative[aura.Timer.Relative])
+					MSA_DropDownMenu_SetSelectedName(PowaBuffTimerRelative, PowaAurasOptions.Text.Relative[aura.Timer.Relative])
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaBuffTimerRelative, PowaAurasOptions.Text.Relative[aura.Timer.Relative])
+		MSA_DropDownMenu_SetSelectedName(PowaBuffTimerRelative, PowaAurasOptions.Text.Relative[aura.Timer.Relative])
 	elseif name == "PowaDropDownStacksTexture" then
 		for i = 1, #PowaAurasOptions.TimerTextures do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.TimerTextures[i]
 			info.func = function(self)
 				local texture = PowaAurasOptions.TimerTextures[i]
 				if aura.Stacks.Texture ~= texture then
 					aura.Stacks.Texture = texture
 					aura.Stacks:Dispose()
-					Lib_UIDropDownMenu_SetSelectedName(PowaDropDownStacksTexture, texture)
+					MSA_DropDownMenu_SetSelectedName(PowaDropDownStacksTexture, texture)
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaDropDownStacksTexture, aura.Stacks.Texture)
+		MSA_DropDownMenu_SetSelectedName(PowaDropDownStacksTexture, aura.Stacks.Texture)
 	elseif name == "PowaDropDownDefaultStacksTexture" then
 		for i = 2, #PowaAurasOptions.TimerTextures do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.TimerTextures[i]
 			info.func = function(self)
 				local texture = PowaAurasOptions.TimerTextures[i]
-				Lib_UIDropDownMenu_SetSelectedName(PowaDropDownDefaultStacksTexture, texture)
+				MSA_DropDownMenu_SetSelectedName(PowaDropDownDefaultStacksTexture, texture)
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
 	elseif name == "PowaBuffStacksRelative" then
 		local relative = {"NONE", "TOPLEFT", "TOP", "TOPRIGHT", "RIGHT", "BOTTOMRIGHT", "BOTTOM", "BOTTOMLEFT", "LEFT", "CENTER"}
 		for i = 1, #relative do
-			local info = Lib_UIDropDownMenu_CreateInfo()
+			local info = MSA_DropDownMenu_CreateInfo()
 			info.text = PowaAurasOptions.Text.Relative[relative[i]]
 			info.value = relative[i]
 			info.func = function(self)
@@ -4080,12 +4080,12 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					aura.Stacks.y = 0
 					aura.Stacks.Relative = relative[i]
 					aura.Stacks:Dispose()
-					Lib_UIDropDownMenu_SetSelectedName(PowaBuffStacksRelative, PowaAurasOptions.Text.Relative[aura.Stacks.Relative])
+					MSA_DropDownMenu_SetSelectedName(PowaBuffStacksRelative, PowaAurasOptions.Text.Relative[aura.Stacks.Relative])
 				end
 			end
-			Lib_UIDropDownMenu_AddButton(info)
+			MSA_DropDownMenu_AddButton(info)
 		end
-		Lib_UIDropDownMenu_SetSelectedName(PowaBuffStacksRelative, PowaAurasOptions.Text.Relative[aura.Stacks.Relative])
+		MSA_DropDownMenu_SetSelectedName(PowaBuffStacksRelative, PowaAurasOptions.Text.Relative[aura.Stacks.Relative])
 	end
 end
 
@@ -4096,12 +4096,12 @@ function PowaAurasOptions:FillDropdownSorted(t, info)
 	for _, name in pairs(names) do
 		info.text = name
 		info.value = values[name]
-		Lib_UIDropDownMenu_AddButton(info)
+		MSA_DropDownMenu_AddButton(info)
 	end
 end
 
 function PowaAurasOptions.DropDownMenu_OnClickBuffType(self)
-	Lib_UIDropDownMenu_SetSelectedValue(self.owner, self.value)
+	MSA_DropDownMenu_SetSelectedValue(self.owner, self.value)
 	PowaAurasOptions:ChangeAuraType(PowaAurasOptions.CurrentAuraId, self.value)
 end
 
@@ -4232,24 +4232,24 @@ function PowaAurasOptions:ShowSpinAtBeginningChecked(button)
 end
 
 function PowaAurasOptions:OldAnimationChecked(button)
-	Lib_CloseDropDownMenus()
+	MSA_CloseDropDownMenus()
 	local aura = self.Auras[self.CurrentAuraId]
 	if button:GetChecked() then
 		aura.UseOldAnimations = true
 		PowaShowSpinAtBeginning:Hide()
-		if Lib_UIDropDownMenu_GetSelectedID(PowaDropDownAnimEnd) == 5 or Lib_UIDropDownMenu_GetSelectedID(PowaDropDownAnimEnd) == 6 then
+		if MSA_DropDownMenu_GetSelectedID(PowaDropDownAnimEnd) == 5 or MSA_DropDownMenu_GetSelectedID(PowaDropDownAnimEnd) == 6 then
 			local aura = self.Auras[self.CurrentAuraId]
-			Lib_UIDropDownMenu_SetSelectedID(PowaDropDownAnimEnd, 1)
+			MSA_DropDownMenu_SetSelectedID(PowaDropDownAnimEnd, 1)
 			aura.finish = 0
 		end
-		if Lib_UIDropDownMenu_GetSelectedID(PowaDropDownAnim1) == 11 or Lib_UIDropDownMenu_GetSelectedID(PowaDropDownAnim1) == 12 then
+		if MSA_DropDownMenu_GetSelectedID(PowaDropDownAnim1) == 11 or MSA_DropDownMenu_GetSelectedID(PowaDropDownAnim1) == 12 then
 			local aura = self.Auras[self.CurrentAuraId]
-			Lib_UIDropDownMenu_SetSelectedID(PowaDropDownAnim1, 1)
+			MSA_DropDownMenu_SetSelectedID(PowaDropDownAnim1, 1)
 			aura.anim1 = 1
 		end
-		if Lib_UIDropDownMenu_GetSelectedID(PowaDropDownAnim2) == 12 or Lib_UIDropDownMenu_GetSelectedID(PowaDropDownAnim2) == 13 then
+		if MSA_DropDownMenu_GetSelectedID(PowaDropDownAnim2) == 12 or MSA_DropDownMenu_GetSelectedID(PowaDropDownAnim2) == 13 then
 			local aura = self.Auras[self.CurrentAuraId]
-			Lib_UIDropDownMenu_SetSelectedID(PowaDropDownAnim2, 1)
+			MSA_DropDownMenu_SetSelectedID(PowaDropDownAnim2, 1)
 			aura.anim2 = 0
 		end
 	else
@@ -4260,7 +4260,7 @@ function PowaAurasOptions:OldAnimationChecked(button)
 end
 
 function PowaAurasOptions.DropDownMenu_OnClickStance(self)
-	Lib_UIDropDownMenu_SetSelectedValue(self.owner, self.value)
+	MSA_DropDownMenu_SetSelectedValue(self.owner, self.value)
 	local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
 	if aura.stance ~= self.value then
 		aura.stance = self.value
@@ -4276,7 +4276,7 @@ function PowaAurasOptions.DropDownMenu_OnClickStance(self)
 end
 
 function PowaAurasOptions.DropDownMenu_OnClickGTFO(self)
-	Lib_UIDropDownMenu_SetSelectedValue(self.owner, self.value)
+	MSA_DropDownMenu_SetSelectedValue(self.owner, self.value)
 	local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
 	if aura.GTFO ~= self.value then
 		aura.GTFO = self.value
@@ -4292,7 +4292,7 @@ function PowaAurasOptions.DropDownMenu_OnClickGTFO(self)
 end
 
 function PowaAurasOptions.DropDownMenu_OnClickPowerType(self)
-	Lib_UIDropDownMenu_SetSelectedValue(self.owner, self.value)
+	MSA_DropDownMenu_SetSelectedValue(self.owner, self.value)
 	local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
 	if aura.PowerType ~= self.value then
 		aura.PowerType = self.value
@@ -4310,7 +4310,7 @@ function PowaAurasOptions.DropDownMenu_OnClickPowerType(self)
 end
 
 function PowaAurasOptions.DropDownMenu_OnClickBegin(self)
-	Lib_UIDropDownMenu_SetSelectedID(self.owner, self.value + 1)
+	MSA_DropDownMenu_SetSelectedID(self.owner, self.value + 1)
 	local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
 	if aura.begin ~= self.begin then
 		aura.begin = self.value
@@ -4321,7 +4321,7 @@ end
 function PowaAurasOptions.DropDownMenu_OnClickEnd(self)
 	local optionID = self:GetID()
 	local aura = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId]
-	Lib_UIDropDownMenu_SetSelectedID(PowaDropDownAnimEnd, optionID)
+	MSA_DropDownMenu_SetSelectedID(PowaDropDownAnimEnd, optionID)
 	if aura.finish ~= optionID - 1 then
 		aura.finish = optionID - 1
 	end
@@ -4369,7 +4369,7 @@ function PowaAurasOptions:SetAuraColor(r, g, b)
 end
 
 function PowaAurasOptions:OpenColorPicker(control, source, setTexture)
-	Lib_CloseDropDownMenus()
+	MSA_CloseDropDownMenus()
 	if ColorPickerFrame:IsVisible() then
 		PowaAurasOptions.CancelColor()
 		ColorPickerFrame:Hide()
@@ -4423,7 +4423,7 @@ function PowaAurasOptions:SetGradientAuraColor(r, g, b)
 end
 
 function PowaAurasOptions:OpenGradientColorPicker(control, source, setTexture)
-	Lib_CloseDropDownMenus()
+	MSA_CloseDropDownMenus()
 	if ColorPickerFrame:IsVisible() then
 		PowaAurasOptions.CancelGradientColor()
 		ColorPickerFrame:Hide()
@@ -4448,7 +4448,7 @@ function PowaAurasOptions:FontSelectorOnShow(owner)
 end
 
 function PowaAurasOptions:OpenFontSelector(owner)
-	Lib_CloseDropDownMenus()
+	MSA_CloseDropDownMenus()
 	if PowaFontSelectorFrame:IsVisible() then
 		PowaFontSelectorFrame:Hide()
 	else
@@ -4631,7 +4631,7 @@ function PowaAurasOptions:TimerDurationSliderChanged(slider, value)
 end
 
 function PowaAurasOptions.DropDownMenu_OnClickTimerRelative(self)
-	Lib_UIDropDownMenu_SetSelectedValue(self.owner, self.value)
+	MSA_DropDownMenu_SetSelectedValue(self.owner, self.value)
 	local timer = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId].Timer
 	timer.x = 0
 	timer.y = 0
@@ -4737,7 +4737,7 @@ function PowaAurasOptions:StacksCoordYSliderChanged(slider, value)
 end
 
 function PowaAurasOptions.DropDownMenu_OnClickStacksRelative(self)
-	Lib_UIDropDownMenu_SetSelectedValue(self.owner, self.value)
+	MSA_DropDownMenu_SetSelectedValue(self.owner, self.value)
 	local stacks = PowaAurasOptions.Auras[PowaAurasOptions.CurrentAuraId].Stacks
 	stacks.x = 0
 	stacks.y = 0
@@ -4917,7 +4917,7 @@ local function OptionsOK()
 	PowaAurasOptions:MiscChecked(PowaDisableFrameScalingButton, "ScaleLocked")
 	PowaAurasOptions:GlobalMiscChecked(PowaBlockIncomingAurasButton, "BlockIncomingAuras")
 	PowaAurasOptions:GlobalMiscChecked(PowaFixExportsButton, "FixExports")
-	local newDefaultTimerTexture = Lib_UIDropDownMenu_GetSelectedName(PowaDropDownDefaultTimerTexture)
+	local newDefaultTimerTexture = MSA_DropDownMenu_GetSelectedName(PowaDropDownDefaultTimerTexture)
 	if newDefaultTimerTexture and newDefaultTimerTexture ~= PowaMisc.DefaultTimerTexture then
 		PowaMisc.DefaultTimerTexture = newDefaultTimerTexture
 		for auraId, aura in pairs(PowaAurasOptions.Auras) do
@@ -4929,7 +4929,7 @@ local function OptionsOK()
 			end
 		end
 	end
-	local newDefaultStacksTexture = Lib_UIDropDownMenu_GetSelectedName(PowaDropDownDefaultStacksTexture)
+	local newDefaultStacksTexture = MSA_DropDownMenu_GetSelectedName(PowaDropDownDefaultStacksTexture)
 	if newDefaultStacksTexture and newDefaultStacksTexture ~= PowaMisc.DefaultStacksTexture then
 		PowaMisc.DefaultStacksTexture = newDefaultStacksTexture
 		for auraId, aura in pairs(PowaAurasOptions.Auras) do
@@ -4974,8 +4974,8 @@ local function OptionsRefresh()
 	PowaDisableFrameScalingButton:SetChecked(PowaMisc.ScaleLocked)
 	PowaBlockIncomingAurasButton:SetChecked(PowaGlobalMisc.BlockIncomingAuras)
 	PowaFixExportsButton:SetChecked(PowaGlobalMisc.FixExports)
-	Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownDefaultTimerTexture, PowaMisc.DefaultTimerTexture)
-	Lib_UIDropDownMenu_SetSelectedValue(PowaDropDownDefaultStacksTexture, PowaMisc.DefaultStacksTexture)
+	MSA_DropDownMenu_SetSelectedValue(PowaDropDownDefaultTimerTexture, PowaMisc.DefaultTimerTexture)
+	MSA_DropDownMenu_SetSelectedValue(PowaDropDownDefaultStacksTexture, PowaMisc.DefaultStacksTexture)
 	PowaDropDownDefaultTimerTextureText:SetText(PowaMisc.DefaultTimerTexture)
 	PowaDropDownDefaultStacksTextureText:SetText(PowaMisc.DefaultStacksTexture)
 	PowaCustomSoundPath:SetText(PowaGlobalMisc.PathToSounds)

@@ -1,4 +1,4 @@
-local PowaAurasOptions=PowaAurasOptions
+local PowaAurasOptions = PowaAurasOptions
 
 -- 8.0.1 (27178)
 -- Crashing the client:

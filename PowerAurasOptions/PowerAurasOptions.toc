@@ -1,6 +1,6 @@
-## Interface: 80300
+## Interface: 90001
 ## Title: Power Auras Classic Options
-## Version: 4.31.0
+## Version: 4.32.0
 ## Author: Smacker 'lolcat', Dridzt 'classic', Garstiger 'continued', Sinsthar 'base', Meorawr, modified by Zensunim and Resike
 ## Notes: Options and configuration GUI for Power Auras Classic.
 ## DefaultState: Enabled
@@ -8,8 +8,9 @@
 ## LoadOnDemand: 1
 
 Libs\LibStub\LibStub.lua
-Libs\UIDropDownMenu\UIDropDownMenu.xml
+Libs\MSA-DropDownMenu-1.0\MSA-DropDownMenu-1.0.lua
 
+PowerGlobals.lua
 PowerOptions.lua
 PowerOptionsData.lua
 PowerOptionsDump.lua

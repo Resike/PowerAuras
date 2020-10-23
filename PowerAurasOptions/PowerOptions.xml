@@ -1,4 +1,11 @@
 <Ui xmlns = "http://www.blizzard.com/wow/ui/" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<!-- Backdrop Template -->
+	<Frame name="PowaBackdropTemplate" mixin="PowaBackdropTemplateMixin" virtual="true">
+		<Scripts>
+			<OnLoad method="OnBackdropLoaded"/>
+			<OnSizeChanged method="OnBackdropSizeChanged"/>
+		</Scripts>
+	</Frame>
 	<!-- Item Button Template -->
 	<Button name = "PowaItemButtonTemplate" hidden = "true" virtual = "true">
 		<Size>
@@ -350,7 +357,10 @@
 		</Scripts>
 	</Frame>
 	<!-- Options Frame -->
-	<Frame name = "PowaOptionsFrame" toplevel = "true" movable = "true" parent = "UIParent" frameStrata = "MEDIUM" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+	<Frame name = "PowaOptionsFrame" inherits = "PowaBackdropTemplate" toplevel = "true" movable = "true" parent = "UIParent" frameStrata = "MEDIUM" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="POWA_OPTIONS_FRAME_BACKDROP_200_32_10101010" type="global"/>
+		</KeyValues>
 		<Size>
 			<AbsDimension x = "323" y = "470"/>
 		</Size>
@@ -361,19 +371,9 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
-			<BackgroundInsets>
-				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val = "200"/>
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val = "32"/>
-			</EdgeSize>
-		</Backdrop>
 		<Scripts>
 			<OnLoad>
+				self:OnBackdropLoaded()
 				self:SetBackdropColor(0.1, 0.1, 0.1)
 				self:SetBackdropBorderColor(0.9, 1.0, 0.9)
 				tinsert(UISpecialFrames, self:GetName())
@@ -439,7 +439,10 @@
 				</Anchors>
 			</Button>
 			<!-- Icon Effects Window -->
-			<Frame name = "PowaOptionsSelectorFrame">
+			<Frame name = "PowaOptionsSelectorFrame" inherits = "PowaBackdropTemplate">
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="POWA_OPTIONS_SELECTOR_BACKDROP_128_12_2222" type="global"/>
+				</KeyValues>
 				<Size>
 					<AbsDimension x = "192" y = "286"/>
 				</Size>
@@ -450,21 +453,11 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-					<EdgeSize>
-						<AbsValue val = "12"/>
-					</EdgeSize>
-					<TileSize>
-						<AbsValue val = "128"/>
-					</TileSize>
-					<BackgroundInsets>
-						<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-					</BackgroundInsets>
-				</Backdrop>
 				<Scripts>
 					<OnLoad>
-						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
+						self:OnBackdropLoaded()
 						self:SetBackdropColor(0.1, 0.1, 0.1)
+						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 					</OnLoad>
 				</Scripts>
 				<!-- Icons -->
@@ -717,7 +710,10 @@
 				</Frames>
 			</Frame>
 			<!-- Player List Window -->
-			<Frame name = "PowaOptionsPlayerListFrame">
+			<Frame name = "PowaOptionsPlayerListFrame" inherits = "PowaBackdropTemplate">
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="POWA_OPTIONS_LIST_BACKDROP_128_16_2222" type="global"/>
+				</KeyValues>
 				<Size>
 					<AbsDimension x = "90" y = "118"/>
 				</Size>
@@ -728,17 +724,6 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-					<EdgeSize>
-						<AbsValue val = "16"/>
-					</EdgeSize>
-					<TileSize>
-						<AbsValue val = "128"/>
-					</TileSize>
-					<BackgroundInsets>
-						<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-					</BackgroundInsets>
-				</Backdrop>
 				<Layers>
 					<Layer>
 						<FontString name = "PowaOptionsPlayerTitre" inherits = "GameFontHighlight">
@@ -823,14 +808,18 @@
 				</Frames>
 				<Scripts>
 					<OnLoad>
-						self:SetBackdropBorderColor(0, 0, 0)
+						self:OnBackdropLoaded()
 						self:SetBackdropColor(0.1, 0.1, 0.1)
+						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 						PowaOptionsPlayerTitre:SetText(PowaAurasOptions.Text.nomPlayerEffects)
 					</OnLoad>
 				</Scripts>
 			</Frame>
 			<!-- Global List Window -->
-			<Frame name = "PowaOptionsGlobalListFrame">
+			<Frame name = "PowaOptionsGlobalListFrame" inherits = "PowaBackdropTemplate">
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="POWA_OPTIONS_LIST_BACKDROP_128_16_2222" type="global"/>
+				</KeyValues>
 				<Size>
 					<AbsDimension x = "90" y = "192"/>
 				</Size>
@@ -1355,8 +1344,9 @@
 				</Frames>
 				<Scripts>
 					<OnLoad>
-						self:SetBackdropBorderColor(0, 0, 0)
+						self:OnBackdropLoaded()
 						self:SetBackdropColor(0.1, 0.1, 0.1)
+						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 						PowaOptionsGlobalTitre:SetText(PowaAurasOptions.Text.nomGlobalEffects)
 					</OnLoad>
 				</Scripts>
@@ -1461,11 +1451,11 @@
 						end
 					</OnLeave>
 					<OnClick>
-						if _G["Lib_DropDownList1"]:IsVisible() and LIB_UIDROPDOWNMENU_OPEN_MENU == self:GetParent() then
-							Lib_CloseDropDownMenus()
+						if _G["MSA_DropDownList1"]:IsVisible() and MSA_DROPDOWNMENU_OPEN_MENU == self:GetParent() then
+							MSA_CloseDropDownMenus()
 						else
-							Lib_UIDropDownMenu_Initialize(self:GetParent(), PowaAurasOptions.DropDownMenu_Initialize)
-							Lib_ToggleDropDownMenu(nil, nil, self:GetParent())
+							MSA_DropDownMenu_Initialize(self:GetParent(), PowaAurasOptions.DropDownMenu_Initialize)
+							MSA_ToggleDropDownMenu(nil, nil, self:GetParent())
 							PlaySound(856)
 						end
 					</OnClick>
@@ -1506,29 +1496,21 @@
 		</Frames>
 		<Scripts>
 			<OnHide>
-				Lib_CloseDropDownMenus()
+				MSA_CloseDropDownMenus()
 			</OnHide>
 		</Scripts>
 	</Frame>
 	<!-- Slider Template -->
-	<Slider name = "PowaBarSliderTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
+	<Slider name = "PowaBarSliderTemplate" inherits = "PowaBackdropTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="POWA_OPTIONS_SLIDER_BACKDROP_8_8_3333" type="global"/>
+		</KeyValues>
 		<Size>
 			<AbsDimension x = "144" y = "17"/>
 		</Size>
 		<HitRectInsets>
 			<AbsInset left = "0" right = "0" top = "-2" bottom = "1"/>
 		</HitRectInsets>
-		<Backdrop bgFile = "Interface/Buttons/UI-SliderBar-Background" edgeFile = "Interface/Buttons/UI-SliderBar-Border" tile = "true">
-			<EdgeSize>
-				<AbsValue val = "8"/>
-			</EdgeSize>
-			<TileSize>
-				<AbsValue val = "8"/>
-			</TileSize>
-			<BackgroundInsets>
-				<AbsInset left = "3" right = "3" top = "6" bottom = "6"/>
-			</BackgroundInsets>
-		</Backdrop>
 		<Layers>
 			<Layer level = "ARTWORK">
 				<FontString name = "$parentText" inherits = "GameFontNormalSmall">
@@ -1557,26 +1539,22 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<EditBox name = "$parentEditBox" autoFocus = "false">
+			<EditBox name = "$parentEditBox" inherits = "PowaBackdropTemplate" autoFocus = "false">
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="POWA_OPTIONS_SLIDER_EDIT_BACKDROP_5_1" type="global"/>
+				</KeyValues>
 				<Size>
 					<AbsDimension x = "50" y = "14"/>
 				</Size>
 				<Anchors>
 					<Anchor point = "TOP" relativePoint = "BOTTOM"/>
 				</Anchors>
-				<Backdrop bgFile = "Interface/ChatFrame/ChatFrameBackground" edgeFile = "Interface/ChatFrame/ChatFrameBackground" tile = "true">
-					<EdgeSize>
-						<AbsValue val = "1"/>
-					</EdgeSize>
-					<TileSize>
-						<AbsValue val = "5"/>
-					</TileSize>
-				</Backdrop>
 				<Scripts>
 					<OnLoad>
 						self:EnableMouseWheel(true)
-						self:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
+						self:OnBackdropLoaded()
 						self:SetBackdropColor(0, 0, 0, 0.5)
+						self:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
 						self:SetJustifyH("CENTER")
 						self:SetMaxLetters(6)
 					</OnLoad>
@@ -1736,7 +1714,10 @@
 		</HighlightTexture>
 	</Button>
 	<!-- Aura Configuration Frame -->
-	<Frame name = "PowaBarConfigFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+	<Frame name = "PowaBarConfigFrame" inherits = "PowaBackdropTemplate" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="POWA_OPTIONS_FRAME_BACKDROP_200_32_10101010" type="global"/>
+		</KeyValues>
 		<Size>
 			<AbsDimension x = "487" y = "920"/>
 		</Size>
@@ -1747,21 +1728,11 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
-			<BackgroundInsets>
-				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val = "200"/>
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val = "32"/>
-			</EdgeSize>
-		</Backdrop>
 		<Scripts>
 			<OnLoad>
-				self:SetBackdropBorderColor(0.9, 1.0, 0.95)
 				self:SetBackdropColor(0.6, 0.6, 0.6)
+				self:SetBackdropBorderColor(0.9, 1.0, 0.95)
+				self:OnBackdropLoaded()
 				PowaAurasOptions:ResizeFrame(self)
 			</OnLoad>
 			<OnMouseDown>
@@ -1830,7 +1801,10 @@
 				</Scripts>
 			</Button>
 			<!-- Top Panel -->
-			<Frame name = "PowaBarConfigFrameEditor">
+			<Frame name = "PowaBarConfigFrameEditor" inherits = "PowaBackdropTemplate">
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="POWA_OPTIONS_SELECTOR_BACKDROP_128_12_2222" type="global"/>
+				</KeyValues>
 				<Size>
 					<AbsDimension x = "450" y = "477"/>
 				</Size>
@@ -1841,21 +1815,11 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-					<EdgeSize>
-						<AbsValue val = "12"/>
-					</EdgeSize>
-					<TileSize>
-						<AbsValue val = "128"/>
-					</TileSize>
-					<BackgroundInsets>
-						<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-					</BackgroundInsets>
-				</Backdrop>
 				<Scripts>
 					<OnLoad>
-						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
+						self:OnBackdropLoaded()
 						self:SetBackdropColor(0.1, 0.1, 0.1)
+						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 					</OnLoad>
 				</Scripts>
 				<!-- Aura Preview Icon -->
@@ -1966,7 +1930,7 @@
 						</Layers>
 						<Scripts>
 							<OnLoad>
-								Lib_UIDropDownMenu_SetWidth(self, 120)
+								MSA_DropDownMenu_SetWidth(self, 120)
 								PowaGradientStyleDropDownLabel:SetText(PowaAurasOptions.Text.nomGradientStyle..":")
 							</OnLoad>
 						</Scripts>
@@ -1998,7 +1962,7 @@
 						</Layers>
 						<Scripts>
 							<OnLoad>
-								Lib_UIDropDownMenu_SetWidth(self, 120)
+								MSA_DropDownMenu_SetWidth(self, 120)
 								PowaModelCategoryDropDownLabel:SetText(PowaAurasOptions.Text.nomModelCategory..":")
 							</OnLoad>
 						</Scripts>
@@ -2093,7 +2057,7 @@
 						</Layers>
 						<Scripts>
 							<OnLoad>
-								Lib_UIDropDownMenu_SetWidth(self, 120)
+								MSA_DropDownMenu_SetWidth(self, 120)
 								PowaModelTextureDropDownLabel:SetText(PowaAurasOptions.Text.nomModelTexture..":")
 							</OnLoad>
 						</Scripts>
@@ -2301,7 +2265,7 @@
 						</Layers>
 						<Scripts>
 							<OnLoad>
-								Lib_UIDropDownMenu_SetWidth(self, 125)
+								MSA_DropDownMenu_SetWidth(self, 125)
 								PowaStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomFrameStrata..":")
 							</OnLoad>
 						</Scripts>
@@ -2320,6 +2284,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(0, 20)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2361,7 +2326,7 @@
 						</Layers>
 						<Scripts>
 							<OnLoad>
-								Lib_UIDropDownMenu_SetWidth(self, 125)
+								MSA_DropDownMenu_SetWidth(self, 125)
 								PowaTextureStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomTextureStrata..":")
 							</OnLoad>
 						</Scripts>
@@ -2380,6 +2345,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(-8, 7)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2421,7 +2387,7 @@
 						</Layers>
 						<Scripts>
 							<OnLoad>
-								Lib_UIDropDownMenu_SetWidth(self, 125)
+								MSA_DropDownMenu_SetWidth(self, 125)
 								PowaBlendModeDropDownLabel:SetText(PowaAurasOptions.Text.nomBlendMode..":")
 							</OnLoad>
 						</Scripts>
@@ -2440,6 +2406,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(-100, 100)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2475,6 +2442,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2510,6 +2478,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(-50, 50)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2546,6 +2515,7 @@
 						<Scripts>
 							<OnLoad>
 								self.aide = PowaAurasOptions.Text.aideTexture
+								self:OnBackdropLoaded()
 								self:SetValueStep(1)
 								self:SetObeyStepOnDrag(true)
 								PowaBarAuraTextureSliderText:SetText(PowaAurasOptions.Text.nomTexture)
@@ -2719,6 +2689,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(0, 100)
 								self:SetValue(100)
 								self:SetValueStep(1)
@@ -2747,6 +2718,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(0, 3)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2775,6 +2747,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(-1, 802)
 								self:SetValue(-1)
 								self:SetValueStep(1)
@@ -2803,6 +2776,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(-0.01, 2.01)
 								self:SetValue(1)
 								self:SetValueStep(0.01)
@@ -2831,6 +2805,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(0, 360)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2859,6 +2834,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(1, 200)
 								self:SetValue(100)
 								self:SetValueStep(1)
@@ -2894,6 +2870,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(-700, 700)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2929,6 +2906,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
+								self:OnBackdropLoaded()
 								self:SetMinMaxValues(-400, 400)
 								self:SetValue(0)
 								self:SetValueStep(1)
@@ -2951,7 +2929,10 @@
 						</Scripts>
 					</Slider>
 					<!-- First Configuration Tab Panel (Activation) -->
-					<Frame name = "PowaBarConfigFrameEditor1">
+					<Frame name = "PowaBarConfigFrameEditor1" inherits = "PowaBackdropTemplate">
+						<KeyValues>
+							<KeyValue key="backdropInfo" value="POWA_OPTIONS_SELECTOR_BACKDROP_128_12_2222" type="global"/>
+						</KeyValues>
 						<Size>
 							<AbsDimension x = "450" y = "372"/>
 						</Size>
@@ -2962,17 +2943,6 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-							<EdgeSize>
-								<AbsValue val = "12"/>
-							</EdgeSize>
-							<TileSize>
-								<AbsValue val = "128"/>
-							</TileSize>
-							<BackgroundInsets>
-								<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-							</BackgroundInsets>
-						</Backdrop>
 						<Layers>
 							<Layer>
 								<Texture name = "PowaIconTexture" file = "Interface\InventoryItems\WowUnknownItem01">
@@ -2991,8 +2961,9 @@
 						</Layers>
 						<Scripts>
 							<OnLoad>
-								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
+								self:OnBackdropLoaded()
 								self:SetBackdropColor(0.1, 0.1, 0.1)
+								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 							</OnLoad>
 						</Scripts>
 						<Frames>
@@ -3023,7 +2994,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 175)
+										MSA_DropDownMenu_SetWidth(self, 175)
 										PowaDropDownBuffTypeLabel:SetText(PowaAurasOptions.Text.nomActivationBy..":")
 									</OnLoad>
 								</Scripts>
@@ -3055,7 +3026,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 145)
+										MSA_DropDownMenu_SetWidth(self, 145)
 										PowaDropDownPowerTypeLabel:SetText(PowaAurasOptions.Text.nomPowerType..":")
 									</OnLoad>
 								</Scripts>
@@ -3090,7 +3061,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 145)
+										MSA_DropDownMenu_SetWidth(self, 145)
 										PowaDropDownStanceLabel:SetText(PowaAurasOptions.Text.nomStance..":")
 									</OnLoad>
 								</Scripts>
@@ -3125,7 +3096,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 145)
+										MSA_DropDownMenu_SetWidth(self, 145)
 										PowaDropDownGTFOLabel:SetText(PowaAurasOptions.Text.nomGTFO..":")
 									</OnLoad>
 								</Scripts>
@@ -3144,6 +3115,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(0, 100)
 										self:SetValue(50)
 										self:SetValueStep(1)
@@ -4341,7 +4313,10 @@
 						</Frames>
 					</Frame>
 					<!-- Second Configuration Tab Panel (Animation) -->
-					<Frame name = "PowaBarConfigFrameEditor2" hidden = "true">
+					<Frame name = "PowaBarConfigFrameEditor2" inherits = "PowaBackdropTemplate" hidden = "true">
+						<KeyValues>
+							<KeyValue key="backdropInfo" value="POWA_OPTIONS_SELECTOR_BACKDROP_128_12_2222" type="global"/>
+						</KeyValues>
 						<Size>
 							<AbsDimension x = "450" y = "334"/>
 						</Size>
@@ -4352,21 +4327,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-							<EdgeSize>
-								<AbsValue val = "12"/>
-							</EdgeSize>
-							<TileSize>
-								<AbsValue val = "128"/>
-							</TileSize>
-							<BackgroundInsets>
-								<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-							</BackgroundInsets>
-						</Backdrop>
 						<Scripts>
 							<OnLoad>
-								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
+								self:OnBackdropLoaded()
 								self:SetBackdropColor(0.1, 0.1, 0.1)
+								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 							</OnLoad>
 						</Scripts>
 						<Frames>
@@ -4397,7 +4362,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaDropDownAnimBeginLabel:SetText(PowaAurasOptions.Text.nomBegin..":")
 									</OnLoad>
 								</Scripts>
@@ -4432,7 +4397,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaDropDownAnimEndLabel:SetText(PowaAurasOptions.Text.nomEnd..":")
 									</OnLoad>
 								</Scripts>
@@ -4464,7 +4429,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaDropDownAnim1Label:SetText(PowaAurasOptions.Text.nomAnim1..":")
 									</OnLoad>
 								</Scripts>
@@ -4496,7 +4461,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaDropDownAnim2Label:SetText(PowaAurasOptions.Text.nomAnim2..":")
 									</OnLoad>
 								</Scripts>
@@ -4572,7 +4537,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaSecondaryBlendModeDropDownLabel:SetText(PowaAurasOptions.Text.nomSecondaryBlendMode..":")
 									</OnLoad>
 								</Scripts>
@@ -4604,7 +4569,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaSecondaryStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomSecondaryFrameStrata..":")
 									</OnLoad>
 								</Scripts>
@@ -4623,6 +4588,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(0, 20)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -4664,7 +4630,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaSecondaryTextureStrataDropDownLabel:SetText(PowaAurasOptions.Text.nomSecondaryTextureStrata..":")
 									</OnLoad>
 								</Scripts>
@@ -4683,6 +4649,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(-8, 7)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -4711,6 +4678,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(1, 200)
 										self:SetValue(100)
 										self:SetValueStep(1)
@@ -4740,6 +4708,7 @@
 								<Scripts>
 									<OnLoad>
 										self.aide = PowaAurasOptions.Text.aideDuration
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
 										self:SetValueStep(0.01)
@@ -4757,7 +4726,10 @@
 						</Frames>
 					</Frame>
 					<!-- Third Configuration Tab Panel (Sound) -->
-					<Frame name = "PowaBarConfigFrameEditor3" hidden = "true">
+					<Frame name = "PowaBarConfigFrameEditor3" inherits = "PowaBackdropTemplate" hidden = "true">
+						<KeyValues>
+							<KeyValue key="backdropInfo" value="POWA_OPTIONS_SELECTOR_BACKDROP_128_12_2222" type="global"/>
+						</KeyValues>
 						<Size>
 							<AbsDimension x = "450" y = "300"/>
 						</Size>
@@ -4768,21 +4740,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-							<EdgeSize>
-								<AbsValue val = "12"/>
-							</EdgeSize>
-							<TileSize>
-								<AbsValue val = "128"/>
-							</TileSize>
-							<BackgroundInsets>
-								<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-							</BackgroundInsets>
-						</Backdrop>
 						<Scripts>
 							<OnLoad>
-								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
+								self:OnBackdropLoaded()
 								self:SetBackdropColor(0.1, 0.1, 0.1)
+								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 							</OnLoad>
 						</Scripts>
 						<Frames>
@@ -4813,7 +4775,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 210)
+										MSA_DropDownMenu_SetWidth(self, 210)
 										PowaDropDownSoundLabel:SetText(PowaAurasOptions.Text.nomSound)
 									</OnLoad>
 								</Scripts>
@@ -4845,7 +4807,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 210)
+										MSA_DropDownMenu_SetWidth(self, 210)
 										PowaDropDownSound2Label:SetText(PowaAurasOptions.Text.nomSound2)
 									</OnLoad>
 								</Scripts>
@@ -4923,7 +4885,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 210)
+										MSA_DropDownMenu_SetWidth(self, 210)
 										PowaDropDownSoundEndLabel:SetText(PowaAurasOptions.Text.nomSoundEnd);
 									</OnLoad>
 								</Scripts>
@@ -4955,7 +4917,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 210)
+										MSA_DropDownMenu_SetWidth(self, 210)
 										PowaDropDownSound2EndLabel:SetText(PowaAurasOptions.Text.nomSound2End);
 									</OnLoad>
 								</Scripts>
@@ -5009,7 +4971,10 @@
 						</Frames>
 					</Frame>
 					<!-- Fourth Configuration Tab Panel (Timer) -->
-					<Frame name = "PowaBarConfigFrameEditor4" hidden = "true">
+					<Frame name = "PowaBarConfigFrameEditor4" inherits = "PowaBackdropTemplate" hidden = "true">
+						<KeyValues>
+							<KeyValue key="backdropInfo" value="POWA_OPTIONS_SELECTOR_BACKDROP_128_12_2222" type="global"/>
+						</KeyValues>
 						<Size>
 							<AbsDimension x = "450" y = "357"/>
 						</Size>
@@ -5020,21 +4985,11 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-							<EdgeSize>
-								<AbsValue val = "12"/>
-							</EdgeSize>
-							<TileSize>
-								<AbsValue val = "128"/>
-							</TileSize>
-							<BackgroundInsets>
-								<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-							</BackgroundInsets>
-						</Backdrop>
 						<Scripts>
 							<OnLoad>
-								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
+								self:OnBackdropLoaded()
 								self:SetBackdropColor(0.1, 0.1, 0.1)
+								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 							</OnLoad>
 						</Scripts>
 						<Frames>
@@ -5074,6 +5029,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(-700, 700)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -5109,6 +5065,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(-400, 400)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -5144,6 +5101,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(0.01, 5)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
@@ -5172,6 +5130,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(0, 1)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
@@ -5201,6 +5160,7 @@
 								<Scripts>
 									<OnLoad>
 										self.aide = PowaAurasOptions.Text.aideTimerDuration
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(0, 60)
 										self:SetValue(0)
 										self:SetValueStep(0.01)
@@ -5376,7 +5336,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaDropDownTimerTextureLabel:SetText(PowaAurasOptions.Text.nomTimerTexture)
 									</OnLoad>
 								</Scripts>
@@ -5471,7 +5431,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaBuffTimerRelativeLabel:SetText(PowaAurasOptions.Text.nomRelative)
 									</OnLoad>
 								</Scripts>
@@ -5491,6 +5451,7 @@
 								<Scripts>
 									<OnLoad>
 										self.aide = PowaAurasOptions.Text.aidePowaTimerInvertAuraSlider
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(0, 600)
 										self:SetValue(0)
 										self:SetValueStep(0.01)
@@ -5508,7 +5469,10 @@
 						</Frames>
 					</Frame>
 					<!-- Fifth Configuration Tab Panel (Stacks) -->
-					<Frame name = "PowaBarConfigFrameEditor5" hidden = "true">
+					<Frame name = "PowaBarConfigFrameEditor5" inherits = "PowaBackdropTemplate" hidden = "true">
+						<KeyValues>
+							<KeyValue key="backdropInfo" value="POWA_OPTIONS_SELECTOR_BACKDROP_128_12_2222" type="global"/>
+						</KeyValues>
 						<Size>
 							<AbsDimension x = "450" y = "230"/>
 						</Size>
@@ -5532,8 +5496,9 @@
 						</Backdrop>
 						<Scripts>
 							<OnLoad>
-								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
+								self:OnBackdropLoaded()
 								self:SetBackdropColor(0.1, 0.1, 0.1)
+								self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 							</OnLoad>
 						</Scripts>
 						<Frames>
@@ -5573,6 +5538,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(-700, 700)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -5608,6 +5574,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(-400, 400)
 										self:SetValue(0)
 										self:SetValueStep(1)
@@ -5643,6 +5610,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(0.01, 5)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
@@ -5671,6 +5639,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										self:OnBackdropLoaded()
 										self:SetMinMaxValues(0, 1)
 										self:SetValue(1)
 										self:SetValueStep(0.01)
@@ -5804,7 +5773,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaDropDownStacksTextureLabel:SetText(PowaAurasOptions.Text.nomStacksTexture)
 									</OnLoad>
 								</Scripts>
@@ -5878,7 +5847,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										Lib_UIDropDownMenu_SetWidth(self, 190)
+										MSA_DropDownMenu_SetWidth(self, 190)
 										PowaBuffStacksRelativeLabel:SetText(PowaAurasOptions.Text.nomRelativeStacks)
 									</OnLoad>
 								</Scripts>
@@ -6042,7 +6011,10 @@
 		</Frames>
 	</Frame>
 	<!-- Font Selector Frame -->
-	<Frame name = "PowaFontSelectorFrame" movable = "false" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+	<Frame name = "PowaFontSelectorFrame" inherits = "PowaBackdropTemplate" movable = "false" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="POWA_OPTIONS_FRAME_BACKDROP_200_32_10101010" type="global"/>
+		</KeyValues>
 		<Size>
 			<AbsDimension x = "248" y = "236"/>
 		</Size>
@@ -6053,17 +6025,6 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
-			<BackgroundInsets>
-				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val = "200"/>
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val = "32"/>
-			</EdgeSize>
-		</Backdrop>
 		<Layers>
 			<Layer>
 				<Texture name = "PowaFontHeaderTexture" file = "Interface\DialogFrame\UI-DialogBox-Header">
@@ -6154,7 +6115,10 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Frame name = "FontSelectorEditor">
+			<Frame name = "FontSelectorEditor" inherits = "PowaBackdropTemplate">
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="POWA_OPTIONS_SELECTOR_BACKDROP_128_12_2222" type="global"/>
+				</KeyValues>
 				<Size>
 					<AbsDimension x = "211" y = "162"/>
 				</Size>
@@ -6165,21 +6129,11 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-					<EdgeSize>
-						<AbsValue val = "12"/>
-					</EdgeSize>
-					<TileSize>
-						<AbsValue val = "128"/>
-					</TileSize>
-					<BackgroundInsets>
-						<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-					</BackgroundInsets>
-				</Backdrop>
 				<Scripts>
 					<OnLoad>
-						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
+						self:OnBackdropLoaded()
 						self:SetBackdropColor(0.1, 0.1, 0.1)
+						self:SetBackdropBorderColor(0.0, 0.0, 0.0)
 					</OnLoad>
 				</Scripts>
 				<Frames>
@@ -6273,6 +6227,9 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
+				self:OnBackdropLoaded()
+				self:SetBackdropColor(0.6, 0.6, 0.6)
+				self:SetBackdropBorderColor(0.9, 1.0, 0.95)
 				PowaFontHeader:SetText(PowaAurasOptions.Text.nomFontSelector)
 			</OnLoad>
 			<OnShow>
@@ -6281,7 +6238,10 @@
 		</Scripts>
 	</Frame>
 	<!-- Equipment Slots Frame -->
-	<Frame name = "PowaEquipmentSlotsFrame" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+	<Frame name = "PowaEquipmentSlotsFrame" inherits = "PowaBackdropTemplate" movable = "true" parent = "UIParent" frameStrata = "DIALOG" toplevel = "true" hidden = "true" enableMouse = "true" enableKeyboard = "true">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="POWA_OPTIONS_EQUIPMENT_BACKDROP_200_16_4444" type="global"/>
+		</KeyValues>
 		<Size>
 			<AbsDimension x = "225" y = "377"/>
 		</Size>
@@ -6303,20 +6263,10 @@
 				</Anchor>
 			</Anchors>
 		</TitleRegion>
-		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
-			<BackgroundInsets>
-				<AbsInset left = "4" right = "4" top = "4" bottom = "4"/>
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val = "200"/>
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val = "16"/>
-			</EdgeSize>
-		</Backdrop>
 		<Scripts>
 			<OnLoad>
 				PowaTitleText:SetText(PowaAurasOptions.Text.SlotsToCheck)
+				self:OnBackdropLoaded()
 				self:SetBackdropColor(0.1, 0.1, 0.1)
 				self:SetBackdropBorderColor(0.9, 1.0, 0.9)
 				tinsert(UISpecialFrames,self:GetName())
