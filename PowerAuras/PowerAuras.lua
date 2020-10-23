@@ -1346,7 +1346,6 @@ function PowaAuras:Reset(aura)
 			model:SetModel(aura.modelpath)
 		end
 	end
-	model:RefreshCamera()
 	model:SetCustomCamera(1)
 	if model:HasCustomCamera() then
 		local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
@@ -1367,7 +1366,6 @@ function PowaAuras:ResetSecondary(aura)
 			secondaryModel:SetModel(aura.modelpath)
 		end
 	end
-	secondaryModel:RefreshCamera()
 	secondaryModel:SetCustomCamera(1)
 	if secondaryModel:HasCustomCamera() then
 		local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
@@ -1386,7 +1384,6 @@ function PowaAuras:ResetUnit(aura)
 			model:SetUnit(string.lower(aura.modelcustompath))
 		end
 	end
-	model:RefreshCamera()
 	model:SetCustomCamera(1)
 	if model:HasCustomCamera() then
 		local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
@@ -1405,7 +1402,6 @@ function PowaAuras:ResetSecondaryUnit(aura)
 			secondaryModel:SetUnit(string.lower(aura.modelcustompath))
 		end
 	end
-	secondaryModel:RefreshCamera()
 	secondaryModel:SetCustomCamera(1)
 	if secondaryModel:HasCustomCamera() then
 		local x, y, z = self:GetBaseCameraTarget(aura.modelpath)
@@ -1628,24 +1624,12 @@ end
 
 function PowaAuras:SetOrientation(aura, model, distance, yaw, pitch)
 	if model:HasCustomCamera() then
-		if type(distance) == "number" and type(yaw) == "number" and type(pitch) == "number" then
-			model.distance, model.yaw, model.pitch = distance, yaw, pitch
-			aura.mcd, aura.mcy, aura.mcp = distance, yaw, pitch
-			local x = distance * math.cos(yaw) * math.cos(pitch)
-			local y = distance * math.sin(- yaw) * math.cos(pitch)
-			local z = (distance * math.sin(- pitch))
-			model:SetCameraPosition(x, y, z)
-		else
-			local x, y, z = model:GetCameraPosition()
-			local tx, ty, tz = model:GetCameraTarget()
-			if ty and tz then
-				model:SetCameraTarget(0, ty, tz)
-			end
-			local distance = math.sqrt(x * x + y * y + z * z)
-			local yaw = - math.atan(y / x)
-			local pitch = - math.atan(z / x)
-			self:SetOrientation(aura, model, distance, yaw, pitch)
-		end
+		model.distance, model.yaw, model.pitch = distance, yaw, pitch
+		aura.mcd, aura.mcy, aura.mcp = distance, yaw, pitch
+		local x = distance * math.cos(yaw) * math.cos(pitch)
+		local y = distance * math.sin(- yaw) * math.cos(pitch)
+		local z = (distance * math.sin(- pitch))
+		model:SetCameraPosition(x, y, z)
 	end
 end
 

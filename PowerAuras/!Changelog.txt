@@ -7,12 +7,6 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
-**4.32.0**
-* Initial support for 9.0.1.
-* Using polymorhp backdrop templates to support retail and classic.
-* Fixes some issues with models.
-* Swapped out dropdown library.
-
 **4.31.0**
 * Initial update for 8.3.0 and Classic 1.13.3.
 
