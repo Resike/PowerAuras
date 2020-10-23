@@ -508,7 +508,12 @@ function PowaAuras:CreateEffectLists()
 	for k in pairs(self.AurasByType) do
 		wipe(self.AurasByType[k])
 	end
-	self.Events = self:CopyTable(self.AlwaysEvents)
+	local events = self:CopyTable(self.AlwaysEvents)
+	if not self.IsClassic then
+		local events_mainline = self:CopyTable(self.AlwaysEventsRetail)
+		for k, v in pairs(events_mainline) do events[k] = v end
+	end
+	self.Events = events
 	for id, aura in pairs(self.Auras) do
 		if not aura.off or self.UsedInMultis[id] then
 			aura:AddEffectAndEvents()
@@ -646,12 +651,12 @@ function PowaAuras:OnUpdate(elapsed)
 				self.DoCheck.All = true
 				self.WeAreMounted = isMounted
 			end
-			local isInVehicle = UnitInVehicle("player")
+			local isInVehicle = not self.IsClassic and UnitInVehicle("player")
 			if isInVehicle ~= self.WeAreInVehicle then
 				self.DoCheck.All = true
 				self.WeAreInVehicle = isInVehicle
 			end
-			local isInPetBattle = C_PetBattles.IsInBattle()
+			local isInPetBattle = not self.IsClassic and C_PetBattles.IsInBattle()
 			if isInPetBattle ~= self.WeAreInPetBattle then
 				self.DoCheck.All = true
 				self.WeAreInPetBattle = isInPetBattle

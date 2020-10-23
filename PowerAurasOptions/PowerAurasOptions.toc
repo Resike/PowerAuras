@@ -1,6 +1,6 @@
-## Interface: 80100
+## Interface: 80300
 ## Title: Power Auras Classic Options
-## Version: 4.30.2
+## Version: 4.31.0
 ## Author: Smacker 'lolcat', Dridzt 'classic', Garstiger 'continued', Sinsthar 'base', Meorawr, modified by Zensunim and Resike
 ## Notes: Options and configuration GUI for Power Auras Classic.
 ## DefaultState: Enabled

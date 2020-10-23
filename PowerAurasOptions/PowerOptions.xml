@@ -40,7 +40,7 @@
 		<HighlightTexture file = "Interface\Buttons\ButtonHilight-Square" alphaMode = "ADD"/>
 	</Button>
 	<!-- Item Slot Template -->
-	<Button name = "PowaItemSlotTemplate" inherits = "ItemButtonTemplate" virtual = "true">
+	<Button name = "PowaItemSlotTemplate" inherits = "SmallItemButtonTemplate" virtual = "true">
 		<Scripts>
 			<OnLeave>
 				self.updateTooltip = nil

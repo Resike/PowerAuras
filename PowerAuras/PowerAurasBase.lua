@@ -15,6 +15,8 @@ local type = type
 local UIErrorsFrame = UIErrorsFrame
 
 local UIERRORS_HOLD_TIME = UIERRORS_HOLD_TIME
+local WOW_PROJECT_ID = WOW_PROJECT_ID
+local WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC
 
 local PowaAuras =
 {
@@ -23,6 +25,8 @@ Version = GetAddOnMetadata("PowerAuras", "Version"),
 VersionPattern = "(%d+)%.(%d+)%.(%d+)",
 
 WoWBuild = tonumber(select(4, GetBuildInfo()), 10),
+
+IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC,
 
 IconSource = "Interface\\Icons\\",
 
@@ -68,7 +72,7 @@ ModTest = false,
 DebugCycle = false,
 ResetTargetTimers = false,
 
-ActiveTalentGroup = GetSpecialization(),
+ActiveTalentGroup = GetSpecialization and GetSpecialization(),
 
 WeAreInCombat = false,
 WeAreInRaid = false,
@@ -142,23 +146,31 @@ playerclass = "unknown",
 Events = { },
 AlwaysEvents =
 {
-	PLAYER_DIFFICULTY_CHANGED = true,
-	ACTIVE_TALENT_GROUP_CHANGED = true,
+	--PLAYER_DIFFICULTY_CHANGED = true,
+	--ACTIVE_TALENT_GROUP_CHANGED = true,
 	CHAT_MSG_ADDON = true,
 	--INSPECT_TALENT_READY = true,
 	PLAYER_ALIVE = true,
 	PLAYER_DEAD = true,
 	PLAYER_REGEN_DISABLED = true,
 	PLAYER_REGEN_ENABLED = true,
-	PLAYER_TALENT_UPDATE = true,
+	--PLAYER_TALENT_UPDATE = true,
 	PLAYER_UNGHOST = true,
 	PLAYER_UPDATE_RESTING = true,
 	GROUP_ROSTER_UPDATE = true,
-	UNIT_ENTERED_VEHICLE = true,
-	UNIT_EXITED_VEHICLE = true,
+	--UNIT_ENTERED_VEHICLE = true,
+	--UNIT_EXITED_VEHICLE = true,
 	UNIT_FACTION = true,
 	UNIT_SPELLCAST_SUCCEEDED = true,
 	ZONE_CHANGED_NEW_AREA = true
+},
+
+AlwaysEventsRetail = {
+	UNIT_ENTERED_VEHICLE = true,
+	UNIT_EXITED_VEHICLE = true,
+	PLAYER_TALENT_UPDATE = true,
+	PLAYER_DIFFICULTY_CHANGED = true,
+	ACTIVE_TALENT_GROUP_CHANGED = true,
 },
 
 RelativeToParent =
