@@ -8,8 +8,9 @@
 ## LoadOnDemand: 1
 
 Libs\LibStub\LibStub.lua
-Libs\UIDropDownMenu\UIDropDownMenu.xml
+Libs\MSA-DropDownMenu-1.0\MSA-DropDownMenu-1.0.lua
 
+PowerGlobals.lua
 PowerOptions.lua
 PowerOptionsData.lua
 PowerOptionsDump.lua
