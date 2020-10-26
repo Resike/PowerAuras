@@ -10,7 +10,6 @@ local GetInspectSpecialization = GetInspectSpecialization
 local GetSpecializationInfoByID = GetSpecializationInfoByID
 local GetTime = GetTime
 local NotifyInspect = NotifyInspect
-local UnitBuff = UnitBuff
 local UnitClass = UnitClass
 local UnitIsConnected = UnitIsConnected
 local UnitIsUnit = UnitIsUnit

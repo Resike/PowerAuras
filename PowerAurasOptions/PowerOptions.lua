@@ -45,6 +45,8 @@ local GRAY_FONT_COLOR = GRAY_FONT_COLOR
 local HIGHLIGHT_FONT_COLOR = HIGHLIGHT_FONT_COLOR
 local NORMAL_FONT_COLOR = NORMAL_FONT_COLOR
 
+local IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+
 if InterfaceOptionsFrame then
 	InterfaceOptionsFrame:HookScript("OnShow", function(self)
 		for i, v in pairs(UISpecialFrames) do
@@ -1525,10 +1527,14 @@ function PowaAurasOptions:UpdateTimerOptions()
 end
 
 function PowaAurasOptions:UpdateStacksOptions()
-	local stacks = self.Auras[self.CurrentAuraId].Stacks
-	if not stacks then
+	local aura = self.Auras[self.CurrentAuraId]
+	if not aura then
 		return
 	end
+	if not aura.Stacks then
+		aura.Stacks = cPowaStacks(aura)
+	end
+	local stacks = aura.Stacks
 	PowaShowStacksButton:SetChecked(stacks.enabled)
 	PowaStacksAlphaSlider:SetValue(stacks.a)
 	PowaStacksSizeSlider:SetValue(stacks.h)
@@ -4328,6 +4334,20 @@ function PowaAurasOptions.DropDownMenu_OnClickEnd(self)
 	PowaAurasOptions:RedisplayAura(PowaAurasOptions.CurrentAuraId)
 end
 
+function PowaAurasOptions:FrameOnLoad(frame)
+	frame:OnBackdropLoaded()
+	frame:SetBackdropColor(0.1, 0.1, 0.1)
+	frame:SetBackdropBorderColor(0.9, 1.0, 0.9)
+	tinsert(UISpecialFrames, frame:GetName())
+	PowaAurasOptions:ResizeFrame(frame)
+
+	if PowaGlobalMisc.SavedPositions and PowaGlobalMisc.SavedPositions[frame:GetName()] then
+		local point, relativeTo, relativePoint, x, y = unpack(PowaGlobalMisc.SavedPositions[frame:GetName()])
+		frame:ClearAllPoints()
+		frame:SetPoint(point, relativeTo or UIParent, relativePoint, math.floor(x + 0.5), math.floor(y + 0.5))
+	end
+end
+
 -- Options Deplacement
 function PowaAurasOptions:FrameMouseDown(frame, button)
 	if button == "LeftButton" then
@@ -4337,6 +4357,10 @@ end
 
 function PowaAurasOptions:FrameMouseUp(frame, button)
 	frame:StopMovingOrSizing()
+	if not PowaGlobalMisc.SavedPositions then
+		PowaGlobalMisc.SavedPositions = {}
+	end
+	PowaGlobalMisc.SavedPositions[frame:GetName()] = {frame:GetPoint(1)}
 end
 
 -- Color Picker
@@ -5176,7 +5200,7 @@ function PowaAurasOptions:ResetSlotsToEmpty()
 	for _, child in ipairs({PowaEquipmentSlotsFrame:GetChildren()}) do
 		if child:IsObjectType("Button") then
 			local slotName = string.gsub(child:GetName(), "Powa", "")
-			if string.match(slotName, "Slot") then
+			if string.match((not IsClassic and slotName == "RangedSlot") and "" or slotName, "Slot") then
 				local slotId, emptyTexture = GetInventorySlotInfo(slotName)
 				_G[child:GetName().."IconTexture"]:SetTexture(emptyTexture)
 				child.SlotId = slotId
@@ -5196,7 +5220,7 @@ function PowaAurasOptions:EquipmentSlotsShow()
 	for pword in string.gmatch(aura.buffname, "[^/]+") do
 		pword = aura:Trim(pword)
 		if string.len(pword) > 0 and pword ~= "???" then
-			if pword == "Head" or pword == "Neck" or pword == "Shoulder" or pword == "Back" or pword == "Chest" or pword == "Shirt" or pword == "Tabard" or pword == "Wrist" or pword == "Hands" or pword == "Waist" or pword == "Legs" or pword == "Feet" or pword == "Finger0" or pword == "Finger1" or pword == "Trinket0" or pword == "Trinket1" or pword == "MainHand" or pword == "SecondaryHand" then
+			if pword == "Head" or pword == "Neck" or pword == "Shoulder" or pword == "Back" or pword == "Chest" or pword == "Shirt" or pword == "Tabard" or pword == "Wrist" or pword == "Hands" or pword == "Waist" or pword == "Legs" or pword == "Feet" or pword == "Finger0" or pword == "Finger1" or pword == "Trinket0" or pword == "Trinket1" or pword == "MainHand" or pword == "SecondaryHand" or (IsClassic and pword == "Ranged") then
 				local slotId = GetInventorySlotInfo(pword.."Slot")
 				if slotId then
 					local ok, texture = pcall(GetInventoryItemTexture, "player", slotId)

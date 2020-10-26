@@ -81,6 +81,7 @@ PowaMisc =
 
 PowaGlobalMisc =
 {
+	SavedPositions = {},
 	PathToSounds = "Interface\\AddOns\\PowerAuras\\Sounds\\",
 	PathToAuras = "Interface\\AddOns\\PowerAuras\\Custom\\",
 	BlockIncomingAuras = false,

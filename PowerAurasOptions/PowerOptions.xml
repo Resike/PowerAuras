@@ -47,7 +47,41 @@
 		<HighlightTexture file = "Interface\Buttons\ButtonHilight-Square" alphaMode = "ADD"/>
 	</Button>
 	<!-- Item Slot Template -->
-	<Button name = "PowaItemSlotTemplate" inherits = "SmallItemButtonTemplate" virtual = "true">
+	<Button name = "PowaItemSlotTemplate" virtual = "true">
+		<Size x="41" y="41" />
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentIconTexture" parentKey="Icon">
+					<Size x="39" y="39" />
+					<Anchors>
+						<Anchor point="TOPLEFT" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY" textureSubLevel="1">
+				<Texture parentKey="IconOverlay" hidden="true">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Icon" relativePoint="TOPLEFT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" relativePoint="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY" textureSubLevel="2">
+				<Texture parentKey="IconOverlay2" hidden="true">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Icon" relativePoint="TOPLEFT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" relativePoint="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY" textureSubLevel="2">
+				<FontString name="$parentCount" inherits="NumberFontNormal" justifyH="RIGHT" parentKey="Count">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" x="-1" y="1" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
 		<Scripts>
 			<OnLeave>
 				self.updateTooltip = nil
@@ -373,11 +407,7 @@
 		</Anchors>
 		<Scripts>
 			<OnLoad>
-				self:OnBackdropLoaded()
-				self:SetBackdropColor(0.1, 0.1, 0.1)
-				self:SetBackdropBorderColor(0.9, 1.0, 0.9)
-				tinsert(UISpecialFrames, self:GetName())
-				PowaAurasOptions:ResizeFrame(self)
+				PowaAurasOptions:FrameOnLoad(self)
 			</OnLoad>
 			<OnShow>
 				PlaySound(73914, PowaMisc.SoundChannel)
@@ -1730,10 +1760,7 @@
 		</Anchors>
 		<Scripts>
 			<OnLoad>
-				self:SetBackdropColor(0.6, 0.6, 0.6)
-				self:SetBackdropBorderColor(0.9, 1.0, 0.95)
-				self:OnBackdropLoaded()
-				PowaAurasOptions:ResizeFrame(self)
+				PowaAurasOptions:FrameOnLoad(self)
 			</OnLoad>
 			<OnMouseDown>
 				PowaAurasOptions:FrameMouseDown(self, button)
@@ -6243,7 +6270,7 @@
 			<KeyValue key="backdropInfo" value="POWA_OPTIONS_EQUIPMENT_BACKDROP_200_16_4444" type="global"/>
 		</KeyValues>
 		<Size>
-			<AbsDimension x = "225" y = "377"/>
+			<AbsDimension x = "288" y = "410"/>
 		</Size>
 		<Anchors>
 			<Anchor point = "CENTER">
@@ -6251,7 +6278,8 @@
 					<AbsDimension x = "0" y = "0"/>
 				</Offset>
 			</Anchor>
-		</Anchors>		<TitleRegion>
+		</Anchors>
+		<TitleRegion>
 			<Size>
 				<AbsDimension x = "225" y = "377"/>
 			</Size>
@@ -6460,6 +6488,15 @@
 			<Button name = "PowaSecondaryHandSlot" inherits = "PowaItemSlotTemplate">
 				<Anchors>
 					<Anchor point = "TOPLEFT" relativeTo = "PowaMainHandSlot" relativePoint = "TOPRIGHT">
+						<Offset>
+							<AbsDimension x = "5" y = "0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name = "PowaRangedSlot" inherits = "PowaItemSlotTemplate">
+				<Anchors>
+					<Anchor point = "TOPLEFT" relativeTo = "PowaSecondaryHandSlot" relativePoint = "TOPRIGHT">
 						<Offset>
 							<AbsDimension x = "5" y = "0"/>
 						</Offset>
