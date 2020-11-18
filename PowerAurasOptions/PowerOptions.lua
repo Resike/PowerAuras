@@ -4413,6 +4413,7 @@ function PowaAurasOptions:OpenColorPicker(control, source, setTexture)
 		ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
 		ColorPickerFrame.previousValues = {r = button.r, g = button.g, b = button.b, a = button.opacity}
 		ColorPickerFrame.cancelFunc = self.CancelColor
+		ColorPickerFrame:ClearAllPoints()
 		ColorPickerFrame:SetPoint("TopLeft", "PowaBarConfigFrame", "TopRight", 0, 0)
 		ColorPickerFrame:Show()
 	end
@@ -4460,6 +4461,7 @@ function PowaAurasOptions:OpenGradientColorPicker(control, source, setTexture)
 		ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
 		ColorPickerFrame.previousGradientValues = {r = button.r, g = button.g, b = button.b, a = button.opacity}
 		ColorPickerFrame.cancelFunc = self.CancelGradientColor
+		ColorPickerFrame:ClearAllPoints()
 		ColorPickerFrame:SetPoint("TopLeft", "PowaBarConfigFrame", "TopRight", 0, 0)
 		ColorPickerFrame:Show()
 	end

@@ -4,6 +4,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.32.2**
+* Fixed color pickers.
+* Updated creature models.
+
 **4.32.1**
 * Fixed equipment slots and added ranged slot for classic.
 * Fixed frame position loading.
