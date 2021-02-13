@@ -179,8 +179,8 @@ function PowaAurasOptions:Dump_Safe()
 	--ComboPoints
 	PowaState["ComboPoints"] = {player = UnitPower("player", Enum.PowerType.ComboPoints), vehicle = UnitPower("vehicle", Enum.PowerType.ComboPoints)}
 	-- Weapon Enchant
-	local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo()
-	PowaState.WeaponEnchant = {hasMainHandEnchant = hasMainHandEnchant, mainHandExpiration = mainHandExpiration, mainHandCharges = mainHandCharges, hasOffHandEnchant = hasOffHandEnchant, offHandExpiration = offHandExpiration, offHandCharges = offHandCharges}
+	local hasMainHandEnchant, mainHandExpiration, mainHandCharges, mainHandEnchantID, hasOffHandEnchant, offHandExpiration, offHandCharges, offHandEnchantID = GetWeaponEnchantInfo()
+	PowaState.WeaponEnchant = {hasMainHandEnchant = hasMainHandEnchant, mainHandExpiration = mainHandExpiration, mainHandCharges = mainHandCharges, mainHandEnchantID = mainHandEnchantID, hasOffHandEnchant = hasOffHandEnchant, offHandExpiration = offHandExpiration, offHandCharges = offHandCharges, offHandEnchantID = offHandEnchantID}
 	-- Stances
 	local numforms = GetNumShapeshiftForms()
 	PowaState["NumShapeshiftForms"] =  numforms

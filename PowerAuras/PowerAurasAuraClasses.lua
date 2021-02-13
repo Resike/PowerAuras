@@ -2483,7 +2483,7 @@ end
 
 function cPowaEnchant:CheckIfShouldShow(giveReason)
 	PowaAuras:Debug("Check weapon enchant")
-	local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo()
+	local hasMainHandEnchant, mainHandExpiration, mainHandCharges, mainHandEnchantID, hasOffHandEnchant, offHandExpiration, offHandCharges, offHandEnchantID = GetWeaponEnchantInfo()
 	local checkMain = true
 	local checkOff = true
 	for pword in string.gmatch(self.buffname, "[^/]+") do
