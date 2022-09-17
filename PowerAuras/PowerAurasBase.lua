@@ -15,8 +15,10 @@ local type = type
 local UIErrorsFrame = UIErrorsFrame
 
 local UIERRORS_HOLD_TIME = UIERRORS_HOLD_TIME
+
 local WOW_PROJECT_ID = WOW_PROJECT_ID
 local WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC
+local WOW_PROJECT_BURNING_CRUSADE_CLASSIC = WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 
 local PowaAuras =
 {
@@ -26,7 +28,8 @@ VersionPattern = "(%d+)%.(%d+)%.(%d+)",
 
 WoWBuild = tonumber(select(4, GetBuildInfo()), 10),
 
-IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC,
+IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC,
+IsBCClassic = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC,
 
 IconSource = "Interface\\Icons\\",
 

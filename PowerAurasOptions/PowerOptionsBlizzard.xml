@@ -1,6 +1,9 @@
 <Ui xmlns = "http://www.blizzard.com/wow/ui/" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
 	<!-- Blizzard Slider Template -->
-	<Slider name = "PowaBarBlizzSliderTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
+	<Slider name = "PowaBarBlizzSliderTemplate"  inherits = "PowaBackdropTemplate" orientation = "HORIZONTAL" virtual = "true" enableMouse = "true">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="POWA_OPTIONS_SLIDER_BACKDROP_8_8_3333" type="global"/>
+		</KeyValues>
 		<Size>
 			<AbsDimension x = "144" y = "17"/>
 		</Size>
@@ -235,6 +238,7 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
+						self:OnBackdropLoaded()
 						self:EnableMouseWheel(true)
 						self:SetMinMaxValues(0, 100)
 						self:SetValue(100 - 200 * PowaMisc.OnUpdateLimit)
@@ -266,6 +270,7 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
+						self:OnBackdropLoaded()
 						self:EnableMouseWheel(true)
 						self:SetMinMaxValues(0, 100)
 						self:SetValue(100 - 1000 * PowaMisc.AnimationLimit)
@@ -319,6 +324,7 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
+						self:OnBackdropLoaded()
 						self:EnableMouseWheel(true)
 						self:SetMinMaxValues(1, 1000)
 						self:SetValue(PowaMisc.UserSetMaxTextures)

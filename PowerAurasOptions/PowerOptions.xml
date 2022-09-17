@@ -167,21 +167,13 @@
 		</Scripts>
 	</Frame>
 	<!-- Export Dialog Frame -->
-	<Frame name = "PowaAuraExportDialog" frameStrata = "DIALOG" hidden = "true" toplevel = "true" parent = "UIParent">
+	<Frame name = "PowaAuraExportDialog" frameStrata = "DIALOG" hidden = "true" toplevel = "true" parent = "UIParent" inherits = "PowaBackdropTemplate">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="POWA_OPTIONS_EXPORT_BACKDROP_32_32_10101010" type="global"/>
+		</KeyValues>
 		<Size>
 			<AbsDimension x = "384" y = "218"/>
 		</Size>
-		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
-			<BackgroundInsets>
-				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val = "32"/>
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val = "32"/>
-			</EdgeSize>
-		</Backdrop>
 		<Layers>
 			<Layer level = "ARTWORK">
 				<FontString name = "$parentTopTitle" inherits = "GameFontNormalLarge" justifyH = "CENTER">
@@ -292,6 +284,7 @@
 		</Frames>
 		<Scripts>
 			<OnLoad>
+				self:OnBackdropLoaded()
 				PowaAurasOptions:ExportDialogInit(self)
 			</OnLoad>
 			<OnShow>

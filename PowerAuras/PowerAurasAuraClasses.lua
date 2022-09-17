@@ -96,6 +96,9 @@ local BOOKTYPE_SPELL = BOOKTYPE_SPELL
 local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
 
+local IsClassic = PowaAuras.IsClassic
+local IsBCClassic = PowaAuras.IsBCClassic
+
 local PowaAuras_Tooltip = CreateFrame("GameTooltip", "PowaAuras_Tooltip", UIParent, "GameTooltipTemplate")
 PowaAuras_Tooltip:SetPoint("BOTTOM", UIParent, "TOP", 0, 100)
 PowaAuras_Tooltip:SetFrameStrata("TOOLTIP")
@@ -3400,7 +3403,7 @@ end
 
 function cPowaHealth:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon("Interface\\Icons\\inv_alchemy_elixir_05")
+	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\inv_potion_131" or "Interface\\Icons\\inv_potion_54") or "Interface\\Icons\\inv_alchemy_90_resource_red")
 end
 
 -- Mana
@@ -3434,7 +3437,7 @@ end
 
 function cPowaMana:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon("Interface\\Icons\\inv_alchemy_elixir_02")
+	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\inv_potion_137" or "Interface\\Icons\\inv_potion_76") or "Interface\\Icons\\inv_alchemy_90_resource_blue")
 end
 
 -- Power
@@ -3880,7 +3883,7 @@ function cPowaStance:SetFixedIcon()
 	if self.stance > 0 then
 		self:SetIcon(GetShapeshiftFormInfo(self.stance))
 	elseif self.stance == 0 then
-		self:SetIcon("Interface\\Icons\\warrior_talent_icon_deadlycalm")
+		self:SetIcon(IsClassic and "Interface\\Icons\\temp" or "Interface\\Icons\\warrior_talent_icon_deadlycalm")
 	else
 		self.icon = ""
 	end
@@ -4337,7 +4340,7 @@ end
 
 function cPowaSlots:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon("Interface\\Icons\\inv_throwingaxepvp330_08")
+	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\inv_axe_66" or "Interface\\Icons\\inv_axe_02") or "Interface\\Icons\\inv_throwingaxepvp330_08")
 end
 
 function cPowaSlots:CheckIfShouldShow(giveReason)
@@ -4705,7 +4708,7 @@ end
 
 function cPowaUnitMatch:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon("Interface\\Icons\\Spell_Misc_EmotionAngry")
+	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\ability_druid_lacerate" or "Interface\\Icons\\ability_druid_enrage") or "Interface\\Icons\\spell_misc_emotionangry")
 end
 
 -- Pet Stance Aura
@@ -4759,7 +4762,7 @@ end
 
 function cPowaPetStance:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon("Interface\\Icons\\ABILITY_HUNTER_SICKEM")
+	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\ability_hunter_pet_wolf" or "Interface\\Icons\\ability_hunter_pet_wolf") or "Interface\\Icons\\ability_hunter_sickem")
 end
 
 -- Concrete Classes

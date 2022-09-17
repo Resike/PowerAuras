@@ -38,6 +38,16 @@ POWA_OPTIONS_LIST_BACKDROP_128_16_2222 = {
 	insets = { left = 2, right = 2, top = 2, bottom = 2 },
 }
 
+POWA_OPTIONS_EXPORT_BACKDROP_32_32_10101010 = {
+	bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+	edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+	tile = true,
+	tileEdge = true,
+	tileSize = 32,
+	edgeSize = 32,
+	insets = { left = 10, right = 10, top = 10, bottom = 10 },
+}
+
 POWA_OPTIONS_SLIDER_BACKDROP_8_8_3333 = {
 	bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
 	edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",

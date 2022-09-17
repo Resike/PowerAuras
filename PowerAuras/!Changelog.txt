@@ -4,6 +4,12 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.32.4**
+* Support for Retail 9.1.5.
+* Support for Burning Crusade Classic 2.5.2.
+* Support for Classc 1.14.0.
+* Fixed interface sliders.
+
 **4.32.3**
 * Fixed temporary enchant tracking.
 
