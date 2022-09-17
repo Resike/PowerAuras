@@ -4,10 +4,16 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.32.5**
+* Support for Retail 9.2.7.
+* Support for Wrath Classic 3.4.0.
+* Support for Classic 1.14.3.
+* Ranged slot fix.
+
 **4.32.4**
 * Support for Retail 9.1.5.
 * Support for Burning Crusade Classic 2.5.2.
-* Support for Classc 1.14.0.
+* Support for Classic 1.14.0.
 * Fixed interface sliders.
 
 **4.32.3**

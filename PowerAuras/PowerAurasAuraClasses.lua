@@ -98,6 +98,7 @@ local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
 
 local IsClassic = PowaAuras.IsClassic
 local IsBCClassic = PowaAuras.IsBCClassic
+local IsWrathClassic = PowaAuras.IsWrathClassic
 
 local PowaAuras_Tooltip = CreateFrame("GameTooltip", "PowaAuras_Tooltip", UIParent, "GameTooltipTemplate")
 PowaAuras_Tooltip:SetPoint("BOTTOM", UIParent, "TOP", 0, 100)
@@ -3403,7 +3404,7 @@ end
 
 function cPowaHealth:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\inv_potion_131" or "Interface\\Icons\\inv_potion_54") or "Interface\\Icons\\inv_alchemy_90_resource_red")
+	self:SetIcon(IsClassic and (IsWrathClassic and "Interface\\Icons\\inv_alchemy_elixir_05" or (IsBCClassic and "Interface\\Icons\\inv_potion_131" or "Interface\\Icons\\inv_potion_54")) or "Interface\\Icons\\inv_alchemy_90_resource_red")
 end
 
 -- Mana
@@ -3437,7 +3438,7 @@ end
 
 function cPowaMana:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\inv_potion_137" or "Interface\\Icons\\inv_potion_76") or "Interface\\Icons\\inv_alchemy_90_resource_blue")
+	self:SetIcon(IsClassic and (IsWrathClassic and "Interface\\Icons\\inv_alchemy_elixir_02" or (IsBCClassic and "Interface\\Icons\\inv_potion_137" or "Interface\\Icons\\inv_potion_76")) or "Interface\\Icons\\inv_alchemy_90_resource_blue")
 end
 
 -- Power
@@ -4019,7 +4020,7 @@ cPowaPet.TooltipOptions = {r = 0.4, g = 1.0, b = 0.4}
 function cPowaPet:Init()
 	self:SetFixedIcon()
 	if PowaAuras.playerclass == "DEATHKNIGHT" then
-		PowaAuras.MasterOfGhouls = (GetSpecialization() == 3)
+		PowaAuras.MasterOfGhouls = (not IsClassic and GetSpecialization() == 3)
 		self.CanHaveTimerOnInverse = true
 		if not PowaAuras.MasterOfGhouls then
 			self.CanHaveTimer = true
@@ -4340,7 +4341,7 @@ end
 
 function cPowaSlots:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\inv_axe_66" or "Interface\\Icons\\inv_axe_02") or "Interface\\Icons\\inv_throwingaxepvp330_08")
+	self:SetIcon(IsClassic and (IsWrathClassic and "Interface\\Icons\\inv_throwingaxepvp330_08" or (IsBCClassic and "Interface\\Icons\\inv_axe_66" or "Interface\\Icons\\inv_axe_02")) or "Interface\\Icons\\inv_throwingaxepvp330_08")
 end
 
 function cPowaSlots:CheckIfShouldShow(giveReason)
@@ -4351,7 +4352,7 @@ function cPowaSlots:CheckIfShouldShow(giveReason)
 	for pword in string.gmatch(self.buffname, "[^/]+") do
 		pword = self:Trim(pword)
 		if string.len(pword) > 0 and pword ~= "???" then
-			if pword == "Head" or pword == "Neck" or pword == "Shoulder" or pword == "Back" or pword == "Chest" or pword == "Shirt" or pword == "Tabard" or pword == "Wrist" or pword == "Hands" or pword == "Waist" or pword == "Legs" or pword == "Feet" or pword == "Finger0" or pword == "Finger1" or pword == "Trinket0" or pword == "Trinket1" or pword == "MainHand" or pword == "SecondaryHand" then
+			if pword == "Head" or pword == "Neck" or pword == "Shoulder" or pword == "Back" or pword == "Chest" or pword == "Shirt" or pword == "Tabard" or pword == "Wrist" or pword == "Hands" or pword == "Waist" or pword == "Legs" or pword == "Feet" or pword == "Finger0" or pword == "Finger1" or pword == "Trinket0" or pword == "Trinket1" or pword == "MainHand" or pword == "SecondaryHand" or (IsClassic and pword == "Ranged") then
 				local slotId, emptyTexture = GetInventorySlotInfo(pword.."Slot")
 				if (slotId) then
 					local texture = GetInventoryItemTexture("player", slotId)
@@ -4708,7 +4709,7 @@ end
 
 function cPowaUnitMatch:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\ability_druid_lacerate" or "Interface\\Icons\\ability_druid_enrage") or "Interface\\Icons\\spell_misc_emotionangry")
+	self:SetIcon(IsClassic and (IsWrathClassic and "Interface\\Icons\\spell_misc_emotionangry" or (IsBCClassic and "Interface\\Icons\\ability_druid_lacerate" or "Interface\\Icons\\ability_druid_enrage")) or "Interface\\Icons\\spell_misc_emotionangry")
 end
 
 -- Pet Stance Aura
@@ -4762,7 +4763,7 @@ end
 
 function cPowaPetStance:SetFixedIcon()
 	self.icon = nil
-	self:SetIcon(IsClassic and (IsBCClassic and "Interface\\Icons\\ability_hunter_pet_wolf" or "Interface\\Icons\\ability_hunter_pet_wolf") or "Interface\\Icons\\ability_hunter_sickem")
+	self:SetIcon(IsClassic and (IsWrathClassic and "Interface\\Icons\\ability_hunter_pet_hyena" or (IsBCClassic and "Interface\\Icons\\ability_hunter_pet_wolf" or "Interface\\Icons\\ability_hunter_pet_wolf")) or "Interface\\Icons\\ability_hunter_sickem")
 end
 
 -- Concrete Classes
