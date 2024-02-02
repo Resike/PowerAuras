@@ -142,6 +142,7 @@ PowerType =
 	[Enum.PowerType.ArcaneCharges] = "Arcane Charges",
 	[Enum.PowerType.Chi] = "Chi",
 	[Enum.PowerType.Energy] = "Energy",
+	[Enum.PowerType.Essence] = "Essence",
 	[Enum.PowerType.Focus] = "Focus",
 	[Enum.PowerType.Fury] = "Fury",
 	[Enum.PowerType.HolyPower] = "Holy Power",

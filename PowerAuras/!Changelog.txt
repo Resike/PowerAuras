@@ -4,6 +4,11 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.33.0**
+* Support for Retail 10.2.5.
+* Support for Wrath Classic 3.4.3.
+* Support for Classic 1.15.0.
+
 **4.32.5**
 * Support for Retail 9.2.7.
 * Support for Wrath Classic 3.4.0.

@@ -10,17 +10,6 @@
 		<HitRectInsets>
 			<AbsInset left = "0" right = "0" top = "-2" bottom = "1"/>
 		</HitRectInsets>
-		<Backdrop bgFile = "Interface\Buttons\UI-SliderBar-Background" edgeFile = "Interface\Buttons\UI-SliderBar-Border" tile = "true">
-			<EdgeSize>
-				<AbsValue val = "8"/>
-			</EdgeSize>
-			<TileSize>
-				<AbsValue val = "8"/>
-			</TileSize>
-			<BackgroundInsets>
-				<AbsInset left = "3" right = "3" top = "6" bottom = "6"/>
-			</BackgroundInsets>
-		</Backdrop>
 		<Layers>
 			<Layer level = "ARTWORK">
 				<FontString name = "$parentText" inherits = "GameFontNormalSmall">
@@ -344,7 +333,7 @@
 				</Scripts>
 			</Slider>
 			<!-- Show Aura Browser Button -->
-			<Button name = "PowaShowAuraBrowserButton" inherits = "OptionsButtonTemplate" text = "Show Browser">
+			<Button name = "PowaShowAuraBrowserButton" inherits = "PowaUIPanelButtonTemplate" text = "Show Browser">
 				<Size>
 					<AbsDimension x = "160" y = "24"/>
 				</Size>
@@ -365,7 +354,7 @@
 				</Scripts>
 			</Button>
 			<!-- Reset Editor Positions Button -->
-			<Button name = "PowaResetPositionButton" inherits = "OptionsButtonTemplate" text = "Reset Editor">
+			<Button name = "PowaResetPositionButton" inherits = "PowaUIPanelButtonTemplate" text = "Reset Editor">
 				<Size>
 					<AbsDimension x = "160" y = "24"/>
 				</Size>

@@ -5,7 +5,7 @@
 	 /  |))\\  /  _  \\ \:' |   \\   \\ /  ._))   /  |))//      /  _ \\ \:.\\_\ \\ /  |))//  /  _ \\  _\  \_//     /  ||     /  \\      /  _ \\  _\  \_//_\  \_// /  \\  /  ||
 	/:. ___// /:.(_)) \\ \  :   </   ///:. ||___ /:.    \\     /:./_\ \\ \  :.  ///:.    \\ /:./_\ \\// \:.\      /:. ||___ /:.  \\__  /:./_\ \\// \:.\ // \:.\  /:.  \\/:. ||___
 	\_ \\     \  _____//(_   ___^____))\  _____))\___|  //     \  _   //(_   ___))\___|  // \  _   //\\__  /      \  _____))\__  ____))\  _   //\\__  / \\__  /  \__  //\  _____))
-	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.26.1   \//      \// \//    \\/     \\/      \//  \//
+	  \//      \//        \//           \//           \//       \// \//   \//          \//   \// \//    \\/        \//4.33.0   \//      \// \//    \\/     \\/      \//  \//
 
 	Power Auras Classic
 	Author: Resike
@@ -33,7 +33,9 @@ local type = type
 local wipe = wipe
 
 local C_PetBattles = C_PetBattles
+local CreateColor = CreateColor
 local CreateFrame = CreateFrame
+local CreateVector3D = CreateVector3D
 local GetActionInfo = GetActionInfo
 local GetActionTexture = GetActionTexture
 local GetCursorPosition = GetCursorPosition
@@ -1231,7 +1233,7 @@ function PowaAuras:ResetModel(aura)
 	model:ClearModel()
 	if aura.model then
 		if not aura.modelpath or aura.modelpath == "" then
-			if not aura.modelcategory or aura.modelcategory == 1 then
+			--[[if not aura.modelcategory or aura.modelcategory == 1 then
 				model:SetModel(self.ModelsCreature[aura.texture])
 			elseif aura.modelcategory == 2 then
 				model:SetModel(self.ModelsEnvironments[aura.texture])
@@ -1239,7 +1241,7 @@ function PowaAuras:ResetModel(aura)
 				model:SetModel(self.ModelsInterface[aura.texture])
 			elseif aura.modelcategory == 4 then
 				model:SetModel(self.ModelsSpells[aura.texture])
-			end
+			end--]]
 		else
 			if tonumber(aura.modelpath) then
 				model:SetDisplayInfo(aura.modelpath)
@@ -1301,7 +1303,7 @@ function PowaAuras:ResetModel(aura)
 		secondaryModel:ClearModel()
 		if aura.model then
 			if not aura.modelpath or aura.modelpath == "" then
-				if not aura.modelcategory or aura.modelcategory == 1 then
+				--[[if not aura.modelcategory or aura.modelcategory == 1 then
 					secondaryModel:SetModel(self.ModelsCreature[aura.texture])
 				elseif aura.modelcategory == 2 then
 					secondaryModel:SetModel(self.ModelsEnvironments[aura.texture])
@@ -1309,7 +1311,7 @@ function PowaAuras:ResetModel(aura)
 					secondaryModel:SetModel(self.ModelsInterface[aura.texture])
 				elseif aura.modelcategory == 4 then
 					secondaryModel:SetModel(self.ModelsSpells[aura.texture])
-				end
+				end--]]
 			else
 				if tonumber(aura.modelpath) then
 					secondaryModel:SetDisplayInfo(aura.modelpath)
@@ -1440,7 +1442,7 @@ function PowaAuras:UpdatePreviewColor(aura)
 	if AuraTexture then
 		if AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02" and AuraTexture:GetTexture() ~= "Interface\\Icons\\TEMP" then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-				AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+				AuraTexture:SetGradient(aura.gradientstyle, CreateColor(aura.r, aura.g, aura.b, 1.0), CreateColor(aura.gr, aura.gg, aura.gb, 1.0))
 			else
 				AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
 			end
@@ -1467,7 +1469,7 @@ function PowaAuras:UpdatePreviewRandomColor(aura)
 	if AuraTexture then
 		if AuraTexture:GetTexture() ~= "Interface\\CharacterFrame\\TempPortrait" and AuraTexture:GetTexture() ~= "Interface\\Icons\\Inv_Misc_QuestionMark" and AuraTexture:GetTexture() ~= "Interface\\Icons\\INV_Scroll_02" and AuraTexture:GetTexture() ~= "Interface\\Icons\\TEMP" then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-				AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r1, aura.r2, aura.r3, 1.0, aura.r4, aura.r5, aura.r6, 1.0)
+				AuraTexture:SetGradient(aura.gradientstyle, CreateColor(aura.r1, aura.r2, aura.r3, 1.0), CreateColor(aura.r4, aura.r5, aura.r6, 1.0))
 			else
 				AuraTexture:SetVertexColor(aura.r1, aura.r2, aura.r3)
 			end
@@ -1495,7 +1497,7 @@ function PowaAuras:UpdateColor(aura)
 		local texture = self.Textures[aura.id]
 		if not aura.textaura then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-				texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+				texture:SetGradient(aura.gradientstyle, CreateColor(aura.r, aura.g, aura.b, 1.0), CreateColor(aura.gr, aura.gg, aura.gb, 1.0))
 			else
 				texture:SetVertexColor(aura.r, aura.g, aura.b)
 			end
@@ -1514,7 +1516,8 @@ function PowaAuras:UpdateColor(aura)
 		end
 	else
 		local model = self.Models[aura.id]
-		model:SetLight(true, false, 0, 1, 0, 1, aura.r, aura.g, aura.b, 1, aura.gr, aura.gg, aura.gb)
+		local lightValues = { omnidirectional = false, point = CreateVector3D(0, 1, 0), ambientIntensity = 1, ambientColor = CreateColor(aura.r, aura.g, aura.b), diffuseIntensity = 1, diffuseColor = CreateColor(aura.gr, aura.gg, aura.gb) }
+		model:SetLight(true, lightValues)
 	end
 	self:UpdatePreviewColor(aura)
 end
@@ -1533,7 +1536,7 @@ function PowaAuras:UpdateRandomColor(aura)
 		local texture = self.Textures[aura.id]
 		if not aura.textaura then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-				texture:SetGradientAlpha(aura.gradientstyle, aura.r1, aura.r2, aura.r3, 1.0, aura.r4, aura.r5, aura.r6, 1.0)
+				texture:SetGradient(aura.gradientstyle, CreateColor(aura.r1, aura.r2, aura.r3, 1.0), CreateColor(aura.r4, aura.r5, aura.r6, 1.0))
 			else
 				texture:SetVertexColor(aura.r1, aura.r2, aura.r3)
 			end
@@ -1554,9 +1557,11 @@ function PowaAuras:UpdateRandomColor(aura)
 	else
 		local model = self.Models[aura.id]
 		if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-			model:SetLight(true, false, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, aura.r4, aura.r5, aura.r6)
+			local lightValues = { omnidirectional = false, point = CreateVector3D(0, 1, 0), ambientIntensity = 1, ambientColor = CreateColor(aura.r1, aura.r2, aura.r3), diffuseIntensity = 1, diffuseColor = CreateColor(aura.r4, aura.r5, aura.r6) }
+			model:SetLight(true, lightValues)
 		else
-			model:SetLight(true, false, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, 1, 1, 1)
+			local lightValues = { omnidirectional = false, point = CreateVector3D(0, 1, 0), ambientIntensity = 1, ambientColor = CreateColor(aura.r1, aura.r2, aura.r3), diffuseIntensity = 1, diffuseColor = CreateColor(1, 1, 1) }
+			model:SetLight(true, lightValues)
 		end
 	end
 end
@@ -1569,7 +1574,7 @@ function PowaAuras:UpdateSecondaryColor(aura)
 		local secondaryTexture = self.SecondaryTextures[aura.id]
 		if not aura.textaura then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-				secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+				secondaryTexture:SetGradient(aura.gradientstyle, CreateColor(aura.r, aura.g, aura.b, 1.0), CreateColor(aura.gr, aura.gg, aura.gb, 1.0))
 			else
 				secondaryTexture:SetVertexColor(aura.r, aura.g, aura.b)
 			end
@@ -1588,7 +1593,8 @@ function PowaAuras:UpdateSecondaryColor(aura)
 		end
 	else
 		local secondaryModel = self.SecondaryModels[aura.id]
-		secondaryModel:SetLight(true, false, 0, 1, 0, 1, aura.r, aura.g, aura.b, 1, aura.gr, aura.gg, aura.gb)
+		local lightValues = { omnidirectional = false, point = CreateVector3D(0, 1, 0), ambientIntensity = 1, ambientColor = CreateColor(aura.r, aura.g, aura.b), diffuseIntensity = 1, diffuseColor = CreateColor(aura.gr, aura.gg, aura.gb) }
+		secondaryModel:SetLight(true, lightValues)
 	end
 end
 
@@ -1600,7 +1606,7 @@ function PowaAuras:UpdateSecondaryRandomColor(aura)
 		local secondaryTexture = self.SecondaryTextures[aura.id]
 		if not aura.textaura then
 			if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-				secondaryTexture:SetGradientAlpha(aura.gradientstyle, aura.r1, aura.r2, aura.r3, 1.0, aura.r4, aura.r5, aura.r6, 1.0)
+				secondaryTexture:SetGradient(aura.gradientstyle, CreateColor(aura.r1, aura.r2, aura.r3, 1.0), CreateColor(aura.r4, aura.r5, aura.r6, 1.0))
 			else
 				secondaryTexture:SetVertexColor(aura.r1, aura.r2, aura.r3)
 			end
@@ -1620,9 +1626,11 @@ function PowaAuras:UpdateSecondaryRandomColor(aura)
 	else
 		local secondaryModel = self.SecondaryModels[aura.id]
 		if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-			secondaryModel:SetLight(true, false, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, aura.r4, aura.r5, aura.r6)
+			local lightValues = { omnidirectional = false, point = CreateVector3D(0, 1, 0), ambientIntensity = 1, ambientColor = CreateColor(aura.r1, aura.r2, aura.r3), diffuseIntensity = 1, diffuseColor = CreateColor(aura.r4, aura.r5, aura.r6) }
+			secondaryModel:SetLight(true, lightValues)
 		else
-			secondaryModel:SetLight(true, false, 0, 1, 0, 1, aura.r1, aura.r2, aura.r3, 1, 1, 1, 1)
+			local lightValues = { omnidirectional = false, point = CreateVector3D(0, 1, 0), ambientIntensity = 1, ambientColor = CreateColor(aura.r1, aura.r2, aura.r3), diffuseIntensity = 1, diffuseColor = CreateColor(1, 1, 1) }
+			secondaryModel:SetLight(true, lightValues)
 		end
 	end
 end
@@ -1719,7 +1727,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		texture:Hide()
 		model:Show()
 		if not aura.modelpath or aura.modelpath == "" then
-			if not aura.modelcategory or aura.modelcategory == 1 then
+			--[[if not aura.modelcategory or aura.modelcategory == 1 then
 				model:SetModel(self.ModelsCreature[aura.texture])
 			elseif aura.modelcategory == 2 then
 				model:SetModel(self.ModelsEnvironments[aura.texture])
@@ -1727,7 +1735,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 				model:SetModel(self.ModelsInterface[aura.texture])
 			elseif aura.modelcategory == 4 then
 				model:SetModel(self.ModelsSpells[aura.texture])
-			end
+			end--]]
 		else
 			if tonumber(aura.modelpath) then
 				model:SetDisplayInfo(aura.modelpath)

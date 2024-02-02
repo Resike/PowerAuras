@@ -3505,7 +3505,7 @@ end
 
 function cPowaPowerType:IsCorrectPowerType(unit)
 	-- Check for correct secondary resource
-	if (self.PowerType == Enum.PowerType.ArcaneCharges and PowaAuras.playerclass == "MAGE") or (self.PowerType == Enum.PowerType.HolyPower and PowaAuras.playerclass == "PALADIN") or (self.PowerType == Enum.PowerType.Alternate) or (self.PowerType == Enum.PowerType.RunicPower and PowaAuras.playerclass == "DEATHKNIGHT") or (self.PowerType == Enum.PowerType.Chi and PowaAuras.playerclass == "MONK") or (self.PowerType == Enum.PowerType.SoulShards and PowaAuras.playerclass == "WARLOCK") then
+	if (self.PowerType == Enum.PowerType.ArcaneCharges and PowaAuras.playerclass == "MAGE") or (self.PowerType == Enum.PowerType.HolyPower and PowaAuras.playerclass == "PALADIN") or (self.PowerType == Enum.PowerType.Alternate) or (self.PowerType == Enum.PowerType.Chi and PowaAuras.playerclass == "MONK") or (self.PowerType == Enum.PowerType.SoulShards and PowaAuras.playerclass == "WARLOCK") then
 		return true
 	end
 	local unitPowerType = UnitPowerType(unit)

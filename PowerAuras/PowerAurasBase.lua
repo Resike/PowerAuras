@@ -947,6 +947,7 @@ PowaAuras.PowerRanges =
 	[Enum.PowerType.Fury] = 130,
 	[Enum.PowerType.Pain] = 100,
 	[Enum.PowerType.ArcaneCharges] = 4,
+	[Enum.PowerType.Essence] = 5,
 	--[SPELL_POWER_BURNING_EMBERS] = 4,
 }
 
@@ -974,6 +975,7 @@ PowaAuras.RangeType =
 	[Enum.PowerType.Fury] = "",
 	[Enum.PowerType.Pain] = "",
 	[Enum.PowerType.ArcaneCharges] = "",
+	[Enum.PowerType.Essence] = "",
 	--[SPELL_POWER_BURNING_EMBERS] = ""
 }
 
@@ -1001,6 +1003,7 @@ PowaAuras.PowerTypeIcon =
 	[Enum.PowerType.Fury] = "spell_shadow_shadowfury",
 	[Enum.PowerType.Pain] = "artifactability_vengeancedemonHunter_painbringer",
 	[Enum.PowerType.ArcaneCharges] = "spell_arcane_arcane04",
+	[Enum.PowerType.Essence] = "inv_enchant_prismaticsphere",
 	--[SPELL_POWER_BURNING_EMBERS] = "ability_warlock_burningembers",
 }
 

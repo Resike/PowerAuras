@@ -20,6 +20,7 @@ local tostring = tostring
 local type = type
 
 local CloseDropDownMenus = CloseDropDownMenus
+local CreateColor = CreateColor
 local CreateFrame = CreateFrame
 local GetAddOnMetadata = GetAddOnMetadata
 local GetCursorPosition = GetCursorPosition
@@ -49,20 +50,37 @@ local WOW_PROJECT_ID = WOW_PROJECT_ID
 local WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC
 local WOW_PROJECT_BURNING_CRUSADE_CLASSIC = WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 local WOW_PROJECT_WRATH_CLASSIC = WOW_PROJECT_WRATH_CLASSIC
+local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
 
 local IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
+local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 
-if InterfaceOptionsFrame then
-	InterfaceOptionsFrame:HookScript("OnShow", function(self)
-		for i, v in pairs(UISpecialFrames) do
-			if v == "PowaOptionsFrame" then
-				tremove(UISpecialFrames, i)
+if IsRetail then
+	if GameMenuFrame then
+		GameMenuFrame:HookScript("OnShow", function(self)
+			for i, v in pairs(UISpecialFrames) do
+				if v == "PowaOptionsFrame" then
+					tremove(UISpecialFrames, i)
+				end
 			end
-		end
-	end)
-	InterfaceOptionsFrame:HookScript("OnHide", function(self)
-		tinsert(UISpecialFrames, "PowaOptionsFrame")
-	end)
+		end)
+		GameMenuFrame:HookScript("OnHide", function(self)
+			tinsert(UISpecialFrames, "PowaOptionsFrame")
+		end)
+	end
+else
+	if InterfaceOptionsFrame then
+		InterfaceOptionsFrame:HookScript("OnShow", function(self)
+			for i, v in pairs(UISpecialFrames) do
+				if v == "PowaOptionsFrame" then
+					tremove(UISpecialFrames, i)
+				end
+			end
+		end)
+		InterfaceOptionsFrame:HookScript("OnHide", function(self)
+			tinsert(UISpecialFrames, "PowaOptionsFrame")
+		end)
+	end
 end
 
 -- Main Options
@@ -1424,8 +1442,14 @@ function PowaAurasOptions:DoCopyEffect(idFrom, idTo, isMove)
 end
 
 function PowaAurasOptions:MainOptionShow()
-	if not InterfaceOptionsFrame:IsShown() then
-		tinsert(UISpecialFrames, "PowaOptionsFrame")
+	if IsRetail then
+		if not GameMenuFrame:IsShown() then
+			tinsert(UISpecialFrames, "PowaOptionsFrame")
+		end
+	else
+		if not InterfaceOptionsFrame:IsShown() then
+			tinsert(UISpecialFrames, "PowaOptionsFrame")
+		end
 	end
 	if PowaOptionsFrame:IsVisible() then
 		self:MainOptionClose()
@@ -2214,7 +2238,7 @@ function PowaAurasOptions:BarAuraTextureSliderChanged(slider, value)
 		AuraTexture:SetVertexColor(1, 1, 1)
 	else
 		if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
-			AuraTexture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+			AuraTexture:SetGradient(aura.gradientstyle, CreateColor(aura.r, aura.g, aura.b, 1.0), CreateColor(aura.gr, aura.gg, aura.gb, 1.0))
 		else
 			AuraTexture:SetVertexColor(aura.r, aura.g, aura.b)
 		end
@@ -3681,7 +3705,7 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 					if not aura.textaura then
 						if aura.gradientstyle == "Horizontal" or aura.gradientstyle == "Vertical" then
 							if not aura.randomcolor then
-								texture:SetGradientAlpha(aura.gradientstyle, aura.r, aura.g, aura.b, 1.0, aura.gr, aura.gg, aura.gb, 1.0)
+								texture:SetGradient(aura.gradientstyle, CreateColor(aura.r, aura.g, aura.b, 1.0), CreateColor(aura.gr, aura.gg, aura.gb, 1.0))
 							else
 								PowaAurasOptions:UpdateRandomColor(aura)
 							end
@@ -4414,8 +4438,13 @@ function PowaAurasOptions:OpenColorPicker(control, source, setTexture)
 		ColorPickerFrame.Source = source
 		ColorPickerFrame.Button = control
 		ColorPickerFrame.setTexture = setTexture
-		ColorPickerFrame.func = self.SetColor
-		ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
+		if ColorPickerFrameMixin then
+			ColorPickerFrame.swatchFunc = self.SetColor
+			ColorPickerFrame.Content.ColorPicker:SetColorRGB(button.r, button.g, button.b)
+		else
+			ColorPickerFrame.func = self.SetColor
+			ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
+		end
 		ColorPickerFrame.previousValues = {r = button.r, g = button.g, b = button.b, a = button.opacity}
 		ColorPickerFrame.cancelFunc = self.CancelColor
 		ColorPickerFrame:ClearAllPoints()
@@ -4462,8 +4491,13 @@ function PowaAurasOptions:OpenGradientColorPicker(control, source, setTexture)
 		ColorPickerFrame.GradientSource = source
 		ColorPickerFrame.GradientButton = control
 		ColorPickerFrame.setTexture = setTexture
-		ColorPickerFrame.func = self.SetGradientColor
-		ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
+		if ColorPickerFrameMixin then
+			ColorPickerFrame.swatchFunc = self.SetGradientColor
+			ColorPickerFrame.Content.ColorPicker:SetColorRGB(button.r, button.g, button.b)
+		else
+			ColorPickerFrame.func = self.SetGradientColor
+			ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
+		end
 		ColorPickerFrame.previousGradientValues = {r = button.r, g = button.g, b = button.b, a = button.opacity}
 		ColorPickerFrame.cancelFunc = self.CancelGradientColor
 		ColorPickerFrame:ClearAllPoints()
@@ -5297,8 +5331,7 @@ function PowaAurasOptions:ResizeFrame(frame)
 	end
 	frame:SetMovable(true)
 	frame:SetResizable(true)
-	frame:SetMaxResize(frame.width * 1.5, frame.height * 1.5)
-	frame:SetMinResize(frame.width / 1.5, frame.height / 1.5)
+	frame:SetResizeBounds(frame.width / 1.5, frame.height / 1.5, frame.width * 1.5, frame.height * 1.5)
 	frame:SetUserPlaced(true)
 	frame.bottomrightframe = CreateFrame("Frame", nil, frame)
 	frame.bottomrightframe:SetFrameStrata(frame:GetFrameStrata())

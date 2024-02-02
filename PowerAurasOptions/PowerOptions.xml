@@ -121,7 +121,7 @@
 		<HighlightTexture file = "Interface\Buttons\ButtonHilight-Square" alphaMode = "ADD" />
 	</Button>
 	<!-- List Template -->
-	<Button name = "PowaListTemplate" inherits = "OptionsButtonTemplate" virtual = "true">
+	<Button name = "PowaListTemplate" inherits = "GameMenuButtonTemplate" virtual = "true">
 		<Size>
 			<AbsDimension x = "82" y = "25"/>
 		</Size>
@@ -157,6 +157,124 @@
 		<HighlightFont style = "GameFontHighlightSmall"/>
 		<NormalTexture file = "Interface\FrameGeneral\UI-Background-Marble"/>
 		<PushedTexture file = "Interface\FrameGeneral\UI-Background-Marble"/>
+	</Button>
+	<Button name = "PowaTabButtonTemplate" virtual = "true">
+		<Size>
+			<AbsDimension x = "115" y = "32"/>
+		</Size>
+		<Layers>
+			<Layer level = "BACKGROUND">
+				<Texture parentKey="LeftActive">
+				</Texture>
+				<Texture parentKey="RightActive">
+				</Texture>
+				<Texture parentKey="MiddleActive">
+				</Texture>
+				<Texture name = "$parentLeftDisabled" parentKey = "LeftDisabled" file = "Interface\HelpFrame\HelpFrameTab-Active">
+					<Size>
+						<AbsDimension x = "16" y = "30"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x = "0" y = "-3"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left = "0" right = "0.25" top = "0" bottom = "1.0"/>
+				</Texture>
+				<Texture name = "$parentMiddleDisabled" parentKey = "MiddleDisabled" file = "Interface\HelpFrame\HelpFrameTab-Active">
+					<Size>
+						<AbsDimension x = "32" y = "30"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "LEFT" relativeKey = "$parent.LeftDisabled" relativePoint = "RIGHT"/>
+					</Anchors>
+					<TexCoords left = "0.25" right = "0.75" top = "0" bottom = "1.0"/>
+				</Texture>
+				<Texture name = "$parentRightDisabled" parentKey = "RightDisabled" file = "Interface\HelpFrame\HelpFrameTab-Active">
+					<Size>
+						<AbsDimension x = "16" y = "30"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "LEFT" relativeKey = "$parent.MiddleDisabled" relativePoint = "RIGHT"/>
+					</Anchors>
+					<TexCoords left = "0.75" right = "1.0" top = "0" bottom = "1.0"/>
+				</Texture>
+				<Texture name = "$parentLeft" parentKey = "Left" file = "Interface\HelpFrame\HelpFrameTab-Inactive">
+					<Size>
+						<AbsDimension x = "16" y = "32"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "BOTTOMLEFT"/>
+					</Anchors>
+					<TexCoords left = "0" right = "0.25" top = "0" bottom = "1.0"/>
+				</Texture>
+				<Texture name = "$parentMiddle" parentKey = "Middle" file = "Interface\HelpFrame\HelpFrameTab-Inactive">
+					<Size>
+						<AbsDimension x = "32" y = "32"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "LEFT" relativeKey = "$parent.Left" relativePoint = "RIGHT"/>
+					</Anchors>
+					<TexCoords left = "0.25" right = "0.75" top = "0" bottom = "1.0"/>
+				</Texture>
+				<Texture name = "$parentRight" parentKey = "Right" file = "Interface\HelpFrame\HelpFrameTab-Inactive">
+					<Size>
+						<AbsDimension x = "16" y = "32"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "LEFT" relativeKey = "$parent.Middle" relativePoint = "RIGHT"/>
+					</Anchors>
+					<TexCoords left = "0.75" right = "1.0" top = "0" bottom = "1.0"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				PanelTemplates_TabResize(self, 0, nil, self.minWidth)
+			</OnLoad>
+		</Scripts>
+		<ButtonText name = "$parentText" parentKey = "Text">
+			<Size>
+				<AbsDimension x = "0" y = "13"/>
+			</Size>
+			<Anchors>
+				<Anchor point = "BOTTOM">
+					<Offset>
+						<AbsDimension x = "0" y = "5"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</ButtonText>
+		<NormalFont style = "GameFontNormalSmall"/>
+		<HighlightFont style = "GameFontHighlightSmall"/>
+		<DisabledFont style = "GameFontDisableSmall"/>
+		<HighlightTexture name = "$parentHighlightTexture" parentKey = "HighlightTexture" file = "Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode = "ADD">
+			<Size>
+				<AbsDimension x = "5" y = "32"/>
+			</Size>
+			<Anchors>
+				<Anchor point = "BOTTOM">
+					<Offset>
+						<AbsDimension x = "2" y = "-8"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+	</Button>
+	<Button name="PowaUIPanelButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="144" y="21"/>
+		</Size>
+		<ButtonText name="$parentText" setAllPoints="true"/>
+		<NormalFont style="GameFontNormal"/>
+		<HighlightFont style="GameFontHighlight"/>
+		<DisabledFont style="GameFontDisable"/>
+		<NormalTexture inherits="UIPanelButtonUpTexture"/>
+		<PushedTexture inherits="UIPanelButtonDownTexture"/>
+		<DisabledTexture inherits="UIPanelButtonDisabledTexture"/>
+		<HighlightTexture inherits="UIPanelButtonHighlightTexture"/>
 	</Button>
 	<!-- Import Dialog Frame -->
 	<Frame name = "PowaAuraImportAuraDialog" frameStrata = "DIALOG" hidden = "true" toplevel = "true" parent = "UIParent">
@@ -248,7 +366,7 @@
 				</Scripts>
 			</EditBox>
 			<!-- Send Button -->
-			<Button name = "$parentSendButton" inherits = "OptionsButtonTemplate">
+			<Button name = "$parentSendButton" inherits = "PowaUIPanelButtonTemplate">
 				<Size>
 					<AbsDimension x = "118" y = "22"/>
 				</Size>
@@ -265,7 +383,7 @@
 				</Scripts>
 			</Button>
 			<!-- Close Button -->
-			<Button name = "$parentCancelButton" inherits = "OptionsButtonTemplate">
+			<Button name = "$parentCancelButton" inherits = "PowaUIPanelButtonTemplate">
 				<Size>
 					<AbsDimension x = "118" y = "22"/>
 				</Size>
@@ -294,20 +412,12 @@
 	</Frame>
 	<!-- Cross-client Import Dialog -->
 	<Frame name = "PowaAuraPlayerImportDialog" frameStrata = "DIALOG" hidden = "true" toplevel = "true" parent = "UIParent">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="POWA_OPTIONS_EXPORT_BACKDROP_32_32_10101010" type="global"/>
+		</KeyValues>
 		<Size>
 			<AbsDimension x = "384" y = "135"/>
 		</Size>
-		<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/DialogFrame/UI-DialogBox-Border" tile = "true">
-			<BackgroundInsets>
-				<AbsInset left = "10" right = "10" top = "10" bottom = "10"/>
-			</BackgroundInsets>
-			<TileSize>
-				<AbsValue val = "32"/>
-			</TileSize>
-			<EdgeSize>
-				<AbsValue val = "32"/>
-			</EdgeSize>
-		</Backdrop>
 		<Layers>
 			<Layer level = "ARTWORK">
 				<FontString name = "$parentTopTitle" inherits = "GameFontNormalLarge" justifyH = "CENTER">
@@ -337,7 +447,7 @@
 		</Layers>
 		<Frames>
 			<!-- Accept Button -->
-			<Button name = "$parentAcceptButton" inherits = "OptionsButtonTemplate">
+			<Button name = "$parentAcceptButton" inherits = "GameMenuButtonTemplate">
 				<Size>
 					<AbsDimension x = "118" y = "22"/>
 				</Size>
@@ -354,7 +464,7 @@
 				</Scripts>
 			</Button>
 			<!-- Cancel Button -->
-			<Button name = "$parentCancelButton" inherits = "OptionsButtonTemplate">
+			<Button name = "$parentCancelButton" inherits = "GameMenuButtonTemplate">
 				<Size>
 					<AbsDimension x = "118" y = "22"/>
 				</Size>
@@ -853,17 +963,6 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-					<EdgeSize>
-						<AbsValue val = "16"/>
-					</EdgeSize>
-					<TileSize>
-						<AbsValue val = "128"/>
-					</TileSize>
-					<BackgroundInsets>
-						<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-					</BackgroundInsets>
-				</Backdrop>
 				<Layers>
 					<Layer>
 						<FontString name = "PowaOptionsGlobalTitre" inherits = "GameFontHighlight">
@@ -1006,7 +1105,7 @@
 						</HitRectInsets>
 					</Button>
 					<!-- Rename Button -->
-					<Button name = "PowaOptionsRename" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaOptionsRename" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1032,7 +1131,7 @@
 						</Scripts>
 					</Button>
 					<!-- Lock Button -->
-					<Button name = "PowaMainLockButton" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaMainLockButton" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1056,7 +1155,7 @@
 						</Scripts>
 					</Button>
 					<!-- Test Button -->
-					<Button name = "PowaMainTestButton" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaMainTestButton" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1079,7 +1178,7 @@
 						</Scripts>
 					</Button>
 					<!-- Test All Button -->
-					<Button name = "PowaMainTestAllButton" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaMainTestAllButton" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1102,7 +1201,7 @@
 						</Scripts>
 					</Button>
 					<!-- Move Button -->
-					<Button name = "PowaOptionsMove" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaOptionsMove" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1124,7 +1223,7 @@
 						</Scripts>
 					</Button>
 					<!-- New Button -->
-					<Button name = "PowaOptionsSelectorNew" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaOptionsSelectorNew" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1146,7 +1245,7 @@
 						</Scripts>
 					</Button>
 					<!-- Delete Button -->
-					<Button name = "PowaOptionsSelectorDelete" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaOptionsSelectorDelete" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1175,7 +1274,7 @@
 						</Scripts>
 					</Button>
 					<!-- Copy Button -->
-					<Button name = "PowaOptionsCopy" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaOptionsCopy" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1197,7 +1296,7 @@
 						</Scripts>
 					</Button>
 					<!-- Export Button -->
-					<Button name = "PowaOptionsSelectorExport" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaOptionsSelectorExport" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1219,7 +1318,7 @@
 						</Scripts>
 					</Button>
 					<!-- Export Set Button -->
-					<Button name = "PowaOptionsSelectorExportSet" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaOptionsSelectorExportSet" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1241,7 +1340,7 @@
 						</Scripts>
 					</Button>
 					<!-- Edit Button -->
-					<Button name = "PowaEditButton" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaEditButton" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1263,7 +1362,7 @@
 						</Scripts>
 					</Button>
 					<!-- Import Button -->
-					<Button name = "PowaOptionsSelectorImport" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaOptionsSelectorImport" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1288,7 +1387,7 @@
 						</Scripts>
 					</Button>
 					<!-- Import Set Button -->
-					<Button name = "PowaOptionsSelectorImportSet" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaOptionsSelectorImportSet" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1310,7 +1409,7 @@
 						</Scripts>
 					</Button>
 					<!-- Hide All Button -->
-					<Button name = "PowaMainHideAllButton" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaMainHideAllButton" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "90" y = "22"/>
 						</Size>
@@ -1377,7 +1476,7 @@
 		</Frames>
 	</Frame>
 	<!-- Check Button Template -->
-	<CheckButton name = "PowaCheckTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
+	<CheckButton name = "PowaCheckTemplate" inherits = "UICheckButtonTemplate" virtual = "true">
 		<HitRectInsets>
 			<AbsInset left = "4" right = "4" top = "4" bottom = "4"/>
 		</HitRectInsets>
@@ -1678,7 +1777,7 @@
 		</ThumbTexture>
 	</Slider>
 	<!-- Ternary Selector Template -->
-	<CheckButton name = "PowaTernarySelectorTemplate" inherits = "OptionsSmallCheckButtonTemplate" virtual = "true">
+	<CheckButton name = "PowaTernarySelectorTemplate" inherits = "UICheckButtonTemplate" virtual = "true">
 		<Size>
 			<AbsDimension x = "25" y = "25"/>
 		</Size>
@@ -2663,7 +2762,7 @@
 						</Scripts>
 					</EditBox>
 					<!-- Text Aura Font Button -->
-					<Button name = "PowaFontButton" inherits = "OptionsButtonTemplate">
+					<Button name = "PowaFontButton" inherits = "GameMenuButtonTemplate">
 						<Size>
 							<AbsDimension x = "50" y = "20"/>
 						</Size>
@@ -5503,17 +5602,6 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
-						<Backdrop bgFile = "Interface/DialogFrame/UI-DialogBox-Background" edgeFile = "Interface/Tooltips/UI-Tooltip-Border" tile = "true">
-							<EdgeSize>
-								<AbsValue val = "12"/>
-							</EdgeSize>
-							<TileSize>
-								<AbsValue val = "128"/>
-							</TileSize>
-							<BackgroundInsets>
-								<AbsInset left = "2" right = "2" top = "2" bottom = "2"/>
-							</BackgroundInsets>
-						</Backdrop>
 						<Scripts>
 							<OnLoad>
 								self:OnBackdropLoaded()
@@ -5874,7 +5962,7 @@
 							</Frame>
 						</Frames>
 					</Frame>
-					<Button name = "PowaEditorTab1" inherits = "TabButtonTemplate">
+					<Button name = "PowaEditorTab1" inherits = "PowaTabButtonTemplate">
 						<Anchors>
 							<Anchor point = "BOTTOMLEFT" relativePoint = "TOPLEFT" relativeTo = "PowaBarConfigFrameEditor1">
 								<Offset>
@@ -5889,6 +5977,23 @@
 								PanelTemplates_DeselectTab(PowaEditorTab3)
 								PanelTemplates_DeselectTab(PowaEditorTab4)
 								PanelTemplates_DeselectTab(PowaEditorTab5)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PowaEditorTab1LeftDisabled:SetHeight(30)
+									PowaEditorTab1MiddleDisabled:SetHeight(30)
+									PowaEditorTab1RightDisabled:SetHeight(30)
+									PowaEditorTab2LeftDisabled:SetHeight(28)
+									PowaEditorTab2MiddleDisabled:SetHeight(28)
+									PowaEditorTab2RightDisabled:SetHeight(28)
+									PowaEditorTab3LeftDisabled:SetHeight(28)
+									PowaEditorTab3MiddleDisabled:SetHeight(28)
+									PowaEditorTab3RightDisabled:SetHeight(28)
+									PowaEditorTab4LeftDisabled:SetHeight(28)
+									PowaEditorTab4MiddleDisabled:SetHeight(28)
+									PowaEditorTab4RightDisabled:SetHeight(28)
+									PowaEditorTab5LeftDisabled:SetHeight(28)
+									PowaEditorTab5MiddleDisabled:SetHeight(28)
+									PowaEditorTab5RightDisabled:SetHeight(28)
+								end
 								PowaBarConfigFrameEditor1:Show()
 								PowaBarConfigFrameEditor2:Hide()
 								PowaBarConfigFrameEditor4:Hide()
@@ -5898,13 +6003,22 @@
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab1Text:SetText(PowaAurasOptions.Text.nomTabActiv)
-								PanelTemplates_SelectTab(self)
-								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab1HighlightTexture:SetWidth(self:GetTextWidth() + 31)
+								PanelTemplates_SelectTab(self)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PanelTemplates_TabResize(self, 0, self:GetTextWidth() + 31)
+									PowaEditorTab1Middle:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab1MiddleDisabled:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab1LeftDisabled:SetHeight(30)
+									PowaEditorTab1MiddleDisabled:SetHeight(30)
+									PowaEditorTab1RightDisabled:SetHeight(30)
+								else
+									PanelTemplates_TabResize(self, 0)
+								end
 							</OnLoad>
 						</Scripts>
 					</Button>
-					<Button name = "PowaEditorTab2" inherits = "TabButtonTemplate">
+					<Button name = "PowaEditorTab2" inherits = "PowaTabButtonTemplate">
 						<Anchors>
 							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab1">
 								<Offset>
@@ -5919,6 +6033,23 @@
 								PanelTemplates_DeselectTab(PowaEditorTab3)
 								PanelTemplates_DeselectTab(PowaEditorTab4)
 								PanelTemplates_DeselectTab(PowaEditorTab5)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PowaEditorTab2LeftDisabled:SetHeight(30)
+									PowaEditorTab2MiddleDisabled:SetHeight(30)
+									PowaEditorTab2RightDisabled:SetHeight(30)
+									PowaEditorTab1LeftDisabled:SetHeight(28)
+									PowaEditorTab1MiddleDisabled:SetHeight(28)
+									PowaEditorTab1RightDisabled:SetHeight(28)
+									PowaEditorTab3LeftDisabled:SetHeight(28)
+									PowaEditorTab3MiddleDisabled:SetHeight(28)
+									PowaEditorTab3RightDisabled:SetHeight(28)
+									PowaEditorTab4LeftDisabled:SetHeight(28)
+									PowaEditorTab4MiddleDisabled:SetHeight(28)
+									PowaEditorTab4RightDisabled:SetHeight(28)
+									PowaEditorTab5LeftDisabled:SetHeight(28)
+									PowaEditorTab5MiddleDisabled:SetHeight(28)
+									PowaEditorTab5RightDisabled:SetHeight(28)
+								end
 								PowaBarConfigFrameEditor1:Hide()
 								PowaBarConfigFrameEditor2:Show()
 								PowaBarConfigFrameEditor4:Hide()
@@ -5928,13 +6059,22 @@
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab2Text:SetText(PowaAurasOptions.Text.nomTabAnim)
-								PanelTemplates_DeselectTab(self)
-								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab2HighlightTexture:SetWidth(self:GetTextWidth() + 31)
+								PanelTemplates_DeselectTab(self)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PanelTemplates_TabResize(self, 0, self:GetTextWidth() + 31)
+									PowaEditorTab2Middle:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab2MiddleDisabled:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab2LeftDisabled:SetHeight(28)
+									PowaEditorTab2MiddleDisabled:SetHeight(28)
+									PowaEditorTab2RightDisabled:SetHeight(28)
+								else
+									PanelTemplates_TabResize(self, 0)
+								end
 							</OnLoad>
 						</Scripts>
 					</Button>
-					<Button name = "PowaEditorTab3" inherits = "TabButtonTemplate">
+					<Button name = "PowaEditorTab3" inherits = "PowaTabButtonTemplate">
 						<Anchors>
 							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab2">
 								<Offset>
@@ -5949,6 +6089,23 @@
 								PanelTemplates_DeselectTab(PowaEditorTab2)
 								PanelTemplates_DeselectTab(PowaEditorTab4)
 								PanelTemplates_DeselectTab(PowaEditorTab5)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PowaEditorTab3LeftDisabled:SetHeight(30)
+									PowaEditorTab3MiddleDisabled:SetHeight(30)
+									PowaEditorTab3RightDisabled:SetHeight(30)
+									PowaEditorTab1LeftDisabled:SetHeight(28)
+									PowaEditorTab1MiddleDisabled:SetHeight(28)
+									PowaEditorTab1RightDisabled:SetHeight(28)
+									PowaEditorTab2LeftDisabled:SetHeight(28)
+									PowaEditorTab2MiddleDisabled:SetHeight(28)
+									PowaEditorTab2RightDisabled:SetHeight(28)
+									PowaEditorTab4LeftDisabled:SetHeight(28)
+									PowaEditorTab4MiddleDisabled:SetHeight(28)
+									PowaEditorTab4RightDisabled:SetHeight(28)
+									PowaEditorTab5LeftDisabled:SetHeight(28)
+									PowaEditorTab5MiddleDisabled:SetHeight(28)
+									PowaEditorTab5RightDisabled:SetHeight(28)
+								end
 								PowaBarConfigFrameEditor3:Show()
 								PowaBarConfigFrameEditor1:Hide()
 								PowaBarConfigFrameEditor2:Hide()
@@ -5958,13 +6115,22 @@
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab3Text:SetText(PowaAurasOptions.Text.nomTabSound)
-								PanelTemplates_DeselectTab(self)
-								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab3HighlightTexture:SetWidth(self:GetTextWidth() + 31)
+								PanelTemplates_DeselectTab(self)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PanelTemplates_TabResize(self, 0, self:GetTextWidth() + 31)
+									PowaEditorTab3Middle:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab3MiddleDisabled:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab3LeftDisabled:SetHeight(28)
+									PowaEditorTab3MiddleDisabled:SetHeight(28)
+									PowaEditorTab3RightDisabled:SetHeight(28)
+								else
+									PanelTemplates_TabResize(self, 0)
+								end
 							</OnLoad>
 						</Scripts>
 					</Button>
-					<Button name = "PowaEditorTab4" inherits = "TabButtonTemplate">
+					<Button name = "PowaEditorTab4" inherits = "PowaTabButtonTemplate">
 						<Anchors>
 							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab3">
 								<Offset>
@@ -5979,6 +6145,23 @@
 								PanelTemplates_DeselectTab(PowaEditorTab2)
 								PanelTemplates_DeselectTab(PowaEditorTab3)
 								PanelTemplates_DeselectTab(PowaEditorTab5)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PowaEditorTab4LeftDisabled:SetHeight(30)
+									PowaEditorTab4MiddleDisabled:SetHeight(30)
+									PowaEditorTab4RightDisabled:SetHeight(30)
+									PowaEditorTab1LeftDisabled:SetHeight(28)
+									PowaEditorTab1MiddleDisabled:SetHeight(28)
+									PowaEditorTab1RightDisabled:SetHeight(28)
+									PowaEditorTab2LeftDisabled:SetHeight(28)
+									PowaEditorTab2MiddleDisabled:SetHeight(28)
+									PowaEditorTab2RightDisabled:SetHeight(28)
+									PowaEditorTab3LeftDisabled:SetHeight(28)
+									PowaEditorTab3MiddleDisabled:SetHeight(28)
+									PowaEditorTab3RightDisabled:SetHeight(28)
+									PowaEditorTab5LeftDisabled:SetHeight(28)
+									PowaEditorTab5MiddleDisabled:SetHeight(28)
+									PowaEditorTab5RightDisabled:SetHeight(28)
+								end
 								PowaBarConfigFrameEditor4:Show()
 								PowaBarConfigFrameEditor1:Hide()
 								PowaBarConfigFrameEditor2:Hide()
@@ -5989,13 +6172,22 @@
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab4Text:SetText(PowaAurasOptions.Text.nomTabTimer)
-								PanelTemplates_DeselectTab(self)
-								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab4HighlightTexture:SetWidth(self:GetTextWidth() + 31)
+								PanelTemplates_DeselectTab(self)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PanelTemplates_TabResize(self, 0, self:GetTextWidth() + 31)
+									PowaEditorTab4Middle:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab4MiddleDisabled:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab4LeftDisabled:SetHeight(28)
+									PowaEditorTab4MiddleDisabled:SetHeight(28)
+									PowaEditorTab4RightDisabled:SetHeight(28)
+								else
+									PanelTemplates_TabResize(self, 0)
+								end
 							</OnLoad>
 						</Scripts>
 					</Button>
-					<Button name = "PowaEditorTab5" inherits = "TabButtonTemplate">
+					<Button name = "PowaEditorTab5" inherits = "PowaTabButtonTemplate">
 						<Anchors>
 							<Anchor point = "LEFT" relativePoint = "RIGHT" relativeTo = "PowaEditorTab4">
 								<Offset>
@@ -6010,6 +6202,23 @@
 								PanelTemplates_DeselectTab(PowaEditorTab2)
 								PanelTemplates_DeselectTab(PowaEditorTab3)
 								PanelTemplates_DeselectTab(PowaEditorTab4)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PowaEditorTab5LeftDisabled:SetHeight(30)
+									PowaEditorTab5MiddleDisabled:SetHeight(30)
+									PowaEditorTab5RightDisabled:SetHeight(30)
+									PowaEditorTab1LeftDisabled:SetHeight(28)
+									PowaEditorTab1MiddleDisabled:SetHeight(28)
+									PowaEditorTab1RightDisabled:SetHeight(28)
+									PowaEditorTab2LeftDisabled:SetHeight(28)
+									PowaEditorTab2MiddleDisabled:SetHeight(28)
+									PowaEditorTab2RightDisabled:SetHeight(28)
+									PowaEditorTab3LeftDisabled:SetHeight(28)
+									PowaEditorTab3MiddleDisabled:SetHeight(28)
+									PowaEditorTab3RightDisabled:SetHeight(28)
+									PowaEditorTab4LeftDisabled:SetHeight(28)
+									PowaEditorTab4MiddleDisabled:SetHeight(28)
+									PowaEditorTab4RightDisabled:SetHeight(28)
+								end
 								PowaBarConfigFrameEditor5:Show()
 								PowaBarConfigFrameEditor1:Hide()
 								PowaBarConfigFrameEditor2:Hide()
@@ -6020,9 +6229,18 @@
 							</OnClick>
 							<OnLoad>
 								PowaEditorTab5Text:SetText(PowaAurasOptions.Text.nomTabStacks)
-								PanelTemplates_DeselectTab(self)
-								PanelTemplates_TabResize(self, 0)
 								PowaEditorTab5HighlightTexture:SetWidth(self:GetTextWidth() + 31)
+								PanelTemplates_DeselectTab(self)
+								if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
+									PanelTemplates_TabResize(self, 0, self:GetTextWidth() + 31)
+									PowaEditorTab5Middle:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab5MiddleDisabled:SetWidth(self:GetTextWidth() + 31 - 32)
+									PowaEditorTab5LeftDisabled:SetHeight(28)
+									PowaEditorTab5MiddleDisabled:SetHeight(28)
+									PowaEditorTab5RightDisabled:SetHeight(28)
+								else
+									PanelTemplates_TabResize(self, 0)
+								end
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6093,7 +6311,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name = "PowaFontsOkayButton" inherits = "OptionsButtonTemplate">
+			<Button name = "PowaFontsOkayButton" inherits = "GameMenuButtonTemplate">
 				<Size>
 					<AbsDimension x = "90" y = "22"/>
 				</Size>
@@ -6114,7 +6332,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name = "PowaFontsCancelButton" inherits = "OptionsButtonTemplate">
+			<Button name = "PowaFontsCancelButton" inherits = "GameMenuButtonTemplate">
 				<Size>
 					<AbsDimension x = "90" y = "22"/>
 				</Size>
@@ -6272,18 +6490,6 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		<TitleRegion>
-			<Size>
-				<AbsDimension x = "225" y = "377"/>
-			</Size>
-			<Anchors>
-				<Anchor point = "TOP">
-					<Offset>
-						<AbsDimension x = "0" y = "0"/>
-					</Offset>
-				</Anchor>
-			</Anchors>
-		</TitleRegion>
 		<Scripts>
 			<OnLoad>
 				PowaTitleText:SetText(PowaAurasOptions.Text.SlotsToCheck)
