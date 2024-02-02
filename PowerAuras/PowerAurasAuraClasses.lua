@@ -4447,14 +4447,14 @@ function cPowaItems:IsItemInBag(itemName)
 		PowaAuras:Message("itemName = ", itemName)
 	end
 	if self.lastBag and self.lastSlot then
-		local itemLink = GetContainerItemLink(self.lastBag, self.lastSlot)
+		local itemLink = GetContainerItemLink and GetContainerItemLink(self.lastBag, self.lastSlot) or C_Container.GetContainerItemLink(self.lastBag, self.lastSlot)
 		if self:ItemLinkIsNamedItem(itemLink, itemName) then
 			return true
 		end
 	end
 	for bag = 0, 4 do
-		for slot = 1, GetContainerNumSlots(bag) do
-			local itemLink = GetContainerItemLink(bag, slot)
+		for slot = 1, GetContainerNumSlots and GetContainerNumSlots(bag) or C_Container.GetContainerNumSlots(bag) do
+			local itemLink = GetContainerItemLink and GetContainerItemLink(bag, slot) or C_Container.GetContainerItemLink(bag, slot)
 			if self:ItemLinkIsNamedItem(itemLink, itemName) then
 				self.lastSlot = slot
 				self.lastBag = bag
@@ -4544,7 +4544,7 @@ function cPowaItems:CheckIfShouldShow(giveReason)
 					end
 					return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonItemNotOnPlayer, itemName)
 				end
-				local _, _, itemId = string.find(itemLink, "item:(%d+):(%d+):(%d+):(%d+)")
+				local itemId = string.match(itemLink, "item:(%d+)")
 				if self.Debug then
 					PowaAuras:Message("itemLink = ", itemLink," itemName = ", itemName," itemId = ", itemId)
 				end

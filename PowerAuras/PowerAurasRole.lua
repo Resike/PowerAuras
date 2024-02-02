@@ -114,7 +114,7 @@ function PowaAuras:InspectUnit(unit)
 	end
 	self.NextInspectUnit = nil
 	local unitInfo = self.GroupUnits[unit]
-	if not unitInfo then
+	if not unitInfo or not GetInspectSpecialization then
 		return
 	end
 	local activeTree = GetInspectSpecialization(unit)

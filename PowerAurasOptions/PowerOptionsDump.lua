@@ -305,8 +305,8 @@ function PowaAurasOptions:Dump_Safe()
 	-- Bags
 	PowaState.Bags = { }
 	for bag = 0, NUM_BAG_FRAMES do
-		PowaState.Bags[bag] = {Slots = GetContainerNumSlots(bag)}
-		for slot = 1, GetContainerNumSlots(bag) do
+		PowaState.Bags[bag] = {Slots = GetContainerNumSlots and GetContainerNumSlots(bag) or C_Container.GetContainerNumSlots(bag)}
+		for slot = 1, GetContainerNumSlots and GetContainerNumSlots(bag) or C_Container.GetContainerNumSlots(bag) do
 			local itemName = GetContainerItemLink(bag, slot)
 			if itemName then
 				local texture, count = GetContainerItemInfo(bag, slot)
