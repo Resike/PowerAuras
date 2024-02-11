@@ -100,6 +100,8 @@ PowaGlobalSet = { }
 PowaGlobalListe = { }
 PowaPlayerListe = { }
 
+local PowaBaseTempModel = nil
+
 -- Default Page Names
 for i = 1, 5 do
 	PowaPlayerListe[i] = PowaAuras.Text.ListePlayer.." "..i
@@ -342,7 +344,6 @@ function PowaAuras:UpdateOldAuras()
 						aura.texture = self:GetTableNumber(ModelCategory, aura.modelpath)
 					end
 					if not aura.texture then
-						local model = PowaAurasOptions.Models[aura.id]
 						local displayID = self:GetTableNumberAll(self.ModelsDisplayInfo, string.lower(aura.modelpath))
 						if displayID then
 							sort(displayID)
@@ -353,7 +354,6 @@ function PowaAuras:UpdateOldAuras()
 						aura.texture = self:GetTableNumber(ModelCategory, self.ModelsDisplayInfo[tonumber(aura.modelpath)])
 					end
 					if not aura.texture then
-						local model = PowaAurasOptions.Models[aura.id]
 						aura.modelpath = string.lower(aura.modelpath)
 						aura.texture = self:GetTableNumber(ModelCategory, aura.modelpath)
 					end
@@ -1233,7 +1233,7 @@ function PowaAuras:ResetModel(aura)
 	model:ClearModel()
 	if aura.model then
 		if not aura.modelpath or aura.modelpath == "" then
-			--[[if not aura.modelcategory or aura.modelcategory == 1 then
+			if not aura.modelcategory or aura.modelcategory == 1 then
 				model:SetModel(self.ModelsCreature[aura.texture])
 			elseif aura.modelcategory == 2 then
 				model:SetModel(self.ModelsEnvironments[aura.texture])
@@ -1241,7 +1241,7 @@ function PowaAuras:ResetModel(aura)
 				model:SetModel(self.ModelsInterface[aura.texture])
 			elseif aura.modelcategory == 4 then
 				model:SetModel(self.ModelsSpells[aura.texture])
-			end--]]
+			end
 		else
 			if tonumber(aura.modelpath) then
 				model:SetDisplayInfo(aura.modelpath)
@@ -1303,7 +1303,7 @@ function PowaAuras:ResetModel(aura)
 		secondaryModel:ClearModel()
 		if aura.model then
 			if not aura.modelpath or aura.modelpath == "" then
-				--[[if not aura.modelcategory or aura.modelcategory == 1 then
+				if not aura.modelcategory or aura.modelcategory == 1 then
 					secondaryModel:SetModel(self.ModelsCreature[aura.texture])
 				elseif aura.modelcategory == 2 then
 					secondaryModel:SetModel(self.ModelsEnvironments[aura.texture])
@@ -1311,7 +1311,7 @@ function PowaAuras:ResetModel(aura)
 					secondaryModel:SetModel(self.ModelsInterface[aura.texture])
 				elseif aura.modelcategory == 4 then
 					secondaryModel:SetModel(self.ModelsSpells[aura.texture])
-				end--]]
+				end
 			else
 				if tonumber(aura.modelpath) then
 					secondaryModel:SetDisplayInfo(aura.modelpath)
@@ -1420,17 +1420,18 @@ function PowaAuras:ResetSecondaryUnit(aura)
 end
 
 function PowaAuras:GetBaseCameraTarget(model)
-	--local modelfile = model:GetModel()
 	if model and model ~= "" then
-		local tempmodel = CreateFrame("PlayerModel", nil, UIParent)
-		if type(model) == "string" then
-			tempmodel:SetModel(model)
-		else
-			tempmodel:SetDisplayInfo(model)
+		if not PowaBaseTempModel then
+			PowaBaseTempModel = CreateFrame("PlayerModel", nil, UIParent)
 		end
-		tempmodel:SetCustomCamera(1)
-		local x, y, z = tempmodel:GetCameraTarget()
-		tempmodel:ClearModel()
+		if type(model) == "string" then
+			PowaBaseTempModel:SetModel(model)
+		else
+			PowaBaseTempModel:SetDisplayInfo(model)
+		end
+		PowaBaseTempModel:SetCustomCamera(1)
+		local x, y, z = PowaBaseTempModel:GetCameraTarget()
+		PowaBaseTempModel:ClearModel()
 		return x, y, z
 	end
 end
@@ -1693,6 +1694,11 @@ function PowaAuras:ShowAuraForFirstTime(aura)
 	self:ShowSecondaryAuraForFirstTime(aura)
 end
 
+local function ModelOnUpdate(self, elapsed)
+	self.elapsed = (self.elapsed or 0) + (elapsed * 1000)
+	self:SetSequenceTime(self.modelanimation, self.elapsed)
+end
+
 function PowaAuras:UpdateAuraVisuals(aura)
 	local frame = self.Frames[aura.id]
 	local model = self.Models[aura.id]
@@ -1727,7 +1733,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		texture:Hide()
 		model:Show()
 		if not aura.modelpath or aura.modelpath == "" then
-			--[[if not aura.modelcategory or aura.modelcategory == 1 then
+			if not aura.modelcategory or aura.modelcategory == 1 then
 				model:SetModel(self.ModelsCreature[aura.texture])
 			elseif aura.modelcategory == 2 then
 				model:SetModel(self.ModelsEnvironments[aura.texture])
@@ -1735,7 +1741,7 @@ function PowaAuras:UpdateAuraVisuals(aura)
 				model:SetModel(self.ModelsInterface[aura.texture])
 			elseif aura.modelcategory == 4 then
 				model:SetModel(self.ModelsSpells[aura.texture])
-			end--]]
+			end
 		else
 			if tonumber(aura.modelpath) then
 				model:SetDisplayInfo(aura.modelpath)
@@ -1824,11 +1830,10 @@ function PowaAuras:UpdateAuraVisuals(aura)
 		model:SetPosition(aura.mz, aura.mx, aura.my)
 		model:SetRotation(math.rad(aura.rotate))
 		if aura.modelanimation and aura.modelanimation > - 1 and aura.modelanimation < 802 then
-			local elapsed = 0
-			model:SetScript("OnUpdate", function(self, elaps)
-				elapsed = elapsed + (elaps * 1000)
-				model:SetSequenceTime(aura.modelanimation, elapsed)
-			end)
+			model.modelanimation = aura.modelanimation
+			model:SetScript("OnUpdate", ModelOnUpdate)
+		else
+			model:SetScript("OnUpdate", nil)
 		end
 	end
 	if aura.customtex or aura.wowtex or aura.owntex or (not aura.customtex and not aura.wowtex and not aura.model and not aura.modelcustom and not aura.textaura and not aura.owntex) then
@@ -2125,11 +2130,10 @@ function PowaAuras:UpdateSecondaryAuraVisuals(aura)
 		secondaryModel:SetPosition(aura.mz, aura.mx, aura.my)
 		secondaryModel:SetRotation(math.rad(aura.rotate))
 		if aura.modelanimation and aura.modelanimation > - 1 and aura.modelanimation < 802 then
-			local elapsed = 0
-			secondaryModel:SetScript("OnUpdate", function(self, elaps)
-				elapsed = elapsed + (elaps * 1000)
-				secondaryModel:SetSequenceTime(aura.modelanimation, elapsed)
-			end)
+			secondaryModel.modelanimation = aura.modelanimation
+			secondaryModel:SetScript("OnUpdate", ModelOnUpdate)
+		else
+			secondaryModel:SetScript("OnUpdate", nil)
 		end
 	end
 	if aura.customtex or aura.wowtex or aura.owntex or (not aura.customtex and not aura.wowtex and not aura.model and not aura.modelcustom and not aura.textaura and not aura.owntex) then

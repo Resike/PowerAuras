@@ -4,6 +4,10 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.33.2**
+* Fixed a major leak with models.
+* Fix color picker on Classic.
+
 **4.33.1**
 * Fixed named items trigger.
 

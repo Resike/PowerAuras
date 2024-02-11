@@ -3199,7 +3199,6 @@ function PowaAurasOptions:ModelsChecked()
 		aura.owntex = false
 		aura.customtex = false
 		aura.textaura = false
-		self:ResetModel(aura)
 		local MaxModels
 		if not aura.modelcategory or aura.modelcategory == 1 then
 			MaxModels = #self.ModelsCreature
@@ -3226,7 +3225,7 @@ function PowaAurasOptions:ModelsChecked()
 				sort(self.ModelTextureList)
 			end
 			if displayID then
-				aura.modelpath = self.ModelTextureList[1]
+				aura.modelpath = tonumber(self.ModelTextureList[1])
 			end
 			PowaModelTextureDropDown:Show()
 			if not displayID then
@@ -3295,6 +3294,7 @@ function PowaAurasOptions:ModelsChecked()
 		AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
 	self:RedisplayAura(self.CurrentAuraId)
+	self:ResetModel(aura)
 end
 
 function PowaAurasOptions:CustomModelsChecked()
@@ -3306,7 +3306,6 @@ function PowaAurasOptions:CustomModelsChecked()
 		aura.owntex = false
 		aura.wowtex = false
 		aura.textaura = false
-		self:ResetModel(aura)
 		PowaModelPositionZSlider:Show()
 		PowaModelPositionXSlider:Show()
 		PowaModelPositionYSlider:Show()
@@ -3354,6 +3353,7 @@ function PowaAurasOptions:CustomModelsChecked()
 		AuraTexture:SetTexture("Interface\\AddOns\\PowerAuras\\Auras\\Aura"..aura.texture)
 	end
 	self:RedisplayAura(self.CurrentAuraId)
+	self:ResetModel(aura)
 end
 
 function PowaAurasOptions:CustomTexturesChecked()
@@ -4440,7 +4440,11 @@ function PowaAurasOptions:OpenColorPicker(control, source, setTexture)
 		ColorPickerFrame.setTexture = setTexture
 		if ColorPickerFrameMixin then
 			ColorPickerFrame.swatchFunc = self.SetColor
-			ColorPickerFrame.Content.ColorPicker:SetColorRGB(button.r, button.g, button.b)
+			if ColorPickerFrame.Content then
+				ColorPickerFrame.Content.ColorPicker:SetColorRGB(button.r, button.g, button.b)
+			else
+				ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
+			end
 		else
 			ColorPickerFrame.func = self.SetColor
 			ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
@@ -4493,7 +4497,11 @@ function PowaAurasOptions:OpenGradientColorPicker(control, source, setTexture)
 		ColorPickerFrame.setTexture = setTexture
 		if ColorPickerFrameMixin then
 			ColorPickerFrame.swatchFunc = self.SetGradientColor
-			ColorPickerFrame.Content.ColorPicker:SetColorRGB(button.r, button.g, button.b)
+			if ColorPickerFrame.Content then
+				ColorPickerFrame.Content.ColorPicker:SetColorRGB(button.r, button.g, button.b)
+			else
+				ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
+			end
 		else
 			ColorPickerFrame.func = self.SetGradientColor
 			ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
