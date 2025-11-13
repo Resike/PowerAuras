@@ -23,7 +23,7 @@ local WOW_PROJECT_WRATH_CLASSIC = WOW_PROJECT_WRATH_CLASSIC
 
 local PowaAuras =
 {
-Version = GetAddOnMetadata("PowerAuras", "Version"),
+Version = C_AddOns.GetAddOnMetadata("PowerAuras", "Version"),
 
 VersionPattern = "(%d+)%.(%d+)%.(%d+)",
 
@@ -251,17 +251,17 @@ FixRoles = { },
 
 Spells =
 {
-	ACTIVATE_FIRST_TALENT = GetSpellInfo(63645),
-	ACTIVATE_SECOND_TALENT = GetSpellInfo(63644),
+	ACTIVATE_FIRST_TALENT = C_Spell.GetSpellInfo(63645) and C_Spell.GetSpellInfo(63645).name,
+	ACTIVATE_SECOND_TALENT = C_Spell.GetSpellInfo(63644) and C_Spell.GetSpellInfo(63644).name,
 	--BUFF_BLOOD_PRESENCE = GetSpellInfo(48266),
 	--BUFF_FROST_PRESENCE = GetSpellInfo(48263),
 	--BUFF_UNHOLY_PRESENCE = GetSpellInfo(48265),
 	--TREE_OF_LIFE = GetSpellInfo(65139),
 	--SHADOWFORM = GetSpellInfo(15473),
-	DRUID_SHIFT_CAT = GetSpellInfo(768),
-	DRUID_SHIFT_BEAR = GetSpellInfo(5487),
+	DRUID_SHIFT_CAT = C_Spell.GetSpellInfo(768) and C_Spell.GetSpellInfo(768).name,
+	DRUID_SHIFT_BEAR = C_Spell.GetSpellInfo(5487) and C_Spell.GetSpellInfo(5487).name,
 	--DRUID_SHIFT_DIREBEAR = GetSpellInfo(9634),
-	DRUID_SHIFT_MOONKIN = GetSpellInfo(24858)
+	DRUID_SHIFT_MOONKIN = C_Spell.GetSpellInfo(24858) and C_Spell.GetSpellInfo(24858).name
 },
 
 ExtraUnitEvent = { },

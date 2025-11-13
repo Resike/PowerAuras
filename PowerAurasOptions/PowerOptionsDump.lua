@@ -39,7 +39,6 @@ local GetRuneCooldown = GetRuneCooldown
 local GetShapeshiftForm = GetShapeshiftForm
 local GetShapeshiftFormInfo = GetShapeshiftFormInfo
 local GetSpellBookItemName = GetSpellBookItemName
-local GetSpellCooldown = GetSpellCooldown
 local GetSpellInfo = GetSpellInfo
 local GetSpellTabInfo = GetSpellTabInfo
 local GetSpellTexture = GetSpellTexture
@@ -256,7 +255,13 @@ function PowaAurasOptions:Dump_Safe()
 			do break end
 		end
 		PowaState.SpellBook[i] = {Name = spellName, Rank = spellRank, Texture = Texture}
-		local StartTime, Duration, Enabled = GetSpellCooldown(i, BOOKTYPE_SPELL)
+		local StartTime, Duration, Enabled
+		local spellInfo = C_Spell.GetSpellCooldown(i, BOOKTYPE_PET)
+		if spellInfo then
+			StartTime = spellInfo.startTime
+			Duration = spellInfo.duration
+			Enabled = spellInfo.isEnabled
+		end
 		PowaState.SpellBook[i]["Cooldown"] = {StartTime = StartTime, Duration = Duration, Enabled = Enabled}
 		PowaState.SpellBook[i]["UsableSpell"] = IsUsableSpell(spellName)
 		self:ResetTooltip()

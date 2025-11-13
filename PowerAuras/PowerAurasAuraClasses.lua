@@ -46,10 +46,6 @@ local GetSpecialization = GetSpecialization
 local GetSpellBonusDamage = GetSpellBonusDamage
 local GetSpellBookItemInfo = GetSpellBookItemInfo
 local GetSpellBookItemName = GetSpellBookItemName
-local GetSpellCharges = GetSpellCharges
-local GetSpellCooldown = GetSpellCooldown
-local GetSpellInfo = GetSpellInfo
-local GetSpellLink = GetSpellLink
 local GetSpellTabInfo = GetSpellTabInfo
 local GetTime = GetTime
 local GetTotemInfo = GetTotemInfo
@@ -62,8 +58,6 @@ local IsPassiveSpell = IsPassiveSpell
 local IsResting = IsResting
 local IsUsableAction = IsUsableAction
 local UnitAttackPower = UnitAttackPower
-local UnitAura = UnitAura
-local UnitBuff = UnitBuff
 local UnitCanAttack = UnitCanAttack
 local UnitCastingInfo = UnitCastingInfo
 local UnitChannelInfo = UnitChannelInfo
@@ -1172,10 +1166,15 @@ function cPowaAura:GetSpellFromMatch(spellMatch)
 	local _, _, spellId = string.find(spellMatch, "%[(%d+)%]")
 	if spellId then
 		spellId = tonumber(spellId)
-		local spellName, spellIcon = GetSpellInfo(spellId)
-		if rank then
-			spellName = spellName.."("..rank..")"
+		local spellName, spellIcon
+		local spellInfo = C_Spell.GetSpellInfo(spellId)
+		if spellInfo then
+			spellName = spellInfo.name
+			spellIcon = spellInfo.iconID
 		end
+		--[[if rank then
+			spellName = spellName.."("..rank..")"
+		end]]
 		return spellName, spellIcon, spellId
 	end
 	return spellMatch
@@ -1665,27 +1664,45 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 	if self.Debug then
 		PowaAuras:DisplayText("IsPresent on ", unit," buffid = ", s," type = ", self.buffAuraType)
 	end
-	local _, auraName, auraTexture, count, expirationTime, caster, auraId
+	local auraName, auraTexture, count, expirationTime, caster, auraId
 	if string.find(textToCheck, "%\\[") or string.find(textToCheck, "%\\]") then
 		textToCheck = strtrim(textToCheck, "%\\[%\\]")
 	end
 	if self.exact and not tonumber(textToCheck) then
 		local i = 1
 		local index
-		while UnitAura(unit, i) do
-			local name = UnitAura(unit, i)
-			if name == textToCheck then
-				index = i
-				break
+		while C_UnitAuras.GetAuraDataByIndex(unit, i) do
+			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i)
+			if auraData then
+				if auraData.name == textToCheck then
+					index = i
+					break
+				end
 			end
 			i = i + 1
 		end
 		if not index then
 			return nil
 		end
-		auraName, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, index, self.buffAuraType)
+		local auraData = C_UnitAuras.GetAuraDataByIndex(unit, index, self.buffAuraType)
+		if auraData then
+			auraName = auraData.name
+			auraTexture = auraData.icon
+			count = auraData.applications
+			expirationTime = auraData.expirationTime
+			caster = auraData.sourceUnit
+			auraId = auraData.spellId
+		end
 	else
-		auraName, auraTexture, count, _, _, expirationTime, caster, _, _, auraId = UnitAura(unit, s, self.buffAuraType)
+		local auraData = C_UnitAuras.GetAuraDataByIndex(unit, s, self.buffAuraType)
+		if auraData then
+			auraName = auraData.name
+			auraTexture = auraData.icon
+			count = auraData.applications
+			expirationTime = auraData.expirationTime
+			caster = auraData.sourceUnit
+			auraId = auraData.spellId
+		end
 	end
 	if auraName == nil then
 		return nil
@@ -2309,7 +2326,17 @@ function cPowaStealableSpell:CheckUnit(unit, targetOf)
 			PowaAuras:Message("Match = ", pword)
 		end
 		for i = 1, 40 do
-			local auraName, auraTexture, count, typeDebuff, _, expirationTime, _, isStealable, _, auraId = UnitAura(unit, i)
+			local auraName, auraTexture, count, typeDebuff, expirationTime, isStealable, auraId
+			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i)
+			if auraData then
+				auraName = auraData.name
+				auraTexture = auraData.icon
+				count = auraData.applications
+				typeDebuff = auraData.dispelName
+				expirationTime = auraData.expirationTime
+				isStealable = auraData.isStealable
+				auraId = auraData.spellId
+			end
 			if self.Debug then
 				PowaAuras:Message("Slot = ", i, " auraName = ", auraName, " (", auraId, ")" )
 			end
@@ -2362,7 +2389,16 @@ function cPowaPurgeableSpell:CheckUnit(unit, targetOf)
 			PowaAuras:Message("Match = ", pword )
 		end
 		for i = 1, 40 do
-			local auraName, auraTexture, count, typeDebuff, _, expirationTime, _, _, _, auraId = UnitAura(unit, i, "HELPFUL")
+			local auraName, auraTexture, count, typeDebuff, expirationTime, auraId
+			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HELPFUL")
+			if auraData then
+				auraName = auraData.name
+				auraTexture = auraData.icon
+				count = auraData.applications
+				typeDebuff = auraData.dispelName
+				expirationTime = auraData.expirationTime
+				auraId = auraData.spellId
+			end
 			if self.Debug then
 				PowaAuras:Message("Slot = ", i, " auraName = ", auraName, " typeDebuff = ", typeDebuff, " (", auraId, ")")
 			end
@@ -2743,8 +2779,12 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		buffname = self.buffname
 	end
 	local spellName, spellIcon, spellId
-	spellName, spellIcon = GetSpellInfo(buffname)
-	local spellLink = GetSpellLink(buffname)
+	local spellInfo = C_Spell.GetSpellInfo(buffname)
+	if spellInfo then
+		spellName = spellInfo.name
+		spellIcon = spellInfo.iconID
+	end
+	local spellLink = C_Spell.GetSpellLink(buffname)
 	if spellLink then
 		spellId = string.match(spellLink, "spell:(%d+)")
 	end
@@ -2756,19 +2796,39 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 		PowaAuras:Message("spellIcon = ", spellIcon)
 	end
 	if self:IconIsRequired() then
-		local _, spellIcon = GetSpellInfo(spellName)
-		self:SetIcon(spellIcon)
+		local spellIcon
+		local spellInfo = C_Spell.GetSpellInfo(spellName)
+		if spellInfo then
+			self:SetIcon(spellInfo.iconID)
+		end
 	end
 	local cdstart, cdduration, enabled
 	if self.targetfriend then
-		cdstart, cdduration, enabled = GetSpellCooldown(spellName, BOOKTYPE_PET)
+		local spellInfo = C_Spell.GetSpellCooldown(spellName, BOOKTYPE_PET)
+		if spellInfo then
+			cdstart = spellInfo.startTime
+			cdduration = spellInfo.duration
+			enabled = spellInfo.isEnabled
+		end
 	else
-		cdstart, cdduration, enabled = GetSpellCooldown(spellName)
+		local spellInfo = C_Spell.GetSpellCooldown(spellName)
+		if spellInfo then
+			cdstart = spellInfo.startTime
+			cdduration = spellInfo.duration
+			enabled = spellInfo.isEnabled
+		end
 	end
 	if self.Debug then
 		PowaAuras:Message("cdstart = ", cdstart," duration = ", cdduration, " enabled = ", enabled)
 	end
-	local charges, maxCharges, start, duration = GetSpellCharges(spellId)
+	local charges, maxCharges, start, duration
+	local chargeInfo = C_Spell.GetSpellCharges(spellId)
+	if chargeInfo then
+		charges = chargeInfo.currentCharges
+		maxCharges = chargeInfo.maxCharges
+		start = chargeInfo.cooldownStartTime
+		duration = chargeInfo.cooldownDuration
+	end
 	if self.Stacks then
 		self.Stacks:SetStackCount(charges)
 	end
@@ -2969,7 +3029,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 				local spellIdFound = false
 				if self.targetfriend then
 					for spellId, spellName, spellSubtext in petSpells() do
-						local spellLink = GetSpellLink(spellId)
+						local spellLink = C_Spell.GetSpellLink(spellId)
 						if spellLink then
 							local spellID = string.match(spellLink, "spell:(%d+)")
 							if tonumber(spellID) == tonumber(buffname) then
@@ -2979,7 +3039,7 @@ function cPowaSpellCooldown:CheckIfShouldShow(giveReason)
 					end
 				else
 					for spellId, spellName, spellSubtext in playerSpells() do
-						local spellLink = GetSpellLink(spellId)
+						local spellLink = C_Spell.GetSpellLink(spellId)
 						if spellLink then
 							local spellID = string.match(spellLink, "spell:(%d+)")
 							if tonumber(spellID) == tonumber(buffname) then
@@ -3209,8 +3269,12 @@ function cPowaSpellLearned:CheckIfShouldShow(giveReason)
 		buffname = self.buffname
 	end
 	local spellName, spellIcon, spellId
-	spellName, spellIcon = GetSpellInfo(buffname)
-	local spellLink = GetSpellLink(buffname)
+	local spellInfo = C_Spell.GetSpellInfo(buffname)
+	if spellInfo then
+		spellName = spellInfo.name
+		spellIcon = spellInfo.iconID
+	end
+	local spellLink = C_Spell.GetSpellLink(buffname)
 	if spellLink then
 		spellId = string.match(spellLink, "spell:(%d+)")
 	end
@@ -3222,8 +3286,12 @@ function cPowaSpellLearned:CheckIfShouldShow(giveReason)
 		PowaAuras:Message("spellIcon = ", spellIcon)
 	end
 	if self:IconIsRequired() then
-		local _, spellIcon = GetSpellInfo(spellName)
-		self:SetIcon(spellIcon)
+		local spellIcon
+		local spellInfo = C_Spell.GetSpellInfo(spellName)
+		if spellInfo then
+			spellIcon = spellInfo.iconID
+			self:SetIcon(spellIcon)
+		end
 	end
 	local show = false
 	if self.targetfriend then
@@ -3703,9 +3771,15 @@ function cPowaSpellAlert:CheckSpellName(unit, spellname, spellicon, endtime, spe
 		if spellicon == nil then
 			local _
 			if spellId ~= nil then
-				_, spellicon = GetSpellInfo(spellId)
+				local spellInfo = C_Spell.GetSpellInfo(spellId)
+				if spellInfo then
+					spellicon = spellInfo.iconID
+				end
 			else
-				_, spellicon = GetSpellInfo(spellname)
+				local spellInfo = C_Spell.GetSpellInfo(spellname)
+				if spellInfo then
+					spellicon = spellInfo.iconID
+				end
 			end
 		end
 		self:SetIcon(spellicon)
@@ -3961,8 +4035,10 @@ function cPowaTotems:CheckIfShouldShow(giveReason)
 			end
 			if totemName ~= nil and totemName ~= "" then
 				if self:IconIsRequired() then
-					local _, spellIcon = GetSpellInfo(totemName)
-					self:SetIcon(spellIcon)
+					local spellInfo = C_Spell.GetSpellInfo(totemName)
+					if spellInfo then
+						self:SetIcon(spellInfo.iconID)
+					end
 				end
 				if self.Timer then
 					self.Timer:SetDurationInfo(startTime + duration)
@@ -3984,8 +4060,10 @@ function cPowaTotems:CheckIfShouldShow(giveReason)
 				local haveTotem, totemName, startTime, duration = GetTotemInfo(slot)
 				if self:MatchText(totemName, pword) then
 					if self:IconIsRequired() then
-						local _, spellIcon = GetSpellInfo(totemName)
-						self:SetIcon(spellIcon)
+						local spellInfo = C_Spell.GetSpellInfo(totemName)
+						if spellInfo then
+							self:SetIcon(spellInfo.iconID)
+						end
 					end
 					if self.Timer then
 						self.Timer:SetDurationInfo(startTime + duration)
@@ -4085,12 +4163,22 @@ function cPowaPet:CheckIfShouldShow(giveReason)
 			end
 		end
 		if self.Timer and self.inverse then
-			local startTime, duration, enabled = GetSpellCooldown(46584)
+			local startTime, duration, enabled
+			local spellInfo = C_Spell.GetSpellCooldown(46584)
+			if spellInfo then
+				startTime = spellInfo.startTime
+				duration = spellInfo.duration
+				enabled = spellInfo.isEnabled
+			end
 			if not enabled then
 				if not giveReason then
 					return false
 				end
-				local name = GetSpellInfo(46584)
+				local name
+				local spellInfo = C_Spell.GetSpellInfo(46584)
+				if spellInfo then
+					name = spellInfo.name
+				end
 				return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotEnabled, name)
 			end
 			self.Timer:SetDurationInfo(startTime + duration)
@@ -4104,12 +4192,22 @@ function cPowaPet:CheckIfShouldShow(giveReason)
 		end
 	elseif PowaAuras.playerclass == "MAGE" then
 		if self.Timer and self.inverse then
-			local startTime, duration, enabled = GetSpellCooldown(31687)
+			local startTime, duration, enabled
+			local spellInfo = C_Spell.GetSpellCooldown(31687)
+			if spellInfo then
+				startTime = spellInfo.startTime
+				duration = spellInfo.duration
+				enabled = spellInfo.isEnabled
+			end
 			if not enabled then
 				if not giveReason then
 					return false
 				end
-				local name = GetSpellInfo(31687)
+				local name
+				local spellInfo = C_Spell.GetSpellInfo(31687)
+				if spellInfo then
+					name = spellInfo.name
+				end
 				return false, PowaAuras:InsertText(PowaAuras.Text.nomReasonSpellNotEnabled, name)
 			end
 			self.Timer:SetDurationInfo(startTime + duration)

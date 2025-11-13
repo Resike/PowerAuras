@@ -41,16 +41,12 @@ local GetActionTexture = GetActionTexture
 local GetCursorPosition = GetCursorPosition
 local GetMacroInfo = GetMacroInfo
 local GetShapeshiftFormID = GetShapeshiftFormID
-local GetSpellCooldown = GetSpellCooldown
-local GetSpellInfo = GetSpellInfo
 local GetTime = GetTime
 local HasAction = HasAction
-local IsAddOnLoaded = IsAddOnLoaded
 local IsAltKeyDown = IsAltKeyDown
 local IsControlKeyDown = IsControlKeyDown
 local IsMounted = IsMounted
 local IsMouseButtonDown = IsMouseButtonDown
-local LoadAddOn = LoadAddOn
 local PlaySound = PlaySound
 local PlaySoundFile = PlaySoundFile
 local SetPortraitToTexture = SetPortraitToTexture
@@ -68,7 +64,7 @@ PowaMisc =
 	Debug = false,
 	OnUpdateLimit = 0,
 	AnimationLimit = 0,
-	Version = GetAddOnMetadata("PowerAuras", "Version"),
+	Version = C_AddOns.GetAddOnMetadata("PowerAuras", "Version"),
 	DefaultTimerTexture = "Original",
 	DefaultStacksTexture = "Original",
 	TimerRoundUp = false,
@@ -326,8 +322,8 @@ function PowaAuras:UpdateOldAuras()
 				aura.InvertAuraBelow = oldaura.Timer.InvertAuraBelow
 			end
 			if aura.model then
-				LoadAddOn("PowerAurasOptions")
-				if IsAddOnLoaded("PowerAurasOptions") then
+				C_AddOns.LoadAddOn("PowerAurasOptions")
+				if C_AddOns.IsAddOnLoaded("PowerAurasOptions") then
 					local ModelCategory
 					if not aura.modelcategory or aura.modelcategory == 1 then
 						ModelCategory = self.ModelsCreature
@@ -401,9 +397,15 @@ function PowaAuras:CustomTexPath(customname)
 	else
 		local spellId = select(3, string.find(customname, "%[?(%d+)%]?"))
 		if spellId then
-			texpath = select(3, GetSpellInfo(tonumber(spellId)))
+			local spellInfo = C_Spell.GetSpellInfo(tonumber(spellId))
+			if spellInfo then
+				texpath = spellInfo.iconID
+			end
 		else
-			texpath = select(3, GetSpellInfo(customname))
+			local spellInfo = C_Spell.GetSpellInfo(customname)
+			if spellInfo then
+				texpath = spellInfo.iconID
+			end
 		end
 	end
 	if not texpath then
@@ -637,9 +639,11 @@ function PowaAuras:OnUpdate(elapsed)
 	self.TimerUpdateThrottleTimer = self.TimerUpdateThrottleTimer + elapsed
 	self.ThrottleTimer = self.ThrottleTimer + elapsed
 	self.InGCD = nil
-	local gcdStart = GetSpellCooldown(61304)
-	if gcdStart then
-		self.InGCD = gcdStart > 0
+	local spellInfo = C_Spell.GetSpellCooldown(61304)
+	if spellInfo then
+		if spellInfo.startTime then
+			self.InGCD = spellInfo.startTime > 0
+		end
 	end
 	local checkAura = false
 	if PowaMisc.OnUpdateLimit == 0 or self.ThrottleTimer >= PowaMisc.OnUpdateLimit then

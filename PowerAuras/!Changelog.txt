@@ -4,6 +4,15 @@
 * "Stance/Seal/Form" multiple selection dropdown update.
 
 
+**4.34.1**
+* Fix for debuffs.
+* Fix Blizzard category options.
+
+**4.34.0**
+* Support for Retail 11.2.5.
+* Support for Panda Classic 5.5.2.
+* Support for Classic 1.15.8.
+
 **4.33.2**
 * Fixed a major leak with models.
 * Fix color picker on Classic.

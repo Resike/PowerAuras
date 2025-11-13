@@ -15,14 +15,11 @@ local GetNumShapeshiftForms = GetNumShapeshiftForms
 local GetNumSubgroupMembers = GetNumSubgroupMembers
 local GetRealmName = GetRealmName
 local GetShapeshiftFormInfo = GetShapeshiftFormInfo
-local GetSpellInfo = GetSpellInfo
 local GetTime = GetTime
-local IsAddOnLoaded = IsAddOnLoaded
 local IsInGroup = IsInGroup
 local IsInInstance = IsInInstance
 local IsInRaid = IsInRaid
 local IsMounted = IsMounted
-local LoadAddOn = LoadAddOn
 local UnitCanAttack = UnitCanAttack
 local UnitClass = UnitClass
 local UnitGUID = UnitGUID
@@ -102,7 +99,7 @@ end
 function PowaAuras:ADDON_LOADED(addon)
 	if addon == "PowerAuras" then
 		PowaAuras_Frame:UnregisterEvent("ADDON_LOADED")
-		--LoadAddOn("PowerAurasOptions")
+		--C_AddOns.LoadAddOn("PowerAurasOptions")
 		-- Ensure PowaMisc gets any new values
 		for k, v in pairs(PowaAuras.PowaMiscDefault) do
 			if PowaMisc[k] == nil then
@@ -187,8 +184,8 @@ end
 
 function PowaAuras:SlashCommandsInit()
 	SlashCmdList["PowerAuras"] = function(msg)
-		LoadAddOn("PowerAurasOptions")
-		if not IsAddOnLoaded("PowerAurasOptions") then
+		C_AddOns.LoadAddOn("PowerAurasOptions")
+		if not C_AddOns.IsAddOnLoaded("PowerAurasOptions") then
 			self:DisplayText("Power Auras Options: "..self.Colors.Red..PowaAuras.Text.Disabled.."|r")
 			return
 		else
@@ -204,7 +201,10 @@ function PowaAuras:Setup()
 	-- Lookup spells by spellId for debuff types
 	self.DebuffCatSpells = { }
 	for k, v in pairs(self.DebuffTypeSpellIds) do
-		local spellName = GetSpellInfo(k)
+		local spellInfo = C_Spell.GetSpellInfo(k)
+		if spellInfo then
+			spellName = spellInfo.name
+		end
 		if spellName then
 			self.DebuffCatSpells[spellName] = v
 		end
@@ -220,7 +220,7 @@ function PowaAuras:Setup()
 	if not self.IsClassic then
 		self.WeAreInVehicle = UnitInVehicle("player")
 		self.WeAreInPetBattle = C_PetBattles.IsInBattle()
-		self.ActiveTalentGroup = GetSpecialization()
+		self.ActiveTalentGroup = GetSpecialization and GetSpecialization()
 	end
 	self.Instance = self:GetInstanceType()
 	self:GetStances()
@@ -285,7 +285,7 @@ function PowaAuras:GetInstanceType()
 end
 
 function PowaAuras:ACTIVE_TALENT_GROUP_CHANGED(...)
-	self.ActiveTalentGroup = GetSpecialization()
+	self.ActiveTalentGroup = GetSpecialization and GetSpecialization()
 	if self.ModTest then
 		return
 	end
@@ -875,8 +875,10 @@ function PowaAuras:CombatLogEvent(...)
 		if event == "SPELL_PERIODIC_DAMAGE" or event == "SPELL_DAMAGE" or ((event == "SPELL_AURA_APPLIED" or event == "SPELL_AURA_APPLIED_DOSE") and spellType == "DEBUFF") then
 			self.AoeAuraAdded[spellId] = spellName
 			if not self.AoeAuraTexture[spellName] then
-				local _, _, icon = GetSpellInfo(spellId)
-				self.AoeAuraTexture[spellId] = icon
+				local spellInfo = C_Spell.GetSpellInfo(spellId)
+				if spellInfo then
+					self.AoeAuraTexture[spellId] = spellInfo.iconID
+				end
 			end
 			self.DoCheck.Aoe = true
 			self.DoCheck.CheckIt = true

@@ -22,13 +22,11 @@ local type = type
 local CloseDropDownMenus = CloseDropDownMenus
 local CreateColor = CreateColor
 local CreateFrame = CreateFrame
-local GetAddOnMetadata = GetAddOnMetadata
+local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 local GetCursorPosition = GetCursorPosition
 local GetInventoryItemTexture = GetInventoryItemTexture
 local GetInventorySlotInfo = GetInventorySlotInfo
 local GetRealmName = GetRealmName
-local GetSpellCharges = GetSpellCharges
-local GetSpellLink = GetSpellLink
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
 local IsAltKeyDown = IsAltKeyDown
@@ -55,32 +53,17 @@ local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
 local IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
 local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 
-if IsRetail then
-	if GameMenuFrame then
-		GameMenuFrame:HookScript("OnShow", function(self)
-			for i, v in pairs(UISpecialFrames) do
-				if v == "PowaOptionsFrame" then
-					tremove(UISpecialFrames, i)
-				end
+if GameMenuFrame then
+	GameMenuFrame:HookScript("OnShow", function(self)
+		for i, v in pairs(UISpecialFrames) do
+			if v == "PowaOptionsFrame" then
+				tremove(UISpecialFrames, i)
 			end
-		end)
-		GameMenuFrame:HookScript("OnHide", function(self)
-			tinsert(UISpecialFrames, "PowaOptionsFrame")
-		end)
-	end
-else
-	if InterfaceOptionsFrame then
-		InterfaceOptionsFrame:HookScript("OnShow", function(self)
-			for i, v in pairs(UISpecialFrames) do
-				if v == "PowaOptionsFrame" then
-					tremove(UISpecialFrames, i)
-				end
-			end
-		end)
-		InterfaceOptionsFrame:HookScript("OnHide", function(self)
-			tinsert(UISpecialFrames, "PowaOptionsFrame")
-		end)
-	end
+		end
+	end)
+	GameMenuFrame:HookScript("OnHide", function(self)
+		tinsert(UISpecialFrames, "PowaOptionsFrame")
+	end)
 end
 
 -- Main Options
@@ -1442,14 +1425,8 @@ function PowaAurasOptions:DoCopyEffect(idFrom, idTo, isMove)
 end
 
 function PowaAurasOptions:MainOptionShow()
-	if IsRetail then
-		if not GameMenuFrame:IsShown() then
-			tinsert(UISpecialFrames, "PowaOptionsFrame")
-		end
-	else
-		if not InterfaceOptionsFrame:IsShown() then
-			tinsert(UISpecialFrames, "PowaOptionsFrame")
-		end
+	if not GameMenuFrame:IsShown() then
+		tinsert(UISpecialFrames, "PowaOptionsFrame")
 	end
 	if PowaOptionsFrame:IsVisible() then
 		self:MainOptionClose()
@@ -4124,9 +4101,20 @@ function PowaAurasOptions.DropDownMenu_Initialize(owner)
 	end
 end
 
+function PowaAurasOptions:ReverseTable(t)
+    if type(t) ~= "table" then
+        return
+    end
+    local r = { }
+    for k, v in pairs(t) do
+        r[v] = k
+    end
+    return r
+end
+
 function PowaAurasOptions:FillDropdownSorted(t, info)
 	local names = PowaAurasOptions:CopyTable(t)
-	local values = ReverseTable(names)
+	local values = self:ReverseTable(names)
 	table.sort(names)
 	for _, name in pairs(names) do
 		info.text = name
@@ -4179,12 +4167,18 @@ function PowaAurasOptions:ChangeAuraType(id, newType)
 		end
 	end
 	if aura.bufftype == self.BuffTypes.ActionReady or aura.bufftype == self.BuffTypes.SpellCooldown then
-		local spellLink = GetSpellLink(aura.buffname)
+		local spellLink = C_Spell.GetSpellLink(aura.buffname)
 		local spellId
 		if spellLink then
 			spellId = string.match(spellLink, "spell:(%d+)")
 		end
-		local _, maxCharges = GetSpellCharges(spellId)
+		local maxCharges
+		if spellId then
+			local chargeInfo = C_Spell.GetSpellCharges(spellId)
+			if chargeInfo then
+				maxCharges = chargeInfo.maxCharges
+			end
+		end
 		if aura.Stacks and aura.Stacks.enabled and not maxCharges then
 			aura.Stacks.enabled = false
 			aura.Stacks:Dispose()
@@ -4237,12 +4231,18 @@ function PowaAurasOptions:RebuildAura(id)
 		end
 	end
 	if aura.bufftype == self.BuffTypes.ActionReady or aura.bufftype == self.BuffTypes.SpellCooldown then
-		local spellLink = GetSpellLink(aura.buffname)
+		local spellLink = C_Spell.GetSpellLink(aura.buffname)
 		local spellId
 		if spellLink then
 			spellId = string.match(spellLink, "spell:(%d+)")
 		end
-		local _, maxCharges = GetSpellCharges(spellId)
+		local maxCharges
+		if spellId then
+			local chargeInfo = C_Spell.GetSpellCharges(spellId)
+			if chargeInfo then
+				maxCharges = chargeInfo.maxCharges
+			end
+		end
 		if aura.Stacks and aura.Stacks.enabled and not maxCharges then
 			aura.Stacks.enabled = false
 			aura.Stacks:Dispose()
@@ -5058,20 +5058,8 @@ local function OptionsRefresh()
 end
 
 function PowaAurasOptions:Blizzard_OnLoad(panel)
-	panel.name = GetAddOnMetadata("PowerAuras", "Title")
-	panel.okay = function(self)
-		OptionsOK()
-	end
-	panel.cancel = function(self)
-		OptionsCancel()
-	end
-	panel.default = function(self)
-		OptionsDefault()
-	end
-	panel.refresh = function(self)
-		OptionsRefresh()
-	end
-	InterfaceOptions_AddCategory(panel)
+	local category = Settings.RegisterCanvasLayoutCategory(PowaOptionsCpuFrame2, "Power Auras")
+	Settings.RegisterAddOnCategory(category)
 end
 
 function PowaAurasOptions:PowaOptionsUpdateSliderChanged(slider, value)
