@@ -1413,6 +1413,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 			for pm = 1, numpm do
 				local groupUnit = "party"..pm..postfix
 				result = self:CheckUnit(groupUnit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1424,6 +1427,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 			for rm = 1, numrm do
 				local groupUnit = "raid"..rm..postfix
 				result = self:CheckUnit(groupUnit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1436,6 +1442,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 				for rm = 1, numrm do
 					local groupUnit = "raid"..rm..postfix
 					result = self:CheckUnit(groupUnit)
+					if result == -1 then
+						return -1
+					end
 					if result then
 						if not giveReason then
 							return true
@@ -1447,6 +1456,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 				for pm = 1, numpm do
 					local groupUnit = "party"..pm..postfix
 					result = self:CheckUnit(groupUnit)
+					if result == -1 then
+						return -1
+					end
 					if result then
 						if not giveReason then
 							return true
@@ -1459,6 +1471,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 					playerUnit = "player"
 				end
 				result = self:CheckUnit(playerUnit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1471,6 +1486,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 					playerUnit = "player"
 				end
 				result = self:CheckUnit(playerUnit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1482,6 +1500,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 		if self.target then -- Check any nearby hostiles that may not be targeted
 			for unit in pairs(PowaAuras.ExtraUnitEvent) do
 				result = self:CheckUnit(unit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1492,6 +1513,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 		end
 	else
 		result = self:CheckUnit(unit..postfix)
+		if result == -1 then
+			return -1
+		end
 		if result then
 			if not giveReason then
 				return true
@@ -1665,14 +1689,24 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		PowaAuras:DisplayText("IsPresent on ", unit," buffid = ", s," type = ", self.buffAuraType)
 	end
 	local auraName, auraTexture, count, expirationTime, caster, auraId
+	-- WoW Forever 1.60.1: aura queries may be secret during combat.
+	-- Do not call GetAuraDataByIndex from this tainted addon path when
+	-- aura access is restricted. -1 means "unknown", not "not present".
+	if C_Secrets and C_Secrets.ShouldAurasBeSecret
+		and C_Secrets.ShouldAurasBeSecret() then
+		return -1
+	end
 	if string.find(textToCheck, "%\\[") or string.find(textToCheck, "%\\]") then
 		textToCheck = strtrim(textToCheck, "%\\[%\\]")
 	end
 	if self.exact and not tonumber(textToCheck) then
 		local i = 1
 		local index
-		while C_UnitAuras.GetAuraDataByIndex(unit, i) do
-			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i)
+		while true do
+			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, self.buffAuraType)
+			if not auraData then
+				break
+			end
 			if auraData then
 				if auraData.name == textToCheck then
 					index = i
@@ -1844,6 +1878,9 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 			PowaAuras:DisplayText("Buff for current slot (", self.CurrentSlot, ")")
 		end
 		present, reason = self:IsPresent(target, self.CurrentSlot, giveReason, self.CurrentMatch)
+		if present == -1 then
+			return -1, reason
+		end
 		if present then
 			if not giveReason then
 				return true
@@ -1866,6 +1903,9 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 				PowaAuras:DisplayText("Down (", i, ")")
 			end
 			present, reason = self:IsPresent(target, i, giveReason, pword)
+			if present == -1 then
+				return -1, reason
+			end
 			if present then
 				if self.Debug then
 					PowaAuras:DisplayText("Found ", i)
@@ -1883,6 +1923,9 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 				PowaAuras:DisplayText("Up (", i, ")")
 			end
 			present, reason = self:IsPresent(target, i, giveReason, pword)
+			if present == -1 then
+				return -1, reason
+			end
 			if present == nil then
 				break
 			end
@@ -1922,6 +1965,9 @@ function cPowaBuffBase:CheckSingleUnit(group, unit, giveReason)
 		PowaAuras:DisplayText("CheckSingleUnit ", unit)
 	end
 	local present, reason = self:CheckAllAuraSlots(unit, giveReason)
+	if present == -1 then
+		return -1, reason
+	end
 	if present then
 		if self.groupany == true then
 			self.CurrentUnit = unit
@@ -3415,7 +3461,7 @@ function cPowaAuraStats:CheckUnit(unit)
     -- WoW Forever / Retail Secret Value protection
     if issecretvalue then
         if issecretvalue(curValue) or issecretvalue(maxValue) then
-            return false
+            return -1
         end
     end
 
