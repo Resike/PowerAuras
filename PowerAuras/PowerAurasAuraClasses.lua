@@ -3399,46 +3399,71 @@ function cPowaAuraStats:Init()
 end
 
 function cPowaAuraStats:CheckUnit(unit)
-	PowaAuras:Debug("CheckUnit "..unit)
-	if not self:IsCorrectPowerType(unit) then
-		return nil
-	end
-	if UnitIsDeadOrGhost(unit) then
-		return false
-	end
-	local curValue = self:UnitValue(unit)
-	if self.Stacks then
-		self.Stacks:SetStackCount(curValue)
-	end
-	self.DisplayValue = curValue
-	self.DisplayUnit = unit
-	self:UpdateText()
-	local maxValue = self:UnitValueMax(unit)
-	if curValue == nil or maxValue == nil or maxValue == 0 then
-		return false
-	end
-	if self.Debug then
-		PowaAuras:DisplayText("curValue = ", curValue, " maxValue = ", maxValue)
-	end
-	if self.RangeType == "%" then
-		curValue = (curValue / maxValue) * 100
-	end
-	if self.Stacks then
-		self.Stacks:SetStackCount(curValue)
-	end
-	if self.Debug then
-		PowaAuras:DisplayText(curValue..self.RangeType, " threshold = ", self.threshold)
-	end
-	local thresholdvalidate
-	if self.thresholdinvert then
-		thresholdvalidate = (curValue >= self.threshold)
-	else
-		thresholdvalidate = (curValue <= self.threshold)
-	end
-	if thresholdvalidate then
-		return true
-	end
-	return false
+    PowaAuras:Debug("CheckUnit "..unit)
+
+    if not self:IsCorrectPowerType(unit) then
+        return nil
+    end
+
+    if UnitIsDeadOrGhost(unit) then
+        return false
+    end
+
+    local curValue = self:UnitValue(unit)
+    local maxValue = self:UnitValueMax(unit)
+
+    -- WoW Forever / Retail Secret Value protection
+    if issecretvalue then
+        if issecretvalue(curValue) or issecretvalue(maxValue) then
+            return false
+        end
+    end
+
+    if curValue == nil or maxValue == nil or maxValue == 0 then
+        return false
+    end
+
+    -- Update display only after validating values
+    if self.Stacks then
+        self.Stacks:SetStackCount(curValue)
+    end
+
+    self.DisplayValue = curValue
+    self.DisplayUnit = unit
+    self:UpdateText()
+
+    if self.Debug then
+        PowaAuras:DisplayText(
+            "curValue = ", curValue,
+            " maxValue = ", maxValue
+        )
+    end
+
+    if self.RangeType == "%" then
+        curValue = (curValue / maxValue) * 100
+    end
+
+    if self.Stacks then
+        self.Stacks:SetStackCount(curValue)
+    end
+
+    if self.Debug then
+        PowaAuras:DisplayText(
+            curValue..self.RangeType,
+            " threshold = ",
+            self.threshold
+        )
+    end
+
+    local thresholdvalidate
+
+    if self.thresholdinvert then
+        thresholdvalidate = (curValue >= self.threshold)
+    else
+        thresholdvalidate = (curValue <= self.threshold)
+    end
+
+    return thresholdvalidate
 end
 
 function cPowaAuraStats:CheckIfShouldShow(giveReason)

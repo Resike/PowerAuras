@@ -1,4 +1,4 @@
-## Interface: 110205, 50502, 11508
+## Interface: 110205, 50502, 11508, 16001
 ## Title: Power Auras Classic
 ## Version: 4.34.1
 ## Author: Smacker 'lolcat', Dridzt 'classic', Garstiger 'continued', Sinsthar 'base', Meorawr, modified by Zensunim and Resike
