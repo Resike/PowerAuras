@@ -32,6 +32,13 @@ local UnitIsPVP = UnitIsPVP
 local UnitIsUnit = UnitIsUnit
 local UnitName = UnitName
 
+local WOW_PROJECT_ID = WOW_PROJECT_ID
+local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
+local WOW_PROJECT_CAMELOT = WOW_PROJECT_CAMELOT
+
+local IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+local IsForever = WOW_PROJECT_ID == WOW_PROJECT_CAMELOT
+
 local PowaAuras_Frame = CreateFrame("Frame", nil, UIParent)
 PowaAuras_Frame:RegisterEvent("ADDON_LOADED")
 
@@ -472,7 +479,22 @@ function PowaAuras:UNIT_SPELLCAST_SUCCEEDED(...)
 	if self.ModTest then
 		return
 	end
-	local unit, spell = ...
+
+	-- API args compatible codes
+	local args = {...}
+	local unit = args[1]
+	local spell = args[(IsForever or IsRetail) and 3 or 2]
+	if self.DebugEvents then
+        self:DisplayText(
+            "BuffCache CAST EVENT: unit=", tostring(unit),
+            " spell=", tostring(spell),
+            " type=", type(spell)
+        )
+    end
+
+	-- refresh player casting Buff duration
+	self:RefreshBuffCache(unit, spell)
+
 	self.ExtraUnitEvent[unit] = spell
 	self:SpellcastEvent(unit)
 	if self.TalentChangeSpells[spell] then

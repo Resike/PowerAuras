@@ -1684,17 +1684,344 @@ function cPowaBuffBase:AddEffectAndEvents()
 	end
 end
 
+PowaAuras.BuffCache = PowaAuras.BuffCache or {}
+
+-- Cache one successfully read AuraData.
+function cPowaBuffBase:CacheAura(unit, auraData, tooltipMatched)
+    if not auraData or not auraData.spellId then
+        return
+    end
+
+    local unitCache = PowaAuras.BuffCache[unit]
+    if not unitCache then
+        unitCache = {}
+        PowaAuras.BuffCache[unit] = unitCache
+    end
+
+    local caster = auraData.sourceUnit
+    local isMine = caster ~= nil
+        and UnitExists(caster)
+        and UnitIsUnit("player", caster)
+
+    unitCache[auraData.spellId] = {
+        spellId = auraData.spellId,
+        name = auraData.name,
+        icon = auraData.icon,
+        applications = auraData.applications,
+        duration = auraData.duration,
+        expirationTime = auraData.expirationTime,
+        sourceUnit = caster,
+        isMine = isMine,
+        tooltipMatched = tooltipMatched ~= false,
+        lastSeen = GetTime(),
+    }
+end
+
+function PowaAuras:RefreshBuffCache(unit, castSpellID)
+	if unit ~= "player" or not castSpellID then
+		return
+	end
+	if self.DebugEvents then
+    	self:DisplayText(
+        	"BuffCache CAST: unit=",
+        	unit,
+        	" spellID=",
+        	castSpellID
+    	)
+	end
+	local unitCache = self.BuffCache and self.BuffCache[unit]
+	if not unitCache then
+		return
+	end
+
+	if self.DebugEvents then
+    	for auraID, aura in pairs(unitCache) do
+    	    self:DisplayText(
+    	        "BuffCache ENTRY: auraID=",
+    	        auraID,
+    	        " name=",
+    	        aura.name,
+    	        " duration=",
+    	        aura.duration
+    	    )
+    	end
+	end
+
+	-- 默认施法技能 ID 与 Aura spellId 相同。
+	local auraSpellID = castSpellID
+
+	-- 如果施法技能 ID 与 Aura spellId 不同，
+	-- 可以通过映射表指定对应关系。
+	if self.BuffCacheRefreshSpellMap then
+		auraSpellID = self.BuffCacheRefreshSpellMap[castSpellID] or auraSpellID
+	end
+
+	local cachedAura = unitCache[auraSpellID]
+	if not cachedAura then
+		return
+	end
+
+	-- 永久 Aura 或未知持续时间，不人为创建倒计时。
+	local duration = cachedAura.duration
+	if type(duration) ~= "number" or duration <= 0 then
+		return
+	end
+
+	local now = GetTime()
+
+	cachedAura.expirationTime = now + duration
+	cachedAura.lastRefresh = now
+
+	if self.DebugEvents then
+		self:DisplayText(
+			"BuffCache REFRESH: ", cachedAura.name,
+			" spellId=", cachedAura.spellId,
+			" castSpellID=", castSpellID,
+			" duration=", duration,
+			" expiration=", cachedAura.expirationTime
+		)
+	end
+end
+
+function cPowaBuffBase:CheckSecretAuraPresence(unit, s, giveReason, textToCheck)
+    local cache = PowaAuras.BuffCache
+        and PowaAuras.BuffCache[unit]
+
+    if not cache then
+        return -1
+    end
+
+    local cachedAura
+
+    for spellId, aura in pairs(cache) do
+        local matched = false
+
+        if tonumber(textToCheck) then
+            matched = spellId == tonumber(textToCheck)
+        elseif self.exact then
+            matched = aura.name == textToCheck
+        elseif self.ignoremaj then
+            matched = string.find(
+                string.upper(aura.name),
+                string.upper(textToCheck),
+                1,
+                true
+            ) ~= nil
+        else
+            matched = string.find(
+                aura.name,
+                textToCheck,
+                1,
+                true
+            ) ~= nil
+        end
+
+        if matched then
+            cachedAura = aura
+            break
+        end
+    end
+
+    if not cachedAura then
+        return -1
+    end
+
+    if not cachedAura.expirationTime or cachedAura.expirationTime <= 0 then
+        return -1
+    end
+
+    local remaining = cachedAura.expirationTime - GetTime()
+
+    if remaining <= 0 then
+        return false
+    end
+
+    return self:ApplyCachedAura(
+        cachedAura,
+        remaining,
+        giveReason,
+        textToCheck
+    )
+end
+
+function cPowaBuffBase:ApplyAuraResult(unit, auraName, auraTexture, 
+	count, expirationTime, isMine, giveReason)
+    if self.mine and not isMine then
+        if not giveReason then
+            return nil
+        end
+        return nil, PowaAuras.Text.nomReasonBuffPresentNotMine
+    end
+    if not self:CheckStacks(count) then
+        if giveReason then
+            return nil, PowaAuras:InsertText(
+                PowaAuras.Text.nomReasonStacksMismatch,
+                count,
+                self:StacksText()
+            )
+        end
+        return nil
+    end
+
+    self.DisplayValue = auraName
+    self.DisplayUnit = unit
+
+    if self.Stacks then
+        self.Stacks:SetStackCount(count)
+    end
+
+    if self.Timer then
+        self.Timer:SetDurationInfo(expirationTime)
+        self:CheckTimerInvert()
+
+        if self.ForceTimeInvert then
+            if not giveReason then
+                return false
+            end
+            return false, PowaAuras.Text.nomReasonBuffPresentTimerInvert
+        end
+    end
+
+    self:UpdateText()
+    self:SetIcon(auraTexture)
+
+    if giveReason then
+        return true, PowaAuras.Text.nomReasonBuffFound
+    end
+
+    return true
+end
+
+
+function cPowaBuffBase:ApplyCachedAura(
+    unit,
+    s,
+    giveReason,
+    textToCheck
+)
+    local unitCache = PowaAuras.BuffCache
+        and PowaAuras.BuffCache[unit]
+
+    if not unitCache then
+        return -1
+    end
+
+    local cachedAura
+    local spellId = tonumber(textToCheck)
+
+    for id, aura in pairs(unitCache) do
+        local matched
+
+        if spellId then
+            matched = tonumber(id) == spellId
+        elseif self.ignoremaj then
+            if self.exact then
+                matched = string.upper(aura.name) == string.upper(textToCheck)
+            else
+                matched = string.upper(aura.name) == string.upper(textToCheck)
+                    or string.find(
+                        string.upper(aura.name),
+                        string.upper(textToCheck),
+                        1,
+                        true
+                    ) ~= nil
+            end
+        else
+            if self.exact then
+                matched = aura.name == textToCheck
+            else
+                matched = aura.name == textToCheck
+                    or string.find(
+                        aura.name,
+                        textToCheck,
+                        1,
+                        true
+                    ) ~= nil
+            end
+        end
+
+        if matched then
+            cachedAura = aura
+            break
+        end
+    end
+
+    if not cachedAura then
+        return -1
+    end
+
+    -- Tooltip cannot be queried reliably from Secret Aura data.
+    if self.tooltipCheck
+        and string.len(self.tooltipCheck) ~= 0
+        and not cachedAura.tooltipMatched then
+        return -1
+    end
+
+    local expirationTime = cachedAura.expirationTime
+    local duration = cachedAura.duration
+
+    -- Permanent aura: no countdown.
+    if not duration or duration <= 0 then
+        expirationTime = 0
+    else
+        if not expirationTime or expirationTime <= 0 then
+            return -1
+        end
+
+        -- Cached timer has expired.
+        if GetTime() >= expirationTime then
+            if self.Debug then
+                PowaAuras:DisplayText(
+                    "BuffCache EXPIRED: ",
+                    cachedAura.name,
+                    " expiration=",
+                    expirationTime
+                )
+            end
+
+            return false
+        end
+    end
+
+    if self.Debug then
+        local remaining = duration and duration > 0
+            and (expirationTime - GetTime())
+            or "permanent"
+
+        PowaAuras:DisplayText(
+            "BuffCache APPLY: ",
+            cachedAura.name,
+            " expiration=",
+            tostring(expirationTime),
+            " remaining=",
+            tostring(remaining)
+        )
+    end
+
+    return self:ApplyAuraResult(
+        unit,
+        cachedAura.name,
+        cachedAura.icon,
+        cachedAura.applications,
+        expirationTime,
+        cachedAura.isMine,
+        giveReason
+    )
+end
+
+
 function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 	if self.Debug then
 		PowaAuras:DisplayText("IsPresent on ", unit," buffid = ", s," type = ", self.buffAuraType)
 	end
 	local auraName, auraTexture, count, expirationTime, caster, auraId
+	local auraDataFound
 	-- WoW Forever 1.60.1: aura queries may be secret during combat.
 	-- Do not call GetAuraDataByIndex from this tainted addon path when
 	-- aura access is restricted. -1 means "unknown", not "not present".
-	if C_Secrets and C_Secrets.ShouldAurasBeSecret
-		and C_Secrets.ShouldAurasBeSecret() then
-		return -1
+	if C_Secrets and C_Secrets.ShouldAurasBeSecret and C_Secrets.ShouldAurasBeSecret() then
+    	-- Secret Aura: use the fallback existence check.
+    	return self:ApplyCachedAura(unit, s, giveReason, textToCheck)
 	end
 	if string.find(textToCheck, "%\\[") or string.find(textToCheck, "%\\]") then
 		textToCheck = strtrim(textToCheck, "%\\[%\\]")
@@ -1720,16 +2047,21 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		end
 		local auraData = C_UnitAuras.GetAuraDataByIndex(unit, index, self.buffAuraType)
 		if auraData then
+			auraDataFound = auraData
+
 			auraName = auraData.name
 			auraTexture = auraData.icon
 			count = auraData.applications
 			expirationTime = auraData.expirationTime
 			caster = auraData.sourceUnit
 			auraId = auraData.spellId
+			
 		end
 	else
 		local auraData = C_UnitAuras.GetAuraDataByIndex(unit, s, self.buffAuraType)
 		if auraData then
+			auraDataFound = auraData
+
 			auraName = auraData.name
 			auraTexture = auraData.icon
 			count = auraData.applications
@@ -1756,6 +2088,11 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 			return false
 		end
 	end
+	
+	-- Cache only after the configured tooltip condition has passed.
+	if auraDataFound then
+  	  	self:CacheAura(unit, auraDataFound, true)
+	end
 	if self.ignoremaj then
 		if self.exact then
 			if string.upper(auraName) ~= string.upper(textToCheck) and auraId ~= tonumber(textToCheck) then
@@ -1781,39 +2118,16 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		PowaAuras:DisplayText("Present!")
 	end
 	local isMine = caster ~= nil and UnitExists(caster) and UnitIsUnit("player", caster)
-	if self.mine and not isMine then
-		if not giveReason then
-			return nil
-		end
-		return nil, PowaAuras.Text.nomReasonBuffPresentNotMine
-	end
-	if not self:CheckStacks(count) then
-		if giveReason then
-			return nil, PowaAuras:InsertText(PowaAuras.Text.nomReasonStacksMismatch, count, self:StacksText())
-		end
-		return nil
-	end
-	self.DisplayValue = auraName
-	self.DisplayUnit = unit
-	if self.Stacks then
-		self.Stacks:SetStackCount(count)
-	end
-	if self.Timer then
-		self.Timer:SetDurationInfo(expirationTime)
-		self:CheckTimerInvert()
-		if self.ForceTimeInvert then
-			if not giveReason then
-				return false
-			end
-			return false, PowaAuras.Text.nomReasonBuffPresentTimerInvert
-		end
-	end
-	self:UpdateText()
-	self:SetIcon(auraTexture)
-	if giveReason then
-		return true, PowaAuras.Text.nomReasonBuffFound
-	end
-	return true
+
+	return self:ApplyAuraResult(
+	    unit,
+	    auraName,
+	    auraTexture,
+	    count,
+	    expirationTime,
+	    isMine,
+	    giveReason
+	)
 end
 
 function cPowaBuffBase:CheckTooltip(text, target, index)
