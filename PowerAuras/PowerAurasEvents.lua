@@ -492,14 +492,18 @@ function PowaAuras:UNIT_SPELLCAST_SUCCEEDED(...)
         )
     end
 
-	-- refresh player casting Buff duration
-	self:RefreshBuffCache(unit, spell)
+	-- Only process player spell casts for BuffCache
+	if unit == "player" then
+		self:RefreshBuffCache(unit, spell)
+	end
 
 	self.ExtraUnitEvent[unit] = spell
 	self:SpellcastEvent(unit)
-	if self.TalentChangeSpells[spell] then
-		self:ResetTalentScan(unit)
-		self.DoCheck.All = true
+	if unit == "player" and not self.WeAreInCombat then
+		if self.TalentChangeSpells[spell] then
+			self:ResetTalentScan(unit)
+			self.DoCheck.All = true
+		end
 	end
 	if self.DebugEvents then
 		self:DisplayText("UNIT_SPELLCAST_SUCCEEDED ", unit, " ", spell)
