@@ -98,6 +98,10 @@ local PowaAuras_Tooltip = CreateFrame("GameTooltip", "PowaAuras_Tooltip", UIPare
 PowaAuras_Tooltip:SetPoint("BOTTOM", UIParent, "TOP", 0, 100)
 PowaAuras_Tooltip:SetFrameStrata("TOOLTIP")
 
+local IsSecretValue = PowaAuras.IsSecretValue
+local GetSafeValue = PowaAuras.GetSafeValue
+local SafeUnitIsUnit = PowaAuras.SafeUnitIsUnit
+
 -- PowaAura Classes
 function PowaClass(base, ctor)
 	local c = { }
@@ -786,13 +790,14 @@ function cPowaAura:CheckState(giveReason)
 	if not self.raid and not self.party and not self.groupOrSelf and not self:SkipTargetChecks() then
 		-- Check if target exists and is alive
 		if self.target or self.targetfriend then
-			if UnitName("target") == nil then
+			local targetName = GetSafeValue(UnitName("target"))
+			if targetName == nil then
 				if not giveReason then
 					return false
 				end
 				return false, PowaAuras.Text.nomReasonNoTarget
 			end
-			if UnitName("target") == UnitName("player") then
+			if targetName and targetName == UnitName("player") then
 				if not giveReason then
 					return false
 				end
@@ -838,7 +843,7 @@ function cPowaAura:CheckState(giveReason)
 		return false, PowaAuras.Text.nomReasonNotInParty
 	end
 	-- Focus
-	if self.focus and UnitName("focus") == nil then -- Focus check
+	if self.focus and GetSafeValue(UnitName("focus")) == nil then
 		if not giveReason then
 			return false
 		end
@@ -1698,10 +1703,10 @@ function cPowaBuffBase:CacheAura(unit, auraData, tooltipMatched)
         PowaAuras.BuffCache[unit] = unitCache
     end
 
-    local caster = auraData.sourceUnit
+    local caster = GetSafeValue(auraData.sourceUnit)
     local isMine = caster ~= nil
         and UnitExists(caster)
-        and UnitIsUnit("player", caster)
+        and SafeUnitIsUnit("player", caster)
 
     unitCache[auraData.spellId] = {
         spellId = auraData.spellId,
@@ -2030,12 +2035,12 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		local i = 1
 		local index
 		while true do
-			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, self.buffAuraType)
+			local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, i, self.buffAuraType))
 			if not auraData then
 				break
 			end
 			if auraData then
-				if auraData.name == textToCheck then
+				if GetSafeValue(auraData.name) == textToCheck then
 					index = i
 					break
 				end
@@ -2045,29 +2050,28 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		if not index then
 			return nil
 		end
-		local auraData = C_UnitAuras.GetAuraDataByIndex(unit, index, self.buffAuraType)
+		local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, index, self.buffAuraType))
 		if auraData then
 			auraDataFound = auraData
 
-			auraName = auraData.name
-			auraTexture = auraData.icon
-			count = auraData.applications
-			expirationTime = auraData.expirationTime
-			caster = auraData.sourceUnit
-			auraId = auraData.spellId
-			
+			auraName = GetSafeValue(auraData.name)
+			auraTexture = GetSafeValue(auraData.icon)
+			count = GetSafeValue(auraData.applications)
+			expirationTime = GetSafeValue(auraData.expirationTime)
+			caster = GetSafeValue(auraData.sourceUnit)
+			auraId = GetSafeValue(auraData.spellId)
 		end
 	else
-		local auraData = C_UnitAuras.GetAuraDataByIndex(unit, s, self.buffAuraType)
+		local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, s, self.buffAuraType))
 		if auraData then
 			auraDataFound = auraData
 
-			auraName = auraData.name
-			auraTexture = auraData.icon
-			count = auraData.applications
-			expirationTime = auraData.expirationTime
-			caster = auraData.sourceUnit
-			auraId = auraData.spellId
+			auraName = GetSafeValue(auraData.name)
+			auraTexture = GetSafeValue(auraData.icon)
+			count = GetSafeValue(auraData.applications)
+			expirationTime = GetSafeValue(auraData.expirationTime)
+			caster = GetSafeValue(auraData.sourceUnit)
+			auraId = GetSafeValue(auraData.spellId)
 		end
 	end
 	if auraName == nil then
@@ -2117,7 +2121,7 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 	if self.Debug then
 		PowaAuras:DisplayText("Present!")
 	end
-	local isMine = caster ~= nil and UnitExists(caster) and UnitIsUnit("player", caster)
+	local isMine = caster ~= nil and UnitExists(caster) and SafeUnitIsUnit("player", caster)
 
 	return self:ApplyAuraResult(
 	    unit,
@@ -2687,7 +2691,7 @@ function cPowaStealableSpell:CheckUnit(unit, targetOf)
 		end
 		for i = 1, 40 do
 			local auraName, auraTexture, count, typeDebuff, expirationTime, isStealable, auraId
-			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i)
+			local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, i))
 			if auraData then
 				auraName = auraData.name
 				auraTexture = auraData.icon
@@ -2750,14 +2754,14 @@ function cPowaPurgeableSpell:CheckUnit(unit, targetOf)
 		end
 		for i = 1, 40 do
 			local auraName, auraTexture, count, typeDebuff, expirationTime, auraId
-			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HELPFUL")
+			local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, i, "HELPFUL"))
 			if auraData then
-				auraName = auraData.name
-				auraTexture = auraData.icon
-				count = auraData.applications
-				typeDebuff = auraData.dispelName
-				expirationTime = auraData.expirationTime
-				auraId = auraData.spellId
+				auraName = GetSafeValue(auraData.name)
+				auraTexture = GetSafeValue(auraData.icon)
+				count = GetSafeValue(auraData.applications)
+				expirationTime = GetSafeValue(auraData.expirationTime)
+				typeDebuff = GetSafeValue(auraData.dispelName)
+				auraId = GetSafeValue(auraData.spellId)
 			end
 			if self.Debug then
 				PowaAuras:Message("Slot = ", i, " auraName = ", auraName, " typeDebuff = ", typeDebuff, " (", auraId, ")")
@@ -3997,7 +4001,7 @@ function cPowaAggro:AddEffectAndEvents()
 end
 
 function cPowaAggro:CheckUnit(unit)
-	return (UnitThreatSituation(unit) or - 1) > 0
+	return (GetSafeValue(UnitThreatSituation(unit)) or - 1) > 0
 end
 
 function cPowaAggro:SetFixedIcon()
@@ -4057,7 +4061,7 @@ function cPowaPvP:CheckUnit(unit)
 	if self.Debug then
 		PowaAuras:DisplayText(unit.." PvP flag is on")
 	end
-	if self.Timer and UnitIsUnit("player", unit) then
+	if self.Timer and SafeUnitIsUnit("player", unit) then
 		local duration = GetPVPTimer()
 		if self.Debug then
 			PowaAuras:DisplayText("PvP flag is on time left =", GetPVPTimer())
@@ -4195,7 +4199,7 @@ function cPowaSpellAlert:CheckUnit(unit)
 	end
 	-- Cast on me check
 	if self.Extra then
-		if not UnitIsUnit(unit.."target","player") then
+		if not SafeUnitIsUnit(unit.."target","player") then
 			if self.Debug then
 				PowaAuras:DisplayText(unit, " is not casting on me")
 			end
@@ -4208,8 +4212,12 @@ function cPowaSpellAlert:CheckUnit(unit)
 	else
 		local _
 		spellname, _, spellicon, _, endtime, _, _, notInterruptible = UnitCastingInfo(unit)
+		spellname = GetSafeValue(spellname)
+
 		if not spellname then
 			spellname, _, spellicon, _, endtime, _, notInterruptible = UnitChannelInfo(unit)
+
+			spellname = GetSafeValue(spellname)
 		end
 	end
 	-- Not casting
@@ -5178,7 +5186,7 @@ function cPowaUnitMatch:CheckIfShouldShow(giveReason)
 	if unit2 == "*" then
 		result = UnitExists(unit1) and true or false
 	else
-		result = UnitIsUnit(unit1, unit2) and true or false
+		result = SafeUnitIsUnit(unit1, unit2) and true or false
 		if not result then
 			result = UnitName(unit1) == unit2 and true or (UnitName(unit2) == unit1 and true or false)
 		end

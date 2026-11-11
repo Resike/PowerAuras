@@ -54,6 +54,10 @@ local PowaAction_Tooltip = CreateFrame("GameTooltip", "PowaAction_Tooltip", UIPa
 PowaAction_Tooltip:SetPoint("BOTTOM", UIParent, "TOP", 0, 100)
 PowaAction_Tooltip:SetFrameStrata("TOOLTIP")
 
+local IsSecretValue = PowaAuras.IsSecretValue
+local GetSafeValue = PowaAuras.GetSafeValue
+local SafeUnitIsUnit = PowaAuras.SafeUnitIsUnit
+
 function PowaAuras:ReregisterEvents()
 	PowaAuras_Frame:UnregisterAllEvents()
 	self:RegisterEvents(PowaAuras_Frame)
@@ -219,7 +223,7 @@ function PowaAuras:Setup()
 	if UnitIsDeadOrGhost("player") then
 		self.WeAreAlive = false
 	end
-	self.PvPFlagSet = UnitIsPVP("player")
+	self.PvPFlagSet = GetSafeValue(UnitIsPVP("player"))
 	self:DetermineRole("player")
 	self.WeAreInRaid = IsInRaid()
 	self.WeAreInParty = IsInGroup()
@@ -350,7 +354,7 @@ function PowaAuras:FillGroup(group, count)
 	for i = 1, count do
 		local unit = group..i
 		local role, roleType = self:DetermineRole(unit)
-		if group == "raid" and UnitIsUnit(unit, "player") then
+		if group == "raid" and SafeUnitIsUnit(unit, "player") then
 			unit = "player"
 		end
 		local _, classname = UnitClass(unit)
@@ -448,32 +452,69 @@ function PowaAuras:SpellcastEvent(unit)
 	if self.DebugEvents then
 		self:DisplayText("SpellcastEvent: ", unit)
 	end
-	if unit and not UnitIsDead(unit) then
-		if UnitIsUnit(unit, "player") then
-			self.DoCheck.PlayerSpells = true
+	if not unit then
+		return
+	end
+	-- Dead check
+	local isDead = GetSafeValue(UnitIsDead(unit))
+	if isDead == true then
+		return
+	end
+
+	-- Player
+	local isPlayer = SafeUnitIsUnit(unit, "player")
+	if isPlayer == true then
+		self.DoCheck.PlayerSpells = true
+		self.DoCheck.GroupOrSelfSpells = true
+	end
+
+	-- Focus
+	local isFocus = SafeUnitIsUnit(unit, "focus")
+	if isFocus == true then
+		self.DoCheck.FocusSpells = true
+	end
+
+	-- Target
+	local isTarget = SafeUnitIsUnit(unit, "target")
+	if isTarget == true then
+		self.DoCheck.TargetSpells = true
+	end
+
+	-- Attack
+	local canAttack = GetSafeValue(UnitCanAttack(unit, "player"))
+
+	if canAttack == true then
+		self.DoCheck.Spells = true
+	elseif canAttack == false then
+
+		local inParty = GetSafeValue(UnitInParty(unit))
+
+		if inParty == true then
+			self.DoCheck.PartySpells = true
 			self.DoCheck.GroupOrSelfSpells = true
 		end
-		if UnitIsUnit(unit, "focus") then
-			self.DoCheck.FocusSpells = true
-		end
-		if UnitIsUnit(unit, "target") then
-			self.DoCheck.TargetSpells = true
-		end
-		if UnitCanAttack(unit, "player") then
-			self.DoCheck.Spells = true -- Scan party/raid targets for casting
+
+		local raidIndex = GetSafeValue(UnitInRaid(unit))
+		local inRaid
+
+		if raidIndex ~= nil then
+			inRaid = GetSafeValue(UnitInRaid(raidIndex))
 		else
-			if UnitInParty(unit) then
-				self.DoCheck.PartySpells = true
-				self.DoCheck.GroupOrSelfSpells = true
-			end
-			if UnitInRaid(UnitInRaid(unit)) then
-				self.DoCheck.RaidSpells = true
-				self.DoCheck.GroupOrSelfSpells = true
-			end
+			inRaid = false
 		end
-		self.DoCheck.CheckIt = true
+
+		if inRaid == true then
+			self.DoCheck.RaidSpells = true
+			self.DoCheck.GroupOrSelfSpells = true
+		end
+	else
+		-- Cannot determine hostility because the result is secret.
+		-- Keep the generic spell check enabled.
+		self.DoCheck.Spells = true
 	end
-end
+
+	self.DoCheck.CheckIt = true
+	end
 
 function PowaAuras:UNIT_SPELLCAST_SUCCEEDED(...)
 	if self.ModTest then
@@ -483,7 +524,7 @@ function PowaAuras:UNIT_SPELLCAST_SUCCEEDED(...)
 	-- API args compatible codes
 	local args = {...}
 	local unit = args[1]
-	local spell = args[(IsForever or IsRetail) and 3 or 2]
+	local spell = GetSafeValue(args[(IsForever or IsRetail) and 3 or 2])
 	if self.DebugEvents then
         self:DisplayText(
             "BuffCache CAST EVENT: unit=", tostring(unit),
@@ -509,8 +550,8 @@ function PowaAuras:UNIT_SPELLCAST_SUCCEEDED(...)
 		self:DisplayText("UNIT_SPELLCAST_SUCCEEDED ", unit, " ", spell)
 	end
 	-- Druid shapeshift special case
-	if unit == "player" then
-		if spell == self.Spells.DRUID_SHIFT_CAT or spell == self.Spells.DRUID_SHIFT_BEAR or spell == self.Spells.DRUID_SHIFT_MOONKIN then
+	if unit == "player" and spell then
+		if spell and spell == self.Spells.DRUID_SHIFT_CAT or spell == self.Spells.DRUID_SHIFT_BEAR or spell == self.Spells.DRUID_SHIFT_MOONKIN then
 			self.DoCheck.Mana = true
 			self.DoCheck.Power = true
 			self.DoCheck.CheckIt = true
@@ -680,7 +721,7 @@ function PowaAuras:UNIT_TARGET(...)
 	if not self.ModTest then
 		self.DoCheck.UnitMatch = true
 		for existingTarget in pairs(PowaAuras.ChangedUnits.Targets) do
-			if UnitIsUnit(target, existingTarget) then
+			if SafeUnitIsUnit(target, existingTarget) then
 				return
 			end
 		end
@@ -820,7 +861,10 @@ end
 
 function PowaAuras:FlagsChanged(unit)
 	if unit == "player" then
-		local flag = UnitIsPVP("player")
+		local flag = GetSafeValue(UnitIsPVP("player"))
+		if flag == nil then
+			return
+		end
 		if flag ~= self.PvPFlagSet then
 			self.PvPFlagSet = flag
 			if not self.ModTest then
