@@ -98,6 +98,10 @@ local PowaAuras_Tooltip = CreateFrame("GameTooltip", "PowaAuras_Tooltip", UIPare
 PowaAuras_Tooltip:SetPoint("BOTTOM", UIParent, "TOP", 0, 100)
 PowaAuras_Tooltip:SetFrameStrata("TOOLTIP")
 
+local IsSecretValue = PowaAuras.IsSecretValue
+local GetSafeValue = PowaAuras.GetSafeValue
+local SafeUnitIsUnit = PowaAuras.SafeUnitIsUnit
+
 -- PowaAura Classes
 function PowaClass(base, ctor)
 	local c = { }
@@ -786,13 +790,14 @@ function cPowaAura:CheckState(giveReason)
 	if not self.raid and not self.party and not self.groupOrSelf and not self:SkipTargetChecks() then
 		-- Check if target exists and is alive
 		if self.target or self.targetfriend then
-			if UnitName("target") == nil then
+			local targetName = GetSafeValue(UnitName("target"))
+			if targetName == nil then
 				if not giveReason then
 					return false
 				end
 				return false, PowaAuras.Text.nomReasonNoTarget
 			end
-			if UnitName("target") == UnitName("player") then
+			if targetName and targetName == UnitName("player") then
 				if not giveReason then
 					return false
 				end
@@ -838,7 +843,7 @@ function cPowaAura:CheckState(giveReason)
 		return false, PowaAuras.Text.nomReasonNotInParty
 	end
 	-- Focus
-	if self.focus and UnitName("focus") == nil then -- Focus check
+	if self.focus and GetSafeValue(UnitName("focus")) == nil then
 		if not giveReason then
 			return false
 		end
@@ -1413,6 +1418,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 			for pm = 1, numpm do
 				local groupUnit = "party"..pm..postfix
 				result = self:CheckUnit(groupUnit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1424,6 +1432,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 			for rm = 1, numrm do
 				local groupUnit = "raid"..rm..postfix
 				result = self:CheckUnit(groupUnit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1436,6 +1447,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 				for rm = 1, numrm do
 					local groupUnit = "raid"..rm..postfix
 					result = self:CheckUnit(groupUnit)
+					if result == -1 then
+						return -1
+					end
 					if result then
 						if not giveReason then
 							return true
@@ -1447,6 +1461,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 				for pm = 1, numpm do
 					local groupUnit = "party"..pm..postfix
 					result = self:CheckUnit(groupUnit)
+					if result == -1 then
+						return -1
+					end
 					if result then
 						if not giveReason then
 							return true
@@ -1459,6 +1476,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 					playerUnit = "player"
 				end
 				result = self:CheckUnit(playerUnit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1471,6 +1491,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 					playerUnit = "player"
 				end
 				result = self:CheckUnit(playerUnit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1482,6 +1505,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 		if self.target then -- Check any nearby hostiles that may not be targeted
 			for unit in pairs(PowaAuras.ExtraUnitEvent) do
 				result = self:CheckUnit(unit)
+				if result == -1 then
+					return -1
+				end
 				if result then
 					if not giveReason then
 						return true
@@ -1492,6 +1518,9 @@ function cPowaAura:CheckAllUnits(giveReason)
 		end
 	else
 		result = self:CheckUnit(unit..postfix)
+		if result == -1 then
+			return -1
+		end
 		if result then
 			if not giveReason then
 				return true
@@ -1660,21 +1689,358 @@ function cPowaBuffBase:AddEffectAndEvents()
 	end
 end
 
+PowaAuras.BuffCache = PowaAuras.BuffCache or {}
+
+-- Cache one successfully read AuraData.
+function cPowaBuffBase:CacheAura(unit, auraData, tooltipMatched)
+    if not auraData or not auraData.spellId then
+        return
+    end
+
+    local unitCache = PowaAuras.BuffCache[unit]
+    if not unitCache then
+        unitCache = {}
+        PowaAuras.BuffCache[unit] = unitCache
+    end
+
+    local caster = GetSafeValue(auraData.sourceUnit)
+    local isMine = caster ~= nil
+        and UnitExists(caster)
+        and SafeUnitIsUnit("player", caster)
+
+    unitCache[auraData.spellId] = {
+        spellId = auraData.spellId,
+        name = auraData.name,
+        icon = auraData.icon,
+        applications = auraData.applications,
+        duration = auraData.duration,
+        expirationTime = auraData.expirationTime,
+        sourceUnit = caster,
+        isMine = isMine,
+        tooltipMatched = tooltipMatched ~= false,
+        lastSeen = GetTime(),
+    }
+end
+
+function PowaAuras:RefreshBuffCache(unit, castSpellID)
+	if unit ~= "player" or not castSpellID then
+		return
+	end
+	if self.DebugEvents then
+    	self:DisplayText(
+        	"BuffCache CAST: unit=",
+        	unit,
+        	" spellID=",
+        	castSpellID
+    	)
+	end
+	local unitCache = self.BuffCache and self.BuffCache[unit]
+	if not unitCache then
+		return
+	end
+
+	if self.DebugEvents then
+    	for auraID, aura in pairs(unitCache) do
+    	    self:DisplayText(
+    	        "BuffCache ENTRY: auraID=",
+    	        auraID,
+    	        " name=",
+    	        aura.name,
+    	        " duration=",
+    	        aura.duration
+    	    )
+    	end
+	end
+
+	-- 默认施法技能 ID 与 Aura spellId 相同。
+	local auraSpellID = castSpellID
+
+	-- 如果施法技能 ID 与 Aura spellId 不同，
+	-- 可以通过映射表指定对应关系。
+	if self.BuffCacheRefreshSpellMap then
+		auraSpellID = self.BuffCacheRefreshSpellMap[castSpellID] or auraSpellID
+	end
+
+	local cachedAura = unitCache[auraSpellID]
+	if not cachedAura then
+		return
+	end
+
+	-- 永久 Aura 或未知持续时间，不人为创建倒计时。
+	local duration = cachedAura.duration
+	if type(duration) ~= "number" or duration <= 0 then
+		return
+	end
+
+	local now = GetTime()
+
+	cachedAura.expirationTime = now + duration
+	cachedAura.lastRefresh = now
+
+	if self.DebugEvents then
+		self:DisplayText(
+			"BuffCache REFRESH: ", cachedAura.name,
+			" spellId=", cachedAura.spellId,
+			" castSpellID=", castSpellID,
+			" duration=", duration,
+			" expiration=", cachedAura.expirationTime
+		)
+	end
+end
+
+function cPowaBuffBase:CheckSecretAuraPresence(unit, s, giveReason, textToCheck)
+    local cache = PowaAuras.BuffCache
+        and PowaAuras.BuffCache[unit]
+
+    if not cache then
+        return -1
+    end
+
+    local cachedAura
+
+    for spellId, aura in pairs(cache) do
+        local matched = false
+
+        if tonumber(textToCheck) then
+            matched = spellId == tonumber(textToCheck)
+        elseif self.exact then
+            matched = aura.name == textToCheck
+        elseif self.ignoremaj then
+            matched = string.find(
+                string.upper(aura.name),
+                string.upper(textToCheck),
+                1,
+                true
+            ) ~= nil
+        else
+            matched = string.find(
+                aura.name,
+                textToCheck,
+                1,
+                true
+            ) ~= nil
+        end
+
+        if matched then
+            cachedAura = aura
+            break
+        end
+    end
+
+    if not cachedAura then
+        return -1
+    end
+
+    if not cachedAura.expirationTime or cachedAura.expirationTime <= 0 then
+        return -1
+    end
+
+    local remaining = cachedAura.expirationTime - GetTime()
+
+    if remaining <= 0 then
+        return false
+    end
+
+    return self:ApplyCachedAura(
+        cachedAura,
+        remaining,
+        giveReason,
+        textToCheck
+    )
+end
+
+function cPowaBuffBase:ApplyAuraResult(unit, auraName, auraTexture, 
+	count, expirationTime, isMine, giveReason)
+    if self.mine and not isMine then
+        if not giveReason then
+            return nil
+        end
+        return nil, PowaAuras.Text.nomReasonBuffPresentNotMine
+    end
+    if not self:CheckStacks(count) then
+        if giveReason then
+            return nil, PowaAuras:InsertText(
+                PowaAuras.Text.nomReasonStacksMismatch,
+                count,
+                self:StacksText()
+            )
+        end
+        return nil
+    end
+
+    self.DisplayValue = auraName
+    self.DisplayUnit = unit
+
+    if self.Stacks then
+        self.Stacks:SetStackCount(count)
+    end
+
+    if self.Timer then
+        self.Timer:SetDurationInfo(expirationTime)
+        self:CheckTimerInvert()
+
+        if self.ForceTimeInvert then
+            if not giveReason then
+                return false
+            end
+            return false, PowaAuras.Text.nomReasonBuffPresentTimerInvert
+        end
+    end
+
+    self:UpdateText()
+    self:SetIcon(auraTexture)
+
+    if giveReason then
+        return true, PowaAuras.Text.nomReasonBuffFound
+    end
+
+    return true
+end
+
+
+function cPowaBuffBase:ApplyCachedAura(
+    unit,
+    s,
+    giveReason,
+    textToCheck
+)
+    local unitCache = PowaAuras.BuffCache
+        and PowaAuras.BuffCache[unit]
+
+    if not unitCache then
+        return -1
+    end
+
+    local cachedAura
+    local spellId = tonumber(textToCheck)
+
+    for id, aura in pairs(unitCache) do
+        local matched
+
+        if spellId then
+            matched = tonumber(id) == spellId
+        elseif self.ignoremaj then
+            if self.exact then
+                matched = string.upper(aura.name) == string.upper(textToCheck)
+            else
+                matched = string.upper(aura.name) == string.upper(textToCheck)
+                    or string.find(
+                        string.upper(aura.name),
+                        string.upper(textToCheck),
+                        1,
+                        true
+                    ) ~= nil
+            end
+        else
+            if self.exact then
+                matched = aura.name == textToCheck
+            else
+                matched = aura.name == textToCheck
+                    or string.find(
+                        aura.name,
+                        textToCheck,
+                        1,
+                        true
+                    ) ~= nil
+            end
+        end
+
+        if matched then
+            cachedAura = aura
+            break
+        end
+    end
+
+    if not cachedAura then
+        return -1
+    end
+
+    -- Tooltip cannot be queried reliably from Secret Aura data.
+    if self.tooltipCheck
+        and string.len(self.tooltipCheck) ~= 0
+        and not cachedAura.tooltipMatched then
+        return -1
+    end
+
+    local expirationTime = cachedAura.expirationTime
+    local duration = cachedAura.duration
+
+    -- Permanent aura: no countdown.
+    if not duration or duration <= 0 then
+        expirationTime = 0
+    else
+        if not expirationTime or expirationTime <= 0 then
+            return -1
+        end
+
+        -- Cached timer has expired.
+        if GetTime() >= expirationTime then
+            if self.Debug then
+                PowaAuras:DisplayText(
+                    "BuffCache EXPIRED: ",
+                    cachedAura.name,
+                    " expiration=",
+                    expirationTime
+                )
+            end
+
+            return false
+        end
+    end
+
+    if self.Debug then
+        local remaining = duration and duration > 0
+            and (expirationTime - GetTime())
+            or "permanent"
+
+        PowaAuras:DisplayText(
+            "BuffCache APPLY: ",
+            cachedAura.name,
+            " expiration=",
+            tostring(expirationTime),
+            " remaining=",
+            tostring(remaining)
+        )
+    end
+
+    return self:ApplyAuraResult(
+        unit,
+        cachedAura.name,
+        cachedAura.icon,
+        cachedAura.applications,
+        expirationTime,
+        cachedAura.isMine,
+        giveReason
+    )
+end
+
+
 function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 	if self.Debug then
 		PowaAuras:DisplayText("IsPresent on ", unit," buffid = ", s," type = ", self.buffAuraType)
 	end
 	local auraName, auraTexture, count, expirationTime, caster, auraId
+	local auraDataFound
+	-- WoW Forever 1.60.1: aura queries may be secret during combat.
+	-- Do not call GetAuraDataByIndex from this tainted addon path when
+	-- aura access is restricted. -1 means "unknown", not "not present".
+	if C_Secrets and C_Secrets.ShouldAurasBeSecret and C_Secrets.ShouldAurasBeSecret() then
+    	-- Secret Aura: use the fallback existence check.
+    	return self:ApplyCachedAura(unit, s, giveReason, textToCheck)
+	end
 	if string.find(textToCheck, "%\\[") or string.find(textToCheck, "%\\]") then
 		textToCheck = strtrim(textToCheck, "%\\[%\\]")
 	end
 	if self.exact and not tonumber(textToCheck) then
 		local i = 1
 		local index
-		while C_UnitAuras.GetAuraDataByIndex(unit, i) do
-			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i)
+		while true do
+			local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, i, self.buffAuraType))
+			if not auraData then
+				break
+			end
 			if auraData then
-				if auraData.name == textToCheck then
+				if GetSafeValue(auraData.name) == textToCheck then
 					index = i
 					break
 				end
@@ -1684,24 +2050,28 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 		if not index then
 			return nil
 		end
-		local auraData = C_UnitAuras.GetAuraDataByIndex(unit, index, self.buffAuraType)
+		local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, index, self.buffAuraType))
 		if auraData then
-			auraName = auraData.name
-			auraTexture = auraData.icon
-			count = auraData.applications
-			expirationTime = auraData.expirationTime
-			caster = auraData.sourceUnit
-			auraId = auraData.spellId
+			auraDataFound = auraData
+
+			auraName = GetSafeValue(auraData.name)
+			auraTexture = GetSafeValue(auraData.icon)
+			count = GetSafeValue(auraData.applications)
+			expirationTime = GetSafeValue(auraData.expirationTime)
+			caster = GetSafeValue(auraData.sourceUnit)
+			auraId = GetSafeValue(auraData.spellId)
 		end
 	else
-		local auraData = C_UnitAuras.GetAuraDataByIndex(unit, s, self.buffAuraType)
+		local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, s, self.buffAuraType))
 		if auraData then
-			auraName = auraData.name
-			auraTexture = auraData.icon
-			count = auraData.applications
-			expirationTime = auraData.expirationTime
-			caster = auraData.sourceUnit
-			auraId = auraData.spellId
+			auraDataFound = auraData
+
+			auraName = GetSafeValue(auraData.name)
+			auraTexture = GetSafeValue(auraData.icon)
+			count = GetSafeValue(auraData.applications)
+			expirationTime = GetSafeValue(auraData.expirationTime)
+			caster = GetSafeValue(auraData.sourceUnit)
+			auraId = GetSafeValue(auraData.spellId)
 		end
 	end
 	if auraName == nil then
@@ -1721,6 +2091,11 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 			self.DisplayUnit = unit
 			return false
 		end
+	end
+	
+	-- Cache only after the configured tooltip condition has passed.
+	if auraDataFound then
+  	  	self:CacheAura(unit, auraDataFound, true)
 	end
 	if self.ignoremaj then
 		if self.exact then
@@ -1746,40 +2121,17 @@ function cPowaBuffBase:IsPresent(unit, s, giveReason, textToCheck)
 	if self.Debug then
 		PowaAuras:DisplayText("Present!")
 	end
-	local isMine = caster ~= nil and UnitExists(caster) and UnitIsUnit("player", caster)
-	if self.mine and not isMine then
-		if not giveReason then
-			return nil
-		end
-		return nil, PowaAuras.Text.nomReasonBuffPresentNotMine
-	end
-	if not self:CheckStacks(count) then
-		if giveReason then
-			return nil, PowaAuras:InsertText(PowaAuras.Text.nomReasonStacksMismatch, count, self:StacksText())
-		end
-		return nil
-	end
-	self.DisplayValue = auraName
-	self.DisplayUnit = unit
-	if self.Stacks then
-		self.Stacks:SetStackCount(count)
-	end
-	if self.Timer then
-		self.Timer:SetDurationInfo(expirationTime)
-		self:CheckTimerInvert()
-		if self.ForceTimeInvert then
-			if not giveReason then
-				return false
-			end
-			return false, PowaAuras.Text.nomReasonBuffPresentTimerInvert
-		end
-	end
-	self:UpdateText()
-	self:SetIcon(auraTexture)
-	if giveReason then
-		return true, PowaAuras.Text.nomReasonBuffFound
-	end
-	return true
+	local isMine = caster ~= nil and UnitExists(caster) and SafeUnitIsUnit("player", caster)
+
+	return self:ApplyAuraResult(
+	    unit,
+	    auraName,
+	    auraTexture,
+	    count,
+	    expirationTime,
+	    isMine,
+	    giveReason
+	)
 end
 
 function cPowaBuffBase:CheckTooltip(text, target, index)
@@ -1844,6 +2196,9 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 			PowaAuras:DisplayText("Buff for current slot (", self.CurrentSlot, ")")
 		end
 		present, reason = self:IsPresent(target, self.CurrentSlot, giveReason, self.CurrentMatch)
+		if present == -1 then
+			return -1, reason
+		end
 		if present then
 			if not giveReason then
 				return true
@@ -1866,6 +2221,9 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 				PowaAuras:DisplayText("Down (", i, ")")
 			end
 			present, reason = self:IsPresent(target, i, giveReason, pword)
+			if present == -1 then
+				return -1, reason
+			end
 			if present then
 				if self.Debug then
 					PowaAuras:DisplayText("Found ", i)
@@ -1883,6 +2241,9 @@ function cPowaBuffBase:CheckAllAuraSlots(target, giveReason)
 				PowaAuras:DisplayText("Up (", i, ")")
 			end
 			present, reason = self:IsPresent(target, i, giveReason, pword)
+			if present == -1 then
+				return -1, reason
+			end
 			if present == nil then
 				break
 			end
@@ -1922,6 +2283,9 @@ function cPowaBuffBase:CheckSingleUnit(group, unit, giveReason)
 		PowaAuras:DisplayText("CheckSingleUnit ", unit)
 	end
 	local present, reason = self:CheckAllAuraSlots(unit, giveReason)
+	if present == -1 then
+		return -1, reason
+	end
 	if present then
 		if self.groupany == true then
 			self.CurrentUnit = unit
@@ -2327,7 +2691,7 @@ function cPowaStealableSpell:CheckUnit(unit, targetOf)
 		end
 		for i = 1, 40 do
 			local auraName, auraTexture, count, typeDebuff, expirationTime, isStealable, auraId
-			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i)
+			local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, i))
 			if auraData then
 				auraName = auraData.name
 				auraTexture = auraData.icon
@@ -2390,14 +2754,14 @@ function cPowaPurgeableSpell:CheckUnit(unit, targetOf)
 		end
 		for i = 1, 40 do
 			local auraName, auraTexture, count, typeDebuff, expirationTime, auraId
-			local auraData = C_UnitAuras.GetAuraDataByIndex(unit, i, "HELPFUL")
+			local auraData = GetSafeValue(C_UnitAuras.GetAuraDataByIndex(unit, i, "HELPFUL"))
 			if auraData then
-				auraName = auraData.name
-				auraTexture = auraData.icon
-				count = auraData.applications
-				typeDebuff = auraData.dispelName
-				expirationTime = auraData.expirationTime
-				auraId = auraData.spellId
+				auraName = GetSafeValue(auraData.name)
+				auraTexture = GetSafeValue(auraData.icon)
+				count = GetSafeValue(auraData.applications)
+				expirationTime = GetSafeValue(auraData.expirationTime)
+				typeDebuff = GetSafeValue(auraData.dispelName)
+				auraId = GetSafeValue(auraData.spellId)
 			end
 			if self.Debug then
 				PowaAuras:Message("Slot = ", i, " auraName = ", auraName, " typeDebuff = ", typeDebuff, " (", auraId, ")")
@@ -3399,46 +3763,71 @@ function cPowaAuraStats:Init()
 end
 
 function cPowaAuraStats:CheckUnit(unit)
-	PowaAuras:Debug("CheckUnit "..unit)
-	if not self:IsCorrectPowerType(unit) then
-		return nil
-	end
-	if UnitIsDeadOrGhost(unit) then
-		return false
-	end
-	local curValue = self:UnitValue(unit)
-	if self.Stacks then
-		self.Stacks:SetStackCount(curValue)
-	end
-	self.DisplayValue = curValue
-	self.DisplayUnit = unit
-	self:UpdateText()
-	local maxValue = self:UnitValueMax(unit)
-	if curValue == nil or maxValue == nil or maxValue == 0 then
-		return false
-	end
-	if self.Debug then
-		PowaAuras:DisplayText("curValue = ", curValue, " maxValue = ", maxValue)
-	end
-	if self.RangeType == "%" then
-		curValue = (curValue / maxValue) * 100
-	end
-	if self.Stacks then
-		self.Stacks:SetStackCount(curValue)
-	end
-	if self.Debug then
-		PowaAuras:DisplayText(curValue..self.RangeType, " threshold = ", self.threshold)
-	end
-	local thresholdvalidate
-	if self.thresholdinvert then
-		thresholdvalidate = (curValue >= self.threshold)
-	else
-		thresholdvalidate = (curValue <= self.threshold)
-	end
-	if thresholdvalidate then
-		return true
-	end
-	return false
+    PowaAuras:Debug("CheckUnit "..unit)
+
+    if not self:IsCorrectPowerType(unit) then
+        return nil
+    end
+
+    if UnitIsDeadOrGhost(unit) then
+        return false
+    end
+
+    local curValue = self:UnitValue(unit)
+    local maxValue = self:UnitValueMax(unit)
+
+    -- WoW Forever / Retail Secret Value protection
+    if issecretvalue then
+        if issecretvalue(curValue) or issecretvalue(maxValue) then
+            return -1
+        end
+    end
+
+    if curValue == nil or maxValue == nil or maxValue == 0 then
+        return false
+    end
+
+    -- Update display only after validating values
+    if self.Stacks then
+        self.Stacks:SetStackCount(curValue)
+    end
+
+    self.DisplayValue = curValue
+    self.DisplayUnit = unit
+    self:UpdateText()
+
+    if self.Debug then
+        PowaAuras:DisplayText(
+            "curValue = ", curValue,
+            " maxValue = ", maxValue
+        )
+    end
+
+    if self.RangeType == "%" then
+        curValue = (curValue / maxValue) * 100
+    end
+
+    if self.Stacks then
+        self.Stacks:SetStackCount(curValue)
+    end
+
+    if self.Debug then
+        PowaAuras:DisplayText(
+            curValue..self.RangeType,
+            " threshold = ",
+            self.threshold
+        )
+    end
+
+    local thresholdvalidate
+
+    if self.thresholdinvert then
+        thresholdvalidate = (curValue >= self.threshold)
+    else
+        thresholdvalidate = (curValue <= self.threshold)
+    end
+
+    return thresholdvalidate
 end
 
 function cPowaAuraStats:CheckIfShouldShow(giveReason)
@@ -3612,7 +4001,7 @@ function cPowaAggro:AddEffectAndEvents()
 end
 
 function cPowaAggro:CheckUnit(unit)
-	return (UnitThreatSituation(unit) or - 1) > 0
+	return (GetSafeValue(UnitThreatSituation(unit)) or - 1) > 0
 end
 
 function cPowaAggro:SetFixedIcon()
@@ -3672,7 +4061,7 @@ function cPowaPvP:CheckUnit(unit)
 	if self.Debug then
 		PowaAuras:DisplayText(unit.." PvP flag is on")
 	end
-	if self.Timer and UnitIsUnit("player", unit) then
+	if self.Timer and SafeUnitIsUnit("player", unit) then
 		local duration = GetPVPTimer()
 		if self.Debug then
 			PowaAuras:DisplayText("PvP flag is on time left =", GetPVPTimer())
@@ -3810,7 +4199,7 @@ function cPowaSpellAlert:CheckUnit(unit)
 	end
 	-- Cast on me check
 	if self.Extra then
-		if not UnitIsUnit(unit.."target","player") then
+		if not SafeUnitIsUnit(unit.."target","player") then
 			if self.Debug then
 				PowaAuras:DisplayText(unit, " is not casting on me")
 			end
@@ -3823,8 +4212,12 @@ function cPowaSpellAlert:CheckUnit(unit)
 	else
 		local _
 		spellname, _, spellicon, _, endtime, _, _, notInterruptible = UnitCastingInfo(unit)
+		spellname = GetSafeValue(spellname)
+
 		if not spellname then
 			spellname, _, spellicon, _, endtime, _, notInterruptible = UnitChannelInfo(unit)
+
+			spellname = GetSafeValue(spellname)
 		end
 	end
 	-- Not casting
@@ -4793,7 +5186,7 @@ function cPowaUnitMatch:CheckIfShouldShow(giveReason)
 	if unit2 == "*" then
 		result = UnitExists(unit1) and true or false
 	else
-		result = UnitIsUnit(unit1, unit2) and true or false
+		result = SafeUnitIsUnit(unit1, unit2) and true or false
 		if not result then
 			result = UnitName(unit1) == unit2 and true or (UnitName(unit2) == unit1 and true or false)
 		end

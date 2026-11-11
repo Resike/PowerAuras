@@ -1448,3 +1448,34 @@ function PowaAuras:GetSettingForExport(prefix, k, v, default)
 	end
 	return setting.."; "
 end
+
+function PowaAuras.IsSecretValue(value)
+    return issecretvalue and issecretvalue(value) or false
+end
+
+function PowaAuras.GetSafeValue(value)
+    if issecretvalue and issecretvalue(value) then
+        return nil
+    end
+    return value
+end
+
+function PowaAuras.SafeUnitIsUnit(unit1, unit2)
+    if not unit1 or not unit2 then
+        return false
+    end
+    if C_Secrets
+        and C_Secrets.ShouldUnitComparisonBeSecret
+        and C_Secrets.ShouldUnitComparisonBeSecret(unit1, unit2) then
+        return false
+    end
+    local ok, result = pcall(UnitIsUnit, unit1, unit2)
+    if not ok then
+        return false
+    end
+    if issecretvalue and issecretvalue(result) then
+        return false
+    end
+
+    return result == true
+end
